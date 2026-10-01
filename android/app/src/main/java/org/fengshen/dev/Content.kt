@@ -1,0 +1,267 @@
+package org.fengshen.dev
+
+import android.content.res.AssetManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import org.json.JSONObject
+import java.io.File
+import java.security.MessageDigest
+import android.os.SystemClock
+
+/** Bundled and future validated cache directories use this same reader. No networking in A. */
+interface ContentSource { fun read(name: String): ByteArray }
+fun checkedName(name: String): String { require(name.matches(Regex("[a-zA-Z0-9._-]+")) && !name.startsWith("."));return name }
+class AssetSource(private val assets: AssetManager): ContentSource {
+    override fun read(name: String)=assets.open("development/"+checkedName(name)).use { it.readBytes() }
+}
+class DirectorySource(private val root: File): ContentSource {
+    override fun read(name: String)=File(root,checkedName(name)).readBytes()
+}
+data class StoryEffect(val type:String,val id:String?,val amount:Int,val source:String)
+data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firstDialogue:String,
+    val repeatDialogue:String?,val firstEffects:List<StoryEffect>,val source:String,val mapId:Int=114,
+    val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null)
+data class StoryText(val id:String,val text:String,val source:String)
+data class CharacterDefinition(val id:String,val name:String,val portraitAsset:String,val portrait:Bitmap,
+    val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
+data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
+    val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
+    val maxCount:Int=10,val preview:Bitmap?=null)
+data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
+    val allowedCharacters:Set<String>,val source:String,val defenseBonus:Int=0,val evasionValue:Int=0,
+    val operationEnabled:Boolean=true)
+
+data class ShopDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
+    val items:List<String>,val sellItems:Set<String>,val buyPrompt:String="")
+data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitmap>,
+    val scenes:Map<Int,Scene> = mapOf(scene.mapId to scene),val atlases:Map<Int,Bitmap> = mapOf(scene.mapId to atlas),
+    val exits:List<MapExit> = emptyList(),val initialPlayer:CharacterState,
+    val initialMoney:Int=0,val intro:StoryText?=null,val npcs:List<StoryNpc> = emptyList(),
+    val dialogues:Map<String,StoryText> = emptyMap(),val itemNames:Map<String,String> = emptyMap(),
+    val playerNames:Map<String,String> = emptyMap(),
+    val characterDefinitions:Map<String,CharacterDefinition> = emptyMap(),
+    val itemDefinitions:Map<String,ItemDefinition> = emptyMap(),
+    val equipmentDefinitions:Map<String,EquipmentDefinition> = emptyMap(),
+    val battle:BattleContent?=null,val audio:AudioContent?=null,
+    val enemyGraphics:Map<Int,Bitmap> = emptyMap(),val battleHorizon:Bitmap?=null,val battleHero:Bitmap?=null,
+    val shops:Map<String,ShopDefinition> = emptyMap())
+object ContentLoader {
+    fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
+        val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
+        val manifestBytes=source.read("manifest.json")
+        val manifest=JSONObject(String(manifestBytes,Charsets.UTF_8))
+        require(manifest.getInt("schemaVersion")==1 && manifest.getString("channel")=="development")
+        val hashes=manifest.getJSONObject("files")
+        fun read(name: String): ByteArray {
+            val start=SystemClock.elapsedRealtime()
+            val b=source.read(checkedName(name));require(b.size<=2_000_000)
+            val hash=MessageDigest.getInstance("SHA-256").digest(b).joinToString(""){"%02x".format(it)}
+            require(hash==hashes.getString(name)){"内容校验失败: $name"};verificationMs+=SystemClock.elapsedRealtime()-start;return b
+        }
+        fun ints(data:JSONObject,name:String)=data.getJSONArray(name).let { a->IntArray(a.length()){a.getInt(it)} }
+        fun edges(data:JSONObject,name:String):Map<Int,Set<Key>> {
+            val o=data.optJSONObject(name)?:return emptyMap()
+            return o.keys().asSequence().associate{k->k.toInt() to o.getJSONArray(k).let{a->
+                (0 until a.length()).map{Key.valueOf(a.getString(it))}.toSet()}}
+        }
+        fun scene(name:String,expectedId:Int):Pair<JSONObject,Scene>{
+            val data=JSONObject(String(read(name),Charsets.UTF_8))
+            require(data.getInt("schemaVersion")==1 && data.getInt("originalMapId")==expectedId)
+            require(data.getInt("tileSize")==16 && data.getInt("logicalWidth")==256 && data.getInt("logicalHeight")==240)
+            require(data.getString("channel")=="development" && data.getString("version")==manifest.getString("version"))
+            val spawn=ints(data,"spawn");require(spawn.size==2)
+            val result=Scene(data.getString("version"),data.getInt("width"),data.getInt("height"),
+                ints(data,"grid"),ints(data,"collision"),ints(data,"enabledCells").toSet(),spawn[0],spawn[1],expectedId,
+                if(data.has("walkableClasses"))ints(data,"walkableClasses").toSet() else setOf(0),
+                if(data.has("dynamicObjectCells"))ints(data,"dynamicObjectCells").toSet() else emptySet(),
+                if(data.has("transitionCells"))ints(data,"transitionCells").toSet() else emptySet(),
+                edges(data,"sourceEdges"),edges(data,"targetEdges"))
+            return data to result
+        }
+        val (data,opening)=scene("scene.json",114)
+        val mapFiles=if(data.has("maps"))data.getJSONArray("maps").let{a->
+            (0 until a.length()).map{i->a.getJSONObject(i)}.map{o->
+                Triple(o.getInt("id"),checkedName(o.getString("scene")),checkedName(o.getString("atlas")))}
+        } else listOf(Triple(114,"scene.json","tiles.png"),Triple(16,"scene16.json","tiles16.png"))
+        require(mapFiles.size in 2..8 && mapFiles.map{it.first}.toSet().size==mapFiles.size &&
+            mapFiles.any{it.first==114 && it.second=="scene.json"})
+        val scenes=mapFiles.associate{(id,name,_)->id to if(id==114)opening else scene(name,id).second}
+        val initial=data.getJSONObject("initialPlayer")
+        require(initial.getJSONObject("source").getString("confidence")=="HIGH")
+        val initialName=initial.optString("name").ifBlank{initial.getString("id")}
+        require(initialName.isNotBlank() && initialName.length<=32)
+        val initialPlayer=CharacterState.parse(initial)
+        val exits=data.getJSONArray("exits").let{a->(0 until a.length()).map{i->
+            val o=a.getJSONObject(i);val trigger=ints(o,"trigger");val spawn=ints(o,"spawn")
+            require(trigger.size==2&&spawn.size==2&&o.getString("confidence")=="VERIFIED")
+            val mode=o.optString("triggerMode","CELL");require(mode in setOf("CELL","EDGE"))
+            val direction=if(mode=="EDGE")Key.valueOf(o.getString("direction")) else null
+            require(direction==null || direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
+            val arrival=Key.valueOf(o.optString("arrivalDirection","DOWN"))
+            require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
+            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival)
+        }}
+        require(exits.all{exit->
+            val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
+            from!=null && to!=null && from.check(exit.triggerX,exit.triggerY)==null && to.check(exit.spawnX,exit.spawnY)==null
+        })
+        fun bitmap(name: String,w: Int,h: Int): Bitmap {
+            val b=read(name);val bitmapStart=SystemClock.elapsedRealtime();val opts=BitmapFactory.Options().apply{inScaled=false}
+            val image=BitmapFactory.decodeByteArray(b,0,b.size,opts)?:error("Invalid image")
+            require(image.width==w&&image.height==h);atlasMs+=SystemClock.elapsedRealtime()-bitmapStart;return image
+        }
+        val atlases=mapFiles.associate{(id,_,name)->id to bitmap(name,256,256)}
+        val atlas114=atlases.getValue(114)
+        val introData=data.optJSONObject("intro")
+        val intro=introData?.let{StoryText(it.getString("id"),it.getString("text"),
+            it.getJSONObject("source").getString("confidence"))}
+        val dialogueArray=data.getJSONArray("dialogues")
+        val dialogues=(0 until dialogueArray.length()).map{dialogueArray.getJSONObject(it)}.associate{d->
+            val record=StoryText(d.getString("id"),d.getString("text"),d.getJSONObject("source").getString("confidence"))
+            record.id to record
+        }
+        val npcArray=data.getJSONArray("npcs")
+        val npcs=(0 until npcArray.length()).map{i->
+            val n=npcArray.getJSONObject(i);val cell=ints(n,"cell")
+            val mapId=n.optInt("mapId",114);val npcScene=scenes.getValue(mapId)
+            require(cell.size==2 && cell[0] in 0 until npcScene.width && cell[1] in 0 until npcScene.height)
+            val effects=n.getJSONArray("firstEffects").let{a->(0 until a.length()).map{j->
+                val e=a.getJSONObject(j);val confidence=e.getString("confidence")
+                require((confidence=="PROVISIONAL_REFERENCE" && !e.getBoolean("originalVerified")) ||
+                    (confidence=="GAMEPLAY_VERIFIED" && e.getBoolean("originalVerified") && e.has("evidence")))
+                StoryEffect(e.getString("type"),e.optString("id").takeIf{it.isNotEmpty()},e.getInt("amount"),e.getString("source"))
+                    .also{require(it.type in setOf("money","item") && it.amount in 1..9999 && (it.type!="item"||it.id!=null))}
+            }}
+            StoryNpc(n.getString("id"),cell[0],cell[1],bitmap(n.getString("sprite"),16,16),
+                n.getString("firstDialogue"),n.optString("repeatDialogue").takeIf{it.isNotEmpty()&&it!="null"},
+                effects,n.getJSONObject("source").getString("confidence"),mapId,
+                n.optString("shopId").takeIf{it.isNotEmpty()},
+                n.optJSONArray("interactionCell")?.let{it.getInt(0) to it.getInt(1)})
+        }
+        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{it.firstDialogue in dialogues && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
+        val itemArray=data.getJSONArray("items")
+        val itemDefinitions=(0 until itemArray.length()).associate{i->
+            val o=itemArray.getJSONObject(i);val source=o.getJSONObject("source").getString("confidence")
+            require(source in setOf("PROVISIONAL_REFERENCE","GAMEPLAY_VERIFIED"))
+            val preview=o.optJSONObject("preview")
+            val item=ItemDefinition(o.getString("id"),o.getString("name"),o.optString("description").takeIf{it.isNotBlank()},source,
+                o.optString("category","weapon"),o.optInt("originalId",0),
+                if(o.has("buyPrice"))o.getInt("buyPrice") else null,
+                if(o.has("sellPrice"))o.getInt("sellPrice") else null,o.optInt("maxCount",10),
+                preview?.let{bitmap(it.getString("asset"),it.getInt("width"),it.getInt("height"))})
+            item.id to item
+        }
+        val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->
+            val o=itemArray.getJSONObject(i);val e=o.optJSONObject("equipment")?:return@mapNotNull null
+            require(o.getJSONObject("source").getString("confidence") in setOf("GAMEPLAY_VERIFIED","PROVISIONAL_REFERENCE"))
+            EquipmentDefinition(o.getString("id"),e.getInt("originalId"),e.getString("slot"),
+                e.getInt("attackBonus"),e.getJSONArray("allowedCharacters").let{a->
+                    (0 until a.length()).map{a.getString(it)}.toSet()},e.getString("evidence"),
+                e.optInt("defenseBonus",0),e.optInt("evasionValue",0),e.optBoolean("operationEnabled",true))
+        }.associateBy{it.itemId}
+        require(equipmentDefinitions.values.all{it.originalId in 0..255 && it.slot in setOf("rightHand","body","feet") &&
+            it.attackBonus>=0 && it.defenseBonus>=0 && it.allowedCharacters==setOf("nezha")})
+        val shops=data.optJSONArray("shops")?.let{a->(0 until a.length()).map{i->
+            val o=a.getJSONObject(i)
+            fun refs(n:String)=o.getJSONArray(n).let{v->(0 until v.length()).map{v.getString(it)}}
+            require(o.getJSONObject("source").getString("confidence")=="GAMEPLAY_VERIFIED")
+            ShopDefinition(o.getString("id"),o.getInt("mapId"),o.getString("npcId"),o.getString("name"),refs("items"),refs("sellItems").toSet(),o.optString("buyPrompt"))
+        }.associateBy{it.id}}?:emptyMap()
+        require(shops.values.all{s->s.mapId in scenes && npcs.any{it.id==s.npcId&&it.shopId==s.id&&it.mapId==s.mapId} &&
+            s.items.all{itemDefinitions[it]?.buyPrice!=null} && s.sellItems.all{itemDefinitions[it]?.sellPrice!=null}})
+        val sprites=mapOf(Key.UP to bitmap("player-up.png",16,16),
+            Key.DOWN to bitmap("player-down.png",16,16),Key.LEFT to bitmap("player-left.png",16,16),Key.RIGHT to bitmap("player-right.png",16,16))
+        val portraitAsset=initial.optString("portraitAsset","player-down.png")
+        require(portraitAsset=="player-down.png" && (initial.has("portraitSource") || !initial.has("portraitAsset")))
+        val definition=CharacterDefinition(initialPlayer.id,initialName,portraitAsset,sprites.getValue(Key.DOWN),
+            initial.getJSONObject("source").getString("confidence"),
+            if(initialPlayer.equipment!=null)listOf("rightHand","leftHand","body","feet") else null)
+        val battle=if(hashes.has("combat.json")){
+            val o=JSONObject(String(read("combat.json"),Charsets.UTF_8))
+            require(o.getInt("schemaVersion")==1 && o.getString("version")==manifest.getString("version"))
+            val zone=o.getJSONObject("zone");require(zone.getInt("mapId")==16 && zone.getInt("id")==0)
+            val rects=zone.getJSONArray("rectangles").let{array->(0 until array.length()).map{i->
+                val a=array.getJSONArray(i);require(a.length()==4)
+                EncounterRect(a.getInt(0),a.getInt(1),a.getInt(2),a.getInt(3))
+            }}
+            val enemies=o.getJSONArray("enemies").let{array->(0 until array.length()).map{i->
+                val e=array.getJSONObject(i)
+                EnemyDefinition(e.getInt("id"),e.getString("name"),e.getInt("hp"),e.getInt("attack"),
+                    e.getInt("defense"),e.getInt("experienceReward"),e.getInt("moneyReward"),
+                    e.getInt("hitByte"),e.getInt("behaviorByte"))
+            }.associateBy{it.id}}
+            val groups=o.getJSONArray("groups").let{array->(0 until array.length()).map{i->
+                val g=array.getJSONObject(i);val members=g.getJSONArray("entities").let{a->
+                    (0 until a.length()).map{j->val e=a.getJSONObject(j);EncounterMember(e.getInt("slot"),e.getInt("enemyId"))}}
+                EncounterGroup(g.getInt("id"),members)
+            }}
+            val growth=o.getJSONArray("nezhaGrowth").let{array->(0 until array.length()).map{i->
+                val g=array.getJSONObject(i);GrowthRow(g.getInt("level"),g.getInt("threshold"),
+                    g.getInt("hp"),g.getInt("mp"),g.getInt("strength"),g.getInt("stamina"),
+                    g.getInt("agility"),g.getInt("spirit"),g.getBoolean("runtimeVerified"))
+            }}
+            val gate=o.getJSONObject("gate")
+            require(rects.size==2 && enemies.keys==setOf(1,2,3) && groups.size==19 &&
+                groups.indices.all{groups[it].id==it} && groups.all{it.members.isNotEmpty() &&
+                    it.members.map{m->m.slot}.distinct().size==it.members.size &&
+                    it.members.all{m->m.slot in 0..6 && m.enemyId in enemies}} &&
+                enemies.values.all{it.hp>0 && it.hitByte in 0..255 && it.behaviorByte==0} &&
+                growth.zipWithNext().all{it.first.threshold<it.second.threshold})
+            BattleContent(zone.getInt("mapId"),rects,groups,enemies,growth,
+                o.getInt("initialArmorContribution"),gate.getInt("stepCounterMin"),
+                gate.getInt("stepCounterForced"),gate.getInt("randomByteThreshold"),
+                o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
+                    a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap(),
+                o.optJSONObject("escape")?.optBoolean("enabled")==true,
+                o.optJSONObject("defeat")?.optBoolean("enabled")==true)
+        }else null
+        val enemyGraphics=mutableMapOf<Int,Bitmap>();var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null
+        if(battle!=null){
+            val presentation=JSONObject(String(read("combat.json"),Charsets.UTF_8)).optJSONObject("presentation")
+            if(presentation!=null){
+                val assets=presentation.getJSONArray("graphics")
+                for(i in 0 until assets.length()){
+                    val a=assets.getJSONObject(i);val bytes=read(a.getString("asset"))
+                    val image=BitmapFactory.decodeByteArray(bytes,0,bytes.size)?:error("Invalid enemy graphic")
+                    require(image.width==a.getInt("width")&&image.height==a.getInt("height"))
+                    enemyGraphics[a.getInt("enemyId")]=image
+                }
+                require(enemyGraphics.keys==battle.enemies.keys)
+                val bytes=read(presentation.getString("horizon"))
+                battleHorizon=BitmapFactory.decodeByteArray(bytes,0,bytes.size)?:error("Invalid battle horizon")
+                if(presentation.has("hero")){
+                    val heroBytes=read(presentation.getString("hero"))
+                    battleHero=BitmapFactory.decodeByteArray(heroBytes,0,heroBytes.size)?:error("Invalid battle actor")
+                }
+            }
+        }
+        Diagnostics.contentVersion=manifest.getString("version")
+        Diagnostics.contentHash=MessageDigest.getInstance("SHA-256").digest(manifestBytes).joinToString(""){"%02x".format(it)}
+        val parseMs=(SystemClock.elapsedRealtime()-started-verificationMs-atlasMs).coerceAtLeast(0)
+        val audioStart=SystemClock.elapsedRealtime()
+        val nonAudioVerificationMs=verificationMs
+        val audio=if(audioCache==null||!hashes.has("audio.json"))null else runCatching{
+            val o=JSONObject(String(read("audio.json"),Charsets.UTF_8));require(o.getInt("schemaVersion")==1)
+            audioCache.mkdirs();val tracks=mutableMapOf<String,AudioTrack>();val effects=mutableMapOf<String,File>()
+            val a=o.getJSONArray("assets")
+            for(i in 0 until a.length()){
+                val asset=a.getJSONObject(i);val id=asset.getString("id");val name=checkedName(asset.getString("file"))
+                runCatching{
+                    val bytes=read(name);val file=File(audioCache,hashes.getString(name)+"-"+name)
+                    if(!file.exists()||!file.readBytes().contentEquals(bytes)){val pending=File(audioCache,file.name+".pending");pending.writeBytes(bytes);check(pending.renameTo(file))}
+                    if(asset.getString("kind")=="BGM"){val start=asset.getLong("loopStartMs");val end=asset.getLong("loopEndMs");require(start>=0&&end>start)
+                        tracks[id]=AudioTrack(id,file,start,end,asset.getBoolean("loop"))}else effects[id]=file
+                    Diagnostics.record("audio_load",details=JSONObject().put("success",true).put("assetID",id))
+                }.onFailure{Diagnostics.record("audio_load","WARN",JSONObject().put("success",false).put("assetID",id),"missing_or_corrupt_audio")}
+            }
+            fun refs(name:String):Map<String,String>{val refs=o.getJSONObject(name);return refs.keys().asSequence().associateWith{refs.getString(it)}}
+            AudioContent(tracks,refs("maps").mapKeys{it.key.toInt()},refs("events"),effects)
+        }.onFailure{Diagnostics.record("audio_load","WARN",code="invalid_audio_manifest")}.getOrNull()
+        timing(JSONObject().put("verificationMs",nonAudioVerificationMs).put("atlasMs",atlasMs).put("parseMs",parseMs).put("audioMs",SystemClock.elapsedRealtime()-audioStart))
+        return Content(opening,atlas114,sprites,
+            scenes,atlases,exits,initialPlayer,
+            data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
+            mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
+            enemyGraphics,battleHorizon,battleHero,shops)
+    }
+}

@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "assets": [
+    {
+      "id": "original.bgm.002",
+      "file": "bgm-002.mp3",
+      "kind": "BGM",
+      "loop": true,
+      "loopStartMs": 2000,
+      "loopEndMs": 24363,
+      "source": {
+        "kind": "REFERENCE_ASSET_MATCHED_TO_TARGET_ROM",
+        "path": "F:\\apps\\FengShenBang-reference\\Resources\\res\\Sound\\bgm_002.mp3",
+        "sha256": "b673f2f0d3cc6db8002f1aa70e2fc0b7d4563047773280d251ef06b9aaf70e5b",
+        "referenceCommit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+        "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+        "recording": "private-derived/audio-log01/maps-original.wav",
+        "recordingSha256": "761f65adabeb7d41d30318082b650209ffc38ffdf05ed214043f944b287c3066",
+        "searchWindowSeconds": [
+          30,
+          36
+        ],
+        "spectralSearchScore": 0.6309,
+        "confidence": "HIGH",
+        "scope": "Melody and scene mapping compared with normal-controller target-ROM audio; waveform not byte-equivalent.",
+        "loopEvidence": {
+          "method": "repeated phrase spectrogram, 50ms search; approximate NES frame period",
+          "periodMs": 22363,
+          "confidence": "INFERRED",
+          "limitation": "loop endpoints chosen inside repeating section to omit recording fade; not a sample-exact ROM sequencer export"
+        }
+      }
+    },
+    {
+      "id": "original.bgm.003",
+      "file": "bgm-003.mp3",
+      "kind": "BGM",
+      "loop": true,
+      "loopStartMs": 2000,
+      "loopEndMs": 30752,
+      "source": {
+        "kind": "REFERENCE_ASSET_MATCHED_TO_TARGET_ROM",
+        "path": "F:\\apps\\FengShenBang-reference\\Resources\\res\\Sound\\bgm_003.mp3",
+        "sha256": "090b69f96269592fa18460efba003d03e3f9b5c83c463d65afe47eeb77f271f9",
+        "referenceCommit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+        "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+        "recording": "private-derived/audio-log01/maps-original.wav",
+        "recordingSha256": "761f65adabeb7d41d30318082b650209ffc38ffdf05ed214043f944b287c3066",
+        "searchWindowSeconds": [
+          100,
+          106
+        ],
+        "spectralSearchScore": 0.56783,
+        "confidence": "HIGH",
+        "scope": "Melody and scene mapping compared with normal-controller target-ROM audio; waveform not byte-equivalent.",
+        "loopEvidence": {
+          "method": "repeated phrase spectrogram, 50ms search; approximate NES frame period",
+          "periodMs": 28752,
+          "confidence": "INFERRED",
+          "limitation": "loop endpoints chosen inside repeating section to omit recording fade; not a sample-exact ROM sequencer export"
+        }
+      }
+    },
+    {
+      "id": "original.bgm.004",
+      "file": "bgm-004.mp3",
+      "kind": "BGM",
+      "loop": true,
+      "loopStartMs": 2000,
+      "loopEndMs": 20636,
+      "source": {
+        "kind": "REFERENCE_ASSET_MATCHED_TO_TARGET_ROM",
+        "path": "F:\\apps\\FengShenBang-reference\\Resources\\res\\Sound\\bgm_004.mp3",
+        "sha256": "c4eafeb34e3782f0b2b137437759c3350db169786542c5b0b5e58b954617711d",
+        "referenceCommit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+        "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+        "recording": "private-derived/audio-log01/battle-retry-original.wav",
+        "recordingSha256": "83560f6b9d5a69169575f2e6ee7d57c011dd4cbb6be8b3585c2347c6df3d13ff",
+        "searchWindowSeconds": [
+          0,
+          18
+        ],
+        "spectralSearchScore": 0.62903,
+        "confidence": "HIGH",
+        "scope": "Melody and scene mapping compared with normal-controller target-ROM audio; waveform not byte-equivalent.",
+        "loopEvidence": {
+          "method": "repeated phrase spectrogram, 50ms search; approximate NES frame period",
+          "periodMs": 18636,
+          "confidence": "INFERRED",
+          "limitation": "loop endpoints chosen inside repeating section to omit recording fade; not a sample-exact ROM sequencer export"
+        }
+      }
+    },
+    {
+      "id": "original.bgm.005",
+      "file": "bgm-005.mp3",
+      "kind": "BGM",
+      "loop": true,
+      "loopStartMs": 2000,
+      "loopEndMs": 36077,
+      "source": {
+        "kind": "REFERENCE_ASSET_MATCHED_TO_TARGET_ROM",
+        "path": "F:\\apps\\FengShenBang-reference\\Resources\\res\\Sound\\bgm_005.mp3",
+        "sha256": "f62f0f1050bd679d20346980033d7c581dcb03e597a5af4f07a61ad41d814e4b",
+        "referenceCommit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+        "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+        "recording": "private-derived/audio-log01/maps-original.wav",
+        "recordingSha256": "761f65adabeb7d41d30318082b650209ffc38ffdf05ed214043f944b287c3066",
+        "searchWindowSeconds": [
+          170,
+          176
+        ],
+        "spectralSearchScore": 0.62148,
+        "confidence": "HIGH",
+        "scope": "Melody and scene mapping compared with normal-controller target-ROM audio; waveform not byte-equivalent.",
+        "loopEvidence": {
+          "method": "repeated phrase spectrogram, 50ms search; approximate NES frame period",
+          "periodMs": 34077,
+          "confidence": "INFERRED",
+          "limitation": "loop endpoints chosen inside repeating section to omit recording fade; not a sample-exact ROM sequencer export"
+        }
+      }
+    }
+  ],
+  "maps": {
+    "114": "original.bgm.002",
+    "16": "original.bgm.003",
+    "0": "original.bgm.005"
+  },
+  "events": {
+    "battle": "original.bgm.004",
+    "victory": "original.bgm.004"
+  },
+  "missingEffects": [
+    "confirm",
+    "cancel",
+    "attack",
+    "hurt"
+  ],
+  "victoryEvidence": {
+    "recording": "private-derived/audio-log01/battle-retry-original.wav",
+    "frames": [
+      5161,
+      5339
+    ],
+    "routineEvidence": "private-derived/battle01-actions-2/actions.tsv: AE12 then ADD7; phase 7 through 5339, map phase at 5340",
+    "behavior": "Victory/rewards continue battle BGM, then original world BGM on map return. No separate victory song invented."
+  }
+}

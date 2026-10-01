@@ -1,0 +1,6926 @@
+[
+  {
+    "path": "Resources/res/HelloWorld.png",
+    "width": 960,
+    "height": 640,
+    "mode": "P"
+  },
+  {
+    "path": "Resources/res/map/mac.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/mac2.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_002.png",
+    "width": 400,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_004.png",
+    "width": 640,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_006.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_008.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_009.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_011.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_013.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_015.png",
+    "width": 480,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_017.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_019.png",
+    "width": 400,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_021.png",
+    "width": 480,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_023.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_025.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_027.png",
+    "width": 560,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_029.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_031.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_033.png",
+    "width": 560,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_035.png",
+    "width": 480,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_037.png",
+    "width": 640,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_039.png",
+    "width": 320,
+    "height": 320,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_041.png",
+    "width": 640,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_043.png",
+    "width": 800,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_044.png",
+    "width": 320,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_047.png",
+    "width": 560,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_049.png",
+    "width": 640,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_051.png",
+    "width": 640,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_053.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_055.png",
+    "width": 400,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_057.png",
+    "width": 240,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_059.png",
+    "width": 240,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_061.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_063.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_065.png",
+    "width": 320,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_067.png",
+    "width": 480,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_069.png",
+    "width": 480,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_071.png",
+    "width": 480,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_073.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_075.png",
+    "width": 560,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_077.png",
+    "width": 720,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_079.png",
+    "width": 240,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_081.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_083.png",
+    "width": 560,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_086.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_087.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_089.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_091.png",
+    "width": 720,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_093.png",
+    "width": 720,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_095.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_097.png",
+    "width": 720,
+    "height": 720,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_099.png",
+    "width": 320,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_102.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_103.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_105.png",
+    "width": 560,
+    "height": 880,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_107.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_109.png",
+    "width": 640,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_111.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_113.png",
+    "width": 560,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_115.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_117.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_119.png",
+    "width": 320,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_121.png",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_123.png",
+    "width": 320,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_125.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_128.png",
+    "width": 480,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_130.png",
+    "width": 480,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_132.png",
+    "width": 480,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_134.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_136.png",
+    "width": 480,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_138.png",
+    "width": 560,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_140.png",
+    "width": 560,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_142.png",
+    "width": 560,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_144.png",
+    "width": 400,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_146.png",
+    "width": 480,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_148.png",
+    "width": 640,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_150.png",
+    "width": 560,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_152.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_154.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_156.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_158.png",
+    "width": 640,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_160.png",
+    "width": 320,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_162.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_164.png",
+    "width": 560,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_166.png",
+    "width": 720,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_168.png",
+    "width": 800,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_170.png",
+    "width": 560,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_172.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_174.png",
+    "width": 400,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_176.png",
+    "width": 1040,
+    "height": 1441,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_178.png",
+    "width": 720,
+    "height": 720,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_180.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_182.png",
+    "width": 400,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_184.png",
+    "width": 480,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_186.png",
+    "width": 800,
+    "height": 400,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_188.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_190.png",
+    "width": 560,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_192.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_194.png",
+    "width": 560,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_196.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_198.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_200.png",
+    "width": 480,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_202.png",
+    "width": 480,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_204.png",
+    "width": 560,
+    "height": 400,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_206.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_208.png",
+    "width": 480,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_210.png",
+    "width": 480,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_212.png",
+    "width": 640,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_214.png",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_216.png",
+    "width": 560,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_218.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_220.png",
+    "width": 560,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_222.png",
+    "width": 720,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_224.png",
+    "width": 480,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_226.png",
+    "width": 320,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_228.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_230.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_232.png",
+    "width": 400,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_234.png",
+    "width": 560,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_236.png",
+    "width": 400,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_238.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_240.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_242.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_244.png",
+    "width": 160,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_246.png",
+    "width": 1120,
+    "height": 720,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_248.png",
+    "width": 640,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_250.png",
+    "width": 640,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_252.png",
+    "width": 640,
+    "height": 400,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/map/map_254.png",
+    "width": 400,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_256.png",
+    "width": 480,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_258.png",
+    "width": 240,
+    "height": 480,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_260.png",
+    "width": 160,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_262.png",
+    "width": 560,
+    "height": 560,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_264.png",
+    "width": 400,
+    "height": 720,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_265.png",
+    "width": 1040,
+    "height": 960,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_266.png",
+    "width": 720,
+    "height": 720,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_267.png",
+    "width": 880,
+    "height": 960,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/map/map_268.png",
+    "width": 160,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_001.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_002.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_003.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_004.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_005.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_006.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_007.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_008.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_009.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_010.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_011.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_012.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_013.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_014.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_015.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_016.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_017.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_018.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Bg/Bg_019.png",
+    "width": 112,
+    "height": 112,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_01.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_02.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_03.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_04.png",
+    "width": 64,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_05.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_06.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_07.png",
+    "width": 64,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_08.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_09.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_10.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_11.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_12.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_13.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_14.png",
+    "width": 256,
+    "height": 512,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_15.png",
+    "width": 256,
+    "height": 512,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_16.png",
+    "width": 256,
+    "height": 512,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_17.png",
+    "width": 256,
+    "height": 512,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_18.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_19.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_20.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_21.png",
+    "width": 32,
+    "height": 32,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_22.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_23.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_24.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_25.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_26.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_27.png",
+    "width": 64,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_28.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_29.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_30.png",
+    "width": 64,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_31.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_32.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_33.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_34.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_35.png",
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_36.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_37.png",
+    "width": 64,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_38.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_39.png",
+    "width": 128,
+    "height": 256,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_40.png",
+    "width": 114,
+    "height": 114,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_001.png",
+    "width": 76,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_002.png",
+    "width": 101,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_003.png",
+    "width": 200,
+    "height": 167,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_004.png",
+    "width": 86,
+    "height": 101,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_005.png",
+    "width": 383,
+    "height": 299,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_006.png",
+    "width": 104,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_007.png",
+    "width": 128,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_008.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_009.png",
+    "width": 152,
+    "height": 223,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_010.png",
+    "width": 125,
+    "height": 137,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_011.png",
+    "width": 125,
+    "height": 110,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_012.png",
+    "width": 190,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_013.png",
+    "width": 137,
+    "height": 239,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_014.png",
+    "width": 98,
+    "height": 134,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_015.png",
+    "width": 101,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_016.png",
+    "width": 74,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_017.png",
+    "width": 95,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_018.png",
+    "width": 113,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_019.png",
+    "width": 125,
+    "height": 143,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_020.png",
+    "width": 104,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_021.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_022.png",
+    "width": 98,
+    "height": 101,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_023.png",
+    "width": 92,
+    "height": 95,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_024.png",
+    "width": 188,
+    "height": 230,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_025.png",
+    "width": 89,
+    "height": 119,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_026.png",
+    "width": 227,
+    "height": 269,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_027.png",
+    "width": 119,
+    "height": 197,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_028.png",
+    "width": 488,
+    "height": 232,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_029.png",
+    "width": 212,
+    "height": 206,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_030.png",
+    "width": 212,
+    "height": 206,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_031.png",
+    "width": 104,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_032.png",
+    "width": 155,
+    "height": 143,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_033.png",
+    "width": 122,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_034.png",
+    "width": 113,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_035.png",
+    "width": 383,
+    "height": 299,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_036.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_037.png",
+    "width": 92,
+    "height": 113,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_038.png",
+    "width": 92,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_039.png",
+    "width": 83,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_040.png",
+    "width": 104,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_041.png",
+    "width": 128,
+    "height": 227,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_042.png",
+    "width": 107,
+    "height": 191,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_043.png",
+    "width": 125,
+    "height": 98,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_044.png",
+    "width": 143,
+    "height": 131,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_045.png",
+    "width": 89,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_046.png",
+    "width": 105,
+    "height": 167,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_047.png",
+    "width": 158,
+    "height": 143,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_048.png",
+    "width": 236,
+    "height": 191,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_049.png",
+    "width": 146,
+    "height": 251,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_050.png",
+    "width": 176,
+    "height": 86,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_051.png",
+    "width": 119,
+    "height": 86,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_052.png",
+    "width": 113,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_053.png",
+    "width": 125,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_054.png",
+    "width": 107,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_055.png",
+    "width": 80,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_056.png",
+    "width": 104,
+    "height": 101,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_057.png",
+    "width": 155,
+    "height": 173,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_058.png",
+    "width": 104,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_059.png",
+    "width": 119,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_060.png",
+    "width": 122,
+    "height": 143,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_061.png",
+    "width": 98,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_062.png",
+    "width": 101,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_063.png",
+    "width": 119,
+    "height": 164,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_064.png",
+    "width": 314,
+    "height": 215,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_065.png",
+    "width": 266,
+    "height": 191,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_066.png",
+    "width": 101,
+    "height": 134,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_067.png",
+    "width": 128,
+    "height": 173,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_068.png",
+    "width": 107,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_069.png",
+    "width": 128,
+    "height": 173,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_070.png",
+    "width": 131,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_071.png",
+    "width": 119,
+    "height": 164,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_072.png",
+    "width": 95,
+    "height": 98,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_073.png",
+    "width": 125,
+    "height": 146,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_074.png",
+    "width": 134,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_075.png",
+    "width": 167,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_076.png",
+    "width": 116,
+    "height": 212,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_077.png",
+    "width": 167,
+    "height": 143,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_078.png",
+    "width": 119,
+    "height": 203,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_079.png",
+    "width": 103,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_080.png",
+    "width": 200,
+    "height": 161,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_081.png",
+    "width": 176,
+    "height": 245,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_082.png",
+    "width": 167,
+    "height": 215,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_083.png",
+    "width": 86,
+    "height": 131,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_084.png",
+    "width": 368,
+    "height": 311,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_085.png",
+    "width": 167,
+    "height": 188,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_086.png",
+    "width": 173,
+    "height": 197,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_087.png",
+    "width": 122,
+    "height": 137,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_088.png",
+    "width": 104,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_089.png",
+    "width": 173,
+    "height": 248,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_090.png",
+    "width": 173,
+    "height": 248,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_091.png",
+    "width": 173,
+    "height": 245,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_092.png",
+    "width": 461,
+    "height": 296,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_093.png",
+    "width": 113,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_094.png",
+    "width": 101,
+    "height": 146,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_095.png",
+    "width": 383,
+    "height": 299,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_096.png",
+    "width": 149,
+    "height": 89,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_097.png",
+    "width": 116,
+    "height": 134,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_098.png",
+    "width": 107,
+    "height": 170,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_099.png",
+    "width": 233,
+    "height": 218,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_100.png",
+    "width": 233,
+    "height": 218,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_101.png",
+    "width": 173,
+    "height": 224,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_102.png",
+    "width": 149,
+    "height": 203,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_103.png",
+    "width": 218,
+    "height": 281,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_104.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_105.png",
+    "width": 101,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_106.png",
+    "width": 125,
+    "height": 224,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_107.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_108.png",
+    "width": 119,
+    "height": 98,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_109.png",
+    "width": 194,
+    "height": 185,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_110.png",
+    "width": 104,
+    "height": 98,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_111.png",
+    "width": 71,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_112.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_113.png",
+    "width": 161,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_114.png",
+    "width": 104,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_115.png",
+    "width": 92,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_116.png",
+    "width": 152,
+    "height": 224,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_117.png",
+    "width": 152,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_118.png",
+    "width": 164,
+    "height": 206,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_119.png",
+    "width": 101,
+    "height": 119,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_120.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_121.png",
+    "width": 101,
+    "height": 68,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_122.png",
+    "width": 125,
+    "height": 197,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_123.png",
+    "width": 182,
+    "height": 245,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_124.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_125.png",
+    "width": 101,
+    "height": 152,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_126.png",
+    "width": 197,
+    "height": 248,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_127.png",
+    "width": 176,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_128.png",
+    "width": 215,
+    "height": 245,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_129.png",
+    "width": 152,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_130.png",
+    "width": 74,
+    "height": 125,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_131.png",
+    "width": 143,
+    "height": 140,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_132.png",
+    "width": 95,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_133.png",
+    "width": 134,
+    "height": 110,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_134.png",
+    "width": 92,
+    "height": 248,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_135.png",
+    "width": 173,
+    "height": 194,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_136.png",
+    "width": 122,
+    "height": 158,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_137.png",
+    "width": 368,
+    "height": 272,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_138.png",
+    "width": 161,
+    "height": 119,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_139.png",
+    "width": 167,
+    "height": 212,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_140.png",
+    "width": 203,
+    "height": 173,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_141.png",
+    "width": 248,
+    "height": 173,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_142.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_143.png",
+    "width": 128,
+    "height": 128,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_144.png",
+    "width": 383,
+    "height": 299,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_145.png",
+    "width": 116,
+    "height": 113,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_146.png",
+    "width": 362,
+    "height": 296,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_147.png",
+    "width": 104,
+    "height": 116,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_148.png",
+    "width": 113,
+    "height": 203,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_149.png",
+    "width": 101,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_150.png",
+    "width": 131,
+    "height": 170,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_151.png",
+    "width": 104,
+    "height": 245,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_152.png",
+    "width": 149,
+    "height": 218,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_153.png",
+    "width": 104,
+    "height": 149,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_154.png",
+    "width": 98,
+    "height": 101,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_155.png",
+    "width": 143,
+    "height": 164,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_156.png",
+    "width": 95,
+    "height": 98,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_157.png",
+    "width": 125,
+    "height": 101,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_158.png",
+    "width": 103,
+    "height": 149,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_159.png",
+    "width": 197,
+    "height": 176,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_160.png",
+    "width": 74,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_161.png",
+    "width": 146,
+    "height": 206,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_162.png",
+    "width": 203,
+    "height": 220,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_163.png",
+    "width": 110,
+    "height": 104,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_164.png",
+    "width": 176,
+    "height": 176,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_165.png",
+    "width": 191,
+    "height": 116,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_166.png",
+    "width": 302,
+    "height": 242,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_167.png",
+    "width": 632,
+    "height": 344,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_168.png",
+    "width": 197,
+    "height": 191,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_169.png",
+    "width": 119,
+    "height": 122,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_170.png",
+    "width": 299,
+    "height": 200,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_171.png",
+    "width": 101,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_172.png",
+    "width": 126,
+    "height": 132,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_173.png",
+    "width": 84,
+    "height": 81,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Monster/Monster_174.png",
+    "width": 651,
+    "height": 357,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_001.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_002.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_003.png",
+    "width": 48,
+    "height": 68,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_004.png",
+    "width": 51,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_005.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_006.png",
+    "width": 51,
+    "height": 73,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_007.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_008.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_009.png",
+    "width": 45,
+    "height": 63,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_010.png",
+    "width": 45,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_011.png",
+    "width": 51,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_012.png",
+    "width": 83,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_013.png",
+    "width": 83,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_014.png",
+    "width": 51,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_015.png",
+    "width": 51,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_016.png",
+    "width": 64,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_017.png",
+    "width": 48,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_018.png",
+    "width": 52,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_019.png",
+    "width": 48,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_020.png",
+    "width": 48,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_021.png",
+    "width": 51,
+    "height": 51,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_022.png",
+    "width": 74,
+    "height": 83,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_023.png",
+    "width": 74,
+    "height": 83,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_024.png",
+    "width": 74,
+    "height": 83,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_025.png",
+    "width": 74,
+    "height": 83,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_026.png",
+    "width": 74,
+    "height": 83,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_027.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_028.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_029.png",
+    "width": 52,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_030.png",
+    "width": 52,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_031.png",
+    "width": 51,
+    "height": 63,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_032.png",
+    "width": 51,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_033.png",
+    "width": 52,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_034.png",
+    "width": 52,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_035.png",
+    "width": 64,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_036.png",
+    "width": 45,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_037.png",
+    "width": 51,
+    "height": 69,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_038.png",
+    "width": 48,
+    "height": 71,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_039.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_040.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_041.png",
+    "width": 52,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_042.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_043.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_044.png",
+    "width": 51,
+    "height": 73,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_045.png",
+    "width": 52,
+    "height": 64,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_046.png",
+    "width": 51,
+    "height": 77,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_047.png",
+    "width": 51,
+    "height": 73,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_048.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_049.png",
+    "width": 51,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_050.png",
+    "width": 51,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_051.png",
+    "width": 48,
+    "height": 96,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_052.png",
+    "width": 48,
+    "height": 74,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_053.png",
+    "width": 49,
+    "height": 49,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_054.png",
+    "width": 50,
+    "height": 50,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_055.png",
+    "width": 50,
+    "height": 49,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_056.png",
+    "width": 50,
+    "height": 49,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_057.png",
+    "width": 78,
+    "height": 54,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_058.png",
+    "width": 78,
+    "height": 48,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_059.png",
+    "width": 78,
+    "height": 54,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_060.png",
+    "width": 78,
+    "height": 45,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_061.png",
+    "width": 54,
+    "height": 72,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_062.png",
+    "width": 54,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_063.png",
+    "width": 51,
+    "height": 72,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_064.png",
+    "width": 54,
+    "height": 66,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_065.png",
+    "width": 55,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_066.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_067.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_068.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_069.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_070.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_071.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_072.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_073.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_074.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_075.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_076.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/SelfRole/SelfRole_077.png",
+    "width": 52,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_001.png",
+    "width": 68,
+    "height": 47,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_002.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_003.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_004.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_005.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_006.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_007.png",
+    "width": 64,
+    "height": 67,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/battle_008.png",
+    "width": 60,
+    "height": 70,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/buff_01.png",
+    "width": 446,
+    "height": 446,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/buff_02.png",
+    "width": 178,
+    "height": 117,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/buff_03.png",
+    "width": 178,
+    "height": 117,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/buff_04.png",
+    "width": 178,
+    "height": 117,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/num01.png",
+    "width": 372,
+    "height": 40,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/num02.png",
+    "width": 372,
+    "height": 40,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/taopao.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_001.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_002.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_003.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_004.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_005.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_006.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_007.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_008.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_009.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_010.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_011.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_012.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_013.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_014.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_015.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_016.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_017.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_018.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_019.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_020.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_021.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_022.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_023.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_024.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_025.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_026.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_027.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_028.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_029.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_030.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_031.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_032.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_033.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_034.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_035.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_036.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_037.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_038.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_039.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_040.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_041.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_042.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_043.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_044.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_045.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_046.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_047.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_048.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_049.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_050.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_051.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_052.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_053.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_054.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_055.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_056.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_057.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_058.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_059.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_060.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_061.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_062.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_063.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_064.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_065.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_066.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_067.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_068.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_069.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_070.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_071.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_072.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_073.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_074.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_075.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_076.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_077.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_078.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_079.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_080.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_081.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_082.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_083.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_084.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_085.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_086.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_087.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_088.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_089.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_090.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_091.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_092.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_093.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_094.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_095.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_096.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_097.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_098.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_099.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_100.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_101.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_102.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Icon/Icon_103.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading01.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading02.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading03.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading04.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading05.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading06.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading07.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/Loading/Loading08.png",
+    "width": 298,
+    "height": 178,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/MainStory_01.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/MainStory_02.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/MainStory_03.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/MainStory_04.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/StoryEnd_01.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/StoryEnd_02.png",
+    "width": 390,
+    "height": 374,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/button.png",
+    "width": 247,
+    "height": 73,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/lobbyBg.png",
+    "width": 1152,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/role_01.png",
+    "width": 576,
+    "height": 576,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/role_02.png",
+    "width": 576,
+    "height": 576,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/role_03.png",
+    "width": 576,
+    "height": 576,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Lobby/role_04.png",
+    "width": 576,
+    "height": 576,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/about.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/aboutBg.png",
+    "width": 960,
+    "height": 640,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/baoxiang.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/bg_map.png",
+    "width": 46,
+    "height": 56,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/button_shang.png",
+    "width": 233,
+    "height": 233,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/button_xia.png",
+    "width": 233,
+    "height": 233,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/button_you.png",
+    "width": 233,
+    "height": 233,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/button_zuo.png",
+    "width": 233,
+    "height": 233,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/chongzhi.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/diaocha.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/duihua.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/fanhui.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/fashu.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/fenxiang.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/fuzhu.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/gundongtiao1.png",
+    "width": 16,
+    "height": 4,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/gundongtiao2.png",
+    "width": 8,
+    "height": 23,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/home.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/jia.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/jiantou.png",
+    "width": 23,
+    "height": 44,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/kuang.png",
+    "width": 79,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/luodi.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/shangcheng.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/up.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/wuYanShi01.png",
+    "width": 24,
+    "height": 24,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/wuYanShi02.png",
+    "width": 1020,
+    "height": 676,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/wuYanShi03.png",
+    "width": 12,
+    "height": 12,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/x.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/xiayiye.png",
+    "width": 44,
+    "height": 37,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/xuanzhong.png",
+    "width": 40,
+    "height": 40,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/yaogan_01.png",
+    "width": 280,
+    "height": 280,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/yaogan_02.png",
+    "width": 109,
+    "height": 109,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zhuangbei.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zhuangtai.png",
+    "width": 87,
+    "height": 87,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan1.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan2.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan3.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan4.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan5.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zuan6.png",
+    "width": 106,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Map/zzz.png",
+    "width": 1,
+    "height": 1,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_001.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_002.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_003.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_004.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_005.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_006.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_007.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_008.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_009.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_010.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_011.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_012.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_013.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_014.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_015.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_016.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_017.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_018.png",
+    "width": 80,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_019.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_020.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_021.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_022.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_023.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_024.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_025.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_026.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_027.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_028.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_029.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_030.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_031.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_032.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_033.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_034.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_035.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_036.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_037.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_038.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_039.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_040.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_041.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_042.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_043.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_044.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_045.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_046.png",
+    "width": 160,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_047.png",
+    "width": 120,
+    "height": 150,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_048.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_049.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_050.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_051.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_052.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_053.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_054.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_055.png",
+    "width": 240,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_056.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_057.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_058.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_059.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_060.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_061.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_062.png",
+    "width": 80,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_063.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_064.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_065.png",
+    "width": 240,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_066.png",
+    "width": 240,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_067.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_068.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_069.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_070.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_071.png",
+    "width": 240,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_072.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_073.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_074.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_075.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_076.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_077.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_078.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_079.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_080.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_081.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_082.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_083.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_084.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_085.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_086.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_087.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_088.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_089.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_090.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_091.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_092.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_093.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_094.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_095.png",
+    "width": 80,
+    "height": 400,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_096.png",
+    "width": 80,
+    "height": 320,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_097.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_098.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_099.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_100.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_101.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_102.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_103.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_104.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_105.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_106.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_107.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_108.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_109.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_110.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_111.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_112.png",
+    "width": 240,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_113.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_114.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_115.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_116.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_117.png",
+    "width": 80,
+    "height": 640,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_118.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_119.png",
+    "width": 80,
+    "height": 240,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Object/object_120.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGB"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_down.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_down_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_down_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_left_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_left_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_right_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_right_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_up_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_fly_up_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_head_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_left.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_left_01.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_left_02.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_right.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_right_01.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_right_02.png",
+    "width": 74,
+    "height": 79,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_up.png",
+    "width": 75,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_up_01.png",
+    "width": 75,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/hero_up_02.png",
+    "width": 75,
+    "height": 75,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc001_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc002_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc003_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc004_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc005_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc006_down_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc006_down_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc007_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc008_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc009_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc009_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc010_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc011_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc012_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc013_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc014_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc015_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc016_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc017_down_01.png",
+    "width": 160,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc017_left_01.png",
+    "width": 160,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc017_left_02.png",
+    "width": 160,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc018_down_01 .png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc018_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc018_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc019_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc020_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc021_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc022_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc023_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc024_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc025_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc026_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc027_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc027_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc028_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc028_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc029_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc030_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc030_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc031_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc032_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc033_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc034_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc035_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc036_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc037_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc038_down_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc038_down_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc039_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc039_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc040_down_01.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc040_down_02.png",
+    "width": 80,
+    "height": 160,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc041_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc041_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc041_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc042_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc042_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc042_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc043_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc043_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc044_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc045_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc046_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc046_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc047_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc047_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc048_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc048_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc049_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc050_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc051_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc051_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc051_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc052_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc053_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc053_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc053_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc053_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc054_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc055_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc056_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc057_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc057_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc057_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_left_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_left_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_up_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc058_up_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc061_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc061_right_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc061_right_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc062_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc063_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc063_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc064_down_01.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc064_down_02.png",
+    "width": 80,
+    "height": 80,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_down_01.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_down_02.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_down_03.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_left_01.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_left_02.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_left_03.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_right_01.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_right_02.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_right_03.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_up_01.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_up_02.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  },
+  {
+    "path": "Resources/res/resCCB/Role/npc065_up_03.png",
+    "width": 62,
+    "height": 78,
+    "mode": "RGBA"
+  }
+]

@@ -1,0 +1,587 @@
+[
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_01.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_01.png",
+      "size": "{128,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:d10204ceeb3281c70080015f1e1405f4$",
+      "textureFileName": "TeXiao_01.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_02.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_02.png",
+      "size": "{64,64}",
+      "smartupdate": "$TexturePacker:SmartUpdate:9d7dbb56e052be0792ce1162a0eac07c$",
+      "textureFileName": "TeXiao_02.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_03.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_03.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:fadd85486f96902b8e75abe04cc1650c$",
+      "textureFileName": "TeXiao_03.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_04.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 3,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_04.png",
+      "size": "{64,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:aa1cab73d51ab6a92fcf9d4292a63698$",
+      "textureFileName": "TeXiao_04.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_05.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_05.png",
+      "size": "{64,64}",
+      "smartupdate": "$TexturePacker:SmartUpdate:aa6d227519b3af2c707f2c6277d71155$",
+      "textureFileName": "TeXiao_05.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_06.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_06.png",
+      "size": "{128,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:a2f5e1791f4bb2263d4f388e523787ca$",
+      "textureFileName": "TeXiao_06.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_07.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_07.png",
+      "size": "{64,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:97ecef4b68eff7ab5e6ae40cdb9e4a87$",
+      "textureFileName": "TeXiao_07.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_08.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_08.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:cb71d222a120c0bed1ca4e9fe89113e8$",
+      "textureFileName": "TeXiao_08.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_09.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_09.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:9ca50c89299a45206f49e9281344c31e$",
+      "textureFileName": "TeXiao_09.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_10.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 3,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_10.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:22d59ef859efe3bb749497345b57988c$",
+      "textureFileName": "TeXiao_10.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_11.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_11.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:a5d2ae9327090a649a9533606de7ecac$",
+      "textureFileName": "TeXiao_11.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_12.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_12.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:c2088aba07e2b74d19dba35d8f768829$",
+      "textureFileName": "TeXiao_12.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_13.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_13.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:356b3c9b1dcf0f0e4e89b3eca646e6bf$",
+      "textureFileName": "TeXiao_13.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_14.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_14.png",
+      "size": "{256,512}",
+      "smartupdate": "$TexturePacker:SmartUpdate:4e53a7756c1a571374928d6245ffc521$",
+      "textureFileName": "TeXiao_14.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_15.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_15.png",
+      "size": "{256,512}",
+      "smartupdate": "$TexturePacker:SmartUpdate:6665fec5ac08e4d02faafccf7ad355d9$",
+      "textureFileName": "TeXiao_15.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_16.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_16.png",
+      "size": "{256,512}",
+      "smartupdate": "$TexturePacker:SmartUpdate:a39d7f3117dade378d5102b129267d18$",
+      "textureFileName": "TeXiao_16.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_17.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_17.png",
+      "size": "{256,512}",
+      "smartupdate": "$TexturePacker:SmartUpdate:84a62c5a8d109d7374fb8cd8bf1c6838$",
+      "textureFileName": "TeXiao_17.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_18.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_18.png",
+      "size": "{128,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:fe5ec1134380260a68020a9a4dda3615$",
+      "textureFileName": "TeXiao_18.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_19.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_19.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:97dfdd97fc83389f3d4eb659a8eab8fe$",
+      "textureFileName": "TeXiao_19.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_20.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_20.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:3b9da57905da92956fa3498dac39d7eb$",
+      "textureFileName": "TeXiao_20.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_21.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_21.png",
+      "size": "{32,32}",
+      "smartupdate": "$TexturePacker:SmartUpdate:8615612387d0a0b21b872336f6719f63$",
+      "textureFileName": "TeXiao_21.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_22.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_22.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:528ab6802abeadb6830d3650bb6bc8e0$",
+      "textureFileName": "TeXiao_22.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_23.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_23.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:1ae5f0ca1750227b67f79a371ee79bd2$",
+      "textureFileName": "TeXiao_23.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_24.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_24.png",
+      "size": "{64,64}",
+      "smartupdate": "$TexturePacker:SmartUpdate:ede76961519542d43acd960af6c906ca$",
+      "textureFileName": "TeXiao_24.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_25.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_25.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:16cbff28538d8fcd8b554bbea13b1888$",
+      "textureFileName": "TeXiao_25.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_26.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_26.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:3fa870682323a305ccaa1f625d0bc2f2$",
+      "textureFileName": "TeXiao_26.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_27.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_27.png",
+      "size": "{64,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:0786e097bcce9815ba86aec76a0742df$",
+      "textureFileName": "TeXiao_27.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_28.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_28.png",
+      "size": "{128,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:76e71c053ee45888f52e27cfd75bcb02$",
+      "textureFileName": "TeXiao_28.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_29.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_29.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:072200d8944f517e277311ebc41b6fc9$",
+      "textureFileName": "TeXiao_29.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_30.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_30.png",
+      "size": "{64,128}",
+      "smartupdate": "$TexturePacker:SmartUpdate:9b34ea77287b5342dbd5302d66a96b86$",
+      "textureFileName": "TeXiao_30.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_31.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_31.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:30541f40e3f4189cf7ce2a9dc2c367a6$",
+      "textureFileName": "TeXiao_31.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_32.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_32.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:d17f5523c3ab21c50e63ddcad5d84be2$",
+      "textureFileName": "TeXiao_32.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_33.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_33.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:d6a40c4043507849fd3c39c50919a008$",
+      "textureFileName": "TeXiao_33.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_34.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_34.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:6a373441a928fd476c7cefca623e89e3$",
+      "textureFileName": "TeXiao_34.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_35.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 1,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_35.png",
+      "size": "{256,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:461126e2a44270bc7024e6bcb389928a$",
+      "textureFileName": "TeXiao_35.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_36.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_36.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:7798576f403910e66ba933660317751d$",
+      "textureFileName": "TeXiao_36.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_37.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 2,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_37.png",
+      "size": "{64,64}",
+      "smartupdate": "$TexturePacker:SmartUpdate:c461fe81520fe263c82f26e308eb7e22$",
+      "textureFileName": "TeXiao_37.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_38.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 3,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_38.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:305c133054a2786024e455b56fccfcad$",
+      "textureFileName": "TeXiao_38.png"
+    }
+  },
+  {
+    "path": "Resources/res/resCCB/Battle/Effect/TeXiao_39.plist",
+    "keys": [
+      "frames",
+      "metadata"
+    ],
+    "frameCount": 3,
+    "metadata": {
+      "format": 2,
+      "realTextureFileName": "TeXiao_39.png",
+      "size": "{128,256}",
+      "smartupdate": "$TexturePacker:SmartUpdate:0a83b767b2b321e9cbe1d9a5e833c26a$",
+      "textureFileName": "TeXiao_39.png"
+    }
+  }
+]

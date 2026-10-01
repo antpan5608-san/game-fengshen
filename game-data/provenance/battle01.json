@@ -1,0 +1,55 @@
+{
+  "captures": {
+    "private-derived/battle01-actions-2/actions.tsv": "40cf860ff911249baf842568572bb8662c40faf222b30274e75caf29f1bee0ba",
+    "private-derived/battle01-state/frame-1820-sram.bin": "5d9cc40c98800bf1cf73a7617db432148cced31842818c6503917af10e6a3c50",
+    "private-derived/battle01-trigger-idle/timeline.tsv": "12d9debe6f4e7b2ba1fce944efa27db8de6e6dec3c08257874236653aec5a098",
+    "private-derived/battle01-trigger-left/timeline.tsv": "f393d5c537e4d164700ccc95b7c303add62d039bf060ee0e0c760748b8f0c2a8",
+    "private-derived/battle01-trigger-right/timeline.tsv": "00ecd07224855a27cd2b4f78c30d9abbd55f4783b1026b67d29ec5293c202269"
+  },
+  "limitations": [
+    "Android RNG byte sequence vs NES free-running $43",
+    "Player miss/critical and action-order branches outside the observed physical sample",
+    "Other escape/defeat branches outside scoped battle02 evidence; $06E2 is not set by observed ordinary escape"
+  ],
+  "romRanges": {
+    "enemyRemapRange": {
+      "cpuAddress": 40611,
+      "length": 5,
+      "meaning": "Source type to ROM enemy ID",
+      "offset": 40627,
+      "prg8kBank": 4,
+      "sha256": "7e1e3ef9da7ebbf3d47efc201bc8c04019dc335da303d4e0b7fb200f3ec3f68c"
+    },
+    "groupCountRange": {
+      "cpuAddress": 45357,
+      "length": 1,
+      "meaning": "Group 0 entry count",
+      "offset": 45373,
+      "prg8kBank": 5,
+      "sha256": "ab897fbdedfa502b2d839b6a56100887dccdc507555c282e59589e06300a62e2"
+    },
+    "groupRootRange": {
+      "cpuAddress": 43324,
+      "length": 4,
+      "meaning": "Group 0 pointer/tiles",
+      "offset": 43340,
+      "prg8kBank": 5,
+      "sha256": "7831c5d59d124241ad463787d2544b5d12f4319506d213577b14f8db34f042b1"
+    },
+    "zoneRange": {
+      "cpuAddress": 49482,
+      "length": 10,
+      "meaning": "Zone 0 two rectangles and terminator",
+      "offset": 377178,
+      "prg8kBank": 46,
+      "sha256": "3cbcf23c5e469fb58463fdbf155c9ee0d9ac1f7aea3f4ab8f2625861a53c8382"
+    }
+  },
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scope": "Map 16 zone 0 and group 0 only",
+  "scripts": {
+    "tools/rom-extractor/probe-battle01-actions.lua": "146d5d693bd938e8f12760da799c2248ca5d8c4d030dbf7461c261523bb22cc4",
+    "tools/rom-extractor/probe-battle01-state.lua": "29e5665acd8d112a1f07eba6fe08a82ec780911c87fdb1fe29520262b9961991",
+    "tools/rom-extractor/probe-battle01-trigger.lua": "fa6ee40db8bae647112069c7f1fd7ad453c525ed24eb160f3174ba27835283cc"
+  }
+}

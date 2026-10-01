@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "records": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "enum": [
+              "VERIFIED",
+              "HIGH",
+              "MEDIUM",
+              "LOW",
+              "UNKNOWN"
+            ]
+          },
+          "evidence": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "length": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "meaning": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "offset": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "romSha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "romSha256",
+          "offset",
+          "length",
+          "meaning",
+          "evidence",
+          "confidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "WAITING_FOR_ROM",
+        "RESEARCH_IN_PROGRESS"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "status",
+    "records"
+  ],
+  "type": "object"
+}

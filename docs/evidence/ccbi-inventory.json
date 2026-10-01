@@ -1,0 +1,2067 @@
+[
+  {
+    "path": "Resources/res/ccbFiles/Battle/BattleBoxItem.ccbi",
+    "header": "69626363",
+    "bytes": 702
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/BattleMain.ccbi",
+    "header": "69626363",
+    "bytes": 5708
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/BattleSkillItem.ccbi",
+    "header": "69626363",
+    "bytes": 712
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/ChooseRole.ccbi",
+    "header": "69626363",
+    "bytes": 421
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/ChooseRoleItem.ccbi",
+    "header": "69626363",
+    "bytes": 1994
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_001.ccbi",
+    "header": "69626363",
+    "bytes": 407
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_002.ccbi",
+    "header": "69626363",
+    "bytes": 311
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_003.ccbi",
+    "header": "69626363",
+    "bytes": 420
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_004.ccbi",
+    "header": "69626363",
+    "bytes": 416
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_005.ccbi",
+    "header": "69626363",
+    "bytes": 351
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_006.ccbi",
+    "header": "69626363",
+    "bytes": 420
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_007.ccbi",
+    "header": "69626363",
+    "bytes": 351
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_008.ccbi",
+    "header": "69626363",
+    "bytes": 351
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_009.ccbi",
+    "header": "69626363",
+    "bytes": 415
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_010.ccbi",
+    "header": "69626363",
+    "bytes": 415
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_011.ccbi",
+    "header": "69626363",
+    "bytes": 366
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_012.ccbi",
+    "header": "69626363",
+    "bytes": 376
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_013.ccbi",
+    "header": "69626363",
+    "bytes": 366
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_014.ccbi",
+    "header": "69626363",
+    "bytes": 375
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_015.ccbi",
+    "header": "69626363",
+    "bytes": 311
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_016.ccbi",
+    "header": "69626363",
+    "bytes": 351
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_017.ccbi",
+    "header": "69626363",
+    "bytes": 311
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_018.ccbi",
+    "header": "69626363",
+    "bytes": 863
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_019.ccbi",
+    "header": "69626363",
+    "bytes": 863
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_020.ccbi",
+    "header": "69626363",
+    "bytes": 319
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_021.ccbi",
+    "header": "69626363",
+    "bytes": 422
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_022.ccbi",
+    "header": "69626363",
+    "bytes": 363
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_023.ccbi",
+    "header": "69626363",
+    "bytes": 363
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_024.ccbi",
+    "header": "69626363",
+    "bytes": 443
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_025.ccbi",
+    "header": "69626363",
+    "bytes": 443
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_026.ccbi",
+    "header": "69626363",
+    "bytes": 443
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_027.ccbi",
+    "header": "69626363",
+    "bytes": 443
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_028.ccbi",
+    "header": "69626363",
+    "bytes": 443
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_029.ccbi",
+    "header": "69626363",
+    "bytes": 623
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_030.ccbi",
+    "header": "69626363",
+    "bytes": 404
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_031.ccbi",
+    "header": "69626363",
+    "bytes": 398
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_032.ccbi",
+    "header": "69626363",
+    "bytes": 290
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Effect/Effect_033.ccbi",
+    "header": "69626363",
+    "bytes": 424
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Failed.ccbi",
+    "header": "69626363",
+    "bytes": 1207
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/SelfAtkRole.ccbi",
+    "header": "69626363",
+    "bytes": 1705
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Success01.ccbi",
+    "header": "69626363",
+    "bytes": 1740
+  },
+  {
+    "path": "Resources/res/ccbFiles/Battle/Success02.ccbi",
+    "header": "69626363",
+    "bytes": 4191
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyEndStory_01.ccbi",
+    "header": "69626363",
+    "bytes": 12452
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyEndStory_02.ccbi",
+    "header": "69626363",
+    "bytes": 5664
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyEndStory_03.ccbi",
+    "header": "69626363",
+    "bytes": 4065
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMain.ccbi",
+    "header": "69626363",
+    "bytes": 1485
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_01.ccbi",
+    "header": "69626363",
+    "bytes": 6019
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_02.ccbi",
+    "header": "69626363",
+    "bytes": 6304
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_03.ccbi",
+    "header": "69626363",
+    "bytes": 6617
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_04.ccbi",
+    "header": "69626363",
+    "bytes": 4960
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_05.ccbi",
+    "header": "69626363",
+    "bytes": 2747
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_06.ccbi",
+    "header": "69626363",
+    "bytes": 2720
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_07.ccbi",
+    "header": "69626363",
+    "bytes": 724
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_08.ccbi",
+    "header": "69626363",
+    "bytes": 724
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_09.ccbi",
+    "header": "69626363",
+    "bytes": 724
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/LobbyMainStory_10.ccbi",
+    "header": "69626363",
+    "bytes": 724
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/SaveItem.ccbi",
+    "header": "69626363",
+    "bytes": 1463
+  },
+  {
+    "path": "Resources/res/ccbFiles/Lobby/Waiting.ccbi",
+    "header": "69626363",
+    "bytes": 721
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/BoxItem.ccbi",
+    "header": "69626363",
+    "bytes": 1472
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/ChooseRole.ccbi",
+    "header": "69626363",
+    "bytes": 420
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/ChooseRoleItem.ccbi",
+    "header": "69626363",
+    "bytes": 1991
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/EquipItem.ccbi",
+    "header": "69626363",
+    "bytes": 1266
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MapMain.ccbi",
+    "header": "69626363",
+    "bytes": 4711
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuAbout.ccbi",
+    "header": "69626363",
+    "bytes": 317
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuAdmob.ccbi",
+    "header": "69626363",
+    "bytes": 1561
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuBox.ccbi",
+    "header": "69626363",
+    "bytes": 3164
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuCharge.ccbi",
+    "header": "69626363",
+    "bytes": 4731
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuEquip.ccbi",
+    "header": "69626363",
+    "bytes": 4088
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuFuZhu.ccbi",
+    "header": "69626363",
+    "bytes": 3717
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuShare.ccbi",
+    "header": "69626363",
+    "bytes": 1817
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuSkill.ccbi",
+    "header": "69626363",
+    "bytes": 3710
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuState.ccbi",
+    "header": "69626363",
+    "bytes": 5980
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/MenuStore.ccbi",
+    "header": "69626363",
+    "bytes": 3394
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/NpcBuy.ccbi",
+    "header": "69626363",
+    "bytes": 2464
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/NpcBuyItem.ccbi",
+    "header": "69626363",
+    "bytes": 1451
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/NpcSell.ccbi",
+    "header": "69626363",
+    "bytes": 3475
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/NpcSellItem.ccbi",
+    "header": "69626363",
+    "bytes": 1530
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/PartEquipItem.ccbi",
+    "header": "69626363",
+    "bytes": 1645
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/SelectSure.ccbi",
+    "header": "69626363",
+    "bytes": 1767
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/SkillItem.ccbi",
+    "header": "69626363",
+    "bytes": 1321
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/StoreItem.ccbi",
+    "header": "69626363",
+    "bytes": 1506
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/TiShi.ccbi",
+    "header": "69626363",
+    "bytes": 763
+  },
+  {
+    "path": "Resources/res/ccbFiles/Map/YingYiItem.ccbi",
+    "header": "69626363",
+    "bytes": 1154
+  },
+  {
+    "path": "Resources/res/ccbFiles/Object/Object_01.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Object/Object_02.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Hero_Fly_Down.ccbi",
+    "header": "69626363",
+    "bytes": 333
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Hero_Fly_Left.ccbi",
+    "header": "69626363",
+    "bytes": 333
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Hero_Fly_Right.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Hero_Fly_Up.ccbi",
+    "header": "69626363",
+    "bytes": 339
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_001_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_001_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_001_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_001_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_002_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_002_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_002_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_002_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_003_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_003_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_003_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_003_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_004_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_004_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_004_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_004_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_005_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_005_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_005_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_005_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_006_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_006_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_006_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_006_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_007_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_007_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_007_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_007_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_008_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_008_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_008_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_008_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_009_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_009_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_009_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_009_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_010_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_010_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_010_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_010_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_011_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_011_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_011_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_011_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_012_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_012_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_012_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_012_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_013_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_013_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_013_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_013_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_014_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_014_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_014_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_014_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_015_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_015_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_015_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_015_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_016_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_016_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_016_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_016_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_017_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_017_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_017_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_017_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_018_Down.ccbi",
+    "header": "69626363",
+    "bytes": 325
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_018_Left.ccbi",
+    "header": "69626363",
+    "bytes": 366
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_018_Right.ccbi",
+    "header": "69626363",
+    "bytes": 325
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_018_Up.ccbi",
+    "header": "69626363",
+    "bytes": 366
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_019_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_019_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_019_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_019_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_020_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_020_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_020_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_020_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_021_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_021_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_021_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_021_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_022_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_022_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_022_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_022_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_023_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_023_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_023_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_023_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_024_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_024_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_024_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_024_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_025_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_025_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_025_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_025_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_026_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_026_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_026_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_026_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_027_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_027_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_027_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_027_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_028_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_028_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_028_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_028_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_029_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_029_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_029_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_029_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_030_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_030_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_030_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_030_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_031_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_031_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_031_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_031_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_032_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_032_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_032_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_032_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_033_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_033_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_033_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_033_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_034_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_034_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_034_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_034_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_035_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_035_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_035_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_035_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_036_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_036_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_036_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_036_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_037_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_037_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_037_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_037_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_038_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_038_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_038_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_038_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_039_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_039_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_039_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_039_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_040_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_040_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_040_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_040_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_041_Down.ccbi",
+    "header": "69626363",
+    "bytes": 333
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_041_Left.ccbi",
+    "header": "69626363",
+    "bytes": 333
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_041_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_041_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_042_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_042_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_042_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_042_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_043_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_043_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_043_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_043_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_044_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_044_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_044_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_044_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_045_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_045_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_045_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_045_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_046_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_046_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_046_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_046_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_047_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_047_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_047_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_047_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_048_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_048_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_048_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_048_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_049_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_049_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_049_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_049_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_050_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_050_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_050_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_050_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_051_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_051_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_051_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_051_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_052_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_052_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_052_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_052_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_053_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_053_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_053_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_053_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_054_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_054_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_054_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_054_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_055_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_055_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_055_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_055_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_056_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_056_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_056_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_056_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_057_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_057_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_057_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_057_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_058_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_058_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_058_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_058_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_059_Down.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_059_Left.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_059_Right.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_059_Up.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_060_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_060_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_060_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_060_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_061_Down.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_061_Left.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_061_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_061_Up.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_062_Down.ccbi",
+    "header": "69626363",
+    "bytes": 289
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_062_Left.ccbi",
+    "header": "69626363",
+    "bytes": 289
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_062_Right.ccbi",
+    "header": "69626363",
+    "bytes": 289
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_062_Up.ccbi",
+    "header": "69626363",
+    "bytes": 289
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_063_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_063_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_063_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_063_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_064_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_064_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_064_Right.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_064_Up.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_065_Down.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_065_Left.ccbi",
+    "header": "69626363",
+    "bytes": 329
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_065_Right,ccb.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_065_Right.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Npc_065_Up.ccbi",
+    "header": "69626363",
+    "bytes": 325
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Def.ccbi",
+    "header": "69626363",
+    "bytes": 689
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Escape.ccbi",
+    "header": "69626363",
+    "bytes": 402
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Normal_Atk_01.ccbi",
+    "header": "69626363",
+    "bytes": 638
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Normal_Atk_02.ccbi",
+    "header": "69626363",
+    "bytes": 696
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Normal_Atk_03.ccbi",
+    "header": "69626363",
+    "bytes": 713
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Normal_Atk_04.ccbi",
+    "header": "69626363",
+    "bytes": 753
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Use_Mibao.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Use_Obj.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role01_Win.ccbi",
+    "header": "69626363",
+    "bytes": 501
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Def.ccbi",
+    "header": "69626363",
+    "bytes": 830
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Escape.ccbi",
+    "header": "69626363",
+    "bytes": 402
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Normal_Atk_01.ccbi",
+    "header": "69626363",
+    "bytes": 595
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Normal_Atk_02.ccbi",
+    "header": "69626363",
+    "bytes": 623
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Normal_Atk_03.ccbi",
+    "header": "69626363",
+    "bytes": 671
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Normal_Atk_04.ccbi",
+    "header": "69626363",
+    "bytes": 711
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Sk_Enemy.ccbi",
+    "header": "69626363",
+    "bytes": 408
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Sk_Friend.ccbi",
+    "header": "69626363",
+    "bytes": 567
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Use_Mibao.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Use_Obj.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role02_Win.ccbi",
+    "header": "69626363",
+    "bytes": 501
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Def.ccbi",
+    "header": "69626363",
+    "bytes": 689
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Escape.ccbi",
+    "header": "69626363",
+    "bytes": 413
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Normal_Atk_01.ccbi",
+    "header": "69626363",
+    "bytes": 637
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Normal_Atk_02.ccbi",
+    "header": "69626363",
+    "bytes": 666
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Normal_Atk_03.ccbi",
+    "header": "69626363",
+    "bytes": 714
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Normal_Atk_04.ccbi",
+    "header": "69626363",
+    "bytes": 754
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Use_Mibao.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Use_Obj.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role03_Win.ccbi",
+    "header": "69626363",
+    "bytes": 543
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Def.ccbi",
+    "header": "69626363",
+    "bytes": 690
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Escape.ccbi",
+    "header": "69626363",
+    "bytes": 402
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Normal_Atk_01.ccbi",
+    "header": "69626363",
+    "bytes": 566
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Normal_Atk_02.ccbi",
+    "header": "69626363",
+    "bytes": 745
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Normal_Atk_03.ccbi",
+    "header": "69626363",
+    "bytes": 785
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Normal_Atk_04.ccbi",
+    "header": "69626363",
+    "bytes": 817
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Sk_Enemy.ccbi",
+    "header": "69626363",
+    "bytes": 464
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Sk_Friend.ccbi",
+    "header": "69626363",
+    "bytes": 441
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Use_Mibao.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Use_Obj.ccbi",
+    "header": "69626363",
+    "bytes": 393
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role04_Win.ccbi",
+    "header": "69626363",
+    "bytes": 501
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Down.ccbi",
+    "header": "69626363",
+    "bytes": 325
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Down_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 277
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Down.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Down_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 285
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Left.ccbi",
+    "header": "69626363",
+    "bytes": 335
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Left_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 285
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Right.ccbi",
+    "header": "69626363",
+    "bytes": 337
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Right_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 286
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Up.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Head_Up_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 283
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Left.ccbi",
+    "header": "69626363",
+    "bytes": 325
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Left_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 277
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Right.ccbi",
+    "header": "69626363",
+    "bytes": 327
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Right_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 278
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Up.ccbi",
+    "header": "69626363",
+    "bytes": 331
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Role_Up_Stop.ccbi",
+    "header": "69626363",
+    "bytes": 285
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Ship_Down.ccbi",
+    "header": "69626363",
+    "bytes": 311
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Ship_Left.ccbi",
+    "header": "69626363",
+    "bytes": 301
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Ship_Right.ccbi",
+    "header": "69626363",
+    "bytes": 313
+  },
+  {
+    "path": "Resources/res/ccbFiles/Role/Ship_Up.ccbi",
+    "header": "69626363",
+    "bytes": 301
+  },
+  {
+    "path": "Resources/res/ccbFiles/Story/StoryMain01.ccbi",
+    "header": "69626363",
+    "bytes": 1217
+  },
+  {
+    "path": "Resources/res/ccbFiles/Story/StoryMain02.ccbi",
+    "header": "69626363",
+    "bytes": 1211
+  },
+  {
+    "path": "Resources/res/ccbFiles/Story/StoryMain03.ccbi",
+    "header": "69626363",
+    "bytes": 1161
+  }
+]

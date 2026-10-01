@@ -1,0 +1,106 @@
+{
+  "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+  "filesExpected": 1958,
+  "filesAudited": 1958,
+  "bytes": 29972389,
+  "extensions": {
+    ".cpp": 16,
+    ".h": 19,
+    ".c": 1,
+    ".md": 1,
+    ".png": 1154,
+    "": 1,
+    ".csb": 1,
+    ".mp3": 52,
+    ".ccbi": 413,
+    ".ttf": 2,
+    ".tmx": 259,
+    ".plist": 39
+  },
+  "verificationErrors": [],
+  "pngDecoded": 1154,
+  "audioFiles": 52,
+  "plistParsed": 39,
+  "ccbiHeaders": {
+    "69626363": 413
+  },
+  "databaseIntegrity": [
+    [
+      "ok"
+    ]
+  ],
+  "tableCounts": {
+    "map_box": 175,
+    "map_mask": 322,
+    "map_monster": 58,
+    "LianJi": 80,
+    "skill": 34,
+    "map_buy": 230,
+    "story": 639,
+    "map_object": 222,
+    "auto_move": 137,
+    "battle": 153,
+    "map_warp_point": 3548,
+    "yingyi": 13,
+    "map_npc": 643,
+    "monster": 174,
+    "object": 147,
+    "role_lv": 249,
+    "map": 259,
+    "store": 21,
+    "z_save_base_info": 0,
+    "z_save_system": 1
+  },
+  "tmxParsed": 259,
+  "mapErrors": 0,
+  "layers": {
+    "mac": 259,
+    "map": 242,
+    "map2": 100,
+    "map1": 1,
+    "map3": 26,
+    "monster": 18,
+    "macair": 16,
+    "map02": 16,
+    "map01": 16
+  },
+  "tileProperties": {
+    "macValue": 1571,
+    "through": 1542,
+    "monsterId": 396,
+    "down": 113,
+    "though": 29
+  },
+  "referenceViolations": {},
+  "reachableIgnoringConditions": 233,
+  "progression": [
+    {
+      "roleId": 1,
+      "rows": 80,
+      "min": 1,
+      "max": 80,
+      "gaps": []
+    },
+    {
+      "roleId": 2,
+      "rows": 69,
+      "min": 12,
+      "max": 80,
+      "gaps": []
+    },
+    {
+      "roleId": 3,
+      "rows": 57,
+      "min": 24,
+      "max": 80,
+      "gaps": []
+    },
+    {
+      "roleId": 4,
+      "rows": 43,
+      "min": 38,
+      "max": 80,
+      "gaps": []
+    }
+  ]
+}

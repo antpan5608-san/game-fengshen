@@ -1,0 +1,31 @@
+{
+  "acquisitions": [
+    {
+      "commit": "23d6234710a5e09db33b17aa21722eb2bc79945e",
+      "file": "reference/rom/candidate-f3596ffda5c1b838.nes",
+      "gitBlobSha1": "36391bee482b76bd34537c44f44ec37d939e1ad7",
+      "headerlessMd5": "97a660fb70152637c21cb220d15d9a4e",
+      "headerlessSha1": "d132723fec0275137cd1a3c65b0cc41c40d78f86",
+      "identityCorroboration": {
+        "confidence": "HIGH",
+        "fullFileHashSource": "https://tasvideos.org/Games/4112/Versions/View/4600",
+        "limitation": "Independent published emulator ROM hash, not a publisher-authenticated or own-cartridge dump",
+        "matchingFileMd5": "ad00a277f50749da912faf37491801ef",
+        "matchingFileSha1": "293d184ef8fe83b3dac59f3b9545f93434ba2373",
+        "matchingPayloadMd5": "97a660fb70152637c21cb220d15d9a4e",
+        "matchingPayloadSha1": "d132723fec0275137cd1a3c65b0cc41c40d78f86",
+        "publication": "https://tasvideos.org/5785M",
+        "source": "https://tasvideos.org/8824S"
+      },
+      "licenseStatus": "UNKNOWN",
+      "originalVersionVerified": false,
+      "remotePath": "[082]  智力类 - 封神榜 伏魔三太子.NES",
+      "repository": "https://github.com/luzeming0211/fc",
+      "sha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+      "size": 1048592,
+      "sourceAssessment": "Public third-party collection; repository filename is not authenticity evidence.",
+      "url": "https://raw.githubusercontent.com/luzeming0211/fc/23d6234710a5e09db33b17aa21722eb2bc79945e/%5B082%5D%20%20%E6%99%BA%E5%8A%9B%E7%B1%BB%20-%20%E5%B0%81%E7%A5%9E%E6%A6%9C%20%E4%BC%8F%E9%AD%94%E4%B8%89%E5%A4%AA%E5%AD%90.NES"
+    }
+  ],
+  "schemaVersion": 1
+}

@@ -1,0 +1,5386 @@
+{
+  "records": [
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.text.pointer"
+      ],
+      "length": 47,
+      "meaning": "Two-level text pointer lookup",
+      "offset": 98531,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.text.decoder"
+      ],
+      "length": 252,
+      "meaning": "Token decoding, C2 newline, C3 end and four-tile glyph emission",
+      "offset": 98664,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.text.special"
+      ],
+      "length": 182,
+      "meaning": "Special glyph/control dispatch; unrecognized codes remain UNKNOWN",
+      "offset": 98940,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.text.plane"
+      ],
+      "length": 36,
+      "meaning": "Token sign bit selects glyph bitplane through palette attributes",
+      "offset": 99328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.map.header"
+      ],
+      "length": 57,
+      "meaning": "Map header fields loaded into $71,$75..$78",
+      "offset": 14855,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.map.chunks"
+      ],
+      "length": 87,
+      "meaning": "16x15 chunk addressing for ordinary maps",
+      "offset": 13655,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.map.render"
+      ],
+      "length": 153,
+      "meaning": "Metatile source and four PPU tile queue writes",
+      "offset": 229467,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.npc.loader"
+      ],
+      "length": 53,
+      "meaning": "NPC 14-byte record copy and map pointer lookup",
+      "offset": 262247,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.character.init"
+      ],
+      "length": 147,
+      "meaning": "New-game initialization: party size, HP, MP, strength, speed, stamina, spirit, level threshold",
+      "offset": 14290,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.enemy.loader"
+      ],
+      "length": 151,
+      "meaning": "Enemy ID -> pointer -> 16-byte stats copied to mapper RAM",
+      "offset": 36530,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.battle.enemyattack"
+      ],
+      "length": 268,
+      "meaning": "Observed normal enemy physical attack branch, defenses, damage floor and HP subtraction",
+      "offset": 305810,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.battle.playerattack"
+      ],
+      "length": 235,
+      "meaning": "Player physical branch: strength/weapon/defense, multiplier and HP subtraction",
+      "offset": 306428,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.battle.rewards"
+      ],
+      "length": 206,
+      "meaning": "Money sum and experience sum/distribution after victory",
+      "offset": 306663,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.growth.bank-switch"
+      ],
+      "length": 66,
+      "meaning": "Map PRG bank 45 to C000-DFFF, call D208/D29E, restore previous bank",
+      "offset": 306907,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.map.transition"
+      ],
+      "length": 83,
+      "meaning": "Five-byte entry/exit row and destination map assignment",
+      "offset": 262300,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.routine.map.chr"
+      ],
+      "length": 41,
+      "meaning": "Background and sprite CHR bank selection",
+      "offset": 8369,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.font78"
+      ],
+      "length": 4096,
+      "meaning": "Observed dialogue font: two CHR 2 KiB banks, two independent glyph planes",
+      "offset": 684048,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.dialogue.124.10"
+      ],
+      "length": 71,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 113044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.dialogue.124.10.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.dialogue.124.10.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101378,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.header"
+      ],
+      "length": 5,
+      "meaning": "Tileset and maximum pixel coordinates",
+      "offset": 24582,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.headerpointer"
+      ],
+      "length": 2,
+      "meaning": "Map header pointer",
+      "offset": 24048,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunktablepointer"
+      ],
+      "length": 2,
+      "meaning": "Map chunk table pointer",
+      "offset": 23698,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.moduleevidence"
+      ],
+      "length": 1,
+      "meaning": "PRG module used by renderer",
+      "offset": 25261,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chrevidence"
+      ],
+      "length": 1,
+      "meaning": "First background CHR 2 KiB bank",
+      "offset": 8984,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.metatilerange"
+      ],
+      "length": 1024,
+      "meaning": "Four PPU tile indices per metatile, TL TR BL BR",
+      "offset": 229648,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.attributerange"
+      ],
+      "length": 256,
+      "meaning": "Renderer attribute lookup; palette meaning only",
+      "offset": 230672,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunk.0"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 231424,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunkptr.0"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27299,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunk.1"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 231664,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunkptr.1"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27301,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunk.2"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 234784,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunkptr.2"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27303,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunk.3"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 235024,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.chunkptr.3"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27305,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.npcs"
+      ],
+      "length": 141,
+      "meaning": "14-byte records terminated by FF",
+      "offset": 283477,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.map114.exit"
+      ],
+      "length": 5,
+      "meaning": "Opening map entry x/y, exit destination map and destination x/y",
+      "offset": 287921,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.enemy.2.data"
+      ],
+      "length": 16,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+      "offset": 60394,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.enemy.2.pointer"
+      ],
+      "length": 2,
+      "meaning": "Enemy stat pointer",
+      "offset": 60012,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.enemy.3.data"
+      ],
+      "length": 16,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+      "offset": 60410,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.enemy.3.pointer"
+      ],
+      "length": 2,
+      "meaning": "Enemy stat pointer",
+      "offset": 60014,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.structure.0"
+      ],
+      "length": 8,
+      "meaning": "Four growth table pointers",
+      "offset": 373414,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.structure.1"
+      ],
+      "length": 8,
+      "meaning": "Four experience table pointers",
+      "offset": 373264,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.structure.2"
+      ],
+      "length": 142,
+      "meaning": "Experience comparison and level index increment",
+      "offset": 373272,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.structure.3"
+      ],
+      "length": 194,
+      "meaning": "Apply seven-byte growth deltas",
+      "offset": 373422,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.0.growthrange"
+      ],
+      "length": 560,
+      "meaning": "80 contiguous seven-byte growth rows",
+      "offset": 373616,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.0.thresholdrange"
+      ],
+      "length": 240,
+      "meaning": "80 contiguous uint24le experience values",
+      "offset": 375856,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.1.growthrange"
+      ],
+      "length": 560,
+      "meaning": "80 contiguous seven-byte growth rows",
+      "offset": 374176,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.1.thresholdrange"
+      ],
+      "length": 240,
+      "meaning": "80 contiguous uint24le experience values",
+      "offset": 376096,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.2.growthrange"
+      ],
+      "length": 560,
+      "meaning": "80 contiguous seven-byte growth rows",
+      "offset": 374736,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.2.thresholdrange"
+      ],
+      "length": 240,
+      "meaning": "80 contiguous uint24le experience values",
+      "offset": 376336,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.3.growthrange"
+      ],
+      "length": 560,
+      "meaning": "80 contiguous seven-byte growth rows",
+      "offset": 375296,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.growth.actor.3.thresholdrange"
+      ],
+      "length": 240,
+      "meaning": "80 contiguous uint24le experience values",
+      "offset": 376576,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.font-switch"
+      ],
+      "length": 341,
+      "meaning": "Initial map chooses font0 for messages0..9, font78 for10..11; group map+10",
+      "offset": 78649,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-talk"
+      ],
+      "length": 54,
+      "meaning": "NPC first/repeat dialogue selection by event selector and mask",
+      "offset": 336229,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-coordinate"
+      ],
+      "length": 46,
+      "meaning": "Subtract120 then divide16 for NPC collision metatile",
+      "offset": 8147,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-camera"
+      ],
+      "length": 49,
+      "meaning": "Camera pixel origin=(camera metatile+7)*16",
+      "offset": 9958,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-render"
+      ],
+      "length": 39,
+      "meaning": "Sprite anchor=raw coordinates-camera pixel origin",
+      "offset": 7363,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-movement"
+      ],
+      "length": 222,
+      "meaning": "Movement program and timer interpreter; full paths not decoded",
+      "offset": 7540,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-sprite"
+      ],
+      "length": 59,
+      "meaning": "Object low7 bits select sprite/direction animation pointers",
+      "offset": 8088,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision-target"
+      ],
+      "length": 117,
+      "meaning": "Read current and directional target metatile collision classes",
+      "offset": 18964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision-town"
+      ],
+      "length": 101,
+      "meaning": "Town foot/boat movement branch and collision dispatch",
+      "offset": 20802,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision-occlusion"
+      ],
+      "length": 103,
+      "meaning": "Town class2 calls CC87 to set sprite occlusion flag9b",
+      "offset": 19817,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.sprite-occlusion"
+      ],
+      "length": 53,
+      "meaning": "Negative9b sets sprite background-priority bit20",
+      "offset": 1884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision-world"
+      ],
+      "length": 308,
+      "meaning": "World foot/flying/boat branches, normal foot D031 table",
+      "offset": 20308,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world-extension"
+      ],
+      "length": 150,
+      "meaning": "World rows150+ use module15 EC59/EC79 pointer arrays",
+      "offset": 13595,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.boundary-exit"
+      ],
+      "length": 67,
+      "meaning": "Map boundary exit dispatch; not door collision class2",
+      "offset": 18047,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.font0"
+      ],
+      "length": 4096,
+      "meaning": "Opening font0/1, manually transcribed glyphs; contextual code table",
+      "offset": 524304,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.0"
+      ],
+      "length": 22,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102716,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.0.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.0.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101358,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.1"
+      ],
+      "length": 35,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102738,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.1.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.1.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101360,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.2"
+      ],
+      "length": 21,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102773,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.2.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.2.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101362,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.3"
+      ],
+      "length": 26,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102794,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.3.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.3.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.4"
+      ],
+      "length": 20,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102820,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.4.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.4.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101366,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.5"
+      ],
+      "length": 37,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102840,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.5.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.5.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101368,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.6"
+      ],
+      "length": 23,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102877,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.6.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.6.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101370,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.7"
+      ],
+      "length": 11,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102900,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.7.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.7.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101372,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.8"
+      ],
+      "length": 14,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102911,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.8.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.8.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101374,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.9"
+      ],
+      "length": 25,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 102925,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.9.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.9.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101376,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.10"
+      ],
+      "length": 71,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 113044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.10.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.10.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101378,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.11"
+      ],
+      "length": 8,
+      "meaning": "C3-terminated text byte stream",
+      "offset": 113115,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.11.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Text group pointer",
+      "offset": 101226,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.dialogue.11.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Message pointer",
+      "offset": 101380,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.npc-list"
+      ],
+      "length": 141,
+      "meaning": "14-byte records terminated by FF",
+      "offset": 283477,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.header"
+      ],
+      "length": 5,
+      "meaning": "Tileset and maximum pixel coordinates",
+      "offset": 24252,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.headerpointer"
+      ],
+      "length": 2,
+      "meaning": "Map header pointer",
+      "offset": 23852,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunktablepointer"
+      ],
+      "length": 2,
+      "meaning": "Map chunk table pointer",
+      "offset": 23502,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.moduleevidence"
+      ],
+      "length": 1,
+      "meaning": "PRG module used by renderer",
+      "offset": 25163,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chrevidence"
+      ],
+      "length": 1,
+      "meaning": "First background CHR 2 KiB bank",
+      "offset": 8886,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.metatilerange"
+      ],
+      "length": 1024,
+      "meaning": "Four PPU tile indices per metatile, TL TR BL BR",
+      "offset": 131344,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.attributerange"
+      ],
+      "length": 256,
+      "meaning": "Renderer attribute lookup; palette meaning only",
+      "offset": 132368,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.0"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.0"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26539,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.1"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.1"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26541,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.2"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.2"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26543,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.3"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.3"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26545,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.4"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.4"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26547,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.5"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.5"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26549,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.6"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.6"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26551,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.7"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.7"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26553,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.8"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 133124,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.8"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26555,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.9"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 133364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.9"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26557,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.10"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.10"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26559,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.11"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.11"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26561,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.12"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.12"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26563,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.13"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 133604,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.13"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26565,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.14"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 133844,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.14"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26567,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.15"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.15"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26569,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.16"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.16"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26571,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.17"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 134084,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.17"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26573,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.18"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 134324,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.18"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26575,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.19"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 134564,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.19"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26577,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.20"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 134804,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.20"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26579,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.21"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 135044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.21"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26581,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.22"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 135284,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.22"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26583,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.23"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 135524,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.23"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26585,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.24"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 135764,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.24"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26587,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.25"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 136004,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.25"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26589,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.26"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 136244,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.26"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26591,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.27"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 136484,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.27"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26593,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.28"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 136724,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.28"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26595,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.29"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 136964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.29"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26597,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.30"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 137204,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.30"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26599,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.31"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 137444,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.31"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26601,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.32"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 137684,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.32"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26603,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.33"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 137924,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.33"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26605,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.34"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 138164,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.34"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26607,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.35"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 138404,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.35"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26609,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.36"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 138644,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.36"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26611,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.37"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 138884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.37"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26613,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.38"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 139124,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.38"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26615,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.39"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 139364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.39"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26617,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.40"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 139604,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.40"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26619,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.41"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 139844,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.41"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26621,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.42"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 140084,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.42"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26623,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.43"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 140324,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.43"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26625,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.44"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 140564,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.44"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26627,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.45"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 140804,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.45"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26629,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.46"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 141044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.46"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26631,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.47"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 141284,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.47"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26633,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.48"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 141524,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.48"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26635,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.49"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 141764,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.49"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26637,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.50"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 142004,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.50"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26639,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.51"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 142244,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.51"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26641,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.52"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 142484,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.52"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26643,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.53"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 142724,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.53"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26645,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.54"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 142964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.54"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26647,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.55"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 143204,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.55"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26649,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.56"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 143444,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.56"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26651,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.57"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 143684,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.57"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26653,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.58"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 143924,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.58"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26655,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.59"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 144164,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.59"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26657,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.60"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 144404,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.60"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26659,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.61"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 144644,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.61"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26661,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.62"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 144884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.62"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26663,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.63"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.63"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26665,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.64"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 145124,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.64"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26667,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.65"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 145364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.65"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26669,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.66"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 145604,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.66"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26671,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.67"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 145844,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.67"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26673,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.68"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 146084,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.68"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26675,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.69"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 146324,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.69"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26677,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.70"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 146564,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.70"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26679,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.71"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 146804,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.71"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26681,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.72"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 147044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.72"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26683,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.73"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 147284,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.73"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26685,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.74"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 147524,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.74"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26687,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.75"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 147764,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.75"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26689,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.76"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 148004,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.76"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26691,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.77"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 148244,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.77"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26693,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.78"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.78"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26695,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.79"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.79"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26697,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.80"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 148484,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.80"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26699,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.81"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 148724,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.81"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26701,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.82"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 148964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.82"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26703,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.83"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 149204,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.83"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26705,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.84"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 149444,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.84"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26707,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.85"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 149684,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.85"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26709,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.86"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.86"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26711,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.87"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 149924,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.87"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26713,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.88"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 150164,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.88"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26715,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.89"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 150404,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.89"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26717,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.90"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 150644,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.90"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26719,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.91"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 150884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.91"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26721,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.92"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 151124,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.92"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26723,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.93"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.93"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26725,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.94"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.94"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26727,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.95"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.95"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26729,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.96"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 151364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.96"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26731,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.97"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 151604,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.97"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26733,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.98"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 151844,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.98"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26735,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.99"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 152084,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.99"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26737,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.100"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 152324,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.100"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26739,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.101"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 152564,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.101"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26741,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.102"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.102"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26743,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.103"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.103"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26745,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.104"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 152804,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.104"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26747,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.105"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 153044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.105"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26749,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.106"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 153284,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.106"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26751,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.107"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 153524,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.107"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26753,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.108"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 153764,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.108"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26755,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.109"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 154004,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.109"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26757,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.110"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.110"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26759,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.111"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.111"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26761,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.112"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.112"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26763,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.113"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 154244,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.113"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26765,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.114"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 154484,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.114"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26767,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.115"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 154724,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.115"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26769,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.116"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 154964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.116"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26771,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.117"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 155204,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.117"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26773,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.118"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.118"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26775,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.119"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.119"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26777,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.120"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.120"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26779,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.121"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.121"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26781,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.122"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.122"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26783,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.123"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 155444,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.123"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26785,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.124"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 155684,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.124"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26787,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.125"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 155924,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.125"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26789,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.126"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.126"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26791,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.127"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.127"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26793,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.128"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.128"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26795,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.129"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 156164,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.129"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26797,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.130"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 156404,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.130"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26799,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.131"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 156644,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.131"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26801,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.132"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 156884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.132"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26803,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.133"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 157124,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.133"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26805,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.134"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 157364,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.134"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26807,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.135"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.135"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26809,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.136"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.136"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26811,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.137"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 157604,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.137"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26813,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.138"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 157844,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.138"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26815,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.139"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.139"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26817,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.140"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 158084,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.140"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26819,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.141"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 158324,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.141"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26821,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.142"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.142"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26823,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.143"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.143"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26825,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.144"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.144"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26827,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.145"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.145"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26829,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.146"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 158564,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.146"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26831,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.147"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 158804,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.147"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26833,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.148"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 159044,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.148"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26835,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.149"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 159284,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.149"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26837,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.150"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 159524,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.150"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26839,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.151"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 159764,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.151"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26841,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.152"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.152"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26843,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.153"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 160004,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.153"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26845,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.154"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 160244,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.154"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26847,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.155"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 160484,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.155"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26849,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.156"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 160724,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.156"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26851,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.157"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 160964,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.157"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26853,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.158"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 161204,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.158"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26855,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.159"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 132884,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.159"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 26857,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.160"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.160"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27753,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.161"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.161"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27755,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.162"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.162"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27757,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.163"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.163"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27759,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.164"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493808,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.164"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27761,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.165"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 494048,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.165"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27763,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.166"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 494288,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.166"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27765,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.167"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 494528,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.167"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27767,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.168"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 494768,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.168"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27769,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.169"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 495008,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.169"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27771,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.170"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 495248,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.170"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27773,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.171"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 495488,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.171"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27775,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.172"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 495728,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.172"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27777,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.173"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 495968,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.173"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27779,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.174"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 496208,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.174"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27781,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.175"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 496448,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.175"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27783,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.176"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.176"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27785,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.177"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.177"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27787,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.178"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.178"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27789,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.179"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.179"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27791,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.180"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.180"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27793,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.181"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493328,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.181"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27795,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.182"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 496688,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.182"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27797,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.183"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 496928,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.183"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27799,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.184"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497168,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.184"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27801,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.185"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497408,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.185"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27803,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.186"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497648,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.186"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27805,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.187"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497888,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.187"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27807,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.188"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498128,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.188"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27809,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.189"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498368,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.189"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27811,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.190"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498608,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.190"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27813,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.191"
+      ],
+      "length": 240,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498848,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.191"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27815,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.192"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.192"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27785,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.193"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.193"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27787,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.194"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.194"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27789,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.195"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.195"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27791,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.196"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.196"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27793,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.197"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 493568,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.197"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27795,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.198"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 496928,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.198"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27797,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.199"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497168,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.199"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27799,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.200"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497408,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.200"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27801,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.201"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497648,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.201"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27803,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.202"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 497888,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.202"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27805,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.203"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498128,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.203"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27807,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.204"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498368,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.204"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27809,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.205"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498608,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.205"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27811,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.206"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 498848,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.206"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27813,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.chunk.207"
+      ],
+      "length": 16,
+      "meaning": "Row-major chunk; world y>=150 uses PRG module15, y180 follows the actual address calculation",
+      "offset": 499088,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.world.pointer.207"
+      ],
+      "length": 2,
+      "meaning": "Metatile chunk pointer",
+      "offset": 27815,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision.map114"
+      ],
+      "length": 256,
+      "meaning": "Metatile collision class lookup",
+      "offset": 230928,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.collision.map16"
+      ],
+      "length": 256,
+      "meaning": "Metatile collision class lookup",
+      "offset": 132624,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.1.growthrange"
+      ],
+      "length": 7,
+      "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+      "offset": 373623,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.1.thresholdrange"
+      ],
+      "length": 3,
+      "meaning": "uint24le cumulative experience candidate",
+      "offset": 375859,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.2.growthrange"
+      ],
+      "length": 7,
+      "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+      "offset": 373630,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.2.thresholdrange"
+      ],
+      "length": 3,
+      "meaning": "uint24le cumulative experience candidate",
+      "offset": 375862,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.routine.0"
+      ],
+      "length": 142,
+      "meaning": "Experience comparison and level index increment",
+      "offset": 373272,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.growth.routine.1"
+      ],
+      "length": 194,
+      "meaning": "Apply seven-byte growth deltas",
+      "offset": 373422,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.enemy1"
+      ],
+      "length": 16,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+      "offset": 60378,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    },
+    {
+      "confidence": "VERIFIED",
+      "evidence": [
+        "source.rom.v1.enemy1.pointer"
+      ],
+      "length": 2,
+      "meaning": "Enemy stat pointer",
+      "offset": 60010,
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+    }
+  ],
+  "schemaVersion": 1,
+  "status": "RESEARCH_IN_PROGRESS"
+}

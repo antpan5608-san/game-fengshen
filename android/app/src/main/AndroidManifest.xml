@@ -1,0 +1,14 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <application android:name=".GameApplication" android:theme="@android:style/Theme.Material.NoActionBar" android:label="封神榜 · 全屏试玩" android:allowBackup="false" android:supportsRtl="true">
+        <receiver android:name=".ApkInstallReceiver" android:exported="false">
+            <intent-filter><action android:name="android.intent.action.MY_PACKAGE_REPLACED"/></intent-filter>
+            <intent-filter><action android:name="org.fengshen.dev.APK_INSTALL_STATUS"/></intent-filter>
+            <intent-filter><action android:name="org.fengshen.dev.APK_INSTALL_STATUS"/><data android:scheme="fengshen-update"/></intent-filter>
+        </receiver>
+        <activity android:name=".MainActivity" android:exported="true" android:screenOrientation="sensorLandscape" android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|density">
+            <intent-filter><action android:name="android.intent.action.MAIN"/><category android:name="android.intent.category.LAUNCHER"/></intent-filter>
+        </activity>
+    </application>
+</manifest>

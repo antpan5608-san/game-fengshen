@@ -1,0 +1,107 @@
+{
+  "records": [
+    {
+      "category": "DIALOGUE",
+      "decision": "Preserve ROM 做; never normalize to reference",
+      "evidence": [
+        "source.original.v1.dialogue-opening-10",
+        "reference.story.7"
+      ],
+      "id": "DIFF-DIALOGUE-007",
+      "referenceValue": "都是你惹的好事",
+      "romValue": "都是你做的好事",
+      "status": "MODIFIED"
+    },
+    {
+      "category": "MAP_STRUCTURE",
+      "decision": "Keep separate coordinate systems; association HIGH",
+      "evidence": [
+        "source.original.map114.geometry",
+        "reference.map.1"
+      ],
+      "id": "DIFF-MAP-001",
+      "referenceValue": [
+        35,
+        35
+      ],
+      "romValue": [
+        32,
+        30
+      ],
+      "status": "MODIFIED"
+    },
+    {
+      "category": "VERBATIM_TEXT",
+      "decision": "Preserve source punctuation and script; this is a verbatim difference, not evidence of changed plot",
+      "evidence": [
+        "source.original.v1.dialogue-opening-1",
+        "source.reference.story.9"
+      ],
+      "id": "DIFF-DIALOGUE-009",
+      "referenceValue": "儿呀！娘好担心你，你可要好好保重自己！这里有一百两，你留着用吧！",
+      "romValue": "『兒呀！娘好擔心你，你可要好好保重自己！這裏有一百兩，你留著用吧！』",
+      "status": "MODIFIED"
+    },
+    {
+      "category": "WORDING_CANDIDATE",
+      "decision": "HIGH decoded candidate; wait for this NPC runtime sequence before verified semantic difference",
+      "evidence": [
+        "source.original.v1.dialogue-opening-6",
+        "source.reference.story.11"
+      ],
+      "id": "HINT-DIALOGUE-011",
+      "referenceValue": "这把小刀送个你",
+      "romValue": "這把小刀送給你",
+      "status": "UNKNOWN"
+    },
+    {
+      "category": "INTERNAL_ROM_SEMANTICS",
+      "decision": "Separate cached remaining display from cumulative threshold; preserve both",
+      "evidence": [
+        "source.original.v1.progression-verified"
+      ],
+      "id": "DIFF-EXP-INIT",
+      "referenceValue": "Not used to resolve",
+      "romValue": {
+        "cumulativeThreshold": 12,
+        "initialCache": 7
+      },
+      "status": "RESOLVED"
+    },
+    {
+      "category": "ENUMERATION",
+      "decision": "Preserve dummy and all records; see numeric-signature classifications, not a one-to-one ID mapping",
+      "evidence": [
+        "source.rom.routine.enemy.loader"
+      ],
+      "id": "DIFF-ENEMY-COUNT",
+      "referenceValue": 174,
+      "romValue": 177,
+      "status": "UNPAIRED"
+    },
+    {
+      "category": "RESEARCH_CORRECTION",
+      "decision": "Rename field; never execute animation bytecode as 6502 event code",
+      "evidence": [
+        "source.rom.v1.npc-render",
+        "source.rom.v1.npc-movement"
+      ],
+      "id": "CORRECTION-NPC-POINTER",
+      "referenceValue": "V0 eventRoutineCandidate interpretation",
+      "romValue": "bytes8..9 animation program in module0",
+      "status": "RESOLVED"
+    },
+    {
+      "category": "PROGRESSION_CANDIDATE",
+      "decision": "Keep UNKNOWN until high-level routine/carry checked; not verified MODIFIED",
+      "evidence": [
+        "source.rom.growth.actor.0.growthrange"
+      ],
+      "id": "DIFF-GROWTH-L50",
+      "referenceValue": 4144,
+      "romValue": 4114,
+      "status": "UNKNOWN"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25"
+}

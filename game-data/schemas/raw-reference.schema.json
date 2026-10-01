@@ -1,0 +1,3399 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assets": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "originalVerified": {
+            "const": false
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "source": {
+            "const": "REFERENCE_PROJECT"
+          },
+          "sourceRefs": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "bytes",
+          "source",
+          "originalVerified",
+          "sourceRefs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "commit": {
+      "type": "string"
+    },
+    "domains": {
+      "additionalProperties": false,
+      "properties": {
+        "chests": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dialogues": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enemies": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "equipment": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "events": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "items": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "maps": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "npcs": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "progression": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "shops": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "skills": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "maps",
+        "dialogues",
+        "enemies",
+        "progression",
+        "items",
+        "equipment",
+        "skills",
+        "npcs",
+        "shops",
+        "chests",
+        "events"
+      ],
+      "type": "object"
+    },
+    "maps": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          },
+          "id": {
+            "type": "integer"
+          },
+          "layers": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attributes": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "gids": {
+                  "items": {
+                    "maximum": 4294967295,
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "attributes",
+                "gids"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "sourceFile": {
+            "type": "string"
+          },
+          "sourceRefs": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          },
+          "tilesets": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "attributes": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object"
+                },
+                "image": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "height": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "width": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "source",
+                        "width",
+                        "height",
+                        "path"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "tileProperties": {
+                  "additionalProperties": {
+                    "type": "object"
+                  },
+                  "type": "object"
+                }
+              },
+              "required": [
+                "attributes",
+                "image",
+                "tileProperties"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "xmlTree": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "sourceFile",
+          "sha256",
+          "sourceRefs",
+          "attributes",
+          "layers",
+          "tilesets",
+          "xmlTree"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "profile": {
+      "const": "reference-research"
+    },
+    "records": {
+      "items": {
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_box"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "is_box": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "objId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "objNum": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "mapId",
+                    "posX",
+                    "posY",
+                    "objId",
+                    "objNum",
+                    "is_box"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_box"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_mask"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "height": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "width": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "map_id",
+                    "posX",
+                    "posY",
+                    "width",
+                    "height",
+                    "res"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_mask"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_monster"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_01": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_02": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_03": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_04": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_05": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_06": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "monster_01",
+                    "monster_02",
+                    "monster_03",
+                    "monster_04",
+                    "monster_05",
+                    "monster_06",
+                    "note"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_monster"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "LianJi"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "pro_01": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "pro_02": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "pro_03": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "pro_04": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "pro_01",
+                    "pro_02",
+                    "pro_03",
+                    "pro_04"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "LianJi"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "skill"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "costMp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "desc": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "isBattleUse": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "roleId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "roleLv": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "skEffect": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "targetType": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "costMp",
+                    "roleId",
+                    "roleLv",
+                    "targetType",
+                    "isBattleUse",
+                    "skEffect",
+                    "desc",
+                    "note"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "skill"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_buy"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npcId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "objId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "mapId",
+                    "npcId",
+                    "objId"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_buy"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "story"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "autoMoveId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "dir": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "getItemId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "getItemNum": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nextSceneId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "next_story_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sceneParam": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "speak_words": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "speakerId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_x": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_y": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "speakerId",
+                    "type",
+                    "speak_words",
+                    "next_story_id",
+                    "getItemId",
+                    "getItemNum",
+                    "nextSceneId",
+                    "sceneParam",
+                    "tar_x",
+                    "tar_y",
+                    "dir",
+                    "note",
+                    "autoMoveId"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "story"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_object"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "connect_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "height": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "resType": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_off": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "width": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "map_id",
+                    "posX",
+                    "posY",
+                    "width",
+                    "height",
+                    "res",
+                    "resType",
+                    "switch_on",
+                    "switch_off",
+                    "note",
+                    "type",
+                    "connect_id"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_object"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "auto_move"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "autoMoveId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "delay": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hero_dir": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hero_posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hero_posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npcId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npc_dir": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npc_end_posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npc_end_posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npc_start_posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "npc_start_posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "storyId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_off": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "mapId",
+                    "hero_posX",
+                    "hero_posY",
+                    "hero_dir",
+                    "npcId",
+                    "npc_start_posX",
+                    "npc_start_posY",
+                    "npc_end_posX",
+                    "npc_end_posY",
+                    "storyId",
+                    "npc_dir",
+                    "autoMoveId",
+                    "type",
+                    "note",
+                    "switch_on",
+                    "switch_off",
+                    "delay"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "auto_move"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "battle"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "autoMoveId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "bg": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "is_escape": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mibaoid": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_01": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_02": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_03": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_04": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_05": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "monster_06": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "nextStoryId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_off": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "monster_01",
+                    "monster_02",
+                    "monster_03",
+                    "monster_04",
+                    "monster_05",
+                    "monster_06",
+                    "is_escape",
+                    "switch_on",
+                    "switch_off",
+                    "map_id",
+                    "type",
+                    "note",
+                    "bg",
+                    "nextStoryId",
+                    "autoMoveId",
+                    "mibaoid"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "battle"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_warp_point"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cur_map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "point_x": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "point_y": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_off": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_hero_dir": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_hero_pos_x": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_hero_pos_y": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "tar_map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "cur_map_id",
+                    "point_x",
+                    "point_y",
+                    "tar_map_id",
+                    "tar_hero_pos_x",
+                    "tar_hero_pos_y",
+                    "tar_hero_dir",
+                    "note",
+                    "switch_on",
+                    "switch_off",
+                    "type"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_warp_point"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "yingyi"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "posY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "unlock_mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "mapId",
+                    "posX",
+                    "posY",
+                    "name",
+                    "unlock_mapId"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "yingyi"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map_npc"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "check_pos": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "cost_money": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "dir": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "height": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "isMove": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "maxPosX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "maxPosY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "minPosX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "minPosY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "storyId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_off": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "switch_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "width": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "zeroPosX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "zeroPosY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "zero_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "mapId",
+                    "width",
+                    "height",
+                    "dir",
+                    "isMove",
+                    "zeroPosX",
+                    "zeroPosY",
+                    "minPosX",
+                    "minPosY",
+                    "maxPosX",
+                    "maxPosY",
+                    "storyId",
+                    "switch_on",
+                    "switch_off",
+                    "zero_id",
+                    "res",
+                    "note",
+                    "type",
+                    "check_pos",
+                    "cost_money"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map_npc"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "monster"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "agi": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "atk": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "buffType": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "buff_pro": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "def": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "exp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "money": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "object": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "object_pro": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "skillHurtNum": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "skillId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "res",
+                    "exp",
+                    "money",
+                    "skillId",
+                    "skillHurtNum",
+                    "atk",
+                    "def",
+                    "agi",
+                    "hp",
+                    "object",
+                    "note",
+                    "type",
+                    "buffType",
+                    "buff_pro",
+                    "object_pro"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "monster"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "object"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "buy_price": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "description": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "isTwoHand": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "isdisappear": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mini_type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "number1": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "role01": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "role02": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "role03": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "role04": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sell_price": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sell_storyId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "type",
+                    "number1",
+                    "res",
+                    "buy_price",
+                    "sell_price",
+                    "mini_type",
+                    "isTwoHand",
+                    "role01",
+                    "role02",
+                    "role03",
+                    "role04",
+                    "isdisappear",
+                    "sell_storyId"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "object"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "role_lv"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "df": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "exp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "jin_shen": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "li_liang": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "min_jie": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reward_exp": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reward_gold": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "roleId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "roleLv": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "ti_neng": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "roleId",
+                    "roleLv",
+                    "hp",
+                    "mp",
+                    "li_liang",
+                    "min_jie",
+                    "ti_neng",
+                    "jin_shen",
+                    "at",
+                    "df",
+                    "exp",
+                    "reward_exp",
+                    "reward_gold"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "role_lv"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "map"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "bgm": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "description": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "heroPosX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "heroPosY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "jump_map_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "jump_pos_x": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "jump_pos_y": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "res": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "soundId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "zeroPosX": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "zeroPosY": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "res",
+                    "description",
+                    "name",
+                    "heroPosX",
+                    "heroPosY",
+                    "soundId",
+                    "jump_map_id",
+                    "jump_pos_x",
+                    "jump_pos_y",
+                    "type",
+                    "zeroPosX",
+                    "zeroPosY",
+                    "bgm"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "map"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "store"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "connect_id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "desc": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "icon": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "note": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "price": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "icon",
+                    "price",
+                    "desc",
+                    "type",
+                    "note",
+                    "connect_id"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "store"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "z_save_base_info"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "day": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "hour": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "mapId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "minute": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "month": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "role01_lv": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "saveId": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "second": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "year": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "saveId",
+                    "year",
+                    "month",
+                    "day",
+                    "hour",
+                    "minute",
+                    "second",
+                    "mapId",
+                    "role01_lv"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "z_save_base_info"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "table": {
+                  "const": "z_save_system"
+                }
+              }
+            },
+            "then": {
+              "additionalProperties": false,
+              "properties": {
+                "data": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "is_music_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "is_sound_on": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "move_type": {
+                      "type": [
+                        "integer",
+                        "number",
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "is_music_on",
+                    "is_sound_on",
+                    "move_type"
+                  ],
+                  "type": "object"
+                },
+                "id": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "legacyId": {
+                  "type": [
+                    "integer",
+                    "string"
+                  ]
+                },
+                "sourceRefs": {
+                  "items": {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  "minItems": 1,
+                  "type": "array",
+                  "uniqueItems": true
+                },
+                "table": {
+                  "const": "z_save_system"
+                }
+              },
+              "required": [
+                "id",
+                "table",
+                "legacyId",
+                "sourceRefs",
+                "data"
+              ],
+              "type": "object"
+            }
+          }
+        ],
+        "properties": {
+          "table": {
+            "enum": [
+              "map_box",
+              "map_mask",
+              "map_monster",
+              "LianJi",
+              "skill",
+              "map_buy",
+              "story",
+              "map_object",
+              "auto_move",
+              "battle",
+              "map_warp_point",
+              "yingyi",
+              "map_npc",
+              "monster",
+              "object",
+              "role_lv",
+              "map",
+              "store",
+              "z_save_base_info",
+              "z_save_system"
+            ]
+          }
+        },
+        "required": [
+          "table"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "sourceDatabaseSha256": {
+      "type": "string"
+    },
+    "tableSchemas": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "profile",
+    "commit",
+    "sourceDatabaseSha256",
+    "tableSchemas",
+    "records",
+    "domains",
+    "maps",
+    "assets"
+  ],
+  "type": "object"
+}

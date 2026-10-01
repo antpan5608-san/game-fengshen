@@ -1,0 +1,28 @@
+{
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scope": "One cold-boot, normal-controller-input opening servant gift, unequip and re-equip of Nezha's right-hand knife; no emulated-memory writes",
+  "confidence": "GAMEPLAY_VERIFIED",
+  "script": {
+    "path": "tools/rom-extractor/probe-equipment.lua",
+    "sha256": "0520cf9d9aa892e93db38d481748f35f7ab7f6b2baa8b0b198d2e14ac3261ec2"
+  },
+  "captures": {
+    "writes.tsv": "2ead82bd261f52fb8c59c73fe0b108b2c25e59af58aa98ce6922056edd24904c",
+    "frame-0590-ram.bin": "1e6bfd50ff8c1c273a22ae79384fad924580c421112f9f033332908b230258c2",
+    "frame-0710-ram.bin": "6d8a0299bc35cf0c4fc6fa54ddc7029ebebfca12ed798808b22c4c895fb3e9f8",
+    "frame-1350-ram.bin": "41747ef1c69ce2547ff88c0ba593cfab58e86d092f123d96730d717ba08b5832",
+    "frame-2000-ram.bin": "e3f17dc3c158989a6d5916a8eedba568fdd8ac9eefde8df02d3a11bdc63f22dd",
+    "frame-0710.png": "546aedfdefec35f7e37a4f247ac4c5d6db62e05a4514fbe53d12ed5126ee9a7d",
+    "frame-2000.png": "367f2028905c1ba27f9275e63b2d628882d2d7bcdba8fa3b690c9d92a00770de"
+  },
+  "ramDomain": "FCEUX CPU RAM",
+  "observations": [
+    {"step": "initial", "frame": 590, "knifeCount05D0": 0, "rightHand0560": 0, "weaponBonus0548": 2, "maxMp052CWidth": 2, "maxMp": 0},
+    {"step": "servant_gift", "frame": 710, "knifeCount05D0": 1, "rightHand0560": 0, "weaponBonus0548": 2, "write": "frame 649: 05D0=01 at module9 A183"},
+    {"step": "unequip", "frame": 1350, "knifeCount05D0": 2, "rightHand0560": 255, "weaponBonus0548": 0, "write": "frame 1232: 05D0=02 at module9 A144; 0560=FF at A9BC; 0548=00 at A9D5"},
+    {"step": "reequip", "frame": 2000, "knifeCount05D0": 1, "rightHand0560": 0, "weaponBonus0548": 2, "write": "frame 1980-1981: 05D0=01 at module9 A1ED; 0560=00 at A7B1; 0548=02 at A7CA"}
+  ],
+  "nameEvidence": "ROM dialogue group124/message6 says 小刀 and the observed equipment menu displays 小刀; ROM inventory index0 corresponds to right-hand equipment ID0 in this route",
+  "initialOtherSlots": {"leftHand0564": 255, "body0568": 0, "feet056C": 28},
+  "limits": ["Other item effects, equipment applicability and full item table remain unknown", "The 6818/6819 writes are an event-script pointer, not inventory; they are deliberately excluded from item evidence", "This probe does not verify a full South Sea Dragon King route"]
+}

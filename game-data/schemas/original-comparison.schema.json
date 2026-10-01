@@ -1,0 +1,220 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseRomSha256": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "completeDomains": {
+      "items": {
+        "enum": [
+          "maps",
+          "dialogues",
+          "enemies",
+          "progression",
+          "items",
+          "equipment",
+          "skills",
+          "npcs",
+          "shops",
+          "chests",
+          "events",
+          "assets"
+        ]
+      },
+      "type": "array"
+    },
+    "coverageSourceRefs": {
+      "additionalProperties": false,
+      "properties": {
+        "assets": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "chests": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "dialogues": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "enemies": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "equipment": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "events": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "items": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "maps": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "npcs": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "progression": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "shops": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "skills": {
+          "items": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "records": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "comparable": {
+            "type": "object"
+          },
+          "complete": {
+            "type": "boolean"
+          },
+          "domain": {
+            "enum": [
+              "maps",
+              "dialogues",
+              "enemies",
+              "progression",
+              "items",
+              "equipment",
+              "skills",
+              "npcs",
+              "shops",
+              "chests",
+              "events",
+              "assets"
+            ]
+          },
+          "id": {
+            "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+            "type": "string"
+          },
+          "referenceId": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sourceRefs": {
+            "items": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "domain",
+          "id",
+          "referenceId",
+          "comparable",
+          "complete",
+          "sourceRefs"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schemaVersion": {
+      "const": 1
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "baseRomSha256",
+    "completeDomains",
+    "coverageSourceRefs",
+    "records"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,314 @@
+[
+  {
+    "path": "Resources/res/Sound/bgm_001.mp3",
+    "bytes": 432251,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_002.mp3",
+    "bytes": 333380,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_003.mp3",
+    "bytes": 321622,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_004.mp3",
+    "bytes": 376059,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_005.mp3",
+    "bytes": 300879,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_006.mp3",
+    "bytes": 334037,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_007.mp3",
+    "bytes": 365249,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_008.mp3",
+    "bytes": 318748,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_009.mp3",
+    "bytes": 381485,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_010.mp3",
+    "bytes": 419357,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_011.mp3",
+    "bytes": 365918,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_012.mp3",
+    "bytes": 469129,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_013.mp3",
+    "bytes": 391803,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_014.mp3",
+    "bytes": 364900,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_015.mp3",
+    "bytes": 459076,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_016.mp3",
+    "bytes": 360853,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_017.mp3",
+    "bytes": 445452,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_018.mp3",
+    "bytes": 454001,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_019.mp3",
+    "bytes": 424729,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_020.mp3",
+    "bytes": 383663,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_021.mp3",
+    "bytes": 432105,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_022.mp3",
+    "bytes": 362719,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/bgm_023.mp3",
+    "bytes": 413027,
+    "headerHex": "4944330300000000007854414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_001.mp3",
+    "bytes": 4630,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_002.mp3",
+    "bytes": 4762,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_003.mp3",
+    "bytes": 5411,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_004.mp3",
+    "bytes": 13978,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_005.mp3",
+    "bytes": 4891,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_006.mp3",
+    "bytes": 6296,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_007.mp3",
+    "bytes": 5541,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_008.mp3",
+    "bytes": 10276,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_009.mp3",
+    "bytes": 8012,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_010.mp3",
+    "bytes": 29465,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_011.mp3",
+    "bytes": 8070,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_012.mp3",
+    "bytes": 6607,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_013.mp3",
+    "bytes": 8350,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_014.mp3",
+    "bytes": 8987,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_015.mp3",
+    "bytes": 8973,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_016.mp3",
+    "bytes": 7442,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_017.mp3",
+    "bytes": 7702,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_018.mp3",
+    "bytes": 8663,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_019.mp3",
+    "bytes": 5178,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_020.mp3",
+    "bytes": 6245,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_021.mp3",
+    "bytes": 13396,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_022.mp3",
+    "bytes": 4346,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_023.mp3",
+    "bytes": 5466,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_024.mp3",
+    "bytes": 4996,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_025.mp3",
+    "bytes": 5984,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_026.mp3",
+    "bytes": 4761,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_027.mp3",
+    "bytes": 6868,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_028.mp3",
+    "bytes": 5204,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  },
+  {
+    "path": "Resources/res/Sound/sound_029.mp3",
+    "bytes": 9182,
+    "headerHex": "4944330300000000106754414c420000",
+    "validation": "header/inventory only; see separate decoder probe"
+  }
+]

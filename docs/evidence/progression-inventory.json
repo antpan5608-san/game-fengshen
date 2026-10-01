@@ -1,0 +1,30 @@
+[
+  {
+    "roleId": 1,
+    "rows": 80,
+    "min": 1,
+    "max": 80,
+    "gaps": []
+  },
+  {
+    "roleId": 2,
+    "rows": 69,
+    "min": 12,
+    "max": 80,
+    "gaps": []
+  },
+  {
+    "roleId": 3,
+    "rows": 57,
+    "min": 24,
+    "max": 80,
+    "gaps": []
+  },
+  {
+    "roleId": 4,
+    "rows": 43,
+    "min": 38,
+    "max": 80,
+    "gaps": []
+  }
+]

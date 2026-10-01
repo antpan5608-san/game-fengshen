@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>封神榜 · 地图取证台</title><link rel="stylesheet" href="viewer.css"></head>
+<body><header><div><span class="eyebrow">FENGSHEN / PHASE 01</span><h1>地图取证台 <span>Reference Explorer</span></h1></div><div class="badge">REFERENCE · 原版未验证</div></header>
+<div class="workspace"><aside class="maps"><label for="search">地图目录 <span id="map-count"></span></label><input id="search" type="search" placeholder="搜索 ID / 地图名称" autocomplete="off"><div id="map-list" role="list" aria-label="地图目录"></div><footer>原始数据保留 · 零 canonical 准入<br>不包含 ROM / 游戏运行逻辑</footer></aside>
+<main><div class="map-heading"><div><span class="eyebrow" id="map-id"></span><h2 id="map-name"></h2></div><div><button id="fit">适应窗口</button><button id="zoom-out" aria-label="缩小">−</button><button id="zoom-in" aria-label="放大">＋</button></div></div>
+<div class="notice">用于与原版模拟器人工对照。坐标原点、碰撞值与剧情条件尚未验证；显示全部记录，包含互斥状态。</div>
+<div class="toolbar"><label><input id="npcs" type="checkbox" checked> NPC</label><label><input id="warps" type="checkbox" checked> 出入口</label><label><input id="teleports" type="checkbox" checked> Teleport 终点</label><label><input id="chests" type="checkbox" checked> 宝箱</label><label><input id="events" type="checkbox" checked> Event</label><label><input id="collision" type="checkbox"> Collision 原始标记</label><label><input id="grid" type="checkbox"> 网格</label></div>
+<div class="toolbar"><label>raw Y轴 <select id="origin"><option value="bottom">底部起点（假设）</option><option value="top">顶部起点（假设）</option></select></label><span id="layers"></span></div>
+<div class="canvas-wrap"><canvas id="map-canvas" aria-label="参考地图画布"></canvas><div id="loading">加载地图图像…</div></div>
+<div class="status"><span id="coordinates">移动鼠标查看坐标 · 拖动画布平移 · 滚轮缩放</span><span id="map-size"></span></div>
+<div id="map-warning"></div><details><summary>本图来源与未决信息</summary><pre id="map-metadata"></pre></details>
+</main><aside class="inspector"><span class="eyebrow">INSPECT / 核查</span><h2>记录与来源</h2><p class="hint">点击标记或下方记录。同一格的记录会同时列出。出口详情可跳转目标地图。</p><div id="details" aria-live="polite">尚未选中记录。</div><h3>本图所有记录 <span id="record-count"></span></h3><input id="record-search" type="search" placeholder="筛选 NPC / warp / ID"><div id="record-list"></div><details><summary>碰撞属性图例（含义 UNKNOWN）</summary><p>橙色 = mac 层有非空属性；紫色 = macair；绿色 = 其他含属性层。不是可走/阻挡判定。光标详情保留 macValue、through、though、down、monsterId 原值。</p></details></aside></div>
+<script src="data.js"></script><script src="viewer.js"></script></body></html>

@@ -1,0 +1,563 @@
+[
+  {
+    "source": "auto_move",
+    "column": "mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "auto_move",
+    "column": "npcId",
+    "target": "map_npc",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "auto_move",
+    "column": "storyId",
+    "target": "story",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "auto_move",
+    "column": "autoMoveId",
+    "target": "auto_move",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "nextStoryId",
+    "target": "story",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "autoMoveId",
+    "target": "auto_move",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "mibaoid",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map",
+    "column": "jump_map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_box",
+    "column": "mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_box",
+    "column": "objId",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_buy",
+    "column": "mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_buy",
+    "column": "npcId",
+    "target": "map_npc",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_buy",
+    "column": "objId",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_mask",
+    "column": "map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_npc",
+    "column": "mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_npc",
+    "column": "storyId",
+    "target": "story",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_npc",
+    "column": "zero_id",
+    "target": "map_npc",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_object",
+    "column": "map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_warp_point",
+    "column": "cur_map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_warp_point",
+    "column": "tar_map_id",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "monster",
+    "column": "skillId",
+    "target": "skill",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "monster",
+    "column": "object",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "object",
+    "column": "sell_storyId",
+    "target": "story",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "speakerId",
+    "target": "map_npc",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "next_story_id",
+    "target": "story",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "getItemId",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "autoMoveId",
+    "target": "auto_move",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "yingyi",
+    "column": "mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "yingyi",
+    "column": "unlock_mapId",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "store",
+    "column": "connect_id",
+    "target": "object",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_01",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_01",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_01",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_02",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_02",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_02",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_03",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_03",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_03",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_04",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_04",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_04",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_05",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_05",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_05",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "map_monster",
+    "column": "monster_06",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "structural",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_06",
+    "target": "monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=0 direct enemy",
+    "invalid": []
+  },
+  {
+    "source": "battle",
+    "column": "monster_06",
+    "target": "map_monster",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: battle.type=1 encounter pool",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "sceneParam",
+    "target": "map",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: nextSceneId=2 map",
+    "invalid": []
+  },
+  {
+    "source": "story",
+    "column": "sceneParam",
+    "target": "battle",
+    "ignoredValues": [
+      0,
+      null
+    ],
+    "interpretation": "hypothesis: nextSceneId=3 battle",
+    "invalid": []
+  }
+]

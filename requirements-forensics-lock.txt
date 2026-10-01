@@ -1,0 +1,8 @@
+Pillow==11.3.0
+py65==1.2.0
+jsonschema==4.25.1
+attrs==26.1.0
+referencing==0.37.0
+jsonschema-specifications==2025.9.1
+rpds-py==2026.6.3
+typing_extensions==4.16.0

@@ -1,0 +1,16 @@
+// Explicit local bootstrap only. Passwords are read from the EXISTING debug
+// signing configuration, never printed, and written only to a protected temp file.
+gradle.projectsEvaluated {
+    def app = gradle.rootProject.project(':app')
+    app.tasks.register('exportExistingSigningForCI') {
+        doLast {
+            def target = System.getenv('FENGSHEN_SIGNING_EXPORT')
+            if (!target) throw new GradleException('Protected export path required')
+            def cfg = app.extensions.getByName('android').signingConfigs.getByName('debug')
+            if (!cfg.storeFile.isFile()) throw new GradleException('Existing signing key missing; do not generate a replacement')
+            def data = [path: cfg.storeFile.absolutePath, storePassword: cfg.storePassword,
+                        alias: cfg.keyAlias, keyPassword: cfg.keyPassword]
+            new File(target).setText(new groovy.json.JsonBuilder(data).toString(), 'UTF-8')
+        }
+    }
+}

@@ -1,0 +1,959 @@
+{
+  "$defs": {
+    "action": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "dialogueId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "dialogue"
+            }
+          },
+          "required": [
+            "type",
+            "dialogueId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "itemId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "quantity": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "type": {
+              "const": "giveItem"
+            }
+          },
+          "required": [
+            "type",
+            "itemId",
+            "quantity"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "itemId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "quantity": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "type": {
+              "const": "removeItem"
+            }
+          },
+          "required": [
+            "type",
+            "itemId",
+            "quantity"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "shopId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "openShop"
+            }
+          },
+          "required": [
+            "type",
+            "shopId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "enemyId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "startBattle"
+            }
+          },
+          "required": [
+            "type",
+            "enemyId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "skillId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "useSkill"
+            }
+          },
+          "required": [
+            "type",
+            "skillId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "eventId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "callEvent"
+            }
+          },
+          "required": [
+            "type",
+            "eventId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "npcId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "showNpc"
+            }
+          },
+          "required": [
+            "type",
+            "npcId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "npcId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "hideNpc"
+            }
+          },
+          "required": [
+            "type",
+            "npcId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "mapId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "position": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "integer"
+                },
+                "y": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "const": "teleport"
+            }
+          },
+          "required": [
+            "type",
+            "mapId",
+            "position"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "mapId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "position": {
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "integer"
+                },
+                "y": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "type": "object"
+            },
+            "type": {
+              "const": "changeMap"
+            }
+          },
+          "required": [
+            "type",
+            "mapId",
+            "position"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "chestId": {
+              "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+              "type": "string"
+            },
+            "type": {
+              "const": "chest"
+            }
+          },
+          "required": [
+            "type",
+            "chestId"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "actions": {
+              "items": {
+                "$ref": "#/$defs/action"
+              },
+              "type": "array"
+            },
+            "type": {
+              "const": "sequence"
+            }
+          },
+          "required": [
+            "type",
+            "actions"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract": {
+      "const": "forensic-baseline-v1"
+    },
+    "entities": {
+      "additionalProperties": false,
+      "properties": {
+        "assets": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "chests": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "itemId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "mapId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "position": {
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "type": "integer"
+                  },
+                  "y": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "mapId",
+              "position",
+              "itemId"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "dialogues": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "nextDialogueId": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "speakerNpcId": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "text": {
+                "minLength": 1,
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "text",
+              "nextDialogueId",
+              "speakerNpcId"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "enemies": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "attack": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "defense": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "hp": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "skillIds": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "name",
+              "hp",
+              "attack",
+              "defense",
+              "skillIds"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "equipment": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "itemId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "slot": {
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "itemId",
+              "slot"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "events": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "actions": {
+                "items": {
+                  "$ref": "#/$defs/action"
+                },
+                "type": "array"
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "mapId": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "mapId",
+              "actions"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "items": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "name"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "maps": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "assetIds": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "height": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              },
+              "transitions": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                      "type": "string"
+                    },
+                    "position": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "x": {
+                          "type": "integer"
+                        },
+                        "y": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "type": "object"
+                    },
+                    "targetMapId": {
+                      "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                      "type": "string"
+                    },
+                    "targetPosition": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "x": {
+                          "type": "integer"
+                        },
+                        "y": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "x",
+                        "y"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "position",
+                    "targetMapId",
+                    "targetPosition"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "width": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "name",
+              "width",
+              "height",
+              "assetIds",
+              "transitions"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "npcs": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "dialogueId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "eventId": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "mapId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "position": {
+                "additionalProperties": false,
+                "properties": {
+                  "x": {
+                    "type": "integer"
+                  },
+                  "y": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "x",
+                  "y"
+                ],
+                "type": "object"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "mapId",
+              "position",
+              "dialogueId",
+              "eventId"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "progression": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "characterId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "experienceThreshold": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "hp": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "level": {
+                "minimum": 1,
+                "type": "integer"
+              },
+              "mp": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "characterId",
+              "level",
+              "hp",
+              "mp",
+              "experienceThreshold"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "shops": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "itemIds": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "mapId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "npcId": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "mapId",
+              "npcId",
+              "itemIds"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "skills": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "characterId": {
+                "anyOf": [
+                  {
+                    "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "id": {
+                "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                "type": "string"
+              },
+              "learnLevel": {
+                "minimum": 1,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "mpCost": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "name": {
+                "type": "string"
+              },
+              "sourceRefs": {
+                "items": {
+                  "pattern": "^[a-z][a-z0-9_.-]{1,95}$",
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array",
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "sourceRefs",
+              "name",
+              "mpCost",
+              "characterId",
+              "learnLevel"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "maps",
+        "dialogues",
+        "enemies",
+        "progression",
+        "items",
+        "equipment",
+        "skills",
+        "npcs",
+        "shops",
+        "chests",
+        "events",
+        "assets"
+      ],
+      "type": "object"
+    },
+    "profile": {
+      "enum": [
+        "verified-baseline",
+        "synthetic-test"
+      ]
+    },
+    "runtimeReady": {
+      "const": false
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "status": {
+      "enum": [
+        "BLOCKED_WAITING_FOR_ROM",
+        "BLOCKED_UNVERIFIED",
+        "READY_FOR_REVIEW",
+        "SYNTHETIC"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "contract",
+    "profile",
+    "status",
+    "runtimeReady",
+    "entities"
+  ],
+  "type": "object"
+}

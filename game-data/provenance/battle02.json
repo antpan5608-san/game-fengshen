@@ -1,0 +1,226 @@
+{
+  "captures": {
+    "private-derived/battle02-lose/events.tsv": "1e228a070aa7c8191ca58edc0f899d416c0e30f1d92076a90dfb58a3d54804d4",
+    "private-derived/battle02-lose/hooks.tsv": "bde0963ce28cb3aa2f6f272a4427c36c7429812a5b9cd1dfce6c4be9b39db7b1",
+    "private-derived/battle02-run/events.tsv": "c6c67fc630f9e004e527324f2a8ad04a88b936d5d49ce09886436f35f2733990",
+    "private-derived/battle02-run/hooks.tsv": "849c382ad61a31336e4b89e6767ae0cc8053958e275bf37a354a13ad7fd0c462",
+    "private-derived/battle02-win/events.tsv": "5100ec3cc2a9d51550c92edb37c25c3cf190c1080725f898bb8494172a04e07c",
+    "private-derived/battle02-run-carry/events.tsv": "c6c67fc630f9e004e527324f2a8ad04a88b936d5d49ce09886436f35f2733990",
+    "private-derived/battle02-run-carry/hooks.tsv": "59400839ddb13664863da7cb7570f3c08f44885730dc182362c66fad293f605e",
+    "private-derived/battle02-win-return/events.tsv": "c50d80f11927415c3f0748f087abad64ce8397db95d5ad0b9106c22d9ac2f81a",
+    "private-derived/battle02-win-return/hooks.tsv": "c03ec8b9cd7a3fac78455db23544447a61f20196276561ddd8dab31020243b5c"
+  },
+  "defeat": {
+    "after": {
+      "cell": [
+        8,
+        21
+      ],
+      "equipment": "initial",
+      "experience": 0,
+      "flags": "cleared",
+      "hp": 20,
+      "inventory": "cleared",
+      "level": 1,
+      "mapId": 114,
+      "maxHp": 20,
+      "maxMp": 0,
+      "money": 0,
+      "mp": 0,
+      "rawPosition": [
+        248,
+        456
+      ]
+    },
+    "clearRoutine": {
+      "cpuAddress": 33069,
+      "length": 41,
+      "meaning": "Clear runtime RAM incl party, inventory, flags and money; does not alter battery bytes outside range",
+      "module": 0,
+      "offset": 317,
+      "sha256": "ac1c7b692beea39c6100d852039d0e85d9bc3cc4fdaf616ccca6a480442fdfaf"
+    },
+    "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+    "damageZeroFrame": 6955,
+    "initFrame": 7105,
+    "limits": "Normal death resets active runtime; cartridge battery-save selection is not implemented. Mobile stores reset state, exception exit retains prebattle checkpoint.",
+    "message": "不幸！全員陣亡了！",
+    "messageFrame": 7092,
+    "openingInit": {
+      "cpuAddress": 46997,
+      "length": 192,
+      "meaning": "Map114 and initial Nezha stats/equipment initialization",
+      "module": 0,
+      "offset": 14245,
+      "sha256": "7b772dbe678a8ed645921146c8f6d337d8e87ebef218be6d1c090142dc26fc0f"
+    },
+    "resetFrame": 7093
+  },
+  "escape": {
+    "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+    "failure": "Five failed attempts each followed enemy actions. No reward. Existing RNG sequence differs from NES.",
+    "graceCorrection": "06E2 is not set by this ordinary escape. Prior escape-grace hypothesis is withdrawn for this branch.",
+    "order": {
+      "cpuAddress": 32844,
+      "length": 217,
+      "meaning": "Stable descending agility order",
+      "module": 9,
+      "offset": 295004,
+      "sha256": "641c1d6e8e87835e0299f01f891264ffc9f9b1a8dd83a8c29cd6e38931a30d28"
+    },
+    "routine": {
+      "cpuAddress": 35401,
+      "length": 188,
+      "meaning": "Escape RNG transform, enemy selection, agility comparison and exit",
+      "module": 9,
+      "offset": 297561,
+      "sha256": "639a21bd598bca2580f7684d3e9a64cc8790057da3475f63fe248817ebe70cc6"
+    },
+    "samples": [
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 2357,
+        "heroAgility": 2,
+        "randomByte": 139,
+        "success": false,
+        "threshold": 127,
+        "transformed": 186
+      },
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 2813,
+        "heroAgility": 2,
+        "randomByte": 232,
+        "success": false,
+        "threshold": 127,
+        "transformed": 140
+      },
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 3185,
+        "heroAgility": 2,
+        "randomByte": 190,
+        "success": false,
+        "threshold": 127,
+        "transformed": 185
+      },
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 3641,
+        "heroAgility": 2,
+        "randomByte": 37,
+        "success": false,
+        "threshold": 127,
+        "transformed": 187
+      },
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 4097,
+        "heroAgility": 2,
+        "randomByte": 135,
+        "success": false,
+        "threshold": 127,
+        "transformed": 166
+      },
+      {
+        "enemyAgility": 2,
+        "enemySlot": 2,
+        "frame": 4553,
+        "heroAgility": 2,
+        "randomByte": 3,
+        "success": true,
+        "threshold": 127,
+        "transformed": 17
+      }
+    ],
+    "success": {
+      "experience": 0,
+      "frame": 4553,
+      "grace06E2": 0,
+      "hp": 3,
+      "map": 16,
+      "money": 0,
+      "mp": 0,
+      "rawPosition": [
+        3336,
+        2536
+      ],
+      "steps": 0
+    },
+    "entryCarryObserved": 1,
+    "entryCarryCount": 6
+  },
+  "presentation": {
+    "commands": [
+      "戰鬥",
+      "法術",
+      "寶箱",
+      "防禦",
+      "逃跑"
+    ],
+    "confidence": "MOBILE_ADAPTATION",
+    "enabledCommands": [
+      "戰鬥",
+      "逃跑"
+    ],
+    "heroPortrait": false,
+    "limitations": [
+      "Font rendered by Android rather than complete original charset.",
+      "Enemy animation poses not fully decoded.",
+      "Player miss/critical and full action order remain unverified.",
+      "One original 16x16 player action pose; weapon swing/effect is not decoded. Position is a mobile presentation adaptation."
+    ],
+    "originalBackground": "black with repeating pixel horizon"
+  },
+  "probe": {
+    "path": "private-derived/battle02-source-probe.lua",
+    "sha256": "6939a42c7da9efc0ff99e569c8cdf0dcda5751f29bfc3199928d01cb2c48d4ab"
+  },
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scope": "Map16 zone0, single Nezha ordinary battle; mobile action presentation adaptation",
+  "originalMovie": {
+    "path": "artifacts/checkpoint-ui/battle02-original-normal.mp4",
+    "source": "FCEUX 2.6.6 normal controller cold boot, no RAM changes; no audio captured",
+    "firstFrame": 1780,
+    "lastFrame": 4020,
+    "sampleEveryFrames": 4,
+    "fps": 60,
+    "groupId": 11,
+    "hero": {
+      "level": 1,
+      "hp": 20,
+      "mp": 0,
+      "weapon": 0
+    },
+    "input": "Command Battle then normal A confirmations, no debug win",
+    "ending": {
+      "hp": 10,
+      "experience": 5,
+      "money": 3,
+      "mapId": 16,
+      "rawPosition": [
+        3336,
+        2536
+      ]
+    },
+    "probe": {
+      "path": "tools/rom-extractor/probe-battle02.lua",
+      "sha256": "a77b66f1194365ca522abd77bbe873771469eeb92b726001a450ace858d41a22"
+    }
+  },
+  "androidEvidence": {
+    "apkSHA256": "731c95939f641cc3bd4cee0c01fa2b4e9071dad823ec7bab9761f325285a1431",
+    "contentVersion": "opening-segment-001-c9",
+    "contentManifestSHA256": "0b1a2bc33f1d9b8ab3f6796d8cde87c72d0b998ae6e2f421a0567925ffb53fa9",
+    "comparisonsReport": "reports/battle02-comparisons.json",
+    "normalVideo": "artifacts/checkpoint-ui/battle02-final-normal-with-audio.mp4",
+    "normalInputs": true,
+    "phoneVerified": false,
+    "canonicalPromoted": false
+  }
+}

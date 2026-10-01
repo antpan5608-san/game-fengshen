@@ -1,0 +1,146 @@
+{
+  "emulator": "FCEUX 2.6.6 Windows x64",
+  "emulatorSha256": "dd615970b67d91ed6ce040e34686cb45a71f5f69350a69028a7625f6ef912271",
+  "replayScripts": [
+    "tools/rom-extractor/probe-npc.lua",
+    "tools/rom-extractor/probe-status.lua",
+    "tools/rom-extractor/probe-battle.lua"
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "saveStates": "No persisted save states are used; cold boot controller timelines reproduce observations.",
+  "scope": "Frame files below 1980 in battle-probe belong to a rejected save-state attempt; excluded from this manifest.",
+  "screenshotTiming": "Requested frame label; PNG captures the following frame. RAM/PPU files are exact labeled frame.",
+  "settings": {
+    "cheats": false,
+    "emulatedMemoryWritesByProbe": false,
+    "region": "NTSC",
+    "sound": false
+  },
+  "snapshots": [
+    {
+      "bytes": 16384,
+      "path": "private-derived/npc-probe/frame-0450-ppu.bin",
+      "sha256": "7ecaf406ea9bf29515bfdb2b20f5caae5aefd4e0b696f0b9b723c3d0da7c20e3"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/npc-probe/frame-0450-ram.bin",
+      "sha256": "3792492d0603f93de0c59cf723e4e78d0881155eae9471dc451d1f00a587cb52"
+    },
+    {
+      "bytes": 3943,
+      "path": "private-derived/npc-probe/frame-0450.png",
+      "sha256": "a44c84cd8a1b0e07ff19716f39385c0449e0bf69a26a9d38f8e71b217d44eb4d"
+    },
+    {
+      "bytes": 3934,
+      "path": "private-derived/npc-probe/frame-0600.png",
+      "sha256": "cb685a40208f79d9c05a68c32598dae2c8c3e714179d3cca17fa5bcebd387722"
+    },
+    {
+      "bytes": 5213,
+      "path": "private-derived/npc-probe/frame-0900.png",
+      "sha256": "5cec4d34f94c131f404e067daa5dc1fa03b0f04a18b5d80f300d5d0ac6939e55"
+    },
+    {
+      "bytes": 4954,
+      "path": "private-derived/npc-probe/frame-1040.png",
+      "sha256": "5cb108fcb41842b531bcdf0ab708516c92fbcf39b988e5393c99caf3796a764b"
+    },
+    {
+      "bytes": 855690,
+      "path": "private-derived/npc-probe/mapper.tsv",
+      "sha256": "be9cad44b4b7c7caa5b9ab2155dff2723752393ca6aba8e4f6d90c372105e85f"
+    },
+    {
+      "bytes": 2930,
+      "path": "private-derived/status-probe/frame-0650.png",
+      "sha256": "06ab6e648a00c48643b89917d97433be73858a834451d8f43e8881fd196132d4"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/status-probe/frame-0650-ram.bin",
+      "sha256": "efbefb8ea9e8bd67f6adb7472fbb77303229dba7ab22c929de72d8b3b62dabe4"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/status-probe/frame-0840-ram.bin",
+      "sha256": "8669fa786d95220ef341b332ff78ec8e1ca5ca6433fc3112806b7bf78bd3eed2"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/status-probe/frame-0843-ram.bin",
+      "sha256": "0877f3746a498689e92d6e11ae8f770792c5567043db30ce5c012d1c153fd24f"
+    },
+    {
+      "bytes": 3833,
+      "path": "private-derived/status-probe/frame-0960.png",
+      "sha256": "b801418e3935b53ab6cd922c2371df4a35f9ef9275821589ae5655648b1ae067"
+    },
+    {
+      "bytes": 4356,
+      "path": "private-derived/status-probe/ram-writes.tsv",
+      "sha256": "b87a8466a32f6dd220126d4f5e13a788a994ec5be63e60d9eabfc7992f7ee6ce"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/battle-probe/frame-1980-sram.bin",
+      "sha256": "11917af9617bd4df995f23778e496f05c6368765d283494aad29b211b992e033"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/battle-probe/frame-1980-ram.bin",
+      "sha256": "c76e829f218621f19ab427d436a43ab5790fcdae62331e26b289f47b8a995626"
+    },
+    {
+      "bytes": 2715,
+      "path": "private-derived/battle-probe/frame-2520.png",
+      "sha256": "f0524910c29a4bb43bfb9588ade2ada172fe7e2996432c9a6e8ffcf11a05e572"
+    },
+    {
+      "bytes": 2412,
+      "path": "private-derived/battle-probe/frame-3000.png",
+      "sha256": "5a248f3630336e3c79f6e6bbe329c83c35201457c301da504d5933b3f5228212"
+    },
+    {
+      "bytes": 2697,
+      "path": "private-derived/battle-probe/frame-3600.png",
+      "sha256": "1227e55c2d7cfd7b198160f013c4bd5e9821bced2712a9b0a51cbcdf8460d666"
+    },
+    {
+      "bytes": 2470,
+      "path": "private-derived/battle-probe/frame-4200.png",
+      "sha256": "0cc69296271c67ba702b0a83f8b1fe24ed40c20a07f248e40e204391bdbb401a"
+    },
+    {
+      "bytes": 2065,
+      "path": "private-derived/battle-probe/frame-4980.png",
+      "sha256": "20e1b3a82b4c8a7a30cb8e05e2611dbebe5060b7e9128430654fe1f5f4dd52a2"
+    },
+    {
+      "bytes": 1433,
+      "path": "private-derived/battle-probe/frame-5100.png",
+      "sha256": "906e64048ac271e0bf8b519920b6e7a4dcad17986d7919627e362201b092133a"
+    },
+    {
+      "bytes": 1645,
+      "path": "private-derived/battle-probe/frame-5220.png",
+      "sha256": "84860956cd55710d2df5f62da88f005f2992a66fc160c919faf8afd847385b11"
+    },
+    {
+      "bytes": 1609,
+      "path": "private-derived/battle-probe/frame-5280.png",
+      "sha256": "3d9ded8583f2addb66ae081e573752ad7095c078b3abb103ae055c425deb7a1a"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/battle-probe/frame-5400-ram.bin",
+      "sha256": "694f962c12c743f8645ac5142f8f3762e0b82c1032f99b96d7e0aded9154cea4"
+    },
+    {
+      "bytes": 238515,
+      "path": "private-derived/battle-probe/writes.tsv",
+      "sha256": "13d529fe6168a73f411be17fb84d25bbff39d9dca870da74ec1a1194c0aedd07"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "contract": "forensic-baseline-v1",
+  "entities": {
+    "assets": [],
+    "chests": [],
+    "dialogues": [],
+    "enemies": [],
+    "equipment": [],
+    "events": [],
+    "items": [],
+    "maps": [],
+    "npcs": [],
+    "progression": [],
+    "shops": [],
+    "skills": []
+  },
+  "profile": "verified-baseline",
+  "runtimeReady": false,
+  "schemaVersion": 1,
+  "status": "BLOCKED_UNVERIFIED"
+}

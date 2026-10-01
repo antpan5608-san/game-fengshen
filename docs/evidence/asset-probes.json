@@ -1,0 +1,1237 @@
+{
+  "audio": [
+    {
+      "path": "Resources/res/Sound/bgm_001.mp3",
+      "seconds": 80.5146485260771,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 42876
+    },
+    {
+      "path": "Resources/res/Sound/bgm_002.mp3",
+      "seconds": 63.22598639455782,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 42094
+    },
+    {
+      "path": "Resources/res/Sound/bgm_003.mp3",
+      "seconds": 40.1865,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_004.mp3",
+      "seconds": 46.991125,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_005.mp3",
+      "seconds": 37.593625,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_006.mp3",
+      "seconds": 41.738375,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_007.mp3",
+      "seconds": 45.639875,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_008.mp3",
+      "seconds": 39.82725,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_009.mp3",
+      "seconds": 47.669375,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_010.mp3",
+      "seconds": 52.403375,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_011.mp3",
+      "seconds": 45.7235,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_012.mp3",
+      "seconds": 58.624875,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_013.mp3",
+      "seconds": 77.1831746031746,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 40543
+    },
+    {
+      "path": "Resources/res/Sound/bgm_014.mp3",
+      "seconds": 45.59625,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_015.mp3",
+      "seconds": 57.36825,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_016.mp3",
+      "seconds": 45.090375,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_017.mp3",
+      "seconds": 55.66525,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_018.mp3",
+      "seconds": 56.733875,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_019.mp3",
+      "seconds": 53.074875,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_020.mp3",
+      "seconds": 47.941625,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_021.mp3",
+      "seconds": 53.996875,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_022.mp3",
+      "seconds": 45.323625,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/bgm_023.mp3",
+      "seconds": 51.612125,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 64000
+    },
+    {
+      "path": "Resources/res/Sound/sound_001.mp3",
+      "seconds": 1.195827664399093,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 13609
+    },
+    {
+      "path": "Resources/res/Sound/sound_002.mp3",
+      "seconds": 1.1609977324263039,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 14759
+    },
+    {
+      "path": "Resources/res/Sound/sound_003.mp3",
+      "seconds": 1.2887074829931973,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 17162
+    },
+    {
+      "path": "Resources/res/Sound/sound_004.mp3",
+      "seconds": 2.6006349206349206,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 34471
+    },
+    {
+      "path": "Resources/res/Sound/sound_005.mp3",
+      "seconds": 1.195827664399093,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 15274
+    },
+    {
+      "path": "Resources/res/Sound/sound_006.mp3",
+      "seconds": 1.4512471655328798,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 20059
+    },
+    {
+      "path": "Resources/res/Sound/sound_007.mp3",
+      "seconds": 1.2654875283446712,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 18279
+    },
+    {
+      "path": "Resources/res/Sound/sound_008.mp3",
+      "seconds": 2.1942857142857144,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 27701
+    },
+    {
+      "path": "Resources/res/Sound/sound_009.mp3",
+      "seconds": 2.0317460317460316,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 21112
+    },
+    {
+      "path": "Resources/res/Sound/sound_010.mp3",
+      "seconds": 5.154829931972789,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 41295
+    },
+    {
+      "path": "Resources/res/Sound/sound_011.mp3",
+      "seconds": 1.5325170068027212,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 27979
+    },
+    {
+      "path": "Resources/res/Sound/sound_012.mp3",
+      "seconds": 1.4396371882086167,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 21702
+    },
+    {
+      "path": "Resources/res/Sound/sound_013.mp3",
+      "seconds": 2.0317460317460316,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 22406
+    },
+    {
+      "path": "Resources/res/Sound/sound_014.mp3",
+      "seconds": 1.497687074829932,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 33126
+    },
+    {
+      "path": "Resources/res/Sound/sound_015.mp3",
+      "seconds": 1.9156462585034013,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 26096
+    },
+    {
+      "path": "Resources/res/Sound/sound_016.mp3",
+      "seconds": 1.5325170068027212,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 24826
+    },
+    {
+      "path": "Resources/res/Sound/sound_017.mp3",
+      "seconds": 1.6370068027210884,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 24524
+    },
+    {
+      "path": "Resources/res/Sound/sound_018.mp3",
+      "seconds": 1.9504761904761905,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 24524
+    },
+    {
+      "path": "Resources/res/Sound/sound_019.mp3",
+      "seconds": 1.242267573696145,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 16421
+    },
+    {
+      "path": "Resources/res/Sound/sound_020.mp3",
+      "seconds": 1.3583673469387756,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 21256
+    },
+    {
+      "path": "Resources/res/Sound/sound_021.mp3",
+      "seconds": 2.8908843537414968,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 29538
+    },
+    {
+      "path": "Resources/res/Sound/sound_022.mp3",
+      "seconds": 1.0565079365079366,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 13169
+    },
+    {
+      "path": "Resources/res/Sound/sound_023.mp3",
+      "seconds": 1.195827664399093,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 18943
+    },
+    {
+      "path": "Resources/res/Sound/sound_024.mp3",
+      "seconds": 1.195827664399093,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 15944
+    },
+    {
+      "path": "Resources/res/Sound/sound_025.mp3",
+      "seconds": 1.4280272108843537,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 18735
+    },
+    {
+      "path": "Resources/res/Sound/sound_026.mp3",
+      "seconds": 1.1609977324263039,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 14752
+    },
+    {
+      "path": "Resources/res/Sound/sound_027.mp3",
+      "seconds": 1.555736961451247,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 21591
+    },
+    {
+      "path": "Resources/res/Sound/sound_028.mp3",
+      "seconds": 1.230657596371882,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 16580
+    },
+    {
+      "path": "Resources/res/Sound/sound_029.mp3",
+      "seconds": 2.078185941043084,
+      "sampleRate": 22050,
+      "channels": 2,
+      "bitrate": 24967
+    }
+  ],
+  "fonts": [
+    {
+      "path": "Resources/res/fonts/arial.ttf",
+      "glyphs": 2816,
+      "cjkCodepoints": 0,
+      "names": [
+        "© 2011 The Monotype Corporation. All Rights Reserved.",
+        "Arial",
+        "Regular",
+        "You may use this font to display and print content as permitted by the license terms for the product in which this font is included. You may only (i) embed this font in content as permitted by the embedding restrictions included in this font; and (ii) temporarily download this font to a printer or other output device to help print content.",
+        "Normal",
+        "obyčejné",
+        "normal",
+        "Standard",
+        "Κανονικά",
+        "Normaali",
+        "Normál",
+        "Normale",
+        "Standaard",
+        "Normalny",
+        "Обычный",
+        "Normálne",
+        "Navadno",
+        "thường",
+        "Arrunta"
+      ]
+    },
+    {
+      "path": "Resources/res/fonts/Marker Felt.ttf",
+      "glyphs": 101,
+      "cjkCodepoints": 0,
+      "names": [
+        "䌀Pat Snyder, 1797 Ross Inlet, Coos Bay, OR 97420 Shware $10",
+        "Felt",
+        "Regular",
+        "©Pat Snyder, 1797 Ross Inlet, Coos Bay, OR 97420 Shware $10"
+      ]
+    }
+  ],
+  "mapPixelReplication": [
+    {
+      "path": "Resources/res/map/mac.png",
+      "width": 240,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/mac2.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_002.png",
+      "width": 400,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_004.png",
+      "width": 640,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_006.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_008.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_009.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_011.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_013.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_015.png",
+      "width": 480,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_017.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_019.png",
+      "width": 400,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_021.png",
+      "width": 480,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_023.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_025.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_027.png",
+      "width": 560,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_029.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_031.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_033.png",
+      "width": 560,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_035.png",
+      "width": 480,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_037.png",
+      "width": 640,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_039.png",
+      "width": 320,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_041.png",
+      "width": 640,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_043.png",
+      "width": 800,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_044.png",
+      "width": 320,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_047.png",
+      "width": 560,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_049.png",
+      "width": 640,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_051.png",
+      "width": 640,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_053.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_055.png",
+      "width": 400,
+      "height": 160,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_057.png",
+      "width": 240,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_059.png",
+      "width": 240,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_061.png",
+      "width": 240,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_063.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_065.png",
+      "width": 320,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_067.png",
+      "width": 480,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_069.png",
+      "width": 480,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_071.png",
+      "width": 480,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_073.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_075.png",
+      "width": 560,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_077.png",
+      "width": 720,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_079.png",
+      "width": 240,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_081.png",
+      "width": 240,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_083.png",
+      "width": 560,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_086.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_087.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_089.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_091.png",
+      "width": 720,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_093.png",
+      "width": 720,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_095.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_097.png",
+      "width": 720,
+      "height": 720,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_099.png",
+      "width": 320,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_102.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_103.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_105.png",
+      "width": 560,
+      "height": 880,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_107.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_109.png",
+      "width": 640,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_111.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_113.png",
+      "width": 560,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_115.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_117.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_119.png",
+      "width": 320,
+      "height": 160,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_121.png",
+      "width": 320,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_123.png",
+      "width": 320,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_125.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_128.png",
+      "width": 480,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_130.png",
+      "width": 480,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_132.png",
+      "width": 480,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_134.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_136.png",
+      "width": 480,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_138.png",
+      "width": 560,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_140.png",
+      "width": 560,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_142.png",
+      "width": 560,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_144.png",
+      "width": 400,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_146.png",
+      "width": 480,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_148.png",
+      "width": 640,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_150.png",
+      "width": 560,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_152.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_154.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_156.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_158.png",
+      "width": 640,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_160.png",
+      "width": 320,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_162.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_164.png",
+      "width": 560,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_166.png",
+      "width": 720,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_168.png",
+      "width": 800,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_170.png",
+      "width": 560,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_172.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_174.png",
+      "width": 400,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_176.png",
+      "width": 1040,
+      "height": 1441,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_178.png",
+      "width": 720,
+      "height": 720,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_180.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_182.png",
+      "width": 400,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_184.png",
+      "width": 480,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_186.png",
+      "width": 800,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_188.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_190.png",
+      "width": 560,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_192.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_194.png",
+      "width": 560,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_196.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_198.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_200.png",
+      "width": 480,
+      "height": 480,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_202.png",
+      "width": 480,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_204.png",
+      "width": 560,
+      "height": 400,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_206.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_208.png",
+      "width": 480,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_210.png",
+      "width": 480,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_212.png",
+      "width": 640,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_214.png",
+      "width": 320,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_216.png",
+      "width": 560,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_218.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_220.png",
+      "width": 560,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_222.png",
+      "width": 720,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_224.png",
+      "width": 480,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_226.png",
+      "width": 320,
+      "height": 320,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_228.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_230.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_232.png",
+      "width": 400,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_234.png",
+      "width": 560,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_236.png",
+      "width": 400,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_238.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_240.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_242.png",
+      "width": 240,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_244.png",
+      "width": 160,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_246.png",
+      "width": 1120,
+      "height": 720,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_248.png",
+      "width": 640,
+      "height": 640,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_250.png",
+      "width": 640,
+      "height": 480,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_252.png",
+      "width": 640,
+      "height": 400,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_254.png",
+      "width": 400,
+      "height": 240,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_256.png",
+      "width": 480,
+      "height": 240,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_258.png",
+      "width": 240,
+      "height": 480,
+      "exact5x": true
+    },
+    {
+      "path": "Resources/res/map/map_260.png",
+      "width": 160,
+      "height": 320,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_262.png",
+      "width": 560,
+      "height": 560,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_264.png",
+      "width": 400,
+      "height": 720,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_265.png",
+      "width": 1040,
+      "height": 960,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_266.png",
+      "width": 720,
+      "height": 720,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_267.png",
+      "width": 880,
+      "height": 960,
+      "exact5x": false
+    },
+    {
+      "path": "Resources/res/map/map_268.png",
+      "width": 160,
+      "height": 160,
+      "exact5x": false
+    }
+  ]
+}

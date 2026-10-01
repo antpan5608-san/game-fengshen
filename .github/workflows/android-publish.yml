@@ -1,0 +1,104 @@
+name: Android approved server upload
+on:
+  workflow_dispatch:
+    inputs:
+      build_run_id:
+        description: 'Successful Android cloud build run ID (same main commit)'
+        required: true
+      expected_sha256:
+        description: 'Exact reviewed APK SHA-256 from that build'
+        required: true
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: fengshen-production-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-2022
+    timeout-minutes: 20
+    environment: fengshen-production
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require successful trusted build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_RUN_ID: ${{ inputs.build_run_id }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+        run: |
+          if($env:BUILD_RUN_ID -notmatch '^[0-9]+$' -or $env:EXPECTED_SHA256 -notmatch '^[a-f0-9]{64}$'){throw 'Invalid review identifiers'}
+          $run=gh run view $env:BUILD_RUN_ID --repo $env:GITHUB_REPOSITORY --json conclusion,status,event,headSha,headBranch,workflowName
+          if($LASTEXITCODE -ne 0){throw 'Cannot read source build'}
+          $r=$run|ConvertFrom-Json
+          if($r.conclusion -ne 'success' -or $r.status -ne 'completed' -or $r.event -ne 'workflow_dispatch' -or $r.headBranch -ne 'main' -or $r.headSha -ne $env:GITHUB_SHA -or $r.workflowName -ne 'Android cloud build'){throw 'Only a successful reviewed main build at this commit may publish'}
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/ci
+          run-id: ${{ inputs.build_run_id }}
+          github-token: ${{ github.token }}
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - name: Prepare existing publisher dependencies
+        run: |
+          npm ci --prefix server --ignore-scripts
+          if($LASTEXITCODE -ne 0){throw 'SSH bridge dependencies failed'}
+          & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-35' 'build-tools;35.0.0'
+          if($LASTEXITCODE -ne 0){throw 'SDK installation failed'}
+          ./ci/install-ossutil.ps1
+      - name: Verify reviewed bytes before obtaining upload credentials
+        env:
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+          BUILD_RUN_ID: ${{ inputs.build_run_id }}
+        run: |
+          ./ci/check-reviewed-apk.ps1 -ExpectedSha256 $env:EXPECTED_SHA256 -BuildRunID $env:BUILD_RUN_ID
+      - name: Inspect, publish exact APK and update existing two-version retention
+        env:
+          ALIYUN_ACCESS_KEY_ID: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+          ALIYUN_ACCESS_KEY_SECRET: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+          ALIYUN_OSS_BUCKET: kubernetes-fleetpilot
+          ALIYUN_OSS_ENDPOINT: oss-cn-beijing.aliyuncs.com
+          ALIYUN_OSS_PUBLIC_BASE_URL: https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PASS: ${{ secrets.REMOTE_PASS }}
+        run: |
+          ./check-runtime.ps1
+          $inspection=Get-Content reports/runtime-preflight.json -Raw|ConvertFrom-Json
+          if($inspection.result.status -or -not $inspection.result.retention.allowedReleases){throw 'Runtime inspection unavailable; upload prohibited'}
+          $apk=@(Get-ChildItem artifacts/ci/*-release.apk)
+          if($apk.Count -ne 1){throw 'Expected exactly one reviewed APK'}
+          ./publish-apk.ps1 -ApkPath $apk[0].FullName
+          if($LASTEXITCODE -ne 0){throw 'Publication incomplete'}
+          ./check-runtime.ps1 -Stage postflight
+          $post=Get-Content reports/runtime-postflight.json -Raw|ConvertFrom-Json
+          if($post.result.status){throw 'Published APK verified, but postflight unavailable; investigate before reporting delivery'}
+      - name: Retain publication receipts (no raw diagnostic logs)
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-publication-receipts
+          path: |
+            artifacts/published/current.json
+            artifacts/published/previous.json
+            artifacts/ci/apk-receipt.json
+          if-no-files-found: ignore
+          retention-days: 30

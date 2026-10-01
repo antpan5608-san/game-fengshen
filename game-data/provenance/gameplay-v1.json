@@ -1,0 +1,130 @@
+{
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "saveStates": "Cold boot, normal controller inputs; five verified in-memory checkpoint restores after death. No cheats or writes to emulated RAM. Branch IDs are part of the evidence.",
+  "screenshotTiming": "PNG queued for following frame; binary observations at labeled frame",
+  "scripts": [
+    {
+      "path": "tools/rom-extractor/probe-slice.lua",
+      "sha256": "079e599e4cc453788cd2b8be51dc7e1ee066bc63a8aac7e300dbc9d9affa4640"
+    },
+    {
+      "path": "tools/rom-extractor/probe-world.lua",
+      "sha256": "543d076c3e8438ddccc0c9aa778740941e326378a5dc186fee7859edb3f5184e"
+    },
+    {
+      "path": "tools/rom-extractor/probe-level.lua",
+      "sha256": "813162c488e51bd81c3852828e9bcd8f63ddbd5b5a93d62e2dc844d7880ffe56"
+    }
+  ],
+  "settings": {
+    "cheats": false,
+    "emulatedMemoryWrites": false
+  },
+  "snapshots": [
+    {
+      "bytes": 340,
+      "path": "private-derived/slice-probe/variables.tsv",
+      "sha256": "b76ab2d77ff00bf5b463039d08e1903d2542819e16ea840b9d5f2e7a051a97aa"
+    },
+    {
+      "bytes": 4704,
+      "path": "private-derived/slice-probe/frame-1500.png",
+      "sha256": "abb3562b30d4ee13a6f4d33c6889aac5ba554e8ead72888fd327e01184e548c7"
+    },
+    {
+      "bytes": 4948,
+      "path": "private-derived/slice-probe/frame-1700.png",
+      "sha256": "15cd3a7f6d0ecc8f3730f7d37a79b9ce0e68965e2de19d6f58c1a403708d5185"
+    },
+    {
+      "bytes": 5213,
+      "path": "private-derived/slice-probe/frame-0900.png",
+      "sha256": "5cec4d34f94c131f404e067daa5dc1fa03b0f04a18b5d80f300d5d0ac6939e55"
+    },
+    {
+      "bytes": 4954,
+      "path": "private-derived/slice-probe/frame-1040.png",
+      "sha256": "5cb108fcb41842b531bcdf0ab708516c92fbcf39b988e5393c99caf3796a764b"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/slice-probe/frame-0450-ram.bin",
+      "sha256": "3792492d0603f93de0c59cf723e4e78d0881155eae9471dc451d1f00a587cb52"
+    },
+    {
+      "bytes": 16384,
+      "path": "private-derived/world-probe/frame-0960-ppu.bin",
+      "sha256": "bdbedfbe0e3e593c42af412ee03526be7831ae0e66bfe6946bef1dc8bf2a3051"
+    },
+    {
+      "bytes": 10236,
+      "path": "private-derived/slice-probe/collision.tsv",
+      "sha256": "7d1243c9ab87b4353d0754ddd00bf50631673f21aa9ba4020d05f37343a49cd8"
+    },
+    {
+      "bytes": 8033,
+      "path": "private-derived/world-probe/collision.tsv",
+      "sha256": "ad30b609b29c161bcc1e436ff59ba7d66f1d97ba9dd28e9afd9268fe971c3daa"
+    },
+    {
+      "bytes": 45403,
+      "path": "private-derived/world-probe/trajectory.tsv",
+      "sha256": "3c55ea81e4d27afbadf88eea9c7e3ff20d593d343796a7a87fa8e6af024d168c"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/013121-b1-growth-entry-ram.bin",
+      "sha256": "a4bb039bc880a4e249026e3b7b5241668e1c626828c42a1761d584e2ac79dc0b"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/013121-b1-growth-entry-sram.bin",
+      "sha256": "322cff5ff1dd900ff4efd7b8960fd14cc5cb01e2bb57a91210c47481e4a37b06"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/013121-b1-change-ram.bin",
+      "sha256": "243c993fc5cc9ae5bf52560a0be465eb77a2927ad6e2e02b9640b423844395b7"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/013121-b1-change-sram.bin",
+      "sha256": "4f9416499b6d64a3a7c66545bde7177c27198f95b36e73022c1309e536c8cc71"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/039282-b5-growth-entry-ram.bin",
+      "sha256": "4dec73c2b3504b9475dba3690460e8e8409889b8b796b0d062964aa9ae92facd"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/039282-b5-growth-entry-sram.bin",
+      "sha256": "1dc9a72aa881e79a0ec7fb1f63294bad055cb6adf2813f797365d76558271450"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/039282-b5-change-ram.bin",
+      "sha256": "4c6240b16f3e05a7ce8f996685380cd58de505625c8223e7b8f01723dc19cc1e"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/039282-b5-change-sram.bin",
+      "sha256": "ce2755a7738558c4db36ba6894849ef23dd83191998411e0804012db5c06b85c"
+    },
+    {
+      "bytes": 3802,
+      "path": "private-derived/level-probe/events.tsv",
+      "sha256": "f2235254737a407eef285fbdbe05af477348ce7678a4cf5ff80d96d515b75b52"
+    },
+    {
+      "bytes": 6847,
+      "path": "private-derived/level-probe/writes.tsv",
+      "sha256": "f70415edb90b007dd114536cd7f552fb083591b2c5013e9c79e5345d22e29869"
+    },
+    {
+      "bytes": 2048,
+      "path": "private-derived/level-probe/007500-b0-periodic-sram.bin",
+      "sha256": "2903e79bdd44722ffaa114799f8fb4d7dba720e8fc093e84d6e5f04202914429"
+    }
+  ]
+}

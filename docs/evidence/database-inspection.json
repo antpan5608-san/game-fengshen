@@ -1,0 +1,2460 @@
+{
+  "integrity": [
+    [
+      "ok"
+    ]
+  ],
+  "tables": {
+    "LianJi": {
+      "sql": "CREATE TABLE [LianJi] (\r\n  [id] integer, \r\n  [pro_01] float, \r\n  [pro_02] float, \r\n  [pro_03] float, \r\n  [pro_04] float)",
+      "count": 80,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "pro_01",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "pro_02",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "pro_03",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "pro_04",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "pro_01": 0.99,
+          "pro_02": 0.01,
+          "pro_03": 0.0,
+          "pro_04": 0.0
+        },
+        {
+          "id": 2,
+          "pro_01": 0.985,
+          "pro_02": 0.015,
+          "pro_03": 0.0,
+          "pro_04": 0.0
+        }
+      ]
+    },
+    "auto_move": {
+      "sql": "CREATE TABLE [auto_move] (\r\n  [id] integer, \r\n  [mapId] integer, \r\n  [hero_posX] integer, \r\n  [hero_posY] integer, \r\n  [hero_dir] integer, \r\n  [npcId] integer, \r\n  [npc_start_posX] integer, \r\n  [npc_start_posY] integer, \r\n  [npc_end_posX] integer, \r\n  [npc_end_posY] integer, \r\n  [storyId] integer, \r\n  [npc_dir] integer, \r\n  [autoMoveId] integer, \r\n  [type] integer, \r\n  [note] text, \r\n  [switch_on] integer, \r\n  [switch_off] integer, \r\n  [delay] integer)",
+      "count": 137,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "hero_posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "hero_posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "hero_dir",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "npcId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "npc_start_posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "npc_start_posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "npc_end_posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "npc_end_posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "storyId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "npc_dir",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "autoMoveId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "switch_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "switch_off",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "delay",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "mapId": 13,
+          "hero_posX": 2,
+          "hero_posY": 4,
+          "hero_dir": 8,
+          "npcId": 554,
+          "npc_start_posX": 12,
+          "npc_start_posY": 4,
+          "npc_end_posX": 3,
+          "npc_end_posY": 4,
+          "storyId": 47,
+          "npc_dir": 6,
+          "autoMoveId": 0,
+          "type": 0,
+          "note": "当主角走到（2.4）时触发动画，北海龙王从右往左出现并走近然后出现对话（id47），发生战斗，战斗胜利后北欧海龙王停在终点",
+          "switch_on": 0,
+          "switch_off": 48,
+          "delay": 0
+        },
+        {
+          "id": 2,
+          "mapId": 15,
+          "hero_posX": 3,
+          "hero_posY": 7,
+          "hero_dir": 5,
+          "npcId": 34,
+          "npc_start_posX": 3,
+          "npc_start_posY": 3,
+          "npc_end_posX": 3,
+          "npc_end_posY": 6,
+          "storyId": 50,
+          "npc_dir": 6,
+          "autoMoveId": 0,
+          "type": 0,
+          "note": "当主角触发开关时，小龙女走近主角出现对话（id50），对话完发生战斗",
+          "switch_on": 0,
+          "switch_off": 50,
+          "delay": 0
+        }
+      ]
+    },
+    "battle": {
+      "sql": "CREATE TABLE [battle] (\r\n  [id] integer, \r\n  [monster_01] integer, \r\n  [monster_02] integer, \r\n  [monster_03] integer, \r\n  [monster_04] integer, \r\n  [monster_05] integer, \r\n  [monster_06] integer, \r\n  [is_escape] integer, \r\n  [switch_on] integer, \r\n  [switch_off] integer, \r\n  [map_id] integer, \r\n  [type] integer, \r\n  [note] text, \r\n  [bg] text, \r\n  [nextStoryId] integer, \r\n  [autoMoveId] integer, \r\n  [mibaoid] integer)",
+      "count": 153,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "monster_01",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "monster_02",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "monster_03",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "monster_04",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "monster_05",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "monster_06",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "is_escape",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "switch_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "switch_off",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "bg",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "nextStoryId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "autoMoveId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "mibaoid",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "monster_01": 1,
+          "monster_02": 1,
+          "monster_03": 1,
+          "monster_04": 1,
+          "monster_05": 0,
+          "monster_06": 0,
+          "is_escape": 1,
+          "switch_on": 0,
+          "switch_off": 9999,
+          "map_id": 0,
+          "type": 1,
+          "note": "哪吒家外",
+          "bg": "Bg_013",
+          "nextStoryId": 0,
+          "autoMoveId": 0,
+          "mibaoid": 0
+        },
+        {
+          "id": 2,
+          "monster_01": 1,
+          "monster_02": 1,
+          "monster_03": 1,
+          "monster_04": 1,
+          "monster_05": 0,
+          "monster_06": 0,
+          "is_escape": 1,
+          "switch_on": 0,
+          "switch_off": 9999,
+          "map_id": 0,
+          "type": 1,
+          "note": "陈塘村外",
+          "bg": "Bg_013",
+          "nextStoryId": 0,
+          "autoMoveId": 0,
+          "mibaoid": 0
+        }
+      ]
+    },
+    "map": {
+      "sql": "CREATE TABLE \"map\"(\r\n[id] integer\r\n,[res] test\r\n,[description] test\r\n,[name] test\r\n,[heroPosX] integer\r\n,[heroPosY] integer\r\n,[soundId] integer\r\n,[jump_map_id] integer\r\n,[jump_pos_x] integer\r\n,[jump_pos_y] integer\r\n,[type] integer\r\n,[zeroPosX] integer\r\n,[zeroPosY] integer\r\n,[bgm] integer\r\n   \r\n)",
+      "count": 259,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "res",
+          "type": "test",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "description",
+          "type": "test",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "name",
+          "type": "test",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "heroPosX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "heroPosY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "soundId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "jump_map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "jump_pos_x",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "jump_pos_y",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "zeroPosX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "zeroPosY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "bgm",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "res": "map/map_001.tmx",
+          "description": "陈塘关（哪吒家）",
+          "name": "陈塘关",
+          "heroPosX": 0,
+          "heroPosY": 0,
+          "soundId": 0,
+          "jump_map_id": 256,
+          "jump_pos_x": 22,
+          "jump_pos_y": 9,
+          "type": 0,
+          "zeroPosX": 0,
+          "zeroPosY": 0,
+          "bgm": 2
+        },
+        {
+          "id": 2,
+          "res": "map/map_002.tmx",
+          "description": "陈塘村",
+          "name": "陈塘村",
+          "heroPosX": 0,
+          "heroPosY": 0,
+          "soundId": 0,
+          "jump_map_id": 255,
+          "jump_pos_x": 21,
+          "jump_pos_y": 41,
+          "type": 0,
+          "zeroPosX": 0,
+          "zeroPosY": 0,
+          "bgm": 2
+        }
+      ]
+    },
+    "map_box": {
+      "sql": "CREATE TABLE [map_box] (\r\n  [id] integer, \r\n  [mapId] integer, \r\n  [posX] integer, \r\n  [posY] integer, \r\n  [objId] integer, \r\n  [objNum] integer, \r\n  [is_box] integer)",
+      "count": 175,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "objId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "objNum",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "is_box",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "mapId": 1,
+          "posX": 25,
+          "posY": 20,
+          "objId": 1,
+          "objNum": 1,
+          "is_box": 1
+        },
+        {
+          "id": 2,
+          "mapId": 10,
+          "posX": 1,
+          "posY": 5,
+          "objId": 1,
+          "objNum": 1,
+          "is_box": 1
+        }
+      ]
+    },
+    "map_buy": {
+      "sql": "CREATE TABLE [map_buy](\r\n[id] integer\r\n,[mapId] integer\r\n,[npcId] integer\r\n,[objId] integer\r\n   \r\n)",
+      "count": 230,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "npcId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "objId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "mapId": 6,
+          "npcId": 22,
+          "objId": 1
+        },
+        {
+          "id": 2,
+          "mapId": 6,
+          "npcId": 22,
+          "objId": 2
+        }
+      ]
+    },
+    "map_mask": {
+      "sql": "CREATE TABLE \"map_mask\"(\r\n[id] integer\r\n,[map_id] integer\r\n,[posX] integer\r\n,[posY] integer\r\n,[width] integer\r\n,[height] integer\r\n,[res] text\r\n   \r\n)",
+      "count": 322,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "width",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "height",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "res",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "map_id": 1,
+          "posX": 6,
+          "posY": 9,
+          "width": 1,
+          "height": 2,
+          "res": "object_004"
+        },
+        {
+          "id": 2,
+          "map_id": 1,
+          "posX": 14,
+          "posY": 9,
+          "width": 1,
+          "height": 2,
+          "res": "object_004"
+        }
+      ]
+    },
+    "map_monster": {
+      "sql": "CREATE TABLE [map_monster] (\r\n  [id] integer, \r\n  [monster_01] integer, \r\n  [monster_02] integer, \r\n  [monster_03] integer, \r\n  [monster_04] integer, \r\n  [monster_05] integer, \r\n  [monster_06] integer, \r\n  [note] text)",
+      "count": 58,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "monster_01",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "monster_02",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "monster_03",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "monster_04",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "monster_05",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "monster_06",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "monster_01": 1,
+          "monster_02": 2,
+          "monster_03": 3,
+          "monster_04": 0,
+          "monster_05": 0,
+          "monster_06": 0,
+          "note": "哪吒家外，陈塘村外，新月岛外，捕鱼村外"
+        },
+        {
+          "id": 2,
+          "monster_01": 4,
+          "monster_02": 5,
+          "monster_03": 0,
+          "monster_04": 0,
+          "monster_05": 0,
+          "monster_06": 0,
+          "note": "南部海底"
+        }
+      ]
+    },
+    "map_npc": {
+      "sql": "CREATE TABLE \"map_npc\"(\r\n[id] integer\r\n,[mapId] integer\r\n,[width] integer\r\n,[height] integer\r\n,[dir] integer\r\n,[isMove] integer\r\n,[zeroPosX] integer\r\n,[zeroPosY] integer\r\n,[minPosX] integer\r\n,[minPosY] integer\r\n,[maxPosX] integer\r\n,[maxPosY] integer\r\n,[storyId] integer\r\n,[switch_on] integer\r\n,[switch_off] integer\r\n,[zero_id] integer\r\n,[res] text\r\n,[note] text\r\n,[type] integer\r\n,[check_pos] integer\r\n,[cost_money] integer\r\n   \r\n)",
+      "count": 643,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "width",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "height",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "dir",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "isMove",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "zeroPosX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "zeroPosY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "minPosX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "minPosY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "maxPosX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "maxPosY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "storyId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "switch_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "switch_off",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "zero_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "res",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "check_pos",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "cost_money",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "mapId": 1,
+          "width": 1,
+          "height": 1,
+          "dir": 6,
+          "isMove": 0,
+          "zeroPosX": 9,
+          "zeroPosY": 16,
+          "minPosX": 9,
+          "minPosY": 16,
+          "maxPosX": 9,
+          "maxPosY": 16,
+          "storyId": 7,
+          "switch_on": 0,
+          "switch_off": 7,
+          "zero_id": 1,
+          "res": "Npc_024",
+          "note": "陈塘关（哪吒家）李靖（首次对话）",
+          "type": 0,
+          "check_pos": 0,
+          "cost_money": 0
+        },
+        {
+          "id": 2,
+          "mapId": 1,
+          "width": 1,
+          "height": 1,
+          "dir": 6,
+          "isMove": 0,
+          "zeroPosX": 8,
+          "zeroPosY": 16,
+          "minPosX": 8,
+          "minPosY": 16,
+          "maxPosX": 8,
+          "maxPosY": 16,
+          "storyId": 9,
+          "switch_on": 0,
+          "switch_off": 9,
+          "zero_id": 2,
+          "res": "Npc_053",
+          "note": "陈塘关（哪吒家）殷氏（首次对话）",
+          "type": 0,
+          "check_pos": 0,
+          "cost_money": 0
+        }
+      ]
+    },
+    "map_object": {
+      "sql": "CREATE TABLE [map_object] (\r\n  [id] integer, \r\n  [map_id] integer, \r\n  [posX] integer, \r\n  [posY] integer, \r\n  [width] integer, \r\n  [height] integer, \r\n  [res] text, \r\n  [resType] integer, \r\n  [switch_on] integer, \r\n  [switch_off] integer, \r\n  [note] text, \r\n  [type] integer, \r\n  [connect_id] integer)",
+      "count": 222,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "width",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "height",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "res",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "resType",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "switch_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "switch_off",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "connect_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "map_id": 30,
+          "posX": 28,
+          "posY": 82,
+          "width": 1,
+          "height": 1,
+          "res": "resCCB/Object/object_015.png",
+          "resType": 1,
+          "switch_on": 0,
+          "switch_off": 9999,
+          "note": "恢复瓦罐（恢复满所有成员hp和mp）可以复活",
+          "type": 4,
+          "connect_id": 0
+        },
+        {
+          "id": 2,
+          "map_id": 30,
+          "posX": 38,
+          "posY": 65,
+          "width": 1,
+          "height": 1,
+          "res": "resCCB/Object/object_015.png",
+          "resType": 1,
+          "switch_on": 0,
+          "switch_off": 9999,
+          "note": "恢复瓦罐（恢复满所有成员hp和mp）可以复活",
+          "type": 4,
+          "connect_id": 0
+        }
+      ]
+    },
+    "map_warp_point": {
+      "sql": "CREATE TABLE [map_warp_point] (\r\n  [id] integer, \r\n  [cur_map_id] integer, \r\n  [point_x] integer, \r\n  [point_y] integer, \r\n  [tar_map_id] integer, \r\n  [tar_hero_pos_x] integer, \r\n  [tar_hero_pos_y] integer, \r\n  [tar_hero_dir] integer, \r\n  [note] text, \r\n  [switch_on] integer, \r\n  [switch_off] integer, \r\n  [type] integer)",
+      "count": 3548,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "cur_map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "point_x",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "point_y",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "tar_map_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "tar_hero_pos_x",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "tar_hero_pos_y",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "tar_hero_dir",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "switch_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "switch_off",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "cur_map_id": 1,
+          "point_x": 9,
+          "point_y": 30,
+          "tar_map_id": 256,
+          "tar_hero_pos_x": 22,
+          "tar_hero_pos_y": 9,
+          "tar_hero_dir": 5,
+          "note": "陈塘关（哪吒家）〓?世界地图",
+          "switch_on": 0,
+          "switch_off": 9999,
+          "type": 0
+        },
+        {
+          "id": 2,
+          "cur_map_id": 256,
+          "point_x": 22,
+          "point_y": 9,
+          "tar_map_id": 1,
+          "tar_hero_pos_x": 9,
+          "tar_hero_pos_y": 30,
+          "tar_hero_dir": 5,
+          "note": "世界地图〓?陈塘关（哪吒家）",
+          "switch_on": 0,
+          "switch_off": 9999,
+          "type": 0
+        }
+      ]
+    },
+    "monster": {
+      "sql": "CREATE TABLE [monster] (\r\n  [id] integer, \r\n  [name] text, \r\n  [res] text, \r\n  [exp] integer, \r\n  [money] integer, \r\n  [skillId] integer, \r\n  [skillHurtNum] integer, \r\n  [atk] integer, \r\n  [def] integer, \r\n  [agi] integer, \r\n  [hp] integer, \r\n  [object] integer, \r\n  [note] text, \r\n  [type] integer, \r\n  [buffType] integer, \r\n  [buff_pro] float, \r\n  [object_pro] float)",
+      "count": 174,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "res",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "exp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "money",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "skillId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "skillHurtNum",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "atk",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "def",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "agi",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "hp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "object",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "buffType",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "buff_pro",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "object_pro",
+          "type": "float",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "name": "螳螂怪",
+          "res": "Monster_125",
+          "exp": 1,
+          "money": 1,
+          "skillId": 0,
+          "skillHurtNum": 0,
+          "atk": 5,
+          "def": 1,
+          "agi": 1,
+          "hp": 8,
+          "object": 0,
+          "note": "哪吒家外，陈塘村外，新月岛外，捕鱼村外",
+          "type": 1,
+          "buffType": 0,
+          "buff_pro": 0.25,
+          "object_pro": 0.0
+        },
+        {
+          "id": 2,
+          "name": "臭甲虫",
+          "res": "Monster_020",
+          "exp": 2,
+          "money": 1,
+          "skillId": 0,
+          "skillHurtNum": 0,
+          "atk": 7,
+          "def": 2,
+          "agi": 2,
+          "hp": 10,
+          "object": 0,
+          "note": "哪吒家外，陈塘村外，新月岛外，捕鱼村外",
+          "type": 1,
+          "buffType": 0,
+          "buff_pro": 0.25,
+          "object_pro": 0.0
+        }
+      ]
+    },
+    "object": {
+      "sql": "CREATE TABLE [object] (\r\n  [id] integer, \r\n  [name] text, \r\n  [description] text, \r\n  [type] integer, \r\n  [number1] integer, \r\n  [res] text, \r\n  [buy_price] integer, \r\n  [sell_price] integer, \r\n  [mini_type] integer, \r\n  [isTwoHand] integer, \r\n  [role01] integer, \r\n  [role02] integer, \r\n  [role03] integer, \r\n  [role04] integer, \r\n  [isdisappear] integer, \r\n  [sell_storyId] integer)",
+      "count": 147,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "description",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "number1",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "res",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "buy_price",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "sell_price",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "mini_type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "isTwoHand",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "role01",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "role02",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "role03",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "role04",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "isdisappear",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "sell_storyId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "name": "小刀",
+          "description": "作为用处广泛的短刀，不如说是匕首，上可刺杀圣上，下可削皮切瓜，实在杀人旅行，必备佳品，攻击力加2",
+          "type": 2,
+          "number1": 2,
+          "res": "Icon_077",
+          "buy_price": 15,
+          "sell_price": 7,
+          "mini_type": 1,
+          "isTwoHand": 0,
+          "role01": 1,
+          "role02": 0,
+          "role03": 0,
+          "role04": 0,
+          "isdisappear": 0,
+          "sell_storyId": 0
+        },
+        {
+          "id": 2,
+          "name": "手刀",
+          "description": "刀尖锐利，刀背斜阔，柄下有鐏。刀直且刀锋利，刀不长不短，乃是当今杀人用得最多的刀具之一，攻击力加5",
+          "type": 2,
+          "number1": 5,
+          "res": "Icon_061",
+          "buy_price": 50,
+          "sell_price": 25,
+          "mini_type": 1,
+          "isTwoHand": 0,
+          "role01": 1,
+          "role02": 0,
+          "role03": 0,
+          "role04": 0,
+          "isdisappear": 0,
+          "sell_storyId": 0
+        }
+      ]
+    },
+    "role_lv": {
+      "sql": "CREATE TABLE [role_lv] (\r\n  [id] integer, \r\n  [roleId] integer, \r\n  [roleLv] integer, \r\n  [hp] integer, \r\n  [mp] integer, \r\n  [li_liang] integer, \r\n  [min_jie] integer, \r\n  [ti_neng] integer, \r\n  [jin_shen] integer, \r\n  [at] integer, \r\n  [df] integer, \r\n  [exp] integer, \r\n  [reward_exp] integer, \r\n  [reward_gold] integer)",
+      "count": 249,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "roleId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "roleLv",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "hp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "mp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "li_liang",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "min_jie",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "ti_neng",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "jin_shen",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "at",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "df",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "exp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "reward_exp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "reward_gold",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "roleId": 1,
+          "roleLv": 1,
+          "hp": 20,
+          "mp": 0,
+          "li_liang": 8,
+          "min_jie": 2,
+          "ti_neng": 4,
+          "jin_shen": 4,
+          "at": 8,
+          "df": 4,
+          "exp": 7,
+          "reward_exp": 18,
+          "reward_gold": 12
+        },
+        {
+          "id": 2,
+          "roleId": 1,
+          "roleLv": 2,
+          "hp": 23,
+          "mp": 0,
+          "li_liang": 10,
+          "min_jie": 3,
+          "ti_neng": 5,
+          "jin_shen": 4,
+          "at": 10,
+          "df": 5,
+          "exp": 27,
+          "reward_exp": 20,
+          "reward_gold": 14
+        }
+      ]
+    },
+    "skill": {
+      "sql": "CREATE TABLE [skill] (\r\n  [id] integer, \r\n  [name] text, \r\n  [costMp] integer, \r\n  [roleId] integer, \r\n  [roleLv] integer, \r\n  [targetType] integer, \r\n  [isBattleUse] integer, \r\n  [skEffect] text, \r\n  [desc] text, \r\n  [note] text)",
+      "count": 34,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "costMp",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "roleId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "roleLv",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "targetType",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "isBattleUse",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "skEffect",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "desc",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "name": "提神术",
+          "costMp": 3,
+          "roleId": 1,
+          "roleLv": 12,
+          "targetType": 2,
+          "isBattleUse": 1,
+          "skEffect": "Effect_001",
+          "desc": "初级单人加血，17+3*等级",
+          "note": "此术乃是“三皇”之一的黄帝教授予小龙女，当年黄帝召集手下各种精通医术的大臣研究出一套完善的医学，此术能使固定一人恢复少量气血"
+        },
+        {
+          "id": 2,
+          "name": "解毒术",
+          "costMp": 3,
+          "roleId": 1,
+          "roleLv": 12,
+          "targetType": 2,
+          "isBattleUse": 1,
+          "skEffect": "Effect_001",
+          "desc": "解毒",
+          "note": "此术乃是“三皇”之一的神农教授予小龙女，当年神农以身试药，尝百草，辨识药性，终成百草药典，此术能使固定一人从中毒状态中恢复健康"
+        }
+      ]
+    },
+    "store": {
+      "sql": "CREATE TABLE [store] (\r\n  [id] integer, \r\n  [name] text, \r\n  [icon] text, \r\n  [price] integer, \r\n  [desc] text, \r\n  [type] int, \r\n  [note] text, \r\n  [connect_id] integer)",
+      "count": 21,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "icon",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "price",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "desc",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "type",
+          "type": "INT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "connect_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "name": "清心丹",
+          "icon": "0",
+          "price": 10,
+          "desc": "乃是神农用数种天材地宝所制成的丹药，凭借此丹药救治了西岐城数万百姓。使用此药后能解除一人所受的所有负面状态。",
+          "type": 1,
+          "note": "解除一个人所有的负面状态",
+          "connect_id": 140
+        },
+        {
+          "id": 2,
+          "name": "龟龄集",
+          "icon": "0",
+          "price": 30,
+          "desc": "采用天地间多种天材地宝所制成的药酒，恢复满hp和mp",
+          "type": 1,
+          "note": "道具龟龄集",
+          "connect_id": 99
+        }
+      ]
+    },
+    "story": {
+      "sql": "CREATE TABLE [story] (\r\n  [id] integer, \r\n  [speakerId] integer, \r\n  [type] integer, \r\n  [speak_words] text, \r\n  [next_story_id] integer, \r\n  [getItemId] integer, \r\n  [getItemNum] integer, \r\n  [nextSceneId] text, \r\n  [sceneParam] integer, \r\n  [tar_x] integer, \r\n  [tar_y] integer, \r\n  [dir] integer, \r\n  [note] text, \r\n  [autoMoveId] integer)",
+      "count": 639,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "speakerId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "speak_words",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "next_story_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "getItemId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "getItemNum",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "nextSceneId",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "sceneParam",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "tar_x",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "tar_y",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "dir",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "note",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "autoMoveId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "speakerId": 149,
+          "type": 0,
+          "speak_words": "完了，这次可闯大祸了，还是先去见见爹娘吧！",
+          "next_story_id": 0,
+          "getItemId": 0,
+          "getItemNum": 0,
+          "nextSceneId": "0",
+          "sceneParam": 0,
+          "tar_x": 0,
+          "tar_y": 0,
+          "dir": 0,
+          "note": "0",
+          "autoMoveId": 0
+        },
+        {
+          "id": 2,
+          "speakerId": 3,
+          "type": 1,
+          "speak_words": "哪吒少爷！我会照顾夫人的，你放心吧！",
+          "next_story_id": 0,
+          "getItemId": 0,
+          "getItemNum": 0,
+          "nextSceneId": "0",
+          "sceneParam": 0,
+          "tar_x": 0,
+          "tar_y": 0,
+          "dir": 0,
+          "note": "0",
+          "autoMoveId": 0
+        }
+      ]
+    },
+    "yingyi": {
+      "sql": "CREATE TABLE [yingyi] (\r\n  [id] integer, \r\n  [mapId] integer, \r\n  [posX] integer, \r\n  [posY] integer, \r\n  [name] text, \r\n  [unlock_mapId] integer)",
+      "count": 13,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "posX",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "posY",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "unlock_mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 1,
+          "mapId": 255,
+          "posX": 20,
+          "posY": 41,
+          "name": "陈塘村",
+          "unlock_mapId": 2
+        },
+        {
+          "id": 2,
+          "mapId": 256,
+          "posX": 57,
+          "posY": 27,
+          "name": "平安村",
+          "unlock_mapId": 48
+        }
+      ]
+    },
+    "z_save_base_info": {
+      "sql": "CREATE TABLE \"z_save_base_info\"(\r\n[saveId] integer\r\n,[year] integer\r\n,[month] integer\r\n,[day] integer\r\n,[hour] integer\r\n,[minute] integer\r\n,[second] integer\r\n,[mapId] integer\r\n,[role01_lv] integer\r\n   \r\n)",
+      "count": 0,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "saveId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "year",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "month",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "day",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "hour",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "minute",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "second",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "mapId",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "role01_lv",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": []
+    },
+    "z_save_system": {
+      "sql": "CREATE TABLE [z_save_system] (\r\n  [id] integer, \r\n  [is_music_on] integer, \r\n  [is_sound_on] integer, \r\n  [move_type] integer)",
+      "count": 1,
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 1,
+          "name": "is_music_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "is_sound_on",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "move_type",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "sample": [
+        {
+          "id": 0,
+          "is_music_on": 1,
+          "is_sound_on": 1,
+          "move_type": 0
+        }
+      ]
+    }
+  }
+}

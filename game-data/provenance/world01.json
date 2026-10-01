@@ -1,0 +1,183 @@
+{
+  "arrivalFacing": {
+    "confidence": "GAMEPLAY_VERIFIED_FOR_OBSERVED_TRANSITIONS",
+    "cpuRamAddress": "0097",
+    "decodedDirection": "DOWN",
+    "mappingEvidence": "Normal up/right movement samples use RAM $97 values 1/4; after each observed map transfer the settled value is 0 and sprite faces down.",
+    "rawValue": 0,
+    "runtimeFrames": [
+      {
+        "capture": "private-derived/world01-return/trajectory.tsv",
+        "frame": 930,
+        "mapId": 114
+      },
+      {
+        "capture": "private-derived/world01-next-80/trajectory.tsv",
+        "frame": 1230,
+        "mapId": 0
+      },
+      {
+        "capture": "private-derived/world01-roundtrip-80/trajectory.tsv",
+        "frame": 1420,
+        "mapId": 16
+      }
+    ]
+  },
+  "captures": {
+    "private-derived/world01-next-80/settled-ppu.bin": "c899a9fdd943fe193720111f721bd89fd57c39a80212fb814f12146889199fb3",
+    "private-derived/world01-next-80/trajectory.tsv": "7025838caf1018507607d3c5338286b7c93156149cdbfb989a5bfcfc3445f582",
+    "private-derived/world01-next-80/transitions.tsv": "960c41abfdc90df91ac9789af0c74a5fe9fef680b7adb0a3bbaed4f2df2a46e2",
+    "private-derived/world01-return/trajectory.tsv": "13e748c888f237777ee65b9a324d5b6b7faf9658452be6e5f20cc665a1e63f87",
+    "private-derived/world01-return/transitions.tsv": "f86309d4228387c158a33f293a1e84f8e6f3df8c7b99a8961301fae27422b25c",
+    "private-derived/world01-roundtrip-80/trajectory.tsv": "bc8b89f035ae806dad76e529432e4cfb3ce34a053628f566a457301cf997a4e5",
+    "private-derived/world01-roundtrip-80/transitions.tsv": "2c351f71caca4d4607753697ec16da695e29aa9f655a76eb8fa519018bae9bb6"
+  },
+  "exits": [
+    {
+      "arrival": [
+        203,
+        142
+      ],
+      "fromMapId": 114,
+      "rawHex": "081d10cb8e",
+      "rom": {
+        "cpuAddress": 58529,
+        "length": 5,
+        "meaning": "Exit table row",
+        "module": 8,
+        "offset": 287921,
+        "sha256": "26b187988f930e51e29fcd31029e11d00a656a406e2b19e6b585ec6f88b58bab"
+      },
+      "runtimeVerified": true,
+      "toMapId": 16,
+      "trigger": [
+        8,
+        29
+      ],
+      "triggerMode": "CELL"
+    },
+    {
+      "arrival": [
+        8,
+        29
+      ],
+      "fromMapId": 16,
+      "rawHex": "cb8e72081d",
+      "rom": {
+        "cpuAddress": 56908,
+        "length": 5,
+        "meaning": "Exit table row",
+        "module": 8,
+        "offset": 286300,
+        "sha256": "4209ae51693d80595ab7607da1a9385da38af128afb6a815b9d52d7d22f30476"
+      },
+      "runtimeVerified": true,
+      "toMapId": 114,
+      "trigger": [
+        203,
+        142
+      ],
+      "triggerMode": "CELL"
+    },
+    {
+      "arrival": [
+        0,
+        15
+      ],
+      "fromMapId": 16,
+      "rawHex": "ca8200000f",
+      "rom": {
+        "cpuAddress": 56913,
+        "length": 5,
+        "meaning": "Exit table row",
+        "module": 8,
+        "offset": 286305,
+        "sha256": "faafb9b9d19655f29b7007b0d2fd54deb3b0411ca22f3ddfaf9aa732d7f38f22"
+      },
+      "runtimeVerified": true,
+      "toMapId": 0,
+      "trigger": [
+        202,
+        130
+      ],
+      "triggerMode": "CELL"
+    },
+    {
+      "arrival": [
+        0,
+        15
+      ],
+      "fromMapId": 16,
+      "rawHex": "cb8200000f",
+      "rom": {
+        "cpuAddress": 56918,
+        "length": 5,
+        "meaning": "Exit table row",
+        "module": 8,
+        "offset": 286310,
+        "sha256": "4ea1f1df7e2be135ea7d0e1b6e7b84446ca9401f111a8b4b08af900cd427b7ca"
+      },
+      "runtimeVerified": false,
+      "toMapId": 0,
+      "trigger": [
+        203,
+        130
+      ],
+      "triggerMode": "CELL"
+    },
+    {
+      "arrival": [
+        202,
+        130
+      ],
+      "fromMapId": 0,
+      "rawHex": "ff8210ca82",
+      "rom": {
+        "cpuAddress": 56777,
+        "length": 5,
+        "meaning": "Exit table row",
+        "module": 8,
+        "offset": 286169,
+        "sha256": "901406cbbbd5e7267ec7b78bb3e85b82e3da1bfd5e051323f2c07af794e3abf3"
+      },
+      "runtimeVerified": true,
+      "toMapId": 16,
+      "trigger": [
+        0,
+        14
+      ],
+      "triggerMode": "EDGE_LEFT"
+    }
+  ],
+  "limitations": [
+    "World random encounter occurred in other controller timings. Android battle is not implemented in WORLD-01.",
+    "Map0 NPCs and interior entrances are not enabled in this package.",
+    "Normal-foot collision class meanings are supported by sampled runtime evidence; other classes remain closed."
+  ],
+  "map0Name": {
+    "confidence": "PROVISIONAL_REFERENCE",
+    "source": "Reference Project map table + ROM runtime visual correspondence",
+    "value": "陈塘村"
+  },
+  "probeScript": {
+    "method": "FCEUX 2.6.6 cold boot and normal controller input; RAM reads only; no RAM writes or debug teleport",
+    "path": "tools/rom-extractor/probe-world01.lua",
+    "sha256": "dbe8f1bd2a2a98383eb072e96867eb2671befd2fea83e3c250d7404982c9b334"
+  },
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "routes": {
+    "homeReturn": {
+      "frame": 915,
+      "path": "16 (203,142) -> (203,141) -> (203,142) -> 114 (8,29)"
+    },
+    "villageEntry": {
+      "frame": 1115,
+      "path": "16 (203,142) -> (202,130) -> 0 (0,15)"
+    },
+    "villageReturn": {
+      "frame": 1303,
+      "path": "0 (0,15) -> (0,14) LEFT at boundary -> 16 (202,130)"
+    }
+  },
+  "taskId": "WORLD-01"
+}

@@ -1,0 +1,2472 @@
+[
+  {
+    "file": "Resources/res/map/map_002.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_003.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_004.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_005.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_006.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_007.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_008.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_009.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_010.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_013.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_014.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_015.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_016.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_017.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_018.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_019.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_020.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_021.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_022.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_023.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_024.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_025.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_026.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_027.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_028.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_029.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_033.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_040.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_041.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_042.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_044.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_047.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_048.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_049.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_050.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_051.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_052.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_053.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_054.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_055.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_056.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_058.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_059.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_060.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_061.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_062.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_063.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_064.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_066.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_067.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_068.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_069.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_070.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_071.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_072.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_073.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_074.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_075.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_076.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_077.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_078.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_079.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_080.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_081.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_083.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_084.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_085.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_086.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_087.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_088.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_089.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_095.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_096.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_099.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_100.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_103.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_104.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_105.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_106.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_107.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_108.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_109.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_110.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_112.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_113.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_114.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_115.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_116.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_117.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_119.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_121.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_122.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_123.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_126.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_127.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_129.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_130.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_131.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_132.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_133.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_134.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_135.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_136.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_137.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_138.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_139.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_140.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_141.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_142.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_143.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_144.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_145.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_146.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_147.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_148.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_150.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_154.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_155.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_156.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_157.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_158.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_159.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_160.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_161.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_162.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_163.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_166.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_170.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_171.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_172.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_174.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_175.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_176.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_177.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_178.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_181.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_182.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_183.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_184.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_185.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_186.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_187.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_188.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_189.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_190.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_191.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_192.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_193.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_194.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_195.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_196.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_197.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_198.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_200.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_201.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_202.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_203.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_205.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_206.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_208.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_209.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_210.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_211.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_212.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_213.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_214.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_215.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_216.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_217.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_218.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_219.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_220.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_221.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_222.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_223.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_224.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_225.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_226.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_227.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_228.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_229.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_230.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_232.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_233.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_235.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_236.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_237.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_237.tmx",
+    "image": "map_059.png",
+    "declared": [
+      240,
+      240
+    ],
+    "actual": [
+      240,
+      320
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_238.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  },
+  {
+    "file": "Resources/res/map/map_246.tmx",
+    "image": "mac.png",
+    "declared": [
+      240,
+      160
+    ],
+    "actual": [
+      240,
+      240
+    ],
+    "warning": "TMX declared image dimensions differ; preserve declared GID boundaries until reviewed"
+  }
+]
