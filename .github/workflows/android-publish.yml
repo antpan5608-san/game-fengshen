@@ -2,12 +2,18 @@ name: Android approved server upload
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'publish uploads a reviewed APK; inspect only reads runtime diagnostics'
+        type: choice
+        options: [publish, inspect]
+        default: publish
+        required: true
       build_run_id:
         description: 'Successful Android cloud build run ID (same main commit)'
-        required: true
+        required: false
       expected_sha256:
         description: 'Exact reviewed APK SHA-256 from that build'
-        required: true
+        required: false
 permissions:
   contents: read
   actions: read
@@ -26,6 +32,7 @@ jobs:
           GH_TOKEN: ${{ secrets.FENGSHEN_DEPLOY_REVIEW_TOKEN }}
           BUILD_RUN_ID: ${{ inputs.build_run_id }}
           EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+          OPERATION: ${{ inputs.mode }}
         shell: bash
         run: |
           set -euo pipefail
@@ -33,6 +40,11 @@ jobs:
             echo 'Configure repository Secret FENGSHEN_DEPLOY_REVIEW_TOKEN with Actions read and Deployments write permissions.' >&2
             exit 1
           fi
+          if [[ "$OPERATION" != inspect && "$OPERATION" != publish ]]; then
+            echo 'Unknown operation; no approval submitted.' >&2
+            exit 1
+          fi
+          if [[ "$OPERATION" == publish ]]; then
           if [[ ! "$BUILD_RUN_ID" =~ ^[0-9]+$ || ! "$EXPECTED_SHA256" =~ ^[a-f0-9]{64}$ ]]; then
             echo 'Invalid reviewed build identifiers; no approval submitted.' >&2
             exit 1
@@ -43,6 +55,7 @@ jobs:
             .event == "workflow_dispatch" and .head_branch == "main" and
             .head_sha == $commit and .path == ".github/workflows/android-build.yml"
           ' <<< "$build" >/dev/null
+          fi
           for attempt in $(seq 1 120); do
             pending=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/pending_deployments")
             target=$(jq '[.[] | select(.environment.name == "fengshen-production")]' <<< "$pending")
@@ -50,8 +63,8 @@ jobs:
             if [[ "$count" == 1 ]]; then
               jq -e '.[0].current_user_can_approve == true' <<< "$target" >/dev/null
               environment_id=$(jq '.[0].environment.id' <<< "$target")
-              jq -n --argjson id "$environment_id" --arg build "$BUILD_RUN_ID" --arg hash "$EXPECTED_SHA256" \
-                '{environment_ids:[$id],state:"approved",comment:("User-authorized Fengshen release; trusted main build " + $build + "; reviewed APK SHA-256 " + $hash)}' \
+              jq -n --argjson id "$environment_id" --arg build "$BUILD_RUN_ID" --arg hash "$EXPECTED_SHA256" --arg operation "$OPERATION" \
+                '{environment_ids:[$id],state:"approved",comment:(if $operation == "inspect" then "User-authorized read-only Fengshen runtime inspection; no APK publication or release registration" else "User-authorized Fengshen release; trusted main build " + $build + "; reviewed APK SHA-256 " + $hash end)}' \
                 > "$RUNNER_TEMP/fengshen-review.json"
               gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/pending_deployments" \
                 --input "$RUNNER_TEMP/fengshen-review.json" --jq 'map({id:.id,environment:.environment,sha:.sha})'
@@ -67,7 +80,7 @@ jobs:
           echo 'Production environment did not become reviewable; no approval submitted.' >&2
           exit 1
   publish:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'publish'
     runs-on: windows-2022
     timeout-minutes: 20
     environment: fengshen-production
@@ -153,3 +166,42 @@ jobs:
             artifacts/ci/apk-receipt.json
           if-no-files-found: ignore
           retention-days: 30
+  inspect:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'inspect'
+    runs-on: windows-2022
+    timeout-minutes: 10
+    environment: fengshen-production
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - name: Prepare existing read-only diagnostic bridge
+        run: |
+          npm ci --prefix server --ignore-scripts
+          if($LASTEXITCODE -ne 0){throw 'SSH bridge dependencies failed'}
+      - name: Read current diagnostics without changing releases or data
+        env:
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PASS: ${{ secrets.REMOTE_PASS }}
+        run: |
+          ./check-runtime.ps1 -SummaryOnly
+          $report=Get-Content reports/runtime-preflight.json -Raw|ConvertFrom-Json -AsHashtable
+          if($report.result.status -notin @('NO_ISSUES_OBSERVED','ISSUES_FOUND','NO_DATA')){throw 'Runtime query unavailable; no health conclusion'}
+      - name: Retain only sanitized runtime summary
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-runtime-summary
+          path: reports/runtime-preflight.json
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,115 +1,16 @@
-task_id: ANDROID-CI-01
+task_id: TOWN-02
+scope_revision: herb-use-and-supply
 
-# ANDROID-CI-01：GitHub Actions 构建、同签名与受保护发布
+# TOWN-02：开局药草使用与补给闭环
 
-以 v21 / 0.8.1-town-01 / c11 为基线；保留游戏进度和历史。复用 Gradle/PowerShell 发布/巡检，先云端手动构建并保留下载产物，再受保护发布；首次服务器上传须用户确认实际产物和目标。Secrets 不进入仓库、日志或 artifact。未取得 GitHub 权限时继续本地实现验证，不能声称已云端验证。
+用户授权实施任务：已有药店买药草→正常离店→原版允许的地图/菜单场景选合法目标使用→HP/数量/HUD/存档一致→停止进程/重启→继续探索。这是可选补给，禁止新增出村剧情前置。
 
-以下接入/失败过程为历史，当前以「v22 云端正式交付」为准。
+仅药草 `rom.medicine.0`；不展开牛黃丸、全物品、客栈、NPC、新地图、南海Boss或战斗物品。保留v21/c11游戏成果、已发布v22及既有UI/输入/战斗/音频/云存档。
 
-云端接续增量（2026-10-01）：已核验 main `6ed46292fab36f480c1cb1e6958ae0d9202ce7e3` 和成功构建 `36855448982`；用户已授权 v22 发布及后续已授权迭代的自动环境审批。首次正式发布 `36868615998` 获用户环境审批后，产物复核通过，实际 ANDROID-CI-01 preflight 返回 NO_ISSUES_OBSERVED，但 workflow 使用普通 ConvertFrom-Json 读取包含合法空名称 contentVersion 字段的报告而失败，尚未上传。仅将 preflight/postflight 两处读取改为 -AsHashtable，与既有 check-runtime.ps1/publish-apk.ps1 一致；不改变健康判定/同提交/签名/内容/目标校验。修复后保留原失败记录，按现有流程在新源提交构建并审核 v22，再执行正式发布；不得将失败运行或未执行巡检写成成功。GitHub 自动 review API 实际 403，仍需解决 Deployments 写入能力，保留环境保护和累计未完成项。
+开始提交：1f9a72f12cbb4dc651a49f8fd952ffeb8f10b2bf。业务修改前本地缺pwsh，巡检初始NOT_AVAILABLE；按用户授权只给原发布workflow增加inspect模式，继续使用原check-runtime.ps1、受保护环境/reviewer与脱敏摘要，无上传/登记/清理调用。实际本轮巡检结果后续填写，不引用旧结果代替。
 
-后续增量：`f8fc3a470870cf729a69c593767bd762385f1200` 的构建 `36870720449` 成功，v22 APK SHA 为 `66e0e945e0999276aed33d3ed3cc4048629d7a082f638d6c6ed8e35350ffcdf7`；发布 `36871347819` 等待审批，现有集成实际缺少 deployments=write。用户已表示配置 FENGSHEN_DEPLOY_REVIEW_TOKEN，现于原生产 workflow 增加 approve job，由 GitHub runner 将该仓库 Secret 注入 GH_TOKEN 并保留 reviewer/main/产物/巡检校验。新配置改变源提交后须构建同提交产物；实际运行验证前不宣称自动审批或发布成功。累计欠账保持。
+原版门槛：现有provenance/c11仅确认药草ID/买卖，medicine effects/use conditions未核。必须核定效果计算、目标、地图可用性、满HP/取消/失败与消耗时机；无证据不猜药效。缺私有输入只恢复必要文件，未变化地图/音频/图集复用可信c11。
 
-## v22 云端正式交付（2026-10-01 最新状态）
+交付门槛：正常购买/离店/受伤角色使用/保存冷启动与旧档升级实际App验收；边界fixture单独标记。一加13T未执行为NOT_RUN，无Android运行验收只保留候选，不覆盖生产。无新功能或有效修复不发布游戏。
 
-状态：`PUBLISHED_AND_VERIFIED`；ANDROID-CI-01 本轮完成。v22 / `0.8.2-ci-release` 于北京时间 2026-10-01 23:17:27（UTC 15:17:27）发布；生产 workflow 于 23:21:47 全部成功。游戏仍为 c11 开发内容，不代表南海龙王或完整原版里程碑完成。
-
-- APK 来源提交：`f7dfea747999f6b1ee497179f98eb6cc7ed94f6a`；[构建 36882142423](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882142423)、[发布 36882936289](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882936289) 均 completed/success，构建与发布同一 main 提交。后续文档提交不改变已审核 APK 来源。
-- 下载：[v22 APK](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=22)；11,316,827 字节，SHA-256 `5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f`。包名 `org.fengshen.dev`，既有签名证书保持；release 非 debuggable、版本、签名、内容及旧包兼容已由原 runner 复核。
-- c11 / `opening-segment-001-c11`，manifest SHA `3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147`。本任务于北京时间 23:23:22 独立下载正式服务器 APK，完整 SHA/大小与 version.json/构建 receipt 一致，原 `tools/ci_apk.py::content` 验证 42 文件（包含 manifest；41 内容文件）及全部文件 hash。
-- 自动审批实际成功：原 `android-publish.yml` 的 approve job 使用仓库 Secret `FENGSHEN_DEPLOY_REVIEW_TOKEN`，通过原 reviewer 政策批准 fengshen-production。随后 publish job 全部成功，无需再次人工点击。现有集成本身的 Deployments API 403 不影响这个已验证的 runner 途径；不代表当前云任务拿到了该 Secret 值。令牌到期/撤销或保护规则变化仍可能明确失败。
-- 实际 `./check-runtime.ps1` preflight：UTC 15:17:21，可信21/20，418事件/41测试事件，普通11模拟器+1真机会话，窗口08:13:38—14:11:04，NO_ISSUES_OBSERVED。
-- 实际 postflight：UTC 15:21:41，可信22/21，363事件/14测试事件，普通6模拟器+1真机会话，窗口08:27:54—14:11:04，NO_ISSUES_OBSERVED；清理失败0。当前保留样本来自v21，v22尚无上传样本；历史设备日志不是本轮手机验收，不证明v22运行或历史音频根因修复。
-- 保留既有两版规则及每版20MiB容量；本次上传只覆盖 Fengshen APK/version.json 两对象。ROM、密钥和电脑未提交资料没有由本次迁移取得；无新游戏源码、UI或功能开发。
-- 验证：实际云端 testReleaseUnitTest/assembleRelease/签名/内容与旧包兼容检查通过；本地自动审批实际 Bash fixture14项、既有 transport12项通过。没有本轮 adb/模拟器/App录屏或真实账号云恢复测试；一加13T覆盖升级、触控、声音、长时性能均 NOT_RUN。
-
-下一迭代继续复用现有构建与发布，versionCode 必须大于22；既有默认22是首次构建的历史值，必须显式覆盖。累计十类未完成项与下一原版节点三个阻塞全部保持，详见最新交付报告。
-
-以下保留 TOWN-01 历史。
-
-# TOWN-01：地图0商店/室内与原版物品装备展示
-
-以实际发布v19及工作区成果为基线。先既有服务端巡检和本轮ROM参照，再复用原导出器、ContentLoader、World、GameView、统一存档接入地图0已证实建筑入口/室内/店员及真实交易。物品装备是否有图像与属性展示由目标ROM当前菜单确认，不编造图标/清单/价格；未核建筑保持明确限制。探索布局、战斗、输入、更新器和诊断机制保留，不reset/clean/清档、不展开下一剧情。最终按T1—T7报告，核心未过保持PARTIAL；每次交付累计输出仍未完成项，只有实际完成后才移除。
-
-以下保留BATTLE-02历史记录。
-
-# BATTLE-02：音频超时、普通逃跑及原版战败
-
-scope_revision: original-battle-presentation
-
-最终交付：v19 / 0.7.8-battle-02 已于 2026-10-01T05:25:43.5350039Z 覆盖发布 Fengshen 两个独立 OSS 对象，公网完整字节校验通过；整体 PARTIAL。APK SHA-256 731c95939f641cc3bd4cee0c01fa2b4e9071dad823ec7bab9761f325285a1431，c9 manifest SHA-256 0b1a2bc33f1d9b8ab3f6796d8cde87c72d0b998ae6e2f421a0567925ffb53fa9。最终横屏有声录像与五组 ROM/App 对照来自实际发布 APK，报告在 delivery-status 追加。实际 v18 App 下载 v19、系统确认与旧档保持通过；取消仍不是成功。最后只读巡检 2026-10-01T06:09:13.4920159Z：最近两版19/18，分别278/376事件（测试81/2）；各有6个普通模拟器会话及1个PKX110真实设备会话，无新增上传ERROR。v19手机样本包含战斗胜利及保存成功，但没有本轮连接手机进行操作/声音验收，一加13T仍NOT_RUN，历史音频根因UNCONFIRMED。17按两版保留规则清理621条，清理失败0，不另归档完整旧日志。完成本轮并停止，不展开地图0内容任务。
-
-用户追加要求：当前工作区已含v19本地候选（未发布）音频原因链/生命周期诊断及安全守卫，继续保留。探索UI冻结；本轮同时恢复目标ROM普通战斗的背景、三敌图形/实例、指令层级及逐步行动/结果。先五状态原版参照及正常录像，再经现有导出/ContentLoader接入，不用完整截图做动态背景。一次指令只计算一次，呈现队列不抽随机或结算；触摸不穿透。不提升未核逃跑/战败或命中/暴击。最终使用修订V1—V7报告，下一内容欠账为地图0 NPC/店屋/事件，不在本轮展开。
-
-基线为已发布v18 / 0.7.7-apk-update-fix；保留更新器热修复和全部未提交成果。只继续当前地图16普通战斗的原版逃跑/战败、统一一次性结果及存档，并针对GameAudio超时做至多两轮必要定位。开工及交付后调用现有check-runtime.ps1，版本来源为可信发布记录；更新器只回归。开发构建-LocalOnly，可交付检查点才发布；严重丢档/卡死未解决时只交付本地PARTIAL。旧音频故障只保存脱敏分析结论，不另存整份旧日志绕过两版保留。真机未连接保持NOT_RUN；不扩展UI、日志平台、全量原版研究或后续剧情。最终按用户BATTLE-02固定结构输出。
-
-本轮实际检查点：v19 / 0.7.8-battle-02，c9。普通物理攻击复用旧引擎，新增不可变行动呈现队列及跨阶段触摸保护；三敌与小角色动作姿态均由同指纹 ROM 图块重建，既有 ContentLoader 校验加载。9:8A49 逃跑变换的六次手柄样本（entry carry=1）与 0:812D/0:B795 战败清空/初始化已进入 game-data/provenance/battle02.json；只启用当前单哪吒普通分支，不提升完整战斗规则。音频 cause/timeoutOperation/实例/线程/生命周期增强和 release 后回调保护，旧超时未复现，根因仍 UNCONFIRMED。
-
-开工实际执行 ./check-runtime.ps1，UTC 2026-10-01T03:17:13.7164336Z，可信最近两版18/17；17有五次旧音频超时，18在该窗口无新增上传 ERROR，均有AVD及一台PKX110日志样本，但无手机ADB连接。仅脱敏分析保留于 reports/battle02-preflight-analysis.json；不另存完整旧服务器日志。
-
-正常App录像从新游戏赠刀/移动进入随机战斗，最终APK普通胜利及force-stop/restart一致；另一普通输入测试6次逃跑成功/15次失败后战败回初始状态，非修改HP。受控高攻击一击、多实例、重复输入另行测试，不当作原版手机数值证明。原版电影含入场到战后野外返回；五组实际ROM/App截图在 reports/battle02-comparisons.json。旧34格门禁不恢复，探索HUD/UI/三图连接/INPUT-01不改。
-
-构建回归：Python90、JVM37、Go12用例通过；Android全量47项首次46通过/1容量测试与在线上传竞态失败，原断言保留，网络隔离修复后该项和新增受控战斗共2项通过，共48不同用例已覆盖。首次编译/录像180秒截断记录保留，不计作通过；实际 final 录像有声音但WASAPI与屏录非采样级同步。后续发布/更新/服务器读回结果增量记入 delivery-status；整体PARTIAL，真机NOT_RUN。
-
-最末兼容修复：当前Android SaveSnapshot.json已有encounterSteps，但旧Go Snapshot未声明，严格解码实际重现400 invalid_json。仅在现有JSONB存档模型补0..255字段（零值omitempty保持旧载荷）、未移除未知字段检查；内存HTTP往返/旧档/边界测试通过，既有Fengshen服务原地部署，无数据库迁移或真实账号写入。APK/内容hash未变，不新建战斗中云同步。
-
-以下为已交付更新器修复及更早任务的历史记录。
-
-# APK-UPDATE-01：安装新版后的更新失败提示
-
-用户于2026-10-01反馈安装新版本后弹出更新失败。先执行本轮只读巡检，再定位现有ApkUpdater/PackageInstaller回调、版本/签名/下载验证，修复并实际验证覆盖升级和存档保留。复用现有入口与独立发布，不扩展内容里程碑；AUDIO-LOG-01未完成音效/超时及BATTLE-01欠账保留，不据本轮升级修复改为完成。
-
-已确认代码缺口：旧接收器把缺失status默认成失败、取消统一显示失败，且无跨进程安装目标/结果恢复。沿用ApkUpdate.kt做薄适配，安装会话/目标仅存升级器私有元数据，不另建玩家状态。PackageManager实际已装版本优先，MY_PACKAGE_REPLACED/前台恢复确认；取消、等待、未知/无归属回调、真实失败分别处理；会话消失给最终回调短暂宽限，再允许重试。权限返回可恢复已验包，同版本不重复提交。新增仅更新阶段诊断白名单；管理员接口/存储不变。公网manifest禁缓存，原SHA/包名/版本/签名校验保留。发布脚本读取实际有空contentVersion键的巡检报告改为Hashtable，原六项安全断言保留。
-
-验收使用既有AVD和仪器，tools/check_app_update_flow.py只做外部驱动：取消为明确test=true的同字节重装fixture；正常升级由旧App公网下载并调用系统确认完成，不能用adb install替代。真机诊断收到PKX110/Android16的v17成功加载/存档样本，但没有ADB连接；不能据此声明本轮真机升级验收通过。最终产物/结果见delivery-status。
-
-本轮已交付 v18 / 0.7.7-apk-update-fix，Fengshen独立OSS覆盖发布并全量公网校验。AVD实际v17应用下载v18→系统确认→PackageManager版本18→原存档字段完全一致通过；取消/缺失回调/同版本检查通过。完整回归及发布后巡检已执行。原手机提示根因尚不能由v17缺少的更新诊断确定，等待用户复测；不扩大本轮内容范围。
-
-以下为历史任务记录。
-
-# AUDIO-LOG-01：当前区段音频与运行诊断
-
-顺序：服务端巡检 → 缺失诊断链路 → 实际稳定性问题 → 当前区段音频 → 集成发布与发布后巡检。基线 v16/c7；BATTLE-01 保持 PARTIAL。不扩展地图、战斗规则或后台平台。诊断设计、证据与交付增量记录于本文件及 delivery-status。
-
-## AUDIO-LOG-01 实际接入与边界
-
-复用 `export_development.py` / `ContentLoader` 及既有 `CloudTokenStore`、Go HTTP/systemd、独立 APK 发布脚本。新增仅为缺失的 `GameAudio`（Media3 1.4.1 / SoundPool）与有界应用诊断缓冲（WorkManager 2.9.1）。c8 保持地图/战斗语义和 c7 存档兼容。四首 Reference MP3 经目标 ROM 正常手柄录音比较，音乐/场景证据 HIGH，循环端点 INFERRED；不提升正式 canonical。114→002、16→003、0→005、普通战斗/当前胜利结果→004（奖励阶段持续战斗音乐）。短音效缺少可靠事件对应，保持静音；不继续全量音乐逆向。
-
-诊断为 Fengshen 独立 `/var/lib/fengshen-remake-diagnostics` 原子私有日志，与 PostgreSQL 玩家存档分离。安装凭据仅允许诊断写入，优先现有云会话；管理员令牌不进入 APK。客户端 10 MiB，gzip 解压≤256 KiB，现有网关压缩体≤64 KiB，因此客户端选批≤60 KiB。服务器每发布版20 MiB，发布脚本公网校验成功后登记 current/previous，立即清理；启动补偿、旧版410、同批/同事件去重。固定巡检脚本只读。测试异常单独标记 test=true；历史退出缺少发生版本时只记录观测版本与限制。
-
-Android 老仪器运行器须明确指定本项目类，避免扫描依赖；`ControlledCrashTest` 必须独立运行，不能混进普通回归。容量压力测试独立于正在渲染的 Activity；首次超时/线程转储记录保留。最后结果见 `docs/delivery-status.md` 和固定 runtime 报告。本任务保持 PARTIAL 直至音频及日志核心验收满足，BATTLE-01 始终 PARTIAL。
-
-# BATTLE-01：地图 16 开局分区正常遇敌与普通战斗
-
-当前开发包 `opening-segment-001-c7` 由原 `tools/export_development.py` 导出，保留 114/16/0 的 WORLD-01 连接及 INPUT-01 输入。目标 ROM 的 bank 46 `C14A` 给出地图 16 分区 0 两个矩形；bank 5 `B12D` 给出 19 条敌群，敌人 ID 1/2/3；正常手柄回放在世界格 `(201,151)` 触发敌群 11（臭甲虫/百角海胆）。`OpeningEncounter` 只在 `World` 完成一步后检查；`OpeningBattle` 只执行已取证的普通物理分支与按敌群求和的奖励。原版玩家未命中/暴击、逃跑、失败结果尚未可靠复现，因此本轮为 **PARTIAL**，不是 B 检查点完成。失败画面的战前存档恢复属于明确标注的开发版安全入口，不计作原版失败规则。证据范围见 `game-data/provenance/battle01.json`；最终构建与验收见 `docs/delivery-status.md`。以下 INPUT-01 / WORLD-01 记录保留为历史。
-
-# INPUT-01：四向摇杆角度选择与沿墙分量减速
-
-当前输入改动仅改变移动意图和每格耗时。原版逐格坐标、地图 114/16/0、碰撞、出口、事件和 WORLD-01 已有进度保持；不把未开放区当作物理墙滑过。验收按 T1–T8、Android 实际录屏和最终版本 15 APK，结果在 `docs/delivery-status.md` 追加。正常速度仍为固定逻辑帧每帧 2 像素、每格 16 像素；沿墙速度系数只在一步开始时确定，死区 15%、滞后 8°、最小分量 0.15。下列 WORLD-01 记录保留为历史。
-
-# WORLD-01：解除试玩门禁并打通地图往返
-
-本轮只修复正常移动、真实出口、第三场景及旧存档兼容。流程：定位限制 → 修复 114/16 往返 → 接入地图 0 → 验证包和升级 → 最终 APK 回归 → 固定交付报告。南海龙王总里程碑与普通战斗仍未完成。
-
-| ROM 原版节点 | 原版依据 | Android c6 开发包 | 未开放 |
-|---|---|---|---|
-| 114 (8,29) → 16 (203,142) | 模块 8 `E4A1: 08 1D 10 CB 8E`；既有正常输入回放 | 步入门格，自动换图 | 其他事件 |
-| 16 (203,142) → 114 (8,29) | 模块 8 `DE4C: CB 8E 72 08 1D`；控制器回放第 915 帧 | 离开落点向上、再进入家门格 | 无 |
-| 16 (202,130) → 0 (0,15) | 模块 8 `DE51: CA 82 00 00 0F`；第 1115 帧 | 普通移动进入村庄 | 野外随机战斗 |
-| 0 (0,14) 左边界 → 16 (202,130) | 模块 8 `DDC9: FF 82 10 CA 82`；第 1303 帧正常左键返回 | 边界方向入口走统一换图流程 | 村内 NPC、店屋入口 |
-
-地图 0 在 ROM 中为 32×30、tileset 0；陈塘村名称来自 Reference 与原版画面比对，仍标暂定，不作为 ROM 文本验证。地图 16 为 256×181，0/2 类普通步行格开放，10/12 类特殊格只在已确认入口开放；地图 0 同样只按 0/2 类普通步行格开放，其他类别保持开发边界。地图/出口判断均用 16×16 世界格，不依赖屏幕位置。已回放出口的落地朝向为下；相邻的地图 16 (203,130) 入口只据同一例程暂定朝向。正常控制器证据与 ROM 行偏移见 `game-data/provenance/world01.json`；私有 ROM、回放 RAM/PPU 和生成包留在 Git 忽略目录。
-
-本地 APK 仍从随包 `development/manifest.json` 经 `AssetSource → ContentLoader` 校验读取；本轮没有内容下载缓存，因此无旧缓存覆盖问题。`DirectorySource` 与它共用校验读取逻辑，但服务端内容下载链路尚未实现。最终验收见 `docs/delivery-status.md`。
-
-## TOWN-01最终检查点（v21 / 0.8.1-town-01）
-
-实际基线v19，保留v18更新器/BATTLE-02/World/Input。v20已交付候选在最终对照时发现百货店问句简化；v21/c11恢复原版「要買寶貝嗎？」并移除药品不存在的preview已验证声明，c10存档兼容。三店map17/18/19正常入口/店员/买卖/返回，8商品、6原版装备预览与贡献表接入；明确不把跨类别卖出限制、客栈/住宅未开放、直接替换未核冒充原版。APK签名/包名保持；21已覆盖发布，仅两个Fengshen对象。最终APK SHA ed700b85c79bd3abfdc64dbf35cfa517b68d4ad9b4eaa7158c3ad20aa3dd30d1；c11 manifest SHA 3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147；APK内41文件逐一校验。
-
-原版依据信息增量见rom-analysis/reference-vs-original/original-playthrough-roadmap。最终App有声录像 town01-v21-final-normal-with-audio.mp4，113.859秒正常输入仪器通过，实际保存/force-stop/restart一致，原测试偏好恢复。API35/Android15模拟器；没有连接手机，一加13T NOT_RUN。
-
-回归：Python97、JVM37、Go12、发布安全6通过。v20完整Android50项首轮49通过/1固定手势路径碰真实墙失败，原断言保留、按实际落点只读选择可走邻格后234.817秒1/1通过（22逃跑成功/16失败并正常战败）；不宣称单次完整50通过。v21实际Content12/12、最终正常三店1/1、HTTPS上报1/1、取消1/1及App20→21真实下载升级通过；c9→c10→c11旧状态保持。真实账号云端写入/恢复测试未运行。
-
-开工19/18巡检06:21:55Z：654事件/83测试，普通12模拟器+2真机会话，无新增上传ERROR；发布前追加20/19巡检08:21:06Z。开工结论脱敏保存，不另归档完整旧版日志。最终发布后08:31:31Z第一次查询SSH重置，保留失败；08:33:01Z重试成功，权威保留21/20、42/55事件，总11普通模拟器会话/0真机、41测试事件、清理失败0，无普通上传ERROR。App实际事件81ac9681-d5b5-4663-9ad8-979c93d4ff20已认证读回且hash一致；窗口只到08:29:45Z，不说明历史音频根因解决或真机正常。
-
-本轮停止，等待真机反馈；累计未完成清单在delivery-status最新TOWN-01正文。历史报告不改写。
+历史授权/上一任务见docs/history/authorization-through-android-ci-01.md；十类累计欠账仍以docs/delivery-status.md现有清单为准。本轮固定报告execution_kind、各项实际覆盖、skill可靠方法及一个最小资源请求。完成后停止。
