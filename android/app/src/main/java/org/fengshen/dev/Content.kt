@@ -26,7 +26,8 @@ data class CharacterDefinition(val id:String,val name:String,val portraitAsset:S
     val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
 data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
     val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
-    val maxCount:Int=10,val preview:Bitmap?=null)
+    val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null)
+data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
     val allowedCharacters:Set<String>,val source:String,val defenseBonus:Int=0,val evasionValue:Int=0,
     val operationEnabled:Boolean=true)
@@ -148,7 +149,14 @@ object ContentLoader {
                 o.optString("category","weapon"),o.optInt("originalId",0),
                 if(o.has("buyPrice"))o.getInt("buyPrice") else null,
                 if(o.has("sellPrice"))o.getInt("sellPrice") else null,o.optInt("maxCount",10),
-                preview?.let{bitmap(it.getString("asset"),it.getInt("width"),it.getInt("height"))})
+                preview?.let{bitmap(it.getString("asset"),it.getInt("width"),it.getInt("height"))},
+                o.optJSONObject("herbUse")?.let{use->
+                    require(o.getString("id")=="rom.medicine.0" && o.getString("category")=="medicine" &&
+                        o.getInt("originalId")==0 && use.getBoolean("mapMenu") &&
+                        use.getString("target")=="living-party-member" && use.getInt("healHp")==50 &&
+                        use.getBoolean("consumeAtFullHp"))
+                    HerbUseDefinition(use.getInt("healHp"),use.getBoolean("consumeAtFullHp"),use.getString("evidence"))
+                })
             item.id to item
         }
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->

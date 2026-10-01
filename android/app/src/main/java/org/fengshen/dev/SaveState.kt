@@ -70,6 +70,27 @@ object TownTrade {
     }
 }
 
+/** Scoped original map/menu herb command. Rendering never mutates these values. */
+object HerbUse {
+    const val ID="rom.medicine.0"
+    data class Result(val characters:List<CharacterState>,val inventory:Map<String,Int>,val applied:Boolean)
+    fun apply(characters:List<CharacterState>,inventory:Map<String,Int>,targetId:String,
+        item:ItemDefinition,inMapMenu:Boolean):Result {
+        val unchanged=Result(characters,inventory,false)
+        val rule=item.herbUse?:return unchanged
+        val index=characters.indexOfFirst{it.id==targetId}
+        val count=inventory[ID]?:0
+        if(!inMapMenu || item.id!=ID || index<0 || count<=0 || rule.healHp<=0)return unchanged
+        val hero=characters[index]
+        if(hero.hp<=0 || hero.hp>hero.maxHp || hero.maxHp<=0 ||
+            (hero.hp==hero.maxHp && !rule.consumeAtFullHp))return unchanged
+        val next=hero.copy(hp=minOf(hero.maxHp.toLong(),hero.hp.toLong()+rule.healHp).toInt())
+        val items=inventory.toMutableMap()
+        if(count==1)items.remove(ID) else items[ID]=count-1
+        return Result(characters.toMutableList().also{it[index]=next},items,true)
+    }
+}
+
 data class CharacterState(val id:String,val level:Int,val experience:Int,val hp:Int,val maxHp:Int,val mp:Int,
     val strength:Int,val stamina:Int,val agility:Int,val spirit:Int,val maxMp:Int?=null,
     val equipment:EquipmentState?=null) {
@@ -102,7 +123,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps)
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         val scene=content.scenes[mapId]?:return false
         return scene.check(x/16,y/16)==null

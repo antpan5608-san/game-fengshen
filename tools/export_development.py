@@ -12,6 +12,48 @@ from forensics.rom import tile_image
 
 OUT=ROOT/'game-data/packages/development/opening-segment-001-c11'
 
+def export_from_base(payload, provenance_path, target_pin, verify_target=True):
+    """TOWN-02 only: reuse checked content bytes and export one evidenced definition.
+
+    The caller validates the immutable base APK with ci_apk.content. No original
+    ROM, historical captures or unchanged image/audio regeneration are needed in CI.
+    """
+    evidence_path=(ROOT/provenance_path).resolve()
+    if not evidence_path.is_relative_to(ROOT) or evidence_path.suffix!='.json':
+        raise ValueError('Invalid iteration provenance path')
+    evidence=load(evidence_path)
+    if evidence['taskId']!='TOWN-02' or evidence['romSha256']!=SHA256:
+        raise ValueError('Unexpected iteration evidence')
+    rule=evidence['herbUse']
+    if rule!={'healHp':50,'mapMenu':True,'target':'living-party-member',
+              'consumeAtFullHp':True,'evidence':provenance_path}:
+        raise ValueError('Unsupported scoped herb policy')
+    def encoded(value):return (json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+    result=dict(payload)
+    scene=json.loads(result['scene.json'])
+    matches=[i for i in scene['items'] if i['id']=='rom.medicine.0']
+    if len(matches)!=1 or matches[0]['originalId']!=0 or matches[0]['category']!='medicine':
+        raise ValueError('Base herb ID/category changed')
+    herb=matches[0]
+    herb['herbUse']=rule
+    herb['description']='恢复50HP；满HP仍消耗'
+    herb['source']['verifiedFields']=sorted(set(herb['source']['verifiedFields'])|{'mapMenuUse','healHp','target','consumption'})
+    herb['source']['remainingUnknown']=[x for x in herb['source']['remainingUnknown'] if x!='medicine effects/use conditions']
+    herb['source']['useEvidence']=provenance_path
+    result['scene.json']=encoded(scene)
+    for name,raw in list(result.items()):
+        if name=='manifest.json' or not name.endswith('.json'):continue
+        value=json.loads(raw)
+        if 'version' in value:
+            value['version']=target_pin['contentVersion'];result[name]=encoded(value)
+    manifest=json.loads(result['manifest.json'])
+    manifest['version']=target_pin['contentVersion']
+    manifest['files']={name:digest(raw) for name,raw in result.items() if name!='manifest.json'}
+    result['manifest.json']=encoded(manifest)
+    if verify_target and digest(result['manifest.json'])!=target_pin['manifestSha256']:
+        raise ValueError('Local herb export differs from reviewed target pin')
+    return result
+
 def export():
     candidates=[p for p in (ROOT/'reference/rom').rglob('*') if p.suffix.lower()=='.nes' and digest(p.read_bytes())==SHA256]
     if not candidates:raise ValueError('Pinned local ROM required to export assets; Android does not read ROM')
@@ -527,4 +569,26 @@ def export():
         'output':OUT.relative_to(ROOT).as_posix(),'canonicalModified':False,'uploaded':False}
     save(ROOT/'reports/development-export.json',report);return report
 
-if __name__=='__main__':print(json.dumps(export(),ensure_ascii=False,indent=2))
+if __name__=='__main__':
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--base-apk',type=Path)
+    parser.add_argument('--provenance')
+    parser.add_argument('--version')
+    args=parser.parse_args()
+    if args.base_apk:
+        import ci_apk as ci
+        ci.verify_apk(args.base_apk,release=True)
+        base=ci.CONFIG.get('iteration',{}).get('base',ci.CONFIG)
+        if base.get('apkSha256') and digest(args.base_apk.read_bytes())!=base['apkSha256']:
+            raise ValueError('Wrong reviewed base APK bytes')
+        if not args.provenance or not args.version:parser.error('Provide provenance and target version')
+        target=dict(ci.CONFIG,contentVersion=args.version)
+        # Authoring computes a reviewable pin; CI always verifies the committed target pin.
+        payload=export_from_base(ci.content(args.base_apk,base),args.provenance,target,verify_target=False)
+        out=ROOT/'game-data/packages/development'/args.version
+        out.mkdir(parents=True,exist_ok=True)
+        for name,raw in payload.items():(out/name).write_bytes(raw)
+        print(json.dumps({'contentVersion':args.version,'manifestSha256':digest(payload['manifest.json']),
+            'files':len(payload),'output':str(out),'uploaded':False}))
+    else:print(json.dumps(export(),ensure_ascii=False,indent=2))

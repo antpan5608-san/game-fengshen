@@ -101,8 +101,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}}
+    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}}
     var layer=Layer.MAP;private set
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
@@ -474,6 +474,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             50+((y-panelBox().y-panelBox().h*.52f)/(panelBox().h*.072f)).toInt().coerceIn(0,3)
         panelTab==CharacterTab.ITEMS && selectedItemId?.let{content.equipmentDefinitions[it]}?.let{d->
             OpeningEquipment.equip(characters[characterPage],inventory,d)!=null}==true && panelEquipmentActionBox().contains(x,y)->41
+        panelTab==CharacterTab.ITEMS && selectedItemId==HerbUse.ID && canUseHerb() && panelEquipmentActionBox().contains(x,y)->42
         panelTab==CharacterTab.ITEMS && inventoryPage>0 && panelPageBox(false).contains(x,y)->1
         panelTab==CharacterTab.ITEMS && inventoryPage+1<inventoryPages() && panelPageBox(true).contains(x,y)->2
         panelTab==CharacterTab.ITEMS && inventoryEntries().drop(inventoryPage*4).take(4).indices.firstOrNull{inventoryRowBox(it).contains(x,y)}!=null->
@@ -484,6 +485,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val e=characters[characterPage].equipment?:return null
         val id=when(equipmentSlot){"rightHand"->e.rightHand;"leftHand"->e.leftHand;"body"->e.body;else->e.feet}
         return content.equipmentDefinitions.values.firstOrNull{it.slot==equipmentSlot&&it.originalId==id&&it.operationEnabled}
+    }
+    private fun canUseHerb():Boolean {
+        val item=content.itemDefinitions[HerbUse.ID]?:return false
+        val hero=characters.getOrNull(characterPage)?:return false
+        return HerbUse.apply(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY)).applied
     }
     private fun runPanelAction(action:Int){when(action){
         0->closePanel()
@@ -499,6 +505,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         41->selectedItemId?.let{content.equipmentDefinitions[it]}?.let{d->OpeningEquipment.equip(characters[characterPage],inventory,d)}?.let{(hero,items)->
             characters=characters.toMutableList().also{it[characterPage]=hero};inventory=items
             selectedItemId=null;persistState()
+        }
+        42->{
+            if(selectedItemId!=HerbUse.ID)return
+            val item=content.itemDefinitions[HerbUse.ID]?:return
+            val hero=characters.getOrNull(characterPage)?:return
+            val result=HerbUse.apply(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY))
+            if(result.applied){
+                characters=result.characters;inventory=result.inventory
+                selectedItemId=null;panelTouch.clear();persistState()
+            }
         }
     }}
     private fun openShop(definition:ShopDefinition){
@@ -900,6 +916,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                         val action=panelEquipmentActionBox();overlayPaint.color=0xff31776e.toInt()
                         c.drawRoundRect(RectF(action.x,action.y,action.x+action.w,action.y+action.h),5*dp,5*dp,overlayPaint)
                         label(c,"装备",action.x+action.w/2,action.y+action.h/2,11f)
+                    }
+                    if(item.herbUse!=null){
+                        val action=panelEquipmentActionBox();overlayPaint.color=if(canUseHerb())0xff31776e.toInt() else 0xff454545.toInt()
+                        c.drawRoundRect(RectF(action.x,action.y,action.x+action.w,action.y+action.h),5*dp,5*dp,overlayPaint)
+                        label(c,if(canUseHerb())"使用 → ${content.playerNames[hero.id]?:hero.id}" else "此目标无法使用",action.x+action.w/2,action.y+action.h/2,11f)
                     }
                 }}
                 if(inventoryPages()>1){

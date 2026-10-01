@@ -1,0 +1,179 @@
+{
+  "captures": {
+    "private-derived/town02/cancel-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/cancel-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/cancel-menu-1460.png": "1389ef84494a969a4188e95bdf995f51fbfe288c03b2d73dab1df1ffb392f99f",
+    "private-derived/town02/cancel-menu-1620.png": "26a0e4e8d1041fb567a0e41e270d05c4dac5dfb3e3962693663a2465c4637fbe",
+    "private-derived/town02/cancel-menu-1780.png": "8e2accfc9a2abc1fc5ac2e65ffc046bcd53b5fd444d874a3b9bd4b8a63f489f1",
+    "private-derived/town02/cancel-menu-2020.png": "06eccef707a3b33830bf684c2d2f8eeda9e847524d15d294a62150121ea36dc4",
+    "private-derived/town02/cancel-result.txt": "cb6257846b86b11909c3dd284ffa8b02dcfc25da1b5ebc8834abaf322f34c2c9",
+    "private-derived/town02/cancel-timeline.tsv": "12f2fe16726dc532c26618f2dad7004f88077c5fb32e3d9eab1cec64985758b1",
+    "private-derived/town02/cancel-writes.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "private-derived/town02/dead-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/dead-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/dead-menu-1460.png": "1389ef84494a969a4188e95bdf995f51fbfe288c03b2d73dab1df1ffb392f99f",
+    "private-derived/town02/dead-menu-1620.png": "26a0e4e8d1041fb567a0e41e270d05c4dac5dfb3e3962693663a2465c4637fbe",
+    "private-derived/town02/dead-menu-1780.png": "53e770899fd125f77f35f05fa4bf3c781127277678c4651aae4e3b3c8f2ccd44",
+    "private-derived/town02/dead-menu-2020.png": "30fd5c3bf32c09d2d94254ec24611c8d060f49f856d45aa352a909efdd41262a",
+    "private-derived/town02/dead-result.txt": "02472728a9a4f923675db6e325537e1a200780da2f150c39058d085664c0c6a4",
+    "private-derived/town02/dead-timeline.tsv": "4d5973162ea14904861d684ac600a020452602c8da09af304d8e871e8efaa77a",
+    "private-derived/town02/dead-writes.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "private-derived/town02/full-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/full-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/full-menu-1460.png": "1389ef84494a969a4188e95bdf995f51fbfe288c03b2d73dab1df1ffb392f99f",
+    "private-derived/town02/full-menu-1620.png": "26a0e4e8d1041fb567a0e41e270d05c4dac5dfb3e3962693663a2465c4637fbe",
+    "private-derived/town02/full-menu-1780.png": "83763048317c1cc307b17a57b62aec75ac67a56c1b595f1ed40b4c79a1e4fd82",
+    "private-derived/town02/full-menu-2020.png": "eb716adb7f8366b46efdb8fff1ab080d55bc27445827333424cac83b0b86c5ee",
+    "private-derived/town02/full-result.txt": "4586371a39e385c2872adac284de030e8778a3995a4634a5c273a0c1ddc945e3",
+    "private-derived/town02/full-timeline.tsv": "1e5aab4007a5b4347ab935507af0d4595f5b205078a077bde807fec8f706dfa0",
+    "private-derived/town02/full-writes.tsv": "8cd94b931e4aa54fe58af726c21f14fa612fb14385532c6e9282130db4800a9d",
+    "private-derived/town02/injured-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/injured-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/injured-menu-1460.png": "1389ef84494a969a4188e95bdf995f51fbfe288c03b2d73dab1df1ffb392f99f",
+    "private-derived/town02/injured-menu-1620.png": "26a0e4e8d1041fb567a0e41e270d05c4dac5dfb3e3962693663a2465c4637fbe",
+    "private-derived/town02/injured-menu-1780.png": "8e2accfc9a2abc1fc5ac2e65ffc046bcd53b5fd444d874a3b9bd4b8a63f489f1",
+    "private-derived/town02/injured-menu-2020.png": "eb716adb7f8366b46efdb8fff1ab080d55bc27445827333424cac83b0b86c5ee",
+    "private-derived/town02/injured-result.txt": "39170eb99e4b3059ca1414cd1e7338c49ba1ce0f3c1f430b2d48dea19907cb27",
+    "private-derived/town02/injured-timeline.tsv": "90fc513161723f40036e33a881b5a1e544ac380166da1329ab402db8895d2615",
+    "private-derived/town02/injured-writes.tsv": "9428df727825dcba8ac32a22d8fa120996a6cc690a55ba34c94b3adee3442e06",
+    "private-derived/town02/near-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/near-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/near-menu-1460.png": "1389ef84494a969a4188e95bdf995f51fbfe288c03b2d73dab1df1ffb392f99f",
+    "private-derived/town02/near-menu-1620.png": "26a0e4e8d1041fb567a0e41e270d05c4dac5dfb3e3962693663a2465c4637fbe",
+    "private-derived/town02/near-menu-1780.png": "c59f2ffdbb8f19780c486c2199d37828b8df8903c37c4d2cda7415239f124323",
+    "private-derived/town02/near-menu-2020.png": "eb716adb7f8366b46efdb8fff1ab080d55bc27445827333424cac83b0b86c5ee",
+    "private-derived/town02/near-result.txt": "4586371a39e385c2872adac284de030e8778a3995a4634a5c273a0c1ddc945e3",
+    "private-derived/town02/near-timeline.tsv": "7f615520904341165195273f9553bb1692771e04209dbb9af99825f3501c669d",
+    "private-derived/town02/near-writes.tsv": "8cd94b931e4aa54fe58af726c21f14fa612fb14385532c6e9282130db4800a9d",
+    "private-derived/town02/none-menu-1100.png": "970ed591c91dcf1bc036824d5317902bece5e4f3b4200476882eb3ce24c8ad75",
+    "private-derived/town02/none-menu-1300.png": "262d56a853fd6657d2232c6c9bfbb9e93fe12ec85ee6a36d15dd0cfe49ae1c84",
+    "private-derived/town02/none-menu-1460.png": "ce7a2d2612eb51d845948933991080479a5a47b9326c47f3a077edb07a56d433",
+    "private-derived/town02/none-menu-1620.png": "e9d54ba5fbc2c5bb7f95c9234b6cd02198647188d1e07f873756c1cf2104b4c2",
+    "private-derived/town02/none-menu-1780.png": "b0cd7e57792141d4ddc4fd02934384834922d8c1342ae7f2980ea2c10b5d6597",
+    "private-derived/town02/none-menu-2020.png": "5f9bcf5eb61417d8119e6106a535bf81befa04411ccd7b74bd5835ca40a01767",
+    "private-derived/town02/none-result.txt": "f11f57f34fea17854d832fa9546e0a9a55cfda0b42689459a69a8249be6f757c",
+    "private-derived/town02/none-timeline.tsv": "f53a87c46a8cb18afd676003c048af2733264de4af048314418a73053d2b6313",
+    "private-derived/town02/none-writes.tsv": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "cases": {
+    "cancel": {
+      "initialCount": 3,
+      "initialHp": 5,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=5 qty=3 flags=1"
+    },
+    "dead": {
+      "initialCount": 3,
+      "initialHp": 0,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=0 qty=3 flags=32"
+    },
+    "full": {
+      "initialCount": 3,
+      "initialHp": 100,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=100 qty=2 flags=0"
+    },
+    "injured": {
+      "initialCount": 3,
+      "initialHp": 5,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=55 qty=2 flags=1"
+    },
+    "near": {
+      "initialCount": 3,
+      "initialHp": 95,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=100 qty=2 flags=0"
+    },
+    "none": {
+      "initialCount": 0,
+      "initialHp": 5,
+      "kind": "CONTROLLED_STATE_EXPERIMENT",
+      "maxHp": 100,
+      "result": "hp=5 qty=0 flags=1"
+    }
+  },
+  "herbUse": {
+    "consumeAtFullHp": true,
+    "evidence": "game-data/provenance/town02-herb.json",
+    "healHp": 50,
+    "mapMenu": true,
+    "target": "living-party-member"
+  },
+  "probe": {
+    "controlledRamWrites": true,
+    "emulator": "Debian FCEUX 2.6.5+dfsg1-4, git ea6ed69b874e3ae94072f1b4f14b9a8f0fdd774b",
+    "normalGameplayProof": false,
+    "path": "tools/rom-extractor/probe-town02-herb.lua",
+    "sha256": "287df8f9100d2c8ca246f06e71780a2d9c73bc564c1394723315d95a3e3c8971"
+  },
+  "remainingUnknown": [
+    "Battle item command remains outside this scope.",
+    "No whole-item-table verification or licensing claim."
+  ],
+  "resource": {
+    "licenseStatus": "UNKNOWN",
+    "privatePath": "private-inputs/town02/target.nes",
+    "retrievedAt": "2026-10-01",
+    "sourceRecord": "game-data/provenance/rom-acquisition.json"
+  },
+  "romRanges": [
+    {
+      "cpuAddress": 38481,
+      "length": 138,
+      "meaning": "Medicine ID 0 restores 50 HP; clamps to maximum",
+      "module": 2,
+      "offset": 71265,
+      "sha256": "2964d286f3b9771a6f6c5fe01a288df182a40897812dcb5f325c3587fbdb706a"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 108,
+      "meaning": "Selected category inventory count decrement, zero-count removal",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701"
+    },
+    {
+      "cpuAddress": 38421,
+      "length": 60,
+      "meaning": "Target confirmation/cancellation before consume and effect",
+      "module": 2,
+      "offset": 71205,
+      "sha256": "d6ce64caa22185ac15f296aff858d21c942bb4bf6f9ccdd640c881aaa1c1f50f"
+    },
+    {
+      "cpuAddress": 39588,
+      "length": 34,
+      "meaning": "Herb opens party target selection from map menu",
+      "module": 2,
+      "offset": 72372,
+      "sha256": "0ffc2e4c71b2a6658ee5d1884197b40fc33d6c0042304965ed26654e7bd19b65"
+    },
+    {
+      "cpuAddress": 39751,
+      "length": 1,
+      "meaning": "Herb target selector class 0",
+      "module": 2,
+      "offset": 72535,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "cancel": "no HP/quantity change",
+    "deadTarget": "cannot use; no consumption",
+    "fullHp": "allowed; consumes one",
+    "noItem": "no use or consumption",
+    "scope": "map/menu only; battle items remain unimplemented",
+    "success": "min(maxHp,hp+50), remove exactly one on confirmed living-party target"
+  },
+  "schemaVersion": 1,
+  "taskId": "TOWN-02"
+}
