@@ -82,14 +82,14 @@ jobs:
           REMOTE_PASS: ${{ secrets.REMOTE_PASS }}
         run: |
           ./check-runtime.ps1
-          $inspection=Get-Content reports/runtime-preflight.json -Raw|ConvertFrom-Json
+          $inspection=Get-Content reports/runtime-preflight.json -Raw|ConvertFrom-Json -AsHashtable
           if($inspection.result.status -notin @('NO_ISSUES_OBSERVED','NO_DATA') -or -not $inspection.result.retention.allowedReleases){throw 'Runtime inspection unavailable or unresolved current errors; upload prohibited'}
           $apk=@(Get-ChildItem artifacts/ci/*-release.apk)
           if($apk.Count -ne 1){throw 'Expected exactly one reviewed APK'}
           ./publish-apk.ps1 -ApkPath $apk[0].FullName
           if($LASTEXITCODE -ne 0){throw 'Publication incomplete'}
           ./check-runtime.ps1 -Stage postflight
-          $post=Get-Content reports/runtime-postflight.json -Raw|ConvertFrom-Json
+          $post=Get-Content reports/runtime-postflight.json -Raw|ConvertFrom-Json -AsHashtable
           if($post.result.status -notin @('NO_ISSUES_OBSERVED','NO_DATA')){throw 'Published APK verified, but postflight unavailable or reports errors; investigate before reporting delivery'}
       - name: Retain publication receipts (no raw diagnostic logs)
         if: always()
