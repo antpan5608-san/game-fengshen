@@ -2,6 +2,18 @@ name: Android cloud build
 on:
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'build creates a candidate; verify-base only restores a trusted existing APK'
+        type: choice
+        options: [build, verify-base]
+        default: build
+        required: true
+      base_build_run_id:
+        description: 'Successful main build supplying the immutable base APK (verify-base only)'
+        required: false
+      base_sha256:
+        description: 'Reviewed base APK SHA-256 (verify-base only)'
+        required: false
       version_code:
         description: 'New APK versionCode (must exceed the published version)'
         required: true
@@ -12,11 +24,13 @@ on:
         default: '0.8.2-ci-release'
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: fengshen-cloud-build
   cancel-in-progress: false
 jobs:
   build:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'build'
     runs-on: windows-2022
     timeout-minutes: 40
     defaults:
@@ -72,3 +86,86 @@ jobs:
           path: android/app/build/test-results/testReleaseUnitTest/*.xml
           if-no-files-found: ignore
           retention-days: 14
+  verify-base:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'verify-base'
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Require an immutable trusted main base build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_RUN_ID: ${{ inputs.base_build_run_id }}
+          BASE_SHA256: ${{ inputs.base_sha256 }}
+        run: |
+          if($env:BASE_RUN_ID -notmatch '^[0-9]+$' -or $env:BASE_SHA256 -notmatch '^[a-f0-9]{64}$'){throw 'Invalid base review identifiers'}
+          $raw=gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:BASE_RUN_ID"
+          if($LASTEXITCODE -ne 0){throw 'Cannot read source build'}
+          $r=$raw|ConvertFrom-Json
+          if($r.status -ne 'completed' -or $r.conclusion -ne 'success' -or $r.event -ne 'workflow_dispatch' -or $r.head_branch -ne 'main' -or $r.path -ne '.github/workflows/android-build.yml'){throw 'Untrusted base build'}
+          $r.head_sha|Set-Content artifacts-base-commit.txt
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/base
+          run-id: ${{ inputs.base_build_run_id }}
+          github-token: ${{ github.token }}
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Verify and restore the base using existing transport
+        env:
+          BASE_RUN_ID: ${{ inputs.base_build_run_id }}
+          BASE_SHA256: ${{ inputs.base_sha256 }}
+        run: |
+          $env:ANDROID_SDK_ROOT=$env:ANDROID_HOME
+          & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'build-tools;35.0.0'
+          if($LASTEXITCODE -ne 0){throw 'APK verification tools unavailable'}
+          $apks=@(Get-ChildItem artifacts/base/*-release.apk)
+          if($apks.Count -ne 1){throw 'Expected exactly one base APK'}
+          $receipt=Get-Content artifacts/base/apk-receipt.json -Raw|ConvertFrom-Json
+          $baseCommit=(Get-Content artifacts-base-commit.txt -Raw).Trim()
+          if($receipt.sourceCommit -ne $baseCommit -or $receipt.buildRunID -ne $env:BASE_RUN_ID -or $receipt.sha256 -ne $env:BASE_SHA256 -or (Get-FileHash $apks[0].FullName).Hash.ToLowerInvariant() -ne $env:BASE_SHA256){throw 'Base receipt or byte provenance mismatch'}
+          python tools/ci_apk.py verify --apk $apks[0].FullName --output artifacts/base/base-verified.json --code $receipt.versionCode --name $receipt.versionName
+          if($LASTEXITCODE -ne 0){throw 'Base signature/package/version/content verification failed'}
+          $verified=Get-Content artifacts/base/base-verified.json -Raw|ConvertFrom-Json
+          if($verified.sha256 -ne $receipt.sha256 -or $verified.sizeBytes -ne $receipt.sizeBytes -or $verified.contentHash -ne $receipt.contentHash){throw 'Base verification differs from build receipt'}
+          python tools/ci_apk.py restore --apk $apks[0].FullName
+          if($LASTEXITCODE -ne 0){throw 'Trusted base restoration failed'}
+          python -m unittest discover -s tests -p test_ci_apk.py
+          if($LASTEXITCODE -ne 0){throw 'Content transport safety regression failed'}
+      - name: Retain verification receipt only
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-base-verification
+          path: artifacts/base/base-verified.json
+          if-no-files-found: error
+          retention-days: 14
+  android-capability:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'verify-base'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Observe existing Android runtime tools without creating a device
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, shutil, subprocess
+          sdk=pathlib.Path(os.environ.get('ANDROID_HOME','/nonexistent'))
+          adb=shutil.which('adb') or str(sdk/'platform-tools/adb')
+          emulator=sdk/'emulator/emulator'
+          avds=[]
+          if emulator.is_file():
+              r=subprocess.run([str(emulator),'-list-avds'],capture_output=True,text=True,timeout=20)
+              if r.returncode==0: avds=r.stdout.splitlines()
+          print('ANDROID_CAPABILITY: '+json.dumps(dict(adb=pathlib.Path(adb).is_file(),emulator=emulator.is_file(),avds=avds,kvmReadable=os.access('/dev/kvm',os.R_OK),kvmWritable=os.access('/dev/kvm',os.W_OK))))
+          PY
