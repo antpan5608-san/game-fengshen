@@ -614,3 +614,89 @@ artifacts/published/v22-public-verification.json、v22-workflow-verification.jso
 本轮云端v22发布完成；不自动展开新玩法区段，等待设备反馈或下一项具体开发任务。
 
 END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: TOWN-02
+scope_revision: herb-use-and-supply
+status: BLOCKED
+execution_kind: IMPLEMENTED
+
+本轮实施并验证的是巡检与可信基底接续工具；药草业务功能未实现，不能称为内容已完成。必要原版使用证据仍缺，取回单个已登记ROM的许可尚未收到。
+
+【基线与修改】
+仓库、分支、开始提交: /workspace/game-fengshen，main，1f9a72f12cbb4dc651a49f8fd952ffeb8f10b2bf；开始工作区干净。
+结束提交/PR或未提交diff: 巡检接续提交d0ab51167161c65c7a91c6dbaec2192aa505ce1a、基底验证提交e445ca200a162ca460fe8d8cd3ed21d612a386e1已推送；本报告、skill与最终门禁修订随本轮收尾提交，实际结束HEAD见交付正文。
+实际基线APK/内容: 游戏v21/c11，可信已发布v22/0.8.2-ci-release/c11；APK来源f7dfea747999f6b1ee497179f98eb6cc7ed94f6a，后续文档/工具提交不同不代表旧发布错误。
+本轮修改文件: 原android-publish.yml、android-build.yml、check-runtime.ps1、tests/test_environment_review.py、AGENTS.md、docs/current-task.md/android-ci.md/delivery-status.md、docs/history/authorization-through-android-ci-01.md、唯一内容迭代SKILL.md。没有修改Android业务源码、内容pin或服务器代码。
+玩家实际新增能力: 无；药草使用未启用。
+仅保留的历史成果: 三店买卖/返回、三图往返、装备、普通战斗/逃跑/新游戏战败、输入、音乐/诊断、更新器和现有本地/云存档。
+
+【本轮巡检】
+执行位置: 原Actions受保护fengshen-production环境。当前环境pwsh不可用，初始NOT_AVAILABLE；通过最小只读适配恢复。
+命令/run_id: gh workflow run android-publish.yml --ref main -f mode=inspect；36888836939，d0ab511。approve/inspect成功，publish跳过。
+查询时间与版本: 2026-10-01T16:02:05.7395193Z，可信22/21。
+正常/测试、模拟器/真机: 总452事件，14测试事件；普通8会话（6模拟器/2真机）；storedVersionCounts=21:370、22:82。窗口08:27:54.845931639Z—15:48:08.659569069Z。
+发现问题、修复及剩余: 窗口NO_ISSUES_OBSERVED、errors={}、cleanupFailures=0。没有发现需修复的当前上传故障；历史音频超时根因仍UNCONFIRMED。
+查询限制: 仅已上传样本，不代替本轮手机/App验收。inspect只GET summary，未调用发布/登记/清理，不注入OSS凭据，只保留脱敏摘要，无samples/完整旧日志。
+
+【资源与证据】
+可信基底APK: 构建36882142423的不可变fengshen-signed-apk，原runner在验证运行36889913121实际成功下载，核对receipt来源提交/run/hash并验签、包名、版本与内容。当前任务直接下载该artifact返回HTTP403，签名URL未输出、未绕过代理。
+公网回退也已实际核验: 重新读取version.json并下载完整正式对象，不依赖?v=22；版本22，大小11316827，SHA256=5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f；官方SDK35工具验签/包名/非debuggable通过。
+基底内容: opening-segment-001-c11，manifest SHA256=3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147，42文件含manifest（41内容文件）。原ci_apk.restore已恢复到原assets入口。
+药草稳定ID: rom.medicine.0，category-local originalId=0；名称藥草、买价15/卖价7/maxCount10。
+原版使用规则: 未核；地图可用性、合法目标/不可用状态、恢复计算、上限截断、满HP/取消/失败消耗及消耗时机均不能由买卖证据推断。
+证据来源与范围: 已提交town01.json与恢复的scene.json；verifiedFields仅name/originalId/category/buyPrice/sellPrice，remainingUnknown明列medicine effects/use conditions。现有extract_town_shops只读取商品/名字/价格/相关买卖例程，不提取药效。
+必要私有输入取得情况: 无。用户明确答复目前没有接入私有资源；未读取电脑F盘。
+最小未取得输入: private-inputs/town02/target.nes，一个完整iNES/Mapper246文件，1048592字节，SHA256=f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25；用途仅药草行为局部取证。已有rom-acquisition.json登记固定来源，但game-data-inventory.md的旧准入规则禁止公共补ROM，新的单文件取回请求尚待批准，未下载。
+是否要求完整历史目录: NO。地图/音频/图集已复用可信c11；本轮无需1958个历史文件。新的正常输入/受控边界证据需在取得ROM及原版运行能力后局部生成。
+
+【实际功能】
+购买→离店→使用路径: 前两步沿用历史已有功能；本轮没有完成使用步骤，不计正常流程PASS。
+可用场景与目标、效果与消耗: 未核，未实现。
+取消、满血、非法目标、重复输入: 原版规则与实际App均NOT_RUN；没有猜数值、消耗药草或改HP。
+HUD/背包/存档一致性: 本轮未执行药草流程验证，旧实现保留，未清档/写用户云进度。
+是否人为增加出村前置: NO。
+
+【内容与CI】
+内容是否改变: NO；基底与目标仍同c11/hash，未伪造新内容版本。
+复用函数: ci_apk.fetch/verify_apk/content/receipt/restore、原build-ci.ps1与两份Actions、check-runtime.ps1/runtime-admin.mjs。
+实际方法: 原build workflow增加verify-base读取成功main构建的不可变APK，先审receipt/来源提交/run/字节，再验签/内容并restore；不生成新APK，不接签名/服务器Secrets。生产approve/publish新增实际唯一成功build job检查，验证基底成功不能伪装APK构建。
+新内容进入原workflow: 因没有可导出药草新定义，此链路NOT_RUN，未关闭pin校验或伪装ZIP。
+干净工作区可重复性: 实际checkout源e445ca2的runner完成基底restore，12项transport测试通过；只证明已有基底恢复，不证明新药草构建可重复。
+构建run_id/来源提交/最终APK: 36889913121是验证运行，不是新APK构建；源e445ca2，实际build job跳过。没有本轮最终APK hash。
+
+【验证】
+原版药草依据、合法使用、边界/取消、重复提交、药草保存冷启动、旧档覆盖升级: 全部NOT_RUN。
+三店/装备/三图/战斗/INPUT-01: 本轮未重跑App回归，历史结果保留，不计本轮PASS。
+正常App录像: 无。
+实际工具验证: Linux python -m unittest discover -s tests -p test_ci_apk.py，12/12；python tests/test_environment_review.py，19/19（真实Bash代码/隔离API，无真实发布）。原Windows runner verify-base actual下载/receipt/验签/restore与12项测试成功；inspect原PowerShell解析/脱敏摘要实际成功。
+工具失败修正: 本地aapt首轮缺同SDK包lib64/libc++.so，补齐经官方checksum验证的该库后实际verify/restore通过，首轮不计成功。
+Android能力: 当前环境无adb/SDK平台/emulator/KVM；仅补官方aapt/apksigner及依赖验证APK。原Linux runner实际adb=true、emulator=false、AVD空、KVM不可读写；未启动设备，不以adb存在写App已运行。
+一加13T: NOT_RUN。
+
+【复用与skill】
+实际复用: 既有恢复/验证/巡检/SSH bridge/自动review，Kotlin与游戏模块未复制；没有第二套工作流/设备农场/导入器。
+skill: .agents/skills/fengshen-content-iteration/SKILL.md；原无对应skill，本轮仅新增此一个。记录已验证的基底恢复、局部证据定位、原inspect/verify-base入口与相关测试，不含版本号、Secret或历史日志。
+已验证步骤: 当前Linux验包/restore及12/19测试，原runner不可变基底验证和只读巡检。
+过期规则收敛: 原AGENTS与ANDROID-CI任务原文完整归档；AGENTS只留稳定规则，current-task唯一TOWN-02，未删除历史决策/欠账。十类清单仍在权威位置。
+未验证方法: 药草原版取证、局部新内容导出及进入签名CI、App仪器/正常操作与真机；skill明确待核。无提速百分比声明。
+
+【产物与发布】
+本轮候选APK: 无；artifacts/town02/base/fengshen-remake-v22-release.apk仅旧可信基底，不是新功能候选。
+可下载验证artifact: 36889913121的fengshen-base-verification（仅receipt）；36888836939的fengshen-runtime-summary（脱敏摘要）。本地artifacts/town02/保留同类回执，均Git忽略。
+版本/versionCode: 未产生新版；正式版本仍0.8.2-ci-release/22。
+签名/内容校验: 基底包名org.fengshen.dev、既有signer 5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6、内容/hash/大小通过。
+发布状态: NOT_PUBLISHED（本轮）；旧v22正式对象保持，不修改Language。
+现有正式地址: https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=22；hash=5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f。
+发布后巡检: NOT_RUN，本轮未发布。
+未发布原因: 无药草原版规则证据、未实现使用功能、无实际App闭环验收；工具/规则/skill改动不作为游戏发布理由。
+
+【累计欠账】
+权威位置: docs/delivery-status.md的ANDROID-CI-01最近完整十项清单（当前598行起），不复制全文；仍10类。
+真正关闭的游戏项目: 无，药草使用未关闭。工程接续已补只读巡检/不可变基底验证，不冒充游戏完成。
+仍阻塞: 单个ROM的合法取得及药草原版规则/运行证据，后续App运行验收；已有音频、更新器、其他物品等欠账保持。
+南海下一真实节点最近3个阻塞: 地图0必要NPC/服务事件；真实南海连接/条件；剧情Boss及胜后状态。药草为可选补给，不新增出村条件。
+
+END_DELIVERY_REPORT

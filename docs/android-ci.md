@@ -94,3 +94,11 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 - 验证：实际云端 testReleaseUnitTest/assembleRelease/签名/内容与旧包兼容检查通过；本地自动审批实际 Bash fixture14项、既有 transport12项通过。没有本轮 adb/模拟器/App录屏或真实账号云恢复测试；一加13T覆盖升级、触控、声音、长时性能均 NOT_RUN。
 
 下一迭代继续复用现有构建与发布，versionCode 必须大于22；既有默认22是首次构建的历史值，必须显式覆盖。累计十类未完成项与下一原版节点三个阻塞全部保持，详见最新交付报告。
+
+## 单项内容迭代的只读接续入口
+
+原android-publish.yml默认mode=publish，产物输入仍由发布job强制核验；mode=inspect仅调用check-runtime.ps1 -SummaryOnly，使用原fengshen-production保护与自动review，publish不运行。摘要artifact保留14天，不含samples/旧原始日志，不登记版本/清理数据。TOWN-02已实际成功运行此入口。
+
+原android-build.yml默认mode=build。mode=verify-base只对成功main手动构建的不可变fengshen-signed-apk核对receipt/来源提交/run/hash，再用ci_apk.py verify/restore；只保留verification receipt，不生成APK、不使用服务器/签名Secrets。同时只读观察现有Linux runner adb/emulator/AVD/KVM；不是启动设备或App验收。
+
+新增只读模式后，生产review与publish均额外要求来源运行实际包含唯一成功build job；verify-base成功不能当作APK构建。后续新内容导出与进入签名构建尚待实现，不允许用关闭pin验证或伪APK绕过。稳定已验证步骤见.agents/skills/fengshen-content-iteration/SKILL.md，实际run/版本由当前任务和交付文档记录。
