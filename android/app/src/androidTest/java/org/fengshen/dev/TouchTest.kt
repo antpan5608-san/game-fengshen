@@ -1142,6 +1142,11 @@ class TouchTest:IsolatedGameTestCase(){
         completeDialogue(v);assertEquals(GameView.Layer.BATTLE,v.layer);waitCommands()
         val box=GameView::class.java.getDeclaredMethod("battleBox").apply{isAccessible=true}.invoke(v) as Box;val scale=box.w/256f
         val fight=f.get(v) as OpeningBattle;val beforeEscapeHp=fight.hero.hp
+        val enemyBox=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java)
+            .apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
+        assertEquals(box.x+64*scale,enemyBox.x,.01f);assertEquals(box.y,enemyBox.y,.01f)
+        assertTrue("Full real Boss must fit above unchanged controls",enemyBox.y+enemyBox.h<=box.y+148*scale)
+        screenshot(v,"nanhai-controlled-boss-original-origin")
         tap(v,Pair(box.x+40*scale,box.y+208*scale));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
         assertEquals(BattlePhase.TARGET,fight.phase);assertTrue(fight.hero.hp<beforeEscapeHp)
         assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true);waitCommands()

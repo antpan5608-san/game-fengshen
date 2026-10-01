@@ -55,6 +55,7 @@ class NanhaiExportTests(unittest.TestCase):
         battle=json.loads(self.result['combat.json']);self.assertEqual([12,13],[len(z['groups']) for z in battle['zones']])
         self.assertEqual('HIGH',battle['zones'][1]['randomGate']);self.assertEqual(245,battle['zones'][1]['randomThreshold'])
         self.assertEqual('rom.event.97.39.1',battle['bosses'][0]['flagId'])
+        self.assertEqual([64,0],next(g for g in battle['presentation']['graphics'] if g['enemyId']==137)['origin'])
         self.assertEqual([120,16,13,60,100],[next(e for e in battle['enemies'] if e['id']==137)[k] for k in ['hp','attack','defense','experienceReward','moneyReward']])
     def test_full_foot_areas_and_only_unimplemented_region_boundary(self):
         sea=json.loads(self.result['scene25.json']);palace=json.loads(self.result['scene97.json'])
@@ -69,11 +70,12 @@ class NanhaiExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'target pin'):
             exporter.export_from_base(self.base,self.proof,dict(self.pin,manifestSha256='0'*64))
         original=json.loads((ci.ROOT/self.proof).read_text(encoding='utf-8'))
-        for kind in ['enemy','exit','tile','rom']:
+        for kind in ['enemy','exit','tile','origin','rom']:
             evidence=json.loads(json.dumps(original))
             if kind=='enemy':evidence['combatOverlay']['enemies'][0]['hp']+=1
             elif kind=='exit':evidence['exits'][0]['spawn']=[0,0]
             elif kind=='tile':evidence['graphics']['enemy-137.png']['tiles'][0]['sha256']='0'*64
+            elif kind=='origin':next(g for g in evidence['combatOverlay']['graphics'] if g['enemyId']==137)['origin']=[112,72]
             else:evidence['romSha256']='0'*64
             with patch.object(exporter,'load',side_effect=lambda path: evidence if Path(path).resolve()==(ci.ROOT/self.proof).resolve() else json.loads(Path(path).read_text(encoding='utf-8'))):
                 with self.assertRaises(ValueError):exporter.export_from_base(self.base,self.proof,self.pin)
