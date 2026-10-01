@@ -71,6 +71,26 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
     fun testNormalTownShopsBuySellAndReturn(){normalTownShops(false)}
     fun testNormalHerbSupplyLoop(){normalTownShops(true)}
+    fun testExportCurrentSaveForUpgrade(){
+        val(activity,v)=launch()
+        // On the old APK, create a real gift/position save with normal inputs.
+        if(v.world.mapId==114 && v.world.x/16==8 && v.world.y/16==21){
+            repeat(3){stickStep(v,Key.RIGHT)};stickStep(v,Key.DOWN)
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+            repeat(12){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
+            assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
+        }
+        File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").writeText(v.currentSnapshot().json().toString())
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
+    fun testUpgradeKeepsPreviousSave(){
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json")
+        assertTrue("Old APK must first export its normal save",file.exists())
+        val old=SaveSnapshot.parse(file.readText())
+        val(activity,v)=launch()
+        assertEquals(old.copy(contentVersion=v.content.scene.version),v.currentSnapshot())
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     fun testHerbColdStartMatchesNormalSave(){
         val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json")
         assertTrue("Run the normal supply test before an external force-stop",expectedFile.exists())
@@ -78,6 +98,41 @@ class TouchTest:IsolatedGameTestCase(){
         val(activity,v)=launch()
         assertEquals(expected,v.currentSnapshot())
         assertEquals(0,v.currentSnapshot().inventory[HerbUse.ID]?:0)
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testControlledHerbBoundariesAndSaveCompatibility(){
+        val(activity,v)=launch()
+        val baseline=v.currentSnapshot()
+        val hero=v.content.initialPlayer.copy(maxHp=100)
+        val panel=v.characterPanelBounds()
+        val row=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.555f)
+        val action=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f)
+        fun fixture(hp:Int,count:Int){
+            instrumentation.runOnMainSync{
+                if(v.layer!=GameView.Layer.MAP)v.handleBack()
+                assertTrue(v.restoreSnapshot(baseline.copy(contentVersion="opening-segment-001-c11",
+                    characters=listOf(hero.copy(hp=hp)),inventory=if(count>0)mapOf(HerbUse.ID to count) else emptyMap())))
+            }
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));tap(v,row)
+        }
+        fixture(5,3)
+        val before=v.currentSnapshot()
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+        assertEquals(before,v.currentSnapshot())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action))
+        send(v,MotionEvent.ACTION_POINTER_DOWN or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
+        send(v,MotionEvent.ACTION_POINTER_UP or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
+        send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(55,v.currentSnapshot().characters.single().hp)
+        assertEquals(2,v.currentSnapshot().inventory[HerbUse.ID])
+        val once=v.currentSnapshot();repeat(10){tap(v,action)};assertEquals(once,v.currentSnapshot())
+        for(hp in listOf(95,100)){
+            fixture(hp,3);tap(v,action)
+            assertEquals(100,v.currentSnapshot().characters.single().hp)
+            assertEquals(2,v.currentSnapshot().inventory[HerbUse.ID])
+        }
+        fixture(0,3);val dead=v.currentSnapshot();tap(v,action);assertEquals(dead,v.currentSnapshot())
+        fixture(5,0);val empty=v.currentSnapshot();tap(v,action);assertEquals(empty,v.currentSnapshot())
         instrumentation.runOnMainSync{activity.finish()}
     }
     private fun normalTownShops(useHerb:Boolean){

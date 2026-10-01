@@ -42,6 +42,11 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
    对旧基底单独验包使用ci_apk.py verify --base-only（精确基底APK hash门禁）；默认verify仍审核目标APK。
    两次干净临时目录restore的42文件一致；test_town02_export.py覆盖错规则/ROM/pin和不变素材字节。
 
+9. 原build-ci.ps1恢复目标内容、相关Python门禁、Gradle wrapper的release单元/构建/同签名验包已实际成功；
+   APK与instrument APK由原工作流分别保留。业务用HerbUse，触摸用原面板；apply之外的available不结算。
+   本地JRE缺编译器时，用Debian官方匹配JDK-headless包在scratch补齐，不改全局权限；JVM网络沿用平台代理系统属性。
+   debug单元测试与构建成功，ContentTest及受控药草UI仪器实际成功；不将其写成正常流程/正式覆盖通过。
+
 # 输出和停止条件
 
 输出恢复/验证receipt、脱敏巡检摘要、测试结果及固定交付报告；临时输入/产物按.gitignore隔离。
@@ -51,9 +56,11 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 
 # 仍待验证
 
-局部导出和目标内容恢复已实际验证；签名构建和App实际运行结果仍以当前任务记录为准。
+局部导出和目标内容恢复已实际验证；签名构建已成功；App覆盖以当前任务记录为准。
 不能仅改目标pin后要求旧服务器包满足它，也不把任意ZIP改名APK。
-原版药草行为取证、使用闭环、模拟器安装/仪器和真机验收仍按当前任务记录推进。
+原版药草边界取证、模拟器安装、内容/受控UI仪器已成功；正常闭环、正式候选覆盖及真机仍按当前任务推进。
+原workflow新增runtime隔离步骤、现有录屏器的静音/冷启动适配及同APK运行回执门禁仍需真实runner验证；
+本地软件AVD出现System UI ANR，保留失败，降低任务AVD分辨率后再验，不将未完成录像计为通过。
 现有runner能力只以实际观测为准，不能把工具存在写成设备已经运行。
 
 详细入口：docs/android-ci.md、tools/ci_apk.py、check-runtime.ps1、原两份Actions工作流。

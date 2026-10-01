@@ -102,3 +102,9 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 原android-build.yml默认mode=build。mode=verify-base只对成功main手动构建的不可变fengshen-signed-apk核对receipt/来源提交/run/hash，再用ci_apk.py verify/restore；只保留verification receipt，不生成APK、不使用服务器/签名Secrets。同时只读观察现有Linux runner adb/emulator/AVD/KVM；不是启动设备或App验收。
 
 新增只读模式后，生产review与publish均额外要求来源运行实际包含唯一成功build job；verify-base成功不能当作APK构建。后续新内容导出与进入签名构建尚待实现，不允许用关闭pin验证或伪APK绕过。稳定已验证步骤见.agents/skills/fengshen-content-iteration/SKILL.md，实际run/版本由当前任务和交付文档记录。
+
+## TOWN-02 局部内容与运行门禁
+
+content-source.json分开固定iteration.base的完整APK/内容hash与目标manifest。原ci_apk.restore验证基底后调用export_development.export_from_base生成药草局部定义，校验目标pin才写assets；无需ROM/历史私有captures。--base-only仅用于原基底验证入口，不能审核目标候选。
+
+原build-ci的RuntimeTests编译同签名release仪器APK；原build workflow的runtime在单个临时AVD验证旧包覆盖、药草边界和正常闭环。录屏继续用record_app_audio.py的--silent适配，静音不证明声音。发布审批须build/runtime实际成功，check-reviewed-apk核对runtime回执与同提交/同产物hash；跳过或失败只留候选。首次真实runner结果以交付记录为准，当前该runtime链路待执行。
