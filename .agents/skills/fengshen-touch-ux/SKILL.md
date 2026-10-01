@@ -36,5 +36,5 @@ description: 在本项目被授权的Android交互任务中，遇到物品/装�
 - TouchTest.testTouchUxSelectionScrollAndAtomicEquipment已在签名候选的隔离Actions AVD运行：选择不变状态，滚动后装备/卸下与原纯业务结果一致，重复UP不重复提交。
 - testTouchUxBaselineClickPath在旧正式APK实际运行；record_app_audio.py --silent --comparison只用于受控UI对比，不冒充正常游玩或声音验收。
 - testExportCurrentSaveForUpgrade/testUpgradeKeepsPreviousSave在原runtime脚本通过。跨APK仪器测试须保留既有public方法的JVM签名：曾把persistState的void返回改为boolean，旧APK测试进程崩溃；已恢复原签名，私有函数返回保存结果。
-- 最后一个滚动列表项可能只露出不足48dp的区域；先滚到可点范围再点击，不能靠越界坐标或削弱断言通过。该交易边界复测结果由当前交付记录维护。
+- 最后一个滚动列表项可能只露出不足48dp的区域；先滚到可点范围再点击，不能靠越界坐标或削弱断言通过。滚动到合法区域后，实际交易边界复测通过；坐标须在当前面板/模式打开后取得。旧药草测试曾预期多点仍提交，现按多点取消改测，独立点击仍执行原药效；药效断言保持。
 - skill显式与隐式隔离CLI尝试均遇到认证401；不将结构/人工案例判断写成自动匹配成功。正式APK、真机与声音须按内容skill和任务门禁另验。

@@ -107,16 +107,16 @@ class TouchTest:IsolatedGameTestCase(){
         val(activity,v)=launch()
         val baseline=v.currentSnapshot()
         val hero=v.content.initialPlayer.copy(maxHp=100)
-        val panel=v.characterPanelBounds()
-        val row=center(v.panelItemBounds(HerbUse.ID))
-        val action=center(v.panelPrimaryBounds())
+        var action=Pair(0f,0f)
         fun fixture(hp:Int,count:Int){
             instrumentation.runOnMainSync{
                 if(v.layer!=GameView.Layer.MAP)v.handleBack()
                 assertTrue(v.restoreSnapshot(baseline.copy(contentVersion="opening-segment-001-c11",
                     characters=listOf(hero.copy(hp=hp)),inventory=if(count>0)mapOf(HerbUse.ID to count) else emptyMap())))
             }
-            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));tap(v,row)
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+            if(count>0){scrollToItem(v,HerbUse.ID);tap(v,center(v.panelItemBounds(HerbUse.ID)))}
+            action=center(v.panelPrimaryBounds())
         }
         fixture(5,3)
         val before=v.currentSnapshot()
@@ -126,9 +126,11 @@ class TouchTest:IsolatedGameTestCase(){
         send(v,MotionEvent.ACTION_POINTER_DOWN or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
         send(v,MotionEvent.ACTION_POINTER_UP or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
         send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(before,v.currentSnapshot()) // Multi-touch cancels the whole candidate gesture.
+        tap(v,action) // A fresh independent single touch is the valid submit.
         assertEquals(55,v.currentSnapshot().characters.single().hp)
         assertEquals(2,v.currentSnapshot().inventory[HerbUse.ID])
-        val once=v.currentSnapshot();repeat(10){tap(v,action)};assertEquals(once,v.currentSnapshot())
+        val once=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(once,v.currentSnapshot())
         for(hp in listOf(95,100)){
             fixture(hp,3);tap(v,action)
             assertEquals(100,v.currentSnapshot().characters.single().hp)
@@ -200,7 +202,7 @@ class TouchTest:IsolatedGameTestCase(){
             fun action(i:Int)=tap(v,center(v.shopActionBounds(i)))
             action(1)
             val definition=v.content.shops.values.first{it.mapId==mid};val item=v.content.itemDefinitions.getValue(definition.items[if(mid==17)1 else 0])
-            tap(v,center(v.shopItemBounds(item.id)));capture("shop$mid")
+            scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)));capture("shop$mid")
             val before=v.currentSnapshot()
             if(mid==17){
                 val point=center(v.shopActionBounds(4));send(v,MotionEvent.ACTION_DOWN,listOf(point))
@@ -220,7 +222,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(0,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID]?:0);capture("touch-ux-sold")
             }
             if(mid==19 && !useHerb){
-                action(2);tap(v,center(v.shopItemBounds(item.id)));capture("sell");val prior=v.currentSnapshot();action(4)
+                action(2);scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)));capture("sell");val prior=v.currentSnapshot();action(4)
                 assertEquals(prior.money+7,v.currentSnapshot().money)
                 assertEquals((prior.inventory[item.id]?:0)-1,v.currentSnapshot().inventory[item.id]?:0)
                 val sold=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(center(v.shopActionBounds(4))))};assertEquals(sold,v.currentSnapshot())
@@ -232,11 +234,11 @@ class TouchTest:IsolatedGameTestCase(){
         }
         if(touchUx){
             tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,"rom.weapon.1")
-            val before=v.currentSnapshot();tap(v,center(v.panelItemBounds("rom.weapon.1")));assertEquals(before,v.currentSnapshot())
+            val before=v.currentSnapshot();scrollToItem(v,"rom.weapon.1");tap(v,center(v.panelItemBounds("rom.weapon.1")));assertEquals(before,v.currentSnapshot())
             tap(v,center(v.panelPrimaryBounds()));assertEquals(1,v.currentSnapshot().characters.first().equipment!!.rightHand);capture("touch-ux-equipped")
             tap(v,tabPoint(v,1));tap(v,center(v.panelSlotBounds("rightHand")));tap(v,center(v.panelPrimaryBounds()))
             assertEquals(-1,v.currentSnapshot().characters.first().equipment!!.rightHand);capture("touch-ux-unequipped")
-            tap(v,tabPoint(v,2));tap(v,center(v.panelItemBounds("rom.weapon.1")));tap(v,center(v.panelPrimaryBounds()))
+            tap(v,tabPoint(v,2));scrollToItem(v,"rom.weapon.1");tap(v,center(v.panelItemBounds("rom.weapon.1")));tap(v,center(v.panelPrimaryBounds()))
             instrumentation.runOnMainSync{v.handleBack()}
             File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-after-counts.json").writeText("""{"kind":"NORMAL_APP_FLOW","buyNonFirstFromBuyList":2,"sellFromSellList":2,"replaceFromInventoryList":2,"unequipFromSlotList":2,"useFromItemList":2,"definition":"actual taps; list already open, role selected"}""")
         }
@@ -261,6 +263,7 @@ class TouchTest:IsolatedGameTestCase(){
             val panel=v.characterPanelBounds()
             val index=before.inventory.filterValues{it>0}.toSortedMap().keys.indexOf(HerbUse.ID)
             assertTrue(index in 0..3)
+            scrollToItem(v,HerbUse.ID)
             val row=center(v.panelItemBounds(HerbUse.ID))
             val action=center(v.panelPrimaryBounds())
             tap(v,row);capture("herb-selected")
@@ -293,7 +296,7 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v,tabPoint(v,2));capture("inventory")
         val index=v.currentSnapshot().inventory.filterValues{it>0}.toSortedMap().keys.indexOf("rom.weapon.1")
         assertTrue(index in 0..3)
-        tap(v,center(v.panelItemBounds("rom.weapon.1")))
+        scrollToItem(v,"rom.weapon.1");tap(v,center(v.panelItemBounds("rom.weapon.1")))
         tap(v,center(v.panelPrimaryBounds()))
         assertEquals(1,v.currentSnapshot().characters.first().equipment!!.rightHand)
         assertEquals(2,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
@@ -354,7 +357,7 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.SHOP,v.layer)
         val initial=v.currentSnapshot();val item=v.content.itemDefinitions.getValue("rom.weapon.1")
         val shop=v.content.shops.values.first{it.mapId==17}
-        tap(v,center(v.shopItemBounds(item.id)));assertEquals(initial,v.currentSnapshot())
+        scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)));assertEquals(initial,v.currentSnapshot())
         val p=center(v.shopActionBounds(4));val off=Pair(p.first,p.second-64*v.resources.displayMetrics.density)
         send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_MOVE,listOf(off));send(v,MotionEvent.ACTION_MOVE,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(initial,v.currentSnapshot())
         send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_POINTER_DOWN or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(p,p));send(v,MotionEvent.ACTION_POINTER_UP or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(p,p));send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(initial,v.currentSnapshot())
@@ -367,13 +370,13 @@ class TouchTest:IsolatedGameTestCase(){
         val sale=TownTrade.sell(beforeSell.money,beforeSell.inventory,shop,v.content.itemDefinitions.getValue("rom.weapon.2"))
         assertEquals(sale.money,v.currentSnapshot().money);assertEquals(sale.inventory,v.currentSnapshot().inventory)
         val last=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(p))};tap(v,p);assertEquals(last,v.currentSnapshot()) // Removed item never transfers selection.
-        tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(2,v.currentSnapshot().inventory[item.id])
-        tap(v,center(v.shopActionBounds(1)));tap(v,center(v.shopItemBounds(item.id)))
+        scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(2,v.currentSnapshot().inventory[item.id])
+        tap(v,center(v.shopActionBounds(1)));scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)))
         send(v,MotionEvent.ACTION_DOWN,listOf(p))
         val changed=v.currentSnapshot().copy(money=0)
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(changed))}
         send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(changed,v.currentSnapshot())
-        tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(changed,v.currentSnapshot())
+        scrollToShopItem(v,item.id);tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(changed,v.currentSnapshot())
         screenshot(v,"touch-ux-trade-failure")
         tap(v,center(v.shopActionBounds(3)));assertEquals(GameView.Layer.MAP,v.layer);assertNull(v.input.direction())
         instrumentation.runOnMainSync{activity.finish()}
@@ -391,7 +394,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue(a.w>=48*dp&&a.h>=48*dp&&b.w>=48*dp&&b.h>=48*dp)
         assertTrue(a.x+a.w<=b.x);screenshot(v,"touch-ux-phone-equipment-$font")
         instrumentation.runOnMainSync{activity.onBackPressed();assertTrue(v.restoreSnapshot(initial.copy(mapId=17,x=7*16+8,y=7*16+8,money=1000,inventory=bag)))}
-        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));tap(v,center(v.shopItemBounds("rom.weapon.1")))
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));scrollToShopItem(v,"rom.weapon.1");tap(v,center(v.shopItemBounds("rom.weapon.1")))
         val unchanged=v.currentSnapshot();screenshot(v,"touch-ux-phone-shop-$font");tap(v,center(v.shopActionBounds(4)))
         assertEquals(unchanged.money-50,v.currentSnapshot().money)
         File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-phone-$font.json").writeText("""{"width":${v.width},"height":${v.height},"density":$dp,"fontScale":$font,"minTouchDp":48,"kind":"EMULATOR_SIZE_VALIDATION"}""")
