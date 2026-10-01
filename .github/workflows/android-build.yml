@@ -267,3 +267,20 @@ jobs:
             artifacts/checkpoint-ui/nanhai-*.txt
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain the real route-entry clip separately
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-nanhai-entry-clip
+          path: artifacts/nanhai-review-clips/entry/*
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Retain the real ending and external-restart clips separately
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-nanhai-final-clips
+          path: artifacts/nanhai-review-clips/final/*
+          if-no-files-found: ignore
+          retention-days: 14
