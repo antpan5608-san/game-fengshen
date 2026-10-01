@@ -10,6 +10,7 @@ $dir=Join-Path $root 'artifacts/ci'
 New-Item -ItemType Directory -Force $dir|Out-Null
 $savedKey=$env:FENGSHEN_KEYSTORE_PATH
 $temporaryKey=$null
+Push-Location $root
 try {
     if(-not $env:FENGSHEN_KEYSTORE_PATH) {
         if(-not $env:FENGSHEN_KEYSTORE_BASE64){throw 'Configure FENGSHEN_KEYSTORE_BASE64 or a protected local FENGSHEN_KEYSTORE_PATH'}
@@ -40,4 +41,5 @@ try {
 } finally {
     $env:FENGSHEN_KEYSTORE_PATH=$savedKey
     if($temporaryKey -and (Test-Path -LiteralPath $temporaryKey)){Remove-Item -LiteralPath $temporaryKey}
+    Pop-Location
 }

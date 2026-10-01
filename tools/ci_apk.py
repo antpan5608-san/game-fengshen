@@ -31,10 +31,12 @@ def tool(name):
 
 
 def command(args):
-    result = subprocess.run(args, capture_output=True, text=True)
+    result = subprocess.run(args, capture_output=True)
     if result.returncode:
         raise ValueError("APK tool verification failed")
-    return result.stdout
+    # Android build tools emit UTF-8, including Chinese application labels.
+    # Windows locale decoding (GBK) can otherwise corrupt even a valid APK.
+    return result.stdout.decode("utf-8")
 
 
 def verify_apk(apk, release=False):

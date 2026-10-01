@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import tempfile
 import sys
+import subprocess
 import unittest
 from unittest.mock import patch
 import warnings
@@ -102,6 +103,11 @@ class ContentTransportTests(unittest.TestCase):
         with patch.object(ci, 'tool', side_effect=lambda name: name), patch.object(ci, 'command', side_effect=[cert, badging]):
             with self.assertRaisesRegex(ValueError, 'debuggable'):
                 ci.verify_apk(self.apk, release=True)
+
+    def test_android_tool_output_uses_utf8_not_windows_locale(self):
+        output = 'application-label:封神榜'.encode('utf-8')
+        with patch.object(ci.subprocess, 'run', return_value=subprocess.CompletedProcess(['aapt'], 0, output, b'')):
+            self.assertEqual(ci.command(['aapt']), 'application-label:封神榜')
 
 
 if __name__ == '__main__':
