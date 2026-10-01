@@ -10,7 +10,7 @@ import export_development as exporter
 class NanhaiExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text())
+        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
         path=Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK',str(ci.ROOT/'artifacts/published/fengshen-remake-v24-release.apk')))
         if not path.is_file():raise RuntimeError('Reviewed immutable base APK required for Nanhai export tests')
         if ci.sha(path.read_bytes())!=cls.pin['iteration']['base']['apkSha256']:raise ValueError('Wrong base APK')
@@ -21,7 +21,7 @@ class NanhaiExportTests(unittest.TestCase):
         for name,raw in self.base.items():
             if not name.endswith('.json'):self.assertEqual(raw,self.result[name],name)
     def test_portable_png_is_decodable_and_preserves_reviewed_pixels(self):
-        evidence=json.loads((ci.ROOT/self.proof).read_text())
+        evidence=json.loads((ci.ROOT/self.proof).read_text(encoding='utf-8'))
         for name,recipe in evidence['graphics'].items():
             image=Image.open(io.BytesIO(self.result[name])).convert('RGBA')
             self.assertEqual((recipe['width'],recipe['height']),image.size)
@@ -44,9 +44,9 @@ class NanhaiExportTests(unittest.TestCase):
         with patch.object(Image.Image,'save',side_effect=AssertionError('Platform encoder used')):
             self.assertEqual(raw,exporter.deterministic_rgba_png(image))
     def test_changed_reviewed_pixels_are_rejected(self):
-        evidence=json.loads((ci.ROOT/self.proof).read_text())
+        evidence=json.loads((ci.ROOT/self.proof).read_text(encoding='utf-8'))
         evidence['graphics']['enemy-137.png']['rgbaSha256']='0'*64
-        with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text())):
+        with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text(encoding='utf-8'))):
             with self.assertRaisesRegex(ValueError,'RGBA pixels'):exporter.export_from_base(self.base,self.proof,self.pin)
     def test_real_contiguous_route_and_original_encounters(self):
         scene=json.loads(self.result['scene.json']);self.assertEqual({114,16,0,17,18,19,25,97},{m['id'] for m in scene['maps']})
@@ -68,14 +68,14 @@ class NanhaiExportTests(unittest.TestCase):
             exporter.export_from_base(dict(self.base,**{'manifest.json':b'wrong'}),self.proof,self.pin)
         with self.assertRaisesRegex(ValueError,'target pin'):
             exporter.export_from_base(self.base,self.proof,dict(self.pin,manifestSha256='0'*64))
-        original=json.loads((ci.ROOT/self.proof).read_text())
+        original=json.loads((ci.ROOT/self.proof).read_text(encoding='utf-8'))
         for kind in ['enemy','exit','tile','rom']:
             evidence=json.loads(json.dumps(original))
             if kind=='enemy':evidence['combatOverlay']['enemies'][0]['hp']+=1
             elif kind=='exit':evidence['exits'][0]['spawn']=[0,0]
             elif kind=='tile':evidence['graphics']['enemy-137.png']['tiles'][0]['sha256']='0'*64
             else:evidence['romSha256']='0'*64
-            with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text())):
+            with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text(encoding='utf-8'))):
                 with self.assertRaises(ValueError):exporter.export_from_base(self.base,self.proof,self.pin)
     def test_manifest_hashes_every_file_and_keeps_herb_rule(self):
         manifest=json.loads(self.result['manifest.json']);self.assertEqual(set(self.result)-{'manifest.json'},set(manifest['files']))
