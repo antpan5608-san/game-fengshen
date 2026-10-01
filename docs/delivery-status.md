@@ -562,3 +562,55 @@ App读回:81ac9681-d5b5-4663-9ad8-979c93d4ff20，version21/test=true/c11与最�
 本轮停止，等待手机体验反馈。
 
 END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: ANDROID-CI-01
+status: PUBLISHED_AND_VERIFIED（云构建/同签名/原服务器发布已交付；游戏内容里程碑仍PARTIAL）
+
+## v22 云端正式交付（2026-10-01 最新状态）
+
+状态：`PUBLISHED_AND_VERIFIED`；ANDROID-CI-01 本轮完成。v22 / `0.8.2-ci-release` 于北京时间 2026-10-01 23:17:27（UTC 15:17:27）发布；生产 workflow 于 23:21:47 全部成功。游戏仍为 c11 开发内容，不代表南海龙王或完整原版里程碑完成。
+
+- APK 来源提交：`f7dfea747999f6b1ee497179f98eb6cc7ed94f6a`；[构建 36882142423](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882142423)、[发布 36882936289](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882936289) 均 completed/success，构建与发布同一 main 提交。后续文档提交不改变已审核 APK 来源。
+- 下载：[v22 APK](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=22)；11,316,827 字节，SHA-256 `5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f`。包名 `org.fengshen.dev`，既有签名证书保持；release 非 debuggable、版本、签名、内容及旧包兼容已由原 runner 复核。
+- c11 / `opening-segment-001-c11`，manifest SHA `3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147`。本任务于北京时间 23:23:22 独立下载正式服务器 APK，完整 SHA/大小与 version.json/构建 receipt 一致，原 `tools/ci_apk.py::content` 验证 42 文件（包含 manifest；41 内容文件）及全部文件 hash。
+- 自动审批实际成功：原 `android-publish.yml` 的 approve job 使用仓库 Secret `FENGSHEN_DEPLOY_REVIEW_TOKEN`，通过原 reviewer 政策批准 fengshen-production。随后 publish job 全部成功，无需再次人工点击。现有集成本身的 Deployments API 403 不影响这个已验证的 runner 途径；不代表当前云任务拿到了该 Secret 值。令牌到期/撤销或保护规则变化仍可能明确失败。
+- 实际 `./check-runtime.ps1` preflight：UTC 15:17:21，可信21/20，418事件/41测试事件，普通11模拟器+1真机会话，窗口08:13:38—14:11:04，NO_ISSUES_OBSERVED。
+- 实际 postflight：UTC 15:21:41，可信22/21，363事件/14测试事件，普通6模拟器+1真机会话，窗口08:27:54—14:11:04，NO_ISSUES_OBSERVED；清理失败0。当前保留样本来自v21，v22尚无上传样本；历史设备日志不是本轮手机验收，不证明v22运行或历史音频根因修复。
+- 保留既有两版规则及每版20MiB容量；本次上传只覆盖 Fengshen APK/version.json 两对象。ROM、密钥和电脑未提交资料没有由本次迁移取得；无新游戏源码、UI或功能开发。
+- 验证：实际云端 testReleaseUnitTest/assembleRelease/签名/内容与旧包兼容检查通过；本地自动审批实际 Bash fixture14项、既有 transport12项通过。没有本轮 adb/模拟器/App录屏或真实账号云恢复测试；一加13T覆盖升级、触控、声音、长时性能均 NOT_RUN。
+
+下一迭代继续复用现有构建与发布，versionCode 必须大于22；既有默认22是首次构建的历史值，必须显式覆盖。累计十类未完成项与下一原版节点三个阻塞全部保持，详见最新交付报告。
+
+
+【复用与最小修复】
+REUSE 原 android-build.yml/build-ci.ps1/ci_apk.py/check-reviewed-apk.ps1、check-runtime.ps1/publish-apk.ps1/register-release.ps1、独立OSS目标与原个人存档/诊断最近两版机制。ADAPT 原 android-publish.yml 两处报告读取为 -AsHashtable，支持合法空 contentVersion 映射键；在同一workflow增加approve job，先确认成功手动main同提交构建，再批准唯一目标环境。不新增workflow、上传凭据体系或游戏实现；保留主分支、reviewer、同产物hash、包/签名/内容/巡检与公网字节校验。依赖保持：Windows2022、JDK17、SDK35/build-tools35.0.0、Gradle8.10.2、AGP8.7.3、Kotlin2.0.21、ssh2 1.17.0、ossutil2.4.0。
+
+【失败和边界】
+36868615998：审批与preflight通过，但旧JSON读取失败，上传前终止；失败保留，后续真实生产运行验证AsHashtable修复。36871347819：旧提交等待审批时取消，尚未上传，避免两份v22竞争。GitHub集成review API403保留；后续runner Secret已实际批准。官方artifact下载redirect的代理CONNECT403未绕过；通过官方日志API取核验receipt，成功发布后再独立下载正式APK。没有禁用TLS/删除平台代理/删除环境保护，不读或输出Secret值。原版ROM/电脑未提交证据、手机与本地签名密钥未迁移，云CI使用已锁定c11包。最近窗口无ERROR不证明未上传过程或v22手机正常。
+
+【可核验本地结果】
+/workspace/game-fengshen/artifacts/published/fengshen-remake-v22-release.apk
+artifacts/published/v22-public-verification.json、v22-workflow-verification.json、artifacts/ci/v22-final-build-log-receipt.json、auto-approval-test-results.json 均位于Git忽略目录；仅脱敏验证摘要和APK，不另归档原始旧诊断日志。云构建APKartifact保留30天，单元测试XML14天，生产receipt30天；正式对象保持既有.bin分发契约，手动下载安装需去掉文件名末尾.bin，应用设置→检查应用更新沿用原路径。
+
+【未完成清单（累计；只有实际完成才移除）】
+以下逐项保留 TOWN-01 累计欠账；其中原有“本轮”及播放器/模拟器次数指 TOWN-01 历史验证，不是此次云端 CI 重跑。
+
+1. TOWN-01：跨类别出售完整流程、已穿装备直接替换及满包副作用、左手/其余商品迁移；药草/牛黃丸实际使用效果和合法场景/目标。
+2. 地图0：客栈收费/恢复/离店，住宅与特殊建筑、其余NPC/宝箱/剧情事件及条件；新室内原版BGM尚未核实并未启用。
+3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；南海龙宫/Boss/胜后状态未连续打通。34格白名单已解除，三图往返不再欠账。
+4. BATTLE-01/02：玩家命中/暴击、完整行动顺序、法术/战斗物品/防御指令、Boss行为；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
+5. 战斗展示：敌人1原名、完整武器/敌人动作、原版全字库、准确文字时序/框位/逐项奖励与调色差异；NES随机序列不与Android独立随机流等价。
+6. AUDIO-LOG-01：历史超时根因UNCONFIRMED、四类短音效、精确循环边界、长时真机稳定性；本轮12播放器/6Activity生命周期无播放器错误，AVD底层音频HAL曾有I/O警告，不以状态测试证明整个设备音频无故障。
+7. 开局内容：开场旁白时机、NPC移动、部分首谈/复谈/事件flag时机；殷氏100金额已增加局部ROM写入证据，整事件仍未完全验证。后续角色入队/法术/剧情尚未迁移。
+8. 更新器/设备：一加13T原误报根因与覆盖升级、触控、声音、长时性能实机验收待反馈；模拟器不能代替。
+9. 云端/内容：实际账号本地丢失/多设备恢复验收NOT_RUN；Go版本化内容包发布及Android下载/校验/缓存/离线回退尚未接通。现有pgsql个人存档保留；APK自升级不等于内容服务端化。
+10. 正式原版/发布门槛：全量地图/剧情/规则与canonical仍未开放，南海龙王里程碑未完成；不重启全量研究，不用未知阻塞现有已核功能。
+距离下一原版剧情节点最近3个阻塞: 地图0必要NPC/服务事件；通往南海的真实连接/条件；剧情Boss与胜后状态。
+
+
+本轮云端v22发布完成；不自动展开新玩法区段，等待设备反馈或下一项具体开发任务。
+
+END_DELIVERY_REPORT

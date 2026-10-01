@@ -1,10 +1,10 @@
 # 封神榜 Android 复刻与原版取证
 
-**当前已发布基线：v21 `0.8.1-town-01`，开发内容 c11。** 已有全屏地图、摇杆、HUD、NPC、赠刀/装备、114/16/0往返、当前普通战斗及地图0三个商店的室内/交易。完整原版内容和南海龙王里程碑仍未完成，具体范围与累计欠账见[交付记录](docs/delivery-status.md)。当前任务将同签名 release APK 构建迁移至 GitHub Actions；[云构建与发布说明](docs/android-ci.md)。旧报告保留为历史，当前有效规则见[AGENTS.md](AGENTS.md)。
+**当前已发布基线：v22 `0.8.2-ci-release`，保留开发内容 c11。** 已有全屏地图、摇杆、HUD、NPC、赠刀/装备、114/16/0往返、当前普通战斗及地图0三个商店的室内/交易。完整原版内容和南海龙王里程碑仍未完成，具体范围与累计欠账见[交付记录](docs/delivery-status.md)。GitHub Actions 同签名 release 构建、原服务器上传和自动环境审批已实测成功；[云构建与发布说明](docs/android-ci.md)。旧报告保留为历史，当前有效规则见[AGENTS.md](AGENTS.md)。
 
 以下为保留的原版研究基线状态，不能解释为禁止已授权的检查点A。
 
-手机下载：[封神 APK v21](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=21)。已有旧 APK 可用“设置 → 检查应用更新”在应用内下载、校验并交给 Android 确认安装。当前服务器 SHA-256 `ed700b85c79bd3abfdc64dbf35cfa517b68d4ad9b4eaa7158c3ad20aa3dd30d1`。云端先构建并下载审核 APK，随后单独触发受保护上传；仅覆盖 Fengshen 两对象，不影响 Language。`./build-android.ps1 -LocalOnly` 保留本地开发验证。
+手机下载：[封神 APK v22](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=22)。手动下载需去掉文件名末尾 `.bin` 再安装。已有旧 APK 可用“设置 → 检查应用更新”在应用内下载、校验并交给 Android 确认安装。当前服务器 SHA-256 `5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f`。云端先构建并审核实际 APK，随后单独触发受保护上传，现有 approve job 自动完成已授权环境审批；仅覆盖 Fengshen 两对象，不影响 Language。`./build-android.ps1 -LocalOnly` 保留本地开发验证。
 
 当前状态：**PARTIAL_V1 / PHASE_1_INCOMPLETE**。已解疑初始升级7与累计阈值12，实测哪吒前两次升级；提取11张地图（两张各900个PPU索引核对）、12段开局文本（2段实测）、10条NPC记录、177条敌人候选（3种各5字段实测）与320条成长候选。381次正常步行碰撞检查通过；完整Reference行等价仍为0，canonical保持阻断。`READY_FOR_PHASE_2 = NO`。
 
