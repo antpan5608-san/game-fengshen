@@ -38,7 +38,7 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
    Debian官方FCEUX包加Lua5.1和Xvfb在用户scratch解包运行已成功，许可文件保留；offscreen OpenGL失败，Xvfb成功。
 8. 复用原export_development.py的--base-apk/--provenance/--version生成可审核目标manifest；
    ci/content-source.json分别固定iteration.base字节/hash和目标内容pin。
-   ci_apk.restore由基底验证→局部导出→目标hash验证→写assets；CI不用ROM或完整旧captures。
+   ci_apk.restore由基底验证→局部导出→目标hash验证→写assets；旧药草局部路径不需ROM或旧captures；新场景按实际必要ROM依赖复用受控缓存，不要求整个历史目录。
    对旧基底单独验包使用ci_apk.py verify --base-only（精确基底APK hash门禁）；默认verify仍审核目标APK。
    两次干净临时目录restore的42文件一致；test_town02_export.py覆盖错规则/ROM/pin和不变素材字节。
 
@@ -70,3 +70,11 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 真机、声音、真实账号多设备恢复仍需实际执行，不将工具存在写成设备已经运行。
 
 详细入口：docs/android-ci.md、tools/ci_apk.py、check-runtime.ps1、原两份Actions工作流。
+
+## 已验证的限定新场景导出
+
+原export_from_base已扩展现有Reader/metatile/ROM-tile recipe路径，可从可信不可变APK基底批次导出当前必要地图/出口/NPC/敌群与本场图形。ROM原始文件仍在忽略的private-inputs/.ci-private，recipe只含偏移/长度/hash/像素组合与来源。先核每条出口实际落点/方向，不交换猜返程；遭遇分区/行为未知只保留受影响区域边界，旧可行区域不能缩成轨迹白名单。
+
+本地已运行test_nanhai_export.py：同输入两次结果一致、不变媒体逐字节一致、错误基底/目标pin/ROMspan/敌数值拒绝、manifest全文件核验。该测试输入为FENGSHEN_CONTENT_BASE_APK指定的已审核APK；源码依赖与生成方法均在原export_development.py及当前provenance。图形PNG编码的透明0和不透明黑底须按实际观察区分，不能用不符hash的重绘图绕过检查。
+
+限定Boss业务边界已在原JVM门禁运行：攻击等防伤0/小于防伤1、同字节命中与倍伤、敏捷排序、冰与物理同字节选择、Boss逃跑读字节后失败耗行动、掉落数量/分类格数满不丢物品。本地构建/原版正常取证不能替代Android正常主线或runner签名门禁；相应CI/App方法待实际运行后才能记录成功。

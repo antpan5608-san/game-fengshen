@@ -84,6 +84,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var processedStepSeq=0L
     private var battle:OpeningBattle?=null
     private var battleCommitted=false
+    private var storyBattle:StoryBattleDefinition?=null
+    private var battleSavePending=false
     private var battleID=""
     private var battleMessage=""
     private var battlePresentation=BattlePresentation()
@@ -141,6 +143,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var modalDialog:AlertDialog?=null
     private var previousMessage=""
     private var noticeUntil=0L
+    private var mapNotice=""
     init {holder.addCallback(this);isFocusable=true;isFocusableInTouchMode=true;contentDescription="封神全屏地图"
         world.transitionObserver={from,to,success->Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),"target_map_or_spawn_unavailable")}}
     fun relayout(){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
@@ -217,6 +220,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val group=encounter?.onCompletedStep(if(step.transitioned)-1 else step.mapId,step.x,step.y){battleRandom.nextInt(256)}?:return
         val rules=content.battle?:return
         persistState() // Stable pre-battle checkpoint; no mid-turn snapshot is written.
+        storyBattle=null;battleSavePending=false
         battle=OpeningBattle(group,rules,characters.first(),
             equipmentBonus(characters.first(),"rightHand"),equipmentBonus(characters.first(),"body"))
         selectedBattleSlot=group.members.first().slot
@@ -254,8 +258,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             BattlePhase.VICTORY->{
                 val reward=current.settle(money)?:return
                 characters=characters.toMutableList().also{it[0]=reward.character};money=reward.money
+                val loot=BattleAcquisition.apply(inventory,current.enemies.mapNotNull{it.definition.loot},
+                    content.itemDefinitions.mapValues{it.value.category}){battleRandom.nextInt(256)}
+                inventory=loot.inventory
+                storyBattle?.let{story->
+                    // The victory flag and rewards share one snapshot; first talk never sets this flag.
+                    flags=flags+(story.flagId to true)+(story.flagId+".dialogue.pending" to true)
+                }
                 battleMessage="胜利！经验 +${reward.experience}  银两 +${current.enemies.sumOf{it.definition.moneyReward}}"+
-                    if(reward.levels.isEmpty())"" else "  等级 ${reward.levels.last()}"
+                    (if(reward.levels.isEmpty())"" else "  等级 ${reward.levels.last()}")+
+                    loot.acquired.joinToString(""){"  获得 ${content.itemNames[it]?:it}"}+
+                    if(loot.skipped.isEmpty())"" else "  物品数量/格数已满，掉落未取得"
                 audio.scene(world.mapId,"victory")
                 Diagnostics.record("reward_settlement",details=JSONObject().put("battleID",battleID).put("settlementID",battleID+":reward")
                     .put("experience",reward.experience).put("money",current.enemies.sumOf{it.definition.moneyReward}))
@@ -279,13 +292,20 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleCommitted=true
         Diagnostics.record("battle_end",details=JSONObject().put("battleID",battleID).put("groupId",current.group.id)
             .put("reason",current.phase.name.lowercase()))
-        persistState()
+        battleSavePending=!persistStateResult()
+        if(battleSavePending)battleMessage+="  保存失败，请重试；尚不能继续"
     }
     private fun closeBattle(){
         if(battlePresentation.screen==BattlePresentation.Screen.TARGET){battlePresentation.back();battleTouch.clear();return}
         if(battlePresentation.screen!=BattlePresentation.Screen.RESULT||!battleCommitted)return
+        if(battleSavePending){battleSavePending=!persistStateResult();if(battleSavePending)return}
+        val story=storyBattle;storyBattle=null
         battle=null;battleTouch.clear();layer=Layer.MAP;input.clear();clock.reset()
         audio.scene(world.mapId)
+        if(story!=null&&flags[story.flagId+".dialogue.pending"]==true){
+            val npc=content.npcs.first{it.id==story.npcId}
+            openDialogue(content.dialogues.getValue(story.victoryDialogue),npc)
+        }
     }
     private fun confirmBattle(){
         when(battlePresentation.screen){
@@ -382,11 +402,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         val direction=facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
-        val id=if(flags[npc.id]==true)npc.repeatDialogue?:npc.firstDialogue else npc.firstDialogue
+        val story=content.battle?.storyBattles?.get(npc.id)
+        val id=if(flags[story?.flagId?:npc.id]==true)npc.repeatDialogue?:npc.firstDialogue else npc.firstDialogue
         content.dialogues[id]?.let{openDialogue(it,npc)}
     }
     fun mapControlEnabled(key:Key)=layer==Layer.MAP&&(key==Key.MENU || (key==Key.A && interactionTarget()!=null))
     fun startOpeningIfNeeded(){
+        val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
+        if(pending!=null){
+            val npc=content.npcs.first{it.id==pending.npcId}
+            openDialogue(content.dialogues.getValue(pending.victoryDialogue),npc);return
+        }
         if(world.mapId==114 && world.x==content.scene.spawnX*16+8 && world.y==content.scene.spawnY*16+8 &&
             flags["opening.intro.seen"]!=true)content.intro?.let{openDialogue(it,null)}
     }
@@ -401,6 +427,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
+        val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
+        if(story!=null){
+            if(flags[story.flagId]==true){
+                flags=flags-(story.flagId+".dialogue.pending");dismissDialogue();persistState();return
+            }
+            dismissDialogue()
+            if(!persistStateResult()){
+                showNotice("保存失败，剧情战斗未开始");return
+            }
+            startStoryBattle(story);return
+        }
         if(npc==null)flags=flags+("opening.intro.seen" to true)
         else if(flags[npc.id]!=true){
             for(effect in npc.firstEffects)when(effect.type){
@@ -411,6 +448,20 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             flags=flags+(npc.id to true)
         }
         dismissDialogue();persistState()
+    }
+    private fun showNotice(message:String){mapNotice=message;noticeUntil=SystemClock.uptimeMillis()+3500}
+    private fun startStoryBattle(story:StoryBattleDefinition){
+        val rules=content.battle?:return
+        if(flags[story.flagId]==true||world.remaining!=0||characters.first().hp<=0)return
+        storyBattle=story;battleSavePending=false
+        battle=OpeningBattle(story.group,rules,characters.first(),
+            equipmentBonus(characters.first(),"rightHand"),equipmentBonus(characters.first(),"body"))
+        selectedBattleSlot=story.group.members.first().slot;battleMessage="南海龍王 · 剧情战斗"
+        battleCommitted=false;battlePresentation=BattlePresentation();layer=Layer.BATTLE
+        battleID=java.util.UUID.randomUUID().toString()
+        Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
+            .put("mapId",world.mapId).put("storyBattle",story.id))
+        audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()
     }
     private fun dismissDialogue(){layer=Layer.MAP;dialogueNpc=null;dialogueText=null;dialogueTouch.clear();input.clear();clock.reset()}
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
@@ -920,9 +971,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         paint.color=Color.WHITE;paint.alpha=255
         val actors=content.npcs.filter{it.mapId==world.mapId}.sortedBy{it.y}
+        val objects=content.mapObjects.filter{it.mapId==world.mapId}
+        for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
             c.drawBitmap(npc.sprite,npc.x*16f,npc.y*16f,paint)
         c.drawBitmap(content.sprites.getValue(world.direction),(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
+        for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8>world.y})
             c.drawBitmap(npc.sprite,npc.x*16f,npc.y*16f,paint)
         if(layer==Layer.MAP){
@@ -932,9 +986,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.restore()
         when(layer){Layer.MAP->{drawControls(c);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
             Layer.CHARACTER,Layer.INVENTORY->drawInfoPanel(c);Layer.BATTLE->drawBattle(c);Layer.SHOP->drawShop(c)}
-        if(world.message!=previousMessage){previousMessage=world.message;if(world.message.startsWith("开发边界"))noticeUntil=SystemClock.uptimeMillis()+1800}
+        if(world.message!=previousMessage){previousMessage=world.message;if(world.message.startsWith("开发边界")){mapNotice=world.message;noticeUntil=SystemClock.uptimeMillis()+1800}}
         if(layer==Layer.MAP&&SystemClock.uptimeMillis()<noticeUntil){
-            val dp=resources.displayMetrics.density;val label=world.message
+            val dp=resources.displayMetrics.density;val label=mapNotice
             textPaint.textSize=13*dp;val tw=textPaint.measureText(label);val tx=(width-tw)/2
             overlayPaint.color=0xb5000000.toInt();c.drawRoundRect(RectF(tx-12*dp,ui.safe.y+8*dp,tx+tw+12*dp,ui.safe.y+34*dp),8*dp,8*dp,overlayPaint)
             c.drawText(label,tx,ui.safe.y+27*dp,textPaint)
@@ -1076,7 +1130,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val screen=battlePresentation.screen
         c.drawColor(Color.BLACK)
         paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
-        content.battleHorizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->
+        val horizon=if(current.enemies.any{it.definition.id in content.blackBattleEnemyIds})null
+            else content.battleHorizons[world.mapId]?:content.battleHorizon
+        horizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->
             c.drawBitmap(image,null,RectF(b.x,b.y,b.x+b.w,b.y+32*scale),paint)
         }
         val action=battlePresentation.action
@@ -1118,6 +1174,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             line("$hp / ${current.hero.maxHp}",156f,162f)
             line("${current.hero.mp} / ${current.hero.maxMp?:"?"}",156f,177f)
             line("HP",126f,162f);line("MP",126f,177f)
+            if(storyBattle!=null)line("此敵逃跑必定失敗",88f,199f,8f)
             line("灰色指令尚未开放",88f,215f,8f,0xffaaaaaa.toInt())
         }else if(screen==BattlePresentation.Screen.RESULT){
             // The target ROM clears the scene for its black, white-bordered result message.

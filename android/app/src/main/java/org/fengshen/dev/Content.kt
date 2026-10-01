@@ -21,6 +21,7 @@ data class StoryEffect(val type:String,val id:String?,val amount:Int,val source:
 data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firstDialogue:String,
     val repeatDialogue:String?,val firstEffects:List<StoryEffect>,val source:String,val mapId:Int=114,
     val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null)
+data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap)
 data class StoryText(val id:String,val text:String,val source:String)
 data class CharacterDefinition(val id:String,val name:String,val portraitAsset:String,val portrait:Bitmap,
     val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
@@ -45,7 +46,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val equipmentDefinitions:Map<String,EquipmentDefinition> = emptyMap(),
     val battle:BattleContent?=null,val audio:AudioContent?=null,
     val enemyGraphics:Map<Int,Bitmap> = emptyMap(),val battleHorizon:Bitmap?=null,val battleHero:Bitmap?=null,
-    val shops:Map<String,ShopDefinition> = emptyMap())
+    val shops:Map<String,ShopDefinition> = emptyMap(),val mapObjects:List<MapObject> = emptyList(),
+    val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet())
 object ContentLoader {
     fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
@@ -76,7 +78,10 @@ object ContentLoader {
                 if(data.has("walkableClasses"))ints(data,"walkableClasses").toSet() else setOf(0),
                 if(data.has("dynamicObjectCells"))ints(data,"dynamicObjectCells").toSet() else emptySet(),
                 if(data.has("transitionCells"))ints(data,"transitionCells").toSet() else emptySet(),
-                edges(data,"sourceEdges"),edges(data,"targetEdges"))
+                edges(data,"sourceEdges"),edges(data,"targetEdges"),
+                data.optJSONArray("unavailableRegions")?.let{a->(0 until a.length()).map{i->
+                    val r=a.getJSONArray(i);require(r.length()==4)
+                    EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}?:emptyList())
             return data to result
         }
         val (data,opening)=scene("scene.json",114)
@@ -139,6 +144,12 @@ object ContentLoader {
                 n.optString("shopId").takeIf{it.isNotEmpty()},
                 n.optJSONArray("interactionCell")?.let{it.getInt(0) to it.getInt(1)})
         }
+        val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
+            val o=a.getJSONObject(i);val cell=ints(o,"cell");val mid=o.getInt("mapId")
+            require(o.getString("interaction")=="NOT_IMPLEMENTED"&&mid in scenes&&cell.size==2&&
+                cell[0] in 0 until scenes.getValue(mid).width&&cell[1] in 0 until scenes.getValue(mid).height)
+            MapObject(o.getString("id"),mid,cell[0],cell[1],bitmap(o.getString("sprite"),16,16))
+        }}?:emptyList()
         require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{it.firstDialogue in dialogues && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         val itemArray=data.getJSONArray("items")
         val itemDefinitions=(0 until itemArray.length()).associate{i->
@@ -196,7 +207,11 @@ object ContentLoader {
                 val e=array.getJSONObject(i)
                 EnemyDefinition(e.getInt("id"),e.getString("name"),e.getInt("hp"),e.getInt("attack"),
                     e.getInt("defense"),e.getInt("experienceReward"),e.getInt("moneyReward"),
-                    e.getInt("hitByte"),e.getInt("behaviorByte"))
+                    e.getInt("hitByte"),e.getInt("behaviorByte"),
+                    e.optInt("iceBaseDamage").takeIf{e.has("iceBaseDamage")},
+                    e.optJSONObject("loot")?.let{l->BattleLoot(l.getString("itemId"),l.getInt("threshold"),l.getString("category"))
+                        .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
+                            itemDefinitions.getValue(it.itemId).category==it.category)}})
             }.associateBy{it.id}}
             val groups=o.getJSONArray("groups").let{array->(0 until array.length()).map{i->
                 val g=array.getJSONObject(i);val members=g.getJSONArray("entities").let{a->
@@ -209,11 +224,12 @@ object ContentLoader {
                     g.getInt("agility"),g.getInt("spirit"),g.getBoolean("runtimeVerified"))
             }}
             val gate=o.getJSONObject("gate")
-            require(rects.size==2 && enemies.keys==setOf(1,2,3) && groups.size==19 &&
+            require(rects.size==2 && enemies.keys.containsAll(setOf(1,2,3)) && groups.size==19 &&
                 groups.indices.all{groups[it].id==it} && groups.all{it.members.isNotEmpty() &&
                     it.members.map{m->m.slot}.distinct().size==it.members.size &&
                     it.members.all{m->m.slot in 0..6 && m.enemyId in enemies}} &&
-                enemies.values.all{it.hp>0 && it.hitByte in 0..255 && it.behaviorByte==0} &&
+                enemies.values.all{it.hp>0 && it.hitByte in 0..255 && (it.behaviorByte==0 ||
+                    (it.id==137&&it.behaviorByte==3&&it.iceBaseDamage==8))} &&
                 growth.zipWithNext().all{it.first.threshold<it.second.threshold})
             BattleContent(zone.getInt("mapId"),rects,groups,enemies,growth,
                 o.getInt("initialArmorContribution"),gate.getInt("stepCounterMin"),
@@ -221,8 +237,37 @@ object ContentLoader {
                 o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
                     a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap(),
                 o.optJSONObject("escape")?.optBoolean("enabled")==true,
-                o.optJSONObject("defeat")?.optBoolean("enabled")==true)
+                o.optJSONObject("defeat")?.optBoolean("enabled")==true,
+                o.optJSONArray("zones")?.let{a->(0 until a.length()).map{i->
+                    val z=a.getJSONObject(i);val zr=z.getJSONArray("rectangles").let{rs->(0 until rs.length()).map{j->
+                        val r=rs.getJSONArray(j);require(r.length()==4)
+                        EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}
+                    val zg=z.getJSONArray("groups").let{gs->(0 until gs.length()).map{j->
+                        val g=gs.getJSONObject(j);val entities=g.getJSONArray("entities").let{es->(0 until es.length()).map{k->
+                            val e=es.getJSONObject(k);EncounterMember(e.getInt("slot"),e.getInt("enemyId"))}}
+                        require(entities.isNotEmpty()&&entities.map{it.slot}.distinct().size==entities.size&&
+                            entities.all{it.slot in 0..6&&enemies[it.enemyId]?.behaviorByte==0})
+                        EncounterGroup(g.getInt("id"),entities,z.getInt("id"))}}
+                    require(z.getInt("mapId") in scenes&&zg.isNotEmpty()&&z.getInt("randomThreshold") in 0..255)
+                    EncounterZone(z.getInt("mapId"),zr,zg,z.getInt("randomThreshold"),z.optString("randomGate")=="HIGH")
+                }}?:emptyList(),
+                o.optJSONObject("physicalRules")?.let{p->
+                    require(p.getBoolean("sameRandomByte"))
+                    val h=p.getJSONObject("weaponHitThreshold");val t=ints(p,"multiplierThresholds").toList()
+                    PhysicalRules(h.keys().asSequence().associate{it.toInt() to h.getInt(it)},t)
+                        .also{require(it.weaponHitThreshold==mapOf(-1 to 64,0 to 54,1 to 54,2 to 51))}
+                },
+                o.optJSONArray("bosses")?.let{a->(0 until a.length()).map{i->
+                    val b=a.getJSONObject(i);val g=b.getJSONObject("group");val es=g.getJSONArray("entities")
+                    val members=(0 until es.length()).map{j->val m=es.getJSONObject(j);EncounterMember(m.getInt("slot"),m.getInt("enemyId"))}
+                    StoryBattleDefinition(b.getString("id"),b.getString("npcId"),b.getString("flagId"),
+                        EncounterGroup(g.getInt("id"),members),b.getString("victoryDialogue")).also{boss->
+                        require(boss.id=="rom.boss.137"&&boss.flagId=="rom.event.97.39.1"&&
+                            boss.npcId=="rom.npc.97.0"&&boss.victoryDialogue in dialogues&&
+                            members==listOf(EncounterMember(3,137))&&npcs.any{it.id==boss.npcId&&it.mapId==97})}
+                }.associateBy{it.npcId}}?:emptyMap())
         }else null
+        val battleHorizons=mutableMapOf<Int,Bitmap>();val blackBattleEnemyIds=mutableSetOf<Int>()
         val enemyGraphics=mutableMapOf<Int,Bitmap>();var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null
         if(battle!=null){
             val presentation=JSONObject(String(read("combat.json"),Charsets.UTF_8)).optJSONObject("presentation")
@@ -237,6 +282,13 @@ object ContentLoader {
                 require(enemyGraphics.keys==battle.enemies.keys)
                 val bytes=read(presentation.getString("horizon"))
                 battleHorizon=BitmapFactory.decodeByteArray(bytes,0,bytes.size)?:error("Invalid battle horizon")
+                presentation.optJSONArray("horizons")?.let{a->for(i in 0 until a.length()){
+                    val h=a.getJSONObject(i);val mid=h.getInt("mapId");require(mid in scenes)
+                    battleHorizons[mid]=bitmap(h.getString("asset"),256,32)
+                }}
+                presentation.optJSONArray("blackBackgroundEnemyIds")?.let{a->for(i in 0 until a.length()){
+                    val id=a.getInt(i);require(id==137&&id in battle.enemies);blackBattleEnemyIds.add(id)
+                }}
                 if(presentation.has("hero")){
                     val heroBytes=read(presentation.getString("hero"))
                     battleHero=BitmapFactory.decodeByteArray(heroBytes,0,heroBytes.size)?:error("Invalid battle actor")
@@ -270,6 +322,6 @@ object ContentLoader {
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
             mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
-            enemyGraphics,battleHorizon,battleHero,shops)
+            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds)
     }
 }

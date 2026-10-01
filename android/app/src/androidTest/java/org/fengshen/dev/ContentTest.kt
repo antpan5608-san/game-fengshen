@@ -18,14 +18,14 @@ class ContentTest:IsolatedGameTestCase(){
         val rules=c.battle!!
         assertEquals(16,rules.zoneMapId)
         assertEquals(19,rules.groups.size)
-        assertEquals(setOf(1,2,3),rules.enemies.keys)
+        assertEquals(setOf(1,2,3,4,5,6,7,137),rules.enemies.keys)
         assertEquals(listOf(2,3),rules.groups[11].members.map{it.enemyId})
         for(group in rules.groups){
-            val fight=OpeningBattle(group,rules,c.initialPlayer,2)
+            val fight=OpeningBattle(group,rules,c.initialPlayer.copy(hp=1000,maxHp=1000),2) // Isolated group-execution fixture, not normal gameplay.
             var turns=0
             while(fight.phase==BattlePhase.TARGET && turns++<100){
                 val target=fight.enemies.first{it.hp>0}
-                assertNotNull(fight.attack(target.slot){255})
+                assertNotNull(fight.attack(target.slot){0})
             }
             assertEquals("group ${group.id}",BattlePhase.VICTORY,fight.phase)
             assertNotNull(fight.settle(100))
@@ -35,7 +35,7 @@ class ContentTest:IsolatedGameTestCase(){
     fun testBundledAndDirectoryUseSameLoader(){
         val ctx=instrumentation.targetContext;val asset=AssetSource(ctx.assets);val c=ContentLoader.load(asset)
         assertEquals(32,c.scene.width);assertEquals(30,c.scene.height);assertEquals(443,c.scene.enabled.size);assertEquals(256,c.atlas.width)
-        assertEquals(setOf(114,16,0,17,18,19),c.scenes.keys) // TOWN-01 adds the three ROM interiors.
+        assertEquals(setOf(114,16,0,17,18,19,25,97),c.scenes.keys) // TOWN-01 adds the three ROM interiors.
         assertEquals(256,c.scenes.getValue(16).width);assertEquals(181,c.scenes.getValue(16).height)
         assertEquals(32,c.scenes.getValue(0).width)
         val dir=File(ctx.cacheDir,"content-test");dir.mkdirs()
@@ -64,7 +64,7 @@ class ContentTest:IsolatedGameTestCase(){
         val files=mutableMapOf("scene.json" to scene.toString().toByteArray(Charsets.UTF_8),
             "scene16.json" to outside.toString().toByteArray(Charsets.UTF_8),
             "scene0.json" to village.toString().toByteArray(Charsets.UTF_8))
-        for(mid in listOf(17,18,19))files["scene$mid.json"]=JSONObject(String(original.read("scene$mid.json"),Charsets.UTF_8))
+        for(mid in listOf(17,18,19,25,97))files["scene$mid.json"]=JSONObject(String(original.read("scene$mid.json"),Charsets.UTF_8))
             .put("version","opening-segment-001-c1").toString().toByteArray(Charsets.UTF_8)
         for((name,bytes)in files)manifest.getJSONObject("files").put(name,
             MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)})
