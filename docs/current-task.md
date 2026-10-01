@@ -33,3 +33,5 @@ execution_kind: IMPLEMENTED
 相关原版路线以docs/original-playthrough-roadmap.md的“当前有效状态”段为准，旧表明确历史；累计十类清单权威仍docs/delivery-status.md。最终只有正常App M1—M3与同产物/升级/巡检通过才READY_FOR_REVIEW，手机和声音不能运行记NOT_RUN。原则上本轮最终一次发布，只写原两个Fengshen对象，不改Language。
 
 - 2026-10-01 22:23 UTC图形审查补充：3aaf4fc签名候选虽然构建/独立验包已通过，但新128×112 Boss图沿用小怪位置(112,72)会被原指令框遮挡，不得发布。本地最小适配从已核observedRect导出可选origin(64,0)，Loader限制图形不越界/不压指令，绘制和触摸共享battleEnemyBox；旧怪位置不动。新目标manifest45e0da6808694b961d809c727abb05727d821939253c1c66f3ce48f4c0741f62，局部7/7与JVM69/69及debug仪器构建再通过，新增受控原位置截图/几何断言。旧run仍可作为诊断证据，不能给修正后的候选背书；修复来源需重新原CI与正常录像，未发布。
+
+- 2026-10-01 22:43 UTC实际检查点：原run36932952930 Windows签名构建/release69项以及受控Boss/旧界面正常流程通过；正常新游戏实际123场战斗、17次地图药草、Lv8、長劍，已走到海底25→龙宫97并正常返回25。正常脚本错误选择29,43墙格导致FAIL，未到Boss、不宣称正常M3通过。已按真实collision改为门口29,44向南29,45再原门进入，不改地图；添加墙/可走断言。原图形修复142de0e之外，四出口现依据原版controller-only settled RAM与静态加载器证据显式清遇敌计数0，完成换图后清旧手势，本段之外旧出口默认不变。新目标manifest badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4，局部7/7与69JVM/debug/仪器构建成功。曾排队的origin-only run36934926038已取消（未执行），合并新证据/测试修复后只启动一次新CI。生产仍v24；剩余约7小时50分，下一动作是相关测试、提交合并修复、原CI正常M1—M3录像/冷启动/覆盖验收。

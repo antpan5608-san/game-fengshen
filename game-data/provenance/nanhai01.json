@@ -3192,14 +3192,296 @@
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "spriteEvidence": "OnlycontrolledHP posefixture, exactOAM/CHRhash derivation. Notnormalplayproof.",
       "task": "NANHAI-01 M1/M2 scopedroute"
+    },
+    "routeEncounterReset": {
+      "conclusion": "All four observed NANHAI route exits reset RAM005B to0 after scene loading completes. Immediate mapId mutation precedes reset; do not treat that early snapshot as finished entrance. No conclusion for other exits or all scene initializations.",
+      "controllerScript": {
+        "path": "private-capture/normal-return-gaps.lua",
+        "sha256": "a3343aa8338c232beea81c099ee146da6ef7238ee49e89bf726463e4b4fd44c6"
+      },
+      "method": "Read only existing normal controller-only RAM captures and matching cached ROM. No emulator started, no RAM writes, no shared-source change.",
+      "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+      "rows": [
+        {
+          "completedArrivalSnapshot": {
+            "cell": [
+              39,
+              42
+            ],
+            "encounterSteps005B": 0,
+            "frame": 1211,
+            "length": 2048,
+            "loaderState0051": 1,
+            "mapId": 25,
+            "nextPhase0039": 0,
+            "path": "private-capture/001211-arrived-map25-ram.bin",
+            "scenePhase0038": 0,
+            "sha256": "edaca711f01a5c83301751500be0e13d7e236ed90b5c52e5d7365900f11f299f",
+            "state": 136,
+            "zone005A": 1
+          },
+          "fromMapId": 16,
+          "limits": "Map-write snapshot has destination mapId already but old source coordinates/counter. Not a completed target-state snapshot.",
+          "mapChangeWriteSnapshot": {
+            "cell": [
+              199,
+              130
+            ],
+            "encounterSteps005B": 16,
+            "frame": 1091,
+            "length": 2048,
+            "loaderState0051": 0,
+            "mapId": 25,
+            "nextPhase0039": 0,
+            "path": "private-capture/001091-map-25-ram.bin",
+            "scenePhase0038": 6,
+            "sha256": "cc771919c64695a2b0daab9f5b1bcc86b0bb9e3fc226e99c5cd5837cfbeb2f9b",
+            "state": 138,
+            "zone005A": 0
+          },
+          "resetAfterCompletedTransitionObserved": true,
+          "spawn": [
+            39,
+            42
+          ],
+          "toMapId": 25,
+          "trigger": [
+            199,
+            130
+          ],
+          "verification": "NORMAL_CONTROLLER_ONLY_SCOPED",
+          "waitFrames": 120,
+          "waitInputs": "No movement during120-frame map transfer settling; exact spawn retained"
+        },
+        {
+          "completedArrivalSnapshot": {
+            "cell": [
+              15,
+              29
+            ],
+            "encounterSteps005B": 0,
+            "frame": 1443,
+            "length": 2048,
+            "loaderState0051": 1,
+            "mapId": 97,
+            "nextPhase0039": 0,
+            "path": "private-capture/001443-arrived-map97-ram.bin",
+            "scenePhase0038": 0,
+            "sha256": "1e2df0b3b12b69a716bedfe40128416bf60b2f32422eb737a4b86776739675b0",
+            "state": 136,
+            "zone005A": 2
+          },
+          "fromMapId": 25,
+          "limits": "Map-write snapshot has destination mapId already but old source coordinates/counter. Not a completed target-state snapshot.",
+          "mapChangeWriteSnapshot": {
+            "cell": [
+              29,
+              44
+            ],
+            "encounterSteps005B": 14,
+            "frame": 1323,
+            "length": 2048,
+            "loaderState0051": 0,
+            "mapId": 97,
+            "nextPhase0039": 0,
+            "path": "private-capture/001323-map-97-ram.bin",
+            "scenePhase0038": 6,
+            "sha256": "08aeaa3248bb525d65ad9b81470a8c315901af94cad2d364c2da386b775c639b",
+            "state": 136,
+            "zone005A": 1
+          },
+          "resetAfterCompletedTransitionObserved": true,
+          "spawn": [
+            15,
+            29
+          ],
+          "toMapId": 97,
+          "trigger": [
+            29,
+            44
+          ],
+          "verification": "NORMAL_CONTROLLER_ONLY_SCOPED",
+          "waitFrames": 120,
+          "waitInputs": "No movement during120-frame map transfer settling; exact spawn retained"
+        },
+        {
+          "completedArrivalSnapshot": {
+            "cell": [
+              29,
+              44
+            ],
+            "encounterSteps005B": 0,
+            "frame": 1579,
+            "length": 2048,
+            "loaderState0051": 1,
+            "mapId": 25,
+            "nextPhase0039": 0,
+            "path": "private-capture/001579-arrived-map25-ram.bin",
+            "scenePhase0038": 0,
+            "sha256": "b81214b653b031d20ad8a91046ba3c340ec6a537c3c2b6ef956d178b96fe0527",
+            "state": 136,
+            "zone005A": 1
+          },
+          "fromMapId": 97,
+          "limits": "Map-write snapshot has destination mapId already but old source coordinates/counter. Not a completed target-state snapshot.",
+          "mapChangeWriteSnapshot": {
+            "cell": [
+              15,
+              29
+            ],
+            "encounterSteps005B": 2,
+            "frame": 1459,
+            "length": 2048,
+            "loaderState0051": 0,
+            "mapId": 25,
+            "nextPhase0039": 0,
+            "path": "private-capture/001459-map-25-ram.bin",
+            "scenePhase0038": 6,
+            "sha256": "a23f6e7b840feeeb6f311a2cf900ce656897298e1cd9c73f75833854a1b811b4",
+            "state": 136,
+            "zone005A": 2
+          },
+          "resetAfterCompletedTransitionObserved": true,
+          "spawn": [
+            29,
+            44
+          ],
+          "toMapId": 25,
+          "trigger": [
+            15,
+            29
+          ],
+          "verification": "NORMAL_CONTROLLER_ONLY_SCOPED",
+          "waitFrames": 120,
+          "waitInputs": "No movement during120-frame map transfer settling; exact spawn retained"
+        },
+        {
+          "completedArrivalSnapshot": {
+            "cell": [
+              199,
+              130
+            ],
+            "encounterSteps005B": 0,
+            "frame": 2161,
+            "length": 2048,
+            "loaderState0051": 1,
+            "mapId": 16,
+            "nextPhase0039": 0,
+            "path": "private-capture/002161-arrived-map16-ram.bin",
+            "scenePhase0038": 0,
+            "sha256": "8c25bdbe0898e00e4d2b6f329362718a1efeb72fd22b9e679542beef807f9335",
+            "state": 136,
+            "zone005A": 0
+          },
+          "fromMapId": 25,
+          "limits": "Map-write snapshot has destination mapId already but old source coordinates/counter. Not a completed target-state snapshot.",
+          "mapChangeWriteSnapshot": {
+            "cell": [
+              39,
+              42
+            ],
+            "encounterSteps005B": 6,
+            "frame": 2041,
+            "length": 2048,
+            "loaderState0051": 0,
+            "mapId": 16,
+            "nextPhase0039": 0,
+            "path": "private-capture/002041-map-16-ram.bin",
+            "scenePhase0038": 6,
+            "sha256": "935393d620ead09a663ee0b5b7372e75849fd292fea842d758737ca8c2186d2d",
+            "state": 136,
+            "zone005A": 1
+          },
+          "resetAfterCompletedTransitionObserved": true,
+          "spawn": [
+            199,
+            130
+          ],
+          "toMapId": 16,
+          "trigger": [
+            39,
+            42
+          ],
+          "verification": "NORMAL_CONTROLLER_ONLY_SCOPED",
+          "waitFrames": 120,
+          "waitInputs": "No movement during120-frame map transfer settling; exact spawn retained"
+        }
+      ],
+      "staticEvidence": {
+        "clear": {
+          "cpuAddress": 43907,
+          "length": 7,
+          "meaning": "LDA#00; STA$5B; STA$6881 at end of scene redraw/load routine",
+          "module": 0,
+          "offset": 11155,
+          "sha256": "50e00f7eaaf5f94b03b842392f37cb67543f9db59254e61fb4ddd0a3f5e2ca15"
+        },
+        "exitDecoder": {
+          "cpuAddress": 56334,
+          "length": 19,
+          "meaning": "STA47 then decode destination spawn into7A/7B (minus7)",
+          "module": 8,
+          "offset": 285726,
+          "sha256": "8e5a1295d1027a7cc8bfb99c96ece27c5e98da38a720e1c1ea21f35cf3bc13d5"
+        },
+        "loaderCallsRedraw": {
+          "cpuAddress": 42693,
+          "length": 3,
+          "meaning": "Inside scene loader A5CD, unconditional JSR AAAF; AAAF flows to AB83 reset",
+          "module": 0,
+          "offset": 9941,
+          "sha256": "17e287d8bd01d605805c13d74166084ba7b2758c5345bf283eb7c6505fa86dd9"
+        },
+        "observedPhase0Loader": {
+          "cpuAddress": 33759,
+          "length": 12,
+          "meaning": "Phase0 handler: check0051, INC0051; JSRB78B; JSRA5CD. Normal transition snapshots nextPhase0039=0,loader0051=0; completed0051=1.",
+          "module": 0,
+          "offset": 1007,
+          "sha256": "47b633e167e85e98d7c894b154d07d019f621218beb25bf19f6e1e609436c58a"
+        },
+        "phase0DispatchTarget": {
+          "cpuAddress": 33633,
+          "length": 2,
+          "meaning": "Scene dispatch table phase0 pointer83DF; matches normal queued nextPhase0.",
+          "module": 0,
+          "offset": 881,
+          "sha256": "2a3056e574be9b4d7f0e3169e39141d2801d2b7ca23c5bd36d5f6f61815f6265"
+        },
+        "phase6Completion": {
+          "cpuAddress": 34368,
+          "length": 13,
+          "meaning": "Phase6 countdown reaches0, LDA0039; STA0038. Allfour immediate transition snapshots0038=6,0039=0; then phase0 loader can execute.",
+          "module": 0,
+          "offset": 1616,
+          "sha256": "2aaa26c18fc65661f29cf0b6f5d9f0b61790620c36073eaac32778478f758def"
+        },
+        "qualification": "Static decoder/call chain and reset instruction verified in matchingROM, consistent with observed transition selectors and settled counters; no additional instruction-execution trace captured for these calls in this followup. Runtime reset conclusion comes from actual normal snapshots, not from generalizing this static routine.",
+        "redrawReturn": {
+          "cpuAddress": 43889,
+          "length": 26,
+          "meaning": "Finalize scene state88/8A; set02=18; clear005B/6881; RTS",
+          "module": 0,
+          "offset": 11137,
+          "sha256": "ec402d82eda00659dd059602eb53224419eb90bde68876101d01c3504f4ac9c5"
+        }
+      },
+      "task": "NANHAI-01 four scoped exits encounter-counter reset",
+      "transitionTrace": {
+        "fourMapWritePC": "DC10 matches module8 exit-record decoder DC0E STA47 then indexed spawn decoding",
+        "path": "private-capture/transitions.tsv",
+        "sha256": "63525fd4e4ca244fa1152172c6f69e024523f4c3875b78f15dafb29bd6189ed7"
+      }
     }
   },
   "exits": [
     {
       "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+      "encounterResetEvidence": "evidence.routeEncounterReset normal completedArrivalSnapshot, scoped four exits only",
       "fromMapId": 16,
       "index": 60,
       "rawHex": "c78219272a",
+      "resetEncounterSteps": true,
       "rom": {
         "cpuAddress": 57208,
         "length": 5,
@@ -3229,9 +3511,11 @@
     },
     {
       "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+      "encounterResetEvidence": "evidence.routeEncounterReset normal completedArrivalSnapshot, scoped four exits only",
       "fromMapId": 25,
       "index": 0,
       "rawHex": "272a10c782",
+      "resetEncounterSteps": true,
       "rom": {
         "cpuAddress": 57449,
         "length": 5,
@@ -3261,9 +3545,11 @@
     },
     {
       "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+      "encounterResetEvidence": "evidence.routeEncounterReset normal completedArrivalSnapshot, scoped four exits only",
       "fromMapId": 25,
       "index": 4,
       "rawHex": "1d2c610f1d",
+      "resetEncounterSteps": true,
       "rom": {
         "cpuAddress": 57469,
         "length": 5,
@@ -3293,9 +3579,11 @@
     },
     {
       "confidence": "GAMEPLAY_VERIFIED_SCOPED",
+      "encounterResetEvidence": "evidence.routeEncounterReset normal completedArrivalSnapshot, scoped four exits only",
       "fromMapId": 97,
       "index": 0,
       "rawHex": "0f1d191d2c",
+      "resetEncounterSteps": true,
       "rom": {
         "cpuAddress": 57490,
         "length": 5,

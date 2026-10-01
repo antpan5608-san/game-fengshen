@@ -167,7 +167,7 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
 }
 enum class MovementBlock { NONE, PHYSICAL, DEVELOPMENT }
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
-    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN)
+    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false)
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null

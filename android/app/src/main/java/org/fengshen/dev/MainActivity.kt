@@ -216,7 +216,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedStepSeq==world.completedStepSeq)return
         processedStepSeq=world.completedStepSeq
         val step=world.lastCompletedStep?:return
-        if(step.transitioned){Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("mapId",step.mapId).put("x",step.x).put("y",step.y));audio.scene(world.mapId)}
+        if(step.transitioned){
+            Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",step.mapId)
+                .put("mapId",world.mapId).put("x",world.x/16).put("y",world.y/16));audio.scene(world.mapId)
+            val exit=content.exits.firstOrNull{it.fromMapId==step.mapId&&it.triggerX==step.x&&it.triggerY==step.y}
+            if(exit?.resetEncounterSteps==true){
+                encounter?.restore(0)
+                // New-scene touch safety: a held old-scene gesture must not advance past the reviewed spawn.
+                input.clear();npcTouch.clear();hudTouch.clear();return
+            }
+        }
         val group=encounter?.onCompletedStep(if(step.transitioned)-1 else step.mapId,step.x,step.y){battleRandom.nextInt(256)}?:return
         val rules=content.battle?:return
         persistState() // Stable pre-battle checkpoint; no mid-turn snapshot is written.
