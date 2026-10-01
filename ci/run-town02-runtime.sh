@@ -30,7 +30,14 @@ python - <<'PYEVIDENCE'
 import subprocess,re
 from pathlib import Path
 base='/sdcard/Android/data/org.fengshen.dev/files/'
-for name in subprocess.check_output(['adb','shell','ls',base],text=True,timeout=10).splitlines():
+listed=subprocess.run(['adb','shell','ls',base],capture_output=True,text=True,timeout=10)
+if listed.returncode:
+    # Same AOSP-only diagnostic access already used by the existing recorder, never a real device.
+    assert 'ranchu' in subprocess.check_output(['adb','shell','getprop','ro.hardware'],text=True,timeout=10)
+    subprocess.run(['adb','root'],check=True,capture_output=True,timeout=10)
+    subprocess.run(['adb','wait-for-device'],check=True,timeout=10)
+    listed=subprocess.run(['adb','shell','ls',base],check=True,capture_output=True,text=True,timeout=10)
+for name in listed.stdout.splitlines():
     if re.fullmatch(r'(nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-')) else 'touch-ux-'+name)

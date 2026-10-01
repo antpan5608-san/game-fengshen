@@ -1152,8 +1152,15 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue("Full real Boss must fit above unchanged controls",enemyBox.y+enemyBox.h<=box.y+148*scale)
         screenshot(v,"nanhai-controlled-boss-original-origin")
         tap(v,Pair(box.x+40*scale,box.y+208*scale));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
-        assertEquals(BattlePhase.TARGET,fight.phase);assertTrue(fight.hero.hp<beforeEscapeHp)
+        assertEquals(BattlePhase.TARGET,fight.phase)
         assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true);waitCommands()
+        // A valid Boss round can miss. Preserve its RNG/rules rather than assume damage on the first attempt.
+        for(i in 0 until 16){
+            if(fight.hero.hp<beforeEscapeHp)break
+            tap(v,Pair(box.x+40*scale,box.y+208*scale));waitCommands()
+            assertEquals(BattlePhase.TARGET,fight.phase)
+        }
+        assertTrue("An ordinary bounded escape attempt sequence must expose retaliation",fight.hero.hp<beforeEscapeHp)
         for(i in 0..20){
             if(fight.phase!=BattlePhase.TARGET)break
             tap(v,Pair(box.x+40*scale,box.y+156*scale))
@@ -1178,9 +1185,16 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));completeDialogue(v2)
         val p2=p.get(v2) as BattlePresentation
         for(i in 0..500){if(p2.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))break;SystemClock.sleep(40)}
-        tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)))
+        val defeatDeadline=SystemClock.elapsedRealtime()+60000
+        val dyingFight=f.get(v2) as OpeningBattle
+        while(dyingFight.phase==BattlePhase.TARGET){
+            assertTrue("Bounded controlled HP1 defeat flow",SystemClock.elapsedRealtime()<defeatDeadline)
+            if(p2.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
+                tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)))
+            SystemClock.sleep(40)
+        }
         for(i in 0..500){if(p2.screen==BattlePresentation.Screen.RESULT)break;SystemClock.sleep(40)}
-        assertEquals(BattlePhase.DEFEAT,(f.get(v2) as OpeningBattle).phase)
+        assertEquals(BattlePhase.DEFEAT,dyingFight.phase)
         assertEquals(114,v2.currentSnapshot().mapId);assertEquals(20,v2.currentSnapshot().characters.first().hp)
         assertEquals(0,v2.currentSnapshot().money);assertTrue(v2.currentSnapshot().inventory.isEmpty())
         assertTrue(v2.currentSnapshot().flags["rom.event.97.39.1"]!=true)
