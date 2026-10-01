@@ -127,6 +127,8 @@ print(json.dumps(r))
 PY
 
 # Keep two small copies of original raw clips for direct review; full unedited footage stays in the original artifact.
+# The state index lives in the App external directory until pulled; collect it before selecting clips.
+pull_evidence
 python - <<'PYCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
