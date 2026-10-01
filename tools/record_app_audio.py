@@ -69,6 +69,11 @@ def record_silent():
             result={'source':'Actual Android App screenrecord; SILENT','kind':'CONTROLLED_UI_COMPARISON','videos':videos,'comparisonAssertions':'PASS','audio':'NOT_RUN'}
             (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));return
         before=saved()
+        cold_remote=f'/sdcard/{prefix}-cold-restart.mp4'
+        cold_started=time.monotonic()
+        cold_uptime=int(float(adb('shell','cat','/proc/uptime').decode().split()[0])*1000)
+        video=subprocess.Popen(['adb','-s','emulator-5554','shell','screenrecord','--bit-rate','1000000','--time-limit','180',cold_remote],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+        time.sleep(.5)
         adb('shell','am','force-stop','org.fengshen.dev')
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
         assert saved()==before,'Cold restart changed saved state'
@@ -78,6 +83,16 @@ def record_silent():
         assert 'OK (1 test)' in cold_log.read_text(),'Actual cold GameView did not restore the normal result'
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
         (OUT/f'{prefix}-force-stop-restored.png').write_bytes(adb('exec-out','screencap','-p'))
+        if video.poll() is None:
+            pid=adb('shell','pidof','screenrecord').decode().strip()
+            if pid.isdecimal():adb('shell','kill','-2',pid)
+        video.wait(timeout=60)
+        cold_local=OUT/f'{prefix}-cold-restart.mp4';adb('pull',cold_remote,str(cold_local))
+        cold_name=str(cold_local.relative_to(ROOT));videos.append(cold_name)
+        segments.append({'file':cold_name,'sha256':hashlib.sha256(cold_local.read_bytes()).hexdigest(),
+            'phase':'EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE',
+            'startedAndroidUptimeMs':cold_uptime,'durationSeconds':round(time.monotonic()-cold_started,3),
+            'limit':'Capture start approximate; actual frames in retained MP4'})
         result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
             'segments':segments,'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')

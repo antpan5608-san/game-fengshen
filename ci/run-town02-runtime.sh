@@ -125,3 +125,23 @@ r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY
+
+# Keep two small copies of original raw clips for direct review; full unedited footage stays in the original artifact.
+python - <<'PYCLIPS'
+import json,shutil,hashlib
+from pathlib import Path
+root=Path('.')
+recording=json.loads(Path('artifacts/checkpoint-ui/nanhai-ci-recording.json').read_text())
+index=json.loads(Path('artifacts/checkpoint-ui/nanhai-normal-index.json').read_text())
+normal=[s for s in recording['segments'] if '-normal-' in s['file']]
+entry_time=next(e['androidUptimeMs'] for e in index['events'] if e['name']=='sea-entry')
+entry=next((s for s in normal if s['startedAndroidUptimeMs']<=entry_time<=s['startedAndroidUptimeMs']+s['durationSeconds']*1000),None)
+if entry is None:raise ValueError('Entry capture not covered by retained raw segment')
+cold=next(s for s in recording['segments'] if s.get('phase')=='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE')
+for part,segments in [('entry',[entry]),('final',[normal[-1],cold])]:
+    out=Path('artifacts/nanhai-review-clips')/part;out.mkdir(parents=True,exist_ok=True)
+    for segment in segments:
+        src=Path(segment['file']);assert hashlib.sha256(src.read_bytes()).hexdigest()==segment['sha256']
+        shutil.copyfile(src,out/src.name)
+    (out/'clip-index.json').write_text(json.dumps({'segments':segments,'normalFlow':index,'kind':'UNCHANGED_RAW_ANDROID_APP_CLIPS_SILENT'},indent=2))
+PYCLIPS
