@@ -66,3 +66,9 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 只覆盖 `oss://kubernetes-fleetpilot/artifacts/fengshen-remake/app/fengshen-remake.apk.bin` 与同目录 `version.json`；APK 命名为 .bin 的既有分发契约保持，原 App 自升级仍走该 URL。包名 org.fengshen.dev，不要求卸载/清档。第一版正式上传前停止并等待用户确认。两个对象不是 OSS 原子事务，上传失败/校验失败仍报告失败，metadata 不先发布；不可把部分上传写成成功。服务器上传、安全存档覆盖升级及手机结果以实际验收为准。
 
 云 CI 不自动运行依赖私有 ROM 的全量取证测试，也不宣称手机操作验证完成。本轮新增仅 transport/signing/CI adapters；TOWN、BATTLE、音频、内容服务端化和一加真机累计未完成项继续见 delivery-status，完成前不得移除。
+
+## 云端接续与后续自动审批授权（2026-10-01 后续修订）
+
+用户已授权 v22 正式上传及后续已授权迭代的自动审批；上文首次人工确认已获得，不重复请求。受保护环境和内容/签名/同提交验证保持。现有集成能够触发 Actions，但 review pending deployments 返回 HTTP 403；取得对应 Deployments 写入能力前，不能保证无需 GitHub 页面操作，不以删除 reviewer 绕过。需由用户在安全的凭据/连接设置中补充权限，不在聊天或仓库传递令牌。
+
+运行 `36868615998` 在实际 preflight 成功后因 workflow 报告读取遗漏 -AsHashtable 失败，上传尚未开始；修复两处报告读取，保留判定逻辑。由于生产工作流要求构建与 main 同提交，CI 修复进入 main 后必须通过原构建工作流生成该提交的 v22，再审核实际 hash；不放宽 guard 以复用旧提交的产物，不创建第二套流程。
