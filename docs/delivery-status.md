@@ -547,7 +547,7 @@ WORLD-01/INPUT-01/BATTLE-02回归: 三图连接、四向/沿墙/取消、赠刀�
 App读回:81ac9681-d5b5-4663-9ad8-979c93d4ff20，version21/test=true/c11与最终hash匹配。只覆盖Fengshen独立APK/version.json，Language内容未改。
 
 【未完成清单（累计；只有实际完成才移除）】
-1. TOWN-01：跨类别出售完整流程、已穿装备直接替换及满包副作用、左手/其余商品迁移；药草/牛黃丸实际使用效果和合法场景/目标。
+1. TOWN-01：跨类别出售完整流程、已穿装备直接替换及满包副作用、左手/其余商品迁移；牛黃丸实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用及补给闭环；战斗药草指令仍归第4类，其他药品不关闭。
 2. 地图0：客栈收费/恢复/离店，住宅与特殊建筑、其余NPC/宝箱/剧情事件及条件；新室内原版BGM尚未核实并未启用。
 3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；南海龙宫/Boss/胜后状态未连续打通。34格白名单已解除，三图往返不再欠账。
 4. BATTLE-01/02：玩家命中/暴击、完整行动顺序、法术/战斗物品/防御指令、Boss行为；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
@@ -698,5 +698,92 @@ skill: .agents/skills/fengshen-content-iteration/SKILL.md；原无对应skill，
 真正关闭的游戏项目: 无，药草使用未关闭。工程接续已补只读巡检/不可变基底验证，不冒充游戏完成。
 仍阻塞: 单个ROM的合法取得及药草原版规则/运行证据，后续App运行验收；已有音频、更新器、其他物品等欠账保持。
 南海下一真实节点最近3个阻塞: 地图0必要NPC/服务事件；真实南海连接/条件；剧情Boss及胜后状态。药草为可选补给，不新增出村条件。
+
+END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: TOWN-02
+scope_revision: herb-use-and-supply
+status: READY_FOR_REVIEW（地图/菜单药草闭环；不是完整物品或南海里程碑完成）
+execution_kind: IMPLEMENTED
+
+【基线与修改】
+仓库/分支: /workspace/game-fengshen，main；开始98edf3d31cd49679dae83824eaac0fa0208d2859，工作区干净，未reset/clean。
+游戏基线v21/c11；发布基线v22/0.8.2-ci-release，APK来源f7dfea747999f6b1ee497179f98eb6cc7ed94f6a。
+本轮APK来源: 77cdc6b7f822628e0fe8b2a4292e6d396d9089f3；交付文档收尾提交另记，不改变已审核APK来源。
+修改文件: Content.kt、MainActivity.kt、SaveState.kt、HerbUseTest.kt、TouchTest.kt、app/build.gradle.kts；原export_development.py、ci_apk.py、record_app_audio.py、build-ci.ps1及两份Actions工作流；ci/content-source.json、check-reviewed-apk.ps1、run-town02-runtime.sh、town02-herb.json、probe-town02-herb.lua、相关Python测试；AGENTS.md、当前任务/CI及冲突规则文档、既有内容迭代skill。
+新增能力: 正常药店买药草→离店→地图物品面板对存活角色使用→HP/数量/HUD/存档同步→停止进程重启继续。
+仅保留的历史成果: 三店/三图、赠刀/装备、现有普通战斗/逃跑/新游戏战败、全屏输入/HUD、音频/诊断、更新器、本地及云存档。未新增牛黃丸、客栈、新地图、Boss或战斗物品。
+
+【本轮巡检】
+位置: 原Actions受保护环境；本地无PowerShell和服务器凭据，未把runner Secrets当成本地凭据。
+开工: gh workflow run android-publish.yml --ref main -f mode=inspect；run36892719605，approve/inspect成功、publish跳过。
+查询: 2026-10-01 16:32:41 UTC，可信v22/v21；452事件、14测试事件，普通8会话（6模拟器/2历史真机）；窗口08:27:54—15:48:08。NO_ISSUES_OBSERVED、cleanupFailures=0。
+限制: 仅上传日志；历史真机不是本轮真机验收，无ERROR不证明所有运行过程正常。历史音频超时根因仍UNCONFIRMED。发布前18:01:44 UTC再次执行原check-runtime.ps1，仍452/14及22/21，NO_ISSUES_OBSERVED；发布后结果见产物部分。
+
+【资源与证据】
+可信基底: 原不可变构建36882142423，runner实际下载并核对receipt；本地公网回退重查metadata和完整字节，未把?v=22当作不可变保证。
+v22 APK SHA-256: 5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f；11316827字节。
+c11 manifest: 3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147。
+药草ID: rom.medicine.0（原版medicine局部ID0）；现有买15/卖7/上限10保留。
+新输入仅一个目标ROM，private-inputs/town02/target.nes，1048592字节、Mapper246、完整SHA f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25；匹配后直接复用原偏移/Reader，不重做全量逆向。
+证据: game-data/provenance/town02-herb.json；module2 9651药效、A22C消耗、9615确认/取消、9AA4目标选择。FCEUX实际执行六类受控状态实验：受伤5→55，近满95→100，满100→100且消耗1；取消、战败目标、无物品均不改变HP/数量。原版fixture明确是CONTROLLED_STATE_EXPERIMENT，不能冒充正常游玩录像。
+规则: 地图/菜单可用；存活队员合法；恢复50HP并截断maxHp，成功消耗1，满HP也消耗；取消/非法目标/无数量不消耗；确认之后结算。战斗物品继续未实现。
+未取得: 原电脑历史私有目录、手机和本地生产密钥仍未迁移，不阻塞本次已有证据的药草实现。只需一加13T后续设备验收，不再要求完整1958文件/历史目录或全部源码。
+许可: ROM来源许可UNKNOWN；hash匹配只证明文件一致，个人用途不等于第三方授权。
+
+【资源复用】
+公开资源: luzeming0211/fc固定提交23d6234710a5e09db33b17aa21722eb2bc79945e中的单个目标NES；Debian官方FCEUX/Lua5.1/Xvfb、官方Android SDK及匹配JDK-headless。来源/日期/hash/许可记录复用既有provenance，原ROM/回放不进公开Git或artifact。
+现有工具恢复: ci_apk验证/恢复c11；原export_development局部生成药草定义；原Reader和FCEUX Lua仅调查本功能；未变地图/图集/音频逐字节复用。
+数据状态: 本轮药草规则有目标ROM及实际受控运行证据；未新增凭空或暂定药效。其余既有暂定字段不升级为全量VERIFIED。
+取消等待: 公网补ROM逐链接确认、仅F盘历史输入、迁回整目录及“先有新APK才能导出新APK”的循环依赖已解除；没有删掉数据/凭据/测试/发布边界。
+
+【实际功能】
+路径: 新游戏正常赠金/赠刀→114/16/0→已接入百货店地图19买药草15→离店→通过普通探索/战斗受伤→HUD物品页选药草→使用当前合法角色→保存→外部force-stop→重启继续走动。
+目标/场景: 原地图/菜单中的存活角色；当前哪吒一名目标沿用原角色面板，无多层确认。
+效果/消耗: min(maxHp,HP+50)，一次确认减1；最后一份移除条目；满HP仍减1。
+取消/无物品/非法目标无副作用；成功清空本次选择和待提交触摸，10次重复输入/同次多点不重复结算；暂停/焦点丢失清除悬挂提交。
+HUD、背包和统一存档一致；渲染及刷新不结算。真实用户存档/云进度未清空。
+是否人为增加出村前置: NO。
+
+【内容与CI】
+确有内容变化: 新增已核药草使用定义/来源和说明；c11→opening-segment-001-c12。
+目标manifest SHA-256: 8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8。
+原c11基底与新c12目标分别锁定；export_from_base由原导出器提供，ci_apk.restore验证基底字节/签名/内容→局部转换→验证目标hash→写原ContentLoader入口。未关闭校验或伪造APK。
+干净临时目录两次恢复42文件一致；原CI干净checkout成功构建，不依赖手工assets或整个历史目录。CI只需可信基底和已提交局部provenance，不接收完整ROM。
+构建: run36902536271，同main来源77cdc6b7f822628e0fe8b2a4292e6d396d9089f3；最终APK hash 1a5a5e10f2793c1418a83a2da3b218ebdc2ff2274b2f02d3d1a30c2153d63bbf。
+
+【验证】
+原版依据: 六类受控实验及静态例程核对通过，所有私有证据文件hash与已提交provenance一致。
+Python transport12/12、局部导出5/5、自动审批隔离fixture22/22；本地JVM44/44（含新增药草7），原CI testReleaseUnitTest/签名构建成功。
+同一签名候选Android运行: 21项仪器测试通过（Content12及9项Touch方法，含旧版保存/覆盖、受控边界、三店买卖、装备、INPUT-01/摇杆隔离、正常闭环、冷启动继续探索）。本地Content12/12及受控药草UI1/1也通过，不将它们重复计为候选的新测试数量。
+正常闭环不使用调试赠药/改HP/传送/强胜；受控边界fixture单独标记。取消、合法使用、近满/满HP、无物品/战败或非法目标、重复提交、暂停、保存冷启动及22→23实际adb install -r覆盖通过。
+实际命令: 原build-ci.ps1 -RuntimeTests（Gradle wrapper testReleaseUnitTest/assembleRelease/assembleReleaseAndroidTest）；ci/run-town02-runtime.sh；原record_app_audio.py town02-ci testNormalHerbSupplyLoop --silent；相关Python unittest/审批fixture；原FCEUX Lua探针。
+失败保留: 首次CI runtime默认AVD路径不存在，显式任务目录修复后成功；本地软件AVD两次System UI ANR，停止并保留失败。首轮安装时PackageManager未就绪和旧高分辨率运行失败未计通过。没有掩盖失败或降低业务断言。
+正常App录像: 原run的fengshen-town02-runtime-evidence/town02-ci-normal-00.mp4，静音实际屏幕录制；声音NOT_RUN，不以播放器状态宣称真机音频稳定。
+一加13T: NOT_RUN；真实账号多设备云恢复、更新误报根因、长时性能及历史音频根因仍未完成。
+
+【复用与skill】
+复用TownTrade、OpeningEquipment、现有角色/物品面板、统一状态/SaveSnapshot、ContentLoader、World/InputState、取证/导出/恢复和原CI/巡检/发布/录屏。没有第二套商店、导入器、引擎或发布平台。
+skill: .agents/skills/fengshen-content-iteration/SKILL.md；沉淀固定公开输入+hash、局部证据定位、可信基底→目标导出、wrapper环境补齐、原同签名AVD覆盖/正常录像/冷启动、同产物运行回执审核。
+仅写实际成功方法；修正默认AVD目录假设，明确本地软件AVD不保证成功。真机/声音/真实云恢复继续待核，不编造提速百分比。
+
+【产物与发布】
+候选: 构建36902536271的fengshen-signed-apk，fengshen-remake-v23-release.apk；运行证据同run的fengshen-town02-runtime-evidence。
+版本: 0.8.3-town-02 / 23；构建前实际服务器最新22，23为递增版本。
+包名org.fengshen.dev，签名SHA-256: 5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6；release非debuggable、c12全部42文件及完整APK字节校验通过。
+发布状态: PUBLISHED_AND_VERIFIED；原工作流36903560942，自动审批/同提交/同hash/签名/内容/运行回执门禁保持，只写既有两个Fengshen对象，Language未修改。
+正式下载: https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=23
+APK SHA-256: 1a5a5e10f2793c1418a83a2da3b218ebdc2ff2274b2f02d3d1a30c2153d63bbf；11322079字节；独立公网下载与receipt/metadata一致。
+发布后巡检: 2026-10-01 18:02:38 UTC，可信23/22，82事件/0测试，普通1历史真机会话/0模拟器；样本仅来自v22，v23尚无已上传样本。NO_ISSUES_OBSERVED、清理失败0。不能据此证明v23真机正常。
+未发布原因: 无；正式上传及独立校验已完成。
+
+【累计欠账】
+权威位置: docs/delivery-status.md的十类累计清单（ANDROID-CI-01段），本次只更新药草子项，其余完整保留；仍10类，不能把一项药草闭环写成完整TOWN或完整原版。
+真正关闭: 药草地图/菜单效果、合法目标与数量规则、正常购买补给闭环、模拟器保存/冷启动/覆盖验证；药草战斗指令不关闭。
+仍欠: 牛黃丸/其他物品、跨类别出售/装备替换/满包/左手、地图0事件/客栈、南海连接/Boss、完整战斗/展示、开局剧情、音频、真机更新/操作、真实云恢复/版本化内容及全量canonical；无新剧情前置。
+到南海最近3个阻塞: 地图0必要NPC/服务/剧情事件；真实连接和剧情条件；剧情Boss及胜后连续状态。完成本任务停止，不展开其他区段。
 
 END_DELIVERY_REPORT
