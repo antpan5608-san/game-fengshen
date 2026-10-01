@@ -25,7 +25,24 @@ if [[ -c /dev/kvm && ! -w /dev/kvm ]] && command -v setfacl >/dev/null; then sud
 if [[ -r /dev/kvm && -w /dev/kvm ]]; then accel=auto; fi
 "$sdk/emulator/emulator" -avd fengshen-town02-ci -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel "$accel" -memory 3072 -cores 2 > artifacts/town02-runtime/emulator.txt 2>&1 &
 emulator_pid=$!
-trap 'kill "$emulator_pid" 2>/dev/null || true' EXIT
+pull_evidence(){
+python - <<'PYEVIDENCE'
+import subprocess,re
+from pathlib import Path
+base='/sdcard/Android/data/org.fengshen.dev/files/'
+for name in subprocess.check_output(['adb','shell','ls',base],text=True,timeout=10).splitlines():
+    if re.fullmatch(r'(touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
+        Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
+        target=Path('artifacts/checkpoint-ui')/(name if name.startswith('touch-ux-') else 'touch-ux-'+name)
+        subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
+PYEVIDENCE
+}
+finish_runtime(){
+    set +e
+    pull_evidence
+    kill "$emulator_pid" 2>/dev/null || true
+}
+trap finish_runtime EXIT
 ready=false
 for attempt in $(seq 1 120); do
     if ! kill -0 "$emulator_pid" 2>/dev/null; then echo 'Android emulator exited; App validation unavailable'; exit 1; fi
@@ -87,15 +104,6 @@ done
 adb shell settings put system font_scale 1.0
 adb shell wm size 960x540
 adb shell wm density 160
-python - <<'PYEVIDENCE'
-import subprocess,re
-from pathlib import Path
-base='/sdcard/Android/data/org.fengshen.dev/files/'
-for name in subprocess.check_output(['adb','shell','ls',base],text=True).splitlines():
-    if re.fullmatch(r'(touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
-        target=Path('artifacts/checkpoint-ui')/(name if name.startswith('touch-ux-') else 'touch-ux-'+name)
-        subprocess.run(['adb','pull',base+name,str(target)],check=True)
-PYEVIDENCE
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
