@@ -54,7 +54,10 @@ run_test(){
         cat "artifacts/town02-runtime/$1.txt"; exit 1
     fi
     cat "artifacts/town02-runtime/$1.txt"
-    grep -q 'OK (1 test)' "artifacts/town02-runtime/$1.txt"
+    if ! grep -q 'OK (1 test)' "artifacts/town02-runtime/$1.txt"; then
+        adb logcat -d -s AndroidRuntime | tail -n 60
+        exit 1
+    fi
 }
 adb install -r "${base[0]}"
 adb install -r "${testapk[0]}"
