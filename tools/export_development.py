@@ -5,6 +5,8 @@ import json
 import shutil
 import sys
 import io
+import struct
+import zlib
 import urllib.request
 from pathlib import Path
 from PIL import Image
@@ -45,6 +47,25 @@ def checked_span(reader,span):
     if digest(raw)!=span['sha256']:raise ValueError('Iteration evidence ROM range changed')
     return raw
 
+def deterministic_rgba_png(image):
+    """Fixed PNG filter and stored DEFLATE blocks; independent of Pillow/zlib encoders.
+    Only new scoped graphics use this encoding. Reviewed base media stay byte-identical.
+    """
+    if image.mode!='RGBA':raise ValueError('Scoped PNG must be RGBA')
+    width,height=image.size
+    if not 0<width<=256 or not 0<height<=256:raise ValueError('Scoped PNG exceeds bounds')
+    pixels=image.tobytes();stride=width*4
+    scan=b''.join(b'\x00'+pixels[y*stride:(y+1)*stride] for y in range(height))
+    packed=bytearray(b'\x78\x01')
+    for start in range(0,len(scan),65535):
+        block=scan[start:start+65535];last=start+len(block)==len(scan)
+        packed.extend(bytes([int(last)])+struct.pack('<HH',len(block),len(block)^0xffff)+block)
+    packed.extend(struct.pack('>I',zlib.adler32(scan)&0xffffffff))
+    def chunk(kind,data):
+        return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
+    return (b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',width,height,8,6,0,0,0))+
+            chunk(b'IDAT',bytes(packed))+chunk(b'IEND',b''))
+
 def scoped_map_atlas(reader,map_data,palette,rgb):
     """Existing metatile/CHR decoder, with this scene's observed NES palette."""
     if len(palette)!=32 or any(x not in range(64) for x in palette) or len(set(palette))<2:
@@ -61,7 +82,7 @@ def scoped_map_atlas(reader,map_data,palette,rgb):
                     value=pattern.getpixel((index%16*8+x,index//16*8+y))[0]//85
                     color=palette[0 if value==0 else pal*4+value]
                     image.putpixel((t%16*16+q%2*8+x,t//16*16+q//2*8+y),tuple(rgb[color])+(255,))
-    out=io.BytesIO();image.save(out,format='PNG');return out.getvalue()
+    return deterministic_rgba_png(image)
 
 def scoped_observed_graphic(reader,recipe):
     """Rebuild the existing observed-ROM-tile recipe without uploading private PPU dumps."""
@@ -82,10 +103,9 @@ def scoped_observed_graphic(reader,recipe):
                 color=tuple(colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
                 image.putpixel((xx+x,yy+y),color)
     if len(occupied)!=width*height//64:raise ValueError('Incomplete graphic recipe')
-    out=io.BytesIO();image.save(out,format='PNG');raw=out.getvalue()
-    if recipe.get('pngSha256') and digest(raw)!=recipe['pngSha256']:
-        raise ValueError('Reconstructed graphic differs from reviewed pixels')
-    return raw
+    if not recipe.get('rgbaSha256') or digest(image.tobytes())!=recipe['rgbaSha256']:
+        raise ValueError('Reconstructed graphic differs from reviewed RGBA pixels')
+    return deterministic_rgba_png(image)
 
 def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
     """Extend the current exporter for this bounded route, retaining base media bytes."""

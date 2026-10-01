@@ -75,6 +75,6 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 
 原export_from_base已扩展现有Reader/metatile/ROM-tile recipe路径，可从可信不可变APK基底批次导出当前必要地图/出口/NPC/敌群与本场图形。ROM原始文件仍在忽略的private-inputs/.ci-private，recipe只含偏移/长度/hash/像素组合与来源。先核每条出口实际落点/方向，不交换猜返程；遭遇分区/行为未知只保留受影响区域边界，旧可行区域不能缩成轨迹白名单。
 
-本地已运行test_nanhai_export.py：同输入两次结果一致、不变媒体逐字节一致、错误基底/目标pin/ROMspan/敌数值拒绝、manifest全文件核验。该测试输入为FENGSHEN_CONTENT_BASE_APK指定的已审核APK；源码依赖与生成方法均在原export_development.py及当前provenance。图形PNG编码的透明0和不透明黑底须按实际观察区分，不能用不符hash的重绘图绕过检查。
+本地已运行test_nanhai_export.py：同输入两次结果一致、不变媒体逐字节一致、错误基底/目标pin/ROMspan/敌数值拒绝、manifest全文件核验。该测试输入为FENGSHEN_CONTENT_BASE_APK指定的已审核APK；源码依赖与生成方法均在原export_development.py及当前provenance。图形PNG编码的透明0和不透明黑底须按实际观察区分。Windows/Linux的Pillow压缩字节曾不同而原bytehash失败；原导出器以已审核RGBA hash核像素，并用固定存储DEFLATE序列输出PNG，目标文件/manifest hash继续严格审核，源PNG hash仅保留溯源。本地Pillow解码/CRC/多block/不调用平台encoder及错像素拒绝测试已通过，跨平台runner仍待核；不能关闭hash门禁绕过。
 
 限定Boss业务边界已在原JVM门禁运行：攻击等防伤0/小于防伤1、同字节命中与倍伤、敏捷排序、冰与物理同字节选择、Boss逃跑读字节后失败耗行动、掉落数量/分类格数满不丢物品。本地构建/原版正常取证不能替代Android正常主线或runner签名门禁；相应CI/App方法待实际运行后才能记录成功。
