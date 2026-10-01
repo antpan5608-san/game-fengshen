@@ -51,18 +51,27 @@ class TouchTest:IsolatedGameTestCase(){
             Key.RIGHT->Pair(stick.x+stick.w-2f,middle.second)
             else->error("Direction required")
         }
-        val beforeMap=v.world.mapId
+        var beforeMap=0;var beforeSeq=0L
+        instrumentation.runOnMainSync{beforeMap=v.world.mapId;beforeSeq=v.world.completedStepSeq}
         send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
         var started=false
         for(i in 0..100){
-            if(v.world.remaining>0 || v.world.mapId!=beforeMap){started=true;break}
+            // World completion sets remaining=0 before dispatching its exit, in the same UI callback.
+            // Observe that callback atomically; a background read can see the doorway before the map changes.
+            instrumentation.runOnMainSync{started=v.world.remaining>0||v.world.mapId!=beforeMap||
+                v.world.completedStepSeq!=beforeSeq||v.layer==GameView.Layer.BATTLE}
+            if(started)break
             SystemClock.sleep(5)
         }
         send(v,MotionEvent.ACTION_UP,listOf(point))
-        assertTrue("No step: map=$beforeMap x=${v.world.x} y=${v.world.y} message=${v.world.message}",
-            started || v.layer==GameView.Layer.BATTLE)
-        for(i in 0..100){if(v.world.remaining==0)break;SystemClock.sleep(5)}
-        assertEquals(0,v.world.remaining)
+        assertTrue("No step: map=$beforeMap x=${v.world.x} y=${v.world.y} message=${v.world.message}",started)
+        var remaining=0
+        for(i in 0..100){
+            instrumentation.runOnMainSync{remaining=v.world.remaining}
+            if(remaining==0)break
+            SystemClock.sleep(5)
+        }
+        instrumentation.runOnMainSync{assertEquals("Unfinished normal touch step",0,v.world.remaining)}
     }
     fun testNormalOpeningRouteGiftAndMap16Encounter(){normalOpeningBattle(false)}
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
@@ -196,7 +205,8 @@ class TouchTest:IsolatedGameTestCase(){
         capture("town")
         for(mid in listOf(17,18,19)){
             val entry=v.content.exits.first{it.fromMapId==0 && it.toMapId==mid}
-            walkTo(entry.triggerX,entry.triggerY);assertEquals(mid,v.world.mapId)
+            walkTo(entry.triggerX,entry.triggerY)
+            assertEquals("Shop entry $mid at ${v.world.mapId}:${v.world.x/16},${v.world.y/16}, remaining=${v.world.remaining}, seq=${v.world.completedStepSeq}",mid,v.world.mapId)
             val keeper=v.content.npcs.first{it.mapId==mid};walkTo(keeper.interactionCell!!.first,keeper.interactionCell.second)
             talk();assertEquals(GameView.Layer.SHOP,v.layer);assertFalse(v.visibleMapControls());assertNull(v.input.direction())
             fun action(i:Int)=tap(v,center(v.shopActionBounds(i)))
