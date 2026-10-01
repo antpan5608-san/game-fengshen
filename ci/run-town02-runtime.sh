@@ -60,6 +60,10 @@ adb shell am force-stop org.fengshen.dev
 adb install -r "${candidate[0]}" # Same signature, actual covering install; never uninstall/clear.
 run_test testUpgradeKeepsPreviousSave
 run_test testControlledHerbBoundariesAndSaveCompatibility
+run_test testNormalTownShopsBuySellAndReturn
+run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
+run_test testInput01RealMapWallSlidesAndMenuCancellation
+run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
 timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
 grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 python tools/record_app_audio.py town02-ci testNormalHerbSupplyLoop --silent
@@ -69,7 +73,7 @@ import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY

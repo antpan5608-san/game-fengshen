@@ -6,9 +6,9 @@
 
 Windows 2022 Actions runner，Temurin JDK 17，SDK platform 35/build-tools 35.0.0；Gradle wrapper 8.10.2（发行包及 wrapper JAR 均锁 SHA），AGP 8.7.3，Kotlin 2.0.21。既有依赖 WorkManager 2.9.1、Media3 1.4.1、JUnit 4.13.2不变。发布桥复用 ssh2 1.17.0（npm lock），ossutil 2.4.0 官方二进制校验后安装。官方 Actions 固定到提交，不用浮动标签。
 
-ROM、reference、private-derived、development assets、APK、密钥、本机 SDK/local.properties/.venv 不能入 Git。现有导出器需要本机 ROM/取证资源，因此不在云端重新逆向或假设这些文件已提交。`tools/ci_apk.py restore` 从现有公开发布 APK 恢复其 development 包，先验证 metadata/APK size/SHA/package/signer，再验证 `ci/content-source.json` 锁定的 manifest/version 和全部文件，最后写入原 ContentLoader 目录。包内容必须完全吻合：c11，manifest SHA `3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147`。不是截图地图，不是第二套 importer。
+ROM、reference、private-derived、development assets、APK、密钥、本机 SDK/local.properties/.venv 不能入 Git。当前局部迭代从可信基底复用不变素材，具体新增定义以已提交provenance为输入；不假设ROM/历史私有目录已经提交。`tools/ci_apk.py restore` 从现有公开发布 APK 恢复其 development 包，先验证 metadata/APK size/SHA/package/signer，再验证 `ci/content-source.json` 锁定的 manifest/version 和全部文件，最后写入原 ContentLoader 目录。实际目标由ci/content-source.json固定；iteration.base单独锁定可信c11 APK字节/manifest，原导出器局部转换后必须完全吻合目标pin。不是截图地图，不是第二套 importer。
 
-公网对象更新后，同一内容 hash 仍可复用；如果服务器改成新内容版本，旧 pin 构建会明确失败。下一次内容变更仍用原 `export_development.py` 生成包，核对 provenance，更新 pin，并提供包含新包的可信 APK（本地 build-ci 可用 `-ContentApk`），再沿用这一读取入口；本轮没有把内容服务端版本化下载功能写成完成。构建源公网不可用时不能编造空包继续构建。
+公网对象更新后，同一内容 hash 仍可复用；如果服务器改成新内容版本，旧 pin 构建会明确失败。内容变化仍用原 `export_development.py`：当前--base-apk/--provenance/--version先确定可追溯目标hash，ci_apk.restore验基底后调用同一局部导出函数再验目标，build-ci可直接用旧基底-ContentApk，不要求先有新内容APK；本轮没有把内容服务端版本化下载功能写成完成。构建源公网不可用时不能编造空包继续构建。
 
 ## Secrets
 
@@ -66,7 +66,7 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 
 只覆盖 `oss://kubernetes-fleetpilot/artifacts/fengshen-remake/app/fengshen-remake.apk.bin` 与同目录 `version.json`；APK 命名为 .bin 的既有分发契约保持，原 App 自升级仍走该 URL。包名 org.fengshen.dev，不要求卸载/清档。v22首次上传确认已取得，后续按AGENTS最新自动审批授权执行。两个对象不是 OSS 原子事务，上传失败/校验失败仍报告失败，metadata 不先发布；不可把部分上传写成成功。服务器上传、安全存档覆盖升级及手机结果以实际验收为准。
 
-云 CI 不自动运行依赖私有 ROM 的全量取证测试，也不宣称手机操作验证完成。本轮新增仅 transport/signing/CI adapters；TOWN、BATTLE、音频、内容服务端化和一加真机累计未完成项继续见 delivery-status，完成前不得移除。
+云 CI 不自动运行依赖私有 ROM 的全量取证测试，也不宣称手机操作验证完成。当前TOWN-02已新增药草地图/菜单使用，原workflow加入同候选runtime门禁；TOWN、BATTLE、音频、内容服务端化和一加真机累计未完成项继续见 delivery-status，完成前不得移除。
 
 ## 云端接续与后续自动审批授权（2026-10-01 历史修订；阻塞已由下文成功运行解除）
 

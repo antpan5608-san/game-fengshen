@@ -47,6 +47,12 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
    本地JRE缺编译器时，用Debian官方匹配JDK-headless包在scratch补齐，不改全局权限；JVM网络沿用平台代理系统属性。
    debug单元测试与构建成功，ContentTest及受控药草UI仪器实际成功；不将其写成正常流程/正式覆盖通过。
 
+10. 同候选运行用原workflow的runtime job与ci/run-town02-runtime.sh，临时目录显式ANDROID_AVD_HOME和avdmanager --path；
+    默认路径假设曾实际失败，显式路径后runner成功。单个AOSP AVD下载原基底/本次候选和同签名test APK，
+    先正常赠刀保存再adb install -r覆盖，验旧档一致；受控边界与Content后由原record_app_audio.py --silent
+    执行正常药店购买、受伤使用、外部force-stop、实际GameView冷启动和继续探索。输出运行回执和实际录像；声音NOT_RUN。
+    发布workflow复核同main提交/build run/APK hash和成功runtime job及回执，测试job不持生产Secret。
+
 # 输出和停止条件
 
 输出恢复/验证receipt、脱敏巡检摘要、测试结果及固定交付报告；临时输入/产物按.gitignore隔离。
@@ -58,9 +64,8 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 
 局部导出和目标内容恢复已实际验证；签名构建已成功；App覆盖以当前任务记录为准。
 不能仅改目标pin后要求旧服务器包满足它，也不把任意ZIP改名APK。
-原版药草边界取证、模拟器安装、内容/受控UI仪器已成功；正常闭环、正式候选覆盖及真机仍按当前任务推进。
-原workflow新增runtime隔离步骤、现有录屏器的静音/冷启动适配及同APK运行回执门禁仍需真实runner验证；
-本地软件AVD出现System UI ANR，保留失败，降低任务AVD分辨率后再验，不将未完成录像计为通过。
-现有runner能力只以实际观测为准，不能把工具存在写成设备已经运行。
+原版药草边界、签名候选覆盖、正常闭环及停止进程恢复已由真实runner成功执行；真机和声音仍NOT_RUN。
+本地无KVM的软件AVD两次System UI ANR，保留失败，不能作为正常流程PASS；低分辨率不保证解决。
+新增原买卖/装备/INPUT-01回归选择在当前任务实际运行后再认定可靠，不将工具存在写成设备已经运行。
 
 详细入口：docs/android-ci.md、tools/ci_apk.py、check-runtime.ps1、原两份Actions工作流。
