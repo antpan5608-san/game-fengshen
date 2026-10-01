@@ -547,7 +547,7 @@ WORLD-01/INPUT-01/BATTLE-02回归: 三图连接、四向/沿墙/取消、赠刀�
 App读回:81ac9681-d5b5-4663-9ad8-979c93d4ff20，version21/test=true/c11与最终hash匹配。只覆盖Fengshen独立APK/version.json，Language内容未改。
 
 【未完成清单（累计；只有实际完成才移除）】
-1. TOWN-01：跨类别出售完整流程、已穿装备直接替换及满包副作用、左手/其余商品迁移；牛黃丸实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用及补给闭环；战斗药草指令仍归第4类，其他药品不关闭。
+1. TOWN-01：跨类别出售完整流程、原版已穿装备直接替换及满包副作用规则、左手/其余商品迁移；TOUCH-UX-01已实现Android原卸下→装备等价原子封装，不替代原版规则取证；牛黃丸实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用及补给闭环；战斗药草指令仍归第4类，其他药品不关闭。
 2. 地图0：客栈收费/恢复/离店，住宅与特殊建筑、其余NPC/宝箱/剧情事件及条件；新室内原版BGM尚未核实并未启用。
 3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；南海龙宫/Boss/胜后状态未连续打通。34格白名单已解除，三图往返不再欠账。
 4. BATTLE-01/02：玩家命中/暴击、完整行动顺序、法术/战斗物品/防御指令、Boss行为；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
@@ -785,5 +785,78 @@ APK SHA-256: 1a5a5e10f2793c1418a83a2da3b218ebdc2ff2274b2f02d3d1a30c2153d63bbf；
 真正关闭: 药草地图/菜单效果、合法目标与数量规则、正常购买补给闭环、模拟器保存/冷启动/覆盖验证；药草战斗指令不关闭。
 仍欠: 牛黃丸/其他物品、跨类别出售/装备替换/满包/左手、地图0事件/客栈、南海连接/Boss、完整战斗/展示、开局剧情、音频、真机更新/操作、真实云恢复/版本化内容及全量canonical；无新剧情前置。
 到南海最近3个阻塞: 地图0必要NPC/服务/剧情事件；真实连接和剧情条件；剧情Boss及胜后连续状态。完成本任务停止，不展开其他区段。
+
+END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: TOUCH-UX-01
+status: READY_FOR_REVIEW
+
+【基线与巡检】
+仓库/workspace/game-fengshen，main；开始提交7e280ed55c66cd59ed149f0a3b1acbad545a1a30，工作区原干净，无并发TOWN-02修改。结束游戏源码/正式APK来源ef29edb9192bb299ed493b767c52b23c450b2094；发布后仅补交付与已验证skill记录，不改变APK来源。
+实际基线v23/0.8.3-town-02/c12；TOWN-02药草已实施发布，本轮直接复用。v21/c11历史三店等成果继续保留。
+实际开工inspect 36906370361：2026-10-01 18:23:15 UTC，可信23/22，445事件、0测试，普通3真机会话/0模拟器，NO_ISSUES_OBSERVED。首次gh401已恢复，旧TOWN-02标签巡检不冒充本轮结果。
+发布前20:07:38 UTC：23/22，511事件、0测试、普通3真机会话。发布后20:07:55 UTC：24/23，424事件、0测试、普通2真机会话/0模拟器，全部来自23；24尚无上传样本。均NO_ISSUES_OBSERVED、cleanupFailures=0；没有样本不能证明新版本健康。
+未观察到需纳入本轮的上传崩溃/交易/丢档故障；历史音频超时根因仍UNCONFIRMED。巡检只覆盖实际上传日志，历史真机不是本轮实机验收。
+
+【实际交互问题】
+旧商店drawShop/shopAction/runShopAction以上一件/下一件选商品，交易进入RESULT还需继续；物品panelAction/runPanelAction固定四项分页，窄面板与列表下标容易限制触控。实际旧APK已录制对照。
+保留原TownTrade、药效、库存/合法装备及统一状态；已合理的属性/法术页不重做，地图/战斗布局/头像/音频架构不扩改。
+改造MainActivity.kt和新增局部TouchUi.kt：物品/装备/商店滚动直接选择，共享绘制/命中布局，宽屏列表+详情、窄屏列表→详情；至少48dp，适配安全窗口/字体。商品显示真实名称、持有量、价格及已有图像。普通交易留在当前列表，结果非阻塞；失败保留现场。
+SaveState.kt新增纯OpeningEquipment.replace，等价于原卸下→装备，原子提交最终结果；候选失效/原回包上限阻止时不丢装备。UI不强行串两个有副作用调用。
+拒绝猜测：牛黃丸/其他物品效果、战斗药品、原版直接替换/满包特殊规则、未入队目标和新槽位。后者仍属原版证据欠账，不被Android事务封装关闭。
+
+【可操作结果】
+物品浏览：滚动真实库存；点击只选中/看详情。实际能力区分可用、条件不满足、无合法目标、待接入和其他场景限制。
+装备/卸下：选背包装备→装备给当前角色；选当前槽→卸下或选择真实候选。纯预览复用同一计算，装备加成与总攻击分别标注。切角色不重排队伍。
+购买：选商品→购买1件·X两。卖出：切卖出列表、选真实可卖库存→卖出1件·X两。价格/每次一件/范围/数量限制不变；不自动卸装出售。最后一件售完清空选择，旧触摸不移到下一件。
+药草：复用rom.medicine.0和已核HerbUse，地图/菜单存活队员可用；HP加50截断maxHp，成功消耗1，满HP也消耗并明确提示；取消/无库存/非法目标不消耗。牛黃丸待接入；战斗物品仍未实现。不新增出村前置。
+实际点击计数从“列表已打开、当前角色已选中”开始：非首行购买旧3→新2；出售旧2→新2（旧为已选商品+继续，新为点行+卖出）；背包直接替换旧5→新2；新卸下2、药草使用2。不计开菜单/切买卖标签，不编造百分比。
+按下只记录稳定物品/角色/槽位/商店/模式/状态；抬起再核验。同手势最多一次提交，滚动、CANCEL、多点、切页/目标/后台清过期输入；重复UP不结算，下一次合法独立点击仍正常。渲染不扣钱/物品，模态开关隔离地图输入。
+成功反馈对应实际保存结果；保存失败路径回滚并显示失败，磁盘故障注入未执行。正常保存、冷启动与升级一致性已实测。
+
+【规则与数据】
+业务入口：TownTrade、OpeningEquipment、HerbUse、GameState/SaveSnapshot，ContentLoader/World/InputState继续复用；未创建第二套交易、引擎、导入器或UI框架。
+游戏数值/价格/数量上限/槽位/药效/剧情条件未改变，c12内容不变。明确修复交互误提交风险、列表重排错对象风险及实际2×字体按钮/导航重叠；多点触摸改为取消整组手势。
+覆盖升级v23→v24实际adb install -r、同签名、未卸载清档，旧位置/钱/库存/装备/flags保存相等。受控fixture仅隔离AVD；未修改用户真实存档/云端进度。
+
+【skill】
+路径.agents/skills/fengshen-touch-ux/SKILL.md，name: fengshen-touch-ux；AGENTS.md增加一条范围规则，docs/android-ui-design.md记录局部触控约定。
+description限定已授权Android物品/装备/已有商店的光标导航、A/B多确认、逐件翻页和误触；排除纯ROM/音频/数值/构建，不授权全库UI或规则变更。
+结构检查PASS；六例人工审阅：商店翻页/装备多确认ADAPT，音频/南海坐标OUT_OF_SCOPE，自动卖全装备买最贵ASK，已有合理直接点选PRESERVE。未据负例改动对应系统。
+显式调用与不提skill名的隐式CLI均在隔离目录实际尝试，因Codex CLI自身认证HTTP401失败，自动匹配NOT_RUN；没有以测试提示词冒充通过，也不影响已正常工作的GitHub授权。未改全局权限/配置，未调用生产发布测试skill。
+实际沉淀：共享布局/稳定ID取坐标、纯事务与手势验证、旧签名方法ABI兼容、滚动到足够点击区域、原AVD覆盖与正常静音录屏/冷启动、native截图真实尺寸/大字体审查及失败白名单取证。不保存版本、Secret、ROM或全量日志，不编造提速。
+
+【验收】
+U1 PASS：当前物品/装备/买卖由直接点选和动作按钮完成，不依赖虚拟方向键/A/B或上一件/下一件。
+U2 PASS：点列表只选中，明确动作才改状态，实际仪器断言/录像。
+U3 PASS：滚动、重复UP、多点取消、交易后列表重排/最后一件售完、状态改变与失效手势有边界验证；下一合法点击可继续交易。
+U4 PASS：相同fixture下纯装备替换/卸下与原合法序列一致，交易仍用原TownTrade；药效边界断言保留。手势策略改动单独如上说明。
+U5 PASS（模拟器）：保存/外部force-stop/冷启动/继续探索、同签名覆盖升级、INPUT-01/摇杆隔离回归；真实账号云恢复与保存磁盘故障注入NOT_RUN。
+U6 PASS（尺寸模拟）：实际截图2640×1216，GameView2640×1080、density3，字体1/1.3/2完成区域断言与截图审阅；动作/价格完整、触摸框不重叠，2×部分详情滚动。一加13T实机NOT_RUN。
+U7 PASS（结构及人工六例），自动显式/隐式匹配NOT_RUN，原因如skill部分。
+U8 PASS（云门禁/字节/本轮巡检），v24上传样本及手机健康结论尚不可取得，未冒称实机通过。
+
+【产物】
+实际命令：原build-ci.ps1 -VersionCode 24 -VersionName 0.8.4-touch-ux-01 -RuntimeTests；原ci/run-town02-runtime.sh；python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent；旧对照为python tools/record_app_audio.py touch-ux-before testTouchUxBaselineClickPath --silent --comparison；Gradle wrapper testReleaseUnitTest/assembleRelease/assembleReleaseAndroidTest，本地testDebugUnitTest/assembleDebugAndroidTest；相关Python unittest/自动审批fixture；ci_apk.py verify；原android-publish.yml及check-runtime.ps1 pre/postflight。
+最终JVM51/51（新增UX7项），Python transport12/12、局部导出5/5、自动审批隔离fixture22/22；最终原API30 AVD合计27次测试执行通过（Content12+15次Touch执行，其中字体方法跑三档）。没有把重复执行写成27个独立用例，未重跑全量Python/Go/音频套件。
+失败保留：旧测试APK公共persistState签名变化引起崩溃，恢复Unit ABI；滚动行不足48dp、旧坐标/多点预期和2×滚动预算失败已针对修复。运行36915073744虽Actions成功，但实际截图尺寸/大字体布局不合格，被拒绝且未发布；最终36917255772修复并实测。失败尝试不计通过。
+正式APK：0.8.4-touch-ux-01 / 24；来源ef29edb9192bb299ed493b767c52b23c450b2094。构建36917255772，原发布36919194991，均success，自动审批沿用reviewer/受保护环境。
+下载：https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=24
+APK SHA256：def359de888614152768bdb70c4f12a5e09a653124db6eb0650e96a9edb76300；11353567字节。完整公网下载与审核artifact/receipt/metadata一致；?v=24本身不是不可变保证。
+包名org.fengshen.dev；既有签名SHA256 5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6。
+内容opening-segment-001-c12，manifest SHA256 8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8，42文件验证通过，无内容变更，不强制另发内容版本。
+正常实际App视频：artifacts/touch-ux/reviewed-runtime/checkpoint-ui/touch-ux-after-normal-00.mp4；旧受控对照touch-ux-before-normal-00.mp4。最终正常视频50秒，外部停止/恢复结果另见touch-ux-after-recording.json；静音，声音NOT_RUN。
+截图：同目录touch-ux-phone-{items,equipment,shop}-{1.0,1.3,2.0}.png；本地正式下载artifacts/published/fengshen-remake-v24-release.apk。运行证据继续原artifact名fengshen-town02-runtime-evidence。
+发布状态PUBLISHED_AND_VERIFIED。2026-10-01 20:07:43 UTC发布，只覆盖既有两个Fengshen对象，Language未改；发布后巡检成功并保留24/23日志，24零样本限制如上。一加13T：NOT_RUN；声音/长时性能：NOT_RUN。
+
+【未完成】
+TOWN-02地图/菜单药草闭环由此前v23关闭，本轮仅复用；药草战斗指令、牛黃丸/其他物品仍欠账，不借UX关闭。
+本轮未验证：实体手柄完整操作、实际多队员选择、所有窄屏设备、保存磁盘故障、Codex自动skill匹配及一加13T实机。当前单队员/宽屏正常流程已实测；属性/法术等其他菜单不在本轮范围。
+十类累计清单权威位置仍为docs/delivery-status.md的“未完成清单（累计；只有实际完成才移除）”；完整保留。Android等价原子替换已实现，但原卡带直接替换/满包规则待核，不冒称原版完成。
+下一原版节点最近3个阻塞：地图0必要NPC/服务/剧情事件；通往南海的真实连接/剧情条件；剧情Boss及胜后连续状态。
+本轮结束，不自动开始新地图、战斗或其他区段。
 
 END_DELIVERY_REPORT

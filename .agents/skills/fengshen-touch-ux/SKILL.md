@@ -40,3 +40,5 @@ description: 在本项目被授权的Android交互任务中，遇到物品/装�
 - skill显式与隐式隔离CLI尝试均遇到认证401；不将结构/人工案例判断写成自动匹配成功。正式APK、真机与声音须按内容skill和任务门禁另验。
 
 - 曾仅设置wm尺寸并得到测试PASS，但截图实际分辨率不同且2×字体动作与标签重叠；必须记录截图真实尺寸及GameView有效窗口，检查真实命中框与完整文字，并目视截图。原CI的退出清理已实际白名单回收隔离测试截图，失败也可审查；不拉用户资料。
+- 原runtime已实际用匹配AVD的hw.lcd尺寸与emulator -skin运行；testTouchUxPhoneSizeAndLargeFont同时断言UiAutomation截图尺寸、有效窗口及布局区域，在1/1.3/2字体下通过。短安全窗口用紧凑标题，操作按钮与导航分开，详情可滚动；触摸目标至少48dp，不能以扩大命中框掩盖文字重叠。
+- testNormalTouchUxSupplyAndEquipment的实际新游戏路径已录制：真实交易、装备/卸下、受伤后药草使用；原录屏器另执行外部force-stop、恢复状态相等和继续探索。正常流程与受控边界/旧UI对照分别标记，不用fixture证明可玩，不用静音录像证明声音。

@@ -101,13 +101,13 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 
 原android-build.yml默认mode=build。mode=verify-base只对成功main手动构建的不可变fengshen-signed-apk核对receipt/来源提交/run/hash，再用ci_apk.py verify/restore；只保留verification receipt，不生成APK、不使用服务器/签名Secrets。同时只读观察现有Linux runner adb/emulator/AVD/KVM；不是启动设备或App验收。
 
-新增只读模式后，生产review与publish均额外要求来源运行实际包含唯一成功build job；verify-base成功不能当作APK构建。后续新内容导出与进入签名构建尚待实现，不允许用关闭pin验证或伪APK绕过。稳定已验证步骤见.agents/skills/fengshen-content-iteration/SKILL.md，实际run/版本由当前任务和交付文档记录。
+新增只读模式后，生产review与publish均额外要求来源运行实际包含唯一成功build job；verify-base成功不能当作APK构建。后续新内容导出与进入签名构建按下文TOWN-02已验证入口执行，不允许用关闭pin验证或伪APK绕过。稳定已验证步骤见.agents/skills/fengshen-content-iteration/SKILL.md，实际run/版本由当前任务和交付文档记录。
 
 ## TOWN-02 局部内容与运行门禁
 
 content-source.json分开固定iteration.base的完整APK/内容hash与目标manifest。原ci_apk.restore验证基底后调用export_development.export_from_base生成药草局部定义，校验目标pin才写assets；无需ROM/历史私有captures。--base-only仅用于原基底验证入口，不能审核目标候选。
 
-原build-ci的RuntimeTests编译同签名release仪器APK；原build workflow的runtime在单个临时AVD验证旧包覆盖、药草边界和正常闭环。录屏继续用record_app_audio.py的--silent适配，静音不证明声音。发布审批须build/runtime实际成功，check-reviewed-apk核对runtime回执与同提交/同产物hash；跳过或失败只留候选。首次真实runner结果以交付记录为准，当前该runtime链路待执行。
+原build-ci的RuntimeTests编译同签名release仪器APK；原build workflow的runtime在单个临时AVD验证旧包覆盖、药草边界和正常闭环。录屏继续用record_app_audio.py的--silent适配，静音不证明声音。发布审批须build/runtime实际成功，check-reviewed-apk核对runtime回执与同提交/同产物hash；跳过或失败只留候选。首次真实runner及后续成功结果以交付记录为准；该runtime链路已由下文TOWN-02实测成功。
 
 
 ## TOWN-02 当前交付与已验证迭代入口
@@ -117,3 +117,13 @@ content-source.json分开固定iteration.base的完整APK/内容hash与目标man
 当前原导出器使用已校验c11基底和提交的药草provenance局部生成目标，不要求先有新内容APK。iteration.base与目标pin分开锁定，默认ci_apk verify仍检目标，verify --base-only仅核原基底。干净CI和临时目录重复恢复已成功，不变素材复用。
 
 原android-build的runtime_tests=true使用同run正式APK/test APK及原不可变v22基底，在一台隔离AOSP AVD执行覆盖安装、Content、药草边界、三店/装备/输入及正常闭环；原录屏器--silent验证停止进程/实际GameView恢复并继续探索，保留录像和同产物runtime-receipt。原android-publish在生产凭据步骤前核对成功build/runtime、同main/源提交/run/APK hash/content与运行回执。本次真实自动审批和发布均成功，reviewer未删除；声音/一加13T仍NOT_RUN。完整验证限制及最新10类欠账见delivery-status最后TOWN-02报告。
+
+## TOUCH-UX-01 已交付的原流程接续
+
+v24/0.8.4-touch-ux-01已发布，来源ef29edb9192bb299ed493b767c52b23c450b2094；原构建36917255772、原发布36919194991成功。APK SHA256 def359de888614152768bdb70c4f12a5e09a653124db6eb0650e96a9edb76300，11353567字节。c12内容和42文件hash不变；后续记录提交不是新APK来源。
+
+原android-build.yml的runtime继续使用同run正式签名APK/test APK，覆盖基底更新为不可变v23构建36902536271。同一隔离API30 AVD包含旧UI对照、真实新游戏触屏交易/装备/药草、冷启动、边界/输入及三档字体。原run-town02-runtime.sh配置匹配native屏幕/skin，截图断言2640×1216和实际有效窗口；不能只凭wm请求或测试PASS省略截图审阅。已出现过Actions成功但截图不合格的候选，该候选未发布。
+
+运行回执新增touchUx、phoneSizedLayout和baselineComparison；check-reviewed-apk要求已授权触控任务的运行门禁，同源提交/run/同审核APK hash保持。原受保护环境/自动审批、preflight/两对象上传/完整公网字节校验/postflight均通过。2026-10-01 20:07:55 UTC发布后可信24/23、424事件全来自23，24无上传样本；一加13T、声音与长时性能仍NOT_RUN。旧artifact名fengshen-town02-runtime-evidence继续复用，不另建workflow或平台。
+
+稳定触控方法见.agents/skills/fengshen-touch-ux/SKILL.md；当前任务/交付记录保存版本和run。以后必须读取实际最新发布并递增，历史默认号不可照抄。
