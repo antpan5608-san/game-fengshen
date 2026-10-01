@@ -6,6 +6,8 @@ task_id: ANDROID-CI-01
 
 云端接续增量（2026-10-01）：已核验 main `6ed46292fab36f480c1cb1e6958ae0d9202ce7e3` 和成功构建 `36855448982`；用户已授权 v22 发布及后续已授权迭代的自动环境审批。首次正式发布 `36868615998` 获用户环境审批后，产物复核通过，实际 ANDROID-CI-01 preflight 返回 NO_ISSUES_OBSERVED，但 workflow 使用普通 ConvertFrom-Json 读取包含合法空名称 contentVersion 字段的报告而失败，尚未上传。仅将 preflight/postflight 两处读取改为 -AsHashtable，与既有 check-runtime.ps1/publish-apk.ps1 一致；不改变健康判定/同提交/签名/内容/目标校验。修复后保留原失败记录，按现有流程在新源提交构建并审核 v22，再执行正式发布；不得将失败运行或未执行巡检写成成功。GitHub 自动 review API 实际 403，仍需解决 Deployments 写入能力，保留环境保护和累计未完成项。
 
+后续增量：`f8fc3a470870cf729a69c593767bd762385f1200` 的构建 `36870720449` 成功，v22 APK SHA 为 `66e0e945e0999276aed33d3ed3cc4048629d7a082f638d6c6ed8e35350ffcdf7`；发布 `36871347819` 等待审批，现有集成实际缺少 deployments=write。用户已表示配置 FENGSHEN_DEPLOY_REVIEW_TOKEN，现于原生产 workflow 增加 approve job，由 GitHub runner 将该仓库 Secret 注入 GH_TOKEN 并保留 reviewer/main/产物/巡检校验。新配置改变源提交后须构建同提交产物；实际运行验证前不宣称自动审批或发布成功。累计欠账保持。
+
 以下保留 TOWN-01 历史。
 
 # TOWN-01：地图0商店/室内与原版物品装备展示

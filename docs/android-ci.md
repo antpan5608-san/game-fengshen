@@ -20,6 +20,7 @@ GitHub 仓库 Settings → Secrets and variables → Actions → Repository secr
 | FENGSHEN_KEYSTORE_PASSWORD | 原 keystore 密码 |
 | FENGSHEN_KEY_ALIAS | 原签名 alias |
 | FENGSHEN_KEY_PASSWORD | 原 key 密码 |
+| FENGSHEN_DEPLOY_REVIEW_TOKEN | antpan5608-san 的 Fine-grained Token，仅此仓库，Actions read、Deployments write；用于已授权发布的自动环境审批 |
 
 Settings → Environments → fengshen-production → Environment secrets：
 
@@ -72,3 +73,9 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 用户已授权 v22 正式上传及后续已授权迭代的自动审批；上文首次人工确认已获得，不重复请求。受保护环境和内容/签名/同提交验证保持。现有集成能够触发 Actions，但 review pending deployments 返回 HTTP 403；取得对应 Deployments 写入能力前，不能保证无需 GitHub 页面操作，不以删除 reviewer 绕过。需由用户在安全的凭据/连接设置中补充权限，不在聊天或仓库传递令牌。
 
 运行 `36868615998` 在实际 preflight 成功后因 workflow 报告读取遗漏 -AsHashtable 失败，上传尚未开始；修复两处报告读取，保留判定逻辑。由于生产工作流要求构建与 main 同提交，CI 修复进入 main 后必须通过原构建工作流生成该提交的 v22，再审核实际 hash；不放宽 guard 以复用旧提交的产物，不创建第二套流程。
+
+### 自动审批令牌的实际配置入口
+
+自动审批由同一个 `android-publish.yml` 的 `approve` job 完成。创建入口：https://github.com/antpan5608-san/game-fengshen/settings/secrets/actions/new 。Name 为 `FENGSHEN_DEPLOY_REVIEW_TOKEN`，Secret 为仓库拥有者的 Fine-grained Token，仅选 game-fengshen，Actions read 与 Deployments write。不要将令牌发到聊天、写入代码或普通 Variables。
+
+`approve` job 将该 Secret 注入其进程 GH_TOKEN，先核对成功的手动 main 构建与同提交，再审批当前运行中唯一的 fengshen-production 环境。它与 publish job 并行启动，不声明 needs，避免等待环境创建的死锁。reviewer 与 main 限制保持；缺失令牌、不可信构建、不符合 reviewer 身份或 API 拒绝均不批准。publish job 继续复核实际 APK/hash、签名、版本、内容及巡检后上传。该 Secret 不传给 APK 构建或发布脚本，不代表当前云端任务拥有凭据；配置并实际运行成功前，自动审批保持未验证。

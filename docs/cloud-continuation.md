@@ -105,3 +105,13 @@
 本次运行完成产物/签名/版本/内容复核，实际 runner preflight `NO_ISSUES_OBSERVED`（仅已上传样本窗口；不是全设备健康证明）。随后在 workflow 读取报告时失败：`The provided JSON includes a property whose name is an empty string ... -AsHashTable switch`。错误位于 workflow 消费 JSON，不是巡检脚本、APK 或服务器故障；上传未开始。修复只为两处 ConvertFrom-Json 补 -AsHashtable，保持其他校验；既有内容 transport 12 项单元测试通过。本地 PowerShell 尚不可用，真实 parser 回归由后续原生产 workflow 验证，不将 Python 通过写成 PowerShell 通过。
 
 源提交改变后需要按原同提交规则在新提交重新构建并审核 v22。原失败运行/原构建记录保留，不降低校验以复用旧提交、不另建工作流。自动审批 API 的技术权限仍未解决，不能承诺已配置成功。
+
+## 自动审批由既有生产 workflow 执行（后续更新）
+
+用户表示已在仓库配置 `FENGSHEN_DEPLOY_REVIEW_TOKEN`。当前集成的 Secret 列表 API 返回 403，不能由该错误断言 Secret 缺失；实际有效性须由 runner 运行验证。当前云环境 Secret 列表为空不代表仓库 Secret 不存在。
+
+已在原 `android-publish.yml` 增加并行 approve job，使用上述仓库 Secret 注入其 GH_TOKEN；仅审查同提交的成功 main 手动构建，批准当前运行唯一的 fengshen-production 环境，保留 required reviewer 与主分支规则。未新建 workflow，未删除环境保护，不把令牌交给构建/上传脚本。生产 job 继续执行原签名/内容/hash/巡检/上传/公网校验。真实身份/权限错误保持失败，不自动绕过。
+
+本地实际运行该 job 的 Bash 代码，14 个 fixture 检查通过：可信构建批准确切目标；缺令牌/非法标识/失败或未完成构建/非手动事件/异提交/异分支/异workflow/不合格 reviewer/多目标/其他环境/API 拒绝均不成功审批。既有 transport 12 项通过。结果存于忽略的 artifacts/ci/auto-approval-test-results.json；这些是隔离 fixture 验证，不代表真实 Token 或生产审批已通过。
+
+解析修复提交 f8fc3a4 的 v22 构建 `36870720449` 成功；其发布 `36871347819` 尚未执行上传，需取消等待中的旧提交运行再构建新审批配置提交，防止两份不同字节的 v22 竞相发布。实际新构建/审批/正式发布结果后续追加；累计游戏欠账与真机 NOT_RUN 保持。

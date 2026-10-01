@@ -15,6 +15,57 @@ concurrency:
   group: fengshen-production-release
   cancel-in-progress: false
 jobs:
+  approve:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions: {}
+    steps:
+      - name: Approve the authorized Fengshen deployment
+        env:
+          GH_TOKEN: ${{ secrets.FENGSHEN_DEPLOY_REVIEW_TOKEN }}
+          BUILD_RUN_ID: ${{ inputs.build_run_id }}
+          EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo 'Configure repository Secret FENGSHEN_DEPLOY_REVIEW_TOKEN with Actions read and Deployments write permissions.' >&2
+            exit 1
+          fi
+          if [[ ! "$BUILD_RUN_ID" =~ ^[0-9]+$ || ! "$EXPECTED_SHA256" =~ ^[a-f0-9]{64}$ ]]; then
+            echo 'Invalid reviewed build identifiers; no approval submitted.' >&2
+            exit 1
+          fi
+          build=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN_ID")
+          jq -e --arg commit "$GITHUB_SHA" '
+            .status == "completed" and .conclusion == "success" and
+            .event == "workflow_dispatch" and .head_branch == "main" and
+            .head_sha == $commit and .path == ".github/workflows/android-build.yml"
+          ' <<< "$build" >/dev/null
+          for attempt in $(seq 1 120); do
+            pending=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/pending_deployments")
+            target=$(jq '[.[] | select(.environment.name == "fengshen-production")]' <<< "$pending")
+            count=$(jq 'length' <<< "$target")
+            if [[ "$count" == 1 ]]; then
+              jq -e '.[0].current_user_can_approve == true' <<< "$target" >/dev/null
+              environment_id=$(jq '.[0].environment.id' <<< "$target")
+              jq -n --argjson id "$environment_id" --arg build "$BUILD_RUN_ID" --arg hash "$EXPECTED_SHA256" \
+                '{environment_ids:[$id],state:"approved",comment:("User-authorized Fengshen release; trusted main build " + $build + "; reviewed APK SHA-256 " + $hash)}' \
+                > "$RUNNER_TEMP/fengshen-review.json"
+              gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/pending_deployments" \
+                --input "$RUNNER_TEMP/fengshen-review.json" --jq 'map({id:.id,environment:.environment,sha:.sha})'
+              echo 'Fengshen production environment approved through the existing reviewer policy.'
+              exit 0
+            fi
+            if [[ "$count" != 0 ]]; then
+              echo 'Ambiguous production environments; no approval submitted.' >&2
+              exit 1
+            fi
+            sleep 3
+          done
+          echo 'Production environment did not become reviewable; no approval submitted.' >&2
+          exit 1
   publish:
     if: github.ref == 'refs/heads/main'
     runs-on: windows-2022
