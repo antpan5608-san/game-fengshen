@@ -1073,9 +1073,9 @@ class TouchTest:IsolatedGameTestCase(){
             val key=if(v.world.y/16==130)Key.DOWN else Key.UP;step(key)
         }
         state("world-trained")
-        walkTo(199,130);assertEquals(25,v.world.mapId);state("sea-entry")
+        walkTo(199,130);assertEquals(25,v.world.mapId);assertEquals(0,v.currentSnapshot().encounterSteps);state("sea-entry")
         // Verified reverse exits through their true trigger cells, no coordinate swapping.
-        walkTo(39,43);walkTo(39,42);assertEquals(16,v.world.mapId);state("sea-return",false)
+        walkTo(39,43);walkTo(39,42);assertEquals(16,v.world.mapId);assertEquals(0,v.currentSnapshot().encounterSteps);state("sea-return",false)
         walkTo(200,130);walkTo(199,130);assertEquals(25,v.world.mapId);walkTo(39,43)
         while(v.currentSnapshot().characters.first().level<8||v.currentSnapshot().characters.first().equipment!!.rightHand!=2){
             assertTrue("Normal sea training budget",steps++<20000)
@@ -1086,9 +1086,13 @@ class TouchTest:IsolatedGameTestCase(){
             step(if(v.world.x/16==39)Key.LEFT else Key.RIGHT)
         }
         refillAndUpgrade();walkTo(199,130);assertEquals(25,v.world.mapId);state("sea-prepared")
-        walkTo(29,44);assertEquals(97,v.world.mapId);state("palace-entry")
-        walkTo(15,28);walkTo(15,29);assertEquals(25,v.world.mapId);state("palace-return",false)
-        walkTo(29,43);walkTo(29,44);assertEquals(97,v.world.mapId)
+        walkTo(29,44);assertEquals(97,v.world.mapId);assertEquals(0,v.currentSnapshot().encounterSteps);state("palace-entry")
+        walkTo(15,28);walkTo(15,29);assertEquals(25,v.world.mapId);assertEquals(0,v.currentSnapshot().encounterSteps);state("palace-return",false)
+        // The verified palace return lands in the doorway with walls north/east/west.
+        // Leave south through actual collision data, then re-enter, without a false shortcut.
+        assertEquals(MovementBlock.PHYSICAL,v.world.scene.probeFrom(29,44,Key.UP))
+        assertEquals(MovementBlock.NONE,v.world.scene.probeFrom(29,44,Key.DOWN))
+        walkTo(29,45);walkTo(29,44);assertEquals(97,v.world.mapId)
         walkTo(15,14);tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
         state("guard-dialogue");repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
         walkTo(15,4);val b=v.currentSnapshot();if((b.inventory[HerbUse.ID]?:0)>0&&b.characters.first().hp<b.characters.first().maxHp)herb()

@@ -136,6 +136,7 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
         elif isinstance(value,list):
             for child in value:verify_ranges(child)
     verify_ranges(evidence['evidence']['boss'])
+    verify_ranges(evidence['evidence']['routeEncounterReset']['staticEvidence'])
     encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
     scene=json.loads(result['scene.json']);maps={m['mapId']:m for m in evidence['maps']}
     if set(maps)!={25,97}:raise ValueError('Nanhai map scope changed without evidence review')
@@ -149,7 +150,15 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('Nanhai exit does not match original dispatch record')
         if exit['confidence']!='GAMEPLAY_VERIFIED_SCOPED':
             raise ValueError('Route entry/return lacks normal original-game evidence')
-        scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn']}|
+        reset_row=next((row for row in evidence['evidence']['routeEncounterReset']['rows']
+            if all(row[k]==exit[k] for k in ('fromMapId','toMapId','trigger','spawn'))),None)
+        if (exit.get('resetEncounterSteps') is not True or not reset_row or
+            reset_row.get('verification')!='NORMAL_CONTROLLER_ONLY_SCOPED' or
+            reset_row['completedArrivalSnapshot']['encounterSteps005B']!=0 or
+            reset_row['completedArrivalSnapshot']['cell']!=exit['spawn'] or
+            reset_row['completedArrivalSnapshot']['mapId']!=exit['toMapId']):
+            raise ValueError('Route encounter reset lacks scoped completed-arrival evidence')
+        scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','resetEncounterSteps']}|
             {'triggerMode':'CELL','confidence':'VERIFIED','arrivalDirection':'DOWN',
              'source':exit['rom'],'evidence':provenance_path})
     for mid,recipe in maps.items():

@@ -106,7 +106,7 @@ object ContentLoader {
             require(direction==null || direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             val arrival=Key.valueOf(o.optString("arrivalDirection","DOWN"))
             require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
-            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival)
+            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false))
         }}
         require(exits.all{exit->
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
