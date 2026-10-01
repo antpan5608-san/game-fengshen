@@ -98,7 +98,13 @@ class TouchTest:IsolatedGameTestCase(){
         val(activity,v)=launch()
         assertEquals(expected,v.currentSnapshot())
         assertEquals(0,v.currentSnapshot().inventory[HerbUse.ID]?:0)
-        instrumentation.runOnMainSync{activity.finish()}
+        val next=listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).first{
+            v.world.scene.probeFrom(v.world.x/16,v.world.y/16,it)==MovementBlock.NONE}
+        stickStep(v,next)
+        assertTrue("Cold restart must allow continued exploration",v.currentSnapshot().let{it.x!=expected.x || it.y!=expected.y || it.mapId!=expected.mapId})
+        assertEquals(expected.characters,v.currentSnapshot().characters)
+        assertEquals(expected.inventory,v.currentSnapshot().inventory)
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
     }
     fun testControlledHerbBoundariesAndSaveCompatibility(){
         val(activity,v)=launch()
