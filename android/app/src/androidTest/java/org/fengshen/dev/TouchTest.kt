@@ -315,6 +315,15 @@ class TouchTest:IsolatedGameTestCase(){
             send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
         };fail("Item $id never reached an accessible row")
     }
+    private fun scrollToShopItem(v:GameView,id:String){
+        val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
+        for(i in 0..12){
+            val row=v.shopItemBounds(id)
+            if(row.h>=48*dp)return
+            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,list.y+list.h*.18f)
+            send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
+        };fail("Shop item $id never reached an accessible row: ${v.shopItemBounds(id)}, view=${v.width}x${v.height}, density=$dp")
+    }
     fun testTouchUxSelectionScrollAndAtomicEquipment(){
         val(activity,v)=launch();val base=v.currentSnapshot()
         val bag=v.content.itemDefinitions.keys.associateWith{2}
@@ -353,7 +362,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.inventory,v.currentSnapshot().inventory)
         val once=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(p))};assertEquals(once,v.currentSnapshot())
         tap(v,p);assertEquals(once.money-50,v.currentSnapshot().money);assertEquals(3,v.currentSnapshot().inventory[item.id])
-        tap(v,center(v.shopActionBounds(2)));tap(v,center(v.shopItemBounds("rom.weapon.2")))
+        tap(v,center(v.shopActionBounds(2)));scrollToShopItem(v,"rom.weapon.2");tap(v,center(v.shopItemBounds("rom.weapon.2")))
         val beforeSell=v.currentSnapshot();tap(v,center(v.shopActionBounds(4)))
         val sale=TownTrade.sell(beforeSell.money,beforeSell.inventory,shop,v.content.itemDefinitions.getValue("rom.weapon.2"))
         assertEquals(sale.money,v.currentSnapshot().money);assertEquals(sale.inventory,v.currentSnapshot().inventory)
