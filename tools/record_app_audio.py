@@ -3,14 +3,87 @@ The existing normal-controller Android test supplies input; no ROM footage is su
 """
 import subprocess,time,wave,json,threading,sys,xml.etree.ElementTree as ET,io
 from pathlib import Path
-import numpy as np
-import pyaudiowpatch as audio
-import imageio_ffmpeg
 from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts/checkpoint-ui'
+def record_silent():
+    """Portable branch of the existing recorder; video only, no audio claim."""
+    prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
+    method=sys.argv[2] if len(sys.argv)>2 else 'testNormalHerbSupplyLoop'
+    def adb(*args,**kwargs):
+        return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,timeout=90,**kwargs).stdout
+    assert b'ranchu' in adb('shell','getprop','ro.hardware'), 'Isolated emulator only'
+    prior=subprocess.run(['adb','-s','emulator-5554','shell','pidof','screenrecord'],capture_output=True,timeout=30)
+    assert not prior.stdout.strip(),'Another recorder owns the emulator'
+    probe=subprocess.run(['adb','-s','emulator-5554','shell','run-as','org.fengshen.dev','id'],capture_output=True,timeout=30)
+    root_mode=probe.returncode!=0
+    if root_mode:
+        adb('root');time.sleep(2);adb('wait-for-device') # AOSP debuggable emulator; no real device access.
+    base='/data/data/org.fengshen.dev/shared_prefs/' if root_mode else 'shared_prefs/'
+    def read_pref(name):
+        cmd=['shell']+([] if root_mode else ['run-as','org.fengshen.dev'])+['cat',base+name+'.xml']
+        r=subprocess.run(['adb','-s','emulator-5554',*cmd],capture_output=True,timeout=60)
+        return r.stdout if r.returncode==0 else None
+    def saved():
+        xml=ET.fromstring(read_pref('opening-local-save'))
+        return json.loads(next(n.text for n in xml if n.attrib.get('name')=='saveJson'))
+    names=['opening-local-save','operation-a-ui','cloud-session']
+    backups={name:read_pref(name) for name in names}
+    OUT.mkdir(parents=True,exist_ok=True)
+    test_log=OUT/f'{prefix}-normal-test.txt'
+    videos=[]
+    test=None;video=None
+    try:
+        with test_log.open('w') as log:
+            test=subprocess.Popen(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class',f'org.fengshen.dev.TouchTest#{method}','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT)
+            started=time.monotonic()
+            while test.poll() is None:
+                if time.monotonic()-started>1200:raise TimeoutError('Normal App route exceeded isolated runtime budget')
+                remote=f'/sdcard/{prefix}-normal-{len(videos):02d}.mp4'
+                video=subprocess.Popen(['adb','-s','emulator-5554','shell','screenrecord','--bit-rate','1000000','--time-limit','180',remote],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+                while video.poll() is None and test.poll() is None:time.sleep(.5)
+                if video.poll() is None:
+                    pid=adb('shell','pidof','screenrecord').decode().strip()
+                    if pid.isdecimal():adb('shell','kill','-2',pid)
+                video.wait(timeout=60)
+                local=OUT/f'{prefix}-normal-{len(videos):02d}.mp4'
+                adb('pull',remote,str(local));videos.append(str(local.relative_to(ROOT)))
+        assert 'OK (1 test)' in test_log.read_text(), 'Normal route assertions did not pass'
+        before=saved()
+        adb('shell','am','force-stop','org.fengshen.dev')
+        adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
+        assert saved()==before,'Cold restart changed saved state'
+        cold_log=OUT/f'{prefix}-cold-start-test.txt'
+        with cold_log.open('w') as log:
+            subprocess.run(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class','org.fengshen.dev.TouchTest#testHerbColdStartMatchesNormalSave','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT,timeout=300,check=True)
+        assert 'OK (1 test)' in cold_log.read_text(),'Actual cold GameView did not restore the normal result'
+        adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
+        (OUT/f'{prefix}-force-stop-restored.png').write_bytes(adb('exec-out','screencap','-p'))
+        result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
+            'normalAssertions':'PASS','forceStopRestartEqual':True,'originalPreferencesRestored':True}
+        (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
+        print(json.dumps(result))
+    finally:
+        if video and video.poll() is None:
+            pid=adb('shell','pidof','screenrecord').decode().strip()
+            if pid.isdecimal():adb('shell','kill','-2',pid)
+            video.wait(timeout=60)
+        if test and test.poll() is None:test.terminate();test.wait(timeout=10)
+        adb('shell','am','force-stop','org.fengshen.dev')
+        for name,raw in backups.items():
+            path=base+name+'.xml'
+            start=['shell']+([] if root_mode else ['run-as','org.fengshen.dev'])
+            if raw is None:adb(*start,'rm','-f',path)
+            else:adb(*start,'sh','-c',f"'cat > {path}'",input=raw)
+
 def main():
+    if '--silent' in sys.argv:
+        sys.argv.remove('--silent')
+        return record_silent()
+    import numpy as np
+    import pyaudiowpatch as audio
+    import imageio_ffmpeg
     prefix=sys.argv[1] if len(sys.argv)>1 else 'audio-log01'
     method=sys.argv[2] if len(sys.argv)>2 else 'testNormalOpeningRouteGiftAndMap16Encounter'
     def adb(*args,**kwargs):return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,**kwargs).stdout

@@ -489,9 +489,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun canUseHerb():Boolean {
         val item=content.itemDefinitions[HerbUse.ID]?:return false
         val hero=characters.getOrNull(characterPage)?:return false
-        return HerbUse.apply(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY)).applied
+        return HerbUse.available(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY))
     }
-    private fun runPanelAction(action:Int){when(action){
+    private fun runPanelAction(action:Int){panelTouch.clear();when(action){
         0->closePanel()
         1->{inventoryPage=max(0,inventoryPage-1);selectedItemId=null}
         2->{inventoryPage=min(inventoryPages()-1,inventoryPage+1);selectedItemId=null}

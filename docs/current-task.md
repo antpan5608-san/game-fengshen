@@ -17,3 +17,6 @@ scope_revision: herb-use-and-supply
 - 普通公开取回固定提交的单个目标ROM，完整hash/大小匹配，license UNKNOWN；仅private-inputs缓存，不公开上传。六类原版菜单fixture已实际执行，药草恢复50HP并截断，满HP消耗，取消/战败目标/无物品不消耗；具体范围见town02-herb.json。
 - ContentLoader加载herbUse，统一HerbUse命令更新HP/数量；原面板一名目标沿用角色选择，成功清空本次选择及触摸，暂停/焦点丢失清掉待提交触摸。c11旧档接受，战斗物品仍未实现。
 - 原导出器从可信c11生成c12，不变素材逐字节复用；原ci_apk.restore干净目标目录42文件重复一致。目标manifest 8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8。12 transport、5局部导出、19审批fixture通过；Kotlin/App/签名构建仍需实际运行结果，不预写PASS。
+
+- 实际本地debug构建与44项JVM测试成功；Content仪器12/12、受控药草UI（多点一次、满血/取消/无物品/战败目标/c11兼容）1/1通过。首个签名候选构建36895786697成功，源08e0ff1，版本23/c12，hash60bbcb9ce499de1dab1033fb89cccedf5321ba6d8e26fbaee2601f81d8f579f0；未发布。业务纯predicate与仪器/门禁后续调整需同新提交重新构建。
+- 当前任务下载Actions产物依然Forbidden，未绕过代理；正常软件AVD录像出现System UI ANR，停止并保留失败，不能标正常流程PASS。仅调整任务生成AVD分辨率，保留userdata。原CI新增同候选隔离runtime/旧版覆盖/正常闭环与同APK回执门禁，待实际执行；无Secret进入测试job。声音/一加13T尚未验收。

@@ -74,16 +74,23 @@ object TownTrade {
 object HerbUse {
     const val ID="rom.medicine.0"
     data class Result(val characters:List<CharacterState>,val inventory:Map<String,Int>,val applied:Boolean)
-    fun apply(characters:List<CharacterState>,inventory:Map<String,Int>,targetId:String,
-        item:ItemDefinition,inMapMenu:Boolean):Result {
-        val unchanged=Result(characters,inventory,false)
-        val rule=item.herbUse?:return unchanged
+    fun available(characters:List<CharacterState>,inventory:Map<String,Int>,targetId:String,
+        item:ItemDefinition,inMapMenu:Boolean):Boolean {
+        val rule=item.herbUse?:return false
         val index=characters.indexOfFirst{it.id==targetId}
         val count=inventory[ID]?:0
-        if(!inMapMenu || item.id!=ID || index<0 || count<=0 || rule.healHp<=0)return unchanged
+        if(!inMapMenu || item.id!=ID || index<0 || count<=0 || rule.healHp<=0)return false
         val hero=characters[index]
-        if(hero.hp<=0 || hero.hp>hero.maxHp || hero.maxHp<=0 ||
-            (hero.hp==hero.maxHp && !rule.consumeAtFullHp))return unchanged
+        return hero.hp>0 && hero.hp<=hero.maxHp && hero.maxHp>0 &&
+            (hero.hp<hero.maxHp || rule.consumeAtFullHp)
+    }
+    fun apply(characters:List<CharacterState>,inventory:Map<String,Int>,targetId:String,
+        item:ItemDefinition,inMapMenu:Boolean):Result {
+        if(!available(characters,inventory,targetId,item,inMapMenu))return Result(characters,inventory,false)
+        val rule=item.herbUse!!
+        val index=characters.indexOfFirst{it.id==targetId}
+        val count=inventory.getValue(ID)
+        val hero=characters[index]
         val next=hero.copy(hp=minOf(hero.maxHp.toLong(),hero.hp.toLong()+rule.healHp).toInt())
         val items=inventory.toMutableMap()
         if(count==1)items.remove(ID) else items[ID]=count-1
