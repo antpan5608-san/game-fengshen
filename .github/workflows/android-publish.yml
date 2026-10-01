@@ -55,6 +55,8 @@ jobs:
             .event == "workflow_dispatch" and .head_branch == "main" and
             .head_sha == $commit and .path == ".github/workflows/android-build.yml"
           ' <<< "$build" >/dev/null
+          build_jobs=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN_ID/jobs")
+          jq -e '[.jobs[] | select(.name == "build" and .status == "completed" and .conclusion == "success")] | length == 1' <<< "$build_jobs" >/dev/null
           fi
           for attempt in $(seq 1 120); do
             pending=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/pending_deployments")
@@ -98,10 +100,12 @@ jobs:
           EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
         run: |
           if($env:BUILD_RUN_ID -notmatch '^[0-9]+$' -or $env:EXPECTED_SHA256 -notmatch '^[a-f0-9]{64}$'){throw 'Invalid review identifiers'}
-          $run=gh run view $env:BUILD_RUN_ID --repo $env:GITHUB_REPOSITORY --json conclusion,status,event,headSha,headBranch,workflowName
+          $run=gh run view $env:BUILD_RUN_ID --repo $env:GITHUB_REPOSITORY --json conclusion,status,event,headSha,headBranch,workflowName,jobs
           if($LASTEXITCODE -ne 0){throw 'Cannot read source build'}
           $r=$run|ConvertFrom-Json
           if($r.conclusion -ne 'success' -or $r.status -ne 'completed' -or $r.event -ne 'workflow_dispatch' -or $r.headBranch -ne 'main' -or $r.headSha -ne $env:GITHUB_SHA -or $r.workflowName -ne 'Android cloud build'){throw 'Only a successful reviewed main build at this commit may publish'}
+          $successfulBuildJobs=@($r.jobs|Where-Object {$_.name -eq 'build' -and $_.status -eq 'completed' -and $_.conclusion -eq 'success'})
+          if($successfulBuildJobs.Count -ne 1){throw 'Base verification/capability runs are not APK builds'}
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: fengshen-signed-apk
