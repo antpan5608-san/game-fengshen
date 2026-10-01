@@ -39,3 +39,5 @@ execution_kind: IMPLEMENTED
 - 2026-10-01 22:55 UTC：71b2f233原run36936863541签名构建、release69/69、独立完整APK/包/签名/59文件/基底33媒体逐字节核验通过；但受控HP1战败脚本误假定首回合必命中，实际TARGET而非DEFEAT，runtime FAIL，正常主线尚未运行。保留全部战败断言，改以有时限的真实攻击输入等待战败；逃跑反击也容许原版真实miss并有限重试，无强制结果/随机数注入。失败早于原录屏adb root，shell无权读取App外部目录；仅原AOSP ranchu隔离AVD复用既有root读取取证，不碰真机/服务器保护。此候选未发布，下个来源继续同内容pin，重跑原CI，不把旧APK通过项给新候选背书。
 
 - 2026-10-01 23:04 UTC取证门槛补齐：8d8c0b45原run36937973030在运行验收前取消，不作为任何正常流程结果。发现既有录像只覆盖保存前，冷启动仅日志/截图；现原record_app_audio.py增加实际外部force-stop/启动/继续的独立静音MP4与完整SHA/uptime索引，原CI额外保留两个小型原片副本artifact（入口、结尾+重启），完整未剪录像继续原artifact。不是新发布系统/新生产对象；此步骤编译/结构检查后须原runner实跑才可沉淀为成功方法。下一条动作：提交取证薄适配，冻结新来源，原CI正常M1—M3/冷启/覆盖/回归；生产24不变。
+
+- 2026-10-01 23:15 UTC：8001c838原run36938801288签名构建/release69/独立验字节签名内容均PASS，受控Boss逃跑反击/胜后once恢复/HP1实际输入战败已PASS。随后三店normal脚本在药店预期19实际0失败，未开始最终南海normal。World完成一步时同一UI callback先remaining=0再dispatch exit；旧测试后台轮询remaining会在落门和换图之间观察中间状态。现只改仪器helper：通过UI线程同步观察完成序列/remaining及最终完成，仍仅正常MotionEvent，不调用world.tick/finish/restore，不改碰撞或业务；保留进店断言并加实际地图/格/seq诊断。原失败取证已成功由既有AOSP隔离读取取回真实全幅Boss截图，权限薄适配实际验证。候选未发布，下一次同源CI必须再跑正常主线。
