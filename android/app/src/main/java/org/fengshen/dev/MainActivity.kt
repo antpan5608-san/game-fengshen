@@ -698,8 +698,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val l=modalLayout();val dp=resources.displayMetrics.density;overlayPaint.color=0x99000000.toInt();c.drawRect(0f,0f,width.toFloat(),height.toFloat(),overlayPaint)
         overlayPaint.color=Color.BLACK;c.drawRect(l.frame.x,l.frame.y,l.frame.x+l.frame.w,l.frame.y+l.frame.h,overlayPaint)
         overlayPaint.color=Color.WHITE;overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=2*dp;c.drawRect(l.frame.x,l.frame.y,l.frame.x+l.frame.w,l.frame.y+l.frame.h,overlayPaint);overlayPaint.style=Paint.Style.FILL
-        val x=l.frame.x+8*dp+if(!l.wide&&modalDetailsOpen)56*dp else 0f
-        touchText(c,title+"\n"+subtitle,Box(x,l.frame.y+8*dp,l.close.x-x-8*dp,1f),15f)
+        val x=l.frame.x+8*dp+if(!l.wide&&modalDetailsOpen)l.back.w+8*dp else 0f
+        touchText(c,if(l.compactHeader)title else title+"\n"+subtitle,Box(x,l.frame.y+8*dp,l.close.x-x-8*dp,1f),15f)
         touchButton(c,l.close,"关闭")
         if(!l.wide&&modalDetailsOpen)touchButton(c,l.back,"列表")
         titles.forEachIndexed{i,t->touchButton(c,l.tabs[i],t,selected=i==selected)}
@@ -716,11 +716,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }};c.restore()
     }
     private fun touchDetail(c:Canvas,lines:List<String>,image:Bitmap?=null){
-        val b=modalLayout().detail;val dp=resources.displayMetrics.density;c.save();c.clipRect(b.x,b.y,b.x+b.w,b.y+b.h)
+        val modal=modalLayout();val b=modal.detail;val dp=resources.displayMetrics.density;c.save();c.clipRect(b.x,b.y,b.x+b.w,b.y+b.h)
         var y=b.y-modalDetailScroll
         if(SystemClock.elapsedRealtime()<uxFeedbackUntil&&uxFeedback.isNotEmpty())y+=touchText(c,uxFeedback,Box(b.x,y,b.w,1f),14f,0xff72d3c5.toInt())+5*dp
-        image?.let{paint.isFilterBitmap=false;c.drawBitmap(it,null,RectF(b.x,y,b.x+56*dp,y+56*dp),paint);y+=64*dp}
+        if(modal.compactHeader){
+            val summary=if(layer==Layer.SHOP)"银两 $money" else characters[characterPage].let{"HP ${it.hp}/${it.maxHp} · MP ${it.mp}/${it.maxMp?:"?"} · 银两 $money"}
+            y+=touchText(c,summary,Box(b.x,y,b.w,1f),14f)+5*dp
+        }
         for(line in lines)y+=touchText(c,line,Box(b.x,y,b.w,1f),14f)+5*dp
+        image?.let{paint.isFilterBitmap=false;c.drawBitmap(it,null,RectF(b.x,y,b.x+56*dp,y+56*dp),paint);y+=64*dp}
         modalDetailScroll=modalDetailScroll.coerceAtMost(max(0f,y+modalDetailScroll-b.y-b.h));c.restore()
     }
     private fun drawDirectPanel(c:Canvas){
@@ -751,7 +755,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }else{val d=equippedDefinition();val item=d?.let{content.itemDefinitions[it.itemId]};val removable=d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null
                 touchDetail(c,listOf("${slotName(equipmentSlot)} · ${item?.name?:"空或尚未核验"}","角色 ${heroName(hero.id)}", "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")}","总防御 ${hero.stamina+equipmentBonus(hero,"body")}",if(d==null)"当前槽位无可卸下的已实现装备" else if(!removable)"当前背包条件不允许回包" else "卸下后回到真实背包"),item?.preview)
                 if(d!=null)touchButton(c,l.primary,"卸下 ${item?.name?:"装备"}",removable)
-                touchButton(c,l.secondary,if(hasEquipmentCandidate())"选择${slotName(equipmentSlot)}候选" else "无合法候选",hasEquipmentCandidate())}
+                touchButton(c,l.secondary,if(hasEquipmentCandidate())"选择候选" else "无合法候选",hasEquipmentCandidate())}
         }
     }
     private fun drawShop(c:Canvas){

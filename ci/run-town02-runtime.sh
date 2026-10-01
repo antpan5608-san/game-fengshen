@@ -15,7 +15,7 @@ python - <<'PYAVD'
 import os
 from pathlib import Path
 p=Path(os.environ.get('ANDROID_AVD_HOME',str(Path.home()/'.android/avd')))/'fengshen-town02-ci.avd/config.ini'
-s=p.read_text().splitlines();values={'hw.lcd.width':'960','hw.lcd.height':'540','hw.lcd.density':'160'}
+s=p.read_text().splitlines();values={'hw.lcd.width':'2640','hw.lcd.height':'1216','hw.lcd.density':'480'}
 s=[line for line in s if line.split('=',1)[0].strip() not in values]
 p.write_text('\n'.join(s+[k+'='+v for k,v in values.items()])+'\n')
 PYAVD
@@ -23,7 +23,7 @@ accel=off
 # Only the ephemeral runner's current UID may use its existing KVM device.
 if [[ -c /dev/kvm && ! -w /dev/kvm ]] && command -v setfacl >/dev/null; then sudo setfacl -m "u:$(id -un):rw" /dev/kvm; fi
 if [[ -r /dev/kvm && -w /dev/kvm ]]; then accel=auto; fi
-"$sdk/emulator/emulator" -avd fengshen-town02-ci -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel "$accel" -memory 3072 -cores 2 > artifacts/town02-runtime/emulator.txt 2>&1 &
+"$sdk/emulator/emulator" -avd fengshen-town02-ci -skin 2640x1216 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel "$accel" -memory 3072 -cores 2 > artifacts/town02-runtime/emulator.txt 2>&1 &
 emulator_pid=$!
 pull_evidence(){
 python - <<'PYEVIDENCE'
@@ -96,6 +96,8 @@ python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipm
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
 adb shell wm density 480
+adb shell wm size > artifacts/town02-runtime/phone-display.txt
+adb shell wm density >> artifacts/town02-runtime/phone-display.txt
 for font in 1.0 1.3 2.0; do
     adb shell settings put system font_scale "$font"
     sleep 3
