@@ -15,3 +15,5 @@
 - 只写 `oss://kubernetes-fleetpilot/artifacts/fengshen-remake/app/fengshen-remake.apk.bin` 和同目录 `version.json`；不修改Language及其对象/服务/数据库。公网完整字节校验后才登记版本，沿用最近两版日志规则。
 - 交付正文按用户本轮固定DELIVERY_REPORT；明确基线、实际修改、证据、巡检、测试、产物/发布和欠账变化。十类清单保持在权威文档，不重复复制全部历史，只有实际完成才关闭。完成当前任务后停止，不自动展开新玩法区段。
 - 稳定且实际验证过的内容迭代方法复用 `.agents/skills/fengshen-content-iteration/SKILL.md`（存在时先读取）；skill不保存变动版本、Secret或历史报告，未验证方法明确标待核。
+
+- 涉及本项目被授权触控界面时先使用 `.agents/skills/fengshen-touch-ux/SKILL.md`；不相关任务不得据此扩展UI范围，已合理界面保持。
