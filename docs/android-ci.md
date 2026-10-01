@@ -1,6 +1,6 @@
 # Android 云构建与发布
 
-仓库：antpan5608-san/game-fengshen，main。保留游戏内容/技术栈，不迁移为模拟器。已发布 v22 / 0.8.2-ci-release，保留 v21 的 c11 游戏成果；云构建、同签名和原服务器发布已验证成功，不代表原版内容里程碑完成。
+仓库：antpan5608-san/game-fengshen，main。保留游戏内容/技术栈，不迁移为模拟器。已发布 v23 / 0.8.3-town-02 / c12，在v21/c11已有成果上增加药草地图/菜单使用；云构建、同签名和原服务器发布已验证成功，不代表原版内容里程碑完成。
 
 ## 构建环境与必要输入
 
@@ -80,7 +80,7 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 
 `approve` job 将该 Secret 注入其进程 GH_TOKEN，先核对成功的手动 main 构建与同提交，再审批当前运行中唯一的 fengshen-production 环境。它与 publish job 并行启动，不声明 needs，避免等待环境创建的死锁。reviewer 与 main 限制保持；缺失令牌、不可信构建、不符合 reviewer 身份或 API 拒绝均不批准。publish job 继续复核实际 APK/hash、签名、版本、内容及巡检后上传。该 Secret 不传给 APK 构建或发布脚本，不代表当前云端任务拥有凭据；运行36882936289已实际自动审批成功，见下文；若后续令牌过期或权限改变，继续按实际API结果报告。
 
-## v22 云端正式交付（2026-10-01 最新状态）
+## v22 云端正式交付（2026-10-01 历史交付）
 
 状态：`PUBLISHED_AND_VERIFIED`；ANDROID-CI-01 本轮完成。v22 / `0.8.2-ci-release` 于北京时间 2026-10-01 23:17:27（UTC 15:17:27）发布；生产 workflow 于 23:21:47 全部成功。游戏仍为 c11 开发内容，不代表南海龙王或完整原版里程碑完成。
 
@@ -108,3 +108,12 @@ gh workflow run android-publish.yml --repo antpan5608-san/game-fengshen --ref ma
 content-source.json分开固定iteration.base的完整APK/内容hash与目标manifest。原ci_apk.restore验证基底后调用export_development.export_from_base生成药草局部定义，校验目标pin才写assets；无需ROM/历史私有captures。--base-only仅用于原基底验证入口，不能审核目标候选。
 
 原build-ci的RuntimeTests编译同签名release仪器APK；原build workflow的runtime在单个临时AVD验证旧包覆盖、药草边界和正常闭环。录屏继续用record_app_audio.py的--silent适配，静音不证明声音。发布审批须build/runtime实际成功，check-reviewed-apk核对runtime回执与同提交/同产物hash；跳过或失败只留候选。首次真实runner结果以交付记录为准，当前该runtime链路待执行。
+
+
+## TOWN-02 当前交付与已验证迭代入口
+
+正式v23/0.8.3-town-02/c12，构建36902536271及发布36903560942均success，来源77cdc6b7f822628e0fe8b2a4292e6d396d9089f3。APK SHA256 1a5a5e10f2793c1418a83a2da3b218ebdc2ff2274b2f02d3d1a30c2153d63bbf（11322079字节）；18:04:11 UTC独立下载验证package/签名/内容及全部字节。后续文档HEAD不同不是另一APK来源；下一游戏迭代必须读取实际生产版本并显式递增，不能照抄历史默认22/23。
+
+当前原导出器使用已校验c11基底和提交的药草provenance局部生成目标，不要求先有新内容APK。iteration.base与目标pin分开锁定，默认ci_apk verify仍检目标，verify --base-only仅核原基底。干净CI和临时目录重复恢复已成功，不变素材复用。
+
+原android-build的runtime_tests=true使用同run正式APK/test APK及原不可变v22基底，在一台隔离AOSP AVD执行覆盖安装、Content、药草边界、三店/装备/输入及正常闭环；原录屏器--silent验证停止进程/实际GameView恢复并继续探索，保留录像和同产物runtime-receipt。原android-publish在生产凭据步骤前核对成功build/runtime、同main/源提交/run/APK hash/content与运行回执。本次真实自动审批和发布均成功，reviewer未删除；声音/一加13T仍NOT_RUN。完整验证限制及最新10类欠账见delivery-status最后TOWN-02报告。

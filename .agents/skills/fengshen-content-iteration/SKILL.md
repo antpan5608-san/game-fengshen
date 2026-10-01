@@ -66,6 +66,7 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 不能仅改目标pin后要求旧服务器包满足它，也不把任意ZIP改名APK。
 原版药草边界、签名候选覆盖、正常闭环及停止进程恢复已由真实runner成功执行；真机和声音仍NOT_RUN。
 本地无KVM的软件AVD两次System UI ANR，保留失败，不能作为正常流程PASS；低分辨率不保证解决。
-新增原买卖/装备/INPUT-01回归选择在当前任务实际运行后再认定可靠，不将工具存在写成设备已经运行。
+原买卖/装备/INPUT-01/摇杆回归在同候选runner已实际通过；原发布门禁和自动审批已在真实生产runner成功，公网独立下载/验签/内容复核通过。
+真机、声音、真实账号多设备恢复仍需实际执行，不将工具存在写成设备已经运行。
 
 详细入口：docs/android-ci.md、tools/ci_apk.py、check-runtime.ps1、原两份Actions工作流。
