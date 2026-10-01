@@ -178,7 +178,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         world.restore(savePrefs.getInt("mapId",114),savePrefs.getInt("x",world.x),savePrefs.getInt("y",world.y),0,
             Key.entries.getOrElse(savePrefs.getInt("direction",Key.DOWN.ordinal)){Key.DOWN})
     }
-    fun persistState():Boolean {
+    fun persistState(){persistStateResult()}
+    private fun persistStateResult():Boolean {
         if(world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return false
         val snapshot=currentSnapshot();val encoded=snapshot.json().toString()
         if(encoded==savedSnapshot)return true
@@ -526,10 +527,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return if(item.category=="medicine")ItemAction("use","使用（待接入）",false,"使用效果和逻辑尚未实现",hero.id)
             else ItemAction(null,"",false,"当前没有已实现的合法操作",null)
     }
+    private fun hasEquipmentCandidate()=inventoryEntries().any{entry->content.equipmentDefinitions[entry.key]?.let{
+        it.slot==equipmentSlot&&OpeningEquipment.replace(characters[characterPage],inventory,it,content.equipmentDefinitions.values)!=null}==true}
     private fun modalState()=currentSnapshot().json().toString()
-    private fun feedback(message:String){uxFeedback=message;uxFeedbackUntil=SystemClock.elapsedRealtime()+3000}
+    private fun feedback(message:String){modalDetailScroll=0f;uxFeedback=message;uxFeedbackUntil=SystemClock.elapsedRealtime()+3000}
     private fun commitModal(before:SaveSnapshot,message:String){
-        if(persistState())feedback(message)
+        if(persistStateResult())feedback(message)
         else {characters=before.characters;inventory=before.inventory;money=before.money;feedback("保存失败，操作未完成")}
         uxRevision++;clearUxGesture()
     }
@@ -554,7 +557,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(panelTab==CharacterTab.EQUIPMENT){
                 val d=equippedDefinition()
                 if(l.primary.contains(x,y)&&d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null)return ModalCommand("unequip",d.itemId,hero.id,equipmentSlot)
-                if(l.secondary.contains(x,y))return ModalCommand("candidates",targetId=hero.id,slot=equipmentSlot)
+                if(l.secondary.contains(x,y)&&hasEquipmentCandidate())return ModalCommand("candidates",targetId=hero.id,slot=equipmentSlot)
             }
         }
         return null
@@ -704,6 +707,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun touchRows(c:Canvas,rows:List<Triple<String,String,Bitmap?>>,selected:String?){
         val l=modalLayout();val dp=resources.displayMetrics.density;c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
+        if(rows.isEmpty())touchText(c,if(candidateSlot!=null)"当前无合法装备候选" else "暂无物品",Box(l.list.x+8*dp,l.list.y+8*dp,l.list.w-16*dp,l.list.h),14f)
         rows.forEachIndexed{i,row->val b=l.row(i,modalListScroll);if(b.y+b.h>=l.list.y&&b.y<=l.list.y+l.list.h){
             overlayPaint.color=if(row.first==selected)0xff244d49.toInt() else 0xff171c1d.toInt();c.drawRect(b.x,b.y,b.x+b.w,b.y+b.h-2*dp,overlayPaint)
             val imageW=if(row.third!=null)48*dp else 0f
@@ -714,9 +718,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun touchDetail(c:Canvas,lines:List<String>,image:Bitmap?=null){
         val b=modalLayout().detail;val dp=resources.displayMetrics.density;c.save();c.clipRect(b.x,b.y,b.x+b.w,b.y+b.h)
         var y=b.y-modalDetailScroll
+        if(SystemClock.elapsedRealtime()<uxFeedbackUntil&&uxFeedback.isNotEmpty())y+=touchText(c,uxFeedback,Box(b.x,y,b.w,1f),14f,0xff72d3c5.toInt())+5*dp
         image?.let{paint.isFilterBitmap=false;c.drawBitmap(it,null,RectF(b.x,y,b.x+56*dp,y+56*dp),paint);y+=64*dp}
-        val messages=lines+if(SystemClock.elapsedRealtime()<uxFeedbackUntil&&uxFeedback.isNotEmpty())listOf(uxFeedback) else emptyList()
-        for(line in messages)y+=touchText(c,line,Box(b.x,y,b.w,1f),14f)+5*dp
+        for(line in lines)y+=touchText(c,line,Box(b.x,y,b.w,1f),14f)+5*dp
         modalDetailScroll=modalDetailScroll.coerceAtMost(max(0f,y+modalDetailScroll-b.y-b.h));c.restore()
     }
     private fun drawDirectPanel(c:Canvas){
@@ -746,8 +750,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(a.kind!=null)touchButton(c,l.primary,a.text,a.enabled)
             }else{val d=equippedDefinition();val item=d?.let{content.itemDefinitions[it.itemId]};val removable=d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null
                 touchDetail(c,listOf("${slotName(equipmentSlot)} · ${item?.name?:"空或尚未核验"}","角色 ${heroName(hero.id)}", "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")}","总防御 ${hero.stamina+equipmentBonus(hero,"body")}",if(d==null)"当前槽位无可卸下的已实现装备" else if(!removable)"当前背包条件不允许回包" else "卸下后回到真实背包"),item?.preview)
-                touchButton(c,l.primary,"卸下 ${item?.name?:"装备"}",removable)
-                touchButton(c,l.secondary,"选择${slotName(equipmentSlot)}候选")}
+                if(d!=null)touchButton(c,l.primary,"卸下 ${item?.name?:"装备"}",removable)
+                touchButton(c,l.secondary,if(hasEquipmentCandidate())"选择${slotName(equipmentSlot)}候选" else "无合法候选",hasEquipmentCandidate())}
         }
     }
     private fun drawShop(c:Canvas){
