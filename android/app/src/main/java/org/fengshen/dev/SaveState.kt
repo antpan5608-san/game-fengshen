@@ -34,6 +34,17 @@ object OpeningEquipment {
         val next=when(definition.slot){"rightHand"->e.copy(rightHand=-1);"body"->e.copy(body=-1);else->e.copy(feet=-1)}
         return character.copy(equipment=next) to (items+(definition.itemId to ((items[definition.itemId]?:0)+1)))
     }
+    /** Equivalent to the existing legal remove-then-equip sequence, committed only as one result. */
+    fun replace(character:CharacterState,items:Map<String,Int>,definition:EquipmentDefinition,
+        definitions:Collection<EquipmentDefinition>):Pair<CharacterState,Map<String,Int>>? {
+        val e=character.equipment?:return null
+        val old=when(definition.slot){"rightHand"->e.rightHand;"body"->e.body;"feet"->e.feet;else->return null}
+        if(old==-1)return equip(character,items,definition)
+        if(old==definition.originalId)return null
+        val prior=definitions.firstOrNull{it.slot==definition.slot&&it.originalId==old}?:return null
+        val removed=unequip(character,items,prior)?:return null
+        return equip(removed.first,removed.second,definition)
+    }
     fun equipKnife(character:CharacterState,items:Map<String,Int>):Pair<CharacterState,Map<String,Int>>? {
         val equipment=character.equipment?:return null
         if(character.id!="nezha" || equipment.rightHand!=-1 || (items[KNIFE_ID]?:0)<=0)return null

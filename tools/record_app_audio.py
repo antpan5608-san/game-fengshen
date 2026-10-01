@@ -9,6 +9,8 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts/checkpoint-ui'
 def record_silent():
     """Portable branch of the existing recorder; video only, no audio claim."""
+    comparison='--comparison' in sys.argv
+    if comparison:sys.argv.remove('--comparison')
     prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
     method=sys.argv[2] if len(sys.argv)>2 else 'testNormalHerbSupplyLoop'
     def adb(*args,**kwargs):
@@ -52,6 +54,9 @@ def record_silent():
                 local=OUT/f'{prefix}-normal-{len(videos):02d}.mp4'
                 adb('pull',remote,str(local));videos.append(str(local.relative_to(ROOT)))
         assert 'OK (1 test)' in test_log.read_text(), 'Normal route assertions did not pass'
+        if comparison:
+            result={'source':'Actual Android App screenrecord; SILENT','kind':'CONTROLLED_UI_COMPARISON','videos':videos,'comparisonAssertions':'PASS','audio':'NOT_RUN'}
+            (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));return
         before=saved()
         adb('shell','am','force-stop','org.fengshen.dev')
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)

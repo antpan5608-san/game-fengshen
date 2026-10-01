@@ -36,10 +36,7 @@ class TouchTest:IsolatedGameTestCase(){
     private fun tap(v:GameView,p:Pair<Float,Float>){send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p))}
     private fun layoutFor(v:GameView)=layout(v.width,v.height,v.resources.displayMetrics.density,v.safe,DisplayMode.FULL,ControlConfig())
     private fun center(b:Box)=Pair(b.x+b.w/2,b.y+b.h/2)
-    private fun tabPoint(v:GameView,index:Int):Pair<Float,Float>{
-        val b=v.characterPanelBounds();val dp=v.resources.displayMetrics.density;val w=(b.w-16*dp)/4
-        return Pair(b.x+8*dp+w*(index+.5f),b.y+b.h*.4525f)
-    }
+    private fun tabPoint(v:GameView,index:Int)=center(v.panelTabBounds(index))
     private fun menuPoint(v:GameView,row:Int):Pair<Float,Float>{
         val safe=layoutFor(v).safe;val dp=v.resources.displayMetrics.density
         val h=minOf(safe.h*.78f,360*dp)
@@ -111,8 +108,8 @@ class TouchTest:IsolatedGameTestCase(){
         val baseline=v.currentSnapshot()
         val hero=v.content.initialPlayer.copy(maxHp=100)
         val panel=v.characterPanelBounds()
-        val row=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.555f)
-        val action=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f)
+        val row=center(v.panelItemBounds(HerbUse.ID))
+        val action=center(v.panelPrimaryBounds())
         fun fixture(hp:Int,count:Int){
             instrumentation.runOnMainSync{
                 if(v.layer!=GameView.Layer.MAP)v.handleBack()
@@ -141,7 +138,7 @@ class TouchTest:IsolatedGameTestCase(){
         fixture(5,0);val empty=v.currentSnapshot();tap(v,action);assertEquals(empty,v.currentSnapshot())
         instrumentation.runOnMainSync{activity.finish()}
     }
-    private fun normalTownShops(useHerb:Boolean){
+    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit()
         val(activity,v)=launch()
         fun capture(name:String){
@@ -201,8 +198,9 @@ class TouchTest:IsolatedGameTestCase(){
             val keeper=v.content.npcs.first{it.mapId==mid};walkTo(keeper.interactionCell!!.first,keeper.interactionCell.second)
             talk();assertEquals(GameView.Layer.SHOP,v.layer);assertFalse(v.visibleMapControls());assertNull(v.input.direction())
             fun action(i:Int)=tap(v,center(v.shopActionBounds(i)))
-            action(1);if(mid==17)action(8);capture("shop$mid")
+            action(1)
             val definition=v.content.shops.values.first{it.mapId==mid};val item=v.content.itemDefinitions.getValue(definition.items[if(mid==17)1 else 0])
+            tap(v,center(v.shopItemBounds(item.id)));capture("shop$mid")
             val before=v.currentSnapshot()
             if(mid==17){
                 val point=center(v.shopActionBounds(4));send(v,MotionEvent.ACTION_DOWN,listOf(point))
@@ -213,20 +211,34 @@ class TouchTest:IsolatedGameTestCase(){
             action(4)
             val once=v.currentSnapshot();assertEquals(before.money-item.buyPrice!!,once.money)
             assertEquals((before.inventory[item.id]?:0)+1,once.inventory[item.id])
-            repeat(10){action(4)};assertEquals(once,v.currentSnapshot())
+            repeat(10){send(v,MotionEvent.ACTION_UP,listOf(center(v.shopActionBounds(4))))};assertEquals(once,v.currentSnapshot())
             assertEquals(before.characters,once.characters) // Native purchase does not auto-equip.
-            capture("bought$mid");action(6);action(5)
+            capture("bought$mid")
+            if(touchUx&&mid==17){
+                action(2);tap(v,center(v.shopItemBounds(OpeningEquipment.KNIFE_ID)));val saleBefore=v.currentSnapshot()
+                action(4);assertEquals(saleBefore.money+7,v.currentSnapshot().money)
+                assertEquals(0,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID]?:0);capture("touch-ux-sold")
+            }
             if(mid==19 && !useHerb){
-                action(2);capture("sell");val prior=v.currentSnapshot();action(4)
+                action(2);tap(v,center(v.shopItemBounds(item.id)));capture("sell");val prior=v.currentSnapshot();action(4)
                 assertEquals(prior.money+7,v.currentSnapshot().money)
                 assertEquals((prior.inventory[item.id]?:0)-1,v.currentSnapshot().inventory[item.id]?:0)
-                val sold=v.currentSnapshot();repeat(10){action(4)};assertEquals(sold,v.currentSnapshot())
-                action(6);action(5)
+                val sold=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(center(v.shopActionBounds(4))))};assertEquals(sold,v.currentSnapshot())
             }
             action(3);assertEquals(GameView.Layer.MAP,v.layer)
             val exit=v.content.exits.first{it.fromMapId==mid};walkTo(exit.triggerX,exit.triggerY)
             assertEquals(0,v.world.mapId);assertEquals(entry.triggerX,v.world.x/16);assertEquals(entry.triggerY,v.world.y/16)
             capture("returned$mid")
+        }
+        if(touchUx){
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,"rom.weapon.1")
+            val before=v.currentSnapshot();tap(v,center(v.panelItemBounds("rom.weapon.1")));assertEquals(before,v.currentSnapshot())
+            tap(v,center(v.panelPrimaryBounds()));assertEquals(1,v.currentSnapshot().characters.first().equipment!!.rightHand);capture("touch-ux-equipped")
+            tap(v,tabPoint(v,1));tap(v,center(v.panelSlotBounds("rightHand")));tap(v,center(v.panelPrimaryBounds()))
+            assertEquals(-1,v.currentSnapshot().characters.first().equipment!!.rightHand);capture("touch-ux-unequipped")
+            tap(v,tabPoint(v,2));tap(v,center(v.panelItemBounds("rom.weapon.1")));tap(v,center(v.panelPrimaryBounds()))
+            instrumentation.runOnMainSync{v.handleBack()}
+            File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-after-counts.json").writeText("""{"kind":"NORMAL_APP_FLOW","buyNonFirstFromBuyList":2,"sellFromSellList":2,"replaceFromInventoryList":2,"unequipFromSlotList":2,"useFromItemList":2,"definition":"actual taps; list already open, role selected"}""")
         }
         if(useHerb){
             // Only normal movement and battle commands create the injury. No HP/item fixture.
@@ -249,8 +261,8 @@ class TouchTest:IsolatedGameTestCase(){
             val panel=v.characterPanelBounds()
             val index=before.inventory.filterValues{it>0}.toSortedMap().keys.indexOf(HerbUse.ID)
             assertTrue(index in 0..3)
-            val row=Pair(panel.x+panel.w*.5f,panel.y+panel.h*(.555f+index*.075f))
-            val action=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f)
+            val row=center(v.panelItemBounds(HerbUse.ID))
+            val action=center(v.panelPrimaryBounds())
             tap(v,row);capture("herb-selected")
             send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
             assertEquals(before,v.currentSnapshot())
@@ -262,7 +274,7 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(minOf(hero.maxHp,hero.hp+50),used.characters.first().hp)
             assertEquals(0,used.inventory[HerbUse.ID]?:0)
             assertEquals(before.money,used.money);assertEquals(before.flags,used.flags)
-            repeat(10){tap(v,action)};assertEquals(used,v.currentSnapshot())
+            repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(used,v.currentSnapshot())
             capture("herb-used")
             instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}
             val(restarted,reloaded)=launch()
@@ -276,13 +288,13 @@ class TouchTest:IsolatedGameTestCase(){
         val state=v.currentSnapshot();assertEquals(EquipmentState(0,-1,0,28),state.characters.first().equipment)
         assertEquals(true,state.flags["rom.npc.114.2"]);assertEquals(1,state.inventory[OpeningEquipment.KNIFE_ID])
         val panel=v.characterPanelBounds()
-        tap(v,Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f)) // Existing explicit remove action.
+        tap(v,center(v.panelPrimaryBounds())) // Existing explicit remove action.
         assertEquals(-1,v.currentSnapshot().characters.first().equipment!!.rightHand)
         tap(v,tabPoint(v,2));capture("inventory")
         val index=v.currentSnapshot().inventory.filterValues{it>0}.toSortedMap().keys.indexOf("rom.weapon.1")
         assertTrue(index in 0..3)
-        tap(v,Pair(panel.x+panel.w*.5f,panel.y+panel.h*(.555f+index*.075f)))
-        tap(v,Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f))
+        tap(v,center(v.panelItemBounds("rom.weapon.1")))
+        tap(v,center(v.panelPrimaryBounds()))
         assertEquals(1,v.currentSnapshot().characters.first().equipment!!.rightHand)
         assertEquals(2,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         assertEquals(0,v.currentSnapshot().inventory["rom.weapon.1"]?:0)
@@ -290,6 +302,114 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{v.handleBack()}
         instrumentation.runOnMainSync{v.persistState();activity.finish()}
     }
+    private fun screenshot(v:GameView,name:String){
+        SystemClock.sleep(350)
+        File(instrumentation.targetContext.getExternalFilesDir(null),name+".png").outputStream().use{
+            instrumentation.uiAutomation.takeScreenshot().compress(Bitmap.CompressFormat.PNG,100,it)}
+    }
+    private fun scrollToItem(v:GameView,id:String){
+        val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
+        for(i in 0..12){
+            if(v.panelItemBounds(id).h>=48*dp)return
+            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,list.y+list.h*.18f)
+            send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
+        };fail("Item $id never reached an accessible row")
+    }
+    fun testTouchUxSelectionScrollAndAtomicEquipment(){
+        val(activity,v)=launch();val base=v.currentSnapshot()
+        val bag=v.content.itemDefinitions.keys.associateWith{2}
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(inventory=bag,money=1000)))}
+        tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));val initial=v.currentSnapshot()
+        tap(v,center(v.panelItemBounds("rom.armor.0")));assertEquals(initial,v.currentSnapshot())
+        scrollToItem(v,"rom.weapon.2");assertEquals(initial,v.currentSnapshot())
+        tap(v,center(v.panelItemBounds("rom.weapon.2")));assertEquals(initial,v.currentSnapshot())
+        val hero=initial.characters.first();val old=v.content.equipmentDefinitions.getValue(OpeningEquipment.KNIFE_ID)
+        val next=v.content.equipmentDefinitions.getValue("rom.weapon.2")
+        val removed=OpeningEquipment.unequip(hero,initial.inventory,old)!!
+        val legacy=OpeningEquipment.equip(removed.first,removed.second,next)!!
+        tap(v,center(v.panelPrimaryBounds()))
+        assertEquals(legacy.first,v.currentSnapshot().characters.first());assertEquals(legacy.second,v.currentSnapshot().inventory)
+        val once=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(center(v.panelPrimaryBounds())))};assertEquals(once,v.currentSnapshot())
+        tap(v,tabPoint(v,1));tap(v,center(v.panelSlotBounds("rightHand")))
+        val beforeRemove=v.currentSnapshot();tap(v,center(v.panelPrimaryBounds()))
+        val result=OpeningEquipment.unequip(beforeRemove.characters.first(),beforeRemove.inventory,next)!!
+        assertEquals(result.first,v.currentSnapshot().characters.first());assertEquals(result.second,v.currentSnapshot().inventory)
+        tap(v,center(v.panelSecondaryBounds()));assertEquals(GameView.CharacterTab.ITEMS,v.activeCharacterTab)
+        assertEquals(-1,v.currentSnapshot().characters.first().equipment!!.rightHand)
+        instrumentation.runOnMainSync{activity.onBackPressed();assertNull(v.input.direction());activity.finish()}
+    }
+    fun testTouchUxTradeGesturesAndResultEquivalence(){
+        val(activity,v)=launch();val base=v.currentSnapshot()
+        val bag=mapOf(OpeningEquipment.KNIFE_ID to 1,"rom.weapon.1" to 1,"rom.weapon.2" to 1)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(mapId=17,x=7*16+8,y=7*16+8,money=1000,inventory=bag)))}
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.SHOP,v.layer)
+        val initial=v.currentSnapshot();val item=v.content.itemDefinitions.getValue("rom.weapon.1")
+        val shop=v.content.shops.values.first{it.mapId==17}
+        tap(v,center(v.shopItemBounds(item.id)));assertEquals(initial,v.currentSnapshot())
+        val p=center(v.shopActionBounds(4));val off=Pair(p.first,p.second-64*v.resources.displayMetrics.density)
+        send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_MOVE,listOf(off));send(v,MotionEvent.ACTION_MOVE,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(initial,v.currentSnapshot())
+        send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_POINTER_DOWN or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(p,p));send(v,MotionEvent.ACTION_POINTER_UP or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(p,p));send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(initial,v.currentSnapshot())
+        tap(v,p);val expected=TownTrade.buy(initial.money,initial.inventory,shop,item)
+        assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.inventory,v.currentSnapshot().inventory)
+        val once=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(p))};assertEquals(once,v.currentSnapshot())
+        tap(v,p);assertEquals(once.money-50,v.currentSnapshot().money);assertEquals(3,v.currentSnapshot().inventory[item.id])
+        tap(v,center(v.shopActionBounds(2)));tap(v,center(v.shopItemBounds("rom.weapon.2")))
+        val beforeSell=v.currentSnapshot();tap(v,center(v.shopActionBounds(4)))
+        val sale=TownTrade.sell(beforeSell.money,beforeSell.inventory,shop,v.content.itemDefinitions.getValue("rom.weapon.2"))
+        assertEquals(sale.money,v.currentSnapshot().money);assertEquals(sale.inventory,v.currentSnapshot().inventory)
+        val last=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(p))};tap(v,p);assertEquals(last,v.currentSnapshot()) // Removed item never transfers selection.
+        tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(2,v.currentSnapshot().inventory[item.id])
+        tap(v,center(v.shopActionBounds(1)));tap(v,center(v.shopItemBounds(item.id)))
+        send(v,MotionEvent.ACTION_DOWN,listOf(p))
+        val changed=v.currentSnapshot().copy(money=0)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(changed))}
+        send(v,MotionEvent.ACTION_UP,listOf(p));assertEquals(changed,v.currentSnapshot())
+        tap(v,center(v.shopItemBounds(item.id)));tap(v,p);assertEquals(changed,v.currentSnapshot())
+        screenshot(v,"touch-ux-trade-failure")
+        tap(v,center(v.shopActionBounds(3)));assertEquals(GameView.Layer.MAP,v.layer);assertNull(v.input.direction())
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testTouchUxPhoneSizeAndLargeFont(){
+        val(activity,v)=launch();val initial=v.currentSnapshot();val bag=v.content.itemDefinitions.keys.associateWith{2}
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(initial.copy(inventory=bag,money=1000)))}
+        tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+        val dp=v.resources.displayMetrics.density;val font=v.resources.configuration.fontScale
+        scrollToItem(v,HerbUse.ID);tap(v,center(v.panelItemBounds(HerbUse.ID)))
+        assertTrue(v.panelItemBounds(HerbUse.ID).h>=48*dp);assertTrue(v.panelPrimaryBounds().w>=48*dp);assertTrue(v.panelPrimaryBounds().h>=48*dp)
+        screenshot(v,"touch-ux-phone-items-$font")
+        tap(v,tabPoint(v,1));tap(v,center(v.panelSlotBounds("rightHand")))
+        val a=v.panelPrimaryBounds();val b=v.panelSecondaryBounds()
+        assertTrue(a.w>=48*dp&&a.h>=48*dp&&b.w>=48*dp&&b.h>=48*dp)
+        assertTrue(a.x+a.w<=b.x);screenshot(v,"touch-ux-phone-equipment-$font")
+        instrumentation.runOnMainSync{activity.onBackPressed();assertTrue(v.restoreSnapshot(initial.copy(mapId=17,x=7*16+8,y=7*16+8,money=1000,inventory=bag)))}
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));tap(v,center(v.shopItemBounds("rom.weapon.1")))
+        val unchanged=v.currentSnapshot();screenshot(v,"touch-ux-phone-shop-$font");tap(v,center(v.shopActionBounds(4)))
+        assertEquals(unchanged.money-50,v.currentSnapshot().money)
+        File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-phone-$font.json").writeText("""{"width":${v.width},"height":${v.height},"density":$dp,"fontScale":$font,"minTouchDp":48,"kind":"EMULATOR_SIZE_VALIDATION"}""")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testTouchUxBaselineClickPath(){
+        // Runs only on the actual previous APK, with a labeled, isolated comparison fixture.
+        val(activity,v)=launch();val base=v.currentSnapshot();val bag=mapOf(OpeningEquipment.KNIFE_ID to 1,"rom.weapon.1" to 1)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(mapId=17,x=7*16+8,y=7*16+8,money=1000,inventory=bag)))}
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+        fun action(i:Int){tap(v,center(v.shopActionBounds(i)));SystemClock.sleep(400)}
+        action(1);val beforeBuy=v.currentSnapshot();action(8);action(4);action(6)
+        assertEquals(beforeBuy.money-50,v.currentSnapshot().money)
+        action(5);action(2);val beforeSell=v.currentSnapshot();action(4);action(6)
+        assertEquals(beforeSell.money+7,v.currentSnapshot().money)
+        action(5);action(3)
+        fun oldTab(i:Int){val p=v.characterPanelBounds();val dp=v.resources.displayMetrics.density;val w=(p.w-16*dp)/4
+            tap(v,Pair(p.x+8*dp+w*(i+.5f),p.y+p.h*.4525f));SystemClock.sleep(400)}
+        tap(v,center(v.hudBounds()));oldTab(2) // Comparison begins with inventory open, role selected.
+        val p=v.characterPanelBounds();val equipmentAction=Pair(p.x+p.w/2,p.y+p.h*.8975f)
+        oldTab(1);tap(v,equipmentAction);SystemClock.sleep(400);oldTab(2)
+        tap(v,Pair(p.x+p.w/2,p.y+p.h*.63f));SystemClock.sleep(400);tap(v,equipmentAction);SystemClock.sleep(400)
+        assertEquals(1,v.currentSnapshot().characters.first().equipment!!.rightHand)
+        File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-before-counts.json").writeText("""{"kind":"CONTROLLED_UI_COMPARISON","buyNonFirstFromBuyList":3,"sellSelectedFromSellList":2,"replaceFromInventoryList":5,"definition":"actual taps; list already open, role selected"}""")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testNormalTouchUxSupplyAndEquipment(){normalTownShops(true,true)}
     fun testControlledOneHitAndSameKindInstances(){
         val(activity,v)=launch();val rules=v.content.battle!!
         fun field(name:String,value:Any){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
@@ -782,14 +902,14 @@ class TouchTest:IsolatedGameTestCase(){
         assertNull(OpeningEquipment.equipKnife(hero,mapOf(OpeningEquipment.KNIFE_ID to 1)))
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(initial.copy(inventory=mapOf(OpeningEquipment.KNIFE_ID to 1))))}
         tap(v,center(v.hudBounds()));tap(v,tabPoint(v,1))
-        val panel=v.characterPanelBounds();val action=Pair(panel.x+panel.w/2,panel.y+panel.h*.8975f)
+        val panel=v.characterPanelBounds();val action=center(v.panelPrimaryBounds())
         tap(v,action)
         assertEquals(-1,v.currentSnapshot().characters.first().equipment?.rightHand)
         assertEquals(2,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         tap(v,action);assertEquals(2,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         tap(v,tabPoint(v,2))
-        tap(v,Pair(panel.x+panel.w*.25f,panel.y+panel.h*.555f))
-        tap(v,action)
+        tap(v,center(v.panelItemBounds(OpeningEquipment.KNIFE_ID)))
+        tap(v,center(v.panelPrimaryBounds()))
         assertEquals(0,v.currentSnapshot().characters.first().equipment?.rightHand)
         assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         tap(v,action);assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
