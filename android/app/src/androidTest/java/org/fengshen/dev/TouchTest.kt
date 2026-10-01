@@ -1126,7 +1126,7 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{
             assertTrue(v.restoreSnapshot(base.copy(mapId=97,x=15*16+8,y=4*16+8,direction=Key.UP,
                 characters=listOf(hero),inventory=mapOf("rom.weapon.2" to 10),money=123,
-                flags=mapOf("opening.intro.seen" to true),encounterSteps=0)))
+                flags=mapOf("opening.intro.seen" to true),encounterSteps=32)))
         }
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
@@ -1160,6 +1160,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(won.characters,v2.currentSnapshot().characters);assertEquals(won.inventory,v2.currentSnapshot().inventory)
         assertEquals(true,v2.currentSnapshot().flags["rom.event.97.39.1"])
         assertTrue(v2.currentSnapshot().flags["rom.event.97.39.1.dialogue.pending"]!=true)
+        assertEquals("Original world-resume reset, not Boss initialization reset",0,v2.currentSnapshot().encounterSteps)
         val settled=v2.currentSnapshot();tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));completeDialogue(v2)
         assertEquals(GameView.Layer.MAP,v2.layer);assertEquals(settled,v2.currentSnapshot())
         // Boss defeat without original manual save uses the preserved new-game branch.

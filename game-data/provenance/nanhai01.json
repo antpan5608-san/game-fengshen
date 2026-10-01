@@ -1478,6 +1478,130 @@
         "repeat": 3,
         "victory": 3
       },
+      "encounterCounterLifecycle": {
+        "evidenceForInitialization": "Pretrigger32 remains32 through loaded battle phase1 and combat phase7; separate escape attempt capture also remains32",
+        "evidenceForWorldResume": "During post-victory dialogue/exit intermediate frame1800 counter32; fully restored world frame2000 counter0 with persistent0761bit1",
+        "initializationReset": false,
+        "inputVisibility": "Original raw RAM remains controlled input; only hashes and scoped facts committed",
+        "integrationTiming": "Preserve count at story-battle start; reset0 when leaving completed battle/aftermath to restored playable world, rather than guessing initialization clears it",
+        "kind": "CONTROLLED original HP/strength fixture, no normal-game difficulty proof",
+        "limits": [
+          "No new live write hook executed in this review; exact timing grounded in existing snapshots plus two static world-restoration reset instructions",
+          "Counter during original defeat game reset also0, but manual-save defeat recovery remains outside this scoped review"
+        ],
+        "ramAddress": 91,
+        "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+        "routineSpans": [
+          {
+            "cpuAddress": 43889,
+            "length": 26,
+            "meaning": "World scene restoration final state88/8A then LDA#0 STA$5B/STA$6881",
+            "module": 0,
+            "offset": 11137,
+            "sha256": "ec402d82eda00659dd059602eb53224419eb90bde68876101d01c3504f4ac9c5"
+          },
+          {
+            "cpuAddress": 34555,
+            "length": 22,
+            "meaning": "Alternate world loader also clears$5B and$6881",
+            "module": 0,
+            "offset": 1803,
+            "sha256": "881b98bb1113f4f112780d91f49c8f7f3b2ee037deb40d31253aa30524c72487"
+          }
+        ],
+        "scope": "Boss137 story battle encounter-counter lifecycle, existing captures only, no emulator rerun",
+        "snapshots": [
+          {
+            "capture": "loaded-fixture-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 0,
+            "ramSha256": "3a6316285f63945eec385595954a1c8ea87eb7ae0aa3d4730b51b894a45b0fd6",
+            "sourceType": 9,
+            "state": 136,
+            "temporaryExitByte0622": 1
+          },
+          {
+            "capture": "frame-600-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 0,
+            "ramSha256": "ffdd2b416f08acbad1ec80e2e295ba6d23d15aaed569cf954fddfebd49f8d3b7",
+            "sourceType": 9,
+            "state": 136,
+            "temporaryExitByte0622": 0
+          },
+          {
+            "capture": "frame-800-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 1,
+            "ramSha256": "e7b85c19f02df84ea84ab20125731db44edef829b47e24971ec3b661df45a043",
+            "sourceType": 255,
+            "state": 8,
+            "temporaryExitByte0622": 0
+          },
+          {
+            "capture": "frame-1000-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 7,
+            "ramSha256": "92d5d0fd62390e141f0399fd61248a7c17323dde35b5567450915f7f7f0ae942",
+            "sourceType": 156,
+            "state": 8,
+            "temporaryExitByte0622": 0
+          },
+          {
+            "capture": "frame-1600-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 7,
+            "ramSha256": "1d7cb2ddc3e8666e1708a4c5f820381d1b0dcdc65ba058a908abc3e832e8565e",
+            "sourceType": 156,
+            "state": 8,
+            "temporaryExitByte0622": 0
+          },
+          {
+            "capture": "frame-1800-ram.bin",
+            "encounterCounter": 32,
+            "flag0761": 0,
+            "mapId": 97,
+            "phase": 0,
+            "ramSha256": "6f910a6527cb6bb65f02a941fb47ae0bb712c056415e557e617ae327bdb8ce33",
+            "sourceType": 156,
+            "state": 136,
+            "temporaryExitByte0622": 1
+          },
+          {
+            "capture": "frame-2000-ram.bin",
+            "encounterCounter": 0,
+            "flag0761": 1,
+            "mapId": 97,
+            "phase": 0,
+            "ramSha256": "85e480dc13f1c6552ee837ab801771dbf291c416bb47f2886d5b4fd63a3ad524",
+            "sourceType": 0,
+            "state": 136,
+            "temporaryExitByte0622": 0
+          },
+          {
+            "capture": "final-ram.bin",
+            "encounterCounter": 0,
+            "flag0761": 1,
+            "mapId": 97,
+            "phase": 0,
+            "ramSha256": "c79dd6c8d6734969a63c5af9df19d1b9755c4fcf178c09091feee095498fa0e4",
+            "sourceType": 0,
+            "state": 136,
+            "temporaryExitByte0622": 0
+          }
+        ],
+        "worldResumeReset": true
+      },
       "escapeAllowed": false,
       "escapeEvidence": {
         "attempts": 10,
@@ -3237,8 +3361,9 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "92bea0168f812e9ab0dd6cdac34683b2f9920eeaf4cb963220320e37d9665b22",
       "ramSha256": "de8ba593649bf2624e3fe745a6e4f23a41f06ef06329ecd56cb7937c1beffd41",
+      "reviewedSourcePngSha256": "92bea0168f812e9ab0dd6cdac34683b2f9920eeaf4cb963220320e37d9665b22",
+      "rgbaSha256": "f45eeac62c08edb8851759cd69e6346c03ac2eb2418e38f5842e42d49e9ef73a",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceCapture": "/workspace/scratch/nanhai-route/normal/003600-state.png",
       "tiles": [
@@ -4439,8 +4564,9 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "df390f069504cf05922ef2c1ee3619db39edb34845d9398c8db69edf2fc6dfa2",
       "ramSha256": "8a928631013fe85ad2e57a006a1f26425fb0ebd9d8b0f13943fc62202835ba8d",
+      "reviewedSourcePngSha256": "df390f069504cf05922ef2c1ee3619db39edb34845d9398c8db69edf2fc6dfa2",
+      "rgbaSha256": "cd4901216d2b921ec51fc9aeda71c0095aa71e355b7ca17ec33c6e3f85cb72bf",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceCapture": "/workspace/scratch/nanhai-route/normal-escape/001920-state.png",
       "tiles": [
@@ -5659,10 +5785,11 @@
         ]
       },
       "palettePpuBytes": "0e0e3616",
-      "pngSha256": "2c15f7e19c8fb0fee560b735314c763cac1d687782a79473a04a5fafd2bfd4ba",
       "ppuSha256": "60bed3e0a775a01e141386a48097f0fb2b8180d567c33903e23502d7bf494702",
       "ramSha256": "dadae2efe47c4d2ecdbadac78ecbce41868b2f38b28b2215af41029b6db2f119",
       "representation": "Observed OAM sprite, not already included in background map metatile pixels",
+      "reviewedSourcePngSha256": "2c15f7e19c8fb0fee560b735314c763cac1d687782a79473a04a5fafd2bfd4ba",
+      "rgbaSha256": "6ce1f207e1c3ef5e48884e068a9a27579e975a0bcf4c3cb2bfe921b2fdc076aa",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sharedPoseEvidence": "Both NPC3/4 target-ROM entity144 and identical animationProgramPointer0x8E3D; NPC4 offscreen OAM retains same6A/6B/7A/7B tile IDs",
       "tiles": [
@@ -5754,7 +5881,8 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "403ace53777278231b298e564144145641a49a9410ee1d6766f60b5fa66dee9e",
+      "reviewedSourcePngSha256": "403ace53777278231b298e564144145641a49a9410ee1d6766f60b5fa66dee9e",
+      "rgbaSha256": "d60c30533d2ea1cfc20ff4b864198f393ffbd73deb15bac1beb19d220881e5d2",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceType": 156,
       "tiles": [
@@ -7809,7 +7937,8 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "00637966d6fa8e201e3afbbcc152804cb35023b27459db755f67f7a8218c2bee",
+      "reviewedSourcePngSha256": "00637966d6fa8e201e3afbbcc152804cb35023b27459db755f67f7a8218c2bee",
+      "rgbaSha256": "cea5d6569280891264f3664b626d1b160d41db71236689681cb77732c1cdc8c7",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceType": 6,
       "tiles": [
@@ -8033,7 +8162,8 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "2fa2cfc2546a70aa151aa8b8a91a0813f5f87a2e2976fe61f9472a27088c145c",
+      "reviewedSourcePngSha256": "2fa2cfc2546a70aa151aa8b8a91a0813f5f87a2e2976fe61f9472a27088c145c",
+      "rgbaSha256": "1e83544946b362b8ef837b0ea32628ceee35940756b0b6685a50723afa09c478",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceType": 5,
       "tiles": [
@@ -8392,7 +8522,8 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "aca53c95589a4c2427eb0743a4132c6da3df2345720dd992fdd09e0749312adf",
+      "reviewedSourcePngSha256": "aca53c95589a4c2427eb0743a4132c6da3df2345720dd992fdd09e0749312adf",
+      "rgbaSha256": "bbdedecdb45a56f1611a3ff3ccf8a0cb9b22ce9b7a84e4b588ed9f0f6c7e3a8f",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceType": 9,
       "tiles": [
@@ -8580,7 +8711,8 @@
         ]
       },
       "pixelMatch": true,
-      "pngSha256": "51f8235fa9f63621a90773c749dd56db146ea1c5db775300d58cc1c805f06a62",
+      "reviewedSourcePngSha256": "51f8235fa9f63621a90773c749dd56db146ea1c5db775300d58cc1c805f06a62",
+      "rgbaSha256": "8b78c614197b8fc9ea0d28be88d20d2143dbb0299db92a78be187959ca12742a",
       "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
       "sourceType": 10,
       "tiles": [
@@ -8938,6 +9070,7 @@
           152
         ]
       },
+      "rgbaSha256": "6739459f16b7f65339785a56ac20f8a1591a2544ec08cbfa22ee824b7bf1734c",
       "tiles": [
         {
           "length": 16,
@@ -9004,6 +9137,7 @@
           0
         ]
       },
+      "rgbaSha256": "ae16e92f877e50ab4a3f89a0292568d5839554a9f9fc84bdb8588b37e0904bcc",
       "tiles": [
         {
           "length": 16,
@@ -9070,6 +9204,7 @@
           0
         ]
       },
+      "rgbaSha256": "ae16e92f877e50ab4a3f89a0292568d5839554a9f9fc84bdb8588b37e0904bcc",
       "tiles": [
         {
           "length": 16,

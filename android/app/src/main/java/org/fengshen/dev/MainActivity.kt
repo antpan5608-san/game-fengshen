@@ -430,6 +430,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
             if(flags[story.flagId]==true){
+                if(flags[story.flagId+".dialogue.pending"]==true)encounter?.restore(0)
                 flags=flags-(story.flagId+".dialogue.pending");dismissDialogue();persistState();return
             }
             dismissDialogue()

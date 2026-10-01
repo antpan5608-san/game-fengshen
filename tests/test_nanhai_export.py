@@ -1,5 +1,6 @@
 """Rebuild this route from the reviewed APK/ROM; reject bad data before packaging."""
-import io,json,os,sys,unittest
+import io,json,os,sys,unittest,struct,zlib
+from PIL import Image
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
@@ -19,6 +20,34 @@ class NanhaiExportTests(unittest.TestCase):
         self.assertEqual(self.result,exporter.export_from_base(self.base,self.proof,self.pin))
         for name,raw in self.base.items():
             if not name.endswith('.json'):self.assertEqual(raw,self.result[name],name)
+    def test_portable_png_is_decodable_and_preserves_reviewed_pixels(self):
+        evidence=json.loads((ci.ROOT/self.proof).read_text())
+        for name,recipe in evidence['graphics'].items():
+            image=Image.open(io.BytesIO(self.result[name])).convert('RGBA')
+            self.assertEqual((recipe['width'],recipe['height']),image.size)
+            self.assertEqual(recipe['rgbaSha256'],ci.sha(image.tobytes()),name)
+        # Includes a >64KiB scanline stream: multiple stored DEFLATE blocks.
+        image=Image.new('RGBA',(256,256),(11,22,33,44))
+        raw=exporter.deterministic_rgba_png(image)
+        self.assertEqual(image.tobytes(),Image.open(io.BytesIO(raw)).convert('RGBA').tobytes())
+        offset=8;types=[];idat=b''
+        while offset<len(raw):
+            size=struct.unpack('>I',raw[offset:offset+4])[0];kind=raw[offset+4:offset+8]
+            data=raw[offset+8:offset+8+size];crc=struct.unpack('>I',raw[offset+8+size:offset+12+size])[0]
+            self.assertEqual(zlib.crc32(kind+data)&0xffffffff,crc)
+            types.append(kind)
+            if kind==b'IDAT':idat+=data
+            offset+=12+size
+        self.assertEqual([b'IHDR',b'IDAT',b'IEND'],types)
+        self.assertEqual(b''.join(b'\x00'+bytes((11,22,33,44))*256 for _ in range(256)),zlib.decompress(idat))
+        # The new exporter cannot fall back to a platform image encoder.
+        with patch.object(Image.Image,'save',side_effect=AssertionError('Platform encoder used')):
+            self.assertEqual(raw,exporter.deterministic_rgba_png(image))
+    def test_changed_reviewed_pixels_are_rejected(self):
+        evidence=json.loads((ci.ROOT/self.proof).read_text())
+        evidence['graphics']['enemy-137.png']['rgbaSha256']='0'*64
+        with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text())):
+            with self.assertRaisesRegex(ValueError,'RGBA pixels'):exporter.export_from_base(self.base,self.proof,self.pin)
     def test_real_contiguous_route_and_original_encounters(self):
         scene=json.loads(self.result['scene.json']);self.assertEqual({114,16,0,17,18,19,25,97},{m['id'] for m in scene['maps']})
         exits={(x['fromMapId'],tuple(x['trigger']),x['toMapId'],tuple(x['spawn'])) for x in scene['exits']}
