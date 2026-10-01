@@ -86,12 +86,12 @@ TMX 全量图层计数：mac=259、map=242、map2=100、map1=1、map3=26、monst
 
 ## 补全来源与取证路线
 
-优先级固定：参考已有候选 → 用户合法提供的本地 ROM → 公开攻略/地图资料 → 原版录像 → 人工校验。ROM尚未提供，因此本阶段没有 ROM 偏移表、mapper结论或已提取数据。
+当前准入遵循AGENTS.md：已有成果与证据优先，公开参考/工具有来源迁移，再定向校正；ROM按版本hash校验而非获取地点限制。下述早期调查状态保留为历史，不表示当前资源不可用。
 
 |来源|本阶段调查到的入口|用途与限制|
 |---|---|---|
 |参考仓库|[固定提交](https://github.com/v5100v5100/FengShenBang/tree/d636453f14f86a096f9d293bf3facfd96cfcb614)|全部候选数据的首个来源；不是原版权威表|
-|用户 ROM|本地路径，待提供|辨识iNES/NES2、mapper、bank布局；不得从公共下载补ROM|
+|用户 ROM|本地路径，待提供|辨识iNES/NES2、mapper、bank布局；可按AGENTS.md从普通公开来源取得并校验目标ROM，许可单独记录|
 |攻略/地图|[全游网物品/攻略/地图页](https://www.youxi360.net/guide/detail/20060118/333.html)、[地图资料候选](https://www.k73.com/glzq/23166.html)|搜索发现的待核线索；未逐图验证、未导入数据，不引用其数值为已确认事实|
 |原版流程录像|[BV1ot411t7HT](https://www.bilibili.com/video/BV1ot411t7HT/)、[BV1VL411i7f4](https://www.bilibili.com/video/BV1VL411i7f4/)|标题/描述宣称无作弊的候选；未观看完整视频，版本和剪辑仍需验证|
 |人工复核|逐条sourceId + 场景/时间戳 + 输入/前后状态|每条结论可重放；冲突进入issue，不强行多数表决|

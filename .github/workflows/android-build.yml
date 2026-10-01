@@ -52,6 +52,10 @@ jobs:
           $env:ANDROID_SDK_ROOT=$env:ANDROID_HOME
           & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-35' 'build-tools;35.0.0'
           if($LASTEXITCODE -ne 0){throw 'Android SDK installation failed'}
+      - name: Prepare the existing scoped exporter dependency
+        run: |
+          python -m pip install Pillow==11.3.0
+          if($LASTEXITCODE -ne 0){throw 'Exporter dependency unavailable'}
       - name: Build, test and verify existing signature/content
         env:
           VERSION_CODE: ${{ inputs.version_code }}
@@ -61,7 +65,7 @@ jobs:
           FENGSHEN_KEY_ALIAS: ${{ secrets.FENGSHEN_KEY_ALIAS }}
           FENGSHEN_KEY_PASSWORD: ${{ secrets.FENGSHEN_KEY_PASSWORD }}
         run: |
-          ./build-ci.ps1 -VersionCode $env:VERSION_CODE -VersionName $env:VERSION_NAME
+          ./build-ci.ps1 -VersionCode $env:VERSION_CODE -VersionName $env:VERSION_NAME -RuntimeTests
           if($LASTEXITCODE -ne 0){throw 'Cloud build failed'}
           $receipt=Get-Content artifacts/ci/apk-receipt.json -Raw|ConvertFrom-Json
           $receipt|Add-Member sourceCommit $env:GITHUB_SHA
@@ -85,6 +89,13 @@ jobs:
           name: fengshen-unit-test-results
           path: android/app/build/test-results/testReleaseUnitTest/*.xml
           if-no-files-found: ignore
+          retention-days: 14
+      - name: Retain the isolated instrumentation APK
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-runtime-test-apk
+          path: android/app/build/outputs/apk/androidTest/release/*.apk
+          if-no-files-found: error
           retention-days: 14
   verify-base:
     if: github.ref == 'refs/heads/main' && inputs.mode == 'verify-base'
@@ -135,11 +146,11 @@ jobs:
           $receipt=Get-Content artifacts/base/apk-receipt.json -Raw|ConvertFrom-Json
           $baseCommit=(Get-Content artifacts-base-commit.txt -Raw).Trim()
           if($receipt.sourceCommit -ne $baseCommit -or $receipt.buildRunID -ne $env:BASE_RUN_ID -or $receipt.sha256 -ne $env:BASE_SHA256 -or (Get-FileHash $apks[0].FullName).Hash.ToLowerInvariant() -ne $env:BASE_SHA256){throw 'Base receipt or byte provenance mismatch'}
-          python tools/ci_apk.py verify --apk $apks[0].FullName --output artifacts/base/base-verified.json --code $receipt.versionCode --name $receipt.versionName
+          python tools/ci_apk.py verify --base-only --apk $apks[0].FullName --output artifacts/base/base-verified.json --code $receipt.versionCode --name $receipt.versionName
           if($LASTEXITCODE -ne 0){throw 'Base signature/package/version/content verification failed'}
           $verified=Get-Content artifacts/base/base-verified.json -Raw|ConvertFrom-Json
           if($verified.sha256 -ne $receipt.sha256 -or $verified.sizeBytes -ne $receipt.sizeBytes -or $verified.contentHash -ne $receipt.contentHash){throw 'Base verification differs from build receipt'}
-          python tools/ci_apk.py restore --apk $apks[0].FullName
+          python tools/ci_apk.py restore --base-only --apk $apks[0].FullName
           if($LASTEXITCODE -ne 0){throw 'Trusted base restoration failed'}
           python -m unittest discover -s tests -p test_ci_apk.py
           if($LASTEXITCODE -ne 0){throw 'Content transport safety regression failed'}

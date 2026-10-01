@@ -66,7 +66,7 @@ TMX转换先不改变坐标原点或80像素尺度。导出所有layers和tilepr
 
 ### M4 原版取证与ROM研究
 
-用户提供ROM后先本地hash/版本profile，不自动上传。提取分probe/decode/export三步：probe只报告候选；decode保持原值/位置；export仅输出已确认字段。不同hash不得复用硬编码offset，除非特征/版本差异已验证。
+取得ROM后先本地hash/版本profile，不自动上传。提取分probe/decode/export三步：probe只报告候选；decode保持原值/位置；export仅输出已确认字段。不同hash不得复用硬编码offset，除非特征/版本差异已验证。
 
 ROM研究有独立输出manifest：输入hash、header、mapper、bank、文件范围、解码算法版本、候选含义、验证截图/轨迹索引；未知数据不扩充成臆测内容。首轮目标是原版字库/地图与一组人物、敌人/战斗数据，建立可重放基准，不承诺一次解析整部游戏。
 

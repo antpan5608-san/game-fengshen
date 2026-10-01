@@ -1,7 +1,8 @@
 param(
     [Parameter(Mandatory)][ValidateRange(22,2100000000)][int]$VersionCode,
     [Parameter(Mandatory)][ValidatePattern('^[A-Za-z0-9._-]{1,80}$')][string]$VersionName,
-    [string]$ContentApk
+    [string]$ContentApk,
+    [switch]$RuntimeTests
 )
 $ErrorActionPreference='Stop'
 $root=$PSScriptRoot
@@ -27,9 +28,12 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Existing content restoration failed'}
     & python -m unittest discover -s tests -p test_ci_apk.py
     if($LASTEXITCODE -ne 0){throw 'CI safety tests failed'}
+    & python -m unittest discover -s tests -p test_town02_export.py
+    if($LASTEXITCODE -ne 0){throw 'Scoped content export tests failed'}
     Push-Location (Join-Path $root 'android')
     try {
-        & ./gradlew.bat --no-daemon --console=plain "-PfengshenVersionCode=$VersionCode" "-PfengshenVersionName=$VersionName" :app:testReleaseUnitTest :app:assembleRelease
+        $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}
+        & ./gradlew.bat --no-daemon --console=plain "-PfengshenVersionCode=$VersionCode" "-PfengshenVersionName=$VersionName" :app:testReleaseUnitTest :app:assembleRelease @runtime
         if($LASTEXITCODE -ne 0){throw 'Release build or unit tests failed; upload prohibited'}
     } finally {Pop-Location}
     $apk=Join-Path $dir "fengshen-remake-v$VersionCode-release.apk"

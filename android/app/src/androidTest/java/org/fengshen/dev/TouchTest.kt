@@ -69,7 +69,18 @@ class TouchTest:IsolatedGameTestCase(){
     }
     fun testNormalOpeningRouteGiftAndMap16Encounter(){normalOpeningBattle(false)}
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
-    fun testNormalTownShopsBuySellAndReturn(){
+    fun testNormalTownShopsBuySellAndReturn(){normalTownShops(false)}
+    fun testNormalHerbSupplyLoop(){normalTownShops(true)}
+    fun testHerbColdStartMatchesNormalSave(){
+        val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json")
+        assertTrue("Run the normal supply test before an external force-stop",expectedFile.exists())
+        val expected=SaveSnapshot.parse(expectedFile.readText())
+        val(activity,v)=launch()
+        assertEquals(expected,v.currentSnapshot())
+        assertEquals(0,v.currentSnapshot().inventory[HerbUse.ID]?:0)
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    private fun normalTownShops(useHerb:Boolean){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit()
         val(activity,v)=launch()
         fun capture(name:String){
@@ -144,7 +155,7 @@ class TouchTest:IsolatedGameTestCase(){
             repeat(10){action(4)};assertEquals(once,v.currentSnapshot())
             assertEquals(before.characters,once.characters) // Native purchase does not auto-equip.
             capture("bought$mid");action(6);action(5)
-            if(mid==19){
+            if(mid==19 && !useHerb){
                 action(2);capture("sell");val prior=v.currentSnapshot();action(4)
                 assertEquals(prior.money+7,v.currentSnapshot().money)
                 assertEquals((prior.inventory[item.id]?:0)-1,v.currentSnapshot().inventory[item.id]?:0)
@@ -155,6 +166,50 @@ class TouchTest:IsolatedGameTestCase(){
             val exit=v.content.exits.first{it.fromMapId==mid};walkTo(exit.triggerX,exit.triggerY)
             assertEquals(0,v.world.mapId);assertEquals(entry.triggerX,v.world.x/16);assertEquals(entry.triggerY,v.world.y/16)
             capture("returned$mid")
+        }
+        if(useHerb){
+            // Only normal movement and battle commands create the injury. No HP/item fixture.
+            if(v.currentSnapshot().characters.first().hp==v.currentSnapshot().characters.first().maxHp){
+                walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId)
+                walkTo(200,130)
+                for(i in 0..120){
+                    val hero=v.currentSnapshot().characters.first()
+                    if(hero.hp in 1 until hero.maxHp)break
+                    val key=if(v.world.y/16==130)Key.UP else Key.DOWN
+                    step(key)
+                }
+                assertTrue("Normal encounters must produce a living injured hero",v.currentSnapshot().characters.first().let{it.hp in 1 until it.maxHp})
+                walkTo(202,130);assertEquals(0,v.world.mapId)
+            }
+            val before=v.currentSnapshot();val hero=before.characters.first()
+            assertTrue(hero.hp in 1 until hero.maxHp)
+            assertEquals(1,before.inventory[HerbUse.ID])
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+            val panel=v.characterPanelBounds()
+            val index=before.inventory.filterValues{it>0}.toSortedMap().keys.indexOf(HerbUse.ID)
+            assertTrue(index in 0..3)
+            val row=Pair(panel.x+panel.w*.5f,panel.y+panel.h*(.555f+index*.075f))
+            val action=Pair(panel.x+panel.w*.5f,panel.y+panel.h*.8975f)
+            tap(v,row);capture("herb-selected")
+            send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+            assertEquals(before,v.currentSnapshot())
+            send(v,MotionEvent.ACTION_DOWN,listOf(action))
+            instrumentation.runOnMainSync{instrumentation.callActivityOnPause(activity);instrumentation.callActivityOnResume(activity)}
+            send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(before,v.currentSnapshot())
+            tap(v,action)
+            val used=v.currentSnapshot()
+            assertEquals(minOf(hero.maxHp,hero.hp+50),used.characters.first().hp)
+            assertEquals(0,used.inventory[HerbUse.ID]?:0)
+            assertEquals(before.money,used.money);assertEquals(before.flags,used.flags)
+            repeat(10){tap(v,action)};assertEquals(used,v.currentSnapshot())
+            capture("herb-used")
+            instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}
+            val(restarted,reloaded)=launch()
+            assertEquals(used,reloaded.currentSnapshot())
+            capture("herb-restored")
+            File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json").writeText(used.json().toString())
+            instrumentation.runOnMainSync{restarted.finish()}
+            return
         }
         tap(v,center(v.hudBounds()));tap(v,tabPoint(v,1));capture("equipment")
         val state=v.currentSnapshot();assertEquals(EquipmentState(0,-1,0,28),state.characters.first().equipment)

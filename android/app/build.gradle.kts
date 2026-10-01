@@ -11,6 +11,7 @@ if (requestingRelease) {
     }
 }
 android {
+    if(providers.gradleProperty("fengshenInstrumentRelease").orNull=="true") testBuildType="release"
     namespace = "org.fengshen.dev"
     compileSdk = 35
     useLibrary("android.test.runner")

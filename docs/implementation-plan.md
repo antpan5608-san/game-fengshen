@@ -52,7 +52,7 @@ Phase 1的工具可使用合成数据推进结构验证；没有ROM/足够原版
 1. 将现有审计脚本作为只读基线，实现独立reference-import：SQLite/TMX→raw+source map，可重复导出且参考文件hash不变。
 2. 将[data-schema.md](data-schema.md)中类型与动作落成严格Schema；validator同时检查结构与命名空间引用，分开error/warning/unknown。
 3. map-viewer显示全部地图目录、图层、原始格子坐标、NPC/warp/mac/macair/monster和疑似扩展内容；能导出选定状态的核验记录。
-4. 确立目标ROM hash/版本。用户未提供前，工具仅接受未来本地路径和合成测试，不寻找ROM下载源。
+4. 确立目标ROM hash/版本。按AGENTS.md主动复用公开候选，完整hash匹配后复用目标偏移；不要求原电脑目录。
 5. 原版最小取证集：开局场景/主角移动与碰撞、一次对话和条件变化、一个物品、一个普通战的完整输入/输出；字段不足就保持UNKNOWN。
 6. 形成“可进入Phase 2”的切片说明：精确范围、来源、已知规则、未支持项与验收轨迹。Phase 1结束汇报后再确认后续范围。
 

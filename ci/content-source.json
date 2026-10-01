@@ -3,6 +3,14 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c11",
-  "manifestSha256": "3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147"
+  "contentVersion": "opening-segment-001-c12",
+  "manifestSha256": "8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8",
+  "iteration": {
+    "base": {
+      "contentVersion": "opening-segment-001-c11",
+      "manifestSha256": "3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147",
+      "apkSha256": "5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f"
+    },
+    "provenance": "game-data/provenance/town02-herb.json"
+  }
 }

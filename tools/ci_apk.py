@@ -59,7 +59,8 @@ def validate_content_path(name):
         raise ValueError("Unsafe content path")
 
 
-def content(apk):
+def content(apk, pin=None):
+    pin = pin or CONFIG
     prefix = "assets/development/"
     with zipfile.ZipFile(apk) as archive:
         entries = [x for x in archive.infolist() if x.filename.startswith(prefix) and not x.is_dir()]
@@ -73,10 +74,10 @@ def content(apk):
             if (x.external_attr >> 16) & 0o170000 == 0o120000:
                 raise ValueError("Content symlink rejected")
         manifest_bytes = archive.read(prefix + "manifest.json")
-        if sha(manifest_bytes) != CONFIG["manifestSha256"]:
+        if sha(manifest_bytes) != pin["manifestSha256"]:
             raise ValueError("Content manifest differs from reviewed export; update pin explicitly")
         manifest = json.loads(manifest_bytes)
-        if manifest["version"] != CONFIG["contentVersion"] or manifest["schemaVersion"] != 1:
+        if manifest["version"] != pin["contentVersion"] or manifest["schemaVersion"] != 1:
             raise ValueError("Wrong development content version/schema")
         if set(names) != set(manifest["files"]) | {"manifest.json"}:
             raise ValueError("Content file set differs from manifest")
@@ -121,7 +122,17 @@ def restore(source=None, destination=None, next_code=None):
         info = verify_apk(apk)
         if next_code is not None and next_code <= info["versionCode"]:
             raise ValueError("New versionCode must exceed source/published APK")
-        payload = content(apk)  # Verify everything BEFORE touching any existing assets.
+        iteration = CONFIG.get("iteration")
+        if iteration and sha(apk.read_bytes()) == iteration["base"]["apkSha256"]:
+            payload = content(apk, iteration["base"])
+            # The trusted base and reviewed local definition form content before APK compilation.
+            import sys
+            sys.path.insert(0, str(ROOT / "tools"))
+            from export_development import export_from_base
+            payload = export_from_base(payload, iteration["provenance"], CONFIG)
+        else:
+            payload = content(apk)
+        # Verify the complete target BEFORE touching any existing assets.
         destination.mkdir(parents=True, exist_ok=True)
         existing = [p for p in destination.rglob("*") if p.is_file()]
         if any(p.relative_to(destination).as_posix() not in payload for p in existing):
@@ -152,7 +163,16 @@ def main():
     parser.add_argument("--output", type=Path)
     parser.add_argument("--code", type=int)
     parser.add_argument("--name")
+    parser.add_argument("--base-only",action="store_true",help="Verify/restore the reviewed iteration base, without exporting target content")
     args = parser.parse_args()
+    if args.base_only:
+        if args.mode not in ("restore","verify") or not CONFIG.get("iteration"):
+            parser.error('base-only requires a configured iteration and restore/verify')
+        base=CONFIG['iteration']['base']
+        if not args.apk or sha(args.apk.read_bytes())!=base['apkSha256']:
+            raise ValueError('Wrong reviewed base APK bytes')
+        CONFIG.update(base)
+        CONFIG.pop('iteration')
     if args.mode == "restore":
         restore(args.apk, next_code=args.code)
     elif args.mode == "verify":
