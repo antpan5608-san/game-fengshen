@@ -312,11 +312,12 @@ class TouchTest:IsolatedGameTestCase(){
     }
     private fun scrollToItem(v:GameView,id:String){
         val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
-        for(i in 0..12){
+        for(i in 0..60){
             if(v.panelItemBounds(id).h>=48*dp)return
-            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,list.y+list.h*.18f)
+            val distance=minOf(list.h*.64f,64*dp)
+            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,down.second-distance)
             send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
-        };fail("Item $id never reached an accessible row")
+        };fail("Item $id never reached an accessible row: row=${v.panelItemBounds(id)}, list=$list, view=${v.width}x${v.height}, density=$dp, font=${v.resources.configuration.fontScale}")
     }
     private fun scrollToShopItem(v:GameView,id:String){
         val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
@@ -386,6 +387,7 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(initial.copy(inventory=bag,money=1000)))}
         tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
         val dp=v.resources.displayMetrics.density;val font=v.resources.configuration.fontScale
+        screenshot(v,"touch-ux-phone-entry-$font")
         scrollToItem(v,HerbUse.ID);tap(v,center(v.panelItemBounds(HerbUse.ID)))
         assertTrue(v.panelItemBounds(HerbUse.ID).h>=48*dp);assertTrue(v.panelPrimaryBounds().w>=48*dp);assertTrue(v.panelPrimaryBounds().h>=48*dp)
         screenshot(v,"touch-ux-phone-items-$font")
