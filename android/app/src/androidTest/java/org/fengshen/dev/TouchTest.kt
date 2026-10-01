@@ -387,19 +387,32 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(initial.copy(inventory=bag,money=1000)))}
         tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
         val dp=v.resources.displayMetrics.density;val font=v.resources.configuration.fontScale
+        val screen=instrumentation.uiAutomation.takeScreenshot()
+        assertEquals("Actual display width, not only wm override",2640,screen.width)
+        assertEquals("Actual display height",1216,screen.height)
+        fun verifyRegions(secondary:Boolean,tabs:Int=4,party:Int=1){
+            val modal=touchModalLayout(layoutFor(v).safe,dp,font,tabs,party,secondary)
+            val targets=modal.tabs+listOf(modal.close,modal.primary)+if(secondary)listOf(modal.secondary) else emptyList()
+            for(i in targets.indices)for(j in i+1 until targets.size){val a=targets[i];val b=targets[j]
+                assertFalse("Overlapping actual phone targets: $a / $b",a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y)}
+            assertTrue("A full scaled text line must fit in scrollable details",modal.detail.h>=17.5f*font*dp)
+        }
+        verifyRegions(false)
         screenshot(v,"touch-ux-phone-entry-$font")
         scrollToItem(v,HerbUse.ID);tap(v,center(v.panelItemBounds(HerbUse.ID)))
         assertTrue(v.panelItemBounds(HerbUse.ID).h>=48*dp);assertTrue(v.panelPrimaryBounds().w>=48*dp);assertTrue(v.panelPrimaryBounds().h>=48*dp)
         screenshot(v,"touch-ux-phone-items-$font")
         tap(v,tabPoint(v,1));tap(v,center(v.panelSlotBounds("rightHand")))
+        verifyRegions(true)
         val a=v.panelPrimaryBounds();val b=v.panelSecondaryBounds()
         assertTrue(a.w>=48*dp&&a.h>=48*dp&&b.w>=48*dp&&b.h>=48*dp)
         assertTrue(a.x+a.w<=b.x);screenshot(v,"touch-ux-phone-equipment-$font")
         instrumentation.runOnMainSync{activity.onBackPressed();assertTrue(v.restoreSnapshot(initial.copy(mapId=17,x=7*16+8,y=7*16+8,money=1000,inventory=bag)))}
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)));scrollToShopItem(v,"rom.weapon.1");tap(v,center(v.shopItemBounds("rom.weapon.1")))
+        verifyRegions(false,2,0)
         val unchanged=v.currentSnapshot();screenshot(v,"touch-ux-phone-shop-$font");tap(v,center(v.shopActionBounds(4)))
         assertEquals(unchanged.money-50,v.currentSnapshot().money)
-        File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-phone-$font.json").writeText("""{"width":${v.width},"height":${v.height},"density":$dp,"fontScale":$font,"minTouchDp":48,"kind":"EMULATOR_SIZE_VALIDATION"}""")
+        File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-phone-$font.json").writeText("""{"screenWidth":${screen.width},"screenHeight":${screen.height},"width":${v.width},"height":${v.height},"density":$dp,"fontScale":$font,"minTouchDp":48,"kind":"EMULATOR_SIZE_VALIDATION"}""")
         instrumentation.runOnMainSync{activity.finish()}
     }
     fun testTouchUxBaselineClickPath(){

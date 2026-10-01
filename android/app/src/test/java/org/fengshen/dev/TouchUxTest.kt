@@ -40,6 +40,15 @@ class TouchUxTest {
             assertTrue(l.primary.y+l.primary.h<=l.frame.y+l.frame.h)
         }
     }
+    @Test fun shortSafeViewportAndLargeFontKeepLabelsAndTargetsSeparate(){
+        for(secondary in listOf(false,true)){
+            val l=touchModalLayout(Box(0f,136f,1920f,808f),3f,2f,4,1,secondary)
+            assertTrue(l.compactHeader);assertTrue(l.close.w>=72*3)
+            val targets=l.tabs+listOf(l.close,l.primary)+if(secondary)listOf(l.secondary) else emptyList()
+            for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlaps(targets[i],targets[j]))
+            assertTrue(l.detail.h>=35*3)
+        }
+    }
     @Test fun narrowWindowUsesListThenDetailAndScrolling(){
         val l=touchModalLayout(Box(0f,0f,320f,600f),1f,1.3f,4,1,false)
         assertFalse(l.wide);assertEquals(l.list.x,l.detail.x,0f)
