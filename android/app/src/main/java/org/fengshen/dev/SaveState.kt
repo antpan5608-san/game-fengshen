@@ -141,7 +141,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps)
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         val scene=content.scenes[mapId]?:return false
         return scene.check(x/16,y/16)==null

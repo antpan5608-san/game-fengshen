@@ -4,26 +4,242 @@ No new ROM importer. Android receives PNG atlases and a grid, never a ROM.
 import json
 import shutil
 import sys
+import io
+import urllib.request
 from pathlib import Path
 from PIL import Image
 from forensics.common import ROOT,load,save
-from forensics.fengshen246 import Reader,SHA256,digest,extract_map,extract_opening_encounter,extract_town_shops
+from forensics.fengshen246 import Reader,SHA256,digest,extract_map,extract_opening_encounter,extract_town_shops,extract_enemy
 from forensics.rom import tile_image
 
 OUT=ROOT/'game-data/packages/development/opening-segment-001-c11'
 
-def export_from_base(payload, provenance_path, target_pin, verify_target=True):
-    """TOWN-02 only: reuse checked content bytes and export one evidenced definition.
+def iteration_reader():
+    """Reuse the pinned public input in a private cache; never include it in exports."""
+    acquisition=load(ROOT/'game-data/provenance/rom-acquisition.json')['acquisitions'][0]
+    if acquisition['sha256']!=SHA256 or acquisition['size']!=1048592:
+        raise ValueError('Unexpected iteration ROM acquisition pin')
+    cache=ROOT/'.ci-private/nanhai-target.nes'
+    for path in (ROOT/'private-inputs/town02/target.nes',cache):
+        if path.is_file():
+            raw=path.read_bytes()
+            if len(raw)!=acquisition['size'] or digest(raw)!=SHA256:
+                raise ValueError('Cached iteration ROM differs; do not silently replace it')
+            return Reader(raw)
+    url=acquisition['url']
+    if not url.startswith('https://raw.githubusercontent.com/') or acquisition['commit'] not in url:
+        raise ValueError('ROM input must use the existing immutable public source')
+    with urllib.request.urlopen(url,timeout=60) as response:
+        if not response.url.startswith('https://'):raise ValueError('Insecure ROM redirect')
+        raw=response.read(acquisition['size']+1)
+    if len(raw)!=acquisition['size'] or digest(raw)!=SHA256:
+        raise ValueError('Downloaded iteration ROM fingerprint differs')
+    cache.parent.mkdir(parents=True,exist_ok=True);cache.write_bytes(raw);cache.chmod(0o600)
+    return Reader(raw)
 
-    The caller validates the immutable base APK with ci_apk.content. No original
-    ROM, historical captures or unchanged image/audio regeneration are needed in CI.
-    """
+def checked_span(reader,span):
+    offset=span['offset'];length=span['length']
+    if offset<16 or length<1 or offset+length>len(reader.data):
+        raise ValueError('Iteration evidence range outside pinned ROM')
+    raw=reader.data[offset:offset+length]
+    if digest(raw)!=span['sha256']:raise ValueError('Iteration evidence ROM range changed')
+    return raw
+
+def scoped_map_atlas(reader,map_data,palette,rgb):
+    """Existing metatile/CHR decoder, with this scene's observed NES palette."""
+    if len(palette)!=32 or any(x not in range(64) for x in palette) or len(set(palette))<2:
+        raise ValueError('Missing or faded scene palette')
+    if len(rgb)!=64 or any(len(c)!=3 or any(x not in range(256) for x in c) for c in rgb):
+        raise ValueError('Invalid emulator RGB palette')
+    offset=reader.header['sections']['chr']['offset']+map_data['chr2kBanks'][0]*2048
+    pattern=tile_image(reader.data[offset:offset+4096]);image=Image.new('RGBA',(256,256))
+    for t in range(256):
+        pal=map_data['attributes'][t]&3
+        for q,index in enumerate(map_data['metatiles'][t]):
+            for y in range(8):
+                for x in range(8):
+                    value=pattern.getpixel((index%16*8+x,index//16*8+y))[0]//85
+                    color=palette[0 if value==0 else pal*4+value]
+                    image.putpixel((t%16*16+q%2*8+x,t//16*16+q//2*8+y),tuple(rgb[color])+(255,))
+    out=io.BytesIO();image.save(out,format='PNG');return out.getvalue()
+
+def scoped_observed_graphic(reader,recipe):
+    """Rebuild the existing observed-ROM-tile recipe without uploading private PPU dumps."""
+    width,height=recipe['width'],recipe['height']
+    if width not in range(8,257,8) or height not in range(8,241,8):
+        raise ValueError('Invalid bounded graphic dimensions')
+    colors=recipe['paletteCodes'];image=Image.new('RGBA',(width,height));occupied=set()
+    for tile in recipe['tiles']:
+        raw=checked_span(reader,tile)
+        if len(raw)!=16:raise ValueError('Graphic tile must be 16 bytes')
+        xx,yy=tile['xy']
+        if xx%8 or yy%8 or not 0<=xx<=width-8 or not 0<=yy<=height-8 or (xx,yy) in occupied:
+            raise ValueError('Overlapping or escaped graphic tile')
+        occupied.add((xx,yy))
+        for y in range(8):
+            for x in range(8):
+                value=((raw[y]>>(7-x))&1)+2*((raw[y+8]>>(7-x))&1)
+                color=tuple(colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
+                image.putpixel((xx+x,yy+y),color)
+    if len(occupied)!=width*height//64:raise ValueError('Incomplete graphic recipe')
+    out=io.BytesIO();image.save(out,format='PNG');raw=out.getvalue()
+    if recipe.get('pngSha256') and digest(raw)!=recipe['pngSha256']:
+        raise ValueError('Reconstructed graphic differs from reviewed pixels')
+    return raw
+
+def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
+    """Extend the current exporter for this bounded route, retaining base media bytes."""
+    if evidence.get('romSha256')!=SHA256 or evidence.get('taskId')!='NANHAI-01':
+        raise ValueError('Unexpected Nanhai iteration evidence')
+    if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
+        raise ValueError('Nanhai export requires the reviewed base content')
+    reader=iteration_reader();result=dict(payload)
+    for enemy in evidence['combatOverlay']['enemies']:
+        original=extract_enemy(reader,enemy['id'])
+        for field in ('hp','attack','defense','experienceReward','moneyReward'):
+            if enemy[field]!=original[field]:raise ValueError('Enemy values differ from pinned ROM')
+        remaining=original['remainingBytes']
+        if (enemy['behaviorByte'],enemy['hitByte'])!=(remaining[1],remaining[2]):
+            raise ValueError('Enemy behavior differs from pinned ROM')
+        checked_span(reader,enemy['source'])
+        if enemy.get('loot') and enemy['loot']['threshold']!=remaining[3]:
+            raise ValueError('Loot threshold differs from pinned ROM')
+    for zone in evidence['combatOverlay']['zones']:
+        for group in zone['groups']:
+            raw=checked_span(reader,group['range'])
+            expected=bytes([v for entity in group['entities'] for v in (entity['slot']+1,entity['sourceType'])]+[0])
+            if raw!=expected:raise ValueError('Encounter slots differ from pinned ROM')
+    def verify_ranges(value):
+        if isinstance(value,dict):
+            if all(k in value for k in ('offset','length','sha256')):checked_span(reader,value)
+            for child in value.values():verify_ranges(child)
+        elif isinstance(value,list):
+            for child in value:verify_ranges(child)
+    verify_ranges(evidence['evidence']['boss'])
+    encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+    scene=json.loads(result['scene.json']);maps={m['mapId']:m for m in evidence['maps']}
+    if set(maps)!={25,97}:raise ValueError('Nanhai map scope changed without evidence review')
+    if set(maps)&{m['id'] for m in scene['maps']}:raise ValueError('New maps overlap base scenes')
+    exits=evidence['exits']
+    if any(e['fromMapId'] not in (16,25,97) or e['toMapId'] not in (16,25,97) for e in exits):
+        raise ValueError('Exit escapes current route scope')
+    for exit in exits:
+        raw=checked_span(reader,exit['rom'])
+        if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
+            raise ValueError('Nanhai exit does not match original dispatch record')
+        if exit['confidence']!='GAMEPLAY_VERIFIED_SCOPED':
+            raise ValueError('Route entry/return lacks normal original-game evidence')
+        scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn']}|
+            {'triggerMode':'CELL','confidence':'VERIFIED','arrivalDirection':'DOWN',
+             'source':exit['rom'],'evidence':provenance_path})
+    for mid,recipe in maps.items():
+        original=extract_map(reader,mid)
+        if original['gridSha256']!=recipe['gridSha256']:raise ValueError('Scoped map grid changed')
+        c=original['collisionCandidate'];classes=list(reader.read(c['module'],c['cpuAddress'],256))
+        grid=[t for row in original['grid'] for t in row];collision=[classes[t] for t in grid]
+        transition={e['trigger'][1]*original['width']+e['trigger'][0] for e in exits if e['fromMapId']==mid}
+        transition|={e['spawn'][1]*original['width']+e['spawn'][0] for e in exits if e['toMapId']==mid}
+        # Full normal-foot areas, not a coordinate/trajectory whitelist.
+        enabled=[i for i,c in enumerate(collision) if c in (0,2) or i in transition]
+        data={'schemaVersion':1,'version':target_pin['contentVersion'],'channel':'development',
+            'originalMapId':mid,'width':original['width'],'height':original['height'],
+            'tileSize':16,'logicalWidth':256,'logicalHeight':240,'grid':grid,'collision':collision,
+            'walkableClasses':[0,2],'transitionCells':sorted(transition),'enabledCells':enabled,
+            'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
+            'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],
+                'evidence':provenance_path,'paletteCapture':recipe['paletteCapture']},
+            'limitations':recipe.get('limitations',[]),'unavailableRegions':recipe.get('unavailableRegions',[])}
+        result[f'scene{mid}.json']=encoded(data)
+        result[f'tiles{mid}.png']=scoped_map_atlas(reader,original,recipe['palette'],evidence['emulatorRgb'])
+        scene['maps'].append({'id':mid,'scene':f'scene{mid}.json','atlas':f'tiles{mid}.png'})
+    world=json.loads(result['scene16.json']);transition=set(world.get('transitionCells',[]))
+    for exit in exits:
+        for field,mid in [('trigger',exit['fromMapId']),('spawn',exit['toMapId'])]:
+            if mid==16:transition.add(exit[field][1]*world['width']+exit[field][0])
+    world['transitionCells']=sorted(transition)
+    world['enabledCells']=sorted(set(world['enabledCells'])|transition)
+    result['scene16.json']=encoded(world)
+    if evidence.get('mapObjects'):scene['mapObjects']=evidence['mapObjects']
+    if evidence.get('items'):
+        if any(i['id'] in {old['id'] for old in scene['items']} for i in evidence['items']):raise ValueError('New item overlaps base definition')
+        scene['items'].extend(evidence['items'])
+    if evidence.get('npcs'):
+        scene['npcs'].extend(evidence['npcs']);scene['dialogues'].extend(evidence['dialogues'])
+    for name,recipe in evidence.get('graphics',{}).items():
+        if '/' in name or '\\' in name or not name.endswith('.png'):raise ValueError('Unsafe scoped image name')
+        result[name]=scoped_observed_graphic(reader,recipe)
+    if evidence.get('combatOverlay'):
+        combat=json.loads(result['combat.json']);overlay=evidence['combatOverlay']
+        for name in ('enemies','zones'):
+            if name in overlay:combat[name]=combat.get(name,[])+overlay[name]
+        if 'enemyAgility' in overlay:combat['escape']['enemyAgility'].update(overlay['enemyAgility'])
+        combat['presentation']['graphics'].extend(overlay.get('graphics',[]))
+        for name in ('horizons','blackBackgroundEnemyIds'):
+            if name in overlay:combat['presentation'][name]=overlay[name]
+        for name in ('physicalRules','bosses'):
+            if name in overlay:combat[name]=overlay[name]
+        observed=evidence['evidence'].get('normalGrowth',{})
+        if overlay.get('growthVerifiedLevels'):
+            if observed.get('normalReadOnlyNoRAMwrites')!=True:raise ValueError('Growth lacks normal original-game evidence')
+            for sample in observed['observed']:
+                state=sample['state'];level=state['level'];rows=[r for r in combat['nezhaGrowth'] if r['level']<=level]
+                for field,initial in [('maxHp','maxHp'),('strength','strength'),('stamina','stamina'),('agility','agility'),('spirit','spirit')]:
+                    increment='hp' if field=='maxHp' else field
+                    if state[field]!=scene['initialPlayer'][initial]+sum(r[increment] for r in rows):raise ValueError('Observed growth conflicts with base rows')
+                threshold=next(r['threshold'] for r in combat['nezhaGrowth'] if r['level']==level+1)
+                if state['xp']+state['remainingExp']!=threshold:raise ValueError('Observed level threshold conflicts')
+        for row in combat['nezhaGrowth']:
+            if row['level'] in overlay.get('growthVerifiedLevels',[]):
+                row['runtimeVerified']=True;row['runtimeEvidence']=provenance_path
+        result['combat.json']=encoded(combat)
+    if evidence.get('audio'):
+        audio=json.loads(result['audio.json'])
+        for candidate in evidence['audio']:
+            name=candidate['file'];checked_name=name.startswith('bgm-') and name.endswith('.mp3') and '/' not in name and '\\' not in name
+            if not checked_name or name in result:raise ValueError('Audio addition overlaps base or escapes scope')
+            cache=ROOT/'.ci-private'/name
+            url=candidate['source']
+            prefix='https://raw.githubusercontent.com/v5100v5100/FengShenBang/'+evidence['sourceReference']['commit']+'/Resources/res/Sound/'
+            if not url.startswith(prefix):raise ValueError('Unpinned audio source')
+            if cache.is_file():raw=cache.read_bytes()
+            else:
+                with urllib.request.urlopen(url,timeout=60) as response:
+                    if not response.url.startswith('https://'):raise ValueError('Insecure audio redirect')
+                    raw=response.read(candidate['bytes']+1)
+            if len(raw)!=candidate['bytes'] or digest(raw)!=candidate['sha256']:raise ValueError('Reference audio hash differs')
+            cache.parent.mkdir(parents=True,exist_ok=True);cache.write_bytes(raw)
+            result[name]=raw;track='reference.bgm.'+str(candidate['id']).zfill(3)
+            audio['assets'].append({'id':track,'file':name,'kind':'BGM','loop':candidate['loop'],
+                'loopStartMs':candidate['loopStartMs'],'loopEndMs':candidate['loopEndMs'],'source':candidate})
+            audio['maps'][str(candidate['mapId'])]=track
+        result['audio.json']=encoded(audio)
+    scene['runtimeScope']=evidence['runtimeScope'];scene['nanhai']=evidence.get('story',{})
+    scene['limitations']=[x for x in scene.get('limitations',[]) if not x.startswith('Nanhai')]
+    scene['limitations'].extend(evidence.get('limitations',[]))
+    result['scene.json']=encoded(scene)
+    return result
+
+def export_from_base(payload, provenance_path, target_pin, verify_target=True):
+    """Reuse checked base bytes; dispatch the current bounded, evidenced iteration."""
     evidence_path=(ROOT/provenance_path).resolve()
     if not evidence_path.is_relative_to(ROOT) or evidence_path.suffix!='.json':
         raise ValueError('Invalid iteration provenance path')
     evidence=load(evidence_path)
-    if evidence['taskId']!='TOWN-02' or evidence['romSha256']!=SHA256:
+    if evidence['romSha256']!=SHA256 or evidence['taskId'] not in ('TOWN-02','NANHAI-01'):
         raise ValueError('Unexpected iteration evidence')
+    if evidence['taskId']=='NANHAI-01':
+        result=export_nanhai_from_base(payload,evidence,provenance_path,target_pin)
+        encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+        for name,raw in list(result.items()):
+            if name=='manifest.json' or not name.endswith('.json'):continue
+            value=json.loads(raw)
+            if 'version' in value:value['version']=target_pin['contentVersion'];result[name]=encoded(value)
+        manifest=json.loads(result['manifest.json']);manifest['version']=target_pin['contentVersion']
+        manifest['files']={name:digest(raw) for name,raw in result.items() if name!='manifest.json'}
+        result['manifest.json']=encoded(manifest)
+        if verify_target and digest(result['manifest.json'])!=target_pin['manifestSha256']:
+            raise ValueError('Nanhai export differs from reviewed target pin')
+        return result
     rule=evidence['herbUse']
     if rule!={'healHp':50,'mapMenu':True,'target':'living-party-member',
               'consumeAtFullHp':True,'evidence':provenance_path}:

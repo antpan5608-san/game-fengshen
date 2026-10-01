@@ -127,7 +127,7 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
     val enabled: Set<Int>,val spawnX: Int,val spawnY: Int,val mapId:Int=114,
     val walkableClasses:Set<Int> = setOf(0),val dynamicObjectCells:Set<Int> = emptySet(),
     val transitionCells:Set<Int> = emptySet(),val sourceEdges:Map<Int,Set<Key>> = emptyMap(),
-    val targetEdges:Map<Int,Set<Key>> = emptyMap()) {
+    val targetEdges:Map<Int,Set<Key>> = emptyMap(),val unavailableRegions:List<EncounterRect> = emptyList()) {
     init {
         require(width in 1..256 && height in 1..256 && grid.size==width*height && collision.size==grid.size)
         require(grid.all { it in 0..255 } && collision.all { it in 0..255 })
@@ -138,6 +138,7 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
     }
     fun blockType(x:Int,y:Int):MovementBlock {
         if(x !in 0 until width || y !in 0 until height)return MovementBlock.DEVELOPMENT
+        if(unavailableRegions.any{it.contains(x,y)})return MovementBlock.DEVELOPMENT
         val i=y*width+x
         if(collision[i] !in walkableClasses && i !in transitionCells)
             return if(collision[i] in setOf(1,3,4,5,7))MovementBlock.PHYSICAL else MovementBlock.DEVELOPMENT

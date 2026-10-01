@@ -3,14 +3,17 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c12",
-  "manifestSha256": "8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8",
+  "contentVersion": "opening-segment-001-c13",
+  "manifestSha256": "58392a4a9c184b57f5d0f2d28d0341d39f9fd86f2fef235b20e1a59e754cf526",
   "iteration": {
     "base": {
-      "contentVersion": "opening-segment-001-c11",
-      "manifestSha256": "3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147",
-      "apkSha256": "5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f"
+      "contentVersion": "opening-segment-001-c12",
+      "manifestSha256": "8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8",
+      "apkSha256": "def359de888614152768bdb70c4f12a5e09a653124db6eb0650e96a9edb76300",
+      "buildRunId": 36917255772,
+      "sourceCommit": "ef29edb9192bb299ed493b767c52b23c450b2094",
+      "versionCode": 24
     },
-    "provenance": "game-data/provenance/town02-herb.json"
+    "provenance": "game-data/provenance/nanhai01.json"
   }
 }

@@ -959,4 +959,222 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(EquipmentState(0,-1,0,28),migrated.characters.first().equipment)
         instrumentation.runOnMainSync{activity.finish()}
     }
+    /** One continuous new-game controller flow. No restoreSnapshot, HP/level/item/flag writes. */
+    fun testNormalNanhaiRouteBossAndVictory(){
+        instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit() // Isolated emulator fixture only.
+        val(activity,v)=launch();val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
+        var fightCount=0;var herbUses=0;var capturedBoss=false;var capturedIce=false
+        fun state(name:String,capture:Boolean=true){
+            if(capture)screenshot(v,"nanhai-$name")
+            events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
+                .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
+            File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-normal-index.json").writeText(
+                org.json.JSONObject().put("kind","NORMAL_CONTROLLER_NEW_GAME_NO_STATE_INJECTION").put("events",events)
+                    .put("fights",fightCount).put("herbUses",herbUses).toString())
+        }
+        val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
+        val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
+        fun finishFight(){
+            if(v.layer!=GameView.Layer.BATTLE)return
+            val boss=(f.get(v) as OpeningBattle).enemies.any{it.definition.id==137}
+            fightCount++
+            if(boss&&!capturedBoss){state("boss-entry");capturedBoss=true}
+            val deadline=SystemClock.elapsedRealtime()+180000
+            while(v.layer==GameView.Layer.BATTLE){
+                assertTrue("Normal fight did not finish",SystemClock.elapsedRealtime()<deadline)
+                val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
+                if(boss&&presentation.screen==BattlePresentation.Screen.ACTING&&!capturedIce&&
+                    presentation.action?.text?.contains("冰系")==true){state("boss-ice");capturedIce=true}
+                if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
+                    assertTrue("Normal preparation must survive; no forced win or restored fixture",fight.phase!=BattlePhase.DEFEAT)
+                    if(boss&&presentation.screen==BattlePresentation.Screen.RESULT)state("boss-victory-result")
+                    tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                }
+                SystemClock.sleep(40)
+            }
+        }
+        fun herb(){
+            assertEquals(GameView.Layer.MAP,v.layer)
+            val before=v.currentSnapshot();assertTrue((before.inventory[HerbUse.ID]?:0)>0)
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,HerbUse.ID)
+            tap(v,center(v.panelItemBounds(HerbUse.ID)));assertEquals(before,v.currentSnapshot())
+            tap(v,center(v.panelPrimaryBounds()));herbUses++
+            val after=v.currentSnapshot();assertEquals(minOf(before.characters.first().maxHp,before.characters.first().hp+50),after.characters.first().hp)
+            assertEquals((before.inventory[HerbUse.ID]?:0)-1,after.inventory[HerbUse.ID]?:0)
+            instrumentation.runOnMainSync{v.handleBack()};assertEquals(GameView.Layer.MAP,v.layer)
+        }
+        fun healIfNeeded(){val s=v.currentSnapshot();val h=s.characters.first()
+            if(v.layer==GameView.Layer.MAP&&h.hp<h.maxHp-7&&(s.inventory[HerbUse.ID]?:0)>0)herb()}
+        fun step(key:Key){assertEquals(GameView.Layer.MAP,v.layer);stickStep(v,key);finishFight();healIfNeeded()}
+        fun walkTo(tx:Int,ty:Int){
+            val scene=v.world.scene;val goal=ty*scene.width+tx;var attempts=0
+            while(v.world.mapId==scene.mapId&&v.world.y/16*scene.width+v.world.x/16!=goal){
+                assertTrue("Normal path did not converge on ${scene.mapId}:$tx,$ty",attempts++<2000)
+                val start=v.world.y/16*scene.width+v.world.x/16;val queue=java.util.ArrayDeque<Int>();queue.add(start)
+                val parents=mutableMapOf(start to (-1 to Key.UP))
+                while(queue.isNotEmpty()&&goal !in parents){
+                    val at=queue.removeFirst();val x=at%scene.width;val y=at/scene.width
+                    for((key,d)in listOf(Key.UP to (0 to -1),Key.DOWN to (0 to 1),Key.LEFT to (-1 to 0),Key.RIGHT to (1 to 0))){
+                        val nx=x+d.first;val ny=y+d.second;if(scene.probeFrom(x,y,key)!=MovementBlock.NONE)continue
+                        val next=ny*scene.width+nx
+                        if(next in parents||(next!=goal&&v.content.exits.any{it.fromMapId==scene.mapId&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null}))continue
+                        parents[next]=at to key;queue.add(next)
+                    }
+                }
+                assertTrue("No legal route ${scene.mapId}→$tx,$ty",goal in parents)
+                var next=goal;while(parents.getValue(next).first!=start)next=parents.getValue(next).first
+                step(parents.getValue(next).second)
+            }
+        }
+        fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+            repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
+        fun equip(id:String){
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,id)
+            tap(v,center(v.panelItemBounds(id)));tap(v,center(v.panelPrimaryBounds()))
+            val d=v.content.equipmentDefinitions.getValue(id);val e=v.currentSnapshot().characters.first().equipment!!
+            assertEquals(d.originalId,if(d.slot=="body")e.body else e.rightHand)
+            instrumentation.runOnMainSync{v.handleBack()}
+        }
+        fun buy(mid:Int,id:String,count:Int){
+            assertEquals(0,v.world.mapId)
+            val entry=v.content.exits.first{it.fromMapId==0&&it.toMapId==mid};walkTo(entry.triggerX,entry.triggerY)
+            val npc=v.content.npcs.first{it.mapId==mid&&it.shopId!=null};walkTo(npc.interactionCell!!.first,npc.interactionCell.second)
+            talk();assertEquals(GameView.Layer.SHOP,v.layer);tap(v,center(v.shopActionBounds(1)))
+            scrollToShopItem(v,id);tap(v,center(v.shopItemBounds(id)))
+            repeat(count){val before=v.currentSnapshot();tap(v,center(v.shopActionBounds(4)))
+                assertEquals(before.money-v.content.itemDefinitions.getValue(id).buyPrice!!,v.currentSnapshot().money)
+                assertEquals((before.inventory[id]?:0)+1,v.currentSnapshot().inventory[id])}
+            tap(v,center(v.shopActionBounds(3)));assertEquals(GameView.Layer.MAP,v.layer)
+            val exit=v.content.exits.first{it.fromMapId==mid};walkTo(exit.triggerX,exit.triggerY);assertEquals(0,v.world.mapId)
+        }
+        fun town(){
+            if(v.world.mapId==25){walkTo(39,42);assertEquals(16,v.world.mapId)}
+            if(v.world.mapId==16){walkTo(202,130);assertEquals(0,v.world.mapId)}
+        }
+        fun leaveTown(){walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId);walkTo(200,130)}
+        fun refillAndUpgrade(){
+            town()
+            var s=v.currentSnapshot()
+            if(s.characters.first().equipment!!.rightHand!=2&&s.money>=135){buy(17,"rom.weapon.2",1);equip("rom.weapon.2")}
+            s=v.currentSnapshot();val count=minOf(5-(s.inventory[HerbUse.ID]?:0),s.money/15).coerceAtLeast(0)
+            if(count>0)buy(19,HerbUse.ID,count)
+            healIfNeeded();leaveTown()
+        }
+        state("new-game")
+        walkTo(7,16);talk();assertEquals(100,v.currentSnapshot().money)
+        walkTo(11,22);talk();assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
+        walkTo(8,29);assertEquals(16,v.world.mapId);walkTo(202,130);assertEquals(0,v.world.mapId)
+        buy(18,"rom.armor.1",1);equip("rom.armor.1");buy(19,HerbUse.ID,1);state("optional-supply")
+        leaveTown();var steps=0
+        while(v.currentSnapshot().characters.first().level<3){
+            assertTrue("Bounded normal training",steps++<10000)
+            val s=v.currentSnapshot();val h=s.characters.first()
+            if((s.inventory[HerbUse.ID]?:0)==0&&h.hp<h.maxHp*3/4)refillAndUpgrade()
+            val key=if(v.world.y/16==130)Key.DOWN else Key.UP;step(key)
+        }
+        state("world-trained")
+        walkTo(199,130);assertEquals(25,v.world.mapId);state("sea-entry")
+        // Verified reverse exits through their true trigger cells, no coordinate swapping.
+        walkTo(39,43);walkTo(39,42);assertEquals(16,v.world.mapId);state("sea-return",false)
+        walkTo(200,130);walkTo(199,130);assertEquals(25,v.world.mapId);walkTo(39,43)
+        while(v.currentSnapshot().characters.first().level<8||v.currentSnapshot().characters.first().equipment!!.rightHand!=2){
+            assertTrue("Normal sea training budget",steps++<20000)
+            val s=v.currentSnapshot();val h=s.characters.first()
+            if((s.inventory[HerbUse.ID]?:0)==0&&h.hp<h.maxHp*3/4||h.equipment!!.rightHand!=2&&s.money>=135){
+                refillAndUpgrade();walkTo(199,130);assertEquals(25,v.world.mapId);walkTo(39,43)
+            }
+            step(if(v.world.x/16==39)Key.LEFT else Key.RIGHT)
+        }
+        refillAndUpgrade();walkTo(199,130);assertEquals(25,v.world.mapId);state("sea-prepared")
+        walkTo(29,44);assertEquals(97,v.world.mapId);state("palace-entry")
+        walkTo(15,28);walkTo(15,29);assertEquals(25,v.world.mapId);state("palace-return",false)
+        walkTo(29,43);walkTo(29,44);assertEquals(97,v.world.mapId)
+        walkTo(15,14);tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        state("guard-dialogue");repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
+        walkTo(15,4);val b=v.currentSnapshot();if((b.inventory[HerbUse.ID]?:0)>0&&b.characters.first().hp<b.characters.first().maxHp)herb()
+        val beforeBoss=v.currentSnapshot();assertTrue(beforeBoss.flags["rom.event.97.39.1"]!=true)
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer);state("boss-dialogue")
+        repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
+        assertEquals(GameView.Layer.BATTLE,v.layer);finishFight();assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        val won=v.currentSnapshot();assertEquals(beforeBoss.money+100,won.money);assertEquals(beforeBoss.characters.first().experience+60,won.characters.first().experience)
+        assertEquals(true,won.flags["rom.event.97.39.1"]);assertEquals(97,won.mapId);state("post-victory-dialogue")
+        repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
+        assertEquals(GameView.Layer.MAP,v.layer);val settled=v.currentSnapshot();assertTrue(settled.flags["rom.event.97.39.1.dialogue.pending"]!=true)
+        talk();assertEquals(GameView.Layer.MAP,v.layer);assertEquals(settled,v.currentSnapshot());state("repeat-no-reward")
+        step(Key.DOWN);assertEquals(97,v.world.mapId);state("next-operable")
+        instrumentation.runOnMainSync{v.persistState()}
+        File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-expected-save.json").writeText(v.currentSnapshot().json().toString())
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testNanhaiColdStartMatchesNormalSave(){
+        val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-expected-save.json")
+        assertTrue("Run continuous normal route before external force-stop",expectedFile.exists())
+        val expected=SaveSnapshot.parse(expectedFile.readText());val(activity,v)=launch()
+        assertEquals(expected,v.currentSnapshot());assertEquals(true,expected.flags["rom.event.97.39.1"])
+        assertTrue(expected.flags["rom.event.97.39.1.dialogue.pending"]!=true)
+        stickStep(v,Key.DOWN);assertEquals(97,v.world.mapId)
+        assertEquals(expected.characters,v.currentSnapshot().characters);assertEquals(expected.money,v.currentSnapshot().money)
+        assertEquals(expected.inventory,v.currentSnapshot().inventory);assertEquals(expected.flags,v.currentSnapshot().flags)
+        screenshot(v,"nanhai-cold-restored-continue")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
+
+    /** Controlled boundary fixture: separate from the continuous normal-play recorder. */
+    fun testControlledNanhaiVictoryFlagAndResumeOnce(){
+        val(activity,v)=launch();val base=v.currentSnapshot()
+        val hero=v.content.initialPlayer.copy(hp=1000,maxHp=1000,strength=250,equipment=EquipmentState(2,-1,1,28))
+        instrumentation.runOnMainSync{
+            assertTrue(v.restoreSnapshot(base.copy(mapId=97,x=15*16+8,y=4*16+8,direction=Key.UP,
+                characters=listOf(hero),inventory=mapOf("rom.weapon.2" to 10),money=123,
+                flags=mapOf("opening.intro.seen" to true),encounterSteps=0)))
+        }
+        val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
+        val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
+        fun completeDialogue(view:GameView){repeat(16){if(view.layer==GameView.Layer.DIALOGUE)tap(view,Pair(view.width*.5f,view.height*.5f))}}
+        fun waitCommands(){
+            for(i in 0..500){val presentation=p.get(v) as BattlePresentation
+                if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))return
+                SystemClock.sleep(40)}
+            fail("Controlled Boss presentation timeout")
+        }
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true)
+        completeDialogue(v);assertEquals(GameView.Layer.BATTLE,v.layer);waitCommands()
+        val box=GameView::class.java.getDeclaredMethod("battleBox").apply{isAccessible=true}.invoke(v) as Box;val scale=box.w/256f
+        val fight=f.get(v) as OpeningBattle;val beforeEscapeHp=fight.hero.hp
+        tap(v,Pair(box.x+40*scale,box.y+208*scale));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
+        assertEquals(BattlePhase.TARGET,fight.phase);assertTrue(fight.hero.hp<beforeEscapeHp)
+        assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true);waitCommands()
+        for(i in 0..20){
+            if(fight.phase!=BattlePhase.TARGET)break
+            tap(v,Pair(box.x+40*scale,box.y+156*scale))
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)));waitCommands()
+        }
+        assertEquals(BattlePhase.VICTORY,fight.phase);assertEquals(BattlePresentation.Screen.RESULT,(p.get(v) as BattlePresentation).screen)
+        val won=v.currentSnapshot();assertEquals(223,won.money);assertEquals(60,won.characters.first().experience)
+        assertEquals(10,won.inventory["rom.weapon.2"]);assertEquals(true,won.flags["rom.event.97.39.1"])
+        assertEquals(true,won.flags["rom.event.97.39.1.dialogue.pending"])
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+        val(a2,v2)=launch();completeDialogue(v2)
+        assertEquals(GameView.Layer.MAP,v2.layer);assertEquals(won.money,v2.currentSnapshot().money)
+        assertEquals(won.characters,v2.currentSnapshot().characters);assertEquals(won.inventory,v2.currentSnapshot().inventory)
+        assertEquals(true,v2.currentSnapshot().flags["rom.event.97.39.1"])
+        assertTrue(v2.currentSnapshot().flags["rom.event.97.39.1.dialogue.pending"]!=true)
+        val settled=v2.currentSnapshot();tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));completeDialogue(v2)
+        assertEquals(GameView.Layer.MAP,v2.layer);assertEquals(settled,v2.currentSnapshot())
+        // Boss defeat without original manual save uses the preserved new-game branch.
+        instrumentation.runOnMainSync{assertTrue(v2.restoreSnapshot(settled.copy(
+            characters=listOf(v2.content.initialPlayer.copy(hp=1)),flags=mapOf("opening.intro.seen" to true),inventory=emptyMap(),money=123)))}
+        tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));completeDialogue(v2)
+        val p2=p.get(v2) as BattlePresentation
+        for(i in 0..500){if(p2.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))break;SystemClock.sleep(40)}
+        tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)))
+        for(i in 0..500){if(p2.screen==BattlePresentation.Screen.RESULT)break;SystemClock.sleep(40)}
+        assertEquals(BattlePhase.DEFEAT,(f.get(v2) as OpeningBattle).phase)
+        assertEquals(114,v2.currentSnapshot().mapId);assertEquals(20,v2.currentSnapshot().characters.first().hp)
+        assertEquals(0,v2.currentSnapshot().money);assertTrue(v2.currentSnapshot().inventory.isEmpty())
+        assertTrue(v2.currentSnapshot().flags["rom.event.97.39.1"]!=true)
+        instrumentation.runOnMainSync{a2.finish()}
+    }
+
 }

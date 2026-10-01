@@ -1,7 +1,7 @@
 """Record the actual emulator App display + Windows output loopback, no microphone.
 The existing normal-controller Android test supplies input; no ROM footage is substituted.
 """
-import subprocess,time,wave,json,threading,sys,xml.etree.ElementTree as ET,io
+import subprocess,time,wave,json,threading,sys,xml.etree.ElementTree as ET,io,hashlib
 from pathlib import Path
 from PIL import Image
 
@@ -9,6 +9,12 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts/checkpoint-ui'
 def record_silent():
     """Portable branch of the existing recorder; video only, no audio claim."""
+    cold_method='testHerbColdStartMatchesNormalSave';budget=1200
+    if '--cold-test' in sys.argv:
+        i=sys.argv.index('--cold-test');cold_method=sys.argv[i+1];del sys.argv[i:i+2]
+    if '--budget-seconds' in sys.argv:
+        i=sys.argv.index('--budget-seconds');budget=int(sys.argv[i+1]);del sys.argv[i:i+2]
+    assert 60<=budget<=3600 and cold_method.isidentifier()
     comparison='--comparison' in sys.argv
     if comparison:sys.argv.remove('--comparison')
     prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
@@ -34,18 +40,20 @@ def record_silent():
     backups={name:read_pref(name) for name in names}
     OUT.mkdir(parents=True,exist_ok=True)
     test_log=OUT/f'{prefix}-normal-test.txt'
-    videos=[]
+    videos=[];segments=[]
     test=None;video=None
     try:
         with test_log.open('w') as log:
             test=subprocess.Popen(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class',f'org.fengshen.dev.TouchTest#{method}','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT)
             started=time.monotonic()
             while test.poll() is None:
-                if time.monotonic()-started>1200:raise TimeoutError('Normal App route exceeded isolated runtime budget')
+                if time.monotonic()-started>budget:raise TimeoutError('Normal App route exceeded isolated runtime budget')
                 remote=f'/sdcard/{prefix}-normal-{len(videos):02d}.mp4'
+                uptime_ms=int(float(adb('shell','cat','/proc/uptime').decode().split()[0])*1000)
+                segment_started=time.monotonic()
                 video=subprocess.Popen(['adb','-s','emulator-5554','shell','screenrecord','--bit-rate','1000000','--time-limit','180',remote],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
                 while video.poll() is None and test.poll() is None:
-                    if time.monotonic()-started>1200:raise TimeoutError('Normal App recording budget exhausted')
+                    if time.monotonic()-started>budget:raise TimeoutError('Normal App recording budget exhausted')
                     time.sleep(.5)
                 if video.poll() is None:
                     pid=adb('shell','pidof','screenrecord').decode().strip()
@@ -53,6 +61,9 @@ def record_silent():
                 video.wait(timeout=60)
                 local=OUT/f'{prefix}-normal-{len(videos):02d}.mp4'
                 adb('pull',remote,str(local));videos.append(str(local.relative_to(ROOT)))
+                segments.append({'file':videos[-1],'sha256':hashlib.sha256(local.read_bytes()).hexdigest(),
+                    'startedAndroidUptimeMs':uptime_ms,'durationSeconds':round(time.monotonic()-segment_started,3),
+                    'limit':'Capture start approximate; actual frames in retained MP4'})
         assert 'OK (1 test)' in test_log.read_text(), 'Normal route assertions did not pass'
         if comparison:
             result={'source':'Actual Android App screenrecord; SILENT','kind':'CONTROLLED_UI_COMPARISON','videos':videos,'comparisonAssertions':'PASS','audio':'NOT_RUN'}
@@ -63,12 +74,12 @@ def record_silent():
         assert saved()==before,'Cold restart changed saved state'
         cold_log=OUT/f'{prefix}-cold-start-test.txt'
         with cold_log.open('w') as log:
-            subprocess.run(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class','org.fengshen.dev.TouchTest#testHerbColdStartMatchesNormalSave','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT,timeout=300,check=True)
+            subprocess.run(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class',f'org.fengshen.dev.TouchTest#{cold_method}','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT,timeout=300,check=True)
         assert 'OK (1 test)' in cold_log.read_text(),'Actual cold GameView did not restore the normal result'
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
         (OUT/f'{prefix}-force-stop-restored.png').write_bytes(adb('exec-out','screencap','-p'))
         result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
-            'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
+            'segments':segments,'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result))
     finally:
