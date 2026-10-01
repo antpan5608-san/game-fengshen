@@ -46,7 +46,7 @@ class NanhaiExportTests(unittest.TestCase):
     def test_changed_reviewed_pixels_are_rejected(self):
         evidence=json.loads((ci.ROOT/self.proof).read_text(encoding='utf-8'))
         evidence['graphics']['enemy-137.png']['rgbaSha256']='0'*64
-        with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text(encoding='utf-8'))):
+        with patch.object(exporter,'load',side_effect=lambda path: evidence if Path(path).resolve()==(ci.ROOT/self.proof).resolve() else json.loads(Path(path).read_text(encoding='utf-8'))):
             with self.assertRaisesRegex(ValueError,'RGBA pixels'):exporter.export_from_base(self.base,self.proof,self.pin)
     def test_real_contiguous_route_and_original_encounters(self):
         scene=json.loads(self.result['scene.json']);self.assertEqual({114,16,0,17,18,19,25,97},{m['id'] for m in scene['maps']})
@@ -75,7 +75,7 @@ class NanhaiExportTests(unittest.TestCase):
             elif kind=='exit':evidence['exits'][0]['spawn']=[0,0]
             elif kind=='tile':evidence['graphics']['enemy-137.png']['tiles'][0]['sha256']='0'*64
             else:evidence['romSha256']='0'*64
-            with patch.object(exporter,'load',side_effect=lambda path: evidence if str(path).endswith(self.proof) else json.loads(Path(path).read_text(encoding='utf-8'))):
+            with patch.object(exporter,'load',side_effect=lambda path: evidence if Path(path).resolve()==(ci.ROOT/self.proof).resolve() else json.loads(Path(path).read_text(encoding='utf-8'))):
                 with self.assertRaises(ValueError):exporter.export_from_base(self.base,self.proof,self.pin)
     def test_manifest_hashes_every_file_and_keeps_herb_rule(self):
         manifest=json.loads(self.result['manifest.json']);self.assertEqual(set(self.result)-{'manifest.json'},set(manifest['files']))

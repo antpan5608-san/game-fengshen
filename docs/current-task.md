@@ -23,7 +23,7 @@ execution_kind: IMPLEMENTED
 - 两辅助任务仅scratch隔离证据/测试草稿，已完成停止；主任务唯一集成打包发布。ROM/rawPPU/RAM/原始截图/回放仍私有，公开provenance仅范围、hash、派生recipe与来源。
 - 下一动作：以可信v24不可变artifact核验receipt/同签名→局部导出目标→原Actions构建与KVM AVD实际覆盖升级/回归→正常新游戏供给/练级/路线/Boss/胜后→外部force-stop恢复。失败修复后重建同提交候选，未达门槛不发生产。
 - 当前具体阻塞：无不可替代资源/权限阻塞；Android正常M1—M3及候选同源/签名/巡检门槛未执行，当前签名/服务器Secrets只在runner内。
-- 时间检查点：2026-10-01约22:05 UTC，已用约1.5小时，剩余约8.5小时。首源码检查点40db7d2；原CI36931479402在Windows导出时失败：Pillow PNG压缩字节与Linux不同，非ROM/像素差异。原导出器现使用固定无压缩DEFLATE PNG，新图先验证已审核RGBA hash再验证目标文件/manifest hash；旧素材字节不变，原源PNG hash保留provenance。本地局部导出7/7通过；第二CI36932538963已在Windows严格恢复同manifest成功，证明PNG差异修复，但三项测试读取中文provenance时依赖系统cp1252而失败。只修复测试显式UTF-8读取，不删断言，再按新来源提交重建。
+- 时间检查点：2026-10-01约22:05 UTC，已用约1.5小时，剩余约8.5小时。首源码检查点40db7d2；原CI36931479402在Windows导出时失败：Pillow PNG压缩字节与Linux不同，非ROM/像素差异。原导出器现使用固定无压缩DEFLATE PNG，新图先验证已审核RGBA hash再验证目标文件/manifest hash；旧素材字节不变，原源PNG hash保留provenance。本地局部导出7/7通过；第二CI36932538963已在Windows严格恢复同manifest成功，证明PNG差异修复，但三项测试读取中文provenance时依赖系统cp1252而失败。只修复测试显式UTF-8读取，不删断言。第三CI36932722843严格恢复及像素解码已成功，Windows反例mock的字符串斜杠匹配未命中输入，出现2个反例不拒绝；已改按Path.resolve相等匹配，保留所有错误输入拒绝断言。
 - 独立干净worktree40db首次恢复59文件成功，使用原入口固定公开输入并核完整ROM/MP3 hash；未迁完整旧目录。全量Python历史ImportIntegrityTests仅缺game-data/raw/reference-project/dataset.json而setUpClass失败，8项跳过、68方法通过；这是未恢复全量历史Reference依赖，不伪报全量通过，不要求全部迁回。另22自动审批安全fixture断言通过。
 - 原版现有RAM/static范围补核：Boss初始化遇敌计数32不清，胜后恢复世界清0。仅完成胜后待对话后清零，不在开战初始化伪造清零；受控App验收新增此断言。
 - 04:03:25 UTC按75%收敛，截止06:33:25 UTC。下一条动作：提交修复后原工作流重建并实际运行normal新游戏路线。
