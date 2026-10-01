@@ -347,7 +347,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun battleEnemyBox(enemy:BattleEnemy):Box {
         val graphic=content.enemyGraphics[enemy.definition.id]
-        return battleRegion(16f+32*enemy.slot,72f,(graphic?.width?:32).toFloat(),(graphic?.height?:40).toFloat())
+        val origin=content.enemyOrigins[enemy.definition.id]
+        return battleRegion(origin?.first?.toFloat()?: (16f+32*enemy.slot),origin?.second?.toFloat()?:72f,
+            (graphic?.width?:32).toFloat(),(graphic?.height?:40).toFloat())
     }
     private fun battleAction(x:Float,y:Float):Int? {
         val current=battle?:return null;val screen=battlePresentation.screen

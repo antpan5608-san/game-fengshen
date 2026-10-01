@@ -21,7 +21,9 @@ execution_kind: IMPLEMENTED
 - 原版地图97手动存档明确拒绝，未有效手动保存的poweron回开局不算恢复成功；Android沿用原有自动SaveSnapshot便利存档，另验强制停止/重启。原版手动存档战败加载分支继续欠账。
 - 新增内容通过原export_from_base接续：两必经地图/四连接/三NPC/两可选宝箱原图但交互未开放/四正常敌人及Boss/地图遇敌/本场规则/掉落/本场背景。未变化c12媒体逐字节复用。北部海底实际group4未接入区域明确开发边界，旧地图不缩回坐标白名单。新增BGM来自固定Reference，PROVISIONAL，许可/目标旋律/精确loop仍未知。
 - 两辅助任务仅scratch隔离证据/测试草稿，已完成停止；主任务唯一集成打包发布。ROM/rawPPU/RAM/原始截图/回放仍私有，公开provenance仅范围、hash、派生recipe与来源。
-- 下一动作：以可信v24不可变artifact核验receipt/同签名→局部导出目标→原Actions构建与KVM AVD实际覆盖升级/回归→正常新游戏供给/练级/路线/Boss/胜后→外部force-stop恢复。失败修复后重建同提交候选，未达门槛不发生产。
+- 最新签名候选检查点：来源3aaf4fcdf0afb9caf91e3afbd064bedfaa1cc9a0，原build run36932952930的Windows build已成功，release JVM69/69；候选v25/0.8.5-nanhai-01，APK SHA1483472f2ea2636714ff031742680cf649af5b97f25960d090c27ff5cb063262，12788840字节，目标c13 manifest0b614b749bb430d4f5a06c255cf4926703e234beab976abfb539ec3de3841eb6，59文件。已独立下载/验原签名与source/run/内容，33个旧媒体逐字节一致。Android runtime尚运行，未验收/未发布；main冻结此来源，本地此任务状态先保存，发布后才提交文档。
+- 检查点巡检inspect36933053909于2026-10-01T22:07:29.805433995Z成功：24/23，720事件，0测试，普通真机会话3/模拟器0，v24 290/v23 430，错误{}，清理失败0。上传区间止20:28:44，未增加样本，不能冒称当前APK真机验收。
+- 下一动作：等原runtime实际覆盖/回归/正常新游戏路线→Boss→胜后/force-stop结果；失败读取其artifact，按具体原因修复后新来源重建，不重复相同CI。当前候选正式APK可本地下载artifacts/nanhai01/candidate，生产仍24。
 - 当前具体阻塞：无不可替代资源/权限阻塞；Android正常M1—M3及候选同源/签名/巡检门槛未执行，当前签名/服务器Secrets只在runner内。
 - 时间检查点：2026-10-01约22:05 UTC，已用约1.5小时，剩余约8.5小时。首源码检查点40db7d2；原CI36931479402在Windows导出时失败：Pillow PNG压缩字节与Linux不同，非ROM/像素差异。原导出器现使用固定无压缩DEFLATE PNG，新图先验证已审核RGBA hash再验证目标文件/manifest hash；旧素材字节不变，原源PNG hash保留provenance。本地局部导出7/7通过；第二CI36932538963已在Windows严格恢复同manifest成功，证明PNG差异修复，但三项测试读取中文provenance时依赖系统cp1252而失败。只修复测试显式UTF-8读取，不删断言。第三CI36932722843严格恢复及像素解码已成功，Windows反例mock的字符串斜杠匹配未命中输入，出现2个反例不拒绝；已改按Path.resolve相等匹配，保留所有错误输入拒绝断言。
 - 独立干净worktree40db首次恢复59文件成功，使用原入口固定公开输入并核完整ROM/MP3 hash；未迁完整旧目录。全量Python历史ImportIntegrityTests仅缺game-data/raw/reference-project/dataset.json而setUpClass失败，8项跳过、68方法通过；这是未恢复全量历史Reference依赖，不伪报全量通过，不要求全部迁回。另22自动审批安全fixture断言通过。
@@ -29,3 +31,5 @@ execution_kind: IMPLEMENTED
 - 04:03:25 UTC按75%收敛，截止06:33:25 UTC。下一条动作：提交修复后原工作流重建并实际运行normal新游戏路线。
 
 相关原版路线以docs/original-playthrough-roadmap.md的“当前有效状态”段为准，旧表明确历史；累计十类清单权威仍docs/delivery-status.md。最终只有正常App M1—M3与同产物/升级/巡检通过才READY_FOR_REVIEW，手机和声音不能运行记NOT_RUN。原则上本轮最终一次发布，只写原两个Fengshen对象，不改Language。
+
+- 2026-10-01 22:23 UTC图形审查补充：3aaf4fc签名候选虽然构建/独立验包已通过，但新128×112 Boss图沿用小怪位置(112,72)会被原指令框遮挡，不得发布。本地最小适配从已核observedRect导出可选origin(64,0)，Loader限制图形不越界/不压指令，绘制和触摸共享battleEnemyBox；旧怪位置不动。新目标manifest45e0da6808694b961d809c727abb05727d821939253c1c66f3ce48f4c0741f62，局部7/7与JVM69/69及debug仪器构建再通过，新增受控原位置截图/几何断言。旧run仍可作为诊断证据，不能给修正后的候选背书；修复来源需重新原CI与正常录像，未发布。

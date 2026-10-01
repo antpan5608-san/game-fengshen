@@ -233,6 +233,11 @@
         "asset": "enemy-137.png",
         "enemyId": 137,
         "height": 112,
+        "origin": [
+          64,
+          0
+        ],
+        "originEvidence": "graphics.enemy-137.png.observedRect, original source156 capture; preserve ordinary enemy placement",
         "source": "game-data/provenance/nanhai01.json",
         "width": 128
       }

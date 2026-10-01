@@ -47,7 +47,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val battle:BattleContent?=null,val audio:AudioContent?=null,
     val enemyGraphics:Map<Int,Bitmap> = emptyMap(),val battleHorizon:Bitmap?=null,val battleHero:Bitmap?=null,
     val shops:Map<String,ShopDefinition> = emptyMap(),val mapObjects:List<MapObject> = emptyList(),
-    val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet())
+    val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet(),
+    val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap())
 object ContentLoader {
     fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
@@ -268,7 +269,8 @@ object ContentLoader {
                 }.associateBy{it.npcId}}?:emptyMap())
         }else null
         val battleHorizons=mutableMapOf<Int,Bitmap>();val blackBattleEnemyIds=mutableSetOf<Int>()
-        val enemyGraphics=mutableMapOf<Int,Bitmap>();var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null
+        val enemyGraphics=mutableMapOf<Int,Bitmap>();val enemyOrigins=mutableMapOf<Int,Pair<Int,Int>>()
+        var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null
         if(battle!=null){
             val presentation=JSONObject(String(read("combat.json"),Charsets.UTF_8)).optJSONObject("presentation")
             if(presentation!=null){
@@ -277,7 +279,12 @@ object ContentLoader {
                     val a=assets.getJSONObject(i);val bytes=read(a.getString("asset"))
                     val image=BitmapFactory.decodeByteArray(bytes,0,bytes.size)?:error("Invalid enemy graphic")
                     require(image.width==a.getInt("width")&&image.height==a.getInt("height"))
-                    enemyGraphics[a.getInt("enemyId")]=image
+                    val enemyId=a.getInt("enemyId");enemyGraphics[enemyId]=image
+                    a.optJSONArray("origin")?.let{origin->
+                        require(origin.length()==2);val x=origin.getInt(0);val y=origin.getInt(1)
+                        require(x>=0&&y>=0&&x+image.width<=256&&y+image.height<=148){"Enemy origin overlaps battle controls"}
+                        enemyOrigins[enemyId]=x to y
+                    }
                 }
                 require(enemyGraphics.keys==battle.enemies.keys)
                 val bytes=read(presentation.getString("horizon"))
@@ -322,6 +329,6 @@ object ContentLoader {
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
             mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
-            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds)
+            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins)
     }
 }

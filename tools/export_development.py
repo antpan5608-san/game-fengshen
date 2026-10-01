@@ -193,6 +193,11 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
         for name in ('enemies','zones'):
             if name in overlay:combat[name]=combat.get(name,[])+overlay[name]
         if 'enemyAgility' in overlay:combat['escape']['enemyAgility'].update(overlay['enemyAgility'])
+        for graphic in overlay.get('graphics',[]):
+            if 'origin' in graphic:
+                recipe=evidence['graphics'][graphic['asset']]
+                if graphic['origin']+[graphic['width'],graphic['height']]!=recipe.get('observedRect'):
+                    raise ValueError('Enemy origin differs from observed original placement')
         combat['presentation']['graphics'].extend(overlay.get('graphics',[]))
         for name in ('horizons','blackBackgroundEnemyIds'):
             if name in overlay:combat['presentation'][name]=overlay[name]
