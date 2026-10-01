@@ -5,10 +5,12 @@ sdk="${ANDROID_HOME:?Existing runner SDK is required}"
 export ANDROID_SDK_ROOT="$sdk"
 export PATH="$sdk/platform-tools:$PATH"
 mkdir -p artifacts/town02-runtime
+export ANDROID_AVD_HOME="${RUNNER_TEMP:-$PWD/artifacts/town02-runtime}/fengshen-town02-avd"
+mkdir -p "$ANDROID_AVD_HOME"
 sdkmanager="$sdk/cmdline-tools/latest/bin/sdkmanager"
 (set +o pipefail; yes | "$sdkmanager" --licenses) > artifacts/town02-runtime/sdk-licenses.txt 2>&1
 "$sdkmanager" 'emulator' 'platform-tools' 'build-tools;35.0.0' 'system-images;android-30;default;x86_64' > artifacts/town02-runtime/sdk-setup.txt 2>&1
-printf 'no\n' | "$sdk/cmdline-tools/latest/bin/avdmanager" create avd --name fengshen-town02-ci --package 'system-images;android-30;default;x86_64' --device pixel_5
+printf 'no\n' | "$sdk/cmdline-tools/latest/bin/avdmanager" create avd --name fengshen-town02-ci --package 'system-images;android-30;default;x86_64' --device pixel_5 --path "$ANDROID_AVD_HOME/fengshen-town02-ci.avd"
 python - <<'PYAVD'
 import os
 from pathlib import Path
@@ -58,6 +60,8 @@ adb shell am force-stop org.fengshen.dev
 adb install -r "${candidate[0]}" # Same signature, actual covering install; never uninstall/clear.
 run_test testUpgradeKeepsPreviousSave
 run_test testControlledHerbBoundariesAndSaveCompatibility
+timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
+grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 python tools/record_app_audio.py town02-ci testNormalHerbSupplyLoop --silent
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'

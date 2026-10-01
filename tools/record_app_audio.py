@@ -42,7 +42,9 @@ def record_silent():
                 if time.monotonic()-started>1200:raise TimeoutError('Normal App route exceeded isolated runtime budget')
                 remote=f'/sdcard/{prefix}-normal-{len(videos):02d}.mp4'
                 video=subprocess.Popen(['adb','-s','emulator-5554','shell','screenrecord','--bit-rate','1000000','--time-limit','180',remote],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
-                while video.poll() is None and test.poll() is None:time.sleep(.5)
+                while video.poll() is None and test.poll() is None:
+                    if time.monotonic()-started>1200:raise TimeoutError('Normal App recording budget exhausted')
+                    time.sleep(.5)
                 if video.poll() is None:
                     pid=adb('shell','pidof','screenrecord').decode().strip()
                     if pid.isdecimal():adb('shell','kill','-2',pid)
@@ -61,7 +63,7 @@ def record_silent():
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
         (OUT/f'{prefix}-force-stop-restored.png').write_bytes(adb('exec-out','screencap','-p'))
         result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
-            'normalAssertions':'PASS','forceStopRestartEqual':True,'originalPreferencesRestored':True}
+            'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result))
     finally:
