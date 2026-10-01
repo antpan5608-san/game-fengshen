@@ -41,7 +41,7 @@ base=(artifacts/runtime-base/*-release.apk)
 candidate=(artifacts/ci/*-release.apk)
 testapk=(artifacts/runtime-test/*.apk)
 [[ ${#base[@]} == 1 && ${#candidate[@]} == 1 && ${#testapk[@]} == 1 ]]
-python tools/ci_apk.py verify --base-only --apk "${base[0]}" --output artifacts/town02-runtime/base.json
+python tools/ci_apk.py verify --apk "${base[0]}" --output artifacts/town02-runtime/base.json
 python tools/ci_apk.py verify --apk "${candidate[0]}" --output artifacts/town02-runtime/candidate.json
 python - "${testapk[0]}" <<'PY'
 import re,sys
@@ -50,15 +50,21 @@ cert=ci.command([ci.tool('apksigner'),'verify','--print-certs',sys.argv[1]])
 assert re.findall(r'Signer #\d+ certificate SHA-256 digest: ([a-f0-9]+)',cert)==[ci.CONFIG['signerSha256']], 'Test APK must have the existing signature'
 PY
 run_test(){
-    timeout 1200 adb shell am instrument -w -e keepFixtureForRestart true -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1
+    if ! timeout 1200 adb shell am instrument -w -e keepFixtureForRestart true -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1; then
+        cat "artifacts/town02-runtime/$1.txt"; exit 1
+    fi
+    cat "artifacts/town02-runtime/$1.txt"
     grep -q 'OK (1 test)' "artifacts/town02-runtime/$1.txt"
 }
 adb install -r "${base[0]}"
 adb install -r "${testapk[0]}"
+python tools/record_app_audio.py touch-ux-before testTouchUxBaselineClickPath --silent --comparison
 run_test testExportCurrentSaveForUpgrade
 adb shell am force-stop org.fengshen.dev
 adb install -r "${candidate[0]}" # Same signature, actual covering install; never uninstall/clear.
 run_test testUpgradeKeepsPreviousSave
+run_test testTouchUxSelectionScrollAndAtomicEquipment
+run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testNormalTownShopsBuySellAndReturn
 run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
@@ -66,14 +72,34 @@ run_test testInput01RealMapWallSlidesAndMenuCancellation
 run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
 timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
 grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
-python tools/record_app_audio.py town02-ci testNormalHerbSupplyLoop --silent
+python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
+# Actual phone-sized windows and scaled text; only this isolated AVD is changed.
+adb shell wm size 2640x1216
+adb shell wm density 480
+for font in 1.0 1.3 2.0; do
+    adb shell settings put system font_scale "$font"
+    sleep 3
+    run_test testTouchUxPhoneSizeAndLargeFont
+done
+adb shell settings put system font_scale 1.0
+adb shell wm size 960x540
+adb shell wm density 160
+python - <<'PYEVIDENCE'
+import subprocess,re
+from pathlib import Path
+base='/sdcard/Android/data/org.fengshen.dev/files/'
+for name in subprocess.check_output(['adb','shell','ls',base],text=True).splitlines():
+    if re.fullmatch(r'(touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
+        target=Path('artifacts/checkpoint-ui')/(name if name.startswith('touch-ux-') else 'touch-ux-'+name)
+        subprocess.run(['adb','pull',base+name,str(target)],check=True)
+PYEVIDENCE
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY

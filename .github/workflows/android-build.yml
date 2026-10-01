@@ -214,7 +214,7 @@ jobs:
         with:
           name: fengshen-signed-apk
           path: artifacts/runtime-base
-          run-id: 36882142423
+          run-id: 36902536271
           github-token: ${{ github.token }}
       - name: Verify and run the exact candidate in one isolated AVD
         shell: bash
@@ -230,5 +230,6 @@ jobs:
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
             artifacts/checkpoint-ui/town02-ci-*
+            artifacts/checkpoint-ui/touch-ux-*
           if-no-files-found: ignore
           retention-days: 14

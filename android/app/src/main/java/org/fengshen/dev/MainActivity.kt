@@ -101,8 +101,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();hudTouch.clear();battleTouch.clear();shopTouch.clear();clock.reset()}}
+    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}}
     var layer=Layer.MAP;private set
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
@@ -116,13 +116,20 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val panelTouch=mutableMapOf<Int,Int>()
     private val hudTouch=mutableSetOf<Int>()
     private val npcTouch=mutableMapOf<Int,Triple<String,Float,Float>>()
-    private var inventoryPage=0
+    private var modalListScroll=0f
+    private var modalDetailScroll=0f
+    private var modalDetailsOpen=false
+    private var candidateSlot:String?=null
+    private var uxGesture:ModalGesture?=null
+    private var uxBlocked=false
+    private var uxRevision=0
+    private var uxFeedback=""
+    private var uxFeedbackUntil=0L
     private var characterPage=0
     private var equipmentSlot="rightHand"
     private var shop:ShopDefinition?=null
     private var shopMode="ROOT"
-    private var shopPreviousMode="BUY"
-    private var shopSelection=0
+    private var selectedShopItemId:String?=null
     private var shopRevision=0
     private var shopMessage=""
     private val shopTouch=mutableMapOf<Int,Pair<Int,Int>>()
@@ -136,7 +143,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var noticeUntil=0L
     init {holder.addCallback(this);isFocusable=true;isFocusableInTouchMode=true;contentDescription="封神全屏地图"
         world.transitionObserver={from,to,success->Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),"target_map_or_spawn_unavailable")}}
-    fun relayout(){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();hudTouch.clear();npcTouch.clear();shopTouch.clear();clock.reset()}
+    fun relayout(){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
     fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0)
     fun hasMeaningfulLocalSave():Boolean = hadPersistedAtStart || world.mapId!=114 ||
         world.x!=content.scene.spawnX*16+8 || world.y!=content.scene.spawnY*16+8 || characters!=listOf(content.initialPlayer) ||
@@ -144,7 +151,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun backupBeforeCloudRestore(){savePrefs.getString("saveJson",null)?.let{savePrefs.edit().putString("preCloudRecovery",it).commit()}}
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
-        world.finishStep();input.clear();clock.reset()
+        clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
         world.restore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction)
         audio.scene(world.mapId)
         encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
@@ -158,7 +165,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             migrated[OpeningEquipment.KNIFE_ID]=(migrated[OpeningEquipment.KNIFE_ID]?:0)+legacy
         }
         inventory=migrated.filterValues{it>0};flags=snapshot.flags;money=snapshot.money
-        characterPage=0;inventoryPage=0;selectedItemId=null
+        characterPage=0;selectedItemId=null;candidateSlot=null;resetModalSelection()
         savedSnapshot="";persistState();return true
     }
     fun restorePersisted(){
@@ -171,20 +178,21 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         world.restore(savePrefs.getInt("mapId",114),savePrefs.getInt("x",world.x),savePrefs.getInt("y",world.y),0,
             Key.entries.getOrElse(savePrefs.getInt("direction",Key.DOWN.ordinal)){Key.DOWN})
     }
-    fun persistState(){
-        if(world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return
+    fun persistState():Boolean {
+        if(world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return false
         val snapshot=currentSnapshot();val encoded=snapshot.json().toString()
-        if(encoded==savedSnapshot)return
+        if(encoded==savedSnapshot)return true
         val committed=savePrefs.edit().putString("contentVersion",content.scene.version).putInt("mapId",world.mapId)
             .putInt("x",world.x).putInt("y",world.y).putInt("direction",world.direction.ordinal)
             .putString("saveJson",encoded).commit()
         Diagnostics.record("save_write",if(committed)"INFO" else "ERROR",JSONObject().put("success",committed).put("mapId",world.mapId),if(committed)"" else "local_commit_failed")
         if(committed){savedSnapshot=encoded;activity.onLocalSnapshotSaved(snapshot)}
+        return committed
     }
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){surface=false;input.clear();menuTouch.clear();panelTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -216,7 +224,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
-        input.clear();battleTouch.clear();menuTouch.clear();panelTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset()
+        input.clear();battleTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset()
     }
     private fun finishPendingStep():Boolean {
         world.finishStep();processCompletedStep()
@@ -383,7 +391,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun openDialogue(text:StoryText,npc:StoryNpc?){
         if(finishPendingStep())return
-        input.clear();menuTouch.clear();panelTouch.clear();npcTouch.clear();dialogueTouch.clear();clock.reset()
+        input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();npcTouch.clear();dialogueTouch.clear();clock.reset()
         dialogueText=text;dialogueNpc=npc;dialoguePage=0;layer=Layer.DIALOGUE
     }
     private fun dialogueLines()=dialogueText?.text?.chunked(24)?.chunked(2)?:emptyList()
@@ -405,8 +413,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun dismissDialogue(){layer=Layer.MAP;dialogueNpc=null;dialogueText=null;dialogueTouch.clear();input.clear();clock.reset()}
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
-    private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clock.reset()}
-    private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clock.reset()}
+    private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
+    private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     fun handleBack():Boolean {when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
@@ -414,14 +422,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openPanel(which:Layer){
         if(layer !in listOf(Layer.MAP,Layer.MENU) || which !in listOf(Layer.CHARACTER,Layer.INVENTORY))return
         panelReturnLayer=layer;if(finishPendingStep())return
-        input.clear();hudTouch.clear();npcTouch.clear();menuTouch.clear();panelTouch.clear();clock.reset()
-        inventoryPage=0;characterPage=0;selectedItemId=null
+        input.clear();hudTouch.clear();npcTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()
+        characterPage=0;selectedItemId=null;candidateSlot=null;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false;uxRevision++
         panelTab=if(which==Layer.INVENTORY)CharacterTab.ITEMS else CharacterTab.ATTRIBUTES
         layer=which
     }
     private fun closePanel(){
         if(layer !in listOf(Layer.CHARACTER,Layer.INVENTORY))return
-        layer=panelReturnLayer;input.clear();panelTouch.clear();hudTouch.clear();clock.reset()
+        layer=panelReturnLayer;input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clock.reset()
     }
     private fun hudBox():Box {
         val dp=resources.displayMetrics.density
@@ -434,34 +442,29 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun panelBox():Box {
         val dp=resources.displayMetrics.density
+        if(directPanel())return modalLayout().frame
         val inset=8*dp;val w=ui.safe.w*.40f
         return Box(ui.safe.x+inset,ui.safe.y+inset,w,ui.safe.h-inset*2)
     }
     fun characterPanelBounds()=panelBox()
     private fun panelBackBox():Box {
+        if(directPanel())return modalLayout().close
         val b=panelBox();val dp=resources.displayMetrics.density;val size=min(46*dp,b.h*.16f)
         return Box(b.x+b.w-size-8*dp,b.y+5*dp,size,size)
     }
     private fun inventoryEntries()=inventory.filterValues{it>0}.toSortedMap().entries.toList()
-    private fun inventoryPages()=max(1,(inventoryEntries().size+3)/4)
     private fun partyBox(index:Int):Box {
+        if(directPanel())return modalLayout().party.getOrElse(index){Box(0f,0f,0f,0f)}
         val b=panelBox();val dp=resources.displayMetrics.density;val size=min(37*dp,b.h*.095f)
         return Box(b.x+12*dp+index*(size+9*dp),b.y+b.h*.265f,size,size)
     }
     private fun tabBox(index:Int):Box {
+        if(directPanel())return modalLayout().tabs[index]
         val b=panelBox();val dp=resources.displayMetrics.density;val w=(b.w-16*dp)/4
         return Box(b.x+8*dp+index*w,b.y+b.h*.405f,w,b.h*.095f)
     }
-    private fun inventoryRowBox(index:Int):Box {
-        val b=panelBox();val dp=resources.displayMetrics.density
-        return Box(b.x+15*dp,b.y+b.h*(.52f+index*.075f),b.w-30*dp,b.h*.07f)
-    }
-    private fun panelPageBox(next:Boolean):Box {
-        val b=panelBox();val dp=resources.displayMetrics.density
-        val w=min(75*dp,b.w*.24f);val h=min(38*dp,b.h*.10f)
-        return Box(if(next)b.x+b.w-w-12*dp else b.x+12*dp,b.y+b.h-h-8*dp,w,h)
-    }
     private fun panelEquipmentActionBox():Box {
+        if(directPanel())return modalLayout().primary
         val b=panelBox();val dp=resources.displayMetrics.density
         return Box(b.x+17*dp,b.y+b.h*.865f,b.w-34*dp,b.h*.065f)
     }
@@ -469,16 +472,6 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         panelBackBox().contains(x,y)->0
         CharacterTab.entries.indices.firstOrNull{tabBox(it).contains(x,y)}!=null->10+CharacterTab.entries.indices.first{tabBox(it).contains(x,y)}
         characters.indices.firstOrNull{partyBox(it).contains(x,y)}!=null->20+characters.indices.first{partyBox(it).contains(x,y)}
-        panelTab==CharacterTab.EQUIPMENT && equippedDefinition()!=null && panelEquipmentActionBox().contains(x,y)->40
-        panelTab==CharacterTab.EQUIPMENT && y>=panelBox().y+panelBox().h*.52f && y<panelBox().y+panelBox().h*.815f && panelBox().contains(x,y)->
-            50+((y-panelBox().y-panelBox().h*.52f)/(panelBox().h*.072f)).toInt().coerceIn(0,3)
-        panelTab==CharacterTab.ITEMS && selectedItemId?.let{content.equipmentDefinitions[it]}?.let{d->
-            OpeningEquipment.equip(characters[characterPage],inventory,d)!=null}==true && panelEquipmentActionBox().contains(x,y)->41
-        panelTab==CharacterTab.ITEMS && selectedItemId==HerbUse.ID && canUseHerb() && panelEquipmentActionBox().contains(x,y)->42
-        panelTab==CharacterTab.ITEMS && inventoryPage>0 && panelPageBox(false).contains(x,y)->1
-        panelTab==CharacterTab.ITEMS && inventoryPage+1<inventoryPages() && panelPageBox(true).contains(x,y)->2
-        panelTab==CharacterTab.ITEMS && inventoryEntries().drop(inventoryPage*4).take(4).indices.firstOrNull{inventoryRowBox(it).contains(x,y)}!=null->
-            30+inventoryEntries().drop(inventoryPage*4).take(4).indices.first{inventoryRowBox(it).contains(x,y)}
         else->null
     }
     private fun equippedDefinition():EquipmentDefinition? {
@@ -486,147 +479,313 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val id=when(equipmentSlot){"rightHand"->e.rightHand;"leftHand"->e.leftHand;"body"->e.body;else->e.feet}
         return content.equipmentDefinitions.values.firstOrNull{it.slot==equipmentSlot&&it.originalId==id&&it.operationEnabled}
     }
-    private fun canUseHerb():Boolean {
-        val item=content.itemDefinitions[HerbUse.ID]?:return false
-        val hero=characters.getOrNull(characterPage)?:return false
-        return HerbUse.available(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY))
+    private fun runPanelAction(action:Int){
+        when(action){0->closePanel();in 10..13->runPanelCommand(ModalCommand("tab:${action-10}"))
+            in 20..23->characters.getOrNull(action-20)?.let{runPanelCommand(ModalCommand("hero",targetId=it.id))}}
     }
-    private fun runPanelAction(action:Int){panelTouch.clear();when(action){
-        0->closePanel()
-        1->{inventoryPage=max(0,inventoryPage-1);selectedItemId=null}
-        2->{inventoryPage=min(inventoryPages()-1,inventoryPage+1);selectedItemId=null}
-        in 10..13->{panelTab=CharacterTab.entries[action-10];selectedItemId=null}
-        in 20..23->if(action-20 in characters.indices){characterPage=action-20;selectedItemId=null}
-        in 30..33->selectedItemId=inventoryEntries().drop(inventoryPage*4).getOrNull(action-30)?.key
-        in 50..53->equipmentSlot=listOf("rightHand","leftHand","body","feet")[action-50]
-        40->equippedDefinition()?.let{d->OpeningEquipment.unequip(characters[characterPage],inventory,d)}?.let{(hero,items)->
-            characters=characters.toMutableList().also{it[characterPage]=hero};inventory=items;persistState()
+    private fun directPanel()=panelTab in listOf(CharacterTab.EQUIPMENT,CharacterTab.ITEMS)
+    private fun modalLayout()=touchModalLayout(ui.safe,resources.displayMetrics.density,
+        resources.configuration.fontScale,if(layer==Layer.SHOP)2 else 4,
+        if(layer==Layer.SHOP)0 else characters.size,layer!=Layer.SHOP&&panelTab==CharacterTab.EQUIPMENT)
+    private fun clearUxGesture(){uxGesture=null;uxBlocked=false}
+    private fun resetModalSelection(){clearUxGesture();uxRevision++;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false}
+    private fun panelItems()=inventoryEntries().filter{entry->candidateSlot==null ||
+        content.equipmentDefinitions[entry.key]?.let{it.slot==candidateSlot&&OpeningEquipment.replace(characters[characterPage],inventory,it,content.equipmentDefinitions.values)!=null}==true}
+    fun panelTabBounds(index:Int)=tabBox(index)
+    fun panelPrimaryBounds()=panelEquipmentActionBox()
+    fun panelSecondaryBounds()=modalLayout().secondary
+    fun panelListBounds()=modalLayout().list
+    fun panelItemBounds(id:String)=modalLayout().visibleRow(panelItems().indexOfFirst{it.key==id},modalListScroll)
+    fun panelSlotBounds(slot:String)=modalLayout().visibleRow(listOf("rightHand","leftHand","body","feet").indexOf(slot),modalListScroll)
+    private fun heroName(id:String)=content.characterDefinitions[id]?.name?:id
+    private fun slotName(slot:String)=mapOf("rightHand" to "右手","leftHand" to "左手","body" to "身体","feet" to "脚")[slot]?:slot
+    private data class ItemAction(val kind:String?,val text:String,val enabled:Boolean,val reason:String,val target:String?)
+    private fun itemAction():ItemAction {
+        val id=selectedItemId?:return ItemAction(null,"",false,"请选择物品",null)
+        val item=content.itemDefinitions[id]?:return ItemAction(null,"",false,"物品定义尚未接入",null)
+        val hero=characters[characterPage];val d=content.equipmentDefinitions[id]
+        if(d!=null){
+            val result=OpeningEquipment.replace(hero,inventory,d,content.equipmentDefinitions.values)
+            val e=hero.equipment
+            val oldId=when(d.slot){"rightHand"->e?.rightHand;"body"->e?.body;"feet"->e?.feet;else->null}
+            val old=content.equipmentDefinitions.values.firstOrNull{it.slot==d.slot&&it.originalId==oldId}
+            val reason=when{!d.operationEnabled->"装备规则尚未实现";hero.id !in d.allowedCharacters->"当前角色不适用，可查看其他已入队队员"
+                (inventory[id]?:0)<=0->"已无该物品";e==null->"角色装备状态尚未接入";oldId==null->"槽位操作尚未实现"
+                oldId==d.originalId->"已装备同件";oldId!=-1&&old==null->"原装备卸下规则待核"
+                old!=null&&(inventory[old.itemId]?:0)>=10->"原装备回包数量已满"
+                result==null->"当前装备条件不满足";else->""}
+            return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
-        41->selectedItemId?.let{content.equipmentDefinitions[it]}?.let{d->OpeningEquipment.equip(characters[characterPage],inventory,d)}?.let{(hero,items)->
-            characters=characters.toMutableList().also{it[characterPage]=hero};inventory=items
-            selectedItemId=null;persistState()
+        if(item.herbUse!=null){
+            val living=characters.filter{it.hp>0};val target=if(living.size==1)living.single() else hero
+            val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
+            val enabled=HerbUse.available(characters,inventory,target.id,item,mapMenu)
+            val reason=when{!mapMenu->"仅支持地图/菜单使用";living.isEmpty()->"当前没有合法的存活目标";(inventory[id]?:0)<=0->"已无该物品";!enabled->"当前目标条件不满足，请选择存活队员";else->""}
+            return ItemAction("use","使用于${heroName(target.id)}",enabled,reason,target.id)
         }
-        42->{
-            if(selectedItemId!=HerbUse.ID)return
-            val item=content.itemDefinitions[HerbUse.ID]?:return
-            val hero=characters.getOrNull(characterPage)?:return
-            val result=HerbUse.apply(characters,inventory,hero.id,item,layer in listOf(Layer.CHARACTER,Layer.INVENTORY))
-            if(result.applied){
-                characters=result.characters;inventory=result.inventory
-                selectedItemId=null;panelTouch.clear();persistState()
+        return if(item.category=="medicine")ItemAction("use","使用（待接入）",false,"使用效果和逻辑尚未实现",hero.id)
+            else ItemAction(null,"",false,"当前没有已实现的合法操作",null)
+    }
+    private fun modalState()=currentSnapshot().json().toString()
+    private fun feedback(message:String){uxFeedback=message;uxFeedbackUntil=SystemClock.elapsedRealtime()+3000}
+    private fun commitModal(before:SaveSnapshot,message:String){
+        if(persistState())feedback(message)
+        else {characters=before.characters;inventory=before.inventory;money=before.money;feedback("保存失败，操作未完成")}
+        uxRevision++;clearUxGesture()
+    }
+    private fun panelHit(x:Float,y:Float):ModalCommand? {
+        val l=modalLayout();val hero=characters[characterPage]
+        if(l.close.contains(x,y))return ModalCommand("close")
+        if(!l.wide&&modalDetailsOpen&&l.back.contains(x,y))return ModalCommand("back-list")
+        l.tabs.indexOfFirst{it.contains(x,y)}.takeIf{it>=0}?.let{return ModalCommand("tab:$it")}
+        if(characters.size>1)l.party.indexOfFirst{it.contains(x,y)}.takeIf{it in characters.indices}?.let{return ModalCommand("hero",targetId=characters[it].id)}
+        if(l.wide||!modalDetailsOpen){
+            val index=((y-l.list.y+modalListScroll)/l.rowHeight).toInt()
+            val visible=l.visibleRow(index,modalListScroll)
+            if(l.list.contains(x,y)&&visible.h>=48*resources.displayMetrics.density){
+                if(panelTab==CharacterTab.ITEMS)panelItems().getOrNull(index)?.let{return ModalCommand("item",it.key,hero.id,mode=candidateSlot)}
+                else listOf("rightHand","leftHand","body","feet").getOrNull(index)?.let{return ModalCommand("slot",targetId=hero.id,slot=it)}
             }
         }
-    }}
+        if(l.wide||modalDetailsOpen){
+            if(panelTab==CharacterTab.ITEMS&&l.primary.contains(x,y)){
+                val a=itemAction();if(a.enabled&&a.kind!=null)return ModalCommand(a.kind,selectedItemId,a.target,mode=candidateSlot)
+            }
+            if(panelTab==CharacterTab.EQUIPMENT){
+                val d=equippedDefinition()
+                if(l.primary.contains(x,y)&&d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null)return ModalCommand("unequip",d.itemId,hero.id,equipmentSlot)
+                if(l.secondary.contains(x,y))return ModalCommand("candidates",targetId=hero.id,slot=equipmentSlot)
+            }
+        }
+        return null
+    }
+    private fun runPanelCommand(cmd:ModalCommand){
+        uxRevision++;clearUxGesture()
+        when(cmd.kind){
+            "close"->closePanel()
+            "back-list"->{modalDetailsOpen=false;modalDetailScroll=0f}
+            "hero"->{characters.indexOfFirst{it.id==cmd.targetId}.takeIf{it>=0}?.let{characterPage=it};selectedItemId=null;candidateSlot=null;resetModalSelection()}
+            "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
+            "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
+            "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
+            "equip","unequip","use"->{
+                val before=currentSnapshot();val id=cmd.itemId?:return;val target=cmd.targetId?:return
+                val index=characters.indexOfFirst{it.id==target};if(index<0)return
+                val hero=characters[index]
+                when(cmd.kind){
+                    "use"->{val a=itemAction();if(a.kind!="use"||!a.enabled||a.target!=target||selectedItemId!=id)return
+                        val item=content.itemDefinitions[id]?:return
+                        val result=HerbUse.apply(characters,inventory,target,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                        if(!result.applied)return;characters=result.characters;inventory=result.inventory}
+                    else->{val d=content.equipmentDefinitions[id]?:return
+                        if(cmd.kind=="equip"&&(selectedItemId!=id||hero.id!=selectedCharacterId))return
+                        if(cmd.kind=="unequip"&&(cmd.slot!=equipmentSlot||equippedDefinition()?.itemId!=id))return
+                        val result=if(cmd.kind=="equip")OpeningEquipment.replace(hero,inventory,d,content.equipmentDefinitions.values) else OpeningEquipment.unequip(hero,inventory,d)
+                        if(result==null){feedback("当前装备条件不满足");return}
+                        characters=characters.toMutableList().also{it[index]=result.first};inventory=result.second}
+                }
+                commitModal(before,when(cmd.kind){"use"->"已使用${content.itemDefinitions[id]?.name}";"equip"->"已装备给${heroName(target)}";else->"已卸下并回包"})
+                if((inventory[id]?:0)==0)selectedItemId=null
+                modalDetailScroll=0f
+            }
+            else->if(cmd.kind.startsWith("tab:")){panelTab=CharacterTab.entries[cmd.kind.substringAfter(':').toInt()];selectedItemId=null;candidateSlot=null;resetModalSelection()}
+        }
+    }
     private fun openShop(definition:ShopDefinition){
-        if(layer!=Layer.MAP || finishPendingStep())return
-        shop=definition;shopMode="ROOT";shopSelection=0;shopMessage="";shopRevision++
+        if(layer!=Layer.MAP||finishPendingStep())return
+        shop=definition;shopMode="BUY";selectedShopItemId=null;shopMessage="";shopRevision++;resetModalSelection()
         input.clear();shopTouch.clear();npcTouch.clear();clock.reset();layer=Layer.SHOP
     }
     private fun shopEntries():List<String> {
         val s=shop?:return emptyList()
-        return if(shopMode=="SELL" || (shopMode=="RESULT"&&shopPreviousMode=="SELL"))
-            s.sellItems.filter{(inventory[it]?:0)>0}.sorted() else s.items
+        return if(shopMode=="SELL")s.sellItems.filter{(inventory[it]?:0)>0}.sorted() else s.items
     }
-    fun shopBounds():Box {
-        val h=ui.safe.h*.92f;val w=min(ui.safe.w*.90f,h*256f/240f)
-        return Box(ui.safe.x+(ui.safe.w-w)/2,ui.safe.y+(ui.safe.h-h)/2,w,h)
-    }
-    fun shopActionBounds(action:Int):Box {
-        val b=shopBounds()
-        val raw=when(action){
-            1->Box(12f,157f,59f,22f);2->Box(12f,181f,59f,22f);3->Box(12f,205f,59f,24f)
-            4->Box(85f,157f,154f,28f);5->Box(85f,198f,154f,28f)
-            6->Box(85f,199f,154f,27f);7->Box(12f,108f,65f,28f);8->Box(92f,108f,65f,28f)
-            else->Box(0f,0f,0f,0f)
+    fun shopBounds()=modalLayout().frame
+    fun shopItemBounds(id:String)=modalLayout().visibleRow(shopEntries().indexOf(id),modalListScroll)
+    fun shopActionBounds(action:Int):Box=when(action){1->modalLayout().tabs[0];2->modalLayout().tabs[1];3,5->modalLayout().close;4->modalLayout().primary;else->Box(0f,0f,0f,0f)}
+    private fun shopHit(x:Float,y:Float):ModalCommand? {
+        val l=modalLayout();val s=shop?:return null
+        if(l.close.contains(x,y))return ModalCommand("shop-close",shopId=s.id,mode=shopMode)
+        if(!l.wide&&modalDetailsOpen&&l.back.contains(x,y))return ModalCommand("back-list",shopId=s.id,mode=shopMode)
+        l.tabs.indexOfFirst{it.contains(x,y)}.takeIf{it>=0}?.let{return ModalCommand("shop-mode",shopId=s.id,mode=if(it==0)"BUY" else "SELL")}
+        if(l.wide||!modalDetailsOpen){
+            val index=((y-l.list.y+modalListScroll)/l.rowHeight).toInt()
+            if(l.list.contains(x,y)&&l.visibleRow(index,modalListScroll).h>=48*resources.displayMetrics.density)
+                shopEntries().getOrNull(index)?.let{return ModalCommand("shop-item",it,shopId=s.id,mode=shopMode)}
         }
-        return Box(b.x+raw.x*b.w/256,b.y+raw.y*b.h/240,raw.w*b.w/256,raw.h*b.h/240)
-    }
-    private fun shopAction(x:Float,y:Float):Int? {
-        val actions=when(shopMode){"ROOT"->listOf(1,2,3);"RESULT"->listOf(6);else->listOf(4,5,7,8)}
-        return actions.firstOrNull{shopActionBounds(it).contains(x,y)}
+        if((l.wide||modalDetailsOpen)&&l.primary.contains(x,y)&&selectedShopItemId in shopEntries())
+            return ModalCommand("trade",selectedShopItemId,shopId=s.id,mode=shopMode)
+        return null
     }
     private fun shopBack(){
         if(layer!=Layer.SHOP)return
-        input.clear();shopTouch.clear();clock.reset();shopRevision++
-        if(shopMode=="ROOT"){shop=null;layer=Layer.MAP;persistState()}
-        else {shopMode="ROOT";shopSelection=0;shopMessage=""}
+        if(!modalLayout().wide&&modalDetailsOpen){modalDetailsOpen=false;resetModalSelection();return}
+        shop=null;layer=Layer.MAP;input.clear();shopTouch.clear();resetModalSelection();clock.reset();persistState()
+    }
+    private fun runShopCommand(cmd:ModalCommand){
+        if(layer!=Layer.SHOP||cmd.shopId!=shop?.id)return
+        uxRevision++;shopRevision++;clearUxGesture();input.clear();shopTouch.clear()
+        when(cmd.kind){
+            "shop-close"->{shop=null;layer=Layer.MAP;resetModalSelection();clock.reset();persistState()}
+            "back-list"->{modalDetailsOpen=false;modalDetailScroll=0f}
+            "shop-mode"->{shopMode=cmd.mode?:return;selectedShopItemId=null;resetModalSelection()}
+            "shop-item"->{if(cmd.mode!=shopMode||cmd.itemId !in shopEntries())return;selectedShopItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
+            "trade"->{
+                val id=cmd.itemId?:return;if(cmd.mode!=shopMode||id!=selectedShopItemId||id !in shopEntries())return
+                val item=content.itemDefinitions[id]?:return;val s=shop?:return;val before=currentSnapshot()
+                val result=if(shopMode=="BUY")TownTrade.buy(money,inventory,s,item) else TownTrade.sell(money,inventory,s,item)
+                if(result.error!=null){feedback(result.error);return}
+                money=result.money;inventory=result.inventory
+                commitModal(before,"${item.name}已${if(shopMode=="BUY")"买入" else "卖出"}1件")
+                if(id !in shopEntries()){selectedShopItemId=null;modalDetailsOpen=false}
+                modalListScroll=modalListScroll.coerceAtMost(modalLayout().maxScroll(shopEntries().size))
+                Diagnostics.record("town_trade",details=JSONObject().put("shopID",s.id).put("itemID",id).put("operation",shopMode).put("success",currentSnapshot()!=before))
+            }
+        }
     }
     private fun runShopAction(action:Int){
-        if(layer!=Layer.SHOP)return
-        when(action){
-            1,2->if(shopMode=="ROOT"){shopMode=if(action==1)"BUY" else "SELL";shopSelection=0}
-            3,5->{shopBack();return}
-            7,8->{val count=shopEntries().size;if(count>0)shopSelection=(shopSelection+count+if(action==7)-1 else 1)%count}
-            4->if(shopMode in listOf("BUY","SELL")){
-                val id=shopEntries().getOrNull(shopSelection);val item=id?.let{content.itemDefinitions[it]}
-                val s=shop?:return
-                shopPreviousMode=shopMode
-                if(item==null)shopMessage="没有可交易物品"
-                else {
-                    val result=if(shopMode=="BUY")TownTrade.buy(money,inventory,s,item) else TownTrade.sell(money,inventory,s,item)
-                    money=result.money;inventory=result.inventory
-                    shopMessage=result.error?:"${item.name} ${if(shopMode=="BUY")"买入" else "卖出"}一件"
-                    persistState()
-                    Diagnostics.record("town_trade",details=JSONObject().put("shopID",s.id).put("itemID",id)
-                        .put("operation",shopMode).put("success",result.error==null))
-                }
-                shopMode="RESULT"
-            }
-            6->if(shopMode=="RESULT"){shopMode=shopPreviousMode;shopSelection=shopSelection.coerceAtMost(max(0,shopEntries().size-1))}
+        val s=shop?:return
+        when(action){1,2->runShopCommand(ModalCommand("shop-mode",shopId=s.id,mode=if(action==1)"BUY" else "SELL"))
+            3,5->shopBack();4->selectedShopItemId?.let{runShopCommand(ModalCommand("trade",it,shopId=s.id,mode=shopMode))}
+            7,8->{val ids=shopEntries();if(ids.isNotEmpty()){val old=ids.indexOf(selectedShopItemId);val next=(old+ids.size+if(action==7)-1 else 1)%ids.size
+                runShopCommand(ModalCommand("shop-item",ids[next],shopId=s.id,mode=shopMode));modalListScroll=(next*modalLayout().rowHeight).coerceAtMost(modalLayout().maxScroll(ids.size))}}
         }
-        shopRevision++;input.clear();shopTouch.clear()
+    }
+    private fun modalTouch(e:MotionEvent):Boolean {
+        input.clear()
+        if(e.actionMasked==MotionEvent.ACTION_CANCEL||!active||!focused){clearUxGesture();return true}
+        val l=modalLayout();fun hit(x:Float,y:Float)=if(layer==Layer.SHOP)shopHit(x,y) else panelHit(x,y)
+        when(e.actionMasked){
+            MotionEvent.ACTION_DOWN->{clearUxGesture();val x=e.x;val y=e.y
+                val area=when{(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;(l.wide||modalDetailsOpen)&&l.detail.contains(x,y)->2;else->0}
+                uxGesture=ModalGesture(e.getPointerId(0),x,y,y,hit(x,y),uxRevision,modalState(),area)}
+            MotionEvent.ACTION_POINTER_DOWN->{clearUxGesture();uxBlocked=true}
+            MotionEvent.ACTION_MOVE->{val g=uxGesture
+                if(!uxBlocked&&g!=null){val i=e.findPointerIndex(g.pointer);if(i>=0){val x=e.getX(i);val y=e.getY(i)
+                    if(hypot(x-g.x,y-g.y)>ViewConfiguration.get(context).scaledTouchSlop){g.dragged=true;g.command=null}
+                    if(g.dragged){val delta=g.lastY-y
+                        if(g.scrollArea==1){val count=if(layer==Layer.SHOP)shopEntries().size else if(panelTab==CharacterTab.ITEMS)panelItems().size else 4
+                            modalListScroll=(modalListScroll+delta).coerceIn(0f,l.maxScroll(count))}
+                        if(g.scrollArea==2)modalDetailScroll=max(0f,modalDetailScroll+delta)
+                    };g.lastY=y}}
+            }
+            MotionEvent.ACTION_UP->{val g=uxGesture;val command=g?.command
+                if(!uxBlocked&&g!=null&&!g.dragged&&g.pointer==e.getPointerId(e.actionIndex)&&g.revision==uxRevision&&g.state==modalState()&&command!=null&&command==hit(e.x,e.y)){
+                    if(layer==Layer.SHOP)runShopCommand(command) else runPanelCommand(command)
+                };clearUxGesture();performClick()}
+            MotionEvent.ACTION_POINTER_UP->Unit
+        };return true
+    }
+    private fun touchText(c:Canvas,value:String,b:Box,sp:Float=14f,color:Int=Color.WHITE):Float {
+        textPaint.color=color;textPaint.textSize=sp*resources.displayMetrics.scaledDensity
+        val lineH=textPaint.textSize*1.25f;var top=b.y;var pending=value
+        while(pending.isNotEmpty()){
+            var n=0;while(n<pending.length&&pending[n]!='\n'&&textPaint.measureText(pending.substring(0,n+1))<=b.w)n++
+            if(n==0&&pending[0]!='\n')n=1
+            c.drawText(pending.substring(0,n),b.x,top-textPaint.fontMetrics.ascent,textPaint);top+=lineH
+            pending=pending.substring(n).removePrefix("\n")
+        };return top-b.y
+    }
+    private fun touchButton(c:Canvas,b:Box,text:String,enabled:Boolean=true,selected:Boolean=false){
+        overlayPaint.color=if(!enabled)0xff454545.toInt() else if(selected)0xff31776e.toInt() else 0xff344b5a.toInt()
+        c.drawRect(b.x,b.y,b.x+b.w,b.y+b.h,overlayPaint);c.save();c.clipRect(b.x,b.y,b.x+b.w,b.y+b.h)
+        touchText(c,text,Box(b.x+8*resources.displayMetrics.density,b.y+8*resources.displayMetrics.density,b.w-16*resources.displayMetrics.density,b.h),14f);c.restore()
+    }
+    private fun touchFrame(c:Canvas,title:String,subtitle:String,titles:List<String>,selected:Int){
+        val l=modalLayout();val dp=resources.displayMetrics.density;overlayPaint.color=0x99000000.toInt();c.drawRect(0f,0f,width.toFloat(),height.toFloat(),overlayPaint)
+        overlayPaint.color=Color.BLACK;c.drawRect(l.frame.x,l.frame.y,l.frame.x+l.frame.w,l.frame.y+l.frame.h,overlayPaint)
+        overlayPaint.color=Color.WHITE;overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=2*dp;c.drawRect(l.frame.x,l.frame.y,l.frame.x+l.frame.w,l.frame.y+l.frame.h,overlayPaint);overlayPaint.style=Paint.Style.FILL
+        val x=l.frame.x+8*dp+if(!l.wide&&modalDetailsOpen)56*dp else 0f
+        touchText(c,title+"\n"+subtitle,Box(x,l.frame.y+8*dp,l.close.x-x-8*dp,1f),15f)
+        touchButton(c,l.close,"关闭")
+        if(!l.wide&&modalDetailsOpen)touchButton(c,l.back,"列表")
+        titles.forEachIndexed{i,t->touchButton(c,l.tabs[i],t,selected=i==selected)}
+        if(layer!=Layer.SHOP&&characters.size>1)characters.forEachIndexed{i,h->touchButton(c,l.party[i],heroName(h.id),selected=i==characterPage)}
+    }
+    private fun touchRows(c:Canvas,rows:List<Triple<String,String,Bitmap?>>,selected:String?){
+        val l=modalLayout();val dp=resources.displayMetrics.density;c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
+        rows.forEachIndexed{i,row->val b=l.row(i,modalListScroll);if(b.y+b.h>=l.list.y&&b.y<=l.list.y+l.list.h){
+            overlayPaint.color=if(row.first==selected)0xff244d49.toInt() else 0xff171c1d.toInt();c.drawRect(b.x,b.y,b.x+b.w,b.y+b.h-2*dp,overlayPaint)
+            val imageW=if(row.third!=null)48*dp else 0f
+            row.third?.let{paint.isFilterBitmap=false;c.drawBitmap(it,null,RectF(b.x+4*dp,b.y+8*dp,b.x+44*dp,b.y+48*dp),paint)}
+            touchText(c,row.second,Box(b.x+8*dp+imageW,b.y+8*dp,b.w-16*dp-imageW,b.h-16*dp),14f)
+        }};c.restore()
+    }
+    private fun touchDetail(c:Canvas,lines:List<String>,image:Bitmap?=null){
+        val b=modalLayout().detail;val dp=resources.displayMetrics.density;c.save();c.clipRect(b.x,b.y,b.x+b.w,b.y+b.h)
+        var y=b.y-modalDetailScroll
+        image?.let{paint.isFilterBitmap=false;c.drawBitmap(it,null,RectF(b.x,y,b.x+56*dp,y+56*dp),paint);y+=64*dp}
+        val messages=lines+if(SystemClock.elapsedRealtime()<uxFeedbackUntil&&uxFeedback.isNotEmpty())listOf(uxFeedback) else emptyList()
+        for(line in messages)y+=touchText(c,line,Box(b.x,y,b.w,1f),14f)+5*dp
+        modalDetailScroll=modalDetailScroll.coerceAtMost(max(0f,y+modalDetailScroll-b.y-b.h));c.restore()
+    }
+    private fun drawDirectPanel(c:Canvas){
+        val l=modalLayout();val hero=characters[characterPage]
+        touchFrame(c,"${heroName(hero.id)}  Lv.${hero.level}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"} · 银两 $money",listOf("属性","装备","物品","法术"),panelTab.ordinal)
+        if(l.wide||!modalDetailsOpen){
+            val rows=if(panelTab==CharacterTab.ITEMS)panelItems().map{e->val item=content.itemDefinitions[e.key]
+                val status=when{item?.herbUse!=null->if(characters.none{it.hp>0})"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
+                Triple(e.key,"${item?.name?:"未知物品"}\n×${e.value} · $status",item?.preview)}
+            else listOf("rightHand","leftHand","body","feet").map{slot->
+                val e=hero.equipment;val id=when(slot){"rightHand"->e?.rightHand;"leftHand"->e?.leftHand;"body"->e?.body;else->e?.feet}
+                val d=content.equipmentDefinitions.values.firstOrNull{it.slot==slot&&it.originalId==id};val item=d?.let{content.itemDefinitions[it.itemId]}
+                Triple(slot,"${slotName(slot)}\n${item?.name?:if(id==-1)"空" else "状态待核"}",item?.preview)}
+            touchRows(c,rows,if(panelTab==CharacterTab.ITEMS)selectedItemId else equipmentSlot)
+        }
+        if(l.wide||modalDetailsOpen){
+            if(panelTab==CharacterTab.ITEMS){val item=selectedItemId?.let{content.itemDefinitions[it]};val a=itemAction();val d=selectedItemId?.let{content.equipmentDefinitions[it]}
+                val lines=mutableListOf(item?.name?:"点击左侧物品查看详情")
+                if(item!=null){lines+="持有 ${inventory[item.id]?:0}";lines+="查看角色：${heroName(hero.id)}"
+                    if(d!=null){lines+=when(d.slot){"rightHand"->"武器加成 +${d.attackBonus}";"body"->"防具加成 +${d.defenseBonus}";else->"迴避力 ${d.evasionValue}"}
+                        val next=OpeningEquipment.replace(hero,inventory,d,content.equipmentDefinitions.values)?.first
+                        if(next!=null)lines+=when(d.slot){"rightHand"->"总攻击 ${hero.strength+equipmentBonus(hero,d.slot)} → ${next.strength+equipmentBonus(next,d.slot)}";"body"->"总防御 ${hero.stamina+equipmentBonus(hero,d.slot)} → ${next.stamina+equipmentBonus(next,d.slot)}";else->"迴避力 ${equipmentBonus(hero,d.slot)} → ${equipmentBonus(next,d.slot)}"}
+                        lines+="原装备按现有规则回包"}
+                    else{lines+=item.description?:"暂无已确认说明";a.target?.let{id->characters.firstOrNull{it.id==id}?.let{lines+="目标 ${heroName(id)} · HP ${it.hp}/${it.maxHp}"}}}
+                    if(a.reason.isNotEmpty())lines+=a.reason
+                };touchDetail(c,lines,item?.preview)
+                if(a.kind!=null)touchButton(c,l.primary,a.text,a.enabled)
+            }else{val d=equippedDefinition();val item=d?.let{content.itemDefinitions[it.itemId]};val removable=d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null
+                touchDetail(c,listOf("${slotName(equipmentSlot)} · ${item?.name?:"空或尚未核验"}","角色 ${heroName(hero.id)}", "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")}","总防御 ${hero.stamina+equipmentBonus(hero,"body")}",if(d==null)"当前槽位无可卸下的已实现装备" else if(!removable)"当前背包条件不允许回包" else "卸下后回到真实背包"),item?.preview)
+                touchButton(c,l.primary,"卸下 ${item?.name?:"装备"}",removable)
+                touchButton(c,l.secondary,"选择${slotName(equipmentSlot)}候选")}
+        }
     }
     private fun drawShop(c:Canvas){
-        overlayPaint.color=0x88000000.toInt();c.drawRect(0f,0f,width.toFloat(),height.toFloat(),overlayPaint)
-        val b=shopBounds();c.save();c.translate(b.x,b.y);c.scale(b.w/256,b.h/240)
-        fun box(x:Float,y:Float,w:Float,h:Float){
-            overlayPaint.color=Color.BLACK;overlayPaint.style=Paint.Style.FILL;c.drawRect(x,y,x+w,y+h,overlayPaint)
-            overlayPaint.color=Color.WHITE;overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=2f
-            c.drawRect(x+1,y+1,x+w-1,y+h-1,overlayPaint);overlayPaint.style=Paint.Style.FILL
+        val l=modalLayout();val item=selectedShopItemId?.let{content.itemDefinitions[it]}
+        touchFrame(c,shop?.name?:"商店","银两 $money",listOf("购买","卖出"),if(shopMode=="BUY")0 else 1)
+        if(l.wide||!modalDetailsOpen)touchRows(c,shopEntries().map{id->val it=content.itemDefinitions.getValue(id)
+            Triple(id,"${it.name}\n持有 ${inventory[id]?:0} · ${if(shopMode=="BUY")it.buyPrice else it.sellPrice}两",it.preview)},selectedShopItemId)
+        if(l.wide||modalDetailsOpen){
+            val lines=mutableListOf(item?.name?:if(shopEntries().isEmpty())"没有已核实可交易物品" else "点击商品查看详情")
+            if(item!=null){lines+="持有 ${inventory[item.id]?:0} · 上限 ${item.maxCount}";lines+="单价 ${if(shopMode=="BUY")item.buyPrice else item.sellPrice} 两"
+                content.equipmentDefinitions[item.id]?.let{d->lines+=when(d.slot){"rightHand"->"武器加成 +${d.attackBonus}";"body"->"防具加成 +${d.defenseBonus}";else->"迴避力 ${d.evasionValue}"};lines+="购入不自动装备"}
+                if(shopMode=="BUY")lines+=shop?.buyPrompt?:""}
+            touchDetail(c,lines,item?.preview)
+            touchButton(c,l.primary,if(item==null)"请选择商品" else "${if(shopMode=="BUY")"购买" else "卖出"}1件 · ${if(shopMode=="BUY")item.buyPrice else item.sellPrice}两",item!=null)
         }
-        fun line(s:String,x:Float,y:Float,size:Float=11f){textPaint.color=Color.WHITE;textPaint.textSize=size;c.drawText(s,x,y,textPaint)}
-        box(6f,5f,160f,136f);box(174f,5f,76f,136f);box(6f,147f,71f,88f);box(82f,147f,168f,88f)
-        line(shop?.name?:"",15f,23f);line("银两",183f,24f);line("$money",183f,44f)
-        val item=shopEntries().getOrNull(shopSelection)?.let{content.itemDefinitions[it]}
-        if(shopMode!="ROOT" && item!=null){
-            line(item.name,15f,47f,14f)
-            item.preview?.let{image->paint.isFilterBitmap=false
-                c.drawBitmap(image,null,RectF(18f,55f,18f+image.width*1.7f,55f+image.height*1.7f),paint)}
-            val price=if(shopMode=="SELL"||(shopMode=="RESULT"&&shopPreviousMode=="SELL"))item.sellPrice else item.buyPrice
-            line("${price?:"?"} 两",101f,89f);line("持有 ${inventory[item.id]?:0}",183f,76f)
-            line("上一件",15f,126f);line("下一件",95f,126f)
-        }
-        line("买",18f,174f,14f);line("卖",18f,198f,14f);line("不要",18f,222f,14f)
-        when(shopMode){
-            "ROOT"->line("请选择买、卖或不要",91f,172f,10f)
-            "RESULT"->{line(shopMessage,91f,174f,10f);line("继续",91f,213f,14f)}
-            else->{line(if(shopMode=="BUY")"买入一件" else "卖出一件",91f,177f,14f)
-                line(if(shopMode=="BUY")shop?.buyPrompt?:"" else if(item==null)"没有已核实可卖物品" else "确认卖出所选物品",91f,197f,10f)
-                line("返回",91f,222f,12f)}
-        }
-        c.restore()
     }
     private fun activate(key:Key){
-        if(layer==Layer.SHOP){when(key){Key.A->runShopAction(if(shopMode=="ROOT")1 else if(shopMode=="RESULT")6 else 4)
+        if(layer==Layer.SHOP){when(key){Key.A->runShopAction(4)
             Key.B,Key.MENU->shopBack();Key.UP->runShopAction(7);Key.DOWN->runShopAction(8);else->Unit};return}
         when(key){
             Key.MENU->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
-            Key.A->when(layer){Layer.MAP->interactionTarget()?.let{openNpc(it)};Layer.MENU->confirmMenu();Layer.DIALOGUE->advanceDialogue();Layer.BATTLE->confirmBattle();else->Unit}
+            Key.A->when(layer){Layer.MAP->interactionTarget()?.let{openNpc(it)};Layer.MENU->confirmMenu();Layer.DIALOGUE->advanceDialogue();Layer.BATTLE->confirmBattle();Layer.CHARACTER,Layer.INVENTORY->if(directPanel()){val b=modalLayout().primary;panelHit(b.x+b.w/2,b.y+b.h/2)?.let{runPanelCommand(it)}};else->Unit}
             Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
             Key.START->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             else->Unit
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
-        if(e.actionMasked==MotionEvent.ACTION_CANCEL){input.clear();menuTouch.clear();panelTouch.clear();hudTouch.clear();npcTouch.clear();dialogueTouch.clear();battleTouch.clear();shopTouch.clear();return true}
-        if(!active||!focused||layer==Layer.SETTINGS){input.clear();menuTouch.clear();panelTouch.clear();hudTouch.clear();npcTouch.clear();return true}
+        if(layer==Layer.SHOP || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
+        if(e.actionMasked==MotionEvent.ACTION_CANCEL){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();dialogueTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();return true}
+        if(!active||!focused||layer==Layer.SETTINGS){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();return true}
         when(e.actionMasked){
             MotionEvent.ACTION_DOWN,MotionEvent.ACTION_POINTER_DOWN->{
                 val i=e.actionIndex;val id=e.getPointerId(i);val x=e.getX(i);val y=e.getY(i)
                 if(layer==Layer.MAP){
                     val button=ui.hitButton(x,y)
                     if(button!=null && mapControlEnabled(button)){
-                        if(button==Key.A){if(finishPendingStep())return true;input.clear();npcTouch.clear();shopTouch.clear();clock.reset()}
+                        if(button==Key.A){if(finishPendingStep())return true;input.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
                         input.set(id,button);if(haptic)performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
                     }
                     else if(ui.stick.contains(x,y)&&input.startStick(id))input.moveStick(id,x,y,ui.stick,config.deadZone)
@@ -646,7 +805,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     panelAction(x,y)?.let{panelTouch[id]=it}
                 } else if(layer==Layer.DIALOGUE)dialogueTouch.add(id)
                 else if(layer==Layer.BATTLE)battleAction(x,y)?.let{battleTouch[id]=it;battleTouchRevision=battlePresentation.revision}
-                else if(layer==Layer.SHOP)shopAction(x,y)?.let{shopTouch[id]=it to shopRevision}
+                else if(layer==Layer.SHOP)Unit
             }
             MotionEvent.ACTION_MOVE->{
                 if(layer==Layer.MAP)for(i in 0 until e.pointerCount){
@@ -670,7 +829,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val battleSelected=battleTouch.remove(id)
                 val key=input.keyFor(id)?.takeIf{layer==Layer.MAP&&ui.hitButton(x,y)==it}
                 input.release(id)
-                if(shopPressed!=null && layer==Layer.SHOP && shopPressed.second==shopRevision && shopPressed.first==shopAction(x,y))runShopAction(shopPressed.first)
+                if(shopPressed!=null && layer==Layer.SHOP && shopPressed.second==shopRevision && false)runShopAction(shopPressed.first)
                 else if(battleSelected!=null && layer==Layer.BATTLE && battleSelected==battleAction(x,y) && battleTouchRevision==battlePresentation.revision){
                     runBattleAction(battleSelected)
                 }
@@ -695,6 +854,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onKeyDown(code:Int,event:KeyEvent):Boolean {
         val key=hardwareKey(code)?:return super.onKeyDown(code,event)
         if(layer==Layer.SETTINGS)return false
+        if(layer==Layer.SHOP&&key in listOf(Key.UP,Key.DOWN)){if(event.repeatCount==0)runShopAction(if(key==Key.UP)7 else 8);return true}
         if(layer==Layer.BATTLE && key in listOf(Key.UP,Key.DOWN)){
             if(event.repeatCount==0&&battlePresentation.screen==BattlePresentation.Screen.COMMAND){
                 var next=battlePresentation.command
@@ -709,7 +869,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(layer==Layer.MAP && key==Key.A && interactionTarget()!=null){if(finishPendingStep())return true;input.clear();clock.reset()}
             input.set(-code,key)
             if(menuOpen){if(key==Key.UP)menuSelection=(menuSelection+menuChoices.size-1)%menuChoices.size;if(key==Key.DOWN)menuSelection=(menuSelection+1)%menuChoices.size}
-            if(layer in listOf(Layer.CHARACTER,Layer.INVENTORY) && panelTab==CharacterTab.ITEMS){if(key==Key.LEFT)runPanelAction(1);if(key==Key.RIGHT)runPanelAction(2)}
+            if(layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()&&key in listOf(Key.UP,Key.DOWN)){
+                val ids=if(panelTab==CharacterTab.ITEMS)panelItems().map{it.key} else listOf("rightHand","leftHand","body","feet")
+                if(ids.isNotEmpty()){val at=ids.indexOf(if(panelTab==CharacterTab.ITEMS)selectedItemId else equipmentSlot)
+                    val next=(at+ids.size+if(key==Key.UP)-1 else 1)%ids.size
+                    runPanelCommand(if(panelTab==CharacterTab.ITEMS)ModalCommand("item",ids[next],selectedCharacterId,mode=candidateSlot) else ModalCommand("slot",targetId=selectedCharacterId,slot=ids[next]))
+                    modalListScroll=(next*modalLayout().rowHeight).coerceAtMost(modalLayout().maxScroll(ids.size))}
+            }
         }
         return true
     }
@@ -834,6 +1000,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return when(slot){"rightHand"->d.attackBonus;"body"->d.defenseBonus;"feet"->d.evasionValue;else->0}
     }
     private fun drawInfoPanel(c:Canvas){
+        if(directPanel()){drawDirectPanel(c);return}
         val dp=resources.displayMetrics.density;val b=panelBox();val hero=characters[characterPage]
         overlayPaint.color=0x88000000.toInt();c.drawRect(0f,0f,width.toFloat(),height.toFloat(),overlayPaint)
         overlayPaint.color=Color.BLACK;c.drawRect(b.x,b.y,b.x+b.w,b.y+b.h,overlayPaint)
@@ -875,60 +1042,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     "敏捷 ${hero.agility}     精神 ${hero.spirit}","银两 $money")
                 for((i,line)in lines.withIndex())c.drawText(line,left,b.y+b.h*(.565f+i*.075f),textPaint)
             }
-            CharacterTab.EQUIPMENT->{
-                val equipment=hero.equipment
-                if(equipment==null)c.drawText("该角色装备状态尚未核验",left,b.y+b.h*.59f,textPaint)
-                else {
-                    val slots=listOf("rightHand" to ("右手" to equipment.rightHand),"leftHand" to ("左手" to equipment.leftHand),
-                        "body" to ("身体" to equipment.body),"feet" to ("脚" to equipment.feet))
-                    for((i,row) in slots.withIndex()){
-                        val definition=content.equipmentDefinitions.values.firstOrNull{it.slot==row.first&&it.originalId==row.second.second}
-                        val item=definition?.let{content.itemDefinitions[it.itemId]};val y=b.y+b.h*(.57f+i*.072f)
-                        c.drawText("${row.second.first}  ${item?.name?:if(row.second.second==-1)"空" else "未核验 ID ${row.second.second}"}",left,y,textPaint)
-                        item?.preview?.let{image->paint.isFilterBitmap=false
-                            c.drawBitmap(image,null,RectF(b.x+b.w*.72f,y-19*dp,b.x+b.w*.72f+21*dp,y+2*dp),paint)}
-                    }
-                    if(equippedDefinition()!=null){
-                        val action=panelEquipmentActionBox();overlayPaint.color=Color.DKGRAY
-                        c.drawRect(action.x,action.y,action.x+action.w,action.y+action.h,overlayPaint)
-                        label(c,"解除 ${content.itemDefinitions[equippedDefinition()?.itemId]?.name?:""}",action.x+action.w/2,action.y+action.h/2,11f)
-                    }
-                    textPaint.textSize=10*dp
-                    c.drawText("攻击力 ${hero.strength+equipmentBonus(hero,"rightHand")}  防御力 ${hero.stamina+equipmentBonus(hero,"body")}  迴避力 ${equipmentBonus(hero,"feet")}",left,b.y+b.h*.84f,textPaint)
-                }
-            }
-            CharacterTab.ITEMS->{
-                val page=inventoryEntries().drop(inventoryPage*4).take(4)
-                if(page.isEmpty())c.drawText("暂无物品",left,b.y+b.h*.58f,textPaint)
-                for((i,item)in page.withIndex()){
-                    val row=inventoryRowBox(i)
-                    if(item.key==selectedItemId){overlayPaint.color=0x7735bdb0;c.drawRoundRect(RectF(row.x,row.y,row.x+row.w,row.y+row.h),5*dp,5*dp,overlayPaint)}
-                    val name=content.itemDefinitions[item.key]?.name?:"未识别物品 (${item.key})"
-                    content.itemDefinitions[item.key]?.preview?.let{image->paint.isFilterBitmap=false
-                        c.drawBitmap(image,null,RectF(row.x,row.y,row.x+row.h,row.y+row.h),paint)}
-                    c.drawText("$name  ×${item.value}",row.x+row.h+5*dp,row.y+row.h*.72f,textPaint)
-                }
-                selectedItemId?.let{id->content.itemDefinitions[id]?.let{item->
-                    val definition=content.equipmentDefinitions[id]
-                    c.drawText(if(definition!=null)when(definition.slot){"body"->"防御力 +${definition.defenseBonus}";"feet"->"迴避力 ${definition.evasionValue}";else->"攻击力 +${definition.attackBonus}"} else
-                        item.description?:"暂无可靠物品说明",left,b.y+b.h*.85f,textPaint)
-                    if(definition!=null && definition.operationEnabled && OpeningEquipment.equip(hero,inventory,definition)!=null){
-                        val action=panelEquipmentActionBox();overlayPaint.color=0xff31776e.toInt()
-                        c.drawRoundRect(RectF(action.x,action.y,action.x+action.w,action.y+action.h),5*dp,5*dp,overlayPaint)
-                        label(c,"装备",action.x+action.w/2,action.y+action.h/2,11f)
-                    }
-                    if(item.herbUse!=null){
-                        val action=panelEquipmentActionBox();overlayPaint.color=if(canUseHerb())0xff31776e.toInt() else 0xff454545.toInt()
-                        c.drawRoundRect(RectF(action.x,action.y,action.x+action.w,action.y+action.h),5*dp,5*dp,overlayPaint)
-                        label(c,if(canUseHerb())"使用 → ${content.playerNames[hero.id]?:hero.id}" else "此目标无法使用",action.x+action.w/2,action.y+action.h/2,11f)
-                    }
-                }}
-                if(inventoryPages()>1){
-                    textPaint.color=0xffcbdce0.toInt();label(c,"${inventoryPage+1}/${inventoryPages()}",b.x+b.w/2,b.y+b.h*.945f,11f)
-                    if(inventoryPage>0){val p=panelPageBox(false);label(c,"上一页",p.x+p.w/2,p.y+p.h/2,11f)}
-                    if(inventoryPage+1<inventoryPages()){val p=panelPageBox(true);label(c,"下一页",p.x+p.w/2,p.y+p.h/2,11f)}
-                }
-            }
+            CharacterTab.EQUIPMENT,CharacterTab.ITEMS->Unit // Drawn by the scoped direct modal above.
             CharacterTab.MAGIC->{
                 c.drawText("尚未开放",left,b.y+b.h*.59f,textPaint)
                 c.drawText("已学法术状态尚未迁移",left,b.y+b.h*.67f,textPaint)
