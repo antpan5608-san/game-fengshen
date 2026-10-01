@@ -4,9 +4,26 @@ task_id: ANDROID-CI-01
 
 以 v21 / 0.8.1-town-01 / c11 为基线；保留游戏进度和历史。复用 Gradle/PowerShell 发布/巡检，先云端手动构建并保留下载产物，再受保护发布；首次服务器上传须用户确认实际产物和目标。Secrets 不进入仓库、日志或 artifact。未取得 GitHub 权限时继续本地实现验证，不能声称已云端验证。
 
+以下接入/失败过程为历史，当前以「v22 云端正式交付」为准。
+
 云端接续增量（2026-10-01）：已核验 main `6ed46292fab36f480c1cb1e6958ae0d9202ce7e3` 和成功构建 `36855448982`；用户已授权 v22 发布及后续已授权迭代的自动环境审批。首次正式发布 `36868615998` 获用户环境审批后，产物复核通过，实际 ANDROID-CI-01 preflight 返回 NO_ISSUES_OBSERVED，但 workflow 使用普通 ConvertFrom-Json 读取包含合法空名称 contentVersion 字段的报告而失败，尚未上传。仅将 preflight/postflight 两处读取改为 -AsHashtable，与既有 check-runtime.ps1/publish-apk.ps1 一致；不改变健康判定/同提交/签名/内容/目标校验。修复后保留原失败记录，按现有流程在新源提交构建并审核 v22，再执行正式发布；不得将失败运行或未执行巡检写成成功。GitHub 自动 review API 实际 403，仍需解决 Deployments 写入能力，保留环境保护和累计未完成项。
 
 后续增量：`f8fc3a470870cf729a69c593767bd762385f1200` 的构建 `36870720449` 成功，v22 APK SHA 为 `66e0e945e0999276aed33d3ed3cc4048629d7a082f638d6c6ed8e35350ffcdf7`；发布 `36871347819` 等待审批，现有集成实际缺少 deployments=write。用户已表示配置 FENGSHEN_DEPLOY_REVIEW_TOKEN，现于原生产 workflow 增加 approve job，由 GitHub runner 将该仓库 Secret 注入 GH_TOKEN 并保留 reviewer/main/产物/巡检校验。新配置改变源提交后须构建同提交产物；实际运行验证前不宣称自动审批或发布成功。累计欠账保持。
+
+## v22 云端正式交付（2026-10-01 最新状态）
+
+状态：`PUBLISHED_AND_VERIFIED`；ANDROID-CI-01 本轮完成。v22 / `0.8.2-ci-release` 于北京时间 2026-10-01 23:17:27（UTC 15:17:27）发布；生产 workflow 于 23:21:47 全部成功。游戏仍为 c11 开发内容，不代表南海龙王或完整原版里程碑完成。
+
+- APK 来源提交：`f7dfea747999f6b1ee497179f98eb6cc7ed94f6a`；[构建 36882142423](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882142423)、[发布 36882936289](https://github.com/antpan5608-san/game-fengshen/actions/runs/36882936289) 均 completed/success，构建与发布同一 main 提交。后续文档提交不改变已审核 APK 来源。
+- 下载：[v22 APK](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=22)；11,316,827 字节，SHA-256 `5cecfe1c3a4208ea077ef8da7fb338e46ad9419dc2551dfb7a61952b230bf72f`。包名 `org.fengshen.dev`，既有签名证书保持；release 非 debuggable、版本、签名、内容及旧包兼容已由原 runner 复核。
+- c11 / `opening-segment-001-c11`，manifest SHA `3ea11936a0c7e04bddfb3e846a612532c836e9e3461df4da71281cfbd0786147`。本任务于北京时间 23:23:22 独立下载正式服务器 APK，完整 SHA/大小与 version.json/构建 receipt 一致，原 `tools/ci_apk.py::content` 验证 42 文件（包含 manifest；41 内容文件）及全部文件 hash。
+- 自动审批实际成功：原 `android-publish.yml` 的 approve job 使用仓库 Secret `FENGSHEN_DEPLOY_REVIEW_TOKEN`，通过原 reviewer 政策批准 fengshen-production。随后 publish job 全部成功，无需再次人工点击。现有集成本身的 Deployments API 403 不影响这个已验证的 runner 途径；不代表当前云任务拿到了该 Secret 值。令牌到期/撤销或保护规则变化仍可能明确失败。
+- 实际 `./check-runtime.ps1` preflight：UTC 15:17:21，可信21/20，418事件/41测试事件，普通11模拟器+1真机会话，窗口08:13:38—14:11:04，NO_ISSUES_OBSERVED。
+- 实际 postflight：UTC 15:21:41，可信22/21，363事件/14测试事件，普通6模拟器+1真机会话，窗口08:27:54—14:11:04，NO_ISSUES_OBSERVED；清理失败0。当前保留样本来自v21，v22尚无上传样本；历史设备日志不是本轮手机验收，不证明v22运行或历史音频根因修复。
+- 保留既有两版规则及每版20MiB容量；本次上传只覆盖 Fengshen APK/version.json 两对象。ROM、密钥和电脑未提交资料没有由本次迁移取得；无新游戏源码、UI或功能开发。
+- 验证：实际云端 testReleaseUnitTest/assembleRelease/签名/内容与旧包兼容检查通过；本地自动审批实际 Bash fixture14项、既有 transport12项通过。没有本轮 adb/模拟器/App录屏或真实账号云恢复测试；一加13T覆盖升级、触控、声音、长时性能均 NOT_RUN。
+
+下一迭代继续复用现有构建与发布，versionCode 必须大于22；既有默认22是首次构建的历史值，必须显式覆盖。累计十类未完成项与下一原版节点三个阻塞全部保持，详见最新交付报告。
 
 以下保留 TOWN-01 历史。
 
