@@ -92,7 +92,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
         val definition=content.enemies[m.enemyId]?:error("Missing enemy ${m.enemyId}")
-        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte!=7||content.physicalRules!=null))
+        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(7,9)||content.physicalRules!=null))
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
@@ -158,7 +158,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private fun originalRound(targetSlot:Int?,nextByte:()->Int,herbHp:Int?=null):BattleTurn {
         val rules=content.physicalRules!!;val steps=mutableListOf<BattleActionStep>()
         val defeated=mutableListOf<Int>();var dealt=0;var received=0;var misses=0
-        fun roll()=nextByte().also{require(it in 0..255)}
+        var lastActionByte:Int?=null
+        fun roll()=nextByte().also{require(it in 0..255);lastActionByte=it}
         val actors=(listOf(-1)+enemies.filter{it.hp>0}.map{it.slot}).sortedByDescending{slot->
             if(slot==-1)hero.agility else content.enemyAgility.getValue(enemies.first{it.slot==slot}.definition.id)}
         for(actor in actors){
@@ -203,15 +204,30 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     steps.add(frame(if(hero.statusMask!=before)"中毒" else "异常状态保持",actor=actor,kind=BattleActionKind.STATUS))
                     continue // Original status branch applies no physical damage or extra RNG draw.
                 }
+                if(enemy.definition.behaviorByte==9&&OriginalStatus.choosesStatus4(random)){
+                    steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=actor,kind=BattleActionKind.ATTACK))
+                    val before=hero.statusMask;hero=OriginalStatus.applyStatus4(hero)
+                    steps.add(frame(if(hero.statusMask!=before)"异常 04" else "异常状态保持",actor=actor,kind=BattleActionKind.STATUS))
+                    continue // 9:A0D2: no HP damage; share the action byte, do not draw again.
+                }
                 val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
                 steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=actor,kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK))
                 if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=actor,kind=BattleActionKind.MISS));continue}
                 val armor=equippedArmorBonus ?: if(hero.equipment?.body==0)content.armorContribution else 0
-                val damage=if(ice)enemy.definition.iceBaseDamage!! else max(1,enemy.definition.attack-armor-hero.stamina)
+                val computed=if(ice)enemy.definition.iceBaseDamage!! else enemy.definition.attack-armor-hero.stamina
+                val damage=OriginalStatus.incomingDamage(computed,hero.statusMask)
                 val actual=minOf(damage,hero.hp);received+=actual;hero=hero.copy(hp=hero.hp-actual,statusMask=if(hero.hp==actual)OriginalStatus.DEAD else hero.statusMask)
                 steps.add(frame("受到 $actual 点伤害",actor=actor,kind=BattleActionKind.DAMAGE,delta=-actual,beforeHero=hero.hp+actual))
                 if(hero.hp==0)phase=BattlePhase.DEFEAT
             }
+        }
+        // 9:A63D/A67B return immediately on defeat/victory. Only a completed, ongoing
+        // round reaches A69F..A6F0. Recovery rotates the last shared action byte once;
+        // it does not sample a new random value and is not an animation callback.
+        if(phase==BattlePhase.TARGET && lastActionByte!=null){
+            val before=hero.statusMask
+            hero=OriginalStatus.recoverStatus4AtRoundEnd(hero,lastActionByte!!).character
+            if(hero.statusMask!=before)steps.add(frame("异常 04 解除",kind=BattleActionKind.STATUS))
         }
         return BattleTurn(dealt,received,misses,defeated,phase,steps)
     }

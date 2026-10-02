@@ -82,6 +82,7 @@ class OriginalStatusTest {
         assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(3,23),EncounterMember(3,23))),c.enemies))
         assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(7,23))),c.enemies))
         assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(3,24))),c.enemies))
-        assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=9)))
+        assertTrue(OriginalStatus.enemySupported(enemy.copy(behaviorByte=9)))
+        assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=10)))
     }
 }
