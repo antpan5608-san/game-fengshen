@@ -29,7 +29,7 @@ class Status4RoundTest {
             assertEquals(0,turn.enemyDamage);assertEquals(100,b.hero.hp)
             val status=turn.actions.first{it.kind==BattleActionKind.STATUS}
             assertEquals(4,status.heroStatusMask);assertEquals(200,status.enemyHp[0])
-            assertEquals(5,turn.playerDamage) // status04 does not skip player command.
+            assertEquals(2,turn.playerDamage) // 5 >> 1; status04 still executes the selected command.
             assertEquals(expected,b.hero.statusMask);assertEquals(expected,turn.actions.last().heroStatusMask)
         }
     }

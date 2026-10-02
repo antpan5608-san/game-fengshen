@@ -190,7 +190,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(!rules.hits(hero.equipment?.rightHand?:-1,random)){
                     steps.add(frame("攻击未命中",target=target.slot,kind=BattleActionKind.MISS));continue
                 }
-                val damage=rules.damage(hero.strength+weaponBonus,target.definition.defense,hero.level,random)
+                val computed=rules.damage(hero.strength+weaponBonus,target.definition.defense,hero.level,random)
+                val damage=OriginalStatus.outgoingPhysicalDamage(computed,hero.statusMask)
                 val actual=minOf(damage,target.hp);target.hp-=actual;dealt+=actual
                 steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=target.slot,kind=BattleActionKind.DAMAGE,delta=-actual,beforeEnemy=target.hp+actual))
                 if(target.hp==0){defeated.add(target.definition.id);steps.add(frame("${target.definition.name} 被击倒",target=target.slot,kind=BattleActionKind.DEATH))}
@@ -270,7 +271,7 @@ object BattleAcquisition {
     fun apply(inventory:Map<String,Int>,loot:List<BattleLoot>,categories:Map<String,String>,nextByte:()->Int):Result {
         val next=inventory.toMutableMap();val acquired=mutableListOf<String>();val skipped=mutableListOf<String>()
         for(item in loot){
-            require(item.category in setOf("medicine","weapon")&&categories[item.itemId]==item.category&&item.threshold in 0..128)
+            require(item.category in setOf("medicine","weapon","armor")&&categories[item.itemId]==item.category&&item.threshold in 0..128)
             val byte=nextByte().also{require(it in 0..255)}
             if((byte and 127)>=item.threshold)continue
             val count=next[item.itemId]?:0
