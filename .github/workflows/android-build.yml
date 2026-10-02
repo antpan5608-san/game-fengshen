@@ -268,6 +268,7 @@ jobs:
           path: |
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
+            artifacts/checkpoint-ui/world-f0-*
             artifacts/checkpoint-ui/town02-ci-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/checkpoint-ui/nanhai-*
@@ -310,7 +311,7 @@ jobs:
         with:
           name: fengshen-mobile-play-checkpoints
           path: |
-            artifacts/checkpoint-ui/town01-*.png
+            artifacts/checkpoint-ui/touch-ux-town01-*.png
             artifacts/checkpoint-ui/world-f0-*.json
             artifacts/checkpoint-ui/world-f0-force-stop-restored.png
             artifacts/checkpoint-ui/mobile-*.png
