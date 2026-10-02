@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c17",
-  "manifestSha256": "b82b9e75e8b1b552ee10fb1956720857e890d2bf2d4eb69f9fee4d6b8b43b91c",
+  "contentVersion": "opening-segment-001-c16",
+  "manifestSha256": "c597c7f7befb4396c4fd9d402611c0f830364c438756d31e922156bff4e2ed96",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-north-palace01.json"
+    "provenance": "game-data/provenance/world-west-services01.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

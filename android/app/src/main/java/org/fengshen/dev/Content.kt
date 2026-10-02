@@ -62,7 +62,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     // bounded loader; this never holds every visited map alive.
     private var stateScene:Scene?=null
     private var stateFlags:Map<String,Boolean>?=null
-    fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
+    @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
         if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
         val base=scenes[mapId]?:return null
         val removed=mapObjects.mapNotNull{it.itemTarget}.filter{it.mapId==mapId&&flags[it.removedFlagId]==true}

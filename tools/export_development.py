@@ -517,6 +517,25 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             elif enemy['behaviorByte'] not in (0,7) or 'iceBaseDamage' in enemy:
                 raise ValueError('Enemy behavior requires implementation and evidence')
         for zone in overlay.get('zones',[]):
+            from forensics.fengshen246 import extract_encounter_groups
+            original_groups=extract_encounter_groups(reader,zone['id'])['groups']
+            if [(g['id'],g.get('sourceEntities',g['entities'])) for g in zone['groups']]!=[(g['id'],g['entities']) for g in original_groups]:
+                raise ValueError('Encounter overlay must retain the complete original zone group table')
+            for group,original_group in zip(zone['groups'],original_groups):
+                if not original_group['duplicateSlots']:
+                    if group['entities']!=original_group['entities']:raise ValueError('Unexpected group normalization')
+                    continue
+                proof=load(ROOT/zone['duplicateSlotEvidence'])
+                if proof['romSha256']!=SHA256 or proof['zoneId']!=zone['id']:
+                    raise ValueError('Repeated-slot evidence belongs to another zone')
+                for span in proof['sources']:checked_span(reader,span)
+                instances={}
+                for row in original_group['entities']:
+                    if row['slot'] in instances and instances[row['slot']]!=row:
+                        raise ValueError('Conflicting repeated slots need their actual loader semantics')
+                    instances.setdefault(row['slot'],row)
+                if group['entities']!=list(instances.values()):
+                    raise ValueError('Repeated-slot runtime instances differ from original loader')
             if zone['rectangles']:
                 raw=checked_span(reader,zone['rectangleSource'])
                 if raw!=bytes([zone['id']]+[v for rect in zone['rectangles'] for v in rect]+[0]):raise ValueError('Encounter rectangles differ')
@@ -534,7 +553,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Encounter groups incomplete')
             for group in zone['groups']:
                 actual=checked_span(reader,group['range'])
-                pairs=[v for entity in group['entities'] for v in (entity['slot']+1,entity['sourceType'])]
+                pairs=[v for entity in group.get('sourceEntities',group['entities']) for v in (entity['slot']+1,entity['sourceType'])]
                 if actual!=bytes(pairs+[0]) or any(reader.read(1,0x9ea3+entity['sourceType'])[0]!=entity['enemyId'] for entity in group['entities']):
                     raise ValueError('Encounter members or source mapping differ')
         combat['enemies']+=overlay.get('enemies',[]);combat['zones']+=overlay.get('zones',[])
@@ -554,10 +573,23 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         for boss in overlay.get('bosses',[]):
             if boss['id'] in {b['id'] for b in combat.get('bosses',[])}:raise ValueError('Duplicate story battle')
             raw=checked_span(reader,boss['npcSource'])
-            if list(raw[10:14])!=[1,2,boss['eventId'],boss['eventArgument']]:
-                raise ValueError('Original story battle dispatch differs')
-            if boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
-                raise ValueError('Story flag must retain original event identity')
+            if boss.get('entryTrigger'):
+                trigger=boss['entryTrigger'];proof=load(ROOT/trigger['evidence'])
+                if proof['romSha256']!=SHA256:raise ValueError('Coordinate story ROM differs')
+                for span in proof['spans']:checked_span(reader,span)
+                original=proof['guard']['trigger']
+                if (boss['mapId'],trigger['mapId'],trigger['x'],trigger['y'],boss['eventId'])!=(
+                        original['mapId'],original['mapId'],*original['cell'],original['eventId']):
+                    raise ValueError('Coordinate story trigger differs')
+                if not original['automatic'] or not boss.get('commitAfterDialogue') or \
+                        boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128' or boss['sourceType']!=154:
+                    raise ValueError('Coordinate story phase or completion differs')
+                if list(raw[0:3])!=[144,1,11]:raise ValueError('Guarded treasure record differs')
+            else:
+                if list(raw[10:14])!=[1,2,boss['eventId'],boss['eventArgument']]:
+                    raise ValueError('Original story battle dispatch differs')
+                if boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
+                    raise ValueError('Story flag must retain original event identity')
             if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
                 raise ValueError('Original story enemy source differs')
             for span in boss['ruleSources']:checked_span(reader,span)
@@ -598,6 +630,20 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         items={i['id']:i for i in catalog['items']}
         stocks={(s['category'],s['contextIndex']):s for s in catalog['stocks']}
         for item in evidence.get('items',[]):
+            if item['category']=='special':
+                proof=load(ROOT/item['worldUse']['evidence'])
+                for span in proof['spans']:checked_span(reader,span)
+                if proof['romSha256']!=SHA256 or (item['id'],item['originalId'],item['maxCount'])!=('rom.special.11',11,1) or \
+                        'buyPrice' in item or 'sellPrice' in item:
+                    raise ValueError('Unreviewed special item or invented price')
+                expected={'targetSpriteId':226,'reusable':True,'usedFlagId':'rom.inventory.special.11.used',
+                    'evidence':item['worldUse']['evidence']}
+                if item['worldUse']!=expected:raise ValueError('World item use differs from verified dispatch')
+                names=reader.word(2,0xe610);pointer=reader.word(2,names+item['originalId']*2)
+                if checked_span(reader,item['source']['nameRange'])!=reader.read(2,pointer,5) or \
+                        item['source']['nameRange']['cpuAddress']!=pointer or not item['source'].get('nameEvidence'):
+                    raise ValueError('Special item name lacks original source')
+                continue
             original=items.get(item['id'])
             if original is None or any(item[k]!=original[k] for k in ('category','originalId','buyPrice','sellPrice','maxCount')):
                 raise ValueError('Service item differs from original catalog')
@@ -625,6 +671,35 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         old=scene.get(name,[]);added=evidence.get(name,[])
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
+    for npc in evidence.get('npcs',[]):
+        if not npc.get('treasure'):continue
+        raw=checked_span(reader,npc['source']['record']);t=npc['treasure']
+        if list(raw[:3])!=[144,1,11] or raw[13]!=2 or t['itemId']!='rom.special.11' or t['amount']!=1 or \
+                t['flagId']!=f'rom.map.{npc["mapId"]}.flag.2' or not npc.get('openedSprite'):
+            raise ValueError('Treasure differs from original category, item or grant flag')
+        if not overlay or not any(b['npcId']==npc['id'] and b.get('entryTrigger') for b in overlay.get('bosses',[])):
+            raise ValueError('Guarded treasure requires its original coordinate story')
+    for obj in evidence.get('mapObjects',[]):
+        raw=checked_span(reader,obj['recordSource']);mid=obj['mapId']
+        cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
+        if obj['interaction']=='NOT_IMPLEMENTED':
+            if mid not in known or obj['cell']!=cell or any(o['id']==obj['id'] for o in scene.get('mapObjects',[])):
+                raise ValueError('Unimplemented actor must preserve its original record and cell')
+            scene.setdefault('mapObjects',[]).append(obj)
+            continue
+        target=obj['itemTarget']
+        if mid not in known or raw[0]!=226 or raw[13]!=1 or obj['cell']!=cell or \
+                obj['interaction']!='WORLD_ITEM_TARGET' or target['spriteId']!=226 or \
+                target['removedFlagId']!=f'rom.map.{mid}.flag.1' or target['completionFlagId']!=f'rom.map.{mid}.flag.128':
+            raise ValueError('World item object differs from original record')
+        if any(o['id']==obj['id'] for o in scene.get('mapObjects',[])):raise ValueError('Duplicate map object')
+        if not any(i.get('worldUse',{}).get('evidence')==target['evidence'] for i in scene['items']):
+            raise ValueError('World item object has no reviewed use rule')
+        scene.setdefault('mapObjects',[]).append(obj)
+        name=next(m['scene'] for m in scene['maps'] if m['id']==mid);data=json.loads(result[name])
+        if not 0<=cell[0]<data['width'] or not 0<=cell[1]<data['height']:raise ValueError('Map object outside grid')
+        data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
+        result[name]=encoded(data)
     bindings=scene.get('serviceBindings',[])+evidence.get('serviceBindings',[])
     if len({(b['callerMapId'],b['interiorMapId'],b['npcId']) for b in bindings})!=len(bindings):
         raise ValueError('Duplicate service caller binding')

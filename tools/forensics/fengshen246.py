@@ -465,6 +465,33 @@ def extract_enemy_ice_base(reader,enemy_id):
     else:raise ValueError('Ice identity outside verified original dispatch domain')
     return {'iceBaseDamage':value,'iceSource':source}
 
+def extract_encounter_groups(reader,zone_id):
+    """Bounded original zone group table; no inferred enemy behavior or map conditions."""
+    if digest(reader.data)!=SHA256 or not 0<=zone_id<=255:
+        raise ValueError('Encounter groups require target ROM and byte zone ID')
+    count=reader.read(1,0xb12d+zone_id)[0];root=reader.word(1,0xa93c+zone_id*4)
+    if not 1<=count<=255 or not 0x8000<=root<=0xffff-count*2:
+        raise ValueError('Invalid original group table')
+    groups=[]
+    for index in range(count):
+        address=reader.word(1,root+index*2);raw=bytearray();entities=[]
+        for cursor in range(0,16,2):
+            first=reader.read(1,address+cursor)[0];raw.append(first)
+            if first==0:break
+            source=reader.read(1,address+cursor+1)[0];raw.append(source)
+            if first not in range(1,8):raise ValueError('Original encounter slot outside seven slots')
+            entities.append({'slot':first-1,'sourceType':source,'enemyId':reader.read(1,0x9ea3+source)[0]})
+        else:raise ValueError('Unterminated original encounter group')
+        if not entities:raise ValueError('Empty original encounter group')
+        # Preserve actual repeated-slot writes; do not silently repair the source table.
+        groups.append({'id':index,'entities':entities,'rawHex':raw.hex(),
+            'duplicateSlots':sorted({e['slot'] for e in entities if sum(x['slot']==e['slot'] for x in entities)>1}),
+            'pointer':reader.span(1,root+index*2,2,'Original encounter group pointer'),
+            'range':reader.span(1,address,len(raw),'Original slot/source pairs, 00 terminated')})
+    return {'id':zone_id,'groups':groups,
+        'groupCountRange':reader.span(1,0xb12d+zone_id,1,'Original zone group count'),
+        'groupRootRange':reader.span(1,0xa93c+zone_id*4,4,'Original zone group table and graphics context')}
+
 def extract_opening_encounter(reader):
     """Bounded map-16 zone 0 and its complete 19-entry group table.
 
