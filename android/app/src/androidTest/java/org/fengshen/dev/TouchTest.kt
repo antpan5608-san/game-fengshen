@@ -1561,6 +1561,13 @@ class TouchTest:IsolatedGameTestCase(){
         fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)));dialogue()}
         fun enterService(caller:Int,room:Int):MapExit{
             assertEquals(caller,v.world.mapId);val entry=v.content.exits.first{it.fromMapId==caller&&it.toMapId==room}
+            if(v.world.x/16==entry.triggerX&&v.world.y/16==entry.triggerY){
+                // The actual return lands on the door. Walking to the same cell
+                // is zero input; leave it normally before crossing it again.
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).first{key->
+                    v.world.scene.probeFrom(entry.triggerX,entry.triggerY,key,v.world.terrainMode)==MovementBlock.NONE}
+                step(departure);assertEquals(caller,v.world.mapId)
+            }
             walkTo(entry.triggerX,entry.triggerY);assertEquals(room,v.world.mapId)
             assertEquals(InteriorContext(caller,entry.triggerX,entry.triggerY),v.currentSnapshot().interiorContext)
             val keeper=v.content.npcs.first{it.mapId==room&&(if(room==22)it.innId!=null else it.shopId!=null)}
@@ -1852,6 +1859,13 @@ class TouchTest:IsolatedGameTestCase(){
         fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)));dialogue()}
         fun enterService(caller:Int,room:Int):MapExit{
             assertEquals(caller,v.world.mapId);val entry=v.content.exits.first{it.fromMapId==caller&&it.toMapId==room}
+            if(v.world.x/16==entry.triggerX&&v.world.y/16==entry.triggerY){
+                // The actual return lands on the door. Walking to the same cell
+                // is zero input; leave it normally before crossing it again.
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).first{key->
+                    v.world.scene.probeFrom(entry.triggerX,entry.triggerY,key,v.world.terrainMode)==MovementBlock.NONE}
+                step(departure);assertEquals(caller,v.world.mapId)
+            }
             walkTo(entry.triggerX,entry.triggerY);assertEquals(room,v.world.mapId)
             assertEquals(InteriorContext(caller,entry.triggerX,entry.triggerY),v.currentSnapshot().interiorContext)
             val keeper=v.content.npcs.first{it.mapId==room&&(if(room==22)it.innId!=null else it.shopId!=null)}
