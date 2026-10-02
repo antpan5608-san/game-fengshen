@@ -69,4 +69,19 @@ class OriginalStatusTest {
         }
         assertNull(OpeningEncounter(c,50).onCompletedStep(0,6,25){error("Village must not roll encounters")})
     }
+    @Test fun sharedPoisonBehaviorDoesNotDependOnTheFirstObservedEnemyId(){
+        val enemy=EnemyDefinition(23,"controlled behavior fixture",30,24,12,10,6,217,7)
+        val group=EncounterGroup(0,listOf(EncounterMember(3,23)),4)
+        val rules=PhysicalRules(mapOf(-1 to 64),List(36){255})
+        val c=BattleContent(16,emptyList(),listOf(group),mapOf(23 to enemy),emptyList(),2,6,50,16,
+            mapOf(23 to 6),true,true,physicalRules=rules)
+        var calls=0;val battle=OpeningBattle(group,c,hero,0)
+        val turn=battle.attack(3){calls++;0}!!
+        assertEquals(2,calls);assertEquals(2,battle.hero.statusMask);assertEquals(0,turn.enemyDamage)
+        assertTrue(validEncounterGroup(group,c.enemies))
+        assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(3,23),EncounterMember(3,23))),c.enemies))
+        assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(7,23))),c.enemies))
+        assertFalse(validEncounterGroup(group.copy(members=listOf(EncounterMember(3,24))),c.enemies))
+        assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=9)))
+    }
 }

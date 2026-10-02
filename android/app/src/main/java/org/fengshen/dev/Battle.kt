@@ -17,7 +17,8 @@ data class EnemyDefinition(val id:Int,val name:String,val hp:Int,val attack:Int,
     val iceBaseDamage:Int?=null,val loot:BattleLoot?=null)
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
-    init {require(multiplierThresholds.size==36&&multiplierThresholds.all{it in 0..255})}
+    init {require(weaponHitThreshold.isNotEmpty()&&weaponHitThreshold.all{(id,n)->id in -1..255&&n in 0..64}&&
+        multiplierThresholds.size==36&&multiplierThresholds.all{it in 0..255})}
     fun hits(weapon:Int,roll:Int)=(roll and 63)<weaponHitThreshold.getValue(weapon)
     fun multiplier(level:Int,roll:Int):Int {
         val bucket=((level-1)/5).coerceIn(0,11);var multiplier=1
@@ -29,6 +30,10 @@ data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThres
 }
 data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:String,val group:EncounterGroup,
     val victoryDialogue:String)
+/** Structural/implemented-behavior checks; witnessed opening sizes belong in golden tests. */
+fun validEncounterGroup(group:EncounterGroup,enemies:Map<Int,EnemyDefinition>):Boolean =
+    group.id in 0..255&&group.members.size in 1..7&&group.members.map{it.slot}.distinct().size==group.members.size&&
+        group.members.all{it.slot in 0..6&&enemies[it.enemyId]?.let(OriginalStatus::enemySupported)==true}
 data class GrowthRow(val level:Int,val threshold:Int,val hp:Int,val mp:Int,val strength:Int,
     val stamina:Int,val agility:Int,val spirit:Int,val runtimeVerified:Boolean)
 data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val groups:List<EncounterGroup>,
@@ -36,7 +41,7 @@ data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val
     val minimumSteps:Int,val forcedSteps:Int,val hitThreshold:Int,
     val enemyAgility:Map<Int,Int> = emptyMap(),val escapeEnabled:Boolean=false,val defeatResetEnabled:Boolean=false,
     val zones:List<EncounterZone> = emptyList(),val physicalRules:PhysicalRules?=null,
-    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap())
+    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap(),val knownMaxLevel:Int?=null)
 
 /** The ROM increments $5B on a completed metatile movement and tests $43 at a tile-aligned checkpoint.
  * Android samples an independent byte, so the random sequence is explicitly not NES-equivalent. */

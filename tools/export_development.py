@@ -85,6 +85,56 @@ def scoped_map_atlas(reader,map_data,palette,rgb):
                     image.putpixel((t%16*16+q%2*8+x,t//16*16+q//2*8+y),tuple(rgb[color])+(255,))
     return deterministic_rgba_png(image)
 
+def cache_world_scenes(reader, destination, rgb):
+    """Recover original geometry/default atlases in the existing private resource cache.
+
+    This is input recovery, not a playable package: no spawn, flags, collision
+    permissions, NPCs or encounter suppression are invented here.
+    """
+    from forensics.fengshen246 import extract_default_map_palette
+    destination=Path(destination).resolve()
+    if not any(destination.is_relative_to((ROOT/p).resolve()) for p in ('private-derived','.ci-private')):
+        raise ValueError('World cache must remain in an existing ignored private directory')
+    if digest(reader.data)!=SHA256:raise ValueError('World cache requires matching target ROM')
+    count=(0xdcfc-0xdb9e)//2
+    signature=digest((Path(__file__).read_bytes()+
+        (ROOT/'tools/forensics/fengshen246.py').read_bytes()+json.dumps(rgb).encode()))
+    pin={'schemaVersion':1,'romSha256':SHA256,'generatorSha256':signature,'geometrySlots':count}
+    destination.mkdir(parents=True,exist_ok=True);index=destination/'index.json'
+    def child(name):
+        p=(destination/name).resolve()
+        if not p.is_relative_to(destination):raise ValueError('Escaped cache path')
+        return p
+    if index.is_file():
+        prior=load(index)
+        if prior.get('input')==pin and [m.get('mapId') for m in prior.get('maps',[])]==list(range(count)):
+            if all(child(m[k]).is_file() and digest(child(m[k]).read_bytes())==m[k+'Sha256']
+                    for m in prior['maps'] for k in ('geometry','atlas')):
+                return dict(prior,cacheReused=True)
+    rows=[];atlas_assets=set()
+    for mid in range(count):
+        data=extract_map(reader,mid);palette=extract_default_map_palette(reader,mid)
+        raw=(json.dumps(data,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode()
+        png=scoped_map_atlas(reader,data,palette['palette'],rgb);asset=digest(png)
+        geometry=f'map{mid}.json';atlas=f'atlases/{asset}.png'
+        gp=child(geometry);ap=child(atlas);ap.parent.mkdir(parents=True,exist_ok=True)
+        gp.write_bytes(raw)
+        if not ap.is_file() or digest(ap.read_bytes())!=asset:ap.write_bytes(png)
+        image=Image.open(io.BytesIO(png));colors=set(image.getdata())
+        black=all(c[:3]==(0,0,0) for c in colors)
+        rows.append({'mapId':mid,'geometry':geometry,'geometrySha256':digest(raw),
+            'atlas':atlas,'atlasSha256':asset,'atlasRgbaSha256':digest(image.tobytes()),
+            'paletteSource':palette,'gridSha256':data['gridSha256'],
+            'visualInput':'BLACK_REQUIRES_STATE_PALETTE' if black else 'STATIC_DEFAULT_RECOVERED',
+            'runtime':'NOT_RUN','normalReachability':'NOT_VERIFIED'})
+        atlas_assets.add(asset)
+    report={'input':pin,'maps':rows,'uniqueAtlases':len(atlas_assets),'cacheReused':False,
+        'effectiveMapCount':None,'effectiveMapCountStatus':'UNKNOWN_EXTRA_HEADER_SLOT_175',
+        'limitations':['Static input cache only; does not enable maps, services, events or encounters',
+            'Scripted lighting, dynamic map/NPC states and extra header slot remain unverified']}
+    save(index,report)
+    return report
+
 def scoped_observed_graphic(reader,recipe):
     """Rebuild the existing observed-ROM-tile recipe without uploading private PPU dumps."""
     width,height=recipe['width'],recipe['height']
@@ -293,6 +343,38 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
     result['scene.json']=encoded(scene)
     return result
 
+def extend_world_growth(reader, combat, proof, provenance_path):
+    """Batch the original owner's table; preserve witnessed rows and do not borrow another actor."""
+    from forensics.fengshen246 import extract_growth_candidates
+    original=extract_growth_candidates(reader);owner=original['groups'][0]
+    if proof.get('actorIndex')!=0 or proof.get('confidence')!='ORIGINAL_ROM_STATIC':
+        raise ValueError('Growth owner or evidence differs')
+    for key in ('growthRange','thresholdRange'):
+        if proof[key]!=owner[key]:raise ValueError('Growth table range differs')
+        checked_span(reader,proof[key])
+    cap=proof['levelCapSource']
+    # Absolute LDA $0504,X / CMP #$4F / BCS $AF04; the stored level is zero based.
+    if checked_span(reader,cap)!=bytes.fromhex('bd0405c94fb036'):
+        raise ValueError('Original level-cap dispatch differs')
+    if proof['maxLevel']!=80 or proof['levels']!=[2,80]:raise ValueError('Growth domain differs from original limit')
+    previous={r['level']:r for r in combat['nezhaGrowth']};rows=[]
+    fields=('level','threshold','hp','mp','strength','stamina','agility','spirit')
+    for raw in owner['rows'][1:]:
+        row=dict(level=raw['index']+1,threshold=raw['cumulativeExpCandidate'],hp=raw['hpDeltaCandidate'],
+            mp=raw['mpDeltaCandidate'],strength=raw['strengthDeltaCandidate'],stamina=raw['staminaDeltaCandidate'],
+            agility=raw['agilityDeltaCandidate'],spirit=raw['spiritDeltaCandidate'],runtimeVerified=False,
+            source=raw['growthRange'],thresholdSource=raw['thresholdRange'],evidence=provenance_path)
+        if row['level'] in previous:
+            old=previous.pop(row['level'])
+            if any(old[k]!=row[k] for k in fields):raise ValueError('Existing witnessed growth row differs')
+            row=old
+        rows.append(row)
+    if previous or any(a['threshold']>=b['threshold'] for a,b in zip(rows,rows[1:])):
+        raise ValueError('Growth lost old rows or cumulative ordering')
+    combat['nezhaGrowth']=rows
+    combat['growthLimit']={'owner':'nezha','level':proof['maxLevel'],'confidence':proof['confidence'],
+        'evidence':provenance_path,'source':cap}
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -436,6 +518,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if name in result or '/' in name or '\\' in name or not name.endswith('.png'):
             raise ValueError('Unsafe/overlapping world graphic')
         result[name]=scoped_observed_graphic(reader,recipe)
+    if evidence.get('growthExtension'):
+        combat=json.loads(result['combat.json'])
+        extend_world_growth(reader,combat,evidence['growthExtension'],provenance_path)
+        result['combat.json']=encoded(combat)
     for inn in evidence.get('inns',[]):
         if int.from_bytes(checked_span(reader,inn['priceSource']),'little')!=inn['price']:
             raise ValueError('Lodging price differs from original table')
@@ -1023,8 +1109,15 @@ if __name__=='__main__':
     parser.add_argument('--provenance')
     parser.add_argument('--version')
     parser.add_argument('--world-inventory',type=Path,help='Write table/context coverage without generating an APK')
+    parser.add_argument('--world-cache',type=Path,help='Recover geometry/default atlases into ignored private cache only')
     args=parser.parse_args()
-    if args.world_inventory:
+    if args.world_cache:
+        rgb=load(ROOT/'game-data/provenance/world-full01.json')['emulatorRgb']
+        report=cache_world_scenes(iteration_reader(),args.world_cache,rgb)
+        print(json.dumps({'geometrySlots':len(report['maps']),'uniqueAtlases':report['uniqueAtlases'],
+            'cacheReused':report['cacheReused'],'blackDefaultIds':[m['mapId'] for m in report['maps']
+                if m['visualInput']=='BLACK_REQUIRES_STATE_PALETTE'],'appRuntime':'NOT_RUN','uploaded':False}))
+    elif args.world_inventory:
         from forensics.fengshen246 import extract_world_inventory
         pin=load(ROOT/'ci/content-source.json')
         packaged=load(ROOT/pin['iteration']['provenance'])
