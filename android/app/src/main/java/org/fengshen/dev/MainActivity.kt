@@ -1121,7 +1121,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         gauge(c,Box(x,y+2*dp,(right-x)*.48f,4*dp),hero.hp,hero.maxHp,0xffc55758.toInt())
         gauge(c,Box(x+(right-x)*.52f,y+2*dp,(right-x)*.48f,4*dp),hero.mp,hero.maxMp,0xff638cce.toInt());y+=9*dp
         val progress=growthProgress(hero)
-        val text=if(progress.status==ExperienceProgress.Status.PROGRESS)"EXP ${progress.earned}/${progress.span}" else "EXP · ${progress.summary}"
+        val text=if(progress.status==ExperienceProgress.Status.PROGRESS)"EXP ${progress.earned}/${progress.span}" else if(progress.status==ExperienceProgress.Status.INVALID)"EXP 状态异常" else "EXP · ${progress.summary}"
         y+=touchText(c,text,Box(x,y,right-x,1f),10f)
         gauge(c,Box(x,y+2*dp,right-x,4*dp),progress.earned?:0,progress.span,0xffcfab54.toInt())
     }
@@ -1258,6 +1258,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             touchText(c,hint,Box(l.status.x+6*dp,l.status.y+6*dp,l.status.w-12*dp,1f),12f)
             return
         }
+        if(action?.kind==BattleActionKind.ATTACK&&action.actorSlot==null){
+            content.battleHero?.let{image->
+                val actor=battleRegion(120f,112f,16f,16f)
+                val shift=sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp
+                c.drawBitmap(image,null,RectF(actor.x,actor.y-shift,actor.x+actor.w,actor.y+actor.h-shift),paint)
+            }
+        }
         val hp=action?.heroHp?:current.hero.hp
         val message=if(battleNotice.isNotEmpty())battleNotice else when(screen){
             BattlePresentation.Screen.ENTRY->"敌人出现了！"
@@ -1276,6 +1283,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battleInfoOpen){
             overlayPaint.color=0xf018252e.toInt();c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)
             touchButton(c,l.closeInfo,"关闭信息")
+            touchText(c,"敌人信息 · 上下滑动",Box(l.arena.x+8*dp,l.arena.y+8*dp,l.closeInfo.x-l.arena.x-16*dp,1f),13f)
             val enemy=current.enemies.firstOrNull{it.slot==selectedBattleSlot}?:current.enemies.first()
             val infoBody=Box(l.arena.x+8*dp,l.arena.y+l.closeInfo.h+8*dp,l.arena.w-16*dp,max(1f,l.arena.h-l.closeInfo.h-16*dp))
             c.save();c.clipRect(infoBody.x,infoBody.y,infoBody.x+infoBody.w,infoBody.y+infoBody.h)
