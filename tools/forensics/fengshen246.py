@@ -177,6 +177,104 @@ def extract_map(reader,map_id):
       'metatiles':[list(metatiles[i:i+4]) for i in range(0,1024,4)],'attributes':list(attributes),
       'chunks':chunks,'confidence':'HIGH','gameplayVerified':False,'transitions':None}
 
+def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
+    """Enumerate physical tables and shared contexts; parsing is not gameplay verification.
+
+    Keep the extra header slot unresolved rather than treating Reference's count or
+    a successful decoder as the effective-world denominator.
+    """
+    if digest(reader.data)!=SHA256:raise ValueError('World inventory requires the target ROM fingerprint')
+    chunk_start,header_start,npc_start,exit_start=0xdb9e,0xdcfc,0xb311,0xdc69
+    geometry_slots=(header_start-chunk_start)//2
+    if geometry_slots!=175:raise ValueError('Original map table boundary changed')
+    # Initial base/indoor overlay references locate the first list; extend through
+    # that physical boundary, including later event-only NPC contexts.
+    first_list=min(reader.word(8,npc_start+2*i) for i in range(190))
+    npc_slots=(first_list-npc_start)//2
+    if first_list<npc_start or (first_list-npc_start)%2:raise ValueError('NPC/context table is misaligned')
+    npc_ptrs=[reader.word(8,npc_start+2*i) for i in range(npc_slots)]
+    if min(npc_ptrs)!=npc_start+npc_slots*2:raise ValueError('NPC/context table boundary changed')
+    runtime_evidence=runtime_evidence or {};packed=set(packaged_ids);maps=[];incoming=collections.defaultdict(list)
+    for mid in range(geometry_slots):
+        original=extract_map(reader,mid);classes=reader.read(original['module'],original['collisionCandidate']['cpuAddress'],256)
+        doors=collections.defaultdict(list)
+        for y,row in enumerate(original['grid']):
+            for x,t in enumerate(row):
+                if classes[t] in (21,22,23,24,25):doors[classes[t]].append([x,y])
+        pointer=reader.word(8,exit_start+2*mid);exits=[]
+        for i in range(128):
+            address=pointer+5*i
+            if reader.read(8,address)[0]==254:break
+            raw=reader.read(8,address,5);destination=raw[2]
+            if destination!=254 and destination>=geometry_slots:raise ValueError('Exit refers outside enumerated geometry')
+            row={'trigger':list(raw[:2]),'targetMapId':None if destination==254 else destination,
+                'kind':'RETURN_TO_CALLER' if destination==254 else 'DIRECT_OR_EDGE',
+                'targetCell':list(raw[3:]),'source':reader.span(8,address,5,'Original exit dispatch row'),
+                'conditionStatus':'NEEDS_DISPATCH_AND_EVENT_CONDITIONS'}
+            exits.append(row)
+            if destination!=254:incoming[destination].append({'fromMapId':mid,'trigger':row['trigger']})
+        else:raise ValueError('Unterminated map exit table')
+        maps.append({'mapId':mid,'identity':'ORIGINAL_GEOMETRY_SLOT','width':original['width'],'height':original['height'],
+            'tilesetId':original['tilesetId'],'gridSha256':original['gridSha256'],'headerSource':original['header'],
+            'decode':'PASS','packaged':mid in packed,'appRender':runtime_evidence.get(str(mid),'NOT_RUN'),
+            'normalReachability':'NOT_VERIFIED_IN_THIS_INVENTORY','doorCandidates':dict(doors),'exits':exits,
+            'remaining':['NPC/event/terrain/encounter conditions require scoped conversion and runtime proof']})
+    contexts=[]
+    for mid in range(npc_slots):
+        pointer=npc_ptrs[mid];records=[]
+        for index in range(128):
+            address=pointer+index*14
+            if reader.read(8,address)[0]==255:break
+            b=reader.read(8,address,14)
+            records.append({'index':index,'textGroup':b[0],'firstMessage':b[1],'repeatMessage':b[2],
+                'pixelPosition':[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')],
+                'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
+        else:raise ValueError('Unterminated NPC/context list')
+        contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
+            'records':records,'runtime':'NOT_RUN'})
+    services=[];kinds={21:('weapon',17),22:('armor',18),23:('medicine',19),24:('other-clinic-candidate',20),25:('inn',22)}
+    village_bases=list(reader.read(0,0xd2b7,16));overlay=list(reader.read(0,0xd2c7,96))
+    for mid in range(16):
+        for klass,cells in maps[mid]['doorCandidates'].items():
+            kind,interior=kinds[klass]
+            context_index=village_bases[mid]+interior-17
+            services.append({'id':f'rom.service.{mid}.{kind}','kind':kind,'callerMapId':mid,
+                'interiorMapId':interior,'entryCells':cells,'npcOverlayId':overlay[context_index],
+                'contextSource':reader.span(0,0xd2c7+context_index,1,'Original additional indoor NPC context'),
+                'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
+                'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
+                'verification':'STRUCTURAL_ROM_DISPATCH'})
+    # The merchant/inn text groups match witnessed services, but their special appearance
+    # conditions and stock dispatch must still be verified independently.
+    for context in contexts[:geometry_slots]:
+        mid=context['contextId']
+        if mid in (17,18,19,20,22):continue
+        for npc in context['records']:
+            if npc['textGroup'] not in (158,159):continue
+            services.append({'id':f'rom.service.map{mid}.npc{npc["index"]}',
+                'kind':'special-merchant-candidate' if npc['textGroup']==159 else 'special-inn-candidate',
+                'interiorMapId':mid,'npcIndex':npc['index'],'source':npc['source'],
+                'conditions':'NEEDS_ORIGINAL_SPECIAL_SERVICE_AND_APPEARANCE_DISPATCH',
+                'operation':'NOT_IMPLEMENTED','verification':'PROVISIONAL_SERVICE_GROUP_CORRELATION'})
+    unresolved=[{'index':175,'kind':'EXTRA_HEADER_AND_EMPTY_NPC_SLOT','status':'UNKNOWN_EFFECTIVE_USAGE',
+        'headerPointerSource':reader.span(0,header_start+350,2,'Extra header pointer beyond 175 chunk slots'),
+        'reason':'No corresponding chunk pointer; must not be silently counted as a parsed map or excluded as unused'}]
+    for m in maps:m['incomingDirectReferences']=incoming[m['mapId']]
+    return {'schemaVersion':1,'taskId':'WORLD-FULL-01','romSha256':SHA256,'effectiveMapCount':None,
+        'effectiveMapCountStatus':'UNKNOWN_PENDING_EXTRA_SLOT_AND_DYNAMIC_CONTEXT_REVIEW',
+        'structuralGeometryCount':len(maps),'npcContextCount':len(contexts),'packagedCount':len(packed),
+        'maps':maps,'npcContexts':contexts,'services':services,'unresolved':unresolved,
+        'tableEvidence':[reader.span(0,chunk_start,350,'175 chunk pointer slots ending at header table'),
+            reader.span(0,header_start,352,'176 header pointer slots; final slot unresolved'),
+            reader.span(8,npc_start,npc_slots*2,'NPC/overlay pointer slots ending at first list'),
+            reader.span(8,exit_start,352,'Geometry exit pointers plus extra slot'),
+            reader.span(0,0xcbe3,79,'Shared indoor/caller/context dispatch'),
+            reader.span(0,0xa73f,56,'Temporarily substitute NPC overlay index then restore actual map')],
+        'referenceMapCount':259,'referenceIsDenominator':False,
+        'summary':{'serviceCandidateCounts':dict(collections.Counter(s['kind'] for s in services)),
+            'exitRecords':sum(len(m['exits']) for m in maps),'appRenderPassed':sum(m['appRender']=='PASS' for m in maps),
+            'allMapsUsable':'NO','limitation':'Only table inventory; no gameplay, service, event, or all-world promotion'}}
+
 def render_map(reader,m,path):
     # Index-only grayscale: no invented NES palette or inferred sprite placement.
     image=Image.new('L',(m['width']*16,m['height']*16));chr_base=reader.header['sections']['chr']['offset']+m['chr2kBanks'][0]*2048
