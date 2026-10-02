@@ -311,7 +311,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     "累计EXP ${battleResultBefore!!.experience} → ${reward.character.experience}",
                     if(reward.levels.isEmpty())"等级 ${reward.character.level}" else "升级 ${battleResultBefore!!.level} → ${reward.character.level}",
                     growthProgress(reward.character).summary)+loot.acquired.map{"获得 ${content.itemNames[it]?:it}"}+
-                    if(loot.skipped.isEmpty())emptyList() else listOf("物品数量/格数已满，掉落未取得")
+                    loot.skipped.map{"${content.itemNames[it]?:it}：数量/格数已满，未取得"}
                 diagnoseExperience()
                 audio.scene(world.mapId,"victory")
                 Diagnostics.record("reward_settlement",details=JSONObject().put("battleID",battleID).put("settlementID",battleID+":reward")
@@ -1310,7 +1310,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         touchText(c,"上下滑动查看 · 不消耗行动",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
         touchButton(c,l.close,"关闭")
         c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
-        for(enemy in current.enemies){val row=battleTargetBounds(enemy.slot)
+        for((i,enemy) in current.enemies.withIndex()){val row=l.row(i,battleInfoListScroll)
             overlayPaint.color=if(enemy.slot==selectedBattleSlot)0xff244d49.toInt() else 0xff18252e.toInt()
             c.drawRect(row.x,row.y,row.x+row.w,row.y+row.h,overlayPaint)
             touchText(c,enemy.definition.name+" ${enemy.slot+1}",Box(row.x+6*dp,row.y+4*dp,row.w-12*dp,1f),12f)
@@ -1324,7 +1324,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
         var y=l.detail.y-battleInfoScroll
         for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
-        c.restore()
+        battleInfoScroll=battleInfoScroll.coerceAtMost(max(0f,y+battleInfoScroll-l.detail.y-l.detail.h));c.restore()
     }
     private fun drawDebug(c:Canvas,cam:Camera){
         val dp=resources.displayMetrics.density

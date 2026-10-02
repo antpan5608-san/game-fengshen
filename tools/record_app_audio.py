@@ -71,7 +71,12 @@ def record_silent():
                     'boundaryScope':('Pre-launch isolated baseline; normal new-game begins at its indexed marker' if len(videos)==1 else 'Continuing the same normal controller flow'),
                     'saveLimit':'Read-only persisted world checkpoints; during battle live action HP is visible in raw frames',
                     'limit':'Capture start approximate; actual frames in retained MP4'})
-        assert 'OK (1 test)' in test_log.read_text(), 'Normal route assertions did not pass'
+        observed=test_log.read_text(encoding='utf-8',errors='replace')
+        if 'OK (1 test)' not in observed:
+            # Isolated App instrumentation only; no server credentials or raw production logs.
+            print('NORMAL_APP_ASSERTION_FAILURE: '+str(test_log.relative_to(ROOT)))
+            print(observed[-12000:])
+            raise AssertionError('Normal route assertions did not pass')
         if comparison:
             result={'source':'Actual Android App screenrecord; SILENT','kind':'CONTROLLED_UI_COMPARISON','videos':videos,'comparisonAssertions':'PASS','audio':'NOT_RUN'}
             (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));return
