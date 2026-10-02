@@ -36,7 +36,10 @@ if listed.returncode:
     assert 'ranchu' in subprocess.check_output(['adb','shell','getprop','ro.hardware'],text=True,timeout=10)
     subprocess.run(['adb','root'],check=True,capture_output=True,timeout=10)
     subprocess.run(['adb','wait-for-device'],check=True,timeout=10)
-    listed=subprocess.run(['adb','shell','ls',base],check=True,capture_output=True,text=True,timeout=10)
+    listed=subprocess.run(['adb','shell','ls',base],capture_output=True,text=True,timeout=10)
+    if listed.returncode:
+        print('No installed App evidence directory; preserve the primary runtime failure')
+        raise SystemExit(0)
 for name in listed.stdout.splitlines():
     if re.fullmatch(r'(mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
@@ -72,7 +75,7 @@ from tools import ci_apk as ci
 apk=Path(sys.argv[1]);pin=ci.CONFIG['runtimeBaseline']
 assert hashlib.sha256(apk.read_bytes()).hexdigest()==pin['apkSha256']
 r=json.loads((apk.parent/'apk-receipt.json').read_text(encoding='utf-8-sig'))
-assert (r['sourceCommit'],r['buildRunID'],r['versionCode'],r['contentHash'])==(pin['sourceCommit'],pin['buildRunId'],pin['versionCode'],pin['manifestSha256'])
+assert (r['sourceCommit'],str(r['buildRunID']),r['versionCode'],r['contentHash'])==(pin['sourceCommit'],str(pin['buildRunId']),pin['versionCode'],pin['manifestSha256'])
 assert ci.verify_apk(apk,release=True)['versionCode']==pin['versionCode']
 ci.content(apk,pin)
 Path('artifacts/town02-runtime/base.json').write_text(json.dumps(r,indent=2)+'\n')
