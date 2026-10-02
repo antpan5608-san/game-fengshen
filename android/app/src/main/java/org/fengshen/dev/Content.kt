@@ -317,9 +317,9 @@ object ContentLoader {
                     val members=(0 until es.length()).map{j->val m=es.getJSONObject(j);EncounterMember(m.getInt("slot"),m.getInt("enemyId"))}
                     StoryBattleDefinition(b.getString("id"),b.getString("npcId"),b.getString("flagId"),
                         EncounterGroup(g.getInt("id"),members),b.getString("victoryDialogue")).also{boss->
-                        require(boss.id=="rom.boss.137"&&boss.flagId=="rom.event.97.39.1"&&
-                            boss.npcId=="rom.npc.97.0"&&boss.victoryDialogue in dialogues&&
-                            members==listOf(EncounterMember(3,137))&&npcs.any{it.id==boss.npcId&&it.mapId==97})}
+                        require(boss.id.matches(Regex("rom\\.boss\\.\\d+"))&&boss.flagId.matches(Regex("rom\\.event\\.\\d+\\.\\d+\\.\\d+"))&&
+                            boss.victoryDialogue in dialogues&&validEncounterGroup(boss.group,enemies)&&
+                            npcs.any{it.id==boss.npcId}&&b.getString("source").isNotBlank())}
                 }.associateBy{it.npcId}}?:emptyMap(),
                 o.optJSONObject("growthLimit")?.let{limit->
                     require(limit.getString("owner")=="nezha"&&limit.getString("confidence")=="ORIGINAL_ROM_STATIC"&&

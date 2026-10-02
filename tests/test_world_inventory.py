@@ -55,8 +55,11 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertEqual(['rightHand'],items['rom.item.0']['nezhaPermittedSlots'])
         self.assertEqual(['feet'],items['rom.armor.28']['nezhaPermittedSlots'])
         self.assertTrue(items['rom.weapon.9']['nezhaPermittedByCategoryList'])
-        self.assertEqual('NEEDS_SLOT_FILTER_DISPATCH',items['rom.weapon.9']['slotStatus'])
+        self.assertEqual('NEEDS_CROSS_HAND_TRANSACTION',items['rom.weapon.9']['slotStatus'])
         self.assertEqual([],items['rom.weapon.9']['nezhaPermittedSlots'])
+        self.assertTrue(items['rom.weapon.9']['crossHandOccupancy'])
+        self.assertEqual(['rightHand'],items['rom.weapon.3']['nezhaPermittedSlots'])
+        self.assertFalse(items['rom.weapon.3']['crossHandOccupancy'])
         self.assertEqual([4,8,20,40],catalog['innPrices'][:4])
         rows={s['id']:s for s in self.report['services']}
         self.assertEqual([0,6],rows['rom.service.0.medicine']['stock']['originalIds'])

@@ -243,7 +243,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
     needs: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -284,6 +284,8 @@ jobs:
             artifacts/town02-runtime/test*.txt
             artifacts/checkpoint-ui/world-f0-*
             artifacts/checkpoint-ui/world-north-*
+            artifacts/checkpoint-ui/world-west-*
+            artifacts/checkpoint-ui/world-village1-*
             artifacts/checkpoint-ui/town02-ci-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/checkpoint-ui/nanhai-*
@@ -347,9 +349,37 @@ jobs:
           name: fengshen-world-checkpoints
           path: |
             artifacts/world-review-clips/*
-            artifacts/checkpoint-ui/touch-ux-world-*.png
-            artifacts/checkpoint-ui/touch-ux-world-*.json
+            artifacts/checkpoint-ui/touch-ux-world-north-*.png
+            artifacts/checkpoint-ui/touch-ux-world-north-*.json
             artifacts/checkpoint-ui/world-north-*.json
             artifacts/checkpoint-ui/world-north-normal-test.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain bounded original world-west continuation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-world-west-checkpoints
+          path: |
+            artifacts/world-west-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-west-*.png
+            artifacts/checkpoint-ui/touch-ux-world-west-*.json
+            artifacts/checkpoint-ui/world-west-*.json
+            artifacts/checkpoint-ui/world-west-normal-test.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain bounded original world-village1 continuation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-world-village-services-checkpoints
+          path: |
+            artifacts/world-village1-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-village1-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village1-*.json
+            artifacts/checkpoint-ui/world-village1-*.json
+            artifacts/checkpoint-ui/world-village1-normal-test.txt
           if-no-files-found: ignore
           retention-days: 14

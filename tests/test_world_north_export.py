@@ -10,7 +10,7 @@ import export_development as exporter
 class WorldNorthExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-north-content.json').read_text(encoding='utf-8'))
         cls.path=Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK',str(ci.ROOT/'artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')))
         cls.base=ci.content(cls.path,cls.pin['iteration']['base']);cls.proof=cls.pin['iteration']['provenance']
         cls.evidence=json.loads((ci.ROOT/cls.proof).read_text(encoding='utf-8'))

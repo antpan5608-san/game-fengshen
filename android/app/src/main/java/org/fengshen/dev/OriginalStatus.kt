@@ -6,7 +6,7 @@ object OriginalStatus {
     const val DEAD=32
     fun label(mask:Int)=when(mask){0->"正常";POISON->"中毒";DEAD->"死亡";else->"异常 %02X".format(mask)}
     fun enemySupported(enemy:EnemyDefinition)=enemy.behaviorByte==0 ||
-        (enemy.id==137&&enemy.behaviorByte==3&&enemy.iceBaseDamage==8) ||
+        (enemy.behaviorByte==3&&enemy.iceBaseDamage!=null&&enemy.iceBaseDamage in 0..65535) ||
         enemy.behaviorByte==7 // Original shared AI dispatch is keyed by behavior, not enemy ID.
     fun choosesPoison(random:Int):Boolean {
         require(random in 0..255)
