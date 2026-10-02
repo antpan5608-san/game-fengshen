@@ -137,7 +137,10 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(2,v.currentSnapshot().inventory[AntidoteUse.ID]);assertEquals(hp,v.currentSnapshot().characters.single().hp)
             assertEquals(status,v.currentSnapshot().characters.single().statusMask);instrumentation.runOnMainSync{v.handleBack()}
         }
-        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(start.copy(characters=listOf(poison.copy(hp=2)),
+        // Keep movement boundaries independent of the previous test's returned shop doorway.
+        // The normal opening route already verifies these two adjacent cells; this remains a fixture.
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(start.copy(mapId=114,x=8*16+8,y=21*16+8,
+            direction=Key.DOWN,interiorContext=null,characters=listOf(poison.copy(hp=2)),
             inventory=emptyMap(),flags=mapOf("opening.intro.seen" to true))))}
         stickStep(v,Key.RIGHT);assertEquals(1,v.currentSnapshot().characters.single().hp)
         assertEquals(2,v.currentSnapshot().characters.single().statusMask)
@@ -1451,7 +1454,7 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{
             assertTrue(v.restoreSnapshot(base.copy(mapId=97,x=15*16+8,y=4*16+8,direction=Key.UP,
                 characters=listOf(hero),inventory=mapOf("rom.weapon.2" to 10),money=123,
-                flags=mapOf("opening.intro.seen" to true),encounterSteps=32)))
+                flags=mapOf("opening.intro.seen" to true),encounterSteps=32,interiorContext=null)))
         }
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
