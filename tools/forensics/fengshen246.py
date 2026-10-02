@@ -177,6 +177,28 @@ def extract_map(reader,map_id):
       'metatiles':[list(metatiles[i:i+4]) for i in range(0,1024,4)],'attributes':list(attributes),
       'chunks':chunks,'confidence':'HIGH','gameplayVerified':False,'transitions':None}
 
+def extract_default_map_palette(reader,map_id):
+    """Original default selector/write path, including the PPU's universal-color aliases.
+
+    This does not claim scripted palette changes or every state is verified.
+    """
+    if not 0<=map_id<175:raise ValueError('Palette ID outside geometry table')
+    selector=0xe0c3+2*map_id
+    background,sprites=reader.read(0,selector,2)
+    bp=reader.word(0,0xe3a6+2*background);sp=reader.word(0,0xe438+2*sprites)
+    palette=list(reader.read(0,bp,16))+list(reader.read(0,sp,16))
+    if any(c not in range(64) for c in palette):raise ValueError('Default scene palette has unsupported color codes')
+    # The original queues background first, sprites second. $3F10/14/18/1C mirror $3F00/04/08/0C.
+    for index in (0,4,8,12):palette[index]=palette[index+16]
+    return {'mapId':map_id,'palette':palette,'backgroundSelector':background,'spriteSelector':sprites,
+        'confidence':'STATIC_ROM_DEFAULT_ONLY','remainingUnknown':['Scripted palette/lighting transitions and non-default event states'],
+        'source':[reader.span(0,selector,2,'Map background/sprite palette selector pair'),
+            reader.span(0,0xe3a6+2*background,2,'Background palette pointer'),
+            reader.span(0,0xe438+2*sprites,2,'Sprite palette pointer'),
+            reader.span(0,bp,16,'Original default background colors'),reader.span(0,sp,16,'Original sprite colors')],
+        'routineEvidence':[reader.span(0,0xa7f9,44,'Signed map ID selector dispatch'),
+            reader.span(0,0xa390,110,'Original queued background then sprite palette writes')]}
+
 def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
     """Enumerate physical tables and shared contexts; parsing is not gameplay verification.
 
@@ -216,6 +238,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
         else:raise ValueError('Unterminated map exit table')
         maps.append({'mapId':mid,'identity':'ORIGINAL_GEOMETRY_SLOT','width':original['width'],'height':original['height'],
             'tilesetId':original['tilesetId'],'gridSha256':original['gridSha256'],'headerSource':original['header'],
+            'defaultPalette':extract_default_map_palette(reader,mid),
             'decode':'PASS','packaged':mid in packed,'appRender':runtime_evidence.get(str(mid),'NOT_RUN'),
             'normalReachability':'NOT_VERIFIED_IN_THIS_INVENTORY','doorCandidates':dict(doors),'exits':exits,
             'remaining':['NPC/event/terrain/encounter conditions require scoped conversion and runtime proof']})

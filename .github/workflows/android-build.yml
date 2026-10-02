@@ -310,6 +310,9 @@ jobs:
         with:
           name: fengshen-mobile-play-checkpoints
           path: |
+            artifacts/checkpoint-ui/town01-*.png
+            artifacts/checkpoint-ui/world-f0-*.json
+            artifacts/checkpoint-ui/world-f0-force-stop-restored.png
             artifacts/checkpoint-ui/mobile-*.png
             artifacts/checkpoint-ui/mobile-*.json
             artifacts/checkpoint-ui/nanhai-mobile-*.png

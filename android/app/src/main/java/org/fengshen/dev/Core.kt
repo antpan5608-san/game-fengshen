@@ -171,6 +171,8 @@ data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMap
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
+    var prepareTarget:((Int)->Boolean)?=null
+    var transitionFailure:Exception?=null;private set
     constructor(scene:Scene):this(mapOf(scene.mapId to scene),emptyList(),scene.mapId)
     init {require(initialMapId in scenes && exits.all{it.fromMapId in scenes && it.toMapId in scenes})}
     var mapId=initialMapId;private set
@@ -197,22 +199,32 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         restore(mapId,px,py,pending,facing)
     }
     fun restore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN){
-        val target=scenes[targetMapId]?:return
+        tryRestore(targetMapId,px,py,pending,facing)
+    }
+    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN):Boolean {
+        val target=scenes[targetMapId]?:return false
         if(target.check(px/16,py/16)==null && pending in 0..16 && facing in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
+            if(prepareTarget?.invoke(targetMapId)==false)return false
             mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
             val moved=16-pending
             stepOriginX=px-when(facing){Key.LEFT->-moved;Key.RIGHT->moved;else->0}
             stepOriginY=py-when(facing){Key.UP->-moved;Key.DOWN->moved;else->0}
+            return true
         }
+        return false
     }
-    private fun enter(exit:MapExit){
-        val target=scenes[exit.toMapId]
-        if(target==null || target.check(exit.spawnX,exit.spawnY)!=null){
-            message="开发边界 · 目标地图或落点不可用"
+    private fun enter(exit:MapExit):Boolean {
+        transitionFailure=null
+        val target=try{scenes[exit.toMapId]}catch(e:Exception){transitionFailure=e;null}
+        val valid=target!=null&&target.check(exit.spawnX,exit.spawnY)==null
+        val ready=try{valid&&prepareTarget?.invoke(exit.toMapId)!=false}catch(e:Exception){transitionFailure=e;false}
+        if(!ready){
+            message=if(valid||transitionFailure!=null)"目标场景加载失败 · 当前状态已保留" else "目标地图或落点不可用 · 当前状态已保留"
             transitionObserver?.invoke(mapId,exit.toMapId,false)
-            return
+            return false
         }
         mapId=exit.toMapId;x=exit.spawnX*16+8;y=exit.spawnY*16+8;direction=exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
+        return true
     }
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}
     private fun edgeExit(key:Key)=exits.firstOrNull{it.fromMapId==mapId && it.triggerX==x/16 &&
@@ -276,8 +288,9 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
             stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y
             val exit=exits.firstOrNull{it.fromMapId==mapId&&it.triggerX==x/16&&it.triggerY==y/16&&it.edgeDirection==null}
             completedStepSeq++
-            lastCompletedStep=CompletedStep(mapId,x/16,y/16,exit!=null)
-            if(exit!=null)enter(exit)
+            val from=mapId;val cellX=x/16;val cellY=y/16
+            val transitioned=exit?.let{enter(it)}==true
+            lastCompletedStep=CompletedStep(from,cellX,cellY,transitioned)
         }
     }
     fun finishStep(){while(remaining>0)tick(null)}

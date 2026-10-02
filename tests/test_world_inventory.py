@@ -3,7 +3,7 @@ import sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from export_development import iteration_reader
-from forensics.fengshen246 import extract_world_inventory,Reader
+from forensics.fengshen246 import extract_world_inventory,extract_default_map_palette,Reader
 
 class WorldInventoryTests(unittest.TestCase):
     @classmethod
@@ -38,5 +38,11 @@ class WorldInventoryTests(unittest.TestCase):
     def test_changed_rom_is_not_an_inventory_source(self):
         wrong=bytearray(self.reader.data);wrong[32]^=1
         with self.assertRaisesRegex(ValueError,'fingerprint'):extract_world_inventory(Reader(bytes(wrong),verify=False))
+    def test_rom_palette_matches_completed_normal_armor_and_inn_capture(self):
+        # Reviewed normal capture palette, not an emulator fixture or a guessed room tint.
+        observed=[14,7,23,55,25,7,38,22,25,33,23,22,25,0,16,48,14,14,54,22,25,14,54,43,25,14,38,34,25,14,38,32]
+        for mid in (18,22):self.assertEqual(observed,extract_default_map_palette(self.reader,mid)['palette'])
+        for row in self.report['maps']:
+            p=row['defaultPalette'];self.assertEqual(32,len(p['palette']));self.assertTrue(p['remainingUnknown'])
 
 if __name__=='__main__':unittest.main()

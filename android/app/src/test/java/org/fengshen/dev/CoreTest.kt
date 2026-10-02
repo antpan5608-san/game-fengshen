@@ -6,6 +6,24 @@ import org.junit.Assert.*
 class CoreTest {
     private fun scene():Scene=Scene("test",4,3,IntArray(12),intArrayOf(1,1,1,1,1,0,0,1,1,0,0,1),setOf(5,6,9),1,1)
     @Test fun collisionIsSeparateFromDevelopmentLimit(){val s=scene();assertTrue(s.check(0,1)!!.startsWith("原版"));assertTrue(s.check(2,2)!!.startsWith("开发"));assertNull(s.check(2,1))}
+    @Test fun targetLoadFailureDoesNotCommitTransitionOrRestore(){
+        fun room(id:Int)=Scene("test",3,1,IntArray(3),IntArray(3),setOf(0,1,2),0,0,id)
+        val world=World(mapOf(1 to room(1),2 to room(2)),listOf(MapExit(1,1,0,2,2,0)),1)
+        var failed=0;world.prepareTarget={it!=2};world.transitionObserver={_,_,ok->if(!ok)failed++}
+        repeat(8){world.tick(Key.RIGHT)}
+        assertEquals(1,world.mapId);assertEquals(24,world.x);assertEquals(0,world.remaining)
+        assertEquals(false,world.lastCompletedStep!!.transitioned);assertEquals(1,failed)
+        assertFalse(world.tryRestore(2,40,8));assertEquals(1,world.mapId);assertEquals(24,world.x)
+        world.prepareTarget={true};assertTrue(world.tryRestore(2,40,8));assertEquals(2,world.mapId)
+    }
+    @Test fun lazySceneHashFailureRemainsDiagnosableAndOriginIsKept(){
+        val first=Scene("test",3,1,IntArray(3),IntArray(3),setOf(0,1,2),0,0,1)
+        val maps=ResourceMap(listOf(1,2),2){if(it==1)first else error("Content checksum mismatch")}
+        val world=World(maps,listOf(MapExit(1,1,0,2,0,0)),1)
+        repeat(8){world.tick(Key.RIGHT)}
+        assertEquals(1,world.mapId);assertEquals(24,world.x)
+        assertEquals("Content checksum mismatch",world.transitionFailure!!.message)
+    }
     @Test fun invalidSpawnAndMaskRejected(){try{scene().copy(enabled=setOf(0));fail()}catch(_:IllegalArgumentException){};try{scene().copy(grid=IntArray(2));fail()}catch(_:IllegalArgumentException){}}
     @Test fun coordinateAndCamera(){val w=World(scene());assertEquals(24,w.x);assertEquals(24,w.y);assertEquals(0f,w.camera().x,.001f);repeat(8){w.tick(Key.RIGHT)};assertEquals(40,w.x)}
     @Test fun releaseFinishesOneLegalTileWithoutStartingAnother(){val w=World(scene());w.tick(Key.RIGHT);repeat(100){w.tick(null)};assertEquals(40,w.x);assertEquals(0,w.remaining);w.tick(Key.RIGHT);assertEquals(40,w.x);assertTrue(w.message.startsWith("原版"))}
