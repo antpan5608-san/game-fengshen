@@ -127,8 +127,9 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
     val enabled: Set<Int>,val spawnX: Int,val spawnY: Int,val mapId:Int=114,
     val walkableClasses:Set<Int> = setOf(0),val dynamicObjectCells:Set<Int> = emptySet(),
     val transitionCells:Set<Int> = emptySet(),val sourceEdges:Map<Int,Set<Key>> = emptyMap(),
-    val targetEdges:Map<Int,Set<Key>> = emptyMap(),val unavailableRegions:List<EncounterRect> = emptyList()) {
+    val targetEdges:Map<Int,Set<Key>> = emptyMap(),val unavailableRegions:List<EncounterRect> = emptyList(),val terrainProfile:Int?=null) {
     init {
+        require(terrainProfile==null||terrainProfile==OriginalTerrain.PALACE)
         require(width in 1..256 && height in 1..256 && grid.size==width*height && collision.size==grid.size)
         require(grid.all { it in 0..255 } && collision.all { it in 0..255 })
         require(transitionCells.all {it in grid.indices})
@@ -136,29 +137,48 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
         require(dynamicObjectCells.all {it in grid.indices})
         require(spawnX in 0 until width && spawnY in 0 until height && spawnY*width+spawnX in enabled)
     }
-    fun blockType(x:Int,y:Int):MovementBlock {
+    fun blockType(x:Int,y:Int)=blockType(x,y,0)
+    fun blockType(x:Int,y:Int,mode:Int):MovementBlock {
         if(x !in 0 until width || y !in 0 until height)return MovementBlock.DEVELOPMENT
         if(unavailableRegions.any{it.contains(x,y)})return MovementBlock.DEVELOPMENT
         val i=y*width+x
+        if(!OriginalTerrain.supported(terrainProfile,mode))return MovementBlock.DEVELOPMENT
+        if(terrainProfile!=null&&!OriginalTerrain.standing(terrainProfile,collision[i],mode))return MovementBlock.PHYSICAL
         if(collision[i] !in walkableClasses && i !in transitionCells)
             return if(collision[i] in setOf(1,3,4,5,7))MovementBlock.PHYSICAL else MovementBlock.DEVELOPMENT
         if(i in dynamicObjectCells)return MovementBlock.PHYSICAL
         if(i !in enabled)return MovementBlock.DEVELOPMENT
         return MovementBlock.NONE
     }
-    fun probeFrom(x:Int,y:Int,key:Key):MovementBlock {
+    fun probeFrom(x:Int,y:Int,key:Key)=probeFrom(x,y,key,0)
+    fun probeFrom(x:Int,y:Int,key:Key,mode:Int):MovementBlock {
         val dx=if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
         val dy=if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
         val nx=x+dx;val ny=y+dy
-        val base=blockType(nx,ny)
+        val next=terrainDecision(x,y,key,mode)
+        if(next.block!=MovementBlock.NONE)return next.block
+        // Original stairs dispatch bypasses the ordinary target-class barrier; enabled,
+        // NPC and unavailable-region safety is still checked with the selected plane.
+        val base=blockType(nx,ny,next.nextMode)
         if(base!=MovementBlock.NONE)return base
-        if(key in (sourceEdges[collision[y*width+x]]?:emptySet()) ||
-            key in (targetEdges[collision[ny*width+nx]]?:emptySet()))return MovementBlock.PHYSICAL
+        if(terrainProfile==null&&(key in (sourceEdges[collision[y*width+x]]?:emptySet()) ||
+            key in (targetEdges[collision[ny*width+nx]]?:emptySet())))return MovementBlock.PHYSICAL
         return MovementBlock.NONE
     }
-    fun check(x: Int,y: Int): String? {
+    fun terrainDecision(x:Int,y:Int,key:Key,mode:Int):TerrainDecision {
+        val dx=if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+        val dy=if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+        val nx=x+dx;val ny=y+dy
+        if(nx !in 0 until width||ny !in 0 until height)return TerrainDecision(MovementBlock.DEVELOPMENT,mode)
+        return if(terrainProfile==null)TerrainDecision(if(mode==0)MovementBlock.NONE else MovementBlock.DEVELOPMENT,mode)
+            else OriginalTerrain.step(terrainProfile,collision[y*width+x],collision[ny*width+nx],key,mode)
+    }
+    fun check(x:Int,y:Int)=check(x,y,0)
+    fun check(x: Int,y: Int,mode:Int): String? {
         if(x !in 0 until width || y !in 0 until height)return "开发边界 · 尚未开放"
         val i=y*width+x
+        if(!OriginalTerrain.supported(terrainProfile,mode))return "原版交通状态未接入 · 保留存档"
+        if(terrainProfile!=null&&!OriginalTerrain.standing(terrainProfile,collision[i],mode))return "原版地形层级 · 阻挡"
         if(collision[i] !in walkableClasses && i !in transitionCells)return if(collision[i] in setOf(1,3,4,5,7))"原版碰撞 · 阻挡" else "开发边界 · 碰撞类别未开放"
         if(i in dynamicObjectCells)return "开发边界 · 动态对象未接入"
         if(i !in enabled)return "开发边界 · 尚未开放"
@@ -172,7 +192,7 @@ data class InteriorContext(val callerMapId:Int,val returnX:Int,val returnY:Int) 
 }
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
     val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false)
-data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean)
+data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean,val suppressEncounter:Boolean=false)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
     var prepareTarget:((Int)->Boolean)?=null
@@ -181,6 +201,9 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     init {require(initialMapId in scenes && exits.all{it.fromMapId in scenes && it.toMapId in scenes})}
     var mapId=initialMapId;private set
     var interiorContext:InteriorContext?=null;private set
+    var terrainMode=0;private set
+    private var stepTerrainMode=0
+    private var stepSuppressEncounter=false
     val scene get()=scenes.getValue(mapId)
     var x=scene.spawnX*16+8; private set
     var y=scene.spawnY*16+8; private set
@@ -199,18 +222,20 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         return (x+dx)/16 to (y+dy)/16
     }
     fun face(key:Key){if(remaining==0 && key in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))direction=key}
-    fun reset() {interiorContext=null;mapId=initialMapId;x=scene.spawnX*16+8;y=scene.spawnY*16+8;remaining=0;direction=Key.DOWN;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message="";lastCompletedStep=null }
+    fun reset() {terrainMode=0;stepTerrainMode=0;stepSuppressEncounter=false;interiorContext=null;mapId=initialMapId;x=scene.spawnX*16+8;y=scene.spawnY*16+8;remaining=0;direction=Key.DOWN;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message="";lastCompletedStep=null }
     fun restore(px: Int,py: Int,pending: Int=0,facing: Key=Key.DOWN) {
         restore(mapId,px,py,pending,facing)
     }
     fun restore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN){
         tryRestore(targetMapId,px,py,pending,facing)
     }
-    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN,context:InteriorContext?=null):Boolean {
+    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN,context:InteriorContext?=null)=
+        tryRestore(targetMapId,px,py,pending,facing,context,0)
+    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int,facing:Key,context:InteriorContext?,mode:Int):Boolean {
         val target=scenes[targetMapId]?:return false
-        if(target.check(px/16,py/16)==null && pending in 0..16 && facing in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
+        if(target.check(px/16,py/16,mode)==null && pending in 0..16 && facing in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
             if(prepareTarget?.invoke(targetMapId)==false)return false
-            interiorContext=context;mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
+            terrainMode=mode;stepTerrainMode=mode;stepSuppressEncounter=false;interiorContext=context;mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
             val moved=16-pending
             stepOriginX=px-when(facing){Key.LEFT->-moved;Key.RIGHT->moved;else->0}
             stepOriginY=py-when(facing){Key.UP->-moved;Key.DOWN->moved;else->0}
@@ -224,7 +249,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         val destination=caller?.callerMapId?:exit.toMapId
         val landingX=caller?.returnX?:exit.spawnX;val landingY=caller?.returnY?:exit.spawnY
         val target=try{scenes[destination]}catch(e:Exception){transitionFailure=e;null}
-        val valid=target!=null&&target.check(landingX,landingY)==null
+        val valid=target!=null&&target.check(landingX,landingY,terrainMode)==null
         val ready=try{valid&&prepareTarget?.invoke(destination)!=false}catch(e:Exception){transitionFailure=e;false}
         if(!ready){
             message=if(valid||transitionFailure!=null)"目标场景加载失败 · 当前状态已保留" else "目标地图或落点不可用 · 当前状态已保留"
@@ -242,7 +267,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     private fun probe(key:Key):MovementBlock {
         if(edgeExit(key)!=null)return MovementBlock.NONE
         val (dx,dy)=delta(key)
-        return scene.probeFrom(x/16,y/16,key)
+        return scene.probeFrom(x/16,y/16,key,terrainMode)
     }
     private fun secondary(intent:MoveIntent):Pair<Key,Float>? {
         val key=if(intent.primary==Key.LEFT || intent.primary==Key.RIGHT){
@@ -269,7 +294,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
                 primaryBlock==MovementBlock.PHYSICAL && other!=null && otherBlock==MovementBlock.NONE->other
                 else->{
                     val (dx,dy)=delta(primary)
-                    message=scene.check(x/16+dx,y/16+dy) ?: if(primaryBlock==MovementBlock.PHYSICAL)"原版碰撞 · 阻挡" else "开发边界 · 入口不可用"
+                    message=scene.check(x/16+dx,y/16+dy,terrainMode) ?: if(primaryBlock==MovementBlock.PHYSICAL)"原版碰撞 · 阻挡" else "开发边界 · 入口不可用"
                     return
                 }
             }
@@ -277,13 +302,15 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
             val edge=edgeExit(direction)
             if(edge!=null){enter(edge);return}
             val (dx,dy)=delta(direction)
-            val blocked=scene.check(x/16+dx,y/16+dy)
+            val decision=scene.terrainDecision(x/16,y/16,direction,terrainMode)
+            val blocked=scene.check(x/16+dx,y/16+dy,decision.nextMode)
             if(blocked!=null){message=blocked;return}
+            stepTerrainMode=terrainMode;terrainMode=decision.nextMode;stepSuppressEncounter=decision.suppressEncounter
             remaining=16;stepScale=chosen.second;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
         }
         val (dx,dy)=delta(direction)
-        val blocked=scene.check(stepOriginX/16+dx,stepOriginY/16+dy)
-        if(blocked!=null){x=stepOriginX;y=stepOriginY;remaining=0;stepScale=1f;movementCredit=0f;message=blocked;return}
+        val blocked=scene.check(stepOriginX/16+dx,stepOriginY/16+dy,terrainMode)
+        if(blocked!=null){terrainMode=stepTerrainMode;stepSuppressEncounter=false;x=stepOriginX;y=stepOriginY;remaining=0;stepScale=1f;movementCredit=0f;message=blocked;return}
         movementCredit+=2f*stepScale
         var step=min(movementCredit.toInt(),remaining)
         movementCredit-=step
@@ -300,7 +327,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
             completedStepSeq++
             val from=mapId;val cellX=x/16;val cellY=y/16
             val transitioned=exit?.let{enter(it)}==true
-            lastCompletedStep=CompletedStep(from,cellX,cellY,transitioned)
+            lastCompletedStep=CompletedStep(from,cellX,cellY,transitioned,stepSuppressEncounter);stepSuppressEncounter=false
         }
     }
     fun finishStep(){while(remaining>0)tick(null)}
