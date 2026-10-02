@@ -377,6 +377,38 @@ def extend_world_growth(reader, combat, proof, provenance_path):
     combat['growthLimit']={'owner':'nezha','level':proof['maxLevel'],'confidence':proof['confidence'],
         'evidence':provenance_path,'source':cap}
 
+def extend_world_mechanisms(reader, scene, mechanisms, provenance_path):
+    """Compile only evidenced dynamic chunks through the existing scene exporter."""
+    for definition in mechanisms:
+        proof=load(ROOT/definition['evidence'])
+        if proof.get('romSha256')!=SHA256 or proof.get('scopeRevision')!='east95-dynamic-chunk':
+            raise ValueError('Dynamic scene lacks current original evidence')
+        for span in proof['sources']:checked_span(reader,span)
+        rule=proof['mechanism']
+        if (definition['id'],definition['mapId'],definition['x'],definition['y'],definition['sessionFlag'])!=(
+                'rom.mechanism.95.0',95,12,21,'runtime.session.map95.mechanism0') or \
+                (rule['mapId'],rule['triggerCell'],rule['requiresMovingState97'],rule['requiresFacing'])!=(95,[12,21],0,False):
+            raise ValueError('Dynamic trigger differs from original dispatch')
+        original=extract_map(reader,95)
+        if 95 not in {m['id'] for m in scene['maps']} or original['tilesetId']!=4:
+            raise ValueError('Dynamic scene not in reviewed map batch')
+        chunk=original['chunks'][2]
+        if (chunk['module'],chunk['cpuAddress'],chunk['length'],chunk['chunkX'],chunk['chunkY'])!=(7,0x9c90,240,0,1) or \
+                (rule['replacementPointer'],rule['dataModule'])!=(0xcf30,7):
+            raise ValueError('Dynamic original chunk source differs')
+        old=checked_span(reader,chunk);new=reader.read(7,0xcf30,240)
+        table=original['collisionCandidate'];classes=reader.read(table['module'],table['cpuAddress'],256)
+        changes=[dict(x=i%16,y=15+i//16,fromTile=a,toTile=b,fromCollision=classes[a],toCollision=classes[b])
+            for i,(a,b) in enumerate(zip(old,new)) if a!=b]
+        evidenced=[dict(x=c['cell'][0],y=c['cell'][1],fromTile=c['metatileBefore'],toTile=c['metatileAfter'],
+            fromCollision=c['collisionBefore'],toCollision=c['collisionAfter']) for c in proof['changedCells']]
+        if changes!=evidenced or len(changes)!=9:
+            raise ValueError('Dynamic cells differ from original chunk comparison')
+        if any(m['id']==definition['id'] or m['sessionFlag']==definition['sessionFlag'] for m in scene.get('mechanisms',[])):
+            raise ValueError('Duplicate scene mechanism')
+        scene.setdefault('mechanisms',[]).append({k:definition[k] for k in ('id','mapId','x','y','sessionFlag','evidence')}|
+            {'changes':changes,'resumePolicy':'ANDROID_SESSION_NOT_ORIGINAL_MANUAL_SAVE','source':provenance_path})
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -463,6 +495,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if not 0<=x<data['width'] or not 0<=y<data['height']:raise ValueError('Exit outside map')
             data['transitionCells']=sorted(set(data.get('transitionCells',[]))|{index})
             data['enabledCells']=sorted(set(data['enabledCells'])|{index});result[name]=encoded(data)
+    extend_world_mechanisms(reader,scene,evidence.get('mechanisms',[]),provenance_path)
     for patch in evidence.get('exitContextUpdates',[]):
         matches=[e for e in scene['exits'] if all(e[k]==patch[k] for k in ('fromMapId','trigger','toMapId','spawn'))]
         if len(matches)!=1:raise ValueError('Caller patch must identify one existing transition')

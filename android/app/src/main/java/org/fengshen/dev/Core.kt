@@ -123,6 +123,34 @@ fun layout(w:Int,h:Int,density:Float,insets:SafeInsets,mode:DisplayMode,c:Contro
         Key.MENU to control(c.menuX,c.menuY,min(safe.h*.07f,58*density)*c.menuSize))
     return ScreenLayout(game,safe,stick,buttons,scale,game.w/scale,game.h/scale,mode)
 }
+/** Original scene-local mechanism. The flag denotes Android session continuation,
+ * not an original cartridge manual-save event byte (see world-east-mechanism.json). */
+data class SceneCellChange(val x:Int,val y:Int,val fromTile:Int,val toTile:Int,
+    val fromCollision:Int,val toCollision:Int)
+data class SceneMechanism(val id:String,val mapId:Int,val x:Int,val y:Int,
+    val sessionFlag:String,val changes:List<SceneCellChange>) {
+    init {
+        require(id.isNotBlank()&&mapId in 0..255&&x>=0&&y>=0)
+        require(sessionFlag.startsWith("runtime.session.")&&sessionFlag.length<=96)
+        require(changes.isNotEmpty()&&changes.map{it.x to it.y}.distinct().size==changes.size)
+        require(changes.all{it.x>=0&&it.y>=0&&listOf(it.fromTile,it.toTile,it.fromCollision,it.toCollision).all{v->v in 0..255}})
+    }
+    fun triggered(map:Int,cellX:Int,cellY:Int,standing:Boolean,flags:Map<String,Boolean>)=
+        standing&&map==mapId&&cellX==x&&cellY==y&&flags[sessionFlag]!=true
+    fun apply(scene:Scene,flags:Map<String,Boolean>):Scene {
+        if(scene.mapId!=mapId||flags[sessionFlag]!=true)return scene
+        val grid=scene.grid.copyOf();val collision=scene.collision.copyOf();val enabled=scene.enabled.toMutableSet()
+        for(change in changes){
+            require(change.x<scene.width&&change.y<scene.height)
+            val index=change.y*scene.width+change.x
+            require(grid[index]==change.fromTile&&collision[index]==change.fromCollision){"Scene mechanism source differs"}
+            grid[index]=change.toTile;collision[index]=change.toCollision
+            if(change.toCollision in scene.walkableClasses||index in scene.transitionCells)enabled.add(index) else enabled.remove(index)
+        }
+        return scene.copy(grid=grid,collision=collision,enabled=enabled)
+    }
+}
+
 data class Scene(val version: String,val width: Int,val height: Int,val grid: IntArray,val collision: IntArray,
     val enabled: Set<Int>,val spawnX: Int,val spawnY: Int,val mapId:Int=114,
     val walkableClasses:Set<Int> = setOf(0),val dynamicObjectCells:Set<Int> = emptySet(),

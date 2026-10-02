@@ -51,6 +51,29 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(world.tryRestore(25,47*16+8,40*16+8,0,Key.UP))
         assertEquals(25,world.mapId);assertEquals(40*16+8,world.y)
     }
+    /** Isolated mechanism snapshot, not normal East route evidence. */
+    fun testControlledSceneMechanismSessionSerialization(){
+        val base=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val cells=(17..19).flatMap{y->(12..14).map{x->SceneCellChange(x,y,if(y==17)112 else 113,102,1,0)}}
+        val mechanism=SceneMechanism("rom.mechanism.95.0",95,12,21,"runtime.session.map95.mechanism0",cells)
+        val grid=IntArray(32*30);val collision=IntArray(grid.size)
+        for(c in cells){grid[c.y*32+c.x]=c.fromTile;collision[c.y*32+c.x]=1}
+        val fixture=Scene(base.scene.version,32,30,grid,collision,collision.indices.filter{collision[it]==0}.toSet(),12,21,95)
+        val content=base.copy(scenes=base.scenes+(95 to fixture)).also{it.mechanisms=listOf(mechanism)}
+        val before=SaveSnapshot(base.scene.version,95,12*16+8,21*16+8,Key.DOWN,listOf(base.initialPlayer),
+            mapOf("rom.medicine.0" to 2),mapOf("original" to true),30)
+        assertTrue(before.validate(content))
+        val after=before.copy(flags=before.flags+(mechanism.sessionFlag to true))
+        val parsed=SaveSnapshot.parse(after.json().toString())
+        assertEquals(after,parsed);assertEquals(before,parsed.copy(flags=before.flags))
+        assertFalse(before.copy(x=12*16+8,y=17*16+8).validate(content))
+        assertTrue(parsed.copy(x=12*16+8,y=17*16+8).validate(content))
+        assertFalse(mechanism.triggered(95,12,21,true,parsed.flags))
+        assertEquals(112,content.scenes.getValue(95).grid[17*32+12])
+        assertEquals(102,content.sceneForState(95,parsed.flags)!!.grid[17*32+12])
+        assertEquals(112,content.sceneForState(95,before.flags)!!.grid[17*32+12])
+        assertEquals(setOf("original",mechanism.sessionFlag),parsed.flags.keys)
+    }
     fun testOpeningCombatPackageExecutesEveryRomGroup(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val rules=c.battle!!

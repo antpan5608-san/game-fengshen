@@ -64,6 +64,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val serviceBindings:List<ServiceBinding> = emptyList()) {
     // One state-dependent scene view. Arrays and atlases stay in the existing
     // bounded loader; this never holds every visited map alive.
+    var mechanisms:List<SceneMechanism> = emptyList()
+        internal set
     private var stateScene:Scene?=null
     private var stateFlags:Map<String,Boolean>?=null
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
@@ -71,7 +73,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         val base=scenes[mapId]?:return null
         val removed=mapObjects.mapNotNull{it.itemTarget}.filter{it.mapId==mapId&&flags[it.removedFlagId]==true}
             .map{it.y*base.width+it.x}.toSet()
-        val result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
+        var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
+        for(mechanism in mechanisms)result=mechanism.apply(result,flags)
         stateScene=result;stateFlags=flags;return result
     }
 }
@@ -439,6 +442,24 @@ object ContentLoader {
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
             mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
-            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings)
+            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
+                data.optJSONArray("mechanisms")?.let{a->
+                    content.mechanisms=(0 until a.length()).map{i->
+                        val o=a.getJSONObject(i);val cells=o.getJSONArray("changes")
+                        require(o.getString("evidence").isNotBlank())
+                        val mechanism=SceneMechanism(o.getString("id"),o.getInt("mapId"),o.getInt("x"),o.getInt("y"),
+                            o.getString("sessionFlag"),(0 until cells.length()).map{j->
+                                val c=cells.getJSONObject(j)
+                                SceneCellChange(c.getInt("x"),c.getInt("y"),c.getInt("fromTile"),c.getInt("toTile"),
+                                    c.getInt("fromCollision"),c.getInt("toCollision"))})
+                        val base=scenes.getValue(mechanism.mapId)
+                        require(base.check(mechanism.x,mechanism.y)==null)
+                        mechanism.apply(base,mapOf(mechanism.sessionFlag to true)) // Reject mismatched geometry before runtime.
+                        mechanism
+                    }
+                    require(content.mechanisms.map{it.id}.distinct().size==content.mechanisms.size)
+                    require(content.mechanisms.map{it.sessionFlag}.distinct().size==content.mechanisms.size)
+                }
+            }
     }
 }

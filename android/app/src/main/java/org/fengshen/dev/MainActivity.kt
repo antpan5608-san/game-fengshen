@@ -295,6 +295,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
         if(openEntryStoryIfNeeded())return
+        if(applySceneMechanism())return
         if(step.suppressEncounter)return
         val group=encounter?.onCompletedStep(if(step.transitioned)-1 else step.mapId,step.x,step.y){battleRandom.nextInt(256)}?:return
         val rules=content.battle?:return
@@ -627,6 +628,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         content.dialogues[id]?.let{openDialogue(it,npc)}
     }
     fun mapControlEnabled(key:Key)=layer==Layer.MAP&&(key==Key.MENU || (key==Key.A && interactionTarget()!=null))
+    private fun applySceneMechanism():Boolean {
+        if(layer!=Layer.MAP)return false
+        val mechanism=content.mechanisms.firstOrNull{
+            it.triggered(world.mapId,world.x/16,world.y/16,world.remaining==0,flags)}?:return false
+        val before=flags
+        flags=flags+(mechanism.sessionFlag to true)
+        if(!persistStateResult()){
+            flags=before;showNotice("保存失败，机关状态已保留，请重新触发");return true
+        }
+        input.clear();npcTouch.clear();hudTouch.clear();clearUxGesture();clock.reset()
+        showNotice("机关已启动")
+        return true
+    }
     private fun openEntryStoryIfNeeded():Boolean {
         if(layer!=Layer.MAP||world.remaining!=0)return false
         val story=content.battle?.storyBattles?.values?.firstOrNull{
