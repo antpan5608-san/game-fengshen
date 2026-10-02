@@ -299,5 +299,7 @@ jobs:
             artifacts/checkpoint-ui/mobile-*.png
             artifacts/checkpoint-ui/mobile-*.json
             artifacts/checkpoint-ui/nanhai-mobile-*.png
+            artifacts/checkpoint-ui/*-normal-test.txt
+            artifacts/town02-runtime/test*.txt
           if-no-files-found: ignore
           retention-days: 14

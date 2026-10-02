@@ -14,6 +14,9 @@ on:
       expected_sha256:
         description: 'Exact reviewed APK SHA-256 from that build'
         required: false
+      runtime_evidence_run_id:
+        description: 'Optional read-only isolated App failure-log extraction during inspect; never a publish input'
+        required: false
 permissions:
   contents: read
   actions: read
@@ -200,6 +203,44 @@ jobs:
         run: |
           npm ci --prefix server --ignore-scripts
           if($LASTEXITCODE -ne 0){throw 'SSH bridge dependencies failed'}
+      - name: Validate an optional isolated runtime evidence source
+        if: inputs.runtime_evidence_run_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVIDENCE_RUN_ID: ${{ inputs.runtime_evidence_run_id }}
+        run: |
+          if($env:EVIDENCE_RUN_ID -notmatch '^[0-9]+$'){throw 'Invalid diagnostic run identifier'}
+          $raw=gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:EVIDENCE_RUN_ID"
+          if($LASTEXITCODE -ne 0){throw 'Cannot read isolated diagnostic source'}
+          $r=$raw|ConvertFrom-Json
+          if($r.status -ne 'completed' -or $r.event -ne 'workflow_dispatch' -or $r.head_branch -ne 'main' -or $r.path -ne '.github/workflows/android-build.yml'){throw 'Not an isolated main build workflow source'}
+      - name: Read optional isolated runtime artifact without publishing
+        if: inputs.runtime_evidence_run_id != ''
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-town02-runtime-evidence
+          path: artifacts/runtime-diagnostic
+          run-id: ${{ inputs.runtime_evidence_run_id }}
+          github-token: ${{ github.token }}
+      - name: Keep only bounded isolated App assertion logs
+        if: inputs.runtime_evidence_run_id != ''
+        run: |
+          New-Item artifacts/runtime-assertions -ItemType Directory -Force|Out-Null
+          $files=@(Get-ChildItem artifacts/runtime-diagnostic -Recurse -File|Where-Object {$_.Name -match '^[a-zA-Z0-9_-]+-normal-test\.txt$|^test[a-zA-Z0-9_-]+\.txt$'})
+          if($files.Count -gt 100){throw 'Unexpected assertion log count'}
+          foreach($file in $files){
+            if($file.Length -gt 1MB){throw 'Assertion log size exceeded'}
+            Copy-Item $file.FullName (Join-Path artifacts/runtime-assertions $file.Name)
+            if($file.Name -like '*-normal-test.txt'){Get-Content $file.FullName -Tail 100}
+          }
+      - name: Retain isolated assertion diagnostics separately
+        if: inputs.runtime_evidence_run_id != ''
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-runtime-assertion-diagnostics
+          path: artifacts/runtime-assertions/*.txt
+          if-no-files-found: error
+          retention-days: 14
       - name: Read current diagnostics without changing releases or data
         env:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
