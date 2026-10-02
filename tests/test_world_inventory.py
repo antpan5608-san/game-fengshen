@@ -24,6 +24,17 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertNotIn('rom.service.8.weapon',services);self.assertNotIn('rom.service.9.armor',services)
         self.assertEqual([[6,25]],services['rom.service.0.inn']['entryCells'])
         self.assertIn('rom.service.map116.npc2',services) # Services outside the sixteen town doors remain visible.
+    def test_npc_coordinates_keep_encoding_and_overlay_appearance_separate(self):
+        contexts={c['contextId']:c for c in self.report['npcContexts']}
+        self.assertEqual([7,5],contexts[17]['records'][0]['cell'])
+        self.assertEqual([12,5],contexts[22]['records'][0]['cell'])
+        services={s['id']:s for s in self.report['services']}
+        extra=services['rom.service.0.weapon']['additionalNpcCandidates']
+        self.assertEqual([10,9],extra[0]['cell']);self.assertTrue(extra[0]['positionInRoom'])
+        # Context 23 is NOT an empty sentinel: its real records lie outside the shop.
+        self.assertEqual(5,len(contexts[23]['records']))
+        self.assertTrue(all(not n['positionInRoom'] for n in services['rom.service.0.armor']['additionalNpcCandidates']))
+        self.assertEqual('NEEDS_NPC_STATE_DISPATCH',extra[0]['appearance'])
     def test_identical_grids_do_not_merge_ids_or_events(self):
         rows={m['mapId']:m for m in self.report['maps']}
         self.assertEqual(rows[69]['gridSha256'],rows[158]['gridSha256'])

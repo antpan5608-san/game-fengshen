@@ -302,8 +302,11 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             address=pointer+index*14
             if reader.read(8,address)[0]==255:break
             b=reader.read(8,address,14)
+            position=[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')]
+            # A8F5/A90E/A92E encodes an NPC cell as cell*16 + $78, not screen pixels.
+            cell=[(v-0x78)//16 for v in position] if all(v>=0x78 and (v-0x78)%16==0 for v in position) else None
             records.append({'index':index,'textGroup':b[0],'firstMessage':b[1],'repeatMessage':b[2],
-                'pixelPosition':[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')],
+                'pixelPosition':position,'positionEncoding':'CELL_TIMES_16_PLUS_120','cell':cell,
                 'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
         else:raise ValueError('Unterminated NPC/context list')
         contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
@@ -316,8 +319,16 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
         for klass,cells in maps[mid]['doorCandidates'].items():
             kind,interior=kinds[klass]
             context_index=village_bases[mid]+interior-17
+            additional=context_index
+            overlay_id=overlay[additional]
+            room=maps[interior]
+            overlay_rows=contexts[overlay_id]['records']
             services.append({'id':f'rom.service.{mid}.{kind}','kind':kind,'callerMapId':mid,
                 'interiorMapId':interior,'entryCells':cells,'npcOverlayId':overlay[context_index],
+                'baseNpcContextId':interior,
+                'additionalNpcCandidates':[{'contextId':overlay_id,'npcIndex':n['index'],'cell':n['cell'],
+                    'positionInRoom':n['cell'] is not None and 0<=n['cell'][0]<room['width'] and 0<=n['cell'][1]<room['height'],
+                    'appearance':'NEEDS_NPC_STATE_DISPATCH'} for n in overlay_rows],
                 'contextSource':reader.span(0,0xd2c7+context_index,1,'Original additional indoor NPC context'),
                 'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
                 'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
@@ -352,6 +363,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             reader.span(8,npc_start,npc_slots*2,'NPC/overlay pointer slots ending at first list'),
             reader.span(8,exit_start,352,'Geometry exit pointers plus extra slot'),
             reader.span(0,0xcbe3,79,'Shared indoor/caller/context dispatch'),
+            reader.span(0,0xa8f5,68,'NPC cell encoding: x/y times sixteen plus 120'),
             reader.span(0,0xa73f,56,'Temporarily substitute NPC overlay index then restore actual map')],
         'referenceMapCount':259,'referenceIsDenominator':False,
         'summary':{'serviceCandidateCounts':dict(collections.Counter(s['kind'] for s in services)),

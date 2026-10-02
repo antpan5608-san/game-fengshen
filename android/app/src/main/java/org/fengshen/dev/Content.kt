@@ -245,12 +245,12 @@ object ContentLoader {
         val battle=if(hashes.has("combat.json")){
             val o=JSONObject(String(read("combat.json"),Charsets.UTF_8))
             require(o.getInt("schemaVersion")==1 && o.getString("version")==manifest.getString("version"))
-            val zone=o.getJSONObject("zone");require(zone.getInt("mapId")==16 && zone.getInt("id")==0)
+            val zone=o.getJSONObject("zone");require(zone.getInt("mapId") in scenes && zone.getInt("id") in 0..255)
             val rects=zone.getJSONArray("rectangles").let{array->(0 until array.length()).map{i->
                 val a=array.getJSONArray(i);require(a.length()==4)
                 EncounterRect(a.getInt(0),a.getInt(1),a.getInt(2),a.getInt(3))
             }}
-            val enemies=o.getJSONArray("enemies").let{array->(0 until array.length()).map{i->
+            val enemyRows=o.getJSONArray("enemies").let{array->(0 until array.length()).map{i->
                 val e=array.getJSONObject(i)
                 EnemyDefinition(e.getInt("id"),e.getString("name"),e.getInt("hp"),e.getInt("attack"),
                     e.getInt("defense"),e.getInt("experienceReward"),e.getInt("moneyReward"),
@@ -259,7 +259,11 @@ object ContentLoader {
                     e.optJSONObject("loot")?.let{l->BattleLoot(l.getString("itemId"),l.getInt("threshold"),l.getString("category"))
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
                             itemDefinitions.getValue(it.itemId).category==it.category)}})
-            }.associateBy{it.id}}
+            }}
+            require(enemyRows.size in 1..256&&enemyRows.map{it.id}.distinct().size==enemyRows.size&&enemyRows.all{
+                it.id in 0..255&&it.name.isNotBlank()&&it.hp in 1..65535&&it.attack in 0..65535&&it.defense in 0..65535&&
+                    it.experienceReward in 0..65535&&it.moneyReward in 0..65535})
+            val enemies=enemyRows.associateBy{it.id}
             val groups=o.getJSONArray("groups").let{array->(0 until array.length()).map{i->
                 val g=array.getJSONObject(i);val members=g.getJSONArray("entities").let{a->
                     (0 until a.length()).map{j->val e=a.getJSONObject(j);EncounterMember(e.getInt("slot"),e.getInt("enemyId"))}}
@@ -271,11 +275,10 @@ object ContentLoader {
                     g.getInt("agility"),g.getInt("spirit"),g.getBoolean("runtimeVerified"))
             }}
             val gate=o.getJSONObject("gate")
-            require(rects.size==2 && enemies.keys.containsAll(setOf(1,2,3)) && groups.size==19 &&
-                groups.indices.all{groups[it].id==it} && groups.all{it.members.isNotEmpty() &&
-                    it.members.map{m->m.slot}.distinct().size==it.members.size &&
-                    it.members.all{m->m.slot in 0..6 && m.enemyId in enemies}} &&
+            require(rects.isNotEmpty() && enemies.isNotEmpty() && groups.size in 1..32 &&
+                groups.indices.all{groups[it].id==it} && groups.all{validEncounterGroup(it,enemies)} &&
                 enemies.values.all{it.hp>0 && it.hitByte in 0..255 && OriginalStatus.enemySupported(it)} &&
+                growth.map{it.level}.distinct().size==growth.size&&growth.all{it.level in 2..99&&it.threshold in 1..0xffffff}&&
                 growth.zipWithNext().all{it.first.threshold<it.second.threshold})
             fun parseZones(name:String):List<EncounterZone> = o.optJSONArray(name)?.let{a->(0 until a.length()).map{i->
                     val z=a.getJSONObject(i);val zr=z.getJSONArray("rectangles").let{rs->(0 until rs.length()).map{j->
@@ -284,18 +287,20 @@ object ContentLoader {
                     val zg=z.getJSONArray("groups").let{gs->(0 until gs.length()).map{j->
                         val g=gs.getJSONObject(j);val entities=g.getJSONArray("entities").let{es->(0 until es.length()).map{k->
                             val e=es.getJSONObject(k);EncounterMember(e.getInt("slot"),e.getInt("enemyId"))}}
-                        require(entities.isNotEmpty()&&entities.map{it.slot}.distinct().size==entities.size&&
-                            entities.all{it.slot in 0..6&&enemies[it.enemyId]?.let(OriginalStatus::enemySupported)==true})
+                        require(validEncounterGroup(EncounterGroup(g.getInt("id"),entities),enemies))
                         EncounterGroup(g.getInt("id"),entities,z.getInt("id"))}}
-                    require(z.getInt("mapId") in scenes&&zg.isNotEmpty()&&z.getInt("randomThreshold") in 0..255)
+                    require(z.getInt("mapId") in scenes&&zg.size in 1..32&&zg.indices.all{zg[it].id==it}&&z.getInt("randomThreshold") in 0..255)
                     EncounterZone(z.getInt("mapId"),zr,zg,z.getInt("randomThreshold"),z.optString("randomGate")=="HIGH")
                 }}?:emptyList()
             val parsedZones=parseZones("zones")+parseZones("fallbackZones")
+            val enemyAgility=o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
+                a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap()
+            if(o.has("physicalRules")||o.optJSONObject("escape")?.optBoolean("enabled")==true)
+                require(enemyAgility.keys.containsAll(enemies.keys)&&enemyAgility.all{(id,value)->id in enemies&&value in 0..255})
             BattleContent(zone.getInt("mapId"),rects,groups,enemies,growth,
                 o.getInt("initialArmorContribution"),gate.getInt("stepCounterMin"),
                 gate.getInt("stepCounterForced"),gate.getInt("randomByteThreshold"),
-                o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
-                    a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap(),
+                enemyAgility,
                 o.optJSONObject("escape")?.optBoolean("enabled")==true,
                 o.optJSONObject("defeat")?.optBoolean("enabled")==true,
                 parsedZones,
@@ -303,7 +308,6 @@ object ContentLoader {
                     require(p.getBoolean("sameRandomByte"))
                     val h=p.getJSONObject("weaponHitThreshold");val t=ints(p,"multiplierThresholds").toList()
                     PhysicalRules(h.keys().asSequence().associate{it.toInt() to h.getInt(it)},t)
-                        .also{require(it.weaponHitThreshold==mapOf(-1 to 64,0 to 54,1 to 54,2 to 51))}
                 },
                 o.optJSONArray("bosses")?.let{a->(0 until a.length()).map{i->
                     val b=a.getJSONObject(i);val g=b.getJSONObject("group");val es=g.getJSONArray("entities")
@@ -313,7 +317,12 @@ object ContentLoader {
                         require(boss.id=="rom.boss.137"&&boss.flagId=="rom.event.97.39.1"&&
                             boss.npcId=="rom.npc.97.0"&&boss.victoryDialogue in dialogues&&
                             members==listOf(EncounterMember(3,137))&&npcs.any{it.id==boss.npcId&&it.mapId==97})}
-                }.associateBy{it.npcId}}?:emptyMap())
+                }.associateBy{it.npcId}}?:emptyMap(),
+                o.optJSONObject("growthLimit")?.let{limit->
+                    require(limit.getString("owner")=="nezha"&&limit.getString("confidence")=="ORIGINAL_ROM_STATIC"&&
+                        limit.getString("evidence").isNotBlank())
+                    limit.getInt("level").also{level->require(level in 2..99&&growth.lastOrNull()?.level==level)}
+                })
         }else null
         val battleHorizons=mutableMapOf<Int,Bitmap>();val blackBattleEnemyIds=mutableSetOf<Int>()
         val enemyGraphics=mutableMapOf<Int,Bitmap>();val enemyOrigins=mutableMapOf<Int,Pair<Int,Int>>()
@@ -341,7 +350,7 @@ object ContentLoader {
                     battleHorizons[mid]=bitmap(h.getString("asset"),256,32)
                 }}
                 presentation.optJSONArray("blackBackgroundEnemyIds")?.let{a->for(i in 0 until a.length()){
-                    val id=a.getInt(i);require(id==137&&id in battle.enemies);blackBattleEnemyIds.add(id)
+                    val id=a.getInt(i);require(id in battle.enemies);blackBattleEnemyIds.add(id)
                 }}
                 if(presentation.has("hero")){
                     val heroBytes=read(presentation.getString("hero"))

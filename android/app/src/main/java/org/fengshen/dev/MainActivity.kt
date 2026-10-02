@@ -108,7 +108,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleResultBefore:CharacterState?=null
     private var battleResultLines:List<String> = emptyList()
     private val diagnosedExperience=mutableSetOf<String>()
-    fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growth?:emptyList(),content.initialPlayer.id)
+    fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growth?:emptyList(),
+        content.initialPlayer.id,content.battle?.knownMaxLevel)
     private fun diagnoseExperience(){for(hero in characters){val progress=growthProgress(hero)
         if(progress.status==ExperienceProgress.Status.INVALID){val key="${hero.id}:${hero.level}:${hero.experience}:${progress.reason}"
             if(diagnosedExperience.add(key))Diagnostics.record("experience_state_inconsistent","ERROR",JSONObject()
