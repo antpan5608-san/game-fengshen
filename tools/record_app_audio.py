@@ -48,6 +48,10 @@ def record_silent():
             started=time.monotonic()
             while test.poll() is None:
                 if time.monotonic()-started>budget:raise TimeoutError('Normal App route exceeded isolated runtime budget')
+                try: boundary_before=saved()
+                except (ET.ParseError,StopIteration,TypeError):
+                    if videos:raise
+                    boundary_before=None # First new-game launch can precede its first automatic save.
                 remote=f'/sdcard/{prefix}-normal-{len(videos):02d}.mp4'
                 uptime_ms=int(float(adb('shell','cat','/proc/uptime').decode().split()[0])*1000)
                 segment_started=time.monotonic()
@@ -63,6 +67,9 @@ def record_silent():
                 adb('pull',remote,str(local));videos.append(str(local.relative_to(ROOT)))
                 segments.append({'file':videos[-1],'sha256':hashlib.sha256(local.read_bytes()).hexdigest(),
                     'startedAndroidUptimeMs':uptime_ms,'durationSeconds':round(time.monotonic()-segment_started,3),
+                    'savedWorldBefore':boundary_before,'savedWorldAfter':saved(),
+                    'boundaryScope':('Pre-launch isolated baseline; normal new-game begins at its indexed marker' if len(videos)==1 else 'Continuing the same normal controller flow'),
+                    'saveLimit':'Read-only persisted world checkpoints; during battle live action HP is visible in raw frames',
                     'limit':'Capture start approximate; actual frames in retained MP4'})
         assert 'OK (1 test)' in test_log.read_text(), 'Normal route assertions did not pass'
         if comparison:
@@ -92,6 +99,8 @@ def record_silent():
         segments.append({'file':cold_name,'sha256':hashlib.sha256(cold_local.read_bytes()).hexdigest(),
             'phase':'EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE',
             'startedAndroidUptimeMs':cold_uptime,'durationSeconds':round(time.monotonic()-cold_started,3),
+            'savedWorldBefore':before,'savedWorldAfter':saved(),
+            'boundaryScope':'Same normal save before external force-stop and after actual restart/continued movement',
             'limit':'Capture start approximate; actual frames in retained MP4'})
         result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
             'segments':segments,'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
