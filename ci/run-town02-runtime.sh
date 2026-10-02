@@ -110,14 +110,6 @@ run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
-run_test testNormalTownShopsBuySellAndReturn
-run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
-run_test testInput01RealMapWallSlidesAndMenuCancellation
-run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
-timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
-grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
-python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
-python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory --silent --cold-test testNanhaiColdStartMatchesNormalSave --budget-seconds 3600
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
 adb shell wm density 480
@@ -132,6 +124,15 @@ done
 adb shell settings put system font_scale 1.0
 adb shell wm size 960x540
 adb shell wm density 160
+
+run_test testNormalTownShopsBuySellAndReturn
+run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
+run_test testInput01RealMapWallSlidesAndMenuCancellation
+run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
+timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
+grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
+python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
+python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory --silent --cold-test testNanhaiColdStartMatchesNormalSave --budget-seconds 3600
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
