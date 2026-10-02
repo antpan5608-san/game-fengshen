@@ -27,3 +27,5 @@ if($runtime.worldCurrentServices -ne 'PASS'){throw 'Current village services mus
 if($runtime.worldSeaNorth -ne 'PASS' -or $runtime.worldStatusAndAntidote -ne 'PASS' -or $runtime.worldSaveProtection -ne 'PASS'){throw 'World north/status/save gates must verify this exact APK'}
 
 if($runtime.worldWestPalace -ne 'PASS' -or $runtime.worldSharedVillageServices -ne 'PASS' -or $runtime.worldTerrainRestore -ne 'PASS'){throw 'World palace/services/terrain restart gates must verify this exact APK'}
+
+if($runtime.worldNorthPalace -ne 'PASS' -or $runtime.worldPearlUseAndColdRestart -ne 'PASS'){throw 'North palace/independent pearl/normal crossing/cold restart gates must verify this exact APK'}

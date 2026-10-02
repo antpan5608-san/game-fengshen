@@ -142,13 +142,14 @@ python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory -
 python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerifiedNanhaiSave --silent --cold-test testWorldNorthColdStartMatchesNormalSave --budget-seconds 1800
 python tools/record_app_audio.py world-west testNormalWorldWestPalaceFromVerifiedNanhaiSave --silent --cold-test testWorldWestColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-village1 testNormalWorldVillageOneServicesFromVerifiedNanhaiSave --silent --cold-test testWorldVillageOneColdStartMatchesNormalSave --budget-seconds 1800
+python tools/record_app_audio.py world-north-palace testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave --silent --cold-test testWorldNorthPalacePearlColdStartMatchesNormalSave --budget-seconds 2400
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',worldNorthPalace='PASS',worldPearlUseAndColdRestart='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY
@@ -188,7 +189,7 @@ for segment in [normal[-1],cold]:
     'limitBytes':27*1024*1024,'allFootageRetainedInOriginalRuntimeArtifact':True},indent=2))
 # Each new continuation has its own bounded review artifact; every original
 # segment remains in the full runtime artifact, including segments not copied.
-for flow in ('world-west','world-village1'):
+for flow in ('world-west','world-village1','world-north-palace'):
     recording=json.loads(Path(f'artifacts/checkpoint-ui/{flow}-recording.json').read_text())
     index=json.loads(Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json').read_text())
     normal=[s for s in recording['segments'] if '-normal-' in s['file']]
