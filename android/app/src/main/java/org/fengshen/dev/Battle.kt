@@ -69,7 +69,7 @@ data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:I
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
 data class BattleSettlement(val character:CharacterState,val money:Int,val experience:Int,val levels:List<Int>)
 
-/** Scoped physical branch for the three opening enemies. No spell/item or invented special action is accepted. */
+/** Existing physical/escape branch plus the fingerprint-verified single-character herb action. */
 class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,hero:CharacterState,
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
@@ -81,6 +81,23 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     var hero=hero;private set
     var phase=BattlePhase.TARGET;private set
     private var settled=false
+    // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
+    var herbsConsumed=0;private set
+    fun herbAvailable(targetId:String,count:Int,item:ItemDefinition):Boolean =
+        phase==BattlePhase.TARGET && content.physicalRules!=null && targetId==hero.id &&
+        hero.hp>0 && hero.hp<=hero.maxHp && hero.maxHp>0 && count>herbsConsumed &&
+        item.id==HerbUse.ID && item.herbUse?.healHp==50 && item.herbUse.consumeAtFullHp
+    fun useHerb(targetId:String,count:Int,item:ItemDefinition,nextByte:()->Int):BattleTurn? {
+        if(!herbAvailable(targetId,count,item))return null
+        // 9:BB9F..BBC9 consumes at confirmation, BEFORE ordered actions. Faster lethal enemies do not refund.
+        herbsConsumed++
+        return originalRound(null,nextByte,herbHp=item.herbUse!!.healHp)
+    }
+    fun inventoryAfterBattle(inventory:Map<String,Int>):Map<String,Int> {
+        if(herbsConsumed==0)return inventory
+        val count=inventory[HerbUse.ID]?:0;check(count>=herbsConsumed){"Pending battle item count changed"}
+        return inventory.toMutableMap().also{if(count==herbsConsumed)it.remove(HerbUse.ID) else it[HerbUse.ID]=count-herbsConsumed}
+    }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
         delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null)=
         BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy)
@@ -120,7 +137,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     }
     /** The restored physical path shares the observed accuracy/multiplier byte.
      * Stable descending agility retains the player before enemies on ties. */
-    private fun originalRound(targetSlot:Int?,nextByte:()->Int):BattleTurn {
+    private fun originalRound(targetSlot:Int?,nextByte:()->Int,herbHp:Int?=null):BattleTurn {
         val rules=content.physicalRules!!;val steps=mutableListOf<BattleActionStep>()
         val defeated=mutableListOf<Int>();var dealt=0;var received=0;var misses=0
         fun roll()=nextByte().also{require(it in 0..255)}
@@ -129,6 +146,12 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         for(actor in actors){
             if(phase!=BattlePhase.TARGET)break
             if(actor==-1){
+                if(herbHp!=null){
+                    // 9:9384/9394 -> A026: living target, +50, cap, no medicine RNG read.
+                    val before=hero.hp;hero=hero.copy(hp=minOf(hero.maxHp.toLong(),before.toLong()+herbHp).toInt())
+                    steps.add(frame("药草 · 恢复 ${hero.hp-before} HP",kind=BattleActionKind.HEAL,delta=hero.hp-before,beforeHero=before))
+                    continue
+                }
                 if(targetSlot==null){
                     steps.add(frame("尝试逃跑",kind=BattleActionKind.ESCAPE))
                     val opponent=enemies.filter{it.hp>0}.maxByOrNull{content.enemyAgility.getValue(it.definition.id)}!!

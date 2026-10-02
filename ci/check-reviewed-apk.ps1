@@ -20,3 +20,5 @@ if($runtime.nanhaiNormalRoute -ne 'PASS' -or $runtime.nanhaiBossVictory -ne 'PAS
 if($runtime.mobileGrowth -ne 'PASS' -or $runtime.mobileEnemyInformation -ne 'PASS' -or $runtime.mobileDirectTouch -ne 'PASS' -or $runtime.mobileActionSnapshots -ne 'PASS'){
     throw 'Mobile growth/battle touch/snapshot gates must verify the same reviewed APK'
 }
+
+if($runtime.battleHerb -ne 'PASS'){throw 'This candidate must verify the scoped battle herb touch/order/save gate'}

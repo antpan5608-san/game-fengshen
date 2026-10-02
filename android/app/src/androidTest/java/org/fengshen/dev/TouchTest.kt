@@ -975,29 +975,43 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalNanhaiRouteBossAndVictory(){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit() // Isolated emulator fixture only.
         val(activity,v)=launch();val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
-        var fightCount=0;var herbUses=0;var capturedBoss=false;var capturedIce=false;var capturedInfo=false;var capturedReward=false;var escapedBoss=false
+        var fightCount=0;var herbUses=0;var capturedBoss=false;var capturedIce=false;var capturedInfo=false;var capturedReward=false;var escapedBoss=false;var battleHerbUses=0;var capturedBattleHeal=false
         fun state(name:String,capture:Boolean=true){
             if(capture)screenshot(v,"nanhai-$name")
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-normal-index.json").writeText(
                 org.json.JSONObject().put("kind","NORMAL_CONTROLLER_NEW_GAME_NO_STATE_INJECTION").put("events",events)
-                    .put("fights",fightCount).put("herbUses",herbUses).toString())
+                    .put("fights",fightCount).put("herbUses",herbUses).put("battleHerbUses",battleHerbUses).toString())
         }
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
         fun finishFight(){
-            if(v.layer!=GameView.Layer.BATTLE)return
-            val boss=(f.get(v) as OpeningBattle).enemies.any{it.definition.id==137}
+            var initial:OpeningBattle?=null
+            instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE){assertNotNull(f.get(v));initial=f.get(v) as OpeningBattle}}
+            val entered=initial?:return
+            val boss=entered.enemies.any{it.definition.id==137}
             fightCount++
             val levelBefore=v.currentSnapshot().characters.first().level
             if(boss&&!capturedBoss){state("boss-entry");capturedBoss=true}
             val deadline=SystemClock.elapsedRealtime()+180000
-            while(v.layer==GameView.Layer.BATTLE){
+            while(true){
+                // Ordinary results now auto-close on the UI thread. Observe layer + battle atomically;
+                // a background layer read followed by a reflection cast can race a valid close.
+                var observed:Pair<OpeningBattle,BattlePresentation>?=null
+                instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE){
+                    assertNotNull("Battle layer must have its instance",f.get(v))
+                    observed=(f.get(v) as OpeningBattle) to (p.get(v) as BattlePresentation)
+                }}
+                val (fight,presentation)=observed?:break
                 assertTrue("Normal fight did not finish",SystemClock.elapsedRealtime()<deadline)
-                val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
                 if(boss&&presentation.screen==BattlePresentation.Screen.ACTING&&!capturedIce&&
                     presentation.action?.text?.contains("冰系")==true){state("boss-ice");capturedIce=true}
+                if(boss&&presentation.screen==BattlePresentation.Screen.ACTING&&!capturedBattleHeal&&
+                    presentation.action?.kind==BattleActionKind.HEAL){
+                    val action=presentation.action!!;assertEquals(minOf(fight.hero.maxHp,action.beforeHeroHp+50),action.heroHp)
+                    state("mobile-battle-herb-heal");capturedBattleHeal=true
+                }
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     assertTrue("Normal preparation must survive; no forced win or restored fixture",fight.phase!=BattlePhase.DEFEAT)
                     if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
@@ -1008,7 +1022,15 @@ class TouchTest:IsolatedGameTestCase(){
                             tap(v,center(v.battleInfoCloseBounds()));capturedInfo=true
                         }
                         if(boss&&!escapedBoss){tap(v,center(v.battleCommandBounds(3)));escapedBoss=true;state("mobile-boss-escape-submitted")}
-                        else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                        else if(boss&&battleHerbUses==0&&v.battleHerbCount()>0&&fight.hero.hp==fight.hero.maxHp){
+                            // Legitimate Boss escape attempt: wait for an actual enemy hit, never edit HP/RNG.
+                            tap(v,center(v.battleCommandBounds(3)))
+                        }else if(boss&&battleHerbUses==0&&fight.hero.hp<fight.hero.maxHp&&v.battleHerbCount()>0){
+                            val before=fight.hero;val count=v.battleHerbCount();tap(v,center(v.battleCommandBounds(2)))
+                            tap(v,center(v.battleItemBounds(HerbUse.ID)))
+                            assertEquals(before,fight.hero);assertEquals(count,v.battleHerbCount());state("mobile-battle-herb-selected")
+                            tap(v,center(v.battleItemUseBounds()));assertEquals(count-1,v.battleHerbCount());battleHerbUses++
+                        }else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
                     }else if(presentation.screen==BattlePresentation.Screen.RESULT){
                         if(boss){state("boss-victory-result");tap(v,center(v.battleResultBounds()))}
                         else if(!capturedReward){state("mobile-ordinary-reward");capturedReward=true}
@@ -1132,6 +1154,8 @@ class TouchTest:IsolatedGameTestCase(){
         repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
         assertEquals(GameView.Layer.BATTLE,v.layer);finishFight();assertEquals(GameView.Layer.DIALOGUE,v.layer)
         val won=v.currentSnapshot();assertEquals(beforeBoss.money+100,won.money);assertEquals(beforeBoss.characters.first().experience+60,won.characters.first().experience)
+        assertEquals("Normal bought herb must be used in Boss combat",1,battleHerbUses);assertTrue(capturedBattleHeal)
+        assertEquals((beforeBoss.inventory[HerbUse.ID]?:0)-1,won.inventory[HerbUse.ID]?:0)
         assertEquals(true,won.flags["rom.event.97.39.1"]);assertEquals(97,won.mapId);state("post-victory-dialogue")
         repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
         assertEquals(GameView.Layer.MAP,v.layer);val settled=v.currentSnapshot();assertTrue(settled.flags["rom.event.97.39.1.dialogue.pending"]!=true)
@@ -1283,6 +1307,45 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(computedEnemies,fight.enemies.map{v.battleVisibleHp(it.slot)})
         instrumentation.runOnMainSync{activity.finish()}
     }
+    /** Ordered-item and touch/persistence fixture; no normal-play or real-player-save claim. */
+    fun testControlledMobileBattleHerbAndSave(){
+        val(activity,v)=launch();val base=v.currentSnapshot();val rules=v.content.battle!!
+        val story=rules.storyBattles.values.single()
+        val hero=v.content.initialPlayer.copy(level=8,experience=702,hp=30,maxHp=100,strength=250,agility=30,equipment=EquipmentState(2,-1,0,28))
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(characters=listOf(hero),inventory=mapOf(HerbUse.ID to 2))))}
+        val checkpoint=v.currentSnapshot();val fight=OpeningBattle(story.group,rules,hero,20,3);val p=BattlePresentation()
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-herb")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE);p.tick(400)}
+        tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(2,v.battleHerbCount())
+        tap(v,center(v.battleItemCloseBounds()));assertEquals(0,fight.herbsConsumed)
+        tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
+        val action=center(v.battleItemUseBounds());send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(0,fight.herbsConsumed)
+        tap(v,action);assertEquals(1,fight.herbsConsumed);assertEquals(1,v.battleHerbCount());assertEquals(BattlePresentation.Screen.ACTING,p.screen)
+        assertEquals(BattleActionKind.HEAL,p.action!!.kind);assertEquals(80,p.action!!.heroHp)
+        repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action));tap(v,action)};assertEquals(1,fight.herbsConsumed)
+        assertEquals("Pending HP and item changes must not make a half-saved checkpoint",checkpoint,v.currentSnapshot())
+        screenshot(v,"mobile-controlled-battle-herb-heal")
+        instrumentation.runOnMainSync{v.active=false};val elapsed=p.elapsedMs;SystemClock.sleep(250);assertEquals(elapsed,p.elapsedMs)
+        instrumentation.runOnMainSync{v.active=true}
+        for(i in 0..200){if(p.screen!=BattlePresentation.Screen.ACTING)break;SystemClock.sleep(25)}
+        assertEquals(BattlePresentation.Screen.COMMAND,p.screen)
+        val afterUse=fight.hero.hp;assertTrue(afterUse<=80);assertEquals(1,v.battleHerbCount())
+        var committed=false
+        repeat(30){
+            var target:Pair<Float,Float>?=null
+            instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE&&p.screen==BattlePresentation.Screen.COMMAND)
+                target=center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot))}
+            target?.let{tap(v,it)}
+            SystemClock.sleep(250)
+            if(p.screen==BattlePresentation.Screen.RESULT)committed=true
+        }
+        assertTrue(committed);assertEquals(1,v.currentSnapshot().inventory[HerbUse.ID]);assertEquals(fight.hero,v.currentSnapshot().characters.first())
+        val saved=v.currentSnapshot();instrumentation.runOnMainSync{v.persistState();activity.finish()}
+        val(reopened,restored)=launch();assertEquals(saved,restored.currentSnapshot());instrumentation.runOnMainSync{reopened.finish()}
+    }
     fun testMobileBattlePhoneSizeAndLargeFont(){
         val(activity,v)=launch();val font=v.resources.configuration.fontScale;val dp=v.resources.displayMetrics.density
         val screen=instrumentation.uiAutomation.takeScreenshot();assertEquals(2640,screen.width);assertEquals(1216,screen.height)
@@ -1297,7 +1360,10 @@ class TouchTest:IsolatedGameTestCase(){
         for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
         val eb=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
         assertEquals(128f/112,eb.w/eb.h,.001f);assertTrue(eb.y+eb.h<=v.battleTargetBounds(fight.enemies.single().slot).y)
-        screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(4)))
+        screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(2)))
+        screenshot(v,"mobile-phone-medicine-$font");tap(v,center(v.battleItemBounds(HerbUse.ID)))
+        screenshot(v,"mobile-phone-medicine-detail-$font");tap(v,center(v.battleItemCloseBounds()))
+        tap(v,center(v.battleCommandBounds(4)))
         val info=GameView::class.java.getDeclaredMethod("battleInfoLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
         val infoTarget=v.battleTargetBounds(fight.enemies.single().slot)
         assertTrue(infoTarget.h>=48*dp);assertFalse(overlap(infoTarget,v.battleInfoCloseBounds()))
