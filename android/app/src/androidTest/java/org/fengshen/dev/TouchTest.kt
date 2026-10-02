@@ -1297,9 +1297,22 @@ class TouchTest:IsolatedGameTestCase(){
         for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
         val eb=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
         assertEquals(128f/112,eb.w/eb.h,.001f);assertTrue(eb.y+eb.h<=v.battleTargetBounds(fight.enemies.single().slot).y)
-        screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(4)));screenshot(v,"mobile-phone-info-$font")
+        screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(4)))
+        val info=GameView::class.java.getDeclaredMethod("battleInfoLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
+        val infoTarget=v.battleTargetBounds(fight.enemies.single().slot)
+        assertTrue(infoTarget.h>=48*dp);assertFalse(overlap(infoTarget,v.battleInfoCloseBounds()))
+        screenshot(v,"mobile-phone-info-$font")
+        val scroll=center(info.detail)
+        send(v,MotionEvent.ACTION_DOWN,listOf(scroll));send(v,MotionEvent.ACTION_MOVE,listOf(Pair(scroll.first,scroll.second-80*dp)))
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(scroll.first,scroll.second-80*dp)))
+        assertEquals(BattlePresentation.Screen.COMMAND,p.screen);assertEquals(fight.hero.hp,p.action?.heroHp?:fight.hero.hp)
+        screenshot(v,"mobile-phone-info-scrolled-$font")
         tap(v,center(v.battleInfoCloseBounds()));instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP)}
         screenshot(v,"mobile-phone-hud-$font");tap(v,center(v.hudBounds()));screenshot(v,"mobile-phone-growth-$font")
+        val detail=(GameView::class.java.getDeclaredMethod("modalLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout).detail;val start=center(detail)
+        send(v,MotionEvent.ACTION_DOWN,listOf(start));send(v,MotionEvent.ACTION_MOVE,listOf(Pair(start.first,start.second-80*dp)))
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(start.first,start.second-80*dp)))
+        screenshot(v,"mobile-phone-growth-scrolled-$font")
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
             org.json.JSONObject().put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
                 .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48).toString())

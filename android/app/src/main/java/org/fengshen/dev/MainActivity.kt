@@ -97,6 +97,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleBlocked=false
     private var battleInfoOpen=false
     private var battleInfoScroll=0f
+    private var battleInfoListScroll=0f
     private var battleResultScroll=0f
     private var battleNotice=""
     private var battleResultBefore:CharacterState?=null
@@ -109,8 +110,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 .put("character",hero.id).put("level",hero.level).put("experience",hero.experience).put("reason",progress.reason))}}}
     private fun clearBattleGesture(){battleGesture=null;battleBlocked=false;battleTouch.clear()}
     fun battleCommandBounds(index:Int)=battleLayout().commands[index]
-    fun battleTargetBounds(slot:Int)=battle?.enemies?.indexOfFirst{it.slot==slot}?.let{battleLayout().enemies.getOrNull(it)}?:Box(0f,0f,0f,0f)
-    fun battleInfoCloseBounds()=battleLayout().closeInfo
+    fun battleTargetBounds(slot:Int):Box {
+        val i=battle?.enemies?.indexOfFirst{it.slot==slot}?:return Box(0f,0f,0f,0f)
+        return if(battleInfoOpen)battleInfoLayout().visibleRow(i,battleInfoListScroll) else battleLayout().enemies.getOrNull(i)?:Box(0f,0f,0f,0f)
+    }
+    fun battleInfoCloseBounds()=battleInfoLayout().close
     fun battleVisibleHp(slot:Int)=battlePresentation.action?.enemyHp?.get(slot)?:battle?.enemies?.firstOrNull{it.slot==slot}?.hp
     fun battleResultBounds()=battleLayout().result
     private var dialogueNpc:StoryNpc?=null
@@ -379,6 +383,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return row.takeIf{it in menuChoices.indices && y>=b.y+b.h*.22f && y<b.y+b.h*.94f}
     }
     private fun menuCloseBox():Box {val b=menuBox();val d=min(42*resources.displayMetrics.density,b.h*.19f);return Box(b.x+b.w-d-8*resources.displayMetrics.density,b.y+6*resources.displayMetrics.density,d,d)}
+    private fun battleInfoLayout():TouchModalLayout {
+        val dp=resources.displayMetrics.density
+        val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,0,0,false)
+        val row=max(56f,20*resources.configuration.fontScale+16)*dp
+        // Landscape uses the existing two-column geometry, including short safe windows.
+        val listW=(l.frame.w-24*dp)*.38f
+        val list=Box(l.frame.x+8*dp,l.list.y,listW,l.list.h)
+        val detail=Box(list.x+list.w+8*dp,list.y,l.frame.x+l.frame.w-8*dp-(list.x+list.w+8*dp),list.h)
+        return l.copy(list=list,detail=detail,rowHeight=row)
+    }
     private fun battleLayout()=battleTouchLayout(ui.safe,resources.displayMetrics.density,
         resources.configuration.fontScale,battle?.enemies?.size?:1)
     private fun battleBox():Box {
@@ -398,9 +412,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val current=battle?:return null;val screen=battlePresentation.screen;val l=battleLayout()
         fun cmd(kind:String,slot:Int?=null)=BattleTouchCommand(battleID,battlePresentation.revision,kind,slot)
         if(battleInfoOpen){
-            if(l.closeInfo.contains(x,y))return cmd("close-info")
-            current.enemies.firstOrNull{battleTargetBounds(it.slot).contains(x,y)}?.let{return cmd("info-target",it.slot)}
-            return if(l.arena.contains(x,y))cmd("info-scroll",selectedBattleSlot) else null
+            val info=battleInfoLayout()
+            if(info.close.contains(x,y))return cmd("close-info")
+            current.enemies.firstOrNull{battleTargetBounds(it.slot).contains(x,y)&&battleTargetBounds(it.slot).h>=48*resources.displayMetrics.density}?.let{return cmd("info-target",it.slot)}
+            return when{info.detail.contains(x,y)->cmd("info-scroll",selectedBattleSlot)
+                info.list.contains(x,y)->cmd("info-list-scroll");else->null}
         }
         if(screen==BattlePresentation.Screen.RESULT)return if(l.result.contains(x,y))cmd("result") else null
         if(screen !in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))return null
@@ -417,10 +433,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(cmd.kind){
             "attack"->{selectedBattleSlot=cmd.slot?:return;attackBattle(selectedBattleSlot)}
             "escape"->escapeBattle()
-            "info"->{battleInfoOpen=true;battleInfoScroll=0f;battlePresentation.invalidateInput()}
+            "info"->{battleInfoOpen=true;battleInfoScroll=0f;battleInfoListScroll=0f;battlePresentation.invalidateInput()}
             "close-info"->{battleInfoOpen=false;battlePresentation.invalidateInput()}
             "info-target"->{selectedBattleSlot=cmd.slot?:return;battleInfoScroll=0f;battlePresentation.invalidateInput()}
-            "info-scroll"->Unit
+            "info-scroll","info-list-scroll"->Unit
             "result"->closeBattle()
             "attack-mode"->{battleNotice="点击存活敌人或对应信息条，攻击一次";battlePresentation.invalidateInput()}
             "magic"->{battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
@@ -438,7 +454,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     val y=e.getY(i)
                     if(hypot(e.getX(i)-g.x,y-g.y)>ViewConfiguration.get(context).scaledTouchSlop)g.cancelled=true
                     if(g.cancelled){
-                        if(battleInfoOpen)battleInfoScroll=max(0f,battleInfoScroll+g.lastY-y)
+                        if(battleInfoOpen){
+                            val info=battleInfoLayout()
+                            if(info.list.contains(g.x,g.y))battleInfoListScroll=(battleInfoListScroll+g.lastY-y).coerceIn(0f,info.maxScroll(battle?.enemies?.size?:0))
+                            else if(info.detail.contains(g.x,g.y))battleInfoScroll=max(0f,battleInfoScroll+g.lastY-y)
+                        }
                         else if(battlePresentation.screen==BattlePresentation.Screen.RESULT)battleResultScroll=max(0f,battleResultScroll+g.lastY-y)
                     };g.lastY=y}}}
             MotionEvent.ACTION_UP->{val g=battleGesture
@@ -1229,6 +1249,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun drawBattle(c:Canvas){
         val current=battle?:return;val l=battleLayout();val b=battleBox();val scale=b.w/256f
         val screen=battlePresentation.screen;val action=battlePresentation.action;val dp=resources.displayMetrics.density
+        if(battleInfoOpen){drawBattleInformation(c,current);return}
         c.drawColor(Color.BLACK);paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
         val horizon=if(current.enemies.any{it.definition.id in content.blackBattleEnemyIds})null else content.battleHorizons[world.mapId]?:content.battleHorizon
         horizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->c.drawBitmap(image,null,RectF(b.x,b.y,b.x+b.w,b.y+32*scale),paint)}
@@ -1280,23 +1301,30 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             touchText(c,text,Box(target.x+target.w/2,target.y+target.h*.4f,120*dp,1f),18f,if(action?.kind==BattleActionKind.HEAL)0xff72d3c5.toInt() else 0xffffb3a7.toInt())
         }
         if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
-        if(battleInfoOpen){
-            overlayPaint.color=0xf018252e.toInt();c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)
-            touchButton(c,l.closeInfo,"关闭信息")
-            touchText(c,"敌人信息 · 上下滑动",Box(l.arena.x+8*dp,l.arena.y+8*dp,l.closeInfo.x-l.arena.x-16*dp,1f),13f)
-            val enemy=current.enemies.firstOrNull{it.slot==selectedBattleSlot}?:current.enemies.first()
-            val infoBody=Box(l.arena.x+8*dp,l.arena.y+l.closeInfo.h+8*dp,l.arena.w-16*dp,max(1f,l.arena.h-l.closeInfo.h-16*dp))
-            c.save();c.clipRect(infoBody.x,infoBody.y,infoBody.x+infoBody.w,infoBody.y+infoBody.h)
-            var y=infoBody.y-battleInfoScroll
-            val lines=listOf(enemy.definition.name+" · 实例 ${enemy.slot+1}","HP ${battleVisibleHp(enemy.slot)}/${enemy.definition.hp}",
-                "攻击 ${enemy.definition.attack} · 防御 ${enemy.definition.defense}",
-                content.battle?.enemyAgility?.get(enemy.definition.id)?.let{"敏捷 $it"}?:"敏捷数据未接入",
-                if(enemy.definition.id in 4..7)"名称为有来源暂定；属性来自现有数据" else "HP/属性显示是移动端信息增强",
-                "点下方实例条查看；信息不消耗行动")
-            for(line in lines)y+=touchText(c,line,Box(infoBody.x,y,infoBody.w,1f),13f)+3*dp
-            c.restore()
-        }
         textPaint.color=Color.WHITE
+    }
+    private fun drawBattleInformation(c:Canvas,current:OpeningBattle){
+        val l=battleInfoLayout();val dp=resources.displayMetrics.density
+        c.drawColor(Color.BLACK)
+        touchText(c,"敌人信息",Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
+        touchText(c,"上下滑动查看 · 不消耗行动",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
+        touchButton(c,l.close,"关闭")
+        c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
+        for(enemy in current.enemies){val row=battleTargetBounds(enemy.slot)
+            overlayPaint.color=if(enemy.slot==selectedBattleSlot)0xff244d49.toInt() else 0xff18252e.toInt()
+            c.drawRect(row.x,row.y,row.x+row.w,row.y+row.h,overlayPaint)
+            touchText(c,enemy.definition.name+" ${enemy.slot+1}",Box(row.x+6*dp,row.y+4*dp,row.w-12*dp,1f),12f)
+            gauge(c,Box(row.x+6*dp,row.y+row.h-9*dp,row.w-12*dp,5*dp),battleVisibleHp(enemy.slot)?:0,enemy.definition.hp,0xffc55758.toInt())
+        };c.restore()
+        val enemy=current.enemies.firstOrNull{it.slot==selectedBattleSlot}?:current.enemies.first()
+        val lines=listOf(enemy.definition.name+" · 实例 ${enemy.slot+1}","HP ${battleVisibleHp(enemy.slot)}/${enemy.definition.hp}",
+            "攻击 ${enemy.definition.attack} · 防御 ${enemy.definition.defense}",
+            content.battle?.enemyAgility?.get(enemy.definition.id)?.let{"敏捷 $it"}?:"敏捷数据未接入",
+            if(enemy.definition.id in 4..7)"名称有来源暂定；属性来自现有数据" else "HP/属性显示为移动端信息增强")
+        c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
+        var y=l.detail.y-battleInfoScroll
+        for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
+        c.restore()
     }
     private fun drawDebug(c:Canvas,cam:Camera){
         val dp=resources.displayMetrics.density
