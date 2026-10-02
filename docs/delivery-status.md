@@ -598,11 +598,11 @@ artifacts/published/v22-public-verification.json、v22-workflow-verification.jso
 【未完成清单（累计；只有实际完成才移除）】
 此处为十类累计欠账的权威清单，按TOWN-02、TOUCH-UX-01与NANHAI-01实际交付更新；原有“本轮”及播放器/模拟器次数指TOWN-01历史验证，不是云端CI重跑。原历史条目可由Git追溯。
 
-1. TOWN-01：跨类别出售完整流程、原版已穿装备直接替换及满包副作用规则、左手/其余商品迁移；牛黃丸及其他药品实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用与补给闭环；战斗药草指令仍归第4类。TOUCH-UX-01已实现Android原卸下→装备等价原子封装，不替代原版直接替换/满包规则取证。
+1. TOWN-01：跨类别出售完整流程、原版已穿装备直接替换及满包副作用规则、左手/其余商品迁移；牛黃丸及其他药品实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用与补给闭环；MOBILE-PLAY-01已关闭当前单哪吒合法战斗药草指令；其他物品仍归第4类。TOUCH-UX-01已实现Android原卸下→装备等价原子封装，不替代原版直接替换/满包规则取证。
 2. 地图0：客栈收费/恢复/离店，住宅与特殊建筑、其余NPC/宝箱/剧情事件及条件；新室内原版BGM尚未核实并未启用。
 3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；NANHAI-01已关闭海底25/龙宫97必经连接、必要NPC、此Boss胜后及正常保存恢复；北部group4敌10/11行为7、两宫内宝箱奖励与后续连接/事件未开放。34格白名单已解除，三图往返不再欠账。
-4. BATTLE-01/02：完整暴击语义、多角色/其他分支行动顺序、法术/战斗物品/防御指令及其他Boss；NANHAI-01已恢复当前哪吒武器-1/0/1/2的已核命中/倍伤/敏捷排序、南海龙王物理/冰/逃跑与掉落；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
-5. 战斗展示：敌人1原名、完整武器/敌人动作、原版全字库、准确文字时序/框位/逐项奖励与调色差异；NES随机序列不与Android独立随机流等价；敌4–7名称及六神丸名称仍PROVISIONAL，南海龙王原静态图/位置已接入，不代表完整动作。
+4. BATTLE-01/02：完整暴击语义、多角色/其他分支行动顺序、法术/其他战斗物品/防御指令及其他Boss；MOBILE-PLAY-01已核并实现当前单存活哪吒药草确认消耗、敏捷排队、恢复50/上限与敌方继续行动，其他队员/死亡选择分支未扩展；NANHAI-01已恢复当前哪吒武器-1/0/1/2的已核命中/倍伤/敏捷排序、南海龙王物理/冰/逃跑与掉落；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
+5. 战斗展示：MOBILE-PLAY-01已接入派生EXP进度、敌人实例HP/详情、直接触屏及结构化行动/完整奖励摘要（移动端增强）；原版敌人1原名、完整武器/敌人动作、原版全字库、准确文字时序/框位/逐项奖励与调色差异；NES随机序列不与Android独立随机流等价；敌4–7名称及六神丸名称仍PROVISIONAL，南海龙王原静态图/位置已接入，不代表完整动作。
 6. AUDIO-LOG-01：历史超时根因UNCONFIRMED、四类短音效、精确循环边界、长时真机稳定性；本轮12播放器/6Activity生命周期无播放器错误，AVD底层音频HAL曾有I/O警告，不以状态测试证明整个设备音频无故障。新海底/龙宫BGM来自固定Reference，场景关联PROVISIONAL，目标原曲/精确循环仍未核；本轮声音NOT_RUN。
 7. 开局内容：开场旁白时机、NPC移动、部分首谈/复谈/事件flag时机；殷氏100金额已增加局部ROM写入证据，整事件仍未完全验证。后续角色入队/法术/剧情尚未迁移。
 8. 更新器/设备：一加13T原误报根因与覆盖升级、触控、声音、长时性能实机验收待反馈；模拟器不能代替。
@@ -970,5 +970,111 @@ skill位置: .agents/skills/fengshen-content-iteration/SKILL.md 与 fengshen-tou
 本轮关闭: 南海必经路线/剧情/Boss胜后子项；本段已核物理命中/倍率/排序、本场Boss行为与掉落。
 本轮新增/剩余: 宫内两宝箱奖励、北部group4行为/后续入口、新BGM精确映射/循环；完整动画/字库/规则、战斗药草、全村事件、真机与云端欠账均未关闭。
 下一真实节点最近3阻塞: ①后续海域真实连接/事件（数据/原版证据）；②group4敌10/11行为7（数据/代码）；③下一剧情战斗及必要指令/奖励（数据/代码/正常运行证据）。不自动开下一大区。
+
+END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: MOBILE-PLAY-01
+status: READY_FOR_REVIEW
+execution_kind: IMPLEMENTED
+
+【执行与基线】
+实际开始/结案记录时间：2026-10-02 03:34:55 / 06:46:25 UTC，约3小时12分钟，在5小时预算内提前达标；未扩展下一海域。
+仓库：/workspace/game-fengshen，main。起始f590cf2127cf1b052467b8c3a1ffd0d4353503c4，开工无未提交修改；没有reset、clean、清档或覆盖未知工作。
+实际基线：v25/0.8.5-nanhai-01/c13，APK来源d87bb7540018913ad17d3865264924add6fa2580；最终APK来源f9d9ba888e078cc32334bf64ad57ae1822b9402b。后续结案/基底指针提交不改变APK来源。
+新增：派生EXP进度、独立敌人HP/信息、一次点怪攻击、结构化行动反馈、完整普通奖励自动返回，以及有原版证据的当前单哪吒战斗药草。
+保留历史成果：8地图、三店、地图药草、装备替换、直接触控、INPUT-01、南海NPC/Boss/胜后一次性状态、存档/更新器/云存档/音频/诊断；不再次算新增。
+
+【实际巡检】
+原check-runtime.ps1与受保护android-publish.yml inspect，开工36960836679：03:35:56Z，可信25/24，1276事件（973/303），0测试，普通真机2会话/模拟器0，errors={}、清理失败0。
+实际检查点36965583433（04:41）、36968683225（05:23）、36972865447（06:18），可信版本仍25/24；分别1919/4335/4409事件，0测试、普通真机2/模拟器0、errors={}、清理0。开工runner原任务头仍NANHAI-01，如实保留，不伪改回执。
+正式发布36974490907：preflight 06:39:35Z，25/24，4409事件（25=4106/24=303）、0测试、普通真机2/模拟器0；postflight 06:39:52Z，26/25，4106事件全来自25、0测试、普通真机1/模拟器0，errors={}、清理0，旧24日志按两版保留移出。
+上传观察区间10-01 20:25:28—10-02 05:24:13；没有发现该上传窗口的确定崩溃、丢档或重复结算。v26无样本，不能拿25日志证明26健康。历史音频超时仍UNCONFIRMED，没有新的cause/操作/线程样本，不宣称已修复。真机日志不等于本轮真机验收。
+本轮实际修复：2倍字体战斗药品详情高度过小；测试观察/跨线程中间态与run_id类型比较修正，后者不冒充游戏故障。未吞异常、改级别或删日志。
+
+【成长信息】
+HUD紧凑EXP条、角色页显示当前/下一等级、本级经验、距下级与累计EXP；共同读取升级结算GrowthRow。首级T(1)=0、T(2)=12，不用EXP13观测值作为阈值；进度(E-T(L))/(T(L+1)-T(L))。
+当前表到10级，未接入下级显示“下一等级数据未接入”，不伪装MAX/100%。重复/逆序阈值、等级/EXP不一致做明确诊断，不改旧档；没有第二份持久化经验。
+正常Lv2—8升级及奖励/HUD/详情/冷启一致：最终Lv8累计844，本级142/308，距下级166；缺数据/异常/跨多级用隔离纯测试覆盖。
+
+【敌人、触控与行动】
+普通敌人与南海龙王常驻名称/独立HP条/选择行动状态；battleID+slot绑定实例，同种多只各自HP/命中区域。独立信息入口显示已有HP/攻/防/敏，不消耗回合，不提前暴露后续行动。
+敌人1仍“原版敌人1”，4—7原暂定名称保留；不编造等级/弱点。HP/属性公开为授权移动端增强，不声称原版默认公开。
+探索摇杆/A/B保持；战斗使用自身安全窗口隐藏地图按钮。等待指令时默认点存活敌人一次提交攻击；逃跑按钮一次提交原规则；药品先选再点“使用于哪吒”，法术未实现明确禁用。每次输入恢复默认攻击，不复用高消耗指令。
+DOWN候选与UP验证绑定battleID/revision/指令/slot/物品/目标；拖移、多点、CANCEL、后台、换面板清除，动画锁输入；重复UP不重复回合，独立下一次点击仍可操作。
+BattleActionStep新增类型/行动者目标/HP前后差值，当前步快照控制显示；攻击450ms、冰650ms、伤害/恢复500ms、未命中350ms等集中配置，以时间推进。呈现不抽随机数、不改HP、不结算，前后台暂停不改变规则。
+普通胜利完整展示奖励、累计EXP变化、升级与全部物品，短暂停留自动返回；去除take(3)截断。Boss保留必要结果确认与胜后对白，已有胜标/待对白存档与一次结算不跳过。保存失败不报成功。
+
+【战斗药草：附加目标】
+状态PASS，限当前单存活哪吒的真实已启用战斗。稳定ID rom.medicine.0 / 原版0；规则来自匹配ROM与局部受控原版实验，不直接套地图调用。
+确认合法使用时先扣1份、按原敏捷排序轮到玩家时恢复50并maxHp截断，敌方正常继续；满HP仍消耗。取消、无库存、App无合法存活目标不提交/不扣数；若确认后敌方先击倒玩家，已消耗、不恢复不退款。恢复不额外读随机数。
+原版范围：9:9349/9365→9384、9394立即数32h、A026恢复上限、BB9F—BBC9确认数量处理。8组新受控实验32文件hash核验，伤/近满/满血/玩家先行/取消/无库存/先被击倒等分开记录；原南海正常取证仅作为已存在证据，不冒充本轮录制。
+本轮Android正常Boss中实际选药、明确提交、+1封顶到57/57、数量减1，冰/物理行动继续；受控+50、满HP、取消、无物品、重复提交/存档另验。
+战斗pending消耗只在统一结算与HP/背包保存一起提交，不另存第二背包；战斗中异常退出沿用原战前检查点恢复HP与物品，不提供逐行动续战。强行在确认后把唯一角色改死的原版受控实验不等于正常可选择死亡目标，多队员/其他药品仍未扩展。
+
+【资源、规则与实现】
+复用可信v25 APK和既有匹配ROM缓存，完整ROM SHA256 f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25；无重新下载全部ROM/图集或迁1958历史文件。来源固定公开项目/许可UNKNOWN沿用原provenance，hash一致不证明授权；ROM/私有原片未进入公开Git/artifact。
+新增窄provenance game-data/provenance/mobile-play01-battle-herb.json，原版探针tools/rom-extractor/probe-mobile-battle-herb.lua；复用Reader/原回合、HerbUse定义、ContentLoader、GameState/SaveSnapshot与SurfaceView/Canvas，不新建战斗引擎/背包/资源平台。
+代码主要MainActivity.kt、Battle.kt、MobilePlay.kt；相关TouchTest/MobilePlayTest/BattleHerbTest、原ci/run-town02-runtime.sh、record_app_audio.py和原两workflow/审核脚本最小门禁/诊断适配。原价格、费用、伤害、概率、槽位、地图门槛不改，未新增必须补给的前置。
+内容没有定义/素材变更，c13及59项（58内容文件+manifest）与v25逐字节一致。原c12不可变导出基底→原export_from_base恢复c13流程不变；实际覆盖基底另固定v25。发布后runtimeBaseline更新不可变v26并执行原PYBASE校验块PASS；不能混淆两种基底。
+
+【验收】
+| 检查点 | 结果与范围 |
+|---|---|
+| C1 成长 | PASS：真实升级、HUD/详情/完整奖励/冷启一致；阈值、跨级、缺数据/异常纯测试通过。 |
+| C2 敌人 | PASS：同种多敌与Boss独立实例/名称/HP/信息，步骤快照不提前出最终血量。 |
+| C3 触屏 | PASS：正常单指一次点怪、信息不耗行动、Boss逃跑失败；取消/拖动/多点/重复UP隔离断言通过。 |
+| C4 反馈 | PASS：结构化受击/冰/未命中/恢复、完整普通奖励自动退出，Boss必要对白保留且不重奖。 |
+| C5 存档与内容 | PASS：最终正常新游戏125战/地图药草20次/战斗药草1次、8地图至龙王胜后，外部force-stop/重启继续；v25→v26 install -r覆盖旧档及原回归通过。 |
+| C6 巡检 | PASS（上传覆盖范围）：本轮真实开工/检查点/发布前后，错误{}；v26无样本，旧音频未解决。 |
+| C7 同产物与证据 | PASS：同f9来源/审核APK/签名/59内容校验及公网完整字节；真实原片和三档字体截图。 |
+| C8 战斗药草 | PASS（上述单角色范围）：原版局部规则、受控边界与正常Boss使用实跑；不关闭其他物品/多队员欠账。 |
+
+实际环境：原Actions API30 AOSP KVM，普通流程960×540；手机尺寸实际截图2640×1216、GameView2640×1080、density3，fontScale 1/1.3/2；按钮/可点击信息≥48dp，2倍字药品首三关键行可见、说明可滚动且不改状态。不是所有窄窗口验收。
+实际命令：原build-ci.ps1，Gradle wrapper testReleaseUnitTest/assembleRelease/assembleReleaseAndroidTest；本地bash gradlew :app:testDebugUnitTest :app:assembleDebugAndroidTest --offline；原ci/run-town02-runtime.sh；原record_app_audio.py --silent与实际am instrument、install -r、force-stop。
+最终release JVM82/82、相关Python12+5+7=24/24，均0失败/错误/跳过；最终Android选定34次测试执行/30种方法，包含字体重复、Content12方法、两条正常录屏/外部冷启，全部通过。审批保护隔离fixture22/22单列，不是App测试。无凭据真实账号云恢复NOT_RUN；一加13T与声音/长时性能NOT_RUN。
+早期失败如实保留：run_id字符串/数字比较安装前失败、自动普通结算后测试跨线程null、Boss RESULT未提交时读取金钱；对应候选均未发布，断言未削弱。完整正常南海在旧5a候选130战通过后因字体2倍药品可读性不合格未发布；最终f9修复后重新完整125战通过，旧产物结果不背书新APK，重复路线不合计为最终场次。
+
+【可查看的真实证据】
+[最终构建/runtime 36971336254](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254)。
+[fengshen-signed-apk](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11211697129)：fengshen-remake-v26-release.apk；[单元XML](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11211263015)。
+[fengshen-mobile-play-checkpoints](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11213035860)：三档手机字体/物品/角色/多敌/Boss真实截图、隔离仪器txt。
+[fengshen-nanhai-checkpoints](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11213061411)：正常路线/升级/Boss/用药/胜后/冷启截图及normal-index/recording-index。
+[最终Boss与冷启原片](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11213020796)、[起步原片](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11212761137)、[完整未剪辑运行证据](https://github.com/antpan5608-san/game-fengshen/actions/runs/36971336254/artifacts/11212976542)。证据artifact14天，签名APK30天；完整162MB超过当前工具32MiB传输上限，小型片/索引独立下载核验，未绕代理。
+原片hash与位置：
+- nanhai-ci-normal-00.mp4，179.995秒，起步/普通战斗成长；SHA256 5684602879ca2984cabbdff89593679c1a8e886ac0a4d4d68482beef7d3891cd。
+- nanhai-ci-normal-08.mp4，106.931秒；约20.2秒龙王对话/21.7逃跑失败/23.5用药恢复/26.0冰/46.6胜利/106.0下一可操作状态；SHA256 e192e123cfb68b30c6236a33db307ae1923e7fe0e6e81c965895bbf3469549cf。
+- nanhai-ci-cold-restart.mp4，22.261秒，外部停进程/真实重启/继续；SHA256 7ecfeeac1043dae8437f51072a8d47c38a3f922745b1e8218f2fd953cea141c9。
+正常主线1552.24秒，共125战；每段Android uptime/只读存档边界和事件索引衔接，分段拉取有短间隙。主线无传送/HP等级或库存修改/强制胜利；原版受控与Android fixture分开。原片实际无音轨，声音NOT_RUN。
+至少五张正常实际截图（上述nanhai-checkpoints内，全部已查看）：
+- nanhai-mobile-upgrade-2.png：真实升级HUD；SHA256 9323a8deea52d170bf29dc87b643b4c69fa6f074f96b4b1ed8ce2a914b78da62。
+- nanhai-mobile-growth-detail-8.png：Lv8本级1/308、距下级307的真实阶段；SHA256 d61263299cf4042ddee06ce9b294efa40a60bb3494bbc2fc6d7ba0477d54b317。
+- nanhai-mobile-enemy-information.png：同种多实例信息、不耗行动；SHA256 caad7bf570ed5eac0343ca8125ade05e499d7b9d7b1df9ce25fdd490e9975170。
+- nanhai-mobile-ordinary-reward.png：完整普通奖励并自动继续；SHA256 05fd0a1cd259515b2b46b8f0d7b7545db187e9508b083ef66cb418e948beef18。
+- nanhai-mobile-battle-herb-heal.png：正常Boss实际药草封顶；SHA256 cc3b26c1eea3dfa2a5a8f4c5da629bf89489733772d854d3b9a31a1e31c859e1。
+- nanhai-boss-ice.png：真实冰行动/当前步骤HP；SHA256 9e009b27b6806355553cebce85da297e9f904b8a2ea1a12a3e87db52dc87ca3c。
+- nanhai-cold-restored-continue.png：冷启继续/EXP142/308；SHA256 ffdb0510af4d235e65d8e66af38f379f3472e6dd432f52b43e459a349eaba88e。
+
+【构建与发布】
+APK：v26 / 0.8.6-mobile-play-01，12830976字节；包名org.fengshen.dev。
+来源f9d9ba888e078cc32334bf64ad57ae1822b9402b；构建/runtime36971336254，自动审批/正式发布[36974490907](https://github.com/antpan5608-san/game-fengshen/actions/runs/36974490907)，approve/publish均success。
+正式下载：[v26 APK](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=26)。可用App更新按钮覆盖；手动下载保存为.apk。公网对象后续可能覆盖，不可变来源是上述signed artifact。
+APK SHA256：54859450bea3b20ce8c684164b9e325fce832326baf7093686e27a89ad58deb4。
+证书SHA256：5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6。
+内容opening-segment-001-c13 / manifest SHA256 badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4，59项（58内容文件+manifest）与v25字节一致。
+发布状态PUBLISHED_AND_VERIFIED；2026-10-02 06:39:40.2462603Z。原同main/同审核APK/同签名/自动reviewer保护、完整公网字节/hash/内容复核和发布后巡检全部通过；仅覆盖既有Fengshen两个对象，Language不改、真实云存档不改。模拟器v25→26覆盖保留位置/钱/角色/库存/装备/flag；一加13T NOT_RUN。
+
+【复用与skill】
+只增量更新两个现有skill。touch-ux沉淀同表经验、实例快照、默认点敌攻击与药品明确提交差异、revision取消、普通/Boss结算分开，以及实际2倍字体药品可视行/滚动验证。
+content-iteration沉淀升级基底与导出基底分开、真实原PYBASE校验、限定失败仪器日志获取、局部药草探针与原KVM主线/冷启、原片hash/metadata轨检查；没有第二套构建/素材/日志系统。
+skill显式文件读取/结构检查及8类人工案例复核完成；自动显式CLI/隐式匹配未复测，历史401限制保留，不写自动触发PASS、不改全局认证。现有合理商店/装备PRESERVE，音频/ROM出口不扩UI，自动卖全部ASK，无规则药效NEEDS_RULE_EVIDENCE。不编造提速比例。
+
+【累计欠账】
+权威：本文件最新“未完成清单（累计；只有实际完成才移除）”，十类仍保留；历史旧清单/交付不重写成当前状态。
+真正关闭：本轮移动端成长/敌人HP信息/直接战斗触屏/行动奖励反馈，以及当前单哪吒战斗药草子项。完整原版字库/敌人1原名/动作/调色/NES随机、其他物品/法术/防御、多队员、卡带已有手动存档后战败加载等未关闭。
+仍待：一加13T覆盖安装/操作/声音/长时性能、真实账号多设备恢复、未知窄窗口、历史音频根因；不借模拟器或旧日志标完成。
+下一原版节点最多3阻塞：后续海域真实连接/事件（数据/原版证据）；北部group4敌10/11行为7（数据/代码）；下一剧情战斗必要指令/奖励（数据/代码/正常App证据）。本轮完成即停止，不自动推进。
 
 END_DELIVERY_REPORT

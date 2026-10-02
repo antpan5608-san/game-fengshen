@@ -93,3 +93,7 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 运行升级基底可以与内容导出基底不同，原ci/content-source.json的runtimeBaseline固定实际已发布APK；receipt.buildRunID可能是字符串，仅将编号统一成字符串比较，来源/hash/证书/manifest照常严格检查。实际原校验块通过，错误来源/编号/版本/内容fixture仍拒绝。
 
 完整App录像artifact可能超过当前32MiB传输限制，直接GH下载也曾实际403；不要移除代理或反复下载。原android-publish.yml的inspect可带runtime_evidence_run_id读取同仓库main原build的完成run，只抽取受限大小的隔离仪器txt到fengshen-runtime-assertion-diagnostics并继续真实巡检；已实际取回缺失的失败断言。此入口不上传APK、不登记版本、不清理数据，不将失败artifact作为可信内容基底。之后原录屏器会在正常断言失败时输出对应日志尾部，原小型checkpoint artifact保留txt；原始生产客户端日志不进入这些产物。
+
+原runtime已实际完成单指点怪、信息不耗行动、动作HP快照、正常成长与本场战斗药草，再跑正常新游戏至龙王胜后及外部冷启。相关局部fixture与主线证据分开；重复字体执行次数与独立方法数分开。局部取证复用匹配缓存和probe-mobile-battle-herb.lua，需已有受控存档及FENGSHEN_ROOT/BATTLE_HERB_CASE；不可把受控实验冒充正常原版游玩。
+
+发布成功后才更新runtimeBaseline为实际审核APK，并对该APK执行原run-town02-runtime.sh的PYBASE校验块；iteration.base仍服务原确定性内容导出，不一起盲改。原片可能包含Android metadata数据轨，ffprobe核对实际video与audio流，不能误将数据轨当损坏视频。用原片SHA、uptime事件索引、外部冷启片及GitHub artifact入口支持交付；静音原片依然声音NOT_RUN。

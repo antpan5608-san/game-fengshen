@@ -60,4 +60,6 @@ description: 在本项目被授权的Android交互任务中，遇到物品/装�
 
 GrowthRow.level为达到等级、threshold为累计EXP，HUD/详情只派生(E-T(L))/(T(L+1)-T(L))；缺下一级不写MAX，异常诊断不改存档。MobilePlayTest已实际覆盖门槛、跨级、缺数据、同种实例/快照及1/1.3/2字体几何。战斗默认点存活实例攻击，独立信息不耗行动，药品列表选中不消耗；各手势绑定battleID/slot或物品/目标ID及revision，滚动/CANCEL/多点取消，动作期间锁指令。BattleActionStep表示当前阶段HP，最终战斗状态不提前显示。普通奖励自动返回，Boss保留胜后剧情确认。
 
-真实KVM在旧档覆盖、选择取消/重复UP、商店/装备/药草和正常升级到7级已执行；完整候选必须另通过当前任务最终门禁。普通结算自动关闭后，仪器测试曾跨线程先读layer再强转battle而NullPointerException；在UI线程原子观察两者，保留路线/存档断言，不把测试观察错误写客户端崩溃。字体截图必须人工看完，几何PASS不能替代可读性。
+原KVM已执行同产物旧档覆盖、取消/重复UP、商店/装备/地图与战斗药草、正常升级及连续南海胜后冷启；完整候选必须通过当前任务最终门禁。普通结算自动关闭后，仪器测试曾跨线程先读layer再强转battle而NullPointerException；在UI线程原子观察两者。RESULT与真实提交可能处于同一UI回调的中间态，观察需同时确认battleCommitted，保留经济/剧情断言，不把测试观察错误写客户端崩溃。
+
+字体截图必须人工看完，几何PASS不能替代可读性。已有medicine面板不使用tab时移除空占位；目标HP、恢复/上限及满血消耗三行保证可见，行动顺序/取消说明可滚动，动作按钮独立。testMobileBattlePhoneSizeAndLargeFont实际在1/1.3/2字体核验可视高度、滚动不扣物品/HP及48dp命中；仅证明记录的屏幕/有效窗口，不能推断所有窄屏、真机或声音已通过。

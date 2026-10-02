@@ -17,10 +17,10 @@
     "provenance": "game-data/provenance/nanhai01.json"
   },
   "runtimeBaseline": {
-    "buildRunId": 36950387932,
-    "sourceCommit": "d87bb7540018913ad17d3865264924add6fa2580",
-    "versionCode": 25,
-    "apkSha256": "19c53eae0f804f86cfcf796b7c72f63459f946feaad54a8f7bef7e5b9ccf8280",
+    "buildRunId": 36971336254,
+    "sourceCommit": "f9d9ba888e078cc32334bf64ad57ae1822b9402b",
+    "versionCode": 26,
+    "apkSha256": "54859450bea3b20ce8c684164b9e325fce832326baf7093686e27a89ad58deb4",
     "contentVersion": "opening-segment-001-c13",
     "manifestSha256": "badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4"
   }

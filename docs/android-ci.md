@@ -132,3 +132,7 @@ v24/0.8.4-touch-ux-01已发布，来源ef29edb9192bb299ed493b767c52b23c450b2094�
 ## 已验证的连续区段门禁
 
 仍只有原构建/发布两份workflow。原runtime在隔离AOSP KVM运行正常连续路线/Boss/胜后离宫再入与实际force-stop冷启；check-reviewed-apk.ps1要求同来源和同产物的nanhaiNormalRoute/nanhaiBossVictory/nanhaiOnceAndColdRestart通过。原record_app_audio.py保留未剪辑分段及只读world边界；完整原片在原runtime artifact，小型checkpoints/entry/final副本便于核查。静音、手机wm尺寸和历史真机日志不能写成声音/实机验收。当前版本/hash/run_id以current-task和交付记录为准。
+
+## MOBILE-PLAY-01 已验收接续
+
+实际正式v26/0.8.6-mobile-play-01，APK来源f9d9ba888e078cc32334bf64ad57ae1822b9402b；构建/runtime36971336254、审批/发布36974490907成功，独立公网完整APK/签名/内容复核通过。c13无素材或定义变化；content-source的iteration.base继续原c12确定性导出，runtimeBaseline发布后固定不可变v26供下轮覆盖，并已对最终APK执行原PYBASE校验块。完整C1—C8、原片、计数及发布后v26零样本限制见delivery-status最后报告。后续文档提交不改变实际APK来源；不因文档/skill变化再发布游戏。
