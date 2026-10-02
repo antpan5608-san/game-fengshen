@@ -92,7 +92,27 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleTouchRevision=0
     private val battleKeyRevisions=mutableMapOf<Int,Int>()
     private var selectedBattleSlot=0
-    private val battleTouch=mutableMapOf<Int,Int>()
+    private val battleTouch=mutableMapOf<Int,Int>() // retained private name for historical fixture compatibility
+    private var battleGesture:BattleTouchGesture?=null
+    private var battleBlocked=false
+    private var battleInfoOpen=false
+    private var battleInfoScroll=0f
+    private var battleResultScroll=0f
+    private var battleNotice=""
+    private var battleResultBefore:CharacterState?=null
+    private var battleResultLines:List<String> = emptyList()
+    private val diagnosedExperience=mutableSetOf<String>()
+    fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growth?:emptyList(),content.initialPlayer.id)
+    private fun diagnoseExperience(){for(hero in characters){val progress=growthProgress(hero)
+        if(progress.status==ExperienceProgress.Status.INVALID){val key="${hero.id}:${hero.level}:${hero.experience}:${progress.reason}"
+            if(diagnosedExperience.add(key))Diagnostics.record("experience_state_inconsistent","ERROR",JSONObject()
+                .put("character",hero.id).put("level",hero.level).put("experience",hero.experience).put("reason",progress.reason))}}}
+    private fun clearBattleGesture(){battleGesture=null;battleBlocked=false;battleTouch.clear()}
+    fun battleCommandBounds(index:Int)=battleLayout().commands[index]
+    fun battleTargetBounds(slot:Int)=battle?.enemies?.indexOfFirst{it.slot==slot}?.let{battleLayout().enemies.getOrNull(it)}?:Box(0f,0f,0f,0f)
+    fun battleInfoCloseBounds()=battleLayout().closeInfo
+    fun battleVisibleHp(slot:Int)=battlePresentation.action?.enemyHp?.get(slot)?:battle?.enemies?.firstOrNull{it.slot==slot}?.hp
+    fun battleResultBounds()=battleLayout().result
     private var dialogueNpc:StoryNpc?=null
     private var dialogueText:StoryText?=null
     private var dialoguePage=0
@@ -103,8 +123,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}}
+    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
     var layer=Layer.MAP;private set
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
@@ -169,7 +189,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         inventory=migrated.filterValues{it>0};flags=snapshot.flags;money=snapshot.money
         characterPage=0;selectedItemId=null;candidateSlot=null;resetModalSelection()
-        savedSnapshot="";persistState();return true
+        savedSnapshot="";diagnoseExperience();persistState();return true
     }
     fun restorePersisted(){
         val encoded=savePrefs.getString("saveJson",null)
@@ -196,7 +216,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -204,7 +224,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(active&&focused&&layer==Layer.MAP)clock.advance(time){
             if(layer==Layer.MAP){world.tickIntent(input.movementIntent());processCompletedStep()}
         } else if(active&&focused&&layer==Layer.BATTLE)clock.advance(time){
-            if(battlePresentation.tick(16))finishBattlePresentation()
+            if(!battleInfoOpen){
+                if(battlePresentation.tick(16))finishBattlePresentation()
+                if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&storyBattle==null&&
+                    !battleSavePending&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
+            }
         } else clock.reset()
         if(layoutMapId!=world.mapId){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId}
         if(world.remaining==0)persistState()
@@ -234,7 +258,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             equipmentBonus(characters.first(),"rightHand"),equipmentBonus(characters.first(),"body"))
         selectedBattleSlot=group.members.first().slot
         battleMessage="遭遇敌群 ${group.id} · 选择目标后攻击"
-        battleCommitted=false;battlePresentation=BattlePresentation();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
@@ -246,16 +270,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     fun finishForLifecycle(){finishPendingStep()}
     private fun attackBattle(slot:Int){
-        if(battlePresentation.screen!=BattlePresentation.Screen.TARGET)return
+        if(battleInfoOpen||battlePresentation.screen !in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))return
         val current=battle?:return
         val turn=current.attack(slot){battleRandom.nextInt(256)}?:return
-        input.clear();battleTouch.clear();battlePresentation.present(turn)
+        input.clear();clearBattleGesture();battleNotice="";battlePresentation.present(turn)
         audio.effect("attack")
     }
     private fun escapeBattle(){
-        if(battlePresentation.screen!=BattlePresentation.Screen.COMMAND)return
+        if(battleInfoOpen||battlePresentation.screen!=BattlePresentation.Screen.COMMAND)return
         val turn=battle?.escape{battleRandom.nextInt(256)}?:return
-        input.clear();battleTouch.clear();battlePresentation.present(turn)
+        input.clear();clearBattleGesture();battleNotice="";battlePresentation.present(turn)
     }
     private fun finishBattlePresentation(){
         val current=battle?:return
@@ -265,6 +289,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battleCommitted)return
         when(current.phase){
             BattlePhase.VICTORY->{
+                battleResultBefore=current.hero
                 val reward=current.settle(money)?:return
                 characters=characters.toMutableList().also{it[0]=reward.character};money=reward.money
                 val loot=BattleAcquisition.apply(inventory,current.enemies.mapNotNull{it.definition.loot},
@@ -278,6 +303,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     (if(reward.levels.isEmpty())"" else "  等级 ${reward.levels.last()}")+
                     loot.acquired.joinToString(""){"  获得 ${content.itemNames[it]?:it}"}+
                     if(loot.skipped.isEmpty())"" else "  物品数量/格数已满，掉落未取得"
+                battleResultLines=listOf("胜利！", "经验 +${reward.experience} · 银两 +${current.enemies.sumOf{it.definition.moneyReward}}",
+                    "累计EXP ${battleResultBefore!!.experience} → ${reward.character.experience}",
+                    if(reward.levels.isEmpty())"等级 ${reward.character.level}" else "升级 ${battleResultBefore!!.level} → ${reward.character.level}",
+                    growthProgress(reward.character).summary)+loot.acquired.map{"获得 ${content.itemNames[it]?:it}"}+
+                    if(loot.skipped.isEmpty())emptyList() else listOf("物品数量/格数已满，掉落未取得")
+                diagnoseExperience()
                 audio.scene(world.mapId,"victory")
                 Diagnostics.record("reward_settlement",details=JSONObject().put("battleID",battleID).put("settlementID",battleID+":reward")
                     .put("experience",reward.experience).put("money",current.enemies.sumOf{it.definition.moneyReward}))
@@ -302,14 +333,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         Diagnostics.record("battle_end",details=JSONObject().put("battleID",battleID).put("groupId",current.group.id)
             .put("reason",current.phase.name.lowercase()))
         battleSavePending=!persistStateResult()
-        if(battleSavePending)battleMessage+="  保存失败，请重试；尚不能继续"
+        if(battleResultLines.isEmpty())battleResultLines=listOf(battleMessage)
+        if(battleSavePending){battleMessage+="  保存失败，请重试；尚不能继续";battleResultLines=battleResultLines+"保存失败，请点击重试"}
     }
+    private fun ordinaryResultDuration()=maxOf(2200L,battleResultLines.sumOf{it.length}.toLong()*45L)
     private fun closeBattle(){
+        if(battleInfoOpen){battleInfoOpen=false;battlePresentation.invalidateInput();clearBattleGesture();return}
         if(battlePresentation.screen==BattlePresentation.Screen.TARGET){battlePresentation.back();battleTouch.clear();return}
         if(battlePresentation.screen!=BattlePresentation.Screen.RESULT||!battleCommitted)return
         if(battleSavePending){battleSavePending=!persistStateResult();if(battleSavePending)return}
         val story=storyBattle;storyBattle=null
-        battle=null;battleTouch.clear();layer=Layer.MAP;input.clear();clock.reset()
+        battle=null;clearBattleGesture();layer=Layer.MAP;input.clear();clock.reset()
         audio.scene(world.mapId)
         if(story!=null&&flags[story.flagId+".dialogue.pending"]==true){
             val npc=content.npcs.first{it.id==story.npcId}
@@ -345,39 +379,73 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return row.takeIf{it in menuChoices.indices && y>=b.y+b.h*.22f && y<b.y+b.h*.94f}
     }
     private fun menuCloseBox():Box {val b=menuBox();val d=min(42*resources.displayMetrics.density,b.h*.19f);return Box(b.x+b.w-d-8*resources.displayMetrics.density,b.y+6*resources.displayMetrics.density,d,d)}
+    private fun battleLayout()=battleTouchLayout(ui.safe,resources.displayMetrics.density,
+        resources.configuration.fontScale,battle?.enemies?.size?:1)
     private fun battleBox():Box {
-        val thumbLimit=2*(ui.buttons.getValue(Key.B).x-8*resources.displayMetrics.density-ui.safe.x-ui.safe.w/2)/256f
-        val scale=min(min(ui.safe.w/256f,ui.safe.h/240f),thumbLimit.coerceAtLeast(ui.safe.w*.35f/256f))
-        return Box(ui.safe.x+(ui.safe.w-256*scale)/2,ui.safe.y+(ui.safe.h-240*scale)/2,256*scale,240*scale)
+        val a=battleLayout().arena;val scale=min(a.w/256f,a.h/132f)
+        return Box(a.x+(a.w-256*scale)/2,a.y,256*scale,240*scale)
     }
     private fun battleRegion(x:Float,y:Float,w:Float,h:Float):Box {
         val b=battleBox();val scale=b.w/256f
         return Box(b.x+x*scale,b.y+y*scale,w*scale,h*scale)
     }
     private fun battleEnemyBox(enemy:BattleEnemy):Box {
-        val graphic=content.enemyGraphics[enemy.definition.id]
-        val origin=content.enemyOrigins[enemy.definition.id]
+        val graphic=content.enemyGraphics[enemy.definition.id];val origin=content.enemyOrigins[enemy.definition.id]
         return battleRegion(origin?.first?.toFloat()?: (16f+32*enemy.slot),origin?.second?.toFloat()?:72f,
             (graphic?.width?:32).toFloat(),(graphic?.height?:40).toFloat())
     }
-    private fun battleAction(x:Float,y:Float):Int? {
-        val current=battle?:return null;val screen=battlePresentation.screen
-        if(screen in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))return null
-        if(ui.buttons.getValue(Key.A).contains(x,y))return 200
-        if(screen==BattlePresentation.Screen.TARGET&&ui.buttons.getValue(Key.B).contains(x,y))return 201
-        if(screen==BattlePresentation.Screen.RESULT)return if(battleRegion(10f,76f,228f,74f).contains(x,y))200 else null
-        if(screen==BattlePresentation.Screen.COMMAND){
-            return listOf(0,4).firstOrNull{battleRegion(12f,150f+it*13,64f,13f).contains(x,y)}?.plus(100)
+    private fun battleHit(x:Float,y:Float):BattleTouchCommand? {
+        val current=battle?:return null;val screen=battlePresentation.screen;val l=battleLayout()
+        fun cmd(kind:String,slot:Int?=null)=BattleTouchCommand(battleID,battlePresentation.revision,kind,slot)
+        if(battleInfoOpen){
+            if(l.closeInfo.contains(x,y))return cmd("close-info")
+            current.enemies.firstOrNull{battleTargetBounds(it.slot).contains(x,y)}?.let{return cmd("info-target",it.slot)}
+            return if(l.arena.contains(x,y))cmd("info-scroll",selectedBattleSlot) else null
         }
-        if(screen==BattlePresentation.Screen.TARGET){
-            // Independent slots even when graphics overlap. Pick the nearest live instance center.
-            return current.enemies.filter{it.hp>0&&battleEnemyBox(it).contains(x,y)}
-                .minByOrNull{abs(x-(battleEnemyBox(it).x+battleEnemyBox(it).w/2))}?.slot
-                ?: current.enemies.filter{it.hp>0}.firstOrNull{enemy->
-                    val i=current.enemies.filter{it.hp>0}.indexOf(enemy)
-                    battleRegion(14f,151f+i*9,218f,9f).contains(x,y)}?.slot
+        if(screen==BattlePresentation.Screen.RESULT)return if(l.result.contains(x,y))cmd("result") else null
+        if(screen !in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))return null
+        l.commands.indexOfFirst{it.contains(x,y)}.takeIf{it>=0}?.let{index->return cmd(listOf("attack-mode","magic","items","escape","info")[index])}
+        current.enemies.firstOrNull{it.hp>0&&battleTargetBounds(it.slot).contains(x,y)}?.let{return cmd("attack",it.slot)}
+        // Overlapping original graphics have a separate non-overlapping >=48dp instance row above commands.
+        val hit=current.enemies.filter{it.hp>0&&battleEnemyBox(it).contains(x,y)}
+        return if(hit.size==1&&battleEnemyBox(hit.single()).w>=48*resources.displayMetrics.density&&
+            battleEnemyBox(hit.single()).h>=48*resources.displayMetrics.density)cmd("attack",hit.single().slot) else null
+    }
+    private fun submitBattle(cmd:BattleTouchCommand){
+        if(cmd.battleId!=battleID||cmd.revision!=battlePresentation.revision)return
+        clearBattleGesture()
+        when(cmd.kind){
+            "attack"->{selectedBattleSlot=cmd.slot?:return;attackBattle(selectedBattleSlot)}
+            "escape"->escapeBattle()
+            "info"->{battleInfoOpen=true;battleInfoScroll=0f;battlePresentation.invalidateInput()}
+            "close-info"->{battleInfoOpen=false;battlePresentation.invalidateInput()}
+            "info-target"->{selectedBattleSlot=cmd.slot?:return;battleInfoScroll=0f;battlePresentation.invalidateInput()}
+            "info-scroll"->Unit
+            "result"->closeBattle()
+            "attack-mode"->{battleNotice="点击存活敌人或对应信息条，攻击一次";battlePresentation.invalidateInput()}
+            "magic"->{battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
+            "items"->{battleNotice=if((inventory[HerbUse.ID]?:0)>0)"药草×${inventory[HerbUse.ID]}：战斗规则尚未接入；地图使用保留" else "当前无药草库存；战斗物品逻辑尚未接入";battlePresentation.invalidateInput()}
         }
-        return null
+    }
+    private fun battleTouchEvent(e:MotionEvent):Boolean {
+        input.clear()
+        if(e.actionMasked==MotionEvent.ACTION_CANCEL||!active||!focused){clearBattleGesture();return true}
+        when(e.actionMasked){
+            MotionEvent.ACTION_DOWN->{clearBattleGesture();battleHit(e.x,e.y)?.let{battleGesture=BattleTouchGesture(e.getPointerId(0),e.x,e.y,it)}}
+            MotionEvent.ACTION_POINTER_DOWN->{battleGesture=null;battleBlocked=true}
+            MotionEvent.ACTION_MOVE->{val g=battleGesture
+                if(g!=null){val i=e.findPointerIndex(g.pointer);if(i>=0){
+                    val y=e.getY(i)
+                    if(hypot(e.getX(i)-g.x,y-g.y)>ViewConfiguration.get(context).scaledTouchSlop)g.cancelled=true
+                    if(g.cancelled){
+                        if(battleInfoOpen)battleInfoScroll=max(0f,battleInfoScroll+g.lastY-y)
+                        else if(battlePresentation.screen==BattlePresentation.Screen.RESULT)battleResultScroll=max(0f,battleResultScroll+g.lastY-y)
+                    };g.lastY=y}}}
+            MotionEvent.ACTION_UP->{val g=battleGesture
+                if(!battleBlocked&&g!=null&&!g.cancelled&&g.pointer==e.getPointerId(e.actionIndex)&&g.command==battleHit(e.x,e.y))submitBattle(g.command)
+                clearBattleGesture();performClick()}
+            else->Unit
+        };return true
     }
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
@@ -469,7 +537,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battle=OpeningBattle(story.group,rules,characters.first(),
             equipmentBonus(characters.first(),"rightHand"),equipmentBonus(characters.first(),"body"))
         selectedBattleSlot=story.group.members.first().slot;battleMessage="南海龍王 · 剧情战斗"
-        battleCommitted=false;battlePresentation=BattlePresentation();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
             .put("mapId",world.mapId).put("storyBattle",story.id))
@@ -484,6 +552,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
     private fun openPanel(which:Layer){
+        diagnoseExperience()
         if(layer !in listOf(Layer.MAP,Layer.MENU) || which !in listOf(Layer.CHARACTER,Layer.INVENTORY))return
         panelReturnLayer=layer;if(finishPendingStep())return
         input.clear();hudTouch.clear();npcTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()
@@ -496,8 +565,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         layer=panelReturnLayer;input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clock.reset()
     }
     private fun hudBox():Box {
-        val dp=resources.displayMetrics.density
-        return Box(ui.safe.x+8*dp,ui.safe.y+8*dp,min(ui.safe.w*.25f,230*dp),min(ui.safe.h*.22f,90*dp))
+        val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
+        val w=min(ui.safe.w*.40f,max(230f,145f*font)*dp)
+        val h=max(92f,44f*font+30f)*dp
+        return Box(ui.safe.x+8*dp,ui.safe.y+8*dp,w,h)
     }
     fun hudBounds()=hudBox()
     private fun hudPortraitBox():Box {
@@ -547,10 +618,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(action){0->closePanel();in 10..13->runPanelCommand(ModalCommand("tab:${action-10}"))
             in 20..23->characters.getOrNull(action-20)?.let{runPanelCommand(ModalCommand("hero",targetId=it.id))}}
     }
-    private fun directPanel()=panelTab in listOf(CharacterTab.EQUIPMENT,CharacterTab.ITEMS)
-    private fun modalLayout()=touchModalLayout(ui.safe,resources.displayMetrics.density,
-        resources.configuration.fontScale,if(layer==Layer.SHOP)2 else 4,
-        if(layer==Layer.SHOP)0 else characters.size,layer!=Layer.SHOP&&panelTab==CharacterTab.EQUIPMENT)
+    private fun directPanel()=true // All existing character tabs reuse the same scoped touch geometry.
+    private fun modalLayout():TouchModalLayout {
+        val l=touchModalLayout(ui.safe,resources.displayMetrics.density,resources.configuration.fontScale,
+            if(layer==Layer.SHOP)2 else 4,if(layer==Layer.SHOP)0 else characters.size,layer!=Layer.SHOP&&panelTab==CharacterTab.EQUIPMENT)
+        if(layer!=Layer.SHOP&&panelTab in listOf(CharacterTab.ATTRIBUTES,CharacterTab.MAGIC)){
+            val dp=resources.displayMetrics.density
+            return l.copy(list=Box(0f,0f,0f,0f),detail=Box(l.frame.x+8*dp,l.list.y,l.frame.w-16*dp,l.list.h),
+                primary=Box(0f,0f,0f,0f),secondary=Box(0f,0f,0f,0f))}
+        return l
+    }
     private fun clearUxGesture(){uxGesture=null;uxBlocked=false}
     private fun resetModalSelection(){clearUxGesture();uxRevision++;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false}
     private fun panelItems()=inventoryEntries().filter{entry->candidateSlot==null ||
@@ -610,7 +687,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val visible=l.visibleRow(index,modalListScroll)
             if(l.list.contains(x,y)&&visible.h>=48*resources.displayMetrics.density){
                 if(panelTab==CharacterTab.ITEMS)panelItems().getOrNull(index)?.let{return ModalCommand("item",it.key,hero.id,mode=candidateSlot)}
-                else listOf("rightHand","leftHand","body","feet").getOrNull(index)?.let{return ModalCommand("slot",targetId=hero.id,slot=it)}
+                else if(panelTab==CharacterTab.EQUIPMENT)listOf("rightHand","leftHand","body","feet").getOrNull(index)?.let{return ModalCommand("slot",targetId=hero.id,slot=it)}
             }
         }
         if(l.wide||modalDetailsOpen){
@@ -793,6 +870,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun drawDirectPanel(c:Canvas){
         val l=modalLayout();val hero=characters[characterPage]
         touchFrame(c,"${heroName(hero.id)}  Lv.${hero.level}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"} · 银两 $money",listOf("属性","装备","物品","法术"),panelTab.ordinal)
+        if(panelTab in listOf(CharacterTab.ATTRIBUTES,CharacterTab.MAGIC)){
+            val progress=growthProgress(hero)
+            val lines=if(panelTab==CharacterTab.MAGIC)listOf("已学法术状态尚未迁移","执行逻辑尚未开放") else
+                listOf("当前等级 ${hero.level}",if(progress.status==ExperienceProgress.Status.PROGRESS)"下一等级 ${hero.level+1}" else progress.summary,
+                    progress.summary,"累计EXP ${hero.experience}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"}",
+                    "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")} · 总防御 ${hero.stamina+equipmentBonus(hero,"body")}",
+                    "敏捷 ${hero.agility} · 精神 ${hero.spirit}","银两 $money")
+            touchDetail(c,lines);return
+        }
         if(l.wide||!modalDetailsOpen){
             val rows=if(panelTab==CharacterTab.ITEMS)panelItems().map{e->val item=content.itemDefinitions[e.key]
                 val status=when{item?.herbUse!=null->if(characters.none{it.hp>0})"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
@@ -847,6 +933,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
+        if(layer==Layer.BATTLE)return battleTouchEvent(e)
         if(layer==Layer.SHOP || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
         if(e.actionMasked==MotionEvent.ACTION_CANCEL){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();dialogueTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();return true}
         if(!active||!focused||layer==Layer.SETTINGS){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();return true}
@@ -875,7 +962,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 } else if(layer==Layer.CHARACTER || layer==Layer.INVENTORY){
                     panelAction(x,y)?.let{panelTouch[id]=it}
                 } else if(layer==Layer.DIALOGUE)dialogueTouch.add(id)
-                else if(layer==Layer.BATTLE)battleAction(x,y)?.let{battleTouch[id]=it;battleTouchRevision=battlePresentation.revision}
+                else if(layer==Layer.BATTLE)Unit
                 else if(layer==Layer.SHOP)Unit
             }
             MotionEvent.ACTION_MOVE->{
@@ -901,7 +988,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val key=input.keyFor(id)?.takeIf{layer==Layer.MAP&&ui.hitButton(x,y)==it}
                 input.release(id)
                 if(shopPressed!=null && layer==Layer.SHOP && shopPressed.second==shopRevision && false)runShopAction(shopPressed.first)
-                else if(battleSelected!=null && layer==Layer.BATTLE && battleSelected==battleAction(x,y) && battleTouchRevision==battlePresentation.revision){
+                else if(battleSelected!=null && layer==Layer.BATTLE && false && battleTouchRevision==battlePresentation.revision){
                     runBattleAction(battleSelected)
                 }
                 else if(wasDialogue&&layer==Layer.DIALOGUE){advanceDialogue()}
@@ -1024,17 +1111,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun drawHud(c:Canvas){
         val hero=characters.firstOrNull()?:return;val b=hudBox();val dp=resources.displayMetrics.density
+        val big=resources.configuration.fontScale>1.3f;val p=hudPortraitBox()
         overlayPaint.color=0xc923303b.toInt();c.drawRoundRect(RectF(b.x,b.y,b.x+b.w,b.y+b.h),9*dp,9*dp,overlayPaint)
-        portrait(c,hero,hudPortraitBox())
-        val p=hudPortraitBox();val x=p.x+p.w+8*dp;val right=b.x+b.w-8*dp
-        textPaint.color=Color.WHITE;textPaint.textSize=13*dp
-        val name=content.characterDefinitions[hero.id]?.name?:hero.id
-        c.drawText("$name  Lv.${hero.level}",x,b.y+b.h*.26f,textPaint)
-        textPaint.textSize=10*dp
-        c.drawText("HP ${hero.hp}/${hero.maxHp}",x,b.y+b.h*.49f,textPaint)
-        gauge(c,Box(x,b.y+b.h*.54f,right-x,b.h*.075f),hero.hp,hero.maxHp,0xffc55758.toInt())
-        c.drawText("MP ${hero.mp}/${hero.maxMp?:"?"}",x,b.y+b.h*.75f,textPaint)
-        gauge(c,Box(x,b.y+b.h*.80f,right-x,b.h*.075f),hero.mp,hero.maxMp,0xff638cce.toInt())
+        if(!big)portrait(c,hero,p)
+        val x=if(big)b.x+8*dp else p.x+p.w+8*dp;val right=b.x+b.w-8*dp
+        var y=b.y+5*dp
+        y+=touchText(c,"${heroName(hero.id)} Lv.${hero.level}",Box(x,y,right-x,1f),11f)
+        y+=touchText(c,"HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"}",Box(x,y,right-x,1f),10f)
+        gauge(c,Box(x,y+2*dp,(right-x)*.48f,4*dp),hero.hp,hero.maxHp,0xffc55758.toInt())
+        gauge(c,Box(x+(right-x)*.52f,y+2*dp,(right-x)*.48f,4*dp),hero.mp,hero.maxMp,0xff638cce.toInt());y+=9*dp
+        val progress=growthProgress(hero)
+        val text=if(progress.status==ExperienceProgress.Status.PROGRESS)"EXP ${progress.earned}/${progress.span}" else "EXP · ${progress.summary}"
+        y+=touchText(c,text,Box(x,y,right-x,1f),10f)
+        gauge(c,Box(x,y+2*dp,right-x,4*dp),progress.earned?:0,progress.span,0xffcfab54.toInt())
     }
     private fun drawControls(c:Canvas){
         val stick=ui.stick;val alpha=(config.opacity.coerceIn(.2f,.9f)*255).toInt()
@@ -1138,92 +1227,66 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         textPaint.textSize=12*dp;c.drawText(hint,x+w-textPaint.measureText(hint)-15*dp,y+h-12*dp,textPaint)
     }
     private fun drawBattle(c:Canvas){
-        val current=battle?:return;val b=battleBox();val scale=b.w/256f
-        val screen=battlePresentation.screen
-        c.drawColor(Color.BLACK)
-        paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
-        val horizon=if(current.enemies.any{it.definition.id in content.blackBattleEnemyIds})null
-            else content.battleHorizons[world.mapId]?:content.battleHorizon
-        horizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->
-            c.drawBitmap(image,null,RectF(b.x,b.y,b.x+b.w,b.y+32*scale),paint)
+        val current=battle?:return;val l=battleLayout();val b=battleBox();val scale=b.w/256f
+        val screen=battlePresentation.screen;val action=battlePresentation.action;val dp=resources.displayMetrics.density
+        c.drawColor(Color.BLACK);paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
+        val horizon=if(current.enemies.any{it.definition.id in content.blackBattleEnemyIds})null else content.battleHorizons[world.mapId]?:content.battleHorizon
+        horizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->c.drawBitmap(image,null,RectF(b.x,b.y,b.x+b.w,b.y+32*scale),paint)}
+        for(enemy in current.enemies){
+            val hp=battleVisibleHp(enemy.slot)?:0;val impact=action?.targetSlot==enemy.slot&&action.kind==BattleActionKind.DAMAGE
+            if(screen!=BattlePresentation.Screen.RESULT&&(hp>0||impact)){
+                val box=battleEnemyBox(enemy);val moving=action?.actorSlot==enemy.slot&&action.kind in listOf(BattleActionKind.ATTACK,BattleActionKind.ICE)
+                val shift=if(moving)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
+                paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
+                content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(box.x+shift,box.y,box.x+box.w+shift,box.y+box.h),paint)};paint.alpha=255
+            }
+            val row=battleTargetBounds(enemy.slot);val selected=selectedBattleSlot==enemy.slot
+            overlayPaint.color=if(selected)0xff244d49.toInt() else 0xff18252e.toInt();c.drawRect(row.x,row.y,row.x+row.w,row.y+row.h,overlayPaint)
+            val same=current.enemies.count{it.definition.id==enemy.definition.id}>1
+            val title=enemy.definition.name+(if(same)" ${enemy.slot+1}" else "")+(if(hp<=0)" · 倒下" else "")
+            touchText(c,title,Box(row.x+6*dp,row.y+4*dp,row.w-12*dp,1f),12f,if(hp>0)Color.WHITE else 0xff929292.toInt())
+            gauge(c,Box(row.x+6*dp,row.y+row.h-9*dp,row.w-12*dp,5*dp),hp,enemy.definition.hp,0xffc55758.toInt())
+            if(action?.actorSlot==enemy.slot||action?.targetSlot==enemy.slot){overlayPaint.color=0xffcfab54.toInt();c.drawRect(row.x,row.y,row.x+3*dp,row.y+row.h,overlayPaint)}
         }
-        val action=battlePresentation.action
+        if(screen==BattlePresentation.Screen.RESULT){
+            overlayPaint.color=Color.BLACK;c.drawRect(l.result.x,l.result.y,l.result.x+l.result.w,l.result.y+l.result.h,overlayPaint)
+            c.save();c.clipRect(l.result.x,l.result.y,l.result.x+l.result.w,l.result.y+l.result.h)
+            var y=l.result.y+8*dp-battleResultScroll
+            for(line in battleResultLines)y+=touchText(c,line,Box(l.result.x+12*dp,y,l.result.w-24*dp,1f),14f)+4*dp
+            c.restore()
+            val hint=if(battleSavePending)"保存失败：点击重试" else if(storyBattle!=null)"点击继续剧情" else "奖励已结算，稍后自动继续"
+            touchText(c,hint,Box(l.status.x+6*dp,l.status.y+6*dp,l.status.w-12*dp,1f),12f)
+            return
+        }
         val hp=action?.heroHp?:current.hero.hp
-        for(enemy in current.enemies.filter{screen!=BattlePresentation.Screen.RESULT}){
-            val visibleHp=action?.enemyHp?.get(enemy.slot)?:enemy.hp
-            val impact=action?.targetSlot==enemy.slot && action.text.contains("受到")
-            if(visibleHp<=0&&!impact)continue
-            val box=battleEnemyBox(enemy)
-            val image=content.enemyGraphics[enemy.definition.id]
-            paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
-            if(image!=null)c.drawBitmap(image,null,RectF(box.x,box.y,box.x+box.w,box.y+box.h),paint)
-            paint.alpha=255
-            if(battlePresentation.screen==BattlePresentation.Screen.TARGET&&enemy.slot==selectedBattleSlot){
-                overlayPaint.color=Color.WHITE;overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=max(1f,scale)
-                c.drawRect(box.x-2*scale,box.y-2*scale,box.x+box.w+2*scale,box.y+box.h+2*scale,overlayPaint)
-                overlayPaint.style=Paint.Style.FILL
-            }
-            if(action?.targetSlot==enemy.slot||action?.actorSlot==enemy.slot){
-                textPaint.color=Color.WHITE;textPaint.textSize=9*scale
-                c.drawText("▼",box.x+box.w/2-4*scale,box.y-5*scale,textPaint)
-            }
+        val message=if(battleNotice.isNotEmpty())battleNotice else when(screen){
+            BattlePresentation.Screen.ENTRY->"敌人出现了！"
+            BattlePresentation.Screen.ACTING->action?.text?:""
+            else->if(storyBattle!=null)"点击龙王攻击 · 逃跑必失败并耗行动" else "点击敌人或对应信息条攻击"}
+        touchText(c,"${heroName(current.hero.id)} HP $hp/${current.hero.maxHp} · MP ${current.hero.mp}/${current.hero.maxMp?:"?"}\n$message",
+            Box(l.status.x+6*dp,l.status.y+3*dp,l.status.w-12*dp,l.status.h),12f)
+        val waiting=screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)
+        listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->touchButton(c,l.commands[i],title,waiting&&i !in listOf(1,2))}
+        if(action?.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.MISS,BattleActionKind.HEAL)){
+            val target=action?.targetSlot?.let{slot->current.enemies.firstOrNull{it.slot==slot}?.let{battleEnemyBox(it)}}?:l.arena
+            val text=if(action?.kind==BattleActionKind.MISS)"MISS" else (action?.hpDelta?:0).toString()
+            touchText(c,text,Box(target.x+target.w/2,target.y+target.h*.4f,120*dp,1f),18f,if(action?.kind==BattleActionKind.HEAL)0xff72d3c5.toInt() else 0xffffb3a7.toInt())
         }
-        fun border(box:Box){
-            overlayPaint.color=Color.BLACK;c.drawRect(box.x,box.y,box.x+box.w,box.y+box.h,overlayPaint)
-            overlayPaint.color=Color.WHITE;overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=2*scale
-            c.drawRect(box.x,box.y,box.x+box.w,box.y+box.h,overlayPaint);overlayPaint.style=Paint.Style.FILL
-        }
-        fun line(value:String,x:Float,y:Float,size:Float=9f,color:Int=Color.WHITE){
-            textPaint.color=color;textPaint.textSize=size*scale
-            c.drawText(value,b.x+x*scale,b.y+y*scale,textPaint)
-        }
-        if(screen==BattlePresentation.Screen.COMMAND){
-            border(battleRegion(10f,148f,66f,76f));border(battleRegion(82f,148f,156f,76f))
-            val commands=listOf("戰鬥","法術","寶箱","防禦","逃跑")
-            commands.forEachIndexed{i,name->line((if(battlePresentation.command==i)"▶" else "  ")+name,13f,160f+13*i,
-                color=if(i in listOf(0,4))Color.WHITE else 0xff747474.toInt())}
-            line(content.characterDefinitions[current.hero.id]?.name?:current.hero.id,88f,162f)
-            line("$hp / ${current.hero.maxHp}",156f,162f)
-            line("${current.hero.mp} / ${current.hero.maxMp?:"?"}",156f,177f)
-            line("HP",126f,162f);line("MP",126f,177f)
-            if(storyBattle!=null)line("此敵逃跑必定失敗",88f,199f,8f)
-            line("灰色指令尚未开放",88f,215f,8f,0xffaaaaaa.toInt())
-        }else if(screen==BattlePresentation.Screen.RESULT){
-            // The target ROM clears the scene for its black, white-bordered result message.
-            border(battleRegion(10f,76f,228f,74f))
-            battleMessage.chunked(22).take(3).forEachIndexed{i,value->line(value,15f,92f+i*15)}
-            line("A 继续",15f,142f,8f)
-        }else{
-            border(battleRegion(10f,148f,228f,76f))
-            when(screen){
-                BattlePresentation.Screen.TARGET->{
-                    current.enemies.filter{it.hp>0}.forEachIndexed{i,e->
-                        line((if(e.slot==selectedBattleSlot)"▶ " else "  ")+e.definition.name,15f,159f+9*i,8f)}
-                    line("选择目标 · A确认 / B返回",15f,216f,8f)
-                }
-                BattlePresentation.Screen.ENTRY->line("敌人出现了！",15f,166f)
-                BattlePresentation.Screen.ACTING->{
-                    (action?.text?:"").chunked(22).take(3).forEachIndexed{i,value->line(value,15f,166f+i*15)}
-                    line("${content.characterDefinitions[current.hero.id]?.name?:current.hero.id}  HP $hp / ${current.hero.maxHp}",15f,216f,8f)
-                }
-                else->Unit
-            }
-        }
-        if(screen==BattlePresentation.Screen.ACTING && action?.targetSlot!=null && action.text.startsWith("攻击")){
-            content.battleHero?.let{image->
-                val actor=battleRegion(120f,124f,16f,16f)
-                c.drawBitmap(image,null,RectF(actor.x,actor.y,actor.x+actor.w,actor.y+actor.h),paint)
-            }
-        }
-        // Reuse the existing A/B geometry and style; no exploration controls participate.
-        for(key in listOf(Key.A,Key.B)){
-            val box=ui.buttons.getValue(key)
-            val enabled=if(key==Key.A)screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET,BattlePresentation.Screen.RESULT)
-                else screen==BattlePresentation.Screen.TARGET
-            overlayPaint.color=if(enabled)0xa0344b5a.toInt() else 0x58344b5a
-            c.drawOval(RectF(box.x,box.y,box.x+box.w,box.y+box.h),overlayPaint)
-            textPaint.color=if(enabled)Color.WHITE else 0xff909999.toInt()
-            label(c,if(key==Key.A)"A 确认" else "B 返回",box.x+box.w/2,box.y+box.h/2,12f)
+        if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
+        if(battleInfoOpen){
+            overlayPaint.color=0xf018252e.toInt();c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)
+            touchButton(c,l.closeInfo,"关闭信息")
+            val enemy=current.enemies.firstOrNull{it.slot==selectedBattleSlot}?:current.enemies.first()
+            val infoBody=Box(l.arena.x+8*dp,l.arena.y+l.closeInfo.h+8*dp,l.arena.w-16*dp,max(1f,l.arena.h-l.closeInfo.h-16*dp))
+            c.save();c.clipRect(infoBody.x,infoBody.y,infoBody.x+infoBody.w,infoBody.y+infoBody.h)
+            var y=infoBody.y-battleInfoScroll
+            val lines=listOf(enemy.definition.name+" · 实例 ${enemy.slot+1}","HP ${battleVisibleHp(enemy.slot)}/${enemy.definition.hp}",
+                "攻击 ${enemy.definition.attack} · 防御 ${enemy.definition.defense}",
+                content.battle?.enemyAgility?.get(enemy.definition.id)?.let{"敏捷 $it"}?:"敏捷数据未接入",
+                if(enemy.definition.id in 4..7)"名称为有来源暂定；属性来自现有数据" else "HP/属性显示是移动端信息增强",
+                "点下方实例条查看；信息不消耗行动")
+            for(line in lines)y+=touchText(c,line,Box(infoBody.x,y,infoBody.w,1f),13f)+3*dp
+            c.restore()
         }
         textPaint.color=Color.WHITE
     }

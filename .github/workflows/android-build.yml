@@ -40,6 +40,7 @@ jobs:
     timeout-minutes: 40
     outputs:
       reviewed_base_run_id: ${{ steps.content_base.outputs.run_id }}
+      reviewed_upgrade_run_id: ${{ steps.content_base.outputs.upgrade_run_id }}
     defaults:
       run:
         shell: pwsh
@@ -69,6 +70,9 @@ jobs:
           $base=(Get-Content ci/content-source.json -Raw|ConvertFrom-Json).iteration.base
           if(-not $base.buildRunId){throw 'Reviewed base build run is required'}
           "run_id=$($base.buildRunId)"|Add-Content $env:GITHUB_OUTPUT
+          $runtime=(Get-Content ci/content-source.json -Raw|ConvertFrom-Json).runtimeBaseline
+          $upgradeRun=if($runtime){$runtime.buildRunId}else{$base.buildRunId}
+          "upgrade_run_id=$upgradeRun"|Add-Content $env:GITHUB_OUTPUT
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: fengshen-signed-apk
@@ -235,7 +239,7 @@ jobs:
         with:
           name: fengshen-signed-apk
           path: artifacts/runtime-base
-          run-id: ${{ needs.build.outputs.reviewed_base_run_id }}
+          run-id: ${{ needs.build.outputs.reviewed_upgrade_run_id }}
           github-token: ${{ github.token }}
       - name: Verify and run the exact candidate in one isolated AVD
         shell: bash
@@ -253,6 +257,7 @@ jobs:
             artifacts/checkpoint-ui/town02-ci-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/checkpoint-ui/nanhai-*
+            artifacts/checkpoint-ui/mobile-*
           if-no-files-found: ignore
           retention-days: 14
 
@@ -282,5 +287,17 @@ jobs:
         with:
           name: fengshen-nanhai-final-clips
           path: artifacts/nanhai-review-clips/final/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain mobile battle and growth screenshots separately
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-mobile-play-checkpoints
+          path: |
+            artifacts/checkpoint-ui/mobile-*.png
+            artifacts/checkpoint-ui/mobile-*.json
+            artifacts/checkpoint-ui/nanhai-mobile-*.png
           if-no-files-found: ignore
           retention-days: 14

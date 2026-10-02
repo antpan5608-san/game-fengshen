@@ -61,8 +61,10 @@ class OpeningEncounter(private val content:BattleContent,initialSteps:Int=0) {
 
 data class BattleEnemy(val slot:Int,val definition:EnemyDefinition,var hp:Int)
 enum class BattlePhase { TARGET, VICTORY, DEFEAT, ESCAPED }
+enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL }
 data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,Int>,
-    val actorSlot:Int?=null,val targetSlot:Int?=null)
+    val actorSlot:Int?=null,val targetSlot:Int?=null,val kind:BattleActionKind=BattleActionKind.TEXT,
+    val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null)
 data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:Int,val defeatedEnemyIds:List<Int>,
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
 data class BattleSettlement(val character:CharacterState,val money:Int,val experience:Int,val levels:List<Int>)
@@ -79,8 +81,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     var hero=hero;private set
     var phase=BattlePhase.TARGET;private set
     private var settled=false
-    private fun frame(text:String,actor:Int?=null,target:Int?=null)=
-        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target)
+    private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
+        delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null)=
+        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy)
     /** Byte-exact 9:8A49..8AAF for the enabled normal enemies. Carry at entry is 1.
      * Random sequence remains independent of NES $43; no fixed success probability. */
     fun escape(nextByte:()->Int):BattleTurn? {
@@ -91,10 +94,10 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         val random=nextByte().also{require(it in 0..255)}
         val transformed=(((random shl 2)+2+(random ushr 7))+random+((random ushr 6) and 1)) and 255
         val threshold=(127+hero.agility-content.enemyAgility.getValue(opponent.definition.id)) and 255
-        val steps=mutableListOf(frame("尝试逃跑"))
-        if(transformed<threshold){phase=BattlePhase.ESCAPED;steps.add(frame("逃跑成功"))
+        val steps=mutableListOf(frame("尝试逃跑",kind=BattleActionKind.ESCAPE))
+        if(transformed<threshold){phase=BattlePhase.ESCAPED;steps.add(frame("逃跑成功",kind=BattleActionKind.ESCAPED))
             return BattleTurn(0,0,0,emptyList(),phase,steps)}
-        steps.add(frame("逃跑失败"))
+        steps.add(frame("逃跑失败",kind=BattleActionKind.ESCAPE_FAILED))
         val (damage,misses)=retaliate(nextByte,steps)
         return BattleTurn(0,damage,misses,emptyList(),phase,steps)
     }
@@ -102,12 +105,12 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         if(phase!=BattlePhase.TARGET)return null
         val target=enemies.firstOrNull{it.slot==slot && it.hp>0}?:return null
         if(content.physicalRules!=null)return originalRound(target.slot,nextByte)
-        val steps=mutableListOf(frame("攻击 ${target.definition.name}",target=slot))
+        val steps=mutableListOf(frame("攻击 ${target.definition.name}",target=slot,kind=BattleActionKind.ATTACK))
         val damage=max(1,hero.strength+weaponBonus-target.definition.defense)
         val actualDamage=minOf(damage,target.hp);target.hp-=actualDamage
         val defeated=if(target.hp==0)listOf(target.definition.id) else emptyList()
-        steps.add(frame("${target.definition.name} 受到 $actualDamage 点伤害",target=slot))
-        if(target.hp==0)steps.add(frame("${target.definition.name} 被击倒",target=slot))
+        steps.add(frame("${target.definition.name} 受到 $actualDamage 点伤害",target=slot,kind=BattleActionKind.DAMAGE,delta=-actualDamage,beforeEnemy=target.hp+actualDamage))
+        if(target.hp==0)steps.add(frame("${target.definition.name} 被击倒",target=slot,kind=BattleActionKind.DEATH))
         if(enemies.all{it.hp==0}){
             phase=BattlePhase.VICTORY
             return BattleTurn(actualDamage,0,0,defeated,phase,steps)
@@ -127,7 +130,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
             if(phase!=BattlePhase.TARGET)break
             if(actor==-1){
                 if(targetSlot==null){
-                    steps.add(frame("尝试逃跑"))
+                    steps.add(frame("尝试逃跑",kind=BattleActionKind.ESCAPE))
                     val opponent=enemies.filter{it.hp>0}.maxByOrNull{content.enemyAgility.getValue(it.definition.id)}!!
                     // 9:8A69: original enemy IDs >=136 always fail; the action is consumed.
                     val random=roll() // Original 8A49 reads the byte before the Boss-ID rejection.
@@ -135,30 +138,30 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                         val transformed=(((random shl 2)+2+(random ushr 7))+random+((random ushr 6) and 1)) and 255
                         transformed<((127+hero.agility-content.enemyAgility.getValue(opponent.definition.id)) and 255)
                     }
-                    if(succeeds){phase=BattlePhase.ESCAPED;steps.add(frame("逃跑成功"))}
-                    else steps.add(frame("逃跑失败"))
+                    if(succeeds){phase=BattlePhase.ESCAPED;steps.add(frame("逃跑成功",kind=BattleActionKind.ESCAPED))}
+                    else steps.add(frame("逃跑失败",kind=BattleActionKind.ESCAPE_FAILED))
                     continue
                 }
                 val target=enemies.first{it.slot==targetSlot};if(target.hp<=0)continue
-                steps.add(frame("攻击 ${target.definition.name}",target=target.slot))
+                steps.add(frame("攻击 ${target.definition.name}",target=target.slot,kind=BattleActionKind.ATTACK))
                 val random=roll()
                 if(!rules.hits(hero.equipment?.rightHand?:-1,random)){
-                    steps.add(frame("攻击未命中",target=target.slot));continue
+                    steps.add(frame("攻击未命中",target=target.slot,kind=BattleActionKind.MISS));continue
                 }
                 val damage=rules.damage(hero.strength+weaponBonus,target.definition.defense,hero.level,random)
                 val actual=minOf(damage,target.hp);target.hp-=actual;dealt+=actual
-                steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=target.slot))
-                if(target.hp==0){defeated.add(target.definition.id);steps.add(frame("${target.definition.name} 被击倒",target=target.slot))}
+                steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=target.slot,kind=BattleActionKind.DAMAGE,delta=-actual,beforeEnemy=target.hp+actual))
+                if(target.hp==0){defeated.add(target.definition.id);steps.add(frame("${target.definition.name} 被击倒",target=target.slot,kind=BattleActionKind.DEATH))}
                 if(enemies.all{it.hp==0})phase=BattlePhase.VICTORY
             }else{
                 val enemy=enemies.first{it.slot==actor};if(enemy.hp<=0)continue
                 val random=roll();val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
-                steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=actor))
-                if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=actor));continue}
+                steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=actor,kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK))
+                if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=actor,kind=BattleActionKind.MISS));continue}
                 val armor=equippedArmorBonus ?: if(hero.equipment?.body==0)content.armorContribution else 0
                 val damage=if(ice)enemy.definition.iceBaseDamage!! else max(1,enemy.definition.attack-armor-hero.stamina)
                 val actual=minOf(damage,hero.hp);received+=actual;hero=hero.copy(hp=hero.hp-actual)
-                steps.add(frame("受到 $actual 点伤害",actor=actor))
+                steps.add(frame("受到 $actual 点伤害",actor=actor,kind=BattleActionKind.DAMAGE,delta=-actual,beforeHero=hero.hp+actual))
                 if(hero.hp==0)phase=BattlePhase.DEFEAT
             }
         }
@@ -167,13 +170,13 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private fun retaliate(nextByte:()->Int,steps:MutableList<BattleActionStep>):Pair<Int,Int>{
         var total=0;var misses=0
         for(enemy in enemies.filter{it.hp>0}){
-            steps.add(frame("${enemy.definition.name} 攻击",actor=enemy.slot))
+            steps.add(frame("${enemy.definition.name} 攻击",actor=enemy.slot,kind=BattleActionKind.ATTACK))
             val value=nextByte().also{require(it in 0..255)}
-            if(value>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=enemy.slot));continue}
+            if(value>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=enemy.slot,kind=BattleActionKind.MISS));continue}
             val armor=equippedArmorBonus ?: if(hero.equipment?.body==0)content.armorContribution else 0
             val hit=max(1,enemy.definition.attack-armor-hero.stamina)
             val applied=minOf(hit,hero.hp);total+=applied;hero=hero.copy(hp=hero.hp-applied)
-            steps.add(frame("受到 $applied 点伤害",actor=enemy.slot))
+            steps.add(frame("受到 $applied 点伤害",actor=enemy.slot,kind=BattleActionKind.DAMAGE,delta=-applied,beforeHero=hero.hp+applied))
             if(hero.hp==0){phase=BattlePhase.DEFEAT;break}
         }
         return total to misses
@@ -226,6 +229,13 @@ class BattlePresentation {
     private var index=0
     private var elapsed=0L
     val elapsedMs get()=elapsed
+    var resultElapsedMs=0L;private set
+    val actionDurationMs get()=duration(action)
+    private fun duration(step:BattleActionStep?)=when(step?.kind){
+        BattleActionKind.ATTACK->450L;BattleActionKind.ICE->650L;BattleActionKind.DAMAGE,BattleActionKind.HEAL->500L
+        BattleActionKind.MISS->350L;BattleActionKind.DEATH->320L;BattleActionKind.ESCAPE->450L
+        BattleActionKind.ESCAPED,BattleActionKind.ESCAPE_FAILED->400L;else->450L}
+    fun invalidateInput(){revision++}
     private var outcome=BattlePhase.TARGET
     fun selectCommand(value:Int){if(screen==Screen.COMMAND&&value in 0..4)command=value}
     fun targets(){if(screen==Screen.COMMAND){screen=Screen.TARGET;revision++}}
@@ -239,12 +249,16 @@ class BattlePresentation {
     fun tick(ms:Long):Boolean {
         require(ms>=0)
         if(screen==Screen.ENTRY){elapsed+=ms;if(elapsed>=400){elapsed=0;screen=Screen.COMMAND;revision++};return false}
+        if(screen==Screen.RESULT){resultElapsedMs+=ms;return false}
         if(screen!=Screen.ACTING)return false
         elapsed+=ms
-        if(elapsed<650)return false
-        elapsed=0;index++;revision++
-        if(index<steps.size){action=steps[index];return false}
-        action=null;screen=if(outcome==BattlePhase.TARGET)Screen.COMMAND else Screen.RESULT
-        return true
+        while(elapsed>=duration(action)){
+            elapsed-=duration(action);index++;revision++
+            if(index<steps.size){action=steps[index];continue}
+            action=null;screen=if(outcome==BattlePhase.TARGET)Screen.COMMAND else Screen.RESULT
+            command=0;elapsed=0;resultElapsedMs=0
+            return true
+        }
+        return false
     }
 }

@@ -38,9 +38,9 @@ if listed.returncode:
     subprocess.run(['adb','wait-for-device'],check=True,timeout=10)
     listed=subprocess.run(['adb','shell','ls',base],check=True,capture_output=True,text=True,timeout=10)
 for name in listed.stdout.splitlines():
-    if re.fullmatch(r'(nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
+    if re.fullmatch(r'(mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
-        target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-')) else 'touch-ux-'+name)
+        target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
 PYEVIDENCE
 }
@@ -65,7 +65,19 @@ base=(artifacts/runtime-base/*-release.apk)
 candidate=(artifacts/ci/*-release.apk)
 testapk=(artifacts/runtime-test/*.apk)
 [[ ${#base[@]} == 1 && ${#candidate[@]} == 1 && ${#testapk[@]} == 1 ]]
-python tools/ci_apk.py verify --base-only --apk "${base[0]}" --output artifacts/town02-runtime/base.json
+python - "${base[0]}" <<'PYBASE'
+import json,sys,hashlib
+from pathlib import Path
+from tools import ci_apk as ci
+apk=Path(sys.argv[1]);pin=ci.CONFIG['runtimeBaseline']
+assert hashlib.sha256(apk.read_bytes()).hexdigest()==pin['apkSha256']
+r=json.loads((apk.parent/'apk-receipt.json').read_text(encoding='utf-8-sig'))
+assert (r['sourceCommit'],r['buildRunID'],r['versionCode'],r['contentHash'])==(pin['sourceCommit'],pin['buildRunId'],pin['versionCode'],pin['manifestSha256'])
+assert ci.verify_apk(apk,release=True)['versionCode']==pin['versionCode']
+ci.content(apk,pin)
+Path('artifacts/town02-runtime/base.json').write_text(json.dumps(r,indent=2)+'\n')
+print('Trusted actual latest covering-upgrade baseline validated')
+PYBASE
 python tools/ci_apk.py verify --apk "${candidate[0]}" --output artifacts/town02-runtime/candidate.json
 python - "${testapk[0]}" <<'PY'
 import re,sys
@@ -94,6 +106,7 @@ run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
+run_test testControlledMobileBattleTouchAndSnapshots
 run_test testNormalTownShopsBuySellAndReturn
 run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
 run_test testInput01RealMapWallSlidesAndMenuCancellation
@@ -111,6 +124,7 @@ for font in 1.0 1.3 2.0; do
     adb shell settings put system font_scale "$font"
     sleep 3
     run_test testTouchUxPhoneSizeAndLargeFont
+    run_test testMobileBattlePhoneSizeAndLargeFont
 done
 adb shell settings put system font_scale 1.0
 adb shell wm size 960x540
@@ -121,7 +135,7 @@ import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='NOT_IMPLEMENTED',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY

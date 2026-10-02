@@ -166,7 +166,9 @@ class TouchTest:IsolatedGameTestCase(){
                 val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     assertTrue("Town route must survive normally",fight.phase!=BattlePhase.DEFEAT)
-                    tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
+                        tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    else if(presentation.screen==BattlePresentation.Screen.RESULT)SystemClock.sleep(40)
                 }
                 SystemClock.sleep(40)
             }
@@ -449,7 +451,7 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalTouchUxSupplyAndEquipment(){normalTownShops(true,true)}
     fun testControlledOneHitAndSameKindInstances(){
         val(activity,v)=launch();val rules=v.content.battle!!
-        fun field(name:String,value:Any){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
         fun prepare(group:EncounterGroup,hero:CharacterState):Pair<OpeningBattle,BattlePresentation>{
             val fight=OpeningBattle(group,rules,hero,2);val p=BattlePresentation()
             instrumentation.runOnMainSync{
@@ -973,7 +975,7 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalNanhaiRouteBossAndVictory(){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit() // Isolated emulator fixture only.
         val(activity,v)=launch();val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
-        var fightCount=0;var herbUses=0;var capturedBoss=false;var capturedIce=false
+        var fightCount=0;var herbUses=0;var capturedBoss=false;var capturedIce=false;var capturedInfo=false;var capturedReward=false;var escapedBoss=false
         fun state(name:String,capture:Boolean=true){
             if(capture)screenshot(v,"nanhai-$name")
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
@@ -988,6 +990,7 @@ class TouchTest:IsolatedGameTestCase(){
             if(v.layer!=GameView.Layer.BATTLE)return
             val boss=(f.get(v) as OpeningBattle).enemies.any{it.definition.id==137}
             fightCount++
+            val levelBefore=v.currentSnapshot().characters.first().level
             if(boss&&!capturedBoss){state("boss-entry");capturedBoss=true}
             val deadline=SystemClock.elapsedRealtime()+180000
             while(v.layer==GameView.Layer.BATTLE){
@@ -997,10 +1000,28 @@ class TouchTest:IsolatedGameTestCase(){
                     presentation.action?.text?.contains("冰系")==true){state("boss-ice");capturedIce=true}
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     assertTrue("Normal preparation must survive; no forced win or restored fixture",fight.phase!=BattlePhase.DEFEAT)
-                    if(boss&&presentation.screen==BattlePresentation.Screen.RESULT)state("boss-victory-result")
-                    tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
+                        if(!capturedInfo&&fight.enemies.size>1){
+                            val before=fight.hero;val hp=fight.enemies.map{it.hp}
+                            tap(v,center(v.battleCommandBounds(4)));tap(v,center(v.battleTargetBounds(fight.enemies.last().slot)))
+                            state("mobile-enemy-information");assertEquals(before,fight.hero);assertEquals(hp,fight.enemies.map{it.hp})
+                            tap(v,center(v.battleInfoCloseBounds()));capturedInfo=true
+                        }
+                        if(boss&&!escapedBoss){tap(v,center(v.battleCommandBounds(3)));escapedBoss=true;state("mobile-boss-escape-submitted")}
+                        else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    }else if(presentation.screen==BattlePresentation.Screen.RESULT){
+                        if(boss){state("boss-victory-result");tap(v,center(v.battleResultBounds()))}
+                        else if(!capturedReward){state("mobile-ordinary-reward");capturedReward=true}
+                    }
                 }
+                if(boss&&presentation.action?.kind==BattleActionKind.ESCAPE_FAILED&&
+                    events.toString().contains("mobile-boss-escape-failed").not())state("mobile-boss-escape-failed")
                 SystemClock.sleep(40)
+            }
+            if(v.layer==GameView.Layer.MAP&&v.currentSnapshot().characters.first().level>levelBefore){
+                state("mobile-upgrade-${v.currentSnapshot().characters.first().level}")
+                tap(v,center(v.hudBounds()));state("mobile-growth-detail-${v.currentSnapshot().characters.first().level}")
+                instrumentation.runOnMainSync{v.handleBack()}
             }
         }
         fun herb(){
@@ -1175,20 +1196,19 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(box.x+64*scale,enemyBox.x,.01f);assertEquals(box.y,enemyBox.y,.01f)
         assertTrue("Full real Boss must fit above unchanged controls",enemyBox.y+enemyBox.h<=box.y+148*scale)
         screenshot(v,"nanhai-controlled-boss-original-origin")
-        tap(v,Pair(box.x+40*scale,box.y+208*scale));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
+        tap(v,center(v.battleCommandBounds(3)));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
         assertEquals(BattlePhase.TARGET,fight.phase)
         assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true);waitCommands()
         // A valid Boss round can miss. Preserve its RNG/rules rather than assume damage on the first attempt.
         for(i in 0 until 16){
             if(fight.hero.hp<beforeEscapeHp)break
-            tap(v,Pair(box.x+40*scale,box.y+208*scale));waitCommands()
+            tap(v,center(v.battleCommandBounds(3)));waitCommands()
             assertEquals(BattlePhase.TARGET,fight.phase)
         }
         assertTrue("An ordinary bounded escape attempt sequence must expose retaliation",fight.hero.hp<beforeEscapeHp)
         for(i in 0..20){
             if(fight.phase!=BattlePhase.TARGET)break
-            tap(v,Pair(box.x+40*scale,box.y+156*scale))
-            tap(v,center(layoutFor(v).buttons.getValue(Key.A)));waitCommands()
+            tap(v,center(v.battleTargetBounds(fight.enemies.single().slot)));waitCommands()
         }
         assertEquals(BattlePhase.VICTORY,fight.phase);assertEquals(BattlePresentation.Screen.RESULT,(p.get(v) as BattlePresentation).screen)
         val won=v.currentSnapshot();assertEquals(223,won.money);assertEquals(60,won.characters.first().experience)
@@ -1214,7 +1234,7 @@ class TouchTest:IsolatedGameTestCase(){
         while(dyingFight.phase==BattlePhase.TARGET){
             assertTrue("Bounded controlled HP1 defeat flow",SystemClock.elapsedRealtime()<defeatDeadline)
             if(p2.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
-                tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)))
+                tap(v2,center(v2.battleTargetBounds(dyingFight.enemies.first{it.hp>0}.slot)))
             SystemClock.sleep(40)
         }
         for(i in 0..500){if(p2.screen==BattlePresentation.Screen.RESULT)break;SystemClock.sleep(40)}
@@ -1223,6 +1243,67 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(0,v2.currentSnapshot().money);assertTrue(v2.currentSnapshot().inventory.isEmpty())
         assertTrue(v2.currentSnapshot().flags["rom.event.97.39.1"]!=true)
         instrumentation.runOnMainSync{a2.finish()}
+    }
+
+    /** Controlled gesture/HP fixture, never used as proof of normal route or real stats. */
+    fun testControlledMobileBattleTouchAndSnapshots(){
+        val(activity,v)=launch();val rules=v.content.battle!!
+        val group=rules.groups.first{g->g.members.groupBy{it.enemyId}.values.any{it.size>1}}
+        val hero=v.content.initialPlayer.copy(hp=200,maxHp=200)
+        val fight=OpeningBattle(group,rules,hero,2);val p=BattlePresentation()
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{
+            field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-gesture")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
+            v.input.clear();p.tick(400)
+        }
+        val target=fight.enemies.first();val point=center(v.battleTargetBounds(target.slot))
+        val before=fight.hero;val enemies=fight.enemies.map{it.hp};val rev=p.revision
+        send(v,MotionEvent.ACTION_DOWN,listOf(point));send(v,MotionEvent.ACTION_CANCEL,listOf(point));send(v,MotionEvent.ACTION_UP,listOf(point))
+        assertEquals(rev,p.revision);assertEquals(enemies,fight.enemies.map{it.hp})
+        send(v,MotionEvent.ACTION_DOWN,listOf(point));send(v,MotionEvent.ACTION_MOVE,listOf(Pair(point.first+100,point.second)));send(v,MotionEvent.ACTION_UP,listOf(point))
+        assertEquals(rev,p.revision)
+        send(v,MotionEvent.ACTION_DOWN,listOf(point))
+        send(v,MotionEvent.ACTION_POINTER_DOWN or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(point,point))
+        send(v,MotionEvent.ACTION_POINTER_UP or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(point,point));send(v,MotionEvent.ACTION_UP,listOf(point))
+        assertEquals(rev,p.revision)
+        tap(v,center(v.battleCommandBounds(4)));tap(v,center(v.battleTargetBounds(fight.enemies.last().slot)))
+        assertEquals(before,fight.hero);assertEquals(enemies,fight.enemies.map{it.hp});assertEquals(BattlePresentation.Screen.COMMAND,p.screen)
+        screenshot(v,"mobile-controlled-independent-information");tap(v,center(v.battleInfoCloseBounds()))
+        tap(v,point);assertEquals(BattlePresentation.Screen.ACTING,p.screen)
+        val computed=fight.hero;val computedEnemies=fight.enemies.map{it.hp}
+        repeat(10){send(v,MotionEvent.ACTION_UP,listOf(point));tap(v,point)}
+        assertEquals(computed,fight.hero);assertEquals(computedEnemies,fight.enemies.map{it.hp})
+        screenshot(v,"mobile-controlled-action")
+        instrumentation.runOnMainSync{v.active=false};val elapsed=p.elapsedMs;SystemClock.sleep(300);assertEquals(elapsed,p.elapsedMs)
+        send(v,MotionEvent.ACTION_UP,listOf(point));instrumentation.runOnMainSync{v.active=true}
+        for(i in 0..200){if(p.screen!=BattlePresentation.Screen.ACTING)break;SystemClock.sleep(25)}
+        assertEquals(computed,fight.hero);assertEquals(computedEnemies,fight.enemies.map{it.hp})
+        assertEquals(BattlePresentation.Screen.COMMAND,p.screen);assertEquals(0,p.command)
+        assertEquals(computedEnemies,fight.enemies.map{v.battleVisibleHp(it.slot)})
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testMobileBattlePhoneSizeAndLargeFont(){
+        val(activity,v)=launch();val font=v.resources.configuration.fontScale;val dp=v.resources.displayMetrics.density
+        val screen=instrumentation.uiAutomation.takeScreenshot();assertEquals(2640,screen.width);assertEquals(1216,screen.height)
+        val rules=v.content.battle!!;val story=rules.storyBattles.values.single();val fight=OpeningBattle(story.group,rules,v.content.initialPlayer,2)
+        val p=BattlePresentation()
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-font-$font")
+            field("battleCommitted",false);field("storyBattle",story);field("layer",GameView.Layer.BATTLE);p.tick(400)}
+        fun overlap(a:Box,b:Box)=a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y
+        val targets=(0..4).map{v.battleCommandBounds(it)}+fight.enemies.map{v.battleTargetBounds(it.slot)}
+        targets.forEach{assertTrue(it.w>=48*dp);assertTrue(it.h>=48*dp)}
+        for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
+        val eb=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
+        assertEquals(128f/112,eb.w/eb.h,.001f);assertTrue(eb.y+eb.h<=v.battleTargetBounds(fight.enemies.single().slot).y)
+        screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(4)));screenshot(v,"mobile-phone-info-$font")
+        tap(v,center(v.battleInfoCloseBounds()));instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP)}
+        screenshot(v,"mobile-phone-hud-$font");tap(v,center(v.hudBounds()));screenshot(v,"mobile-phone-growth-$font")
+        File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
+            org.json.JSONObject().put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
+                .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48).toString())
+        instrumentation.runOnMainSync{activity.finish()}
     }
 
 }
