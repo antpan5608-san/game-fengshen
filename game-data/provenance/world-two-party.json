@@ -214,6 +214,86 @@
       "module": 9,
       "cpuAddress": 40998,
       "meaning": "Herb HP add and cap"
+    },
+    {
+      "offset": 298833,
+      "length": 29,
+      "sha256": "815ce0d0b972bfca1172cb59e5803859397a6319ff1df15946f0c74e8e57b45d",
+      "module": 9,
+      "cpuAddress": 36673,
+      "meaning": "Enemy action invokesdamageandstatus withoutRNG"
+    },
+    {
+      "offset": 305961,
+      "length": 61,
+      "sha256": "103fb48b2b0f559fae1cf1758ba96bc77cc108072fa06ac62721731537f70da1",
+      "module": 9,
+      "cpuAddress": 43801,
+      "meaning": "Per-target status04 doublesdamage beforeHPsubtract/death"
+    },
+    {
+      "offset": 304670,
+      "length": 218,
+      "sha256": "afe560cd1012c8ea62fdaa53641c8b31d1a73667c724c254544be8cf9fd11627",
+      "module": 9,
+      "cpuAddress": 42510,
+      "meaning": "Partyfailurecheck/end-of-cycle recovery"
+    },
+    {
+      "offset": 298949,
+      "length": 35,
+      "sha256": "c6a044ed4e3c828d3270099e8a1e56f50cf16924ea5d94b0e34344f5a6b4abed",
+      "module": 9,
+      "cpuAddress": 36789,
+      "meaning": "Ordinarynextinputstage3"
+    },
+    {
+      "offset": 308728,
+      "length": 14,
+      "sha256": "2f0ba1b3d811a9f81ac71efc2c19cfe8d876ee1905604bed79b88a0eca0d72ec",
+      "module": 9,
+      "cpuAddress": 46568,
+      "meaning": "Initializefreshcommandcollectionactor0"
+    },
+    {
+      "offset": 308894,
+      "length": 29,
+      "sha256": "a9dcbbef2ce7bef9bdd840c3f9628c63f120206e68c5dbbfe1d3f5fb0e14dc92",
+      "module": 9,
+      "cpuAddress": 46734,
+      "meaning": "Nextactor eligibility usesstatus notescapedcommand7"
+    },
+    {
+      "offset": 310849,
+      "length": 121,
+      "sha256": "f846209f6c76a874dd255e41b1db9faf41bad9ca9e457d1de08ef5c89446cd40",
+      "module": 9,
+      "cpuAddress": 48689,
+      "meaning": "Medicine selection validates current sharedquantity andstorescommand5"
+    },
+    {
+      "offset": 310518,
+      "length": 107,
+      "sha256": "5ff3934951e71cedf5b53189c5549bc7b4d77f676055a5b5a3cfe9bd0a86ca99",
+      "module": 9,
+      "cpuAddress": 48358,
+      "meaning": "Partytarget cursorandconfirmation doesnotexclude deadstatus"
+    },
+    {
+      "offset": 295975,
+      "length": 73,
+      "sha256": "455c7194afdbe1e746978fee4466e314402ee3f87a39d56a81458fd5cf230938",
+      "module": 9,
+      "cpuAddress": 33815,
+      "meaning": "Medicine action uses stored136+target partySlot"
+    },
+    {
+      "offset": 309118,
+      "length": 71,
+      "sha256": "6f84bedd912abb11c1d1bb908f1dee6fffda4a77b66901e2d803978a9da48348",
+      "module": 9,
+      "cpuAddress": 46958,
+      "meaning": "Backtopreviousactor refundscommand5 reservation once"
     }
   ],
   "validation": {
@@ -279,6 +359,65 @@
       },
       "parameterCases": 2330,
       "notNormalOrAndroid": true
+    },
+    "continuation": {
+      "reportSha256": "53c1088655826627257b390ac2fd1bb7eb04f387b82126643b5ffa50f8742bc4",
+      "kind": "CONTROLLED_UNMODIFIED_ORIGINAL_CPU_BOUNDARIES_NOT_NORMAL_OR_ANDROID",
+      "boundaryFamilies": 7,
+      "caseCounts": {
+        "iceAllTargets": 48,
+        "partialEscapeContinuation": 12,
+        "herbFullSelectionAndAction": 12,
+        "sharedHerbQueueAndBack": 1,
+        "partialEscapeScheduler": 1,
+        "forcedEscapeOverwritesHerb": 1,
+        "escapedActorXP": 1
+      },
+      "parameterCases": 76,
+      "notNormalOrAndroid": true,
+      "keySnapshots": {
+        "partialEscapeScheduler": {
+          "firstActor": 1,
+          "firstRoll": 0,
+          "firstSuccess": true,
+          "forcedActor": 0,
+          "forcedRoll": 80,
+          "forcedFails": true,
+          "orderAfterForce": [
+            0,
+            0,
+            131,
+            2,
+            3,
+            128,
+            129,
+            130,
+            132,
+            133,
+            134
+          ],
+          "cursorAfterForcedFailure": 1,
+          "nextOriginalSlotActor": 0,
+          "nextOriginalSlotCommand": 4,
+          "willAttemptEscapeAgainInOwnSlot": true
+        },
+        "forcedEscapeHerb": {
+          "secondCommandBefore": 5,
+          "secondCommandAfter": 4,
+          "quantityBeforeEscape": 0,
+          "quantityAfterEscape": 0,
+          "HPUnchanged": true,
+          "refundOnForcedEscape": false
+        },
+        "sharedHerbQueue": {
+          "initialQuantity": 1,
+          "actor0ConfirmedQuantity": 0,
+          "actor1CannotSelectEmptyHerb": true,
+          "backToActor0RefundsReservedUnit": true,
+          "finalQuantity": 1,
+          "firstCommandCleared": true
+        }
+      }
     }
   },
   "growthActor1BoundaryCases": [
@@ -324,19 +463,14 @@
     "Recoverycarrydoesnotcome frompreviouspartycountcompare: B196 SEC/SBC mapspositiveactiveIDandsetscarry1foreveryactiveactor. Correctedexpectedtest; sharedRNGbytecontinuesmutating."
   ],
   "limits": [
-    "One normalnaturalbattle plusisolatedCPUcases; no Androidacceptance",
-    "Onlycurrenttwoactiveactors; arbitrarypartyreordering/holesnotvalidated",
-    "All-targetBossice multi-targetexecution not included",
-    "Normalgirl levelup not yet observed",
-    "OriginalNMI/framerandomsequence not replicated bystatic bytefixtures",
-    "Two present actors0/1 only; no arbitraryparty holes/reordering originalUI acceptance",
-    "AI routine fixed supplied43; NMI frame randomsequence remainsnotreplicated",
-    "Ice dispatcher andfirsttarget CPUverified, fulltwo-target originalnormalplaynotperformed",
-    "Herb fullHP anddeadtarget effectboundary checked; originalmenu legality ondeadtarget NOTchecked",
-    "Herb depleted-sharedinventory menu betweenactor confirmations NOTchecked; donot autoallowfreeuse",
-    "Escape oneactor success isnotparty success; post-success targeteligibility/roundcarry andordinarymenucontinuation pending exactprobe",
-    "No newnormal original battle orAndroid acceptance inthis addendum",
-    "11 JVM methods and 11,935 original CPU parameter cases across 11 families are different counts. Addendum cases are separately counted; repeated byte/status fixtures are not independent normal battles."
+    "One controller-only normal original two-actor physical victory; no Android acceptance is established by this file.",
+    "Only the present actors with original indices0/1. Arbitrary missing active slots, later actors and party reordering are outside the current evidence.",
+    "Core 11,935 parameter cases / 11 families, addendum 2,330 / 5, continuation 76 / 7, and 11 JVM methods are separately counted. Repeated byte/status fixtures are not independent normal battles.",
+    "Controlled escape continuation sets the last scheduler cursor to10 for the next-input boundary; the explicit failure-to-next-slot trace is separate and exact. No new normal full partial-escape round was recorded.",
+    "Normal girl level-up and normal multi-target ice after joining were not observed; growth and ice boundaries use unmodified original CPU fixtures.",
+    "The original battle driver at9:8042 increments43 per invocation. Fixed-byte CPU fixtures do not reproduce frame/NMI random sequence or establish Android timing equivalence.",
+    "No new spell catalog, later party rules, medicine other than herb, or key item behavior is inferred.",
+    "Battle dead-target herb confirmation consumes without healing in the original. A UI that prevents that no-effect choice must identify this as an interaction guard, not claim the original refunds it."
   ],
   "taskId": "WORLD-FULL-01",
   "source": {
@@ -357,8 +491,9 @@
   },
   "additionalRules": {
     "enemyRandomTiming": "9:8DE9 selects AI/hit and calls 8EB2 with the same unchanged $43; ordinary target selection draws no additional byte. Later A956 damage dispatch reads no random byte. This fixed-byte CPU evidence does not simulate NMI frame RNG.",
-    "iceTargetMode": "Behaviors 1/3 special attacks set $693E=1 and start at first living party slot. 8F71 advances to later living slots. Full multi-target continuation remains pending verification; do not silently use single-target semantics.",
-    "twoActorEscape": "8A49 evaluates the acting character against first enemy in agility order. Success sets that actor command7, advances to the next party actor, forces numeric command4 if applicable, and finishes only after all relevant actors command7. One success is not a party escape. Status>=0x10 skip and subsequent-round target/state behavior require further validation.",
-    "herbTwoActorEffect": "Original 9384 uses EF-selected party target through B1BD/B1C7, +50 and max cap, dead-bit20 rejects effect. Both acting and target actor combinations were tested. BB9F confirms and decrements before the ordered action; cancellation does not decrement. Target stores 0x88+partySlot. Shared inventory depletion across collection and full menu legality remain unverified."
+    "iceTargetMode": "Behaviors 1/3 special attacks set $693E=1. Original 8F41 applies damage per current living target; 8F71 scans later present HP-positive party slots. A first target death does not stop later targets. Each target uses its own status04 doubling. No new AI, accuracy, damage or target random read between targets; the common party-failure check runs after the sequence. Tested 48 CPU cases, not a normal multi-target original/Android battle.",
+    "twoActorEscape": "8A49 tests the acting actor against the first enemy in agility order using its existing byte transform and actor agility. Success writes command7, advances in party order, skips status>=0x10 as command7, or forces the next actor command4 and overwrites CURRENT scheduler entry with that actor. Only all relevant command7 ends battle. If that forced actor fails, A60E advances the cursor once; its own original later scheduler slot still executes command4 again. A previous success is not permanent retreat: command7 alone excludes neither ordinary enemy targeting nor living EXP, and next round all eligible actors collect fresh input.",
+    "herbTwoActorEffect": "Actual medicine selection BE31 validates the CURRENT shared quantity and writes command5, item0. BB9F explicitly confirms/decrements, BCE6 records 0x88+partySlot, 8417 converts to EF, and 9349/9384 applies +50/max cap through the selected active identity. Acting actor and target may differ. Target cursor can select a dead party member: confirmation consumes a unit, then dead bit20 rejects the heal. This battle edge differs from map HerbUse. Full HP consumes. Selector rejects a second queued use after the last unit was reserved. B76E returns one reserved unit when explicitly editing the earlier command, and clears that command/cache to prevent another refund.",
+    "escapeOverwritesReservedHerb": "A successful escape chain overwrites a following already-confirmed medicine command5 with escape4; pre-consumed quantity is not refunded and no heal occurs. This is distinct from explicitly returning to edit the previous input, which invokes B76E refund."
   }
 }
