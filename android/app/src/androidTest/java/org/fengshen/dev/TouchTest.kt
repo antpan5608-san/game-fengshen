@@ -1320,7 +1320,7 @@ class TouchTest:IsolatedGameTestCase(){
         val source=SaveSnapshot.parse(file.readText());assertEquals(true,source.flags["rom.event.97.39.1"])
         val(activity,v)=launch();instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals(source,v.currentSnapshot())
-        val started=SystemClock.elapsedRealtime();val events=org.json.JSONArray();var fights=0;var capturedPoison=false
+        val started=SystemClock.elapsedRealtime();val events=org.json.JSONArray();var fights=0;var battleHerbs=0;var capturedPoison=false
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
         fun state(name:String){
@@ -1331,7 +1331,7 @@ class TouchTest:IsolatedGameTestCase(){
             File(instrumentation.targetContext.getExternalFilesDir(null),"world-north-normal-index.json").writeText(
                 org.json.JSONObject().put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_NANHAI_SAVE")
                     .put("sourceFile","nanhai-expected-save.json").put("sourceSha256",hash).put("sourceSnapshot",source.json())
-                    .put("stateChangesAtLoad",false).put("events",events).put("fights",fights).toString())
+                    .put("stateChangesAtLoad",false).put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).toString())
         }
         fun mapMedicine(id:String){
             val before=v.currentSnapshot();assertTrue((before.inventory[id]?:0)>0)
@@ -1351,7 +1351,7 @@ class TouchTest:IsolatedGameTestCase(){
                 mapMedicine(AntidoteUse.ID)
             }
             val h=v.currentSnapshot().characters.first()
-            if(h.hp<h.maxHp-7&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)mapMedicine(HerbUse.ID)
+            if(h.hp<=h.maxHp*2/3&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)mapMedicine(HerbUse.ID)
         }
         fun finishFight(){
             var entered=false;instrumentation.runOnMainSync{entered=v.layer==GameView.Layer.BATTLE};if(!entered)return
@@ -1365,8 +1365,16 @@ class TouchTest:IsolatedGameTestCase(){
                 if(!capturedPoison&&presentation.screen==BattlePresentation.Screen.ACTING&&presentation.action?.kind==BattleActionKind.STATUS){
                     state("original-enemy-poison-action");capturedPoison=true
                 }
-                if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
-                    tap(v,center(v.battleTargetBounds(battle.enemies.first{it.hp>0}.slot)))
+                if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
+                    if(battle.hero.hp<=battle.hero.maxHp*2/3&&v.battleHerbCount()>0){
+                        // Normal direct touch medicine, consuming the original turn and inventory.
+                        // The previous driver attacked until death even while carrying usable herbs.
+                        val before=battle.hero;val count=v.battleHerbCount()
+                        tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
+                        assertEquals(before,battle.hero);assertEquals(count,v.battleHerbCount())
+                        tap(v,center(v.battleItemUseBounds()));assertEquals(count-1,v.battleHerbCount());battleHerbs++
+                    }else tap(v,center(v.battleTargetBounds(battle.enemies.first{it.hp>0}.slot)))
+                }
                 SystemClock.sleep(40)
             }
             assertEquals(GameView.Layer.MAP,v.layer);supply()
