@@ -24,3 +24,4 @@ if($runtime.mobileGrowth -ne 'PASS' -or $runtime.mobileEnemyInformation -ne 'PAS
 if($runtime.battleHerb -ne 'PASS'){throw 'This candidate must verify the scoped battle herb touch/order/save gate'}
 
 if($runtime.worldCurrentServices -ne 'PASS'){throw 'Current village services must verify the reviewed APK'}
+if($runtime.worldSeaNorth -ne 'PASS' -or $runtime.worldStatusAndAntidote -ne 'PASS' -or $runtime.worldSaveProtection -ne 'PASS'){throw 'World north/status/save gates must verify this exact APK'}

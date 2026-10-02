@@ -112,6 +112,8 @@ run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
 run_test testUnrestorableSaveCannotBeOverwritten
+run_test testWorldLegacyInteriorContextAndRestart
+run_test testControlledWorldAntidoteAndFieldPoison
 run_test testControlledInnTransactionsAndGestureSafety
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
@@ -137,13 +139,14 @@ grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
 python tools/record_app_audio.py world-f0 testNormalWorldFullCurrentServices --silent
 python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory --silent --cold-test testNanhaiColdStartMatchesNormalSave --budget-seconds 3600
+python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerifiedNanhaiSave --silent --cold-test testWorldNorthColdStartMatchesNormalSave --budget-seconds 1800
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY
@@ -168,4 +171,17 @@ for part,segments in [('entry',[entry]),('final',[normal[-1],cold])]:
         src=Path(segment['file']);assert hashlib.sha256(src.read_bytes()).hexdigest()==segment['sha256']
         shutil.copyfile(src,out/src.name)
     (out/'clip-index.json').write_text(json.dumps({'segments':segments,'normalFlow':index,'kind':'UNCHANGED_RAW_ANDROID_APP_CLIPS_SILENT'},indent=2))
+recording=json.loads(Path('artifacts/checkpoint-ui/world-north-recording.json').read_text())
+index=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-north-normal-index.json').read_text())
+normal=[s for s in recording['segments'] if '-normal-' in s['file']]
+cold=next(s for s in recording['segments'] if s.get('phase')=='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE')
+out=Path('artifacts/world-review-clips');out.mkdir(parents=True,exist_ok=True)
+selected=[];total=0
+for segment in [normal[-1],cold]:
+    src=Path(segment['file']);assert hashlib.sha256(src.read_bytes()).hexdigest()==segment['sha256']
+    if total+src.stat().st_size>27*1024*1024:continue # Original full artifact still retains every segment.
+    shutil.copyfile(src,out/src.name);total+=src.stat().st_size;selected.append(segment)
+(out/'clip-index.json').write_text(json.dumps({'segments':selected,'allSegmentIndex':recording,
+    'normalFlow':index,'kind':'UNCHANGED_RAW_ANDROID_APP_CONTINUATION_CLIPS_SILENT',
+    'limitBytes':27*1024*1024,'allFootageRetainedInOriginalRuntimeArtifact':True},indent=2))
 PYCLIPS

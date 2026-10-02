@@ -166,8 +166,12 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
     }
 }
 enum class MovementBlock { NONE, PHYSICAL, DEVELOPMENT }
+/** Original shared interiors retain the village caller and exact entered doorway ($9D and return position). */
+data class InteriorContext(val callerMapId:Int,val returnX:Int,val returnY:Int) {
+    init {require(callerMapId in 0..255&&returnX in 0..255&&returnY in 0..255)}
+}
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
-    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false)
+    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false)
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
@@ -176,6 +180,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     constructor(scene:Scene):this(mapOf(scene.mapId to scene),emptyList(),scene.mapId)
     init {require(initialMapId in scenes && exits.all{it.fromMapId in scenes && it.toMapId in scenes})}
     var mapId=initialMapId;private set
+    var interiorContext:InteriorContext?=null;private set
     val scene get()=scenes.getValue(mapId)
     var x=scene.spawnX*16+8; private set
     var y=scene.spawnY*16+8; private set
@@ -194,18 +199,18 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         return (x+dx)/16 to (y+dy)/16
     }
     fun face(key:Key){if(remaining==0 && key in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))direction=key}
-    fun reset() {mapId=initialMapId;x=scene.spawnX*16+8;y=scene.spawnY*16+8;remaining=0;direction=Key.DOWN;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message="";lastCompletedStep=null }
+    fun reset() {interiorContext=null;mapId=initialMapId;x=scene.spawnX*16+8;y=scene.spawnY*16+8;remaining=0;direction=Key.DOWN;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message="";lastCompletedStep=null }
     fun restore(px: Int,py: Int,pending: Int=0,facing: Key=Key.DOWN) {
         restore(mapId,px,py,pending,facing)
     }
     fun restore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN){
         tryRestore(targetMapId,px,py,pending,facing)
     }
-    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN):Boolean {
+    fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN,context:InteriorContext?=null):Boolean {
         val target=scenes[targetMapId]?:return false
         if(target.check(px/16,py/16)==null && pending in 0..16 && facing in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
             if(prepareTarget?.invoke(targetMapId)==false)return false
-            mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
+            interiorContext=context;mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
             val moved=16-pending
             stepOriginX=px-when(facing){Key.LEFT->-moved;Key.RIGHT->moved;else->0}
             stepOriginY=py-when(facing){Key.UP->-moved;Key.DOWN->moved;else->0}
@@ -215,15 +220,20 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     }
     private fun enter(exit:MapExit):Boolean {
         transitionFailure=null
-        val target=try{scenes[exit.toMapId]}catch(e:Exception){transitionFailure=e;null}
-        val valid=target!=null&&target.check(exit.spawnX,exit.spawnY)==null
-        val ready=try{valid&&prepareTarget?.invoke(exit.toMapId)!=false}catch(e:Exception){transitionFailure=e;false}
+        val caller=interiorContext.takeIf{exit.returnToCaller}
+        val destination=caller?.callerMapId?:exit.toMapId
+        val landingX=caller?.returnX?:exit.spawnX;val landingY=caller?.returnY?:exit.spawnY
+        val target=try{scenes[destination]}catch(e:Exception){transitionFailure=e;null}
+        val valid=target!=null&&target.check(landingX,landingY)==null
+        val ready=try{valid&&prepareTarget?.invoke(destination)!=false}catch(e:Exception){transitionFailure=e;false}
         if(!ready){
             message=if(valid||transitionFailure!=null)"目标场景加载失败 · 当前状态已保留" else "目标地图或落点不可用 · 当前状态已保留"
-            transitionObserver?.invoke(mapId,exit.toMapId,false)
+            transitionObserver?.invoke(mapId,destination,false)
             return false
         }
-        mapId=exit.toMapId;x=exit.spawnX*16+8;y=exit.spawnY*16+8;direction=exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
+        val nextContext=when {exit.captureCaller->InteriorContext(mapId,exit.triggerX,exit.triggerY)
+            exit.returnToCaller->null;else->interiorContext}
+        interiorContext=nextContext;mapId=destination;x=landingX*16+8;y=landingY*16+8;direction=exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
         return true
     }
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}

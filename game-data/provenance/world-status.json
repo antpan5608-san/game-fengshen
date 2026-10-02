@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "confidence": "STATIC_ROM_AND_CONTROLLED_EMULATION",
+  "normalPlayEvidence": false,
+  "enemy10": {
+    "sourceType": 7,
+    "behaviorByte": 7,
+    "specialChoice": "(random&127)<41 and ((random>>1)&63)<25",
+    "effect": "status2 by original rank table; no HP damage; not substituted with normal physical attack"
+  },
+  "fieldPoison": {
+    "trigger": "Each completed 16-pixel grid movement",
+    "hpLoss": 1,
+    "deathStatus": 32,
+    "failure": "Verified no-cartridge-manual-save continuation resets map114/HP20/status0 after confirmation",
+    "remainingUnknown": "Original manual cartridge-save recovery branch; map67 special terrain damage not covered"
+  },
+  "medicine6": {
+    "stableId": "rom.medicine.6",
+    "category": "medicine",
+    "originalId": 6,
+    "clearMask": 2,
+    "confirmationConsumption": 1,
+    "extraConsumptionWhenCured": 1,
+    "extraWhenOneAvailable": "Search returns without consuming absent quantity",
+    "scopedCases": {
+      "poison_count3": {
+        "HP": 5,
+        "countAfter": 1,
+        "statusAfter": 0
+      },
+      "poison_count1": {
+        "HP": 5,
+        "countAfter": 0,
+        "statusAfter": 0
+      },
+      "cancel": {
+        "countAfter": 3,
+        "statusAfter": 2
+      },
+      "no_stock": {
+        "countAfter": 0,
+        "statusAfter": 2
+      },
+      "non_poison_sleep": {
+        "countAfter": 2,
+        "statusAfter": 8
+      },
+      "dead_controlled_fixture": {
+        "HP": 0,
+        "countAfter": 2,
+        "statusAfter": 32
+      }
+    },
+    "limitation": "Dead target case is controlled menu fixture, not proof the normal all-dead world can continue browsing menus"
+  },
+  "ranges": [
+    {
+      "offset": 40634,
+      "length": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "module": 1,
+      "cpuAddress": 40618,
+      "meaning": "Source type7 remaps enemy10"
+    },
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Special behavior thresholds"
+    },
+    {
+      "offset": 298489,
+      "length": 202,
+      "sha256": "e564ab20da4ce8d4e4f1467697c383bcecb18f32115c32ed56949c1eb7343855",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Original physical/special choice"
+    },
+    {
+      "offset": 303330,
+      "length": 89,
+      "sha256": "e699109b047f56448c43139d67996baa2cce701e6f79efc8f4cc501bcec3d939",
+      "module": 9,
+      "cpuAddress": 41170,
+      "meaning": "Original status rank dispatch and status table"
+    },
+    {
+      "offset": 14912,
+      "length": 80,
+      "sha256": "d0400c59c556fcd49cf4093ac694370a9b79b1b8a6c8cb5a242be9c4be2c0a6e",
+      "module": 0,
+      "cpuAddress": 47664,
+      "meaning": "Completed-step poison"
+    },
+    {
+      "offset": 15091,
+      "length": 24,
+      "sha256": "e84121fa7245bec441043b523a8933280ecd96afd75ba6e388de572cea5060ff",
+      "module": 0,
+      "cpuAddress": 47843,
+      "meaning": "All-disabled party failure flags"
+    },
+    {
+      "offset": 71205,
+      "length": 60,
+      "sha256": "d6ce64caa22185ac15f296aff858d21c942bb4bf6f9ccdd640c881aaa1c1f50f",
+      "module": 2,
+      "cpuAddress": 38421,
+      "meaning": "Map medicine confirm consumes once"
+    },
+    {
+      "offset": 71520,
+      "length": 40,
+      "sha256": "50a3dbb9b7eb14b95d5665ba47db793cc228858efd7efde528c978e72e7aa464",
+      "module": 2,
+      "cpuAddress": 38736,
+      "meaning": "Medicine6 removes poison and repeats inventory consumption"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Inventory consume search and exhausted-slot handling"
+    }
+  ],
+  "captures": [
+    {
+      "path": "private-derived/world-full01/enemy10-poison-source7/actions.tsv",
+      "sha256": "6c6c770c8234ba264fc06fc27105dae95ae60814f9ea1d483c5febccf9fd0901",
+      "scope": "CONTROLLED_FIXTURE_NOT_NORMAL_APP"
+    },
+    {
+      "path": "private-derived/world-full01/poison-field-confirm/ticks.tsv",
+      "sha256": "80e02147aadd7aa6ba1a9c68bdfc0f47ff44fb756b2b8f0ae3f89c9f02964c13",
+      "scope": "CONTROLLED_FIXTURE_NOT_NORMAL_APP"
+    },
+    {
+      "path": "private-derived/world-poison-medicine-hook/poison-writes.tsv",
+      "sha256": "866f2b51e4e3dcf0e913821d1e22138bc07f5aaa1c1aef88cd13afad17dd2439",
+      "scope": "CONTROLLED_FIXTURE_NOT_NORMAL_APP"
+    },
+    {
+      "path": "private-derived/world-poison-medicine-one/poison-one-writes.tsv",
+      "sha256": "21e2fbafa80f56f0712b81378fbe1524c4d0259f384448c9e36f698178ec9248",
+      "scope": "CONTROLLED_FIXTURE_NOT_NORMAL_APP"
+    }
+  ],
+  "evidenceLocations": "Ignored private-derived evidence in root and task worktree; no ROM/RAM/replay included in public Git",
+  "remainingUnknown": [
+    "Medicine6 healthy-status0 menu target fixture not independently traced; original cartridge-manual-save defeat recovery; map67 terrain damage; multi-character special target selector; battle antidote order/consumption"
+  ]
+}

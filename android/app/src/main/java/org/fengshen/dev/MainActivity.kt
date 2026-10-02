@@ -65,7 +65,7 @@ class MainActivity:Activity() {
 }
 
 class GameView(private val activity:MainActivity,val content:Content):SurfaceView(activity),SurfaceHolder.Callback,Choreographer.FrameCallback {
-    enum class Layer { MAP, MENU, SETTINGS, DIALOGUE, CHARACTER, INVENTORY, BATTLE, SHOP, INN }
+    enum class Layer {FIELD_FAILURE, MAP, MENU, SETTINGS, DIALOGUE, CHARACTER, INVENTORY, BATTLE, SHOP, INN }
     enum class CharacterTab { ATTRIBUTES, EQUIPMENT, ITEMS, MAGIC }
     val world=World(content.scenes,content.exits,114)
     val input=InputState()
@@ -183,7 +183,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),
                 error?.javaClass?.simpleName?:"target_map_or_spawn_unavailable",error?.stackTrace?.take(12)?.joinToString("\n")?:"")}}
     fun relayout(){clearBattleGesture();battlePresentation.invalidateInput();ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
-    fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0)
+    fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0,world.interiorContext)
     fun hasMeaningfulLocalSave():Boolean = hadPersistedAtStart || world.mapId!=114 ||
         world.x!=content.scene.spawnX*16+8 || world.y!=content.scene.spawnY*16+8 || characters!=listOf(content.initialPlayer) ||
         inventory.isNotEmpty() || flags.isNotEmpty() || money!=content.initialMoney
@@ -191,7 +191,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
-        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction))return false
+        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction,snapshot.resolvedInteriorContext(content)))return false
         audio.scene(world.mapId)
         encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
         characters=snapshot.characters.map{hero->
@@ -205,7 +205,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         inventory=migrated.filterValues{it>0};flags=snapshot.flags;money=snapshot.money
         characterPage=0;selectedItemId=null;candidateSlot=null;resetModalSelection()
-        localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState();return true
+        localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState()
+        if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
+        return true
     }
     fun restorePersisted(){
         val encoded=savePrefs.getString("saveJson",null)
@@ -273,6 +275,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedStepSeq==world.completedStepSeq)return
         processedStepSeq=world.completedStepSeq
         val step=world.lastCompletedStep?:return
+        characters=OriginalStatus.step(characters)
+        if(OriginalStatus.allDisabled(characters)){
+            flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
+        }
         if(step.transitioned){
             Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",step.mapId)
                 .put("mapId",world.mapId).put("x",world.x/16).put("y",world.y/16));audio.scene(world.mapId)
@@ -296,6 +302,34 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
         input.clear();battleTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset()
+    }
+    private val FIELD_FAILURE_FLAG="runtime.field-defeat.pending"
+    /** Same verified no-cartridge-manual-save failure branch already used by battles. */
+    private fun resetOpeningAfterDefeat(){
+        characters=listOf(content.initialPlayer);inventory=emptyMap();money=content.initialMoney
+        flags=mapOf("opening.intro.seen" to true);encounter?.restore(0)
+        world.restore(114,content.scene.spawnX*16+8,content.scene.spawnY*16+8,0,Key.DOWN)
+        processedStepSeq=world.completedStepSeq
+    }
+    private fun showFieldFailure(){
+        if(flags[FIELD_FAILURE_FLAG]!=true||modalDialog!=null)return
+        input.clear();clearUxGesture();clearBattleGesture();clock.reset();layer=Layer.FIELD_FAILURE
+        val dialog=AlertDialog.Builder(activity).setTitle("不幸！全員陣亡了！")
+            .setCancelable(false).setPositiveButton("继续",null).create()
+        modalDialog=dialog
+        dialog.setOnShowListener{
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener{
+                if(flags[FIELD_FAILURE_FLAG]!=true)return@setOnClickListener
+                val before=currentSnapshot();resetOpeningAfterDefeat()
+                if(!persistStateResult()){
+                    if(!restoreSnapshot(before))localSaveProtected=true
+                    dialog.setMessage("保存失败 · 原状态已保留，请重试")
+                    return@setOnClickListener
+                }
+                layer=Layer.MAP;audio.scene(world.mapId);dialog.dismiss();modalDialog=null;clock.reset()
+            }
+        }
+        dialog.show()
     }
     private fun finishPendingStep():Boolean {
         world.finishStep();processCompletedStep()
@@ -354,11 +388,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             BattlePhase.DEFEAT->{
                 if(content.battle?.defeatResetEnabled!=true){battleMessage="原版战败处理尚未开放";return}
                 // Target ROM: 0:812D clears runtime RAM, 0:B795 initializes map114 and the opening party.
-                characters=listOf(content.initialPlayer);inventory=emptyMap();money=content.initialMoney
-                flags=mapOf("opening.intro.seen" to true) // Mobile intro was already shown; no invented repeat scene.
-                encounter?.restore(0)
-                world.restore(114,content.scene.spawnX*16+8,content.scene.spawnY*16+8,0,Key.DOWN)
-                processedStepSeq=world.completedStepSeq
+                resetOpeningAfterDefeat()
                 battleMessage="不幸！全員陣亡了！"
             }
             BattlePhase.TARGET->return
@@ -435,7 +465,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return Box(b.x+x*scale,b.y+y*scale,w*scale,h*scale)
     }
     private fun battleEnemyBox(enemy:BattleEnemy):Box {
-        val graphic=content.enemyGraphics[enemy.definition.id];val origin=content.enemyOrigins[enemy.definition.id]
+        val graphic=content.enemyGraphics[enemy.definition.id]
+        // A captured single-enemy origin is not a shared origin for every instance in a group.
+        // Keep the existing slot layout for ordinary groups; the sole Boss retains its origin.
+        val origin=content.enemyOrigins[enemy.definition.id]?.takeIf{battle?.enemies?.size==1}
         return battleRegion(origin?.first?.toFloat()?: (16f+32*enemy.slot),origin?.second?.toFloat()?:72f,
             (graphic?.width?:32).toFloat(),(graphic?.height?:40).toFloat())
     }
@@ -551,11 +584,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val (x,y)=world.destinationCell()
         if(npc.shopId!=null){
             if(npc !in nearbyNpcs())return
-            world.face(Key.UP);openShop(content.shops.getValue(npc.shopId));return
+            val bindings=content.serviceBindings.filter{it.npcId==npc.id&&it.interiorMapId==world.mapId}
+            val id=if(bindings.isEmpty())npc.shopId else bindings.firstOrNull{it.callerMapId==world.interiorContext?.callerMapId}?.shopId
+            val definition=id?.let{content.shops[it]}
+            if(definition==null){showNotice("当前村庄的商店数据未接入");return}
+            world.face(Key.UP);openShop(definition);return
         }
         if(npc.innId!=null){
             if(npc !in nearbyNpcs())return
-            world.face(Key.UP);openInn(content.inns.getValue(npc.innId));return
+            val bindings=content.serviceBindings.filter{it.npcId==npc.id&&it.interiorMapId==world.mapId}
+            val id=if(bindings.isEmpty())npc.innId else bindings.firstOrNull{it.callerMapId==world.interiorContext?.callerMapId}?.innId
+            val definition=id?.let{content.inns[it]}
+            if(definition==null){showNotice("当前村庄的住宿数据未接入");return}
+            world.face(Key.UP);openInn(definition);return
         }
         val direction=facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
@@ -625,7 +666,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
     private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
-    fun handleBack():Boolean {when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
+    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
@@ -742,10 +783,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 result==null->"当前装备条件不满足";else->""}
             return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
-        if(item.herbUse!=null){
-            val living=characters.filter{it.hp>0};val target=if(living.size==1)living.single() else hero
+        if(MapItemUse.supported(item)){
+            val living=if(item.antidoteUse!=null)characters else characters.filter{it.hp>0};val target=if(living.size==1)living.single() else hero
             val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
-            val enabled=HerbUse.available(characters,inventory,target.id,item,mapMenu)
+            val enabled=MapItemUse.available(characters,inventory,target.id,item,mapMenu)
             val reason=when{!mapMenu->"仅支持地图/菜单使用";living.isEmpty()->"当前没有合法的存活目标";(inventory[id]?:0)<=0->"已无该物品";!enabled->"当前目标条件不满足，请选择存活队员";else->""}
             return ItemAction("use","使用于${heroName(target.id)}",enabled,reason,target.id)
         }
@@ -803,7 +844,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 when(cmd.kind){
                     "use"->{val a=itemAction();if(a.kind!="use"||!a.enabled||a.target!=target||selectedItemId!=id)return
                         val item=content.itemDefinitions[id]?:return
-                        val result=HerbUse.apply(characters,inventory,target,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                        val result=MapItemUse.apply(characters,inventory,target,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
                         if(!result.applied)return;characters=result.characters;inventory=result.inventory}
                     else->{val d=content.equipmentDefinitions[id]?:return
                         if(cmd.kind=="equip"&&(selectedItemId!=id||hero.id!=selectedCharacterId))return
@@ -1003,14 +1044,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val progress=growthProgress(hero)
             val lines=if(panelTab==CharacterTab.MAGIC)listOf("已学法术状态尚未迁移","执行逻辑尚未开放") else
                 listOf("当前等级 ${hero.level}",if(progress.status==ExperienceProgress.Status.PROGRESS)"下一等级 ${hero.level+1}" else progress.summary,
-                    progress.summary,"累计EXP ${hero.experience}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"}",
+                    progress.summary,"累计EXP ${hero.experience}","状态 ${OriginalStatus.label(hero.statusMask)}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"}",
                     "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")} · 总防御 ${hero.stamina+equipmentBonus(hero,"body")}",
                     "敏捷 ${hero.agility} · 精神 ${hero.spirit}","银两 $money")
             touchDetail(c,lines);return
         }
         if(l.wide||!modalDetailsOpen){
             val rows=if(panelTab==CharacterTab.ITEMS)panelItems().map{e->val item=content.itemDefinitions[e.key]
-                val status=when{item?.herbUse!=null->if(characters.none{it.hp>0})"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
+                val status=when{item?.let(MapItemUse::supported)==true->if(characters.isEmpty()||(item.antidoteUse==null&&characters.none{it.hp>0}))"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
                 Triple(e.key,"${item?.name?:"未知物品"}\n×${e.value} · $status",item?.preview)}
             else listOf("rightHand","leftHand","body","feet").map{slot->
                 val e=hero.equipment;val id=when(slot){"rightHand"->e?.rightHand;"leftHand"->e?.leftHand;"body"->e?.body;else->e?.feet}
@@ -1063,6 +1104,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
+        if(layer==Layer.FIELD_FAILURE)return true
         if(layer==Layer.BATTLE)return battleTouchEvent(e)
         if(layer in listOf(Layer.SHOP,Layer.INN) || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
         if(e.actionMasked==MotionEvent.ACTION_CANCEL){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();dialogueTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();return true}
@@ -1213,7 +1255,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)
         }
         c.restore()
-        when(layer){Layer.MAP->{drawControls(c);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
+        when(layer){Layer.FIELD_FAILURE->drawHud(c);Layer.MAP->{drawControls(c);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
             Layer.CHARACTER,Layer.INVENTORY->drawInfoPanel(c);Layer.BATTLE->drawBattle(c);Layer.SHOP->drawShop(c);Layer.INN->drawInn(c)}
         if(world.message!=previousMessage){previousMessage=world.message;if(world.message.startsWith("开发边界")){mapNotice=world.message;noticeUntil=SystemClock.uptimeMillis()+1800}}
         if(layer==Layer.MAP&&SystemClock.uptimeMillis()<noticeUntil){
@@ -1246,7 +1288,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(!big)portrait(c,hero,p)
         val x=if(big)b.x+8*dp else p.x+p.w+8*dp;val right=b.x+b.w-8*dp
         var y=b.y+5*dp
-        y+=touchText(c,"${heroName(hero.id)} Lv.${hero.level}",Box(x,y,right-x,1f),11f)
+        y+=touchText(c,"${heroName(hero.id)} Lv.${hero.level}"+if(hero.statusMask==0)"" else " · ${OriginalStatus.label(hero.statusMask)}",Box(x,y,right-x,1f),11f)
         y+=touchText(c,"HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"}",Box(x,y,right-x,1f),10f)
         gauge(c,Box(x,y+2*dp,(right-x)*.48f,4*dp),hero.hp,hero.maxHp,0xffc55758.toInt())
         gauge(c,Box(x+(right-x)*.52f,y+2*dp,(right-x)*.48f,4*dp),hero.mp,hero.maxMp,0xff638cce.toInt());y+=9*dp
@@ -1402,7 +1444,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             BattlePresentation.Screen.ENTRY->"敌人出现了！"
             BattlePresentation.Screen.ACTING->action?.text?:""
             else->if(storyBattle!=null)"点击龙王攻击 · 逃跑必失败并耗行动" else "点击敌人或对应信息条攻击"}
-        touchText(c,"${heroName(current.hero.id)} HP $hp/${current.hero.maxHp} · MP ${current.hero.mp}/${current.hero.maxMp?:"?"}\n$message",
+        val status=if(screen==BattlePresentation.Screen.ACTING)action?.heroStatusMask?:current.hero.statusMask else current.hero.statusMask
+        val statusText=if(status==0)"" else " · ${OriginalStatus.label(status)}"
+        touchText(c,"${heroName(current.hero.id)}$statusText HP $hp/${current.hero.maxHp} · MP ${current.hero.mp}/${current.hero.maxMp?:"?"}\n$message",
             Box(l.status.x+6*dp,l.status.y+3*dp,l.status.w-12*dp,l.status.h),12f)
         val waiting=screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)
         listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->touchButton(c,l.commands[i],title,waiting&&i!=1)}

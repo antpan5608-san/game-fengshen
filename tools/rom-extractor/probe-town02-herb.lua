@@ -1,6 +1,10 @@
 -- Isolated original-game boundary fixture: RAM setup is NOT normal play evidence.
 local root=assert(os.getenv('FENGSHEN_ROOT'),'Set FENGSHEN_ROOT')
-local out=root..'/private-derived/town02/'
+local folder=os.getenv('HERB_OUTPUT_FOLDER') or 'town02'
+assert(folder:match('^[a-zA-Z0-9_-]+$'),'Private output folder must be a basename')
+local out=root..'/private-derived/'..folder..'/'
+local item=tonumber(os.getenv('HERB_ITEM_ID') or '0')
+assert(item>=0 and item<=14 and item==math.floor(item),'Category-local medicine ID required')
 local case=os.getenv('HERB_CASE') or 'injured'
 local hp=tonumber(os.getenv('HERB_HP') or '5')
 local flag=tonumber(os.getenv('HERB_FLAG') or '0')
@@ -9,7 +13,7 @@ emu.speedmode('nothrottle')
 local frame=0;local banks={63,63,63,63}
 local writes=assert(io.open(out..case..'-writes.tsv','w'))
 memory.registerwrite(0x6000,4,function(a,n,v)banks[a-0x6000+1]=v%64 end)
-for _,addr in ipairs({0x514,0x515,0x5b0})do memory.registerwrite(addr,1,function(a,n,v)
+for _,addr in ipairs({0x514,0x515,0x544,0x5b0})do memory.registerwrite(addr,1,function(a,n,v)
  if frame>1000 then local pc=memory.getregister('pc');writes:write(string.format('%d\t%04X\t%d\t%04X\t%d\n',frame,a,v,pc,banks[math.floor((pc-0x8000)/8192)+1] or -1)) end
 end)end
 local log=assert(io.open(out..case..'-timeline.tsv','w'))
@@ -20,7 +24,7 @@ for t=1,2400 do
  if t==520 or t==535 or t==550 or t==565 or t==580 then k.down=true end
  if t==690 or t==720 then k.B=true end
  if t==1000 then
-  memory.writebyte(0x570,0);memory.writebyte(0x5b0,tonumber(os.getenv('HERB_COUNT') or '3'))
+  memory.writebyte(0x570,item);memory.writebyte(0x5b0,tonumber(os.getenv('HERB_COUNT') or '3'))
   memory.writebyte(0x514,hp);memory.writebyte(0x51c,100);memory.writebyte(0x544,flag)
  end
  if t==1040 or t==1220 or t==1380 or t==1540 or t==1700 or (t==1860 and case~='cancel') then k.A=true end

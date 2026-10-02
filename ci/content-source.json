@@ -3,25 +3,25 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c14",
-  "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495",
+  "contentVersion": "opening-segment-001-c15",
+  "manifestSha256": "ceba3005133e693c01ae1c852ee0bc2be3655cd5879869c3c782856f3c2eea1a",
   "iteration": {
     "base": {
-      "buildRunId": 36971336254,
-      "sourceCommit": "f9d9ba888e078cc32334bf64ad57ae1822b9402b",
-      "versionCode": 26,
-      "apkSha256": "54859450bea3b20ce8c684164b9e325fce832326baf7093686e27a89ad58deb4",
-      "contentVersion": "opening-segment-001-c13",
-      "manifestSha256": "badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4"
+      "buildRunId": 36995827962,
+      "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+      "versionCode": 27,
+      "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+      "contentVersion": "opening-segment-001-c14",
+      "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-full01.json"
+    "provenance": "game-data/provenance/world-north01.json"
   },
   "runtimeBaseline": {
-    "buildRunId": 36971336254,
-    "sourceCommit": "f9d9ba888e078cc32334bf64ad57ae1822b9402b",
-    "versionCode": 26,
-    "apkSha256": "54859450bea3b20ce8c684164b9e325fce832326baf7093686e27a89ad58deb4",
-    "contentVersion": "opening-segment-001-c13",
-    "manifestSha256": "badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4"
+    "buildRunId": 36995827962,
+    "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+    "versionCode": 27,
+    "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+    "contentVersion": "opening-segment-001-c14",
+    "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
   }
 }

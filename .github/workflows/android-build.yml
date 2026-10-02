@@ -75,6 +75,8 @@ jobs:
           "upgrade_run_id=$upgradeRun"|Add-Content $env:GITHUB_OUTPUT
           $golden=(Get-Content ci/golden-nanhai-content.json -Raw|ConvertFrom-Json).iteration.base
           "golden_run_id=$($golden.buildRunId)"|Add-Content $env:GITHUB_OUTPUT
+          $worldGolden=(Get-Content ci/golden-world-f0-content.json -Raw|ConvertFrom-Json).iteration.base
+          "world_golden_run_id=$($worldGolden.buildRunId)"|Add-Content $env:GITHUB_OUTPUT
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: fengshen-signed-apk
@@ -87,6 +89,13 @@ jobs:
           name: fengshen-signed-apk
           path: artifacts/golden-base
           run-id: ${{ steps.content_base.outputs.golden_run_id }}
+          github-token: ${{ github.token }}
+      - name: Retain the fixed historical world fault regression input
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/world-golden-base
+          run-id: ${{ steps.content_base.outputs.world_golden_run_id }}
           github-token: ${{ github.token }}
       - name: Build, test and verify existing signature/content
         env:
@@ -109,6 +118,11 @@ jobs:
           $goldenReceipt=Get-Content artifacts/golden-base/apk-receipt.json -Raw|ConvertFrom-Json
           if($golden.Count -ne 1 -or (Get-FileHash $golden[0].FullName).Hash.ToLowerInvariant() -ne $goldenPin.apkSha256 -or $goldenReceipt.sourceCommit -ne $goldenPin.sourceCommit -or $goldenReceipt.buildRunID -ne $goldenPin.buildRunId -or $goldenReceipt.contentHash -ne $goldenPin.manifestSha256){throw 'Historical golden source/hash/receipt differs'}
           $env:FENGSHEN_GOLDEN_BASE_APK=$golden[0].FullName
+          $worldGoldenPin=(Get-Content ci/golden-world-f0-content.json -Raw|ConvertFrom-Json).iteration.base
+          $worldGolden=@(Get-ChildItem artifacts/world-golden-base/*-release.apk)
+          $worldGoldenReceipt=Get-Content artifacts/world-golden-base/apk-receipt.json -Raw|ConvertFrom-Json
+          if($worldGolden.Count -ne 1 -or (Get-FileHash $worldGolden[0].FullName).Hash.ToLowerInvariant() -ne $worldGoldenPin.apkSha256 -or $worldGoldenReceipt.sourceCommit -ne $worldGoldenPin.sourceCommit -or $worldGoldenReceipt.buildRunID -ne $worldGoldenPin.buildRunId -or $worldGoldenReceipt.contentHash -ne $worldGoldenPin.manifestSha256){throw 'Historical world fault golden source/hash/receipt differs'}
+          $env:FENGSHEN_WORLD_F0_BASE_APK=$worldGolden[0].FullName
           ./build-ci.ps1 -VersionCode $env:VERSION_CODE -VersionName $env:VERSION_NAME -ContentApk $base[0].FullName -RuntimeTests
           if($LASTEXITCODE -ne 0){throw 'Cloud build failed'}
           $receipt=Get-Content artifacts/ci/apk-receipt.json -Raw|ConvertFrom-Json
@@ -269,6 +283,7 @@ jobs:
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
             artifacts/checkpoint-ui/world-f0-*
+            artifacts/checkpoint-ui/world-north-*
             artifacts/checkpoint-ui/town02-ci-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/checkpoint-ui/nanhai-*
@@ -314,10 +329,27 @@ jobs:
             artifacts/checkpoint-ui/touch-ux-town01-*.png
             artifacts/checkpoint-ui/world-f0-*.json
             artifacts/checkpoint-ui/world-f0-force-stop-restored.png
+            artifacts/checkpoint-ui/world-north-*.json
+            artifacts/checkpoint-ui/world-north-force-stop-restored.png
+            artifacts/checkpoint-ui/touch-ux-world-*.png
+            artifacts/checkpoint-ui/touch-ux-world-*.json
             artifacts/checkpoint-ui/mobile-*.png
             artifacts/checkpoint-ui/mobile-*.json
             artifacts/checkpoint-ui/nanhai-mobile-*.png
             artifacts/checkpoint-ui/*-normal-test.txt
             artifacts/town02-runtime/test*.txt
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Retain bounded original world continuation evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-world-checkpoints
+          path: |
+            artifacts/world-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-*.png
+            artifacts/checkpoint-ui/touch-ux-world-*.json
+            artifacts/checkpoint-ui/world-north-*.json
+            artifacts/checkpoint-ui/world-north-normal-test.txt
           if-no-files-found: ignore
           retention-days: 14

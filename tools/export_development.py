@@ -7,6 +7,7 @@ import sys
 import io
 import struct
 import zlib
+import itertools
 import urllib.request
 from pathlib import Path
 from PIL import Image
@@ -106,6 +107,45 @@ def scoped_observed_graphic(reader,recipe):
     if not recipe.get('rgbaSha256') or digest(image.tobytes())!=recipe['rgbaSha256']:
         raise ValueError('Reconstructed graphic differs from reviewed RGBA pixels')
     return deterministic_rgba_png(image)
+
+def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False):
+    """Bounded evidence helper for the existing ROM-tile recipe, never an image importer.
+
+    Call only with a settled original capture and an explicitly reviewed rectangle.
+    A partial match, faded frame, or extra palette colors is rejected.
+    """
+    if digest(reader.data)!=SHA256:raise ValueError('Graphic evidence needs target ROM')
+    x,y,width,height=rect
+    if any(v%8 for v in rect) or not 8<=width<=256 or not 8<=height<=240:
+        raise ValueError('Graphic evidence rectangle must align to tiles')
+    with Image.open(capture_path) as capture:
+        if x<0 or y<0 or x+width>capture.width or y+height>capture.height:raise ValueError('Capture rectangle escapes image')
+        observed=capture.convert('RGB').crop((x,y,x+width,y+height))
+    colors=sorted(set(observed.getdata())-{(0,0,0)})
+    if not 1<=len(colors)<=3:raise ValueError('Faded or mixed graphic palette')
+    chr_start=reader.header['sections']['chr']['offset'];best=None
+    for order in itertools.permutations((1,2,3),len(colors)):
+        codes={(0,0,0):0,**dict(zip(colors,order))};tiles=[]
+        for yy in range(0,height,8):
+            for xx in range(0,width,8):
+                rows=[[codes[observed.getpixel((xx+dx,yy+dy))] for dx in range(8)] for dy in range(8)]
+                raw=bytes([sum((row[dx]&1)<<(7-dx) for dx in range(8)) for row in rows]+
+                    [sum(((row[dx]>>1)&1)<<(7-dx) for dx in range(8)) for row in rows])
+                offset=reader.data.find(raw,chr_start)
+                tiles.append({'xy':[xx,yy],'offset':offset,'length':16,'sha256':digest(raw)})
+        matches=sum(t['offset']>=chr_start for t in tiles)
+        if best is None or matches>best[0]:best=(matches,codes,tiles)
+    matches,codes,tiles=best
+    if matches!=len(tiles):raise ValueError(f'Incomplete original tile match: {matches}/{len(tiles)}')
+    rgba=observed.convert('RGBA')
+    if transparent_zero:
+        rgba.putdata([p[:3]+(0 if p[:3]==(0,0,0) else 255,) for p in rgba.getdata()])
+    recipe={'width':width,'height':height,'observedRect':rect,'transparentZero':transparent_zero,
+        'paletteCodes':{str(code):list(color) for color,code in codes.items()},'tiles':tiles,
+        'rgbaSha256':digest(rgba.tobytes()),'captureSha256':digest(Path(capture_path).read_bytes()),
+        'captureKind':'CONTROLLED_ORIGINAL_FULL_GROUP_LOADER','normalPlayEvidence':False}
+    scoped_observed_graphic(reader,recipe) # Same CI reconstruction and RGBA gate.
+    return recipe
 
 def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
     """Extend the current exporter for this bounded route, retaining base media bytes."""
@@ -303,9 +343,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             klass=reader.read(c['module'],c['cpuAddress']+tile)[0]
             if klass!=exit['collisionClass'] or exit['toMapId']!=klass-exit['dispatchSubtract']:
                 raise ValueError('Original indoor collision dispatch differs')
+        elif exit['kind']=='EXIT_RECORD':
+            if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
+                raise ValueError('Original exit record differs')
         else:raise ValueError('Unsupported transition kind needs original evidence')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
-            {'source':exit['source'],'evidence':provenance_path})
+            {'source':exit['source'],'evidence':provenance_path}|
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller') if k in exit})
         for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
             mid=exit[idfield]
             if mid==114:raise ValueError('Opening scene overlay requires explicit review')
@@ -314,6 +358,80 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if not 0<=x<data['width'] or not 0<=y<data['height']:raise ValueError('Exit outside map')
             data['transitionCells']=sorted(set(data.get('transitionCells',[]))|{index})
             data['enabledCells']=sorted(set(data['enabledCells'])|{index});result[name]=encoded(data)
+    for patch in evidence.get('exitContextUpdates',[]):
+        matches=[e for e in scene['exits'] if all(e[k]==patch[k] for k in ('fromMapId','trigger','toMapId','spawn'))]
+        if len(matches)!=1:raise ValueError('Caller patch must identify one existing transition')
+        checked_span(reader,patch['source'])
+        if patch['fromMapId'] in (17,18,19,22):
+            if list(checked_span(reader,patch['source']))!=patch['trigger']+[254,0,0] or patch.get('returnToCaller') is not True:
+                raise ValueError('Caller return lacks original FE record')
+        elif patch['fromMapId'] not in range(16) or patch.get('captureCaller') is not True:
+            raise ValueError('Caller entry outside original villages')
+        matches[0].update({k:patch[k] for k in ('captureCaller','returnToCaller') if k in patch})
+    for update in evidence.get('itemUpdates',[]):
+        matches=[i for i in scene['items'] if i['id']==update['id']]
+        if len(matches)!=1 or update['id']!='rom.medicine.6':raise ValueError('Unreviewed item update')
+        rule=update['antidoteUse']
+        if rule!={'mapMenu':True,'cureStatusMask':2,'confirmationConsumption':1,'extraConsumptionWhenCured':1,
+                'evidence':'game-data/provenance/world-status.json'}:raise ValueError('Antidote rule differs from checked dispatch')
+        status=load(ROOT/rule['evidence'])
+        if status['romSha256']!=SHA256:raise ValueError('Wrong status evidence fingerprint')
+        for span in status['ranges']:checked_span(reader,span)
+        matches[0]['antidoteUse']=rule;matches[0]['description']=update['description']
+        source=matches[0]['source'];source['useEvidence']=rule['evidence']
+        source['verifiedFields']=source.get('verifiedFields',[])+['mapUseConsumption','mapUsePoisonRemoval']
+        source['remainingUnknown']=['Battle antidote use/order not implemented']
+    overlay=evidence.get('combatOverlay')
+    if overlay:
+        combat=json.loads(result['combat.json'])
+        for enemy in overlay.get('enemies',[]):
+            original=extract_enemy(reader,enemy['id'])
+            if enemy['id'] not in (10,11) or enemy['id'] in {x['id'] for x in combat['enemies']}:raise ValueError('Enemy overlay overlaps or escapes evidence')
+            if any(enemy[k]!=original[k] for k in ('hp','attack','defense','experienceReward','moneyReward')):
+                raise ValueError('Enemy overlay stats differ from ROM')
+            tail=original['remainingBytes']
+            if (enemy['behaviorByte'],enemy['hitByte'],overlay['enemyAgility'][str(enemy['id'])])!=(tail[1],tail[2],tail[0]):
+                raise ValueError('Enemy overlay behavior/agility differs')
+            if enemy.get('loot')!={'category':'medicine','itemId':f'rom.medicine.{tail[5]}','threshold':tail[3]}:
+                raise ValueError('Enemy overlay loot differs')
+            checked_span(reader,enemy['source'])
+        for zone in overlay.get('zones',[]):
+            if zone['id']!=4 or zone['mapId']!=25 or zone['randomThreshold']!=16 or zone['randomGate']!='LOW':
+                raise ValueError('Unreviewed encounter region')
+            raw=checked_span(reader,zone['rectangleSource'])
+            if raw!=bytes([zone['id']]+[v for rect in zone['rectangles'] for v in rect]+[0]):raise ValueError('Encounter rectangles differ')
+            expected_count=reader.read(1,0xb12d+zone['id'])[0]
+            if len(zone['groups'])!=expected_count or [g['id'] for g in zone['groups']]!=list(range(expected_count)):
+                raise ValueError('Encounter groups incomplete')
+            for group in zone['groups']:
+                actual=checked_span(reader,group['range'])
+                pairs=[v for entity in group['entities'] for v in (entity['slot']+1,entity['sourceType'])]
+                if actual!=bytes(pairs+[0]) or any(reader.read(1,0x9ea3+entity['sourceType'])[0]!=entity['enemyId'] for entity in group['entities']):
+                    raise ValueError('Encounter members or source mapping differ')
+        combat['enemies']+=overlay.get('enemies',[]);combat['zones']+=overlay.get('zones',[])
+        for fallback in overlay.get('fallbackZones',[]):
+            if fallback['mapId']!=25 or fallback['id']!=1 or fallback['rectangles'] or \
+                    checked_span(reader,fallback['defaultSource'])!=b'\x01':raise ValueError('Unreviewed default encounter fallback')
+            existing=next(z for z in combat['zones'] if z['mapId']==25 and z['id']==1)
+            if any(fallback[k]!=existing[k] for k in ('groups','randomThreshold','randomGate')):
+                raise ValueError('Default encounter fallback must reuse full original zone1')
+            combat.setdefault('fallbackZones',[]).append(fallback)
+        combat['escape']['enemyAgility'].update(overlay.get('enemyAgility',{}))
+        for graphic in overlay.get('graphics',[]):
+            recipe=evidence['graphics'][graphic['asset']]
+            if graphic['origin']+[graphic['width'],graphic['height']]!=recipe['observedRect']:
+                raise ValueError('Enemy graphic placement differs from observed rectangle')
+        combat['presentation']['graphics']+=overlay.get('graphics',[])
+        result['combat.json']=encoded(combat)
+    for patch in evidence.get('sceneCapabilityUpdates',[]):
+        if patch['mapId']!=25 or not overlay:raise ValueError('Scene capability update lacks implemented encounters')
+        zone=next(z for z in overlay['zones'] if z['id']==4)
+        name=next(m['scene'] for m in scene['maps'] if m['id']==patch['mapId']);data=json.loads(result[name])
+        if data.get('unavailableRegions')!=zone['rectangles'] or patch['implementedCapabilities']!=['ENEMY10_POISON','FIELD_POISON','MAP_ANTIDOTE','FIELD_DEFEAT']:
+            raise ValueError('Scene capability source/implementation differs')
+        data['unavailableRegions']=[]
+        data['limitations']=[s for s in data.get('limitations',[]) if not s.startswith('Nanhai sea northern encounter region4')]
+        result[name]=encoded(data)
     for name,recipe in evidence.get('graphics',{}).items():
         if name in result or '/' in name or '\\' in name or not name.endswith('.png'):
             raise ValueError('Unsafe/overlapping world graphic')
