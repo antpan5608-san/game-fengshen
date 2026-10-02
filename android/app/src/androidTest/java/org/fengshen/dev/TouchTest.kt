@@ -1373,7 +1373,15 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(128f/112,eb.w/eb.h,.001f);assertTrue(eb.y+eb.h<=v.battleTargetBounds(fight.enemies.single().slot).y)
         screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(2)))
         screenshot(v,"mobile-phone-medicine-$font");tap(v,center(v.battleItemBounds(HerbUse.ID)))
-        screenshot(v,"mobile-phone-medicine-detail-$font");tap(v,center(v.battleItemCloseBounds()))
+        screenshot(v,"mobile-phone-medicine-detail-$font")
+        val medicine=GameView::class.java.getDeclaredMethod("battleItemLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
+        assertTrue("Medicine target/effect/full-HP rule need three readable rows",medicine.detail.h>=(14f*font*1.25f+4)*3*dp)
+        assertFalse(overlap(medicine.detail,medicine.primary));assertFalse(overlap(medicine.detail,medicine.close))
+        val inventoryBefore=v.battleHerbCount();val heroBefore=fight.hero;val medicineScroll=center(medicine.detail)
+        send(v,MotionEvent.ACTION_DOWN,listOf(medicineScroll));send(v,MotionEvent.ACTION_MOVE,listOf(Pair(medicineScroll.first,medicineScroll.second-80*dp)))
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(medicineScroll.first,medicineScroll.second-80*dp)))
+        assertEquals(inventoryBefore,v.battleHerbCount());assertEquals(heroBefore,fight.hero)
+        screenshot(v,"mobile-phone-medicine-detail-scrolled-$font");tap(v,center(v.battleItemCloseBounds()))
         tap(v,center(v.battleCommandBounds(4)))
         val info=GameView::class.java.getDeclaredMethod("battleInfoLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
         val infoTarget=v.battleTargetBounds(fight.enemies.single().slot)
@@ -1392,7 +1400,8 @@ class TouchTest:IsolatedGameTestCase(){
         screenshot(v,"mobile-phone-growth-scrolled-$font")
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
             org.json.JSONObject().put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
-                .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48).toString())
+                .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48)
+                .put("medicineDetailHeightDp",medicine.detail.h/dp).put("medicineTextRowsVisible",medicine.detail.h/((14f*font*1.25f+4)*dp)).toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
 
