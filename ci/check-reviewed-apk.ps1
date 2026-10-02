@@ -16,3 +16,7 @@ if($LASTEXITCODE -ne 0){throw 'Reviewed signature/content/version failed revalid
 if($runtime.nanhaiNormalRoute -ne 'PASS' -or $runtime.nanhaiBossVictory -ne 'PASS' -or $runtime.nanhaiOnceAndColdRestart -ne 'PASS'){
     throw 'Nanhai normal App route/Boss/once-and-restart gates are required'
 }
+
+if($runtime.mobileGrowth -ne 'PASS' -or $runtime.mobileEnemyInformation -ne 'PASS' -or $runtime.mobileDirectTouch -ne 'PASS' -or $runtime.mobileActionSnapshots -ne 'PASS'){
+    throw 'Mobile growth/battle touch/snapshot gates must verify the same reviewed APK'
+}

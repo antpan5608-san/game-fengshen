@@ -31,7 +31,7 @@ class Battle02Test {
         assertEquals(10,turn.playerDamage);assertEquals(BattlePhase.VICTORY,turn.phase)
         assertEquals(3,turn.actions.size);assertTrue(p.present(turn));assertFalse(p.present(turn))
         assertEquals(BattlePresentation.Screen.ACTING,p.screen)
-        repeat(2){assertFalse(p.tick(650))};assertTrue(p.tick(650))
+        assertFalse(p.tick(449));assertFalse(p.tick(1));assertFalse(p.tick(499));assertFalse(p.tick(1));assertFalse(p.tick(319));assertTrue(p.tick(1))
         assertEquals(BattlePresentation.Screen.RESULT,p.screen)
         assertNotNull(b.settle(0));assertNull(b.settle(0));assertFalse(p.tick(10000))
     }
