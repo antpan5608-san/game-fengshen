@@ -149,7 +149,7 @@ class TouchTest:IsolatedGameTestCase(){
         fixture(5,0);val empty=v.currentSnapshot();tap(v,action);assertEquals(empty,v.currentSnapshot())
         instrumentation.runOnMainSync{activity.finish()}
     }
-    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false){
+    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false,innSupply:Boolean=false){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit()
         val(activity,v)=launch()
         fun capture(name:String){
@@ -253,6 +253,28 @@ class TouchTest:IsolatedGameTestCase(){
             tap(v,tabPoint(v,2));scrollToItem(v,"rom.weapon.1");tap(v,center(v.panelItemBounds("rom.weapon.1")));tap(v,center(v.panelPrimaryBounds()))
             instrumentation.runOnMainSync{v.handleBack()}
             File(instrumentation.targetContext.getExternalFilesDir(null),"touch-ux-after-counts.json").writeText("""{"kind":"NORMAL_APP_FLOW","buyNonFirstFromBuyList":2,"sellFromSellList":2,"replaceFromInventoryList":2,"unequipFromSlotList":2,"useFromItemList":2,"definition":"actual taps; list already open, role selected"}""")
+        }
+        if(innSupply){
+            val entry=v.content.exits.first{it.fromMapId==0&&it.toMapId==22}
+            walkTo(entry.triggerX,entry.triggerY);assertEquals(22,v.world.mapId)
+            capture("inn-room")
+            val keeper=v.content.npcs.first{it.innId=="rom.inn.0"}
+            walkTo(keeper.interactionCell!!.first,keeper.interactionCell.second)
+            talk();assertEquals(GameView.Layer.INN,v.layer);assertFalse(v.visibleMapControls())
+            val before=v.currentSnapshot();capture("inn-offer")
+            instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
+            talk();val button=center(v.innStayBounds())
+            send(v,MotionEvent.ACTION_DOWN,listOf(button));send(v,MotionEvent.ACTION_CANCEL,listOf(button))
+            assertEquals(before,v.currentSnapshot())
+            tap(v,button);assertEquals(GameView.Layer.MAP,v.layer)
+            val expected=InnStay.apply(before.money,before.characters,v.content.inns.getValue("rom.inn.0"))
+            assertNull(expected.error);assertEquals(expected.money,v.currentSnapshot().money)
+            assertEquals(expected.characters,v.currentSnapshot().characters)
+            assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.flags,v.currentSnapshot().flags)
+            val paid=v.currentSnapshot();repeat(10){send(v,MotionEvent.ACTION_UP,listOf(button))};assertEquals(paid,v.currentSnapshot())
+            capture("inn-restored")
+            walkTo(12,14);assertEquals(0,v.world.mapId);assertEquals(6,v.world.x/16);assertEquals(25,v.world.y/16)
+            capture("inn-returned")
         }
         if(useHerb){
             // Only normal movement and battle commands create the injury. No HP/item fixture.
@@ -449,6 +471,35 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{activity.finish()}
     }
     fun testNormalTouchUxSupplyAndEquipment(){normalTownShops(true,true)}
+    fun testNormalWorldFullCurrentServices(){normalTownShops(true,true,true)}
+    fun testControlledInnTransactionsAndGestureSafety(){
+        val(activity,v)=launch();val baseline=v.currentSnapshot();val service=v.content.inns.getValue("rom.inn.0")
+        fun fixture(money:Int,status:Int=0,hp:Int=5){
+            instrumentation.runOnMainSync{
+                if(v.layer!=GameView.Layer.MAP)v.handleBack()
+                val hero=v.content.initialPlayer.copy(hp=hp,maxHp=100,mp=1,maxMp=10,statusMask=status)
+                assertTrue(v.restoreSnapshot(baseline.copy(mapId=22,x=12*16+8,y=7*16+8,money=money,characters=listOf(hero))))
+            }
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.INN,v.layer)
+        }
+        fixture(3);val poor=v.currentSnapshot();tap(v,center(v.innStayBounds()));assertEquals(poor,v.currentSnapshot())
+        fixture(315);val before=v.currentSnapshot();val action=center(v.innStayBounds())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_POINTER_DOWN or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
+        send(v,MotionEvent.ACTION_POINTER_UP or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action));send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(before,v.currentSnapshot());assertEquals(GameView.Layer.INN,v.layer)
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));instrumentation.runOnMainSync{instrumentation.callActivityOnPause(activity);instrumentation.callActivityOnResume(activity)}
+        send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(before,v.currentSnapshot())
+        tap(v,action);assertEquals(311,v.currentSnapshot().money);assertEquals(100,v.currentSnapshot().characters.first().hp)
+        assertEquals(10,v.currentSnapshot().characters.first().mp)
+        for(status in listOf(2,4,16,32,64)){
+            fixture(315,status,if(status==32)0 else 5);val old=v.currentSnapshot();tap(v,center(v.innStayBounds()))
+            val result=InnStay.apply(old.money,old.characters,service)
+            assertEquals(result.money,v.currentSnapshot().money);assertEquals(result.characters,v.currentSnapshot().characters)
+            assertEquals(v.currentSnapshot(),SaveSnapshot.parse(v.currentSnapshot().json().toString()))
+        }
+        val saved=v.currentSnapshot();instrumentation.runOnMainSync{v.persistState();activity.finish()}
+        val(reopened,reloaded)=launch();assertEquals(saved,reloaded.currentSnapshot());instrumentation.runOnMainSync{reopened.finish()}
+    }
     fun testControlledOneHitAndSameKindInstances(){
         val(activity,v)=launch();val rules=v.content.battle!!
         fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}

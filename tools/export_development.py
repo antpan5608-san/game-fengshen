@@ -253,16 +253,95 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
     result['scene.json']=encoded(scene)
     return result
 
+def export_world_from_base(payload,evidence,provenance_path,target_pin):
+    """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
+    if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
+        raise ValueError('World export requires reviewed base content')
+    reader=iteration_reader();result=dict(payload)
+    encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+    scene=json.loads(result['scene.json']);known={m['id'] for m in scene['maps']}
+    for span in evidence['ruleRanges']:checked_span(reader,span)
+    for recipe in evidence.get('atlasCorrections',[]):
+        mid=recipe['mapId'];original=extract_map(reader,mid)
+        if mid not in known or original['gridSha256']!=recipe['gridSha256']:
+            raise ValueError('Atlas correction lacks existing map/grid evidence')
+        name=next(m['atlas'] for m in scene['maps'] if m['id']==mid)
+        if digest(result[name])!=recipe['previousAssetSha256']:
+            raise ValueError('Atlas correction source differs')
+        result[name]=scoped_map_atlas(reader,original,recipe['palette'],evidence['emulatorRgb'])
+    for recipe in evidence.get('maps',[]):
+        mid=recipe['mapId'];original=extract_map(reader,mid)
+        if mid in known or original['gridSha256']!=recipe['gridSha256']:
+            raise ValueError('World map overlaps or differs from pinned ROM')
+        c=original['collisionCandidate'];classes=reader.read(c['module'],c['cpuAddress'],256)
+        grid=[t for row in original['grid'] for t in row];collision=[classes[t] for t in grid]
+        transitions=set()
+        for exit in evidence['exits']:
+            for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
+                if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
+        allowed=recipe['walkableClasses']
+        data={'schemaVersion':1,'version':target_pin['contentVersion'],'channel':'development',
+            'originalMapId':mid,'width':original['width'],'height':original['height'],
+            'tileSize':16,'logicalWidth':256,'logicalHeight':240,'grid':grid,'collision':collision,
+            'walkableClasses':allowed,'transitionCells':sorted(transitions),
+            'enabledCells':[i for i,c in enumerate(collision) if c in allowed or i in transitions],
+            'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
+            'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
+            'limitations':recipe.get('limitations',[])}
+        result[f'scene{mid}.json']=encoded(data)
+        result[f'tiles{mid}.png']=scoped_map_atlas(reader,original,recipe['palette'],evidence['emulatorRgb'])
+        scene['maps'].append({'id':mid,'scene':f'scene{mid}.json','atlas':f'tiles{mid}.png'});known.add(mid)
+    for exit in evidence.get('exits',[]):
+        if exit['fromMapId'] not in known or exit['toMapId'] not in known or exit['confidence']!='VERIFIED':
+            raise ValueError('World transition lacks scoped source/target evidence')
+        raw=checked_span(reader,exit['source'])
+        if exit['kind']=='RETURN_TO_CALLER':
+            if list(raw)!=exit['trigger']+[254,0,0]:raise ValueError('Original return record differs')
+        elif exit['kind']=='COLLISION_ENTRY':
+            origin=extract_map(reader,exit['fromMapId']);c=origin['collisionCandidate']
+            x,y=exit['trigger'];tile=origin['grid'][y][x]
+            klass=reader.read(c['module'],c['cpuAddress']+tile)[0]
+            if klass!=exit['collisionClass'] or exit['toMapId']!=klass-exit['dispatchSubtract']:
+                raise ValueError('Original indoor collision dispatch differs')
+        else:raise ValueError('Unsupported transition kind needs original evidence')
+        scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
+            {'source':exit['source'],'evidence':provenance_path})
+        for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
+            mid=exit[idfield]
+            if mid==114:raise ValueError('Opening scene overlay requires explicit review')
+            name=next(m['scene'] for m in scene['maps'] if m['id']==mid);data=json.loads(result[name])
+            x,y=exit[field];index=y*data['width']+x
+            if not 0<=x<data['width'] or not 0<=y<data['height']:raise ValueError('Exit outside map')
+            data['transitionCells']=sorted(set(data.get('transitionCells',[]))|{index})
+            data['enabledCells']=sorted(set(data['enabledCells'])|{index});result[name]=encoded(data)
+    for name,recipe in evidence.get('graphics',{}).items():
+        if name in result or '/' in name or '\\' in name or not name.endswith('.png'):
+            raise ValueError('Unsafe/overlapping world graphic')
+        result[name]=scoped_observed_graphic(reader,recipe)
+    for inn in evidence.get('inns',[]):
+        if int.from_bytes(checked_span(reader,inn['priceSource']),'little')!=inn['price']:
+            raise ValueError('Lodging price differs from original table')
+        flags=[checked_span(reader,span)[0] for span in inn['statusFlagSources']]
+        if inn['blockedStatusMask']!=sum(set(flags)) or any(x not in (2,16,32,64) for x in flags):
+            raise ValueError('Lodging status policy differs from original routine')
+    for name in ('npcs','dialogues','inns'):
+        old=scene.get(name,[]);added=evidence.get(name,[])
+        if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
+        scene[name]=old+added
+    scene['limitations']=scene.get('limitations',[])+evidence.get('limitations',[])
+    result['scene.json']=encoded(scene)
+    return result
+
 def export_from_base(payload, provenance_path, target_pin, verify_target=True):
     """Reuse checked base bytes; dispatch the current bounded, evidenced iteration."""
     evidence_path=(ROOT/provenance_path).resolve()
     if not evidence_path.is_relative_to(ROOT) or evidence_path.suffix!='.json':
         raise ValueError('Invalid iteration provenance path')
     evidence=load(evidence_path)
-    if evidence['romSha256']!=SHA256 or evidence['taskId'] not in ('TOWN-02','NANHAI-01'):
+    if evidence['romSha256']!=SHA256 or evidence['taskId'] not in ('TOWN-02','NANHAI-01','WORLD-FULL-01'):
         raise ValueError('Unexpected iteration evidence')
-    if evidence['taskId']=='NANHAI-01':
-        result=export_nanhai_from_base(payload,evidence,provenance_path,target_pin)
+    if evidence['taskId'] in ('NANHAI-01','WORLD-FULL-01'):
+        result=(export_nanhai_from_base if evidence['taskId']=='NANHAI-01' else export_world_from_base)(payload,evidence,provenance_path,target_pin)
         encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
         for name,raw in list(result.items()):
             if name=='manifest.json' or not name.endswith('.json'):continue
@@ -272,7 +351,7 @@ def export_from_base(payload, provenance_path, target_pin, verify_target=True):
         manifest['files']={name:digest(raw) for name,raw in result.items() if name!='manifest.json'}
         result['manifest.json']=encoded(manifest)
         if verify_target and digest(result['manifest.json'])!=target_pin['manifestSha256']:
-            raise ValueError('Nanhai export differs from reviewed target pin')
+            raise ValueError('Scoped export differs from reviewed target pin')
         return result
     rule=evidence['herbUse']
     if rule!={'healHp':50,'mapMenu':True,'target':'living-party-member',

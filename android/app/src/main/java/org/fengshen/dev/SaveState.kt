@@ -81,6 +81,20 @@ object TownTrade {
     }
 }
 
+/** The shared original lodging command; price/policy belong to each evidenced service instance. */
+object InnStay {
+    data class Result(val money:Int,val characters:List<CharacterState>,val error:String?=null)
+    fun eligible(character:CharacterState,inn:InnDefinition)=character.statusMask and inn.blockedStatusMask==0
+    fun apply(money:Int,characters:List<CharacterState>,inn:InnDefinition):Result {
+        if(inn.price !in 0..9999999 || inn.blockedStatusMask !in 0..255 || characters.isEmpty())
+            return Result(money,characters,"住宿定义或队伍无效")
+        if(money<inn.price)return Result(money,characters,"银两不足")
+        return Result(money-inn.price,characters.map{hero->
+            if(eligible(hero,inn))hero.copy(hp=hero.maxHp,mp=hero.maxMp?:hero.mp,statusMask=0) else hero
+        })
+    }
+}
+
 /** Scoped original map/menu herb command. Rendering never mutates these values. */
 object HerbUse {
     const val ID="rom.medicine.0"
@@ -111,20 +125,20 @@ object HerbUse {
 
 data class CharacterState(val id:String,val level:Int,val experience:Int,val hp:Int,val maxHp:Int,val mp:Int,
     val strength:Int,val stamina:Int,val agility:Int,val spirit:Int,val maxMp:Int?=null,
-    val equipment:EquipmentState?=null) {
+    val equipment:EquipmentState?=null,val statusMask:Int=0) {
     fun json()=JSONObject().put("id",id).put("level",level).put("experience",experience).put("hp",hp)
         .put("maxHp",maxHp).put("mp",mp).put("strength",strength).put("stamina",stamina)
         .put("agility",agility).put("spirit",spirit).also{if(maxMp!=null)it.put("maxMp",maxMp);
-            if(equipment!=null)it.put("equipment",equipment.json())}
+            if(equipment!=null)it.put("equipment",equipment.json());if(statusMask!=0)it.put("statusMask",statusMask)}
     companion object {
         fun parse(o:JSONObject)=CharacterState(o.getString("id"),o.getInt("level"),o.getInt("experience"),
             o.getInt("hp"),o.getInt("maxHp"),o.getInt("mp"),o.getInt("strength"),o.getInt("stamina"),
                 o.getInt("agility"),o.getInt("spirit"),if(o.has("maxMp"))o.getInt("maxMp") else null,
-                o.optJSONObject("equipment")?.let{EquipmentState.parse(it)}).also {
+                o.optJSONObject("equipment")?.let{EquipmentState.parse(it)},o.optInt("statusMask",0)).also {
             require(it.id.matches(Regex("[a-z0-9_-]{1,64}")) && it.level in 1..99 && it.experience in 0..0xffffff &&
                 it.maxHp in 1..9999 && it.hp in 0..it.maxHp && it.mp in 0..9999 &&
                 listOf(it.strength,it.stamina,it.agility,it.spirit).all { value->value in 0..9999 } &&
-                (it.maxMp==null || it.maxMp in it.mp..9999))
+                (it.maxMp==null || it.maxMp in it.mp..9999) && it.statusMask in 0..255)
         }
     }
 }
@@ -141,7 +155,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps)
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         val scene=content.scenes[mapId]?:return false
         return scene.check(x/16,y/16)==null

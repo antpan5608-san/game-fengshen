@@ -41,7 +41,7 @@ if listed.returncode:
         print('No installed App evidence directory; preserve the primary runtime failure')
         raise SystemExit(0)
 for name in listed.stdout.splitlines():
-    if re.fullmatch(r'(mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb)[A-Za-z0-9._-]*)\.(png|json)',name):
+    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
@@ -111,6 +111,7 @@ run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
+run_test testControlledInnTransactionsAndGestureSafety
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
 adb shell wm density 480
@@ -133,6 +134,7 @@ run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
 timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
 grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
+python tools/record_app_audio.py world-f0 testNormalWorldFullCurrentServices --silent
 python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory --silent --cold-test testNanhaiColdStartMatchesNormalSave --budget-seconds 3600
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
@@ -140,7 +142,7 @@ import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY

@@ -10,8 +10,9 @@ import export_development as exporter
 class NanhaiExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
-        path=Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK',str(ci.ROOT/'artifacts/published/fengshen-remake-v24-release.apk')))
+        # Historical golden coverage stays fixed when the live iteration acquires a newer base.
+        cls.pin=json.loads((ci.ROOT/'ci/golden-nanhai-content.json').read_text(encoding='utf-8'))
+        path=Path(os.environ.get('FENGSHEN_GOLDEN_BASE_APK',str(ci.ROOT/'artifacts/published/fengshen-remake-v24-release.apk')))
         if not path.is_file():raise RuntimeError('Reviewed immutable base APK required for Nanhai export tests')
         if ci.sha(path.read_bytes())!=cls.pin['iteration']['base']['apkSha256']:raise ValueError('Wrong base APK')
         cls.base=ci.content(path,cls.pin['iteration']['base']);cls.proof=cls.pin['iteration']['provenance']

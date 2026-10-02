@@ -35,7 +35,10 @@ class ContentTest:IsolatedGameTestCase(){
     fun testBundledAndDirectoryUseSameLoader(){
         val ctx=instrumentation.targetContext;val asset=AssetSource(ctx.assets);val c=ContentLoader.load(asset)
         assertEquals(32,c.scene.width);assertEquals(30,c.scene.height);assertEquals(443,c.scene.enabled.size);assertEquals(256,c.atlas.width)
-        assertEquals(setOf(114,16,0,17,18,19,25,97),c.scenes.keys) // TOWN-01 adds the three ROM interiors.
+        assertTrue(c.scenes.keys.containsAll(setOf(114,16,0,17,18,19,25,97))) // Historical map golden subset stays required.
+        assertTrue(c.scenes.keys.contains(22));assertEquals(4,c.inns.getValue("rom.inn.0").price)
+        val armor=c.atlases.getValue(18)
+        assertTrue("Armor room must not repeat the v26 all-black atlas",(0 until 65536).any{i->armor.getPixel(i%256,i/256)!=android.graphics.Color.BLACK})
         assertEquals(256,c.scenes.getValue(16).width);assertEquals(181,c.scenes.getValue(16).height)
         assertEquals(32,c.scenes.getValue(0).width)
         val dir=File(ctx.cacheDir,"content-test");dir.mkdirs()
@@ -64,7 +67,7 @@ class ContentTest:IsolatedGameTestCase(){
         val files=mutableMapOf("scene.json" to scene.toString().toByteArray(Charsets.UTF_8),
             "scene16.json" to outside.toString().toByteArray(Charsets.UTF_8),
             "scene0.json" to village.toString().toByteArray(Charsets.UTF_8))
-        for(mid in listOf(17,18,19,25,97))files["scene$mid.json"]=JSONObject(String(original.read("scene$mid.json"),Charsets.UTF_8))
+        for(mid in contentMapIds(scene).filter{it !in setOf(114,16,0)})files["scene$mid.json"]=JSONObject(String(original.read("scene$mid.json"),Charsets.UTF_8))
             .put("version","opening-segment-001-c1").toString().toByteArray(Charsets.UTF_8)
         for((name,bytes)in files)manifest.getJSONObject("files").put(name,
             MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)})
@@ -75,6 +78,7 @@ class ContentTest:IsolatedGameTestCase(){
         val content=ContentLoader.load(older)
         assertEquals("nezha",content.playerNames["nezha"])
     }
+    private fun contentMapIds(scene:JSONObject)=scene.getJSONArray("maps").let{a->(0 until a.length()).map{a.getJSONObject(it).getInt("id")}}
     fun testOriginalOpeningExitAndCollision(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val w=World(c.scenes,c.exits,114)
