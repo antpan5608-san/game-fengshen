@@ -235,7 +235,7 @@ jobs:
           }
           # Only actual isolated App service captures; never production logs, ROM, or arbitrary files.
           $captures=@(Get-ChildItem artifacts/runtime-diagnostic -Recurse -File|Where-Object {
-            $_.Name -match '^town01-(shop17|shop18|shop19|inn-room|inn-offer|inn-restored|inn-returned|town|equipment|inventory|equipped-handknife)\.png$|^world-f0-(recording\.json|force-stop-restored\.png|normal-[0-9]{2}\.mp4|cold-restart\.mp4)$'
+            $_.Name -match '^touch-ux-town01-(shop17|shop18|shop19|inn-room|inn-offer|inn-restored|inn-returned|town|equipment|inventory|equipped-handknife)\.png$|^world-f0-(recording\.json|force-stop-restored\.png|normal-[0-9]{2}\.mp4|cold-restart\.mp4)$'
           })
           if($captures.Count -gt 32 -or ($captures|Measure-Object Length -Sum).Sum -gt 24MB){throw 'Bounded App capture budget exceeded'}
           foreach($file in $captures){
