@@ -111,6 +111,7 @@ run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
+run_test testUnrestorableSaveCannotBeOverwritten
 run_test testControlledInnTransactionsAndGestureSafety
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216

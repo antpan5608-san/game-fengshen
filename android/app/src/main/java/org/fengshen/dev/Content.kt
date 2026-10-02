@@ -95,7 +95,8 @@ object ContentLoader {
         // ROM dispatch IDs are bytes; cardinality is a format bound, not the last task's sample count.
         require(mapFiles.size in 1..256 && mapFiles.all{it.first in 0..255} && mapFiles.map{it.first}.toSet().size==mapFiles.size &&
             mapFiles.any{it.first==114 && it.second=="scene.json"})
-        val scenes=mapFiles.associate{(id,name,_)->id to if(id==114)opening else scene(name,id).second}
+        val sceneFiles=mapFiles.associate{it.first to it.second}
+        val scenes=ResourceMap(sceneFiles.keys,8){id->if(id==114)opening else scene(sceneFiles.getValue(id),id).second}
         val initial=data.getJSONObject("initialPlayer")
         require(initial.getJSONObject("source").getString("confidence")=="HIGH")
         val initialName=initial.optString("name").ifBlank{initial.getString("id")}
@@ -120,7 +121,15 @@ object ContentLoader {
             val image=BitmapFactory.decodeByteArray(b,0,b.size,opts)?:error("Invalid image")
             require(image.width==w&&image.height==h);atlasMs+=SystemClock.elapsedRealtime()-bitmapStart;return image
         }
-        val atlases=mapFiles.associate{(id,_,name)->id to bitmap(name,256,256)}
+        val atlasFiles=mapFiles.associate{it.first to it.third}
+        val atlasResources=ResourceMap(atlasFiles.values.distinct(),8){name->bitmap(name,256,256)}
+        val atlases=object:AbstractMap<Int,Bitmap>(){
+            override val keys:Set<Int> get()=atlasFiles.keys
+            override val size get()=atlasFiles.size
+            override fun containsKey(key:Int)=key in atlasFiles
+            override fun get(key:Int)=atlasFiles[key]?.let{atlasResources.getValue(it)}
+            override val entries get()=atlasFiles.keys.map{id->java.util.AbstractMap.SimpleImmutableEntry(id,getValue(id))}.toSet()
+        }
         val atlas114=atlases.getValue(114)
         val introData=data.optJSONObject("intro")
         val intro=introData?.let{StoryText(it.getString("id"),it.getString("text"),

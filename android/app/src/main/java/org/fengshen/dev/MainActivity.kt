@@ -74,6 +74,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val prefs=activity.getSharedPreferences("operation-a-ui",0)
     private val savePrefs=activity.getSharedPreferences("opening-local-save",0)
     private val hadPersistedAtStart=savePrefs.contains("saveJson")||savePrefs.contains("mapId")
+    private var localSaveProtected=false
     private var savedSnapshot=""
     private var characters=listOf(content.initialPlayer)
     private var inventory:Map<String,Int> = emptyMap()
@@ -175,7 +176,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var noticeUntil=0L
     private var mapNotice=""
     init {holder.addCallback(this);isFocusable=true;isFocusableInTouchMode=true;contentDescription="封神全屏地图"
-        world.transitionObserver={from,to,success->Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),"target_map_or_spawn_unavailable")}}
+        world.prepareTarget={target->try{content.atlases.getValue(target);true}catch(e:Exception){
+            input.clear();Diagnostics.record("scene_load","ERROR",JSONObject().put("mapId",target).put("success",false),e.javaClass.simpleName,e.stackTrace.take(12).joinToString("\n"));false}}
+        world.transitionObserver={from,to,success->
+            val error=world.transitionFailure
+            Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),
+                error?.javaClass?.simpleName?:"target_map_or_spawn_unavailable",error?.stackTrace?.take(12)?.joinToString("\n")?:"")}}
     fun relayout(){clearBattleGesture();battlePresentation.invalidateInput();ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
     fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0)
     fun hasMeaningfulLocalSave():Boolean = hadPersistedAtStart || world.mapId!=114 ||
@@ -185,7 +191,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
-        world.restore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction)
+        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction))return false
         audio.scene(world.mapId)
         encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
         characters=snapshot.characters.map{hero->
@@ -199,21 +205,38 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         inventory=migrated.filterValues{it>0};flags=snapshot.flags;money=snapshot.money
         characterPage=0;selectedItemId=null;candidateSlot=null;resetModalSelection()
-        savedSnapshot="";diagnoseExperience();persistState();return true
+        localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState();return true
     }
     fun restorePersisted(){
         val encoded=savePrefs.getString("saveJson",null)
-        if(encoded!=null){val restored=runCatching{restoreSnapshot(SaveSnapshot.parse(encoded))}.getOrDefault(false)
-            Diagnostics.record("save_load",if(restored)"INFO" else "ERROR",JSONObject().put("success",restored),if(restored)"" else "invalid_local_snapshot")
-            if(restored)return
-        }else Diagnostics.record("save_load",details=JSONObject().put("success",true),code="new_game_no_save")
-        if(savePrefs.getString("contentVersion",null)!=content.scene.version)return
-        world.restore(savePrefs.getInt("mapId",114),savePrefs.getInt("x",world.x),savePrefs.getInt("y",world.y),0,
-            Key.entries.getOrElse(savePrefs.getInt("direction",Key.DOWN.ordinal)){Key.DOWN})
+        if(encoded!=null){
+            localSaveProtected=true
+            val result=runCatching{restoreSnapshot(SaveSnapshot.parse(encoded))}
+            val restored=result.getOrDefault(false)
+            Diagnostics.record("save_load",if(restored)"INFO" else "ERROR",JSONObject()
+                .put("success",restored).put("existingSaveProtected",!restored)
+                .put("cause",result.exceptionOrNull()?.javaClass?.simpleName?:world.transitionFailure?.javaClass?.simpleName?:""),
+                if(restored)"" else "invalid_local_snapshot")
+            if(!restored)mapNotice="存档未能恢复 · 原存档已保留";return
+        }
+        if(savePrefs.contains("mapId")){
+            localSaveProtected=true
+            if(savePrefs.getString("contentVersion",null)!=content.scene.version){
+                Diagnostics.record("save_load","ERROR",code="legacy_content_version_unavailable")
+                mapNotice="旧存档内容未能恢复 · 原存档已保留";return
+            }
+            val restored=world.tryRestore(savePrefs.getInt("mapId",114),savePrefs.getInt("x",world.x),savePrefs.getInt("y",world.y),0,
+                Key.entries.getOrElse(savePrefs.getInt("direction",Key.DOWN.ordinal)){Key.DOWN})
+            if(restored)localSaveProtected=false else mapNotice="旧存档场景未能恢复 · 原存档已保留"
+            Diagnostics.record("save_load",if(restored)"INFO" else "ERROR",JSONObject().put("success",restored),
+                if(restored)"legacy_position_restored" else "legacy_scene_unavailable")
+            return
+        }
+        Diagnostics.record("save_load",details=JSONObject().put("success",true),code="new_game_no_save")
     }
     fun persistState(){persistStateResult()}
     private fun persistStateResult():Boolean {
-        if(world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return false
+        if(localSaveProtected || world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return false
         val snapshot=currentSnapshot();val encoded=snapshot.json().toString()
         if(encoded==savedSnapshot)return true
         val committed=savePrefs.edit().putString("contentVersion",content.scene.version).putInt("mapId",world.mapId)

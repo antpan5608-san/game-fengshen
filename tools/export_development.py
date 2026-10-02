@@ -904,8 +904,23 @@ if __name__=='__main__':
     parser.add_argument('--base-apk',type=Path)
     parser.add_argument('--provenance')
     parser.add_argument('--version')
+    parser.add_argument('--world-inventory',type=Path,help='Write table/context coverage without generating an APK')
     args=parser.parse_args()
-    if args.base_apk:
+    if args.world_inventory:
+        from forensics.fengshen246 import extract_world_inventory
+        pin=load(ROOT/'ci/content-source.json')
+        packaged=load(ROOT/pin['iteration']['provenance'])
+        # Package status is populated by the reviewed manifest, not by successful ROM parsing.
+        ids=[]
+        if args.base_apk:
+            import ci_apk as ci
+            base=ci.CONFIG['iteration']['base'];ci.verify_apk(args.base_apk,release=True)
+            if digest(args.base_apk.read_bytes())!=base['apkSha256']:raise ValueError('Wrong reviewed inventory APK')
+            payload=ci.content(args.base_apk,base);ids=[m['id'] for m in json.loads(payload['scene.json'])['maps']]
+        report=extract_world_inventory(iteration_reader(),ids)
+        args.world_inventory.parent.mkdir(parents=True,exist_ok=True);save(args.world_inventory,report)
+        print(json.dumps({k:report[k] for k in ['structuralGeometryCount','npcContextCount','effectiveMapCount','summary']}))
+    elif args.base_apk:
         import ci_apk as ci
         ci.verify_apk(args.base_apk,release=True)
         base=ci.CONFIG.get('iteration',{}).get('base',ci.CONFIG)

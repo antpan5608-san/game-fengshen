@@ -104,3 +104,10 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 - 住宿原版正常按键与受控边界分开；价格、排除状态和返回出口分别查原Reader span。恢复HP/MP不等于复活或清除所有异常；不可用队员保持原状。原版取消、钱不足、满状态及多队员受控实验已运行，具体案例见world-full01 provenance；不把fixture写成正常路线。
 - 村庄室内共享地图ID：caller与辅助NPC上下文各有独立RAM来源；不能按村庄数量复制地图或把NPC overlay当缺失几何。完整有效集合仍须按当前任务核定。
 - 更换可信内容基底时，历史Nanhai golden配置独立固定，test_nanhai_export.py用FENGSHEN_GOLDEN_BASE_APK；当前局部导出用FENGSHEN_CONTENT_BASE_APK。两者各自验hash，不把新任务集合写进旧golden。新的runner下载/住宿正常流程仍以当前任务实际结果为准。
+
+
+## 已验证的地图索引与默认palette批次
+
+`export_development.py --world-inventory <report> --base-apk <reviewed-apk>`复用原Reader枚举物理几何表、NPC overlay域、真实出口/服务门口；解码、打包和实际App运行字段分开。相同grid不合并状态ID，未证明使用的尾槽保留UNKNOWN；Reference TMX扩边数据不替代原格网。原E0C3选择/E3A6背景/E438精灵palette及PPU零色镜像已与正常防具/客栈截图核对；只代表静态默认palette，不宣称脚本光照变体已核。
+
+F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取仍待实际执行，不无限重试，不修改代理。

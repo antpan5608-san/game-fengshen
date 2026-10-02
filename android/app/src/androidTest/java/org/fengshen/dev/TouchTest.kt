@@ -73,6 +73,21 @@ class TouchTest:IsolatedGameTestCase(){
         }
         instrumentation.runOnMainSync{assertEquals("Unfinished normal touch step",0,v.world.remaining)}
     }
+    fun testUnrestorableSaveCannotBeOverwritten(){
+        val (activity,v)=launch()
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        // Emulator-only corrupt/missing-scene fixture; the user's preferences are restored by IsolatedGameTestCase.
+        val broken=v.currentSnapshot().copy(mapId=255).json().toString()
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString("saveJson",broken).commit())
+            v.restorePersisted();v.persistState();v.active=false;v.persistState()
+            assertEquals(broken,prefs.getString("saveJson",null))
+            val valid=v.currentSnapshot()
+            assertTrue(v.restoreSnapshot(valid));v.persistState()
+            assertEquals(valid.json().toString(),prefs.getString("saveJson",null))
+            activity.finish()
+        }
+    }
     fun testNormalOpeningRouteGiftAndMap16Encounter(){normalOpeningBattle(false)}
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
     fun testNormalTownShopsBuySellAndReturn(){normalTownShops(false)}
