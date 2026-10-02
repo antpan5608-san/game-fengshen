@@ -77,4 +77,12 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 
 本地已运行test_nanhai_export.py：同输入两次结果一致、不变媒体逐字节一致、错误基底/目标pin/ROMspan/敌数值拒绝、manifest全文件核验。该测试输入为FENGSHEN_CONTENT_BASE_APK指定的已审核APK；源码依赖与生成方法均在原export_development.py及当前provenance。图形PNG编码的透明0和不透明黑底须按实际观察区分。Windows/Linux的Pillow压缩字节曾不同而原bytehash失败；原导出器以已审核RGBA hash核像素，并用固定存储DEFLATE序列输出PNG，目标文件/manifest hash继续严格审核，源PNG hash仅保留溯源。本地Pillow解码/CRC/多block/不调用平台encoder及错像素拒绝测试已通过，Windows runner已严格恢复与Linux同一manifest；随后测试文件的默认cp1252读取失败，中文JSON必须显式read_text(encoding='utf-8')。不能关闭hash门禁或删测试绕过。
 
-限定Boss业务边界已在原JVM门禁运行：攻击等防伤0/小于防伤1、同字节命中与倍伤、敏捷排序、冰与物理同字节选择、Boss逃跑读字节后失败耗行动、掉落数量/分类格数满不丢物品。本地构建/原版正常取证不能替代Android正常主线或runner签名门禁；相应CI/App方法待实际运行后才能记录成功。
+限定Boss业务边界已在原JVM门禁运行：攻击等防伤0/小于防伤1、同字节命中与倍伤、敏捷排序、冰与物理同字节选择、Boss逃跑读字节后失败耗行动、掉落数量/分类格数满不丢物品。本地构建/原版正常取证不能替代Android正常主线或runner签名门禁；相应CI/App方法已在原签名候选正常运行门禁执行；实际结果以当前交付记录为准，不把本地或原版证据当Android验收。
+
+
+## 已验证的连续区段交付
+
+- 原TouchTest.testNormalNanhaiRouteBossAndVictory以真实MotionEvent从新游戏补给/练级/连图/NPC到Boss胜后，再正常离宫/再入；不得调用restoreSnapshot、改HP/等级/物品/flag或固定胜利。边界fixture用独立testControlledNanhaiVictoryFlagAndResumeOnce，不能混作主线。
+- 原record_app_audio.py --silent配合--cold-test testNanhaiColdStartMatchesNormalSave和--budget-seconds在原KVM runtime已实跑：未剪辑分段、SHA/Android uptime、每段只读保存world边界、外部force-stop/实际GameView冷启与继续。战斗live HP以原片为准；分段拉取有短间隙，索引时间近似，静音不等于音频验收。
+- App外部索引必须先用原pull_evidence收集再挑小型原片；此前收集顺序错使正常App通过但整个run失败，保留门禁。小型原片只是原文件副本，原完整artifact继续保留全段，不生成示意图/假战斗。
+- 原check-reviewed-apk.ps1要求同main/来源/签名/审核APK字节和成功runtime receipt，新增区段门槛由实际测试和原workflow承载。审核时冻结来源；修候选必须重新构建验证。发布后文档提交可以不同，明确APK来源。原publish pre/post巡检与公网完整APK独立复核已成功；新版本无样本如实记录。

@@ -127,3 +127,8 @@ v24/0.8.4-touch-ux-01已发布，来源ef29edb9192bb299ed493b767c52b23c450b2094�
 运行回执新增touchUx、phoneSizedLayout和baselineComparison；check-reviewed-apk要求已授权触控任务的运行门禁，同源提交/run/同审核APK hash保持。原受保护环境/自动审批、preflight/两对象上传/完整公网字节校验/postflight均通过。2026-10-01 20:07:55 UTC发布后可信24/23、424事件全来自23，24无上传样本；一加13T、声音与长时性能仍NOT_RUN。旧artifact名fengshen-town02-runtime-evidence继续复用，不另建workflow或平台。
 
 稳定触控方法见.agents/skills/fengshen-touch-ux/SKILL.md；当前任务/交付记录保存版本和run。以后必须读取实际最新发布并递增，历史默认号不可照抄。
+
+
+## 已验证的连续区段门禁
+
+仍只有原构建/发布两份workflow。原runtime在隔离AOSP KVM运行正常连续路线/Boss/胜后离宫再入与实际force-stop冷启；check-reviewed-apk.ps1要求同来源和同产物的nanhaiNormalRoute/nanhaiBossVictory/nanhaiOnceAndColdRestart通过。原record_app_audio.py保留未剪辑分段及只读world边界；完整原片在原runtime artifact，小型checkpoints/entry/final副本便于核查。静音、手机wm尺寸和历史真机日志不能写成声音/实机验收。当前版本/hash/run_id以current-task和交付记录为准。
