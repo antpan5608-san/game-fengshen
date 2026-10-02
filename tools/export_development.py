@@ -503,8 +503,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
             if enemy['behaviorByte']==3:
-                if not 137<=enemy['id']<=144 or enemy.get('iceBaseDamage')!=reader.word(9,0xa906+2*(enemy['id']-137)):
-                    raise ValueError('Ice damage differs from original boss table')
+                from forensics.fengshen246 import extract_enemy_ice_base
+                original_ice=extract_enemy_ice_base(reader,enemy['id'])
+                if enemy.get('iceBaseDamage')!=original_ice['iceBaseDamage']:
+                    raise ValueError('Ice damage differs from original behavior dispatch')
+                if enemy['iceSource']!=original_ice['iceSource']:
+                    # Historical boss recipes use equivalent spans with their own
+                    # description; address/length/hash remain exact, not wording.
+                    for key in ('offset','length','sha256','module','cpuAddress'):
+                        if enemy['iceSource'].get(key)!=original_ice['iceSource'][key]:
+                            raise ValueError('Ice evidence span differs from original dispatch')
                 checked_span(reader,enemy['iceSource'])
             elif enemy['behaviorByte'] not in (0,7) or 'iceBaseDamage' in enemy:
                 raise ValueError('Enemy behavior requires implementation and evidence')

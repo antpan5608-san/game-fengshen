@@ -452,6 +452,19 @@ def extract_enemy(reader,enemy_id):
       'range':reader.span(1,pointer,16,'Enemy record: five uint16le stats/rewards, six unresolved bytes'),
       'confidence':'HIGH','rawHex':data.hex()}
 
+def extract_enemy_ice_base(reader,enemy_id):
+    """Original behavior3 dispatch; ordinary enemies do not use the dragon table."""
+    original=extract_enemy(reader,enemy_id)
+    if original['remainingBytes'][1]!=3:raise ValueError('Enemy does not use the original ice behavior')
+    if 12<=enemy_id<137:
+        value=(enemy_id-12)*3+13
+        source=reader.span(9,0xaa24,0xaa3f-0xaa24,'Original ordinary ice: (enemyID-12)*3+13')
+    elif 137<=enemy_id<=144:
+        value=reader.word(9,0xa906+2*(enemy_id-137))
+        source=reader.span(9,0xa906+2*(enemy_id-137),2,'Original dragon ice table value')
+    else:raise ValueError('Ice identity outside verified original dispatch domain')
+    return {'iceBaseDamage':value,'iceSource':source}
+
 def extract_opening_encounter(reader):
     """Bounded map-16 zone 0 and its complete 19-entry group table.
 

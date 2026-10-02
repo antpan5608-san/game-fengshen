@@ -75,6 +75,14 @@ class WorldInventoryTests(unittest.TestCase):
         rows={s['id']:s for s in self.report['services']}
         self.assertEqual([0,6],rows['rom.service.0.medicine']['stock']['originalIds'])
         self.assertEqual(550,rows['rom.service.15.inn']['price'])
+    def test_ordinary_ice_uses_its_actual_formula_and_dragon_ice_keeps_table(self):
+        from forensics.fengshen246 import extract_enemy_ice_base
+        for enemy,value in [(12,13),(93,256),(99,274),(110,307),(117,328),(120,337),(132,373),(137,8),(138,10),(139,13),(141,18)]:
+            actual=extract_enemy_ice_base(self.reader,enemy)
+            self.assertEqual(value,actual['iceBaseDamage'])
+            self.assertEqual(0xaa24 if enemy<137 else 0xa906+2*(enemy-137),actual['iceSource']['cpuAddress'])
+        for enemy in (0,8,13,15,140):
+            with self.assertRaisesRegex(ValueError,'ice behavior'):extract_enemy_ice_base(self.reader,enemy)
     def test_changed_rom_is_not_an_inventory_source(self):
         wrong=bytearray(self.reader.data);wrong[32]^=1
         with self.assertRaisesRegex(ValueError,'fingerprint'):extract_world_inventory(Reader(bytes(wrong),verify=False))
