@@ -1,0 +1,364 @@
+{
+  "schemaVersion": 1,
+  "scope": "Original actors0/1 physical command collection, turn scheduling, alive-target selection and shared rewards/recovery; no spells or Android pass",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "identity": "partySlot0/1 map through012D=1/2 to stableactorIndex0/1 viaB196; scalar/word/XP strides1/2/3. Do not bind onlycharacters.first().",
+    "collection": "4byte command records0100+4*partySlot; type at+0, payload+1, target at+2. Both eligible actors collect beforestage5. No action duringfirst confirmation.",
+    "inputSkip": "original collection skipsstatus&38; actualaction additionally rechecksHP>0. Alivepoison2/status4 mayact;8/16/32 skip.",
+    "order": "4 actor entries then7 enemy entries; stable descendingagility tiesretainoriginalactorIndex thenenemySlot. Existingcommand3 priority before ordinary agilitysort; command3 actors retainoriginalstableorder regardlessagility; not newly enablingdefense.",
+    "enemyTarget": "ordinary693E=0: ((rng>>2)&3), subtractpartyCountonce if>=; for2 yields0/1, scanselected→end forpresence/living thenwrap0; no extraRNGwrite. Status alone doesnotexcludeHPpositive target.",
+    "deadEnemyTarget": "revalidationA5B2 keeps livingselected; otherwise selectsfirstlivingenemy in currentagilityorder andupdatesoriginalcommandtarget. All-enemydead branch is normalvictory beforeanotheraction.",
+    "XP": "sum7 enemy rewards16bit, divide by countpresentHPpositiveactors, flooredshareaddedtoeachsuchactor24bitXP; fractionalremainder discarded; status flagsalone donotexcludeHPpositiveactors. No zero-livingvictorycase claimed.",
+    "statusRecovery": "after11schedulerentries, visitpartySlots0then1. Mask04/08 rotates sharedRNG insequence, clearswhole statusbyte iffnewbit0zero. Each B196 maps positive activeID with SEC/SBC1, returning carry1 before thatactor ROR; second actor usesalreadyrotatedbyte. Do not restartRNG peractor.",
+    "battleExit": "Both actorstatus bytes clear08, retain04/poison02/10/20. HPunchanged for these testednormalstatusmasks;special40cleanup remainsoutside scope.",
+    "multiplier": "Eachactorusesown8577 pointer; currentgirlLv12 thresholdrowactor1, notNezha. Formula arithmetic/status04 followsalreadyverifiedsharedphysicalpath."
+  },
+  "sources": [
+    {
+      "offset": 307622,
+      "length": 39,
+      "sha256": "d5b34e425f87abbd75d1fd5843956da222805bec43d2e5e4f634fd6a2597cceb",
+      "module": 9,
+      "cpuAddress": 45462,
+      "meaning": "Current partySlot→originalactor scalar/word/XP index"
+    },
+    {
+      "offset": 308894,
+      "length": 119,
+      "sha256": "09780984adf321cddbf4c39a83f76ed377d8e9c7572974a6edbb8291840c1f8a",
+      "module": 9,
+      "cpuAddress": 46734,
+      "meaning": "Eligible actor collection and4bytecommand storage"
+    },
+    {
+      "offset": 309769,
+      "length": 49,
+      "sha256": "9b84d2c463e44733cec98599b92e1acf8bf028e4781a8859680fa969a181a14f",
+      "module": 9,
+      "cpuAddress": 47609,
+      "meaning": "Confirmtarget advancespartySlot; afterlast command stage5"
+    },
+    {
+      "offset": 310488,
+      "length": 25,
+      "sha256": "2a94e5ea0cef43abc0530d264ff0145fc9862da5b6e9c7bf8a7e50721ea67370",
+      "module": 9,
+      "cpuAddress": 48328,
+      "meaning": "Explicit targetinput stores0102+4slot thenadvance"
+    },
+    {
+      "offset": 295004,
+      "length": 217,
+      "sha256": "641c1d6e8e87835e0299f01f891264ffc9f9b1a8dd83a8c29cd6e38931a30d28",
+      "module": 9,
+      "cpuAddress": 32844,
+      "meaning": "Stable11entryagilitysort with existingcommand3priority"
+    },
+    {
+      "offset": 295326,
+      "length": 126,
+      "sha256": "5fa8b427be398423674813b5de49ceadf6eb6aa17b2d9a33b7a2439372d6c7dd",
+      "module": 9,
+      "cpuAddress": 33166,
+      "meaning": "Mapordered stableactor toactiveparty and revalidateHP/status"
+    },
+    {
+      "offset": 304578,
+      "length": 92,
+      "sha256": "5fff038fd1c838dcc9c9138a412f8590d9ab12f0b56119cf4f711b8c12b5ab78",
+      "module": 9,
+      "cpuAddress": 42418,
+      "meaning": "Retarget dead selected enemy tofirstlivingagilityorderenemy"
+    },
+    {
+      "offset": 298690,
+      "length": 91,
+      "sha256": "4eb4db8983ee958b789ea1bfd47538de245037700579bc0f4421fd1c0893bd6f",
+      "module": 9,
+      "cpuAddress": 36530,
+      "meaning": "Ordinaryenemytargetselection withlivingforwardscan/wrap"
+    },
+    {
+      "offset": 306722,
+      "length": 147,
+      "sha256": "7aff0e68554574f3096c350419d3a7f07c1d66e320a73811011ccbbfa739cd6c",
+      "module": 9,
+      "cpuAddress": 44562,
+      "meaning": "ShareEXP amongstpresentlivingactors"
+    },
+    {
+      "offset": 304815,
+      "length": 73,
+      "sha256": "62c8c4c89793239399b2a10d366c6025f57c7e742435d6e4b66aef56f2c77158",
+      "module": 9,
+      "cpuAddress": 42655,
+      "meaning": "Sequentialstatusrecovery withsameRNG/carry"
+    },
+    {
+      "offset": 306873,
+      "length": 108,
+      "sha256": "190a6fbdf706d30587faa445e05464e6026d2d3ebf1994f0d13e83893fd98e1b",
+      "module": 9,
+      "cpuAddress": 44713,
+      "meaning": "Allactorslevelup loop andraw79 cap; actor-specific bank45growth dispatcher"
+    },
+    {
+      "offset": 296248,
+      "length": 79,
+      "sha256": "5559b0bfacd0e9152430e3dcf465d82538786265e7311bebe51f6978d8c8d2e6",
+      "module": 9,
+      "cpuAddress": 34088,
+      "meaning": "Actor-specific physical multiplierlookup"
+    },
+    {
+      "offset": 299666,
+      "length": 46,
+      "sha256": "e17b72be6d3fa9bdabd25d3ccaad5510ae7d6c1a433ec7eb7d5aa4b73786b180",
+      "module": 9,
+      "cpuAddress": 37506,
+      "meaning": "Both actor battle-exit status cleanup"
+    },
+    {
+      "offset": 306428,
+      "length": 218,
+      "sha256": "9337e35ddc56627413801eabad3a88962ceb2c7169ce40c4b97fc0172062dccf",
+      "module": 9,
+      "cpuAddress": 44268,
+      "meaning": "Shared physical damage uses actual actorID and wordstrides"
+    },
+    {
+      "offset": 296327,
+      "length": 8,
+      "sha256": "7c0dc21a16aa2913a7d49ed6b473877fec466276baead305fb7ecd64ae66bb48",
+      "module": 9,
+      "cpuAddress": 34167,
+      "meaning": "Fouractor multiplierpointers"
+    },
+    {
+      "offset": 296395,
+      "length": 60,
+      "sha256": "3ec93051ca153ee0ae976922404e4177b6ba901ec24c8a2ac0946c754d6c7a71",
+      "module": 9,
+      "cpuAddress": 34235,
+      "meaning": "Actor1multiplierphysicaltable original60bytes"
+    },
+    {
+      "offset": 298489,
+      "length": 292,
+      "sha256": "303e4195f396fffc3ca40a91594483801f0479a783e230237c25520637ac1fb4",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "One enemy AI/accuracy and ordinary target dispatch; shares43; ice behaviors1/3 setalltargets"
+    },
+    {
+      "offset": 305510,
+      "length": 46,
+      "sha256": "e6375c861e9ad124de79018112414385a2ba36e8b97e0476cc90da4aa564e4a4",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Damage dispatcher reads no new random byte"
+    },
+    {
+      "offset": 298881,
+      "length": 68,
+      "sha256": "49dce502392299faf9d56f53f749df44f76cf881c803141fa830748cea74be1a",
+      "module": 9,
+      "cpuAddress": 36721,
+      "meaning": "All-target spell progresses to next livingparty slot; no newAI decision"
+    },
+    {
+      "offset": 297561,
+      "length": 230,
+      "sha256": "df423868446a5a16a8b8cf3b529ff688c184b27ec38a7609f82ab459133a2f0a",
+      "module": 9,
+      "cpuAddress": 35401,
+      "meaning": "Per-actor escape probability then command7/next actor escalation"
+    },
+    {
+      "offset": 310191,
+      "length": 42,
+      "sha256": "9ecffb83bd9bd53c33cb55f8364196085eac1ca2796752b053a63ca5f408d91b",
+      "module": 9,
+      "cpuAddress": 48031,
+      "meaning": "Medicine explicit confirmation decrementsbeforeorderedactions"
+    },
+    {
+      "offset": 310596,
+      "length": 28,
+      "sha256": "9d2bce90853dc1d0f10b351fec1743b0993540a70dcfe91011211e250131f907",
+      "module": 9,
+      "cpuAddress": 48436,
+      "meaning": "Medicine target encodes88+partySlot and advancescommandcollection"
+    },
+    {
+      "offset": 307661,
+      "length": 21,
+      "sha256": "338c9f15068ee0bd506cb71effaaea8c1b86ad13931eac7d9c7c34bf10581499",
+      "module": 9,
+      "cpuAddress": 45501,
+      "meaning": "Selectedtarget maps actual activeID toscalar/wordoffset"
+    },
+    {
+      "offset": 299924,
+      "length": 27,
+      "sha256": "49c7bf23f8ebc2a233a6f2d7975ce2911adcd7de146a85993f539f09b7dd3f8c",
+      "module": 9,
+      "cpuAddress": 37764,
+      "meaning": "Herb selectedtarget deadbitguard and50effect"
+    },
+    {
+      "offset": 303158,
+      "length": 86,
+      "sha256": "f9edfd0147bdde88b1d06f94b0dc016d1b8c5490eb3fdc9c32a331742ba932ae",
+      "module": 9,
+      "cpuAddress": 40998,
+      "meaning": "Herb HP add and cap"
+    }
+  ],
+  "validation": {
+    "evidenceKind": "NORMAL_ORIGINAL_CONTROLLER_PLUS_ISOLATED_ORIGINAL_CPU",
+    "normal": {
+      "enemy18HP": 38,
+      "chosenCommands": "actor0 attackslot3 then actor1 attackslot3",
+      "executionOrder": [
+        1,
+        0,
+        131
+      ],
+      "firstAction": "girl actor1 actual42 physical damage kills enemy, remaining dead target not attacked",
+      "XP39Split": [
+        19,
+        19
+      ],
+      "money13Shared": true,
+      "HP": [
+        50,
+        92
+      ]
+    },
+    "normalSourceSha256": "ac862ffe1c3d6f3e4aac2fa39f6858590db3073d13cea29d83d910e1fad0d3e6",
+    "normalFinalSha256": "e108d954dcf9c5b051cf981c7ac3c92dd82760ba35c67abf4d55360e6627bdec",
+    "boundaryFamilies": 11,
+    "boundaryCaseCounts": {
+      "order": 16,
+      "collection": 2,
+      "actionRecheck": 12,
+      "deadEnemyRetarget": 4,
+      "enemyTarget": 2048,
+      "reward": 48,
+      "recovery": 9216,
+      "multiplier": 512,
+      "battleExit": 49,
+      "actorPhysical": 24,
+      "actor1Growth": 4
+    },
+    "normalReportSha256": "d0c88f0d9437641e4d3af93242b125add0b218458071ec28bd1ace7ea15fc4af",
+    "cpuReportSha256": "36365fb6bfc01f13b931516d20c4ec577fd05440b59c0169070e78769e194697",
+    "notIndependentMethodsPerCase": true,
+    "parameterCases": 11935,
+    "jvm": {
+      "methods": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "command": "JAVA_HOME=<existing JDK21> ANDROID_SDK_ROOT=<existing SDK> bash ./gradlew --offline --no-daemon :app:testDebugUnitTest --tests org.fengshen.dev.OriginalPartyRulesTest",
+      "environment": "Managed Linux worktree; original Gradle wrapper, cached dependencies and SDK35. No APK or Android runtime claim.",
+      "timestampUTC": "2026-10-02T18:14:07Z"
+    },
+    "addendum": {
+      "reportSha256": "add3db989727c5d718239fc49e04ea6598afa44c34a55562e8972711a25835a5",
+      "kind": "CONTROLLED_UNMODIFIED_ORIGINAL_CPU_NOT_NORMAL_OR_ANDROID",
+      "boundaryFamilies": 5,
+      "caseCounts": {
+        "aiAndTargetSameByte": 1280,
+        "perActorEscape": 1024,
+        "escapeChains": 2,
+        "herbTargetEffects": 16,
+        "herbConfirmation": 8
+      },
+      "parameterCases": 2330,
+      "notNormalOrAndroid": true
+    }
+  },
+  "growthActor1BoundaryCases": [
+    {
+      "actorIndex": 1,
+      "beforeLevelRaw": 11,
+      "xp": 2524,
+      "afterLevel": 12,
+      "afterMaxHP": 92,
+      "afterMaxMP": 44,
+      "steps": 279
+    },
+    {
+      "actorIndex": 1,
+      "beforeLevelRaw": 11,
+      "xp": 2525,
+      "afterLevel": 13,
+      "afterMaxHP": 107,
+      "afterMaxMP": 48,
+      "steps": 582
+    },
+    {
+      "actorIndex": 1,
+      "beforeLevelRaw": 11,
+      "xp": 3184,
+      "afterLevel": 14,
+      "afterMaxHP": 124,
+      "afterMaxMP": 52,
+      "steps": 887
+    },
+    {
+      "actorIndex": 1,
+      "beforeLevelRaw": 79,
+      "xp": 9999999,
+      "afterLevel": 80,
+      "afterMaxHP": 92,
+      "afterMaxMP": 44,
+      "steps": 169
+    }
+  ],
+  "failedAssumptionsCorrected": [
+    "Command3 versuscommand3 retainsoriginalstableorder evenwhenspeedsdiffer; correctedexpectedtest, didnotpatchROM.",
+    "Recoverycarrydoesnotcome frompreviouspartycountcompare: B196 SEC/SBC mapspositiveactiveIDandsetscarry1foreveryactiveactor. Correctedexpectedtest; sharedRNGbytecontinuesmutating."
+  ],
+  "limits": [
+    "One normalnaturalbattle plusisolatedCPUcases; no Androidacceptance",
+    "Onlycurrenttwoactiveactors; arbitrarypartyreordering/holesnotvalidated",
+    "All-targetBossice multi-targetexecution not included",
+    "Normalgirl levelup not yet observed",
+    "OriginalNMI/framerandomsequence not replicated bystatic bytefixtures",
+    "Two present actors0/1 only; no arbitraryparty holes/reordering originalUI acceptance",
+    "AI routine fixed supplied43; NMI frame randomsequence remainsnotreplicated",
+    "Ice dispatcher andfirsttarget CPUverified, fulltwo-target originalnormalplaynotperformed",
+    "Herb fullHP anddeadtarget effectboundary checked; originalmenu legality ondeadtarget NOTchecked",
+    "Herb depleted-sharedinventory menu betweenactor confirmations NOTchecked; donot autoallowfreeuse",
+    "Escape oneactor success isnotparty success; post-success targeteligibility/roundcarry andordinarymenucontinuation pending exactprobe",
+    "No newnormal original battle orAndroid acceptance inthis addendum",
+    "11 JVM methods and 11,935 original CPU parameter cases across 11 families are different counts. Addendum cases are separately counted; repeated byte/status fixtures are not independent normal battles."
+  ],
+  "taskId": "WORLD-FULL-01",
+  "source": {
+    "acquisition": "game-data/provenance/rom-acquisition.json",
+    "licenseStatus": "Unknown; unchanged ROM hash proves byte identity, not rights clearance."
+  },
+  "implementation": {
+    "helper": "android/app/src/main/java/org/fengshen/dev/OriginalPartyRules.kt",
+    "scope": "Pure decision helpers only. No HP/EXP/inventory mutation, random sampling, renderer, save format or command engine. OpeningBattle integration and Android acceptance are separate.",
+    "actorIds": {
+      "0": "nezha",
+      "1": "xiaolongnv"
+    },
+    "identity": "Actor index is stable original identity. Party slot controls recovery/target traversal; enemy slot identifies a battle instance independently of definition ID.",
+    "missingGrowthOrMultiplierOwner": "Reject missing owner data; never substitute another actor table.",
+    "noLivingExperienceGuard": "Returns an empty allocation safely; does not assert that the original permits a zero-survivor victory.",
+    "inactiveSchedulerSlots": "Sorting present entries preserves the original active relative order. Dead entries supplied by the caller remain sorted and require action-time eligibility revalidation."
+  },
+  "additionalRules": {
+    "enemyRandomTiming": "9:8DE9 selects AI/hit and calls 8EB2 with the same unchanged $43; ordinary target selection draws no additional byte. Later A956 damage dispatch reads no random byte. This fixed-byte CPU evidence does not simulate NMI frame RNG.",
+    "iceTargetMode": "Behaviors 1/3 special attacks set $693E=1 and start at first living party slot. 8F71 advances to later living slots. Full multi-target continuation remains pending verification; do not silently use single-target semantics.",
+    "twoActorEscape": "8A49 evaluates the acting character against first enemy in agility order. Success sets that actor command7, advances to the next party actor, forces numeric command4 if applicable, and finishes only after all relevant actors command7. One success is not a party escape. Status>=0x10 skip and subsequent-round target/state behavior require further validation.",
+    "herbTwoActorEffect": "Original 9384 uses EF-selected party target through B1BD/B1C7, +50 and max cap, dead-bit20 rejects effect. Both acting and target actor combinations were tested. BB9F confirms and decrements before the ordered action; cancellation does not decrement. Target stores 0x88+partySlot. Shared inventory depletion across collection and full menu legality remain unverified."
+  }
+}
