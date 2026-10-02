@@ -1337,8 +1337,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun battleMedicines()=content.itemDefinitions.values.filter{it.category=="medicine"&&
         ((inventory[it.id]?:0)>0||it.id==HerbUse.ID)}.map{it.id}.sorted()
     private fun battleItemLayout():TouchModalLayout {
-        val l=touchModalLayout(ui.safe,resources.displayMetrics.density,resources.configuration.fontScale,0,0,false)
-        return l
+        val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
+        val l=touchModalLayout(ui.safe,dp,font,0,0,false)
+        // This modal has no tabs/party rows. Reserve its two actual header lines, not phantom tabs.
+        val header=max(96f,(15f+12f)*font*1.25f+28f)*dp
+        val y=l.frame.y+header+8*dp;val bottom=l.frame.y+l.frame.h-8*dp
+        return l.copy(list=l.list.copy(y=y,h=bottom-y),detail=l.detail.copy(y=y,h=max(1f,l.primary.y-8*dp-y)))
     }
     fun battleItemBounds(id:String)=battleItemLayout().visibleRow(battleMedicines().indexOf(id),battleItemListScroll)
     fun battleItemUseBounds()=battleItemLayout().primary
@@ -1366,9 +1370,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val id=selectedBattleItem;val item=id?.let{content.itemDefinitions[it]}
         val enabled=item!=null&&current.herbAvailable(current.hero.id,inventory[HerbUse.ID]?:0,item)
         val lines=if(id==null)listOf("选择物品后查看效果与合法目标", "只浏览、取消或滑动不会消耗物品") else listOf(
-            content.itemNames[id]?:id,"目标 ${heroName(current.hero.id)} · HP ${current.hero.hp}/${current.hero.maxHp}",
-            if(id==HerbUse.ID)"恢复50 HP，超过上限截断；满HP仍消耗" else "效果尚未实现",battleMedicineReason(id),
-            "取消不消耗药草；敌人仍会按顺序行动")
+            "${heroName(current.hero.id)} · HP ${current.hero.hp}/${current.hero.maxHp}",
+            if(id==HerbUse.ID)"HP +50 · 不超过上限" else "效果尚未实现",
+            if(id==HerbUse.ID)"满HP仍消耗1份" else "当前不能使用",
+            battleMedicineReason(id),"取消不消耗；敌人按顺序行动")
         c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
         var y=l.detail.y-battleItemDetailScroll
         for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
