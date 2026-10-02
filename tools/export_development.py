@@ -452,10 +452,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
         if recipe.get('terrain'):
             terrain=recipe['terrain'];proof=load(ROOT/terrain['evidence'])
-            if original['tilesetId']!=4 or terrain['tileset']!=4 or proof['romSha256']!=SHA256:
+            if original['tilesetId']!=terrain['tileset'] or proof['romSha256']!=SHA256:
                 raise ValueError('Terrain profile differs from original tileset')
-            for field in ('sourceDispatch','targetDispatch','selector','targetSelector'):
-                checked_span(reader,proof['profile'][field])
+            if terrain['tileset']==4:
+                for field in ('sourceDispatch','targetDispatch','selector','targetSelector'):
+                    checked_span(reader,proof['profile'][field])
+            elif terrain['tileset']==3 and proof.get('scopeRevision')=='map23-ground-mode':
+                if original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0:
+                    raise ValueError('Ground profile lacks current map/plane evidence')
+                for span in proof['sources']:checked_span(reader,span)
+                if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1,14}:
+                    raise ValueError('Ground profile classes differ from original map')
+            else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
         result[f'tiles{mid}.png']=scoped_map_atlas(reader,original,recipe['palette'],evidence['emulatorRgb'])

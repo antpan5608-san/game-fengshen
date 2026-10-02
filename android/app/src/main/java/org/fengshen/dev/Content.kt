@@ -64,6 +64,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val serviceBindings:List<ServiceBinding> = emptyList()) {
     // One state-dependent scene view. Arrays and atlases stay in the existing
     // bounded loader; this never holds every visited map alive.
+    var joinCharacters:Map<String,CharacterState> = emptyMap()
+        internal set
     var mechanisms:List<SceneMechanism> = emptyList()
         internal set
     private var stateScene:Scene?=null
@@ -113,7 +115,7 @@ object ContentLoader {
                     val r=a.getJSONArray(i);require(r.length()==4)
                     EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}?:emptyList(),data.optJSONObject("terrain")?.let{t->
                     require(t.getString("evidence").isNotBlank())
-                    t.getInt("tileset").also{require(it==OriginalTerrain.PALACE)}
+                    t.getInt("tileset").also{require(it in setOf(OriginalTerrain.PALACE,OriginalTerrain.CAVE_GROUND))}
                 })
             return data to result
         }
@@ -240,6 +242,17 @@ object ContentLoader {
             val t=npc.treasure!!;val item=itemDefinitions[t.itemId]
             npc.openedSprite!=null&&t.flagId.isNotBlank()&&item?.category=="special"&&item.originalId==11&&item.maxCount==1
         })
+        val extraCharacters=data.optJSONArray("additionalCharacters")?.let{a->(0 until a.length()).map{i->
+            val c=a.getJSONObject(i);val state=CharacterState.parse(c.getJSONObject("initialState"))
+            require(state.id!=initialPlayer.id&&c.getString("evidence").isNotBlank())
+            require(c.getInt("originalActorIndex") in 0..3)
+            val name=c.getString("name");require(name.isNotBlank()&&name.length<=32)
+            val asset=checkedName(c.getString("portraitAsset"))
+            state to CharacterDefinition(state.id,name,asset,bitmap(asset,16,16),c.getString("confidence"),
+                if(state.equipment!=null)listOf("rightHand","leftHand","body","feet") else null)
+        }}?:emptyList()
+        require(extraCharacters.map{it.first.id}.distinct().size==extraCharacters.size&&extraCharacters.size<=3)
+        val knownCharacters=extraCharacters.map{it.first.id}.toSet()+initialPlayer.id
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->
             val o=itemArray.getJSONObject(i);val e=o.optJSONObject("equipment")?:return@mapNotNull null
             require(o.getJSONObject("source").getString("confidence") in setOf("GAMEPLAY_VERIFIED","PROVISIONAL_REFERENCE"))
@@ -249,7 +262,7 @@ object ContentLoader {
                 e.optInt("defenseBonus",0),e.optInt("evasionValue",0),e.optBoolean("operationEnabled",true))
         }.associateBy{it.itemId}
         require(equipmentDefinitions.values.all{it.originalId in 0..255 && it.slot in setOf("rightHand","body","feet") &&
-            it.attackBonus>=0 && it.defenseBonus>=0 && it.allowedCharacters==setOf("nezha")})
+            it.attackBonus>=0 && it.defenseBonus>=0 && it.allowedCharacters.isNotEmpty()&&it.allowedCharacters.all{owner->owner in knownCharacters}})
         val shops=data.optJSONArray("shops")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i)
             fun refs(n:String)=o.getJSONArray(n).let{v->(0 until v.length()).map{v.getString(it)}}
@@ -368,6 +381,21 @@ object ContentLoader {
                             StoryEntryTrigger(mid,x,y)
                         }
                         boss.commitAfterDialogue=b.optBoolean("commitAfterDialogue",false)
+                        boss.continuation=b.optJSONObject("continuation")?.let{c->
+                            require(c.getString("evidence").isNotBlank())
+                            val ids=c.getJSONArray("dialogueIds").let{v->(0 until v.length()).map{v.getString(it)}}
+                            val joins=c.optString("joinCharacterId").takeIf{it.isNotEmpty()}
+                            require(ids.firstOrNull()==boss.victoryDialogue&&ids.all{it in dialogues}&&
+                                (joins==null||extraCharacters.any{it.first.id==joins}))
+                            val target=c.optJSONObject("destination")?.let{t->
+                                val d=StoryDestination(t.getInt("mapId"),t.getInt("x"),t.getInt("y"),if(t.has("direction"))Key.valueOf(t.getString("direction")) else null,
+                                    if(t.has("terrainMode"))t.getInt("terrainMode") else null,if(t.has("encounterSteps"))t.getInt("encounterSteps") else null)
+                                require(scenes[d.mapId]?.check(d.x,d.y,d.terrainMode?:0)==null&&d.mapId in scenes)
+                                d
+                            }
+                            val fs=c.getJSONArray("completionFlags").let{v->(0 until v.length()).map{v.getString(it)}.toSet()}
+                            StoryContinuation(ids,joins,target,fs)
+                        }
                         require(!boss.commitAfterDialogue||boss.entryTrigger!=null)
                         require(boss.id.matches(Regex("rom\\.boss\\.\\d+"))&&(boss.flagId.matches(Regex("rom\\.event\\.\\d+\\.\\d+\\.\\d+"))||boss.flagId.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+")))&&
                             boss.victoryDialogue in dialogues&&validEncounterGroup(boss.group,enemies)&&
@@ -377,7 +405,30 @@ object ContentLoader {
                     require(limit.getString("owner")=="nezha"&&limit.getString("confidence")=="ORIGINAL_ROM_STATIC"&&
                         limit.getString("evidence").isNotBlank())
                     limit.getInt("level").also{level->require(level in 2..99&&growth.lastOrNull()?.level==level)}
-                })
+                }).also{rules->
+                    o.optJSONArray("characterGrowth")?.let{a->
+                        val seen=mutableSetOf<String>();val rows=mutableMapOf<String,List<GrowthRow>>();val limits=mutableMapOf<String,Int>()
+                        for(i in 0 until a.length()){
+                            val g=a.getJSONObject(i);val owner=g.getString("owner")
+                            require(owner in knownCharacters&&owner!=initialPlayer.id&&seen.add(owner)&&g.getString("evidence").isNotBlank())
+                            val table=g.getJSONArray("rows")
+                            val values=(0 until table.length()).map{j->
+                                val r=table.getJSONObject(j)
+                                GrowthRow(r.getInt("level"),r.getInt("threshold"),r.getInt("hp"),r.getInt("mp"),
+                                    r.getInt("strength"),r.getInt("stamina"),r.getInt("agility"),r.getInt("spirit"),r.getBoolean("runtimeVerified"))}
+                            require(values.isNotEmpty()&&values.map{it.level}.distinct().size==values.size&&
+                                values.all{it.level in 2..99&&it.threshold in 1..0xffffff&&
+                                    listOf(it.hp,it.mp,it.strength,it.stamina,it.agility,it.spirit).all{v->v in 0..255}}&&
+                                values.zipWithNext().all{it.second.level==it.first.level+1&&it.second.threshold>it.first.threshold})
+                            rows[owner]=values
+                            if(g.has("knownMaxLevel")){
+                                require(g.getString("limitEvidence").isNotBlank())
+                                limits[owner]=g.getInt("knownMaxLevel").also{require(it==values.last().level)}
+                            }
+                        }
+                        rules.characterGrowth=rows;rules.characterLevelLimits=limits
+                    }
+                }
         }else null
         require(npcs.filter{it.scriptedActor}.all{npc->
             battle?.storyBattles?.get(npc.id)?.entryTrigger?.mapId==npc.mapId})
@@ -441,8 +492,10 @@ object ContentLoader {
         return Content(opening,atlas114,sprites,
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
-            mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
+            mapOf(initialPlayer.id to initialName)+extraCharacters.associate{it.first.id to it.second.name},
+            mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
+                content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 data.optJSONArray("mechanisms")?.let{a->
                     content.mechanisms=(0 until a.length()).map{i->
                         val o=a.getJSONObject(i);val cells=o.getJSONArray("changes")

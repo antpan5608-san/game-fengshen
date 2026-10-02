@@ -108,8 +108,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleResultBefore:CharacterState?=null
     private var battleResultLines:List<String> = emptyList()
     private val diagnosedExperience=mutableSetOf<String>()
-    fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growth?:emptyList(),
-        content.initialPlayer.id,content.battle?.knownMaxLevel)
+    fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growthFor(hero.id)?:emptyList(),
+        hero.id,content.battle?.maxLevelFor(hero.id))
     private fun diagnoseExperience(){for(hero in characters){val progress=growthProgress(hero)
         if(progress.status==ExperienceProgress.Status.INVALID){val key="${hero.id}:${hero.level}:${hero.experience}:${progress.reason}"
             if(diagnosedExperience.add(key))Diagnostics.record("experience_state_inconsistent","ERROR",JSONObject()
@@ -191,6 +191,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         inventory.isNotEmpty() || flags.isNotEmpty() || money!=content.initialMoney
     fun backupBeforeCloudRestore(){savePrefs.getString("saveJson",null)?.let{savePrefs.edit().putString("preCloudRecovery",it).commit()}}
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
+        if(!applySnapshotState(snapshot))return false
+        localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState()
+        if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
+        return true
+    }
+    /** Apply a validated proposal in memory; transaction owners decide when to persist. */
+    private fun applySnapshotState(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
         val priorFlags=flags;flags=snapshot.flags
@@ -210,8 +217,6 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         inventory=migrated.filterValues{it>0};flags=snapshot.flags;money=snapshot.money
         characterPage=0;selectedItemId=null;candidateSlot=null;resetModalSelection()
-        localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState()
-        if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
         return true
     }
     fun restorePersisted(){
@@ -421,7 +426,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         audio.scene(world.mapId)
         if(story!=null&&flags[story.flagId+".dialogue.pending"]==true){
             val npc=content.npcs.first{it.id==story.npcId}
-            openDialogue(content.dialogues.getValue(story.victoryDialogue),npc)
+            openDialogue(content.dialogues.getValue(story.pendingDialogue(flags)),npc)
         }
     }
     private fun confirmBattle(){
@@ -622,7 +627,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             clearUxGesture();uxRevision++;return
         }
         if(story!=null&&flags[story.pendingFlag]==true){
-            openDialogue(content.dialogues.getValue(story.victoryDialogue),npc);return
+            openDialogue(content.dialogues.getValue(story.pendingDialogue(flags)),npc);return
         }
         val id=if(flags[story?.flagId?:npc.id]==true)npc.repeatDialogue?:npc.firstDialogue else npc.firstDialogue
         content.dialogues[id]?.let{openDialogue(it,npc)}
@@ -653,7 +658,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
         if(pending!=null){
             val npc=content.npcs.first{it.id==pending.npcId}
-            openDialogue(content.dialogues.getValue(pending.victoryDialogue),npc);return
+            openDialogue(content.dialogues.getValue(pending.pendingDialogue(flags)),npc);return
         }
         if(openEntryStoryIfNeeded())return
         if(world.mapId==114 && world.x==content.scene.spawnX*16+8 && world.y==content.scene.spawnY*16+8 &&
@@ -673,6 +678,22 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
             if(story.alreadyWon(flags)){
+                if(story.continuation!=null&&flags[story.pendingFlag]==true){
+                    if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+                    val before=currentSnapshot()
+                    val result=StoryFollowup.advance(before,story,dialogueText?.id?:"",content.joinCharacters)
+                    if(!result.applied){showNotice(result.error?:"剧情状态已变化");return}
+                    if(!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+                        showNotice("剧情落点或队伍不可恢复，原状态已保留");return
+                    }
+                    if(!persistStateResult()){
+                        if(!applySnapshotState(before))localSaveProtected=true
+                        showNotice("保存失败，请重试继续对话");return
+                    }
+                    if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
+                    else{dismissDialogue();audio.scene(world.mapId)}
+                    return
+                }
                 val before=flags
                 if(flags[story.pendingFlag]==true)encounter?.restore(0)
                 flags=story.completeDialogue(flags)
@@ -710,11 +731,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             .put("mapId",world.mapId).put("storyBattle",story.id))
         audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()
     }
+    private fun canDismissDialogue():Boolean {
+        val story=dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)}?:return true
+        return story.entryTrigger==null&&!(story.continuation!=null&&flags[story.pendingFlag]==true)
+    }
     private fun dismissDialogue(){layer=Layer.MAP;dialogueNpc=null;dialogueText=null;dialogueTouch.clear();input.clear();clock.reset()}
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
     private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
-    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->{if(dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)?.entryTrigger}==null)dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
+    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
@@ -1164,7 +1189,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(key){
             Key.MENU->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             Key.A->when(layer){Layer.MAP->interactionTarget()?.let{openNpc(it)};Layer.MENU->confirmMenu();Layer.DIALOGUE->advanceDialogue();Layer.BATTLE->confirmBattle();Layer.CHARACTER,Layer.INVENTORY->if(directPanel()){val b=modalLayout().primary;panelHit(b.x+b.w/2,b.y+b.h/2)?.let{runPanelCommand(it)}};else->Unit}
-            Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->{if(dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)?.entryTrigger}==null)dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
+            Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
             Key.START->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             else->Unit
         }

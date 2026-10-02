@@ -157,7 +157,7 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
     val transitionCells:Set<Int> = emptySet(),val sourceEdges:Map<Int,Set<Key>> = emptyMap(),
     val targetEdges:Map<Int,Set<Key>> = emptyMap(),val unavailableRegions:List<EncounterRect> = emptyList(),val terrainProfile:Int?=null) {
     init {
-        require(terrainProfile==null||terrainProfile==OriginalTerrain.PALACE)
+        require(terrainProfile==null||terrainProfile in setOf(OriginalTerrain.PALACE,OriginalTerrain.CAVE_GROUND))
         require(width in 1..256 && height in 1..256 && grid.size==width*height && collision.size==grid.size)
         require(grid.all { it in 0..255 } && collision.all { it in 0..255 })
         require(transitionCells.all {it in grid.indices})

@@ -29,12 +29,57 @@ data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThres
         if(attack<defense)1 else ((attack-defense)*multiplier(level,roll)) and 65535
 }
 data class StoryEntryTrigger(val mapId:Int,val x:Int,val y:Int)
+data class StoryDestination(val mapId:Int,val x:Int,val y:Int,val direction:Key?,val terrainMode:Int?,
+    val encounterSteps:Int?)
+data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:String?,
+    val destination:StoryDestination?,val completionFlags:Set<String>) {
+    init {
+        require(dialogueIds.isNotEmpty()&&dialogueIds.size<=64&&dialogueIds.all{it.isNotBlank()})
+        require(dialogueIds.distinct().size==dialogueIds.size)
+        require(completionFlags.all{it.isNotBlank()&&it.length<=96})
+        destination?.let{require(it.mapId in 0..255&&it.x>=0&&it.y>=0&&(it.terrainMode==null||it.terrainMode in 0..255)&&
+            (it.direction==null||it.direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))&&(it.encounterSteps==null||it.encounterSteps in 0..255))}
+    }
+    fun stageKey(storyId:String,index:Int)="runtime.story.$storyId.continuation.$index"
+    fun stage(storyId:String,flags:Map<String,Boolean>)=dialogueIds.indices.firstOrNull{flags[stageKey(storyId,it)]!=true}
+}
+
+/** One durable dialogue-step proposal; rendering never moves the party or grants actors. */
+object StoryFollowup {
+    data class Result(val snapshot:SaveSnapshot,val nextDialogue:String?,val applied:Boolean,val error:String?=null)
+    fun advance(before:SaveSnapshot,story:StoryBattleDefinition,currentDialogue:String,
+        templates:Map<String,CharacterState>):Result {
+        fun reject(reason:String)=Result(before,null,false,reason)
+        val chain=story.continuation?:return reject("当前剧情没有后续阶段")
+        if(before.flags[story.pendingFlag]!=true)return reject("剧情状态已变化")
+        val index=chain.stage(story.id,before.flags)?:return reject("后续剧情已经完成")
+        if(chain.dialogueIds[index]!=currentDialogue)return reject("对话阶段已变化")
+        val progressed=before.flags+(chain.stageKey(story.id,index) to true)
+        if(index+1<chain.dialogueIds.size)
+            return Result(before.copy(flags=progressed),chain.dialogueIds[index+1],true)
+        val characters=before.characters.toMutableList()
+        chain.joinCharacterId?.let{id->
+            val actor=templates[id]?:return reject("入队角色数据未接入")
+            if(characters.any{it.id==id}||characters.size>=4)return reject("当前队伍与入队剧情不一致")
+            characters.add(actor)
+        }
+        val completed=story.completeDialogue(progressed)+chain.completionFlags.associateWith{true}
+        val next=before.copy(characters=characters,flags=completed)
+        val destination=chain.destination?:return Result(next,null,true)
+        return Result(next.copy(mapId=destination.mapId,x=destination.x*16+8,y=destination.y*16+8,
+            direction=destination.direction?:before.direction,terrainMode=destination.terrainMode?:before.terrainMode,interiorContext=null,
+            encounterSteps=destination.encounterSteps?:before.encounterSteps),null,true)
+    }
+}
+
 data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:String,val group:EncounterGroup,
     val victoryDialogue:String) {
     // Keep the existing constructor ABI for cross-APK instrumentation. Set only by ContentLoader.
     var entryTrigger:StoryEntryTrigger?=null;internal set
     var commitAfterDialogue:Boolean=false;internal set
+    var continuation:StoryContinuation?=null;internal set
     val pendingFlag get()=flagId+".dialogue.pending"
+    fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
         entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
@@ -54,7 +99,14 @@ data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val
     val minimumSteps:Int,val forcedSteps:Int,val hitThreshold:Int,
     val enemyAgility:Map<Int,Int> = emptyMap(),val escapeEnabled:Boolean=false,val defeatResetEnabled:Boolean=false,
     val zones:List<EncounterZone> = emptyList(),val physicalRules:PhysicalRules?=null,
-    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap(),val knownMaxLevel:Int?=null)
+    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap(),val knownMaxLevel:Int?=null) {
+    // Constructor remains ABI-compatible with published APK instrumentation.
+    var characterGrowth:Map<String,List<GrowthRow>> = emptyMap();internal set
+    var characterLevelLimits:Map<String,Int> = emptyMap();internal set
+    fun growthFor(owner:String)=if(owner=="nezha")growth else characterGrowth[owner]?:emptyList()
+    fun maxLevelFor(owner:String)=if(owner=="nezha")knownMaxLevel else characterLevelLimits[owner]
+}
+
 
 /** The ROM increments $5B on a completed metatile movement and tests $43 at a tile-aligned checkpoint.
  * Android samples an independent byte, so the random sequence is explicitly not NES-equivalent. */
