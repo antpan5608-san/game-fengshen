@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "xiaolongnv-initial-party-growth-and-equipment",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "initialCharacter": {
+    "id": "xiaolongnv",
+    "name": "小龍女",
+    "actorIndex": 1,
+    "originalActiveActorId": 2,
+    "partySlot": 1,
+    "level": 12,
+    "experience": 2000,
+    "hp": 92,
+    "maxHp": 92,
+    "mp": 44,
+    "maxMp": 44,
+    "strength": 22,
+    "stamina": 14,
+    "agility": 26,
+    "spirit": 43,
+    "statusMask": 0,
+    "equipment": {"rightHand": 19, "leftHand": -1, "body": 11, "feet": 38},
+    "confidence": "NORMAL_ORIGINAL_MENU_AND_RAM_WITH_SCOPED_CPU_INIT",
+    "inheritedEmptySlotFields": ["left-hand565 remains prior FF", "status545 remains prior0", "learned-spell lists not explicitly initialized here; no spell capability inferred"],
+    "spells": "NOT_VERIFIED_NO_CAPABILITY_INFERRED"
+  },
+  "initializationSources": [
+    {"offset": 379814, "length": 2, "sha256": "380c456ab38350bd7c985a9d51fd3818dd56b340639eb3def3e75286cd972ffc", "module": 11, "cpuAddress": 52118, "meaning": "Event28 actual pointer toD6E6"},
+    {"offset": 382710, "length": 180, "sha256": "305409d7f09de1a2bda1e10dccf99e92899a936b1994f566bc681ffdaa56810c", "module": 11, "cpuAddress": 55014, "meaning": "Event28 stages: script33 then initialize actor1 and map23"},
+    {"offset": 382737, "length": 153, "sha256": "0a5d92aeb7682ed3119792168f2c41af24c883a8f11abd099fbd1e0733bc861f", "module": 11, "cpuAddress": 55041, "meaning": "Actual actor1 initialization and original completion call"},
+    {"offset": 377592, "length": 2, "sha256": "5e0e9ff8bb2f453b8614834ed74783218cb130a32ecc47c8ac18ef2cb2c1b1da", "module": 11, "cpuAddress": 49896, "meaning": "Script33 pointer"},
+    {"offset": 378918, "length": 77, "sha256": "b0f816e4b10bf7eb0eaaa13d934eb33b9a38120ab80e9783cbd2d3e2bbd5d968", "module": 11, "cpuAddress": 51222, "meaning": "Script33 exact byte stream, FF terminator"},
+    {"offset": 380058, "length": 117, "sha256": "826c3fbc71a547f8f20e752b3a9e517f5d37f1da7d500ae1aa5956b529fe01de", "module": 11, "cpuAddress": 52362, "meaning": "Original event completion OR80 to old-map flag before new map load"}
+  ],
+  "atomicJoinBoundary": {
+    "event": 28,
+    "afterRequiredDialogueScript": 33,
+    "mapId": 23,
+    "spawn": [54, 92],
+    "map95FlagValue": 129,
+    "preserve": "Existing actor0 HP/EXP/equipment, inventory and money remain unchanged by join; common Boss reward is already committed.",
+    "noExtraGrant": "No additional money, EXP, or bag copies of initial equipped gear.",
+    "scope": "Resource definition only, not runtime dispatch implementation or a claim forced repeated event calls are legal."
+  },
+  "growthExtension": {
+    "owner": "xiaolongnv",
+    "actorIndex": 1,
+    "confidence": "ORIGINAL_ROM_STATIC",
+    "levels": [2, 80],
+    "maxLevel": 80,
+    "growthRange": {"offset": 374176, "length": 560, "sha256": "1fe28bed189658f134d029bda673130f1549c51fe898ba789430e3bb48a1dc32", "cpuAddress": 54672, "prg8kBank": 45, "meaning": "80 contiguous seven-byte growth rows"},
+    "thresholdRange": {"offset": 376096, "length": 240, "sha256": "0f3cff03cbfaa0f0ae710d3577da485015a0b7dff8ed5e9cc3ad61c51a1c89c1", "cpuAddress": 56592, "prg8kBank": 45, "meaning": "80 contiguous uint24le experience values"},
+    "levelCapSource": {"offset": 306903, "length": 7, "sha256": "22d4c0bd8b32da763a0890325a44b61cce90d5d3b8d8de69d89e1f7f2fc06a1f", "module": 9, "cpuAddress": 44743, "meaning": "Active character storedlevel>=79 skips growth; displayed maxlevel80"},
+    "comparisonSources": [
+      {"offset": 373272, "length": 142, "sha256": "f9f7b7f82b87f2a320d2f0ff4c199c9ffb1e1c666f1f18e381c834833d4ceba2", "cpuAddress": 53768, "prg8kBank": 45, "meaning": "Experience comparison and level index increment"},
+      {"offset": 373422, "length": 194, "sha256": "388fb2ce24e7746861b7cb6eae2c7f27e51b9d828e6394a808f27023bc2e0d81", "cpuAddress": 53918, "prg8kBank": 45, "meaning": "Apply seven-byte growth deltas"}
+    ],
+    "pointerSources": [
+      {"offset": 373414, "length": 8, "sha256": "1f4714b3aa49dc2162460b9f3cfd8864631fe7e9f2f3b5db38933f36af8c1bdb", "cpuAddress": 53910, "prg8kBank": 45, "meaning": "Four growth table pointers"},
+      {"offset": 373264, "length": 8, "sha256": "a854ffe4f404bea262eca1fdfed16bda4f48c4b7f22d40408a1575a0fbcbc37b", "cpuAddress": 53760, "prg8kBank": 45, "meaning": "Four experience table pointers"}
+    ],
+    "initialInterval": {"level": 12, "totalExperience": 2000, "currentThreshold": 1972, "nextLevel": 13, "nextThreshold": 2525, "earnedInLevel": 28, "neededForNext": 525},
+    "rowSemantics": "Storedlevel=index; row indexN supplies deltas and cumulative threshold for displayed levelN+1. Do not replace event28 initial stats with a cumulative sum from row0.",
+    "displayCacheCaution": "Actor1 independent group, index11 cumulative1972 / next index12 2525; original status screen initially shows remaining0 while cache is stale. Do not reuse Nezha rows or treat cache as true threshold. No normal girl level-up executed here.",
+    "controlledOriginalThresholdCases": [
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 12,
+        "xp": 2000,
+        "afterLevel": 12,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "steps": 135,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 12,
+        "xp": 2524,
+        "afterLevel": 12,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "steps": 138,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 12,
+        "xp": 2525,
+        "afterLevel": 13,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 107, "mp": 48, "strength": 25, "stamina": 15, "agility": 27, "spirit": 46},
+        "steps": 441,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 12,
+        "xp": 2526,
+        "afterLevel": 13,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 107, "mp": 48, "strength": 25, "stamina": 15, "agility": 27, "spirit": 46},
+        "steps": 440,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 12,
+        "xp": 3961,
+        "afterLevel": 15,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 143, "mp": 56, "strength": 31, "stamina": 17, "agility": 29, "spirit": 52},
+        "steps": 1051,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 79,
+        "xp": 6698856,
+        "afterLevel": 80,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 108, "mp": 45, "strength": 23, "stamina": 15, "agility": 27, "spirit": 44},
+        "steps": 340,
+        "experienceUnchanged": true
+      },
+      {
+        "kind": "CONTROLLED_ORIGINAL_ACTOR1_LEVEL_BOUNDARY",
+        "beforeLevel": 80,
+        "xp": 16777215,
+        "afterLevel": 80,
+        "statBefore": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "statAfter": {"hp": 92, "mp": 44, "strength": 22, "stamina": 14, "agility": 26, "spirit": 43},
+        "steps": 28,
+        "experienceUnchanged": true
+      }
+    ],
+    "normalCharacterLevelUp": "NOT_RUN",
+    "higherRows": "ROM_STATIC_NOT_NORMAL_PLAY_VERIFIED"
+  },
+  "items": [
+    {
+      "id": "rom.weapon.19",
+      "category": "weapon",
+      "originalId": 19,
+      "buyPrice": 250,
+      "sellPrice": 125,
+      "maxCount": 10,
+      "name": "銅爪",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "verifiedFields": ["originalId", "category", "price", "contribution", "actorAndSlot", "name", "preview"],
+        "nameEvidence": {"kind": "NORMAL_ORIGINAL_EQUIPMENT_MENU", "path": "private-derived/world-east-followup/party-equipment-girl/normal-girl-equipment.png", "sha256": "fe56ca7cd1e4ba44f18cfce80ac05f15678a5aedbeab1f390ac2c730fd1d5e78"},
+        "nameRange": {"offset": 92797, "length": 4, "sha256": "6c6c6c5c8c0db9cf48d9e6308c37b0cb3f891402ba5b9579712cc18559b4192f", "module": 2, "cpuAddress": 60013, "meaning": "Original terminated menu text"},
+        "priceRange": {"offset": 92464, "length": 2, "sha256": "37133560d1c3a56cc32bdc7367716b6f5f12879610677b2bc29017e1b2db9374", "module": 2, "cpuAddress": 59680, "meaning": "Original unsigned purchase price"},
+        "evidence": "game-data/provenance/world-party-xiaolongnv.json"
+      },
+      "preview": {"asset": "item-weapon-19.png", "width": 24, "height": 24, "normalComparison": "PASS"},
+      "equipment": {
+        "originalId": 19,
+        "slot": "rightHand",
+        "allowedCharacters": ["xiaolongnv"],
+        "originalActorIndexes": [1],
+        "originalPermittedSlots": ["rightHand", "leftHand"],
+        "attackBonus": 20,
+        "defenseBonus": 0,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {"offset": 92568, "length": 2, "sha256": "5aeca385d8b781825b07bbec7c858b7170426c88088935850bc13dd6402368a5", "module": 2, "cpuAddress": 59784, "meaning": "Original equipment contribution"},
+          {"offset": 94144, "length": 15, "sha256": "b0e67829f758335d7c911536047312ffaa04020b3f32ed35a4faa394a918878e", "module": 2, "cpuAddress": 61360, "meaning": "Actor1 original equipment slot terminated list"}
+        ],
+        "crossHandOccupancy": false,
+        "limit": "Runtime right-hand/body/feet only; original left-hand list membership does not implement left-hand combat."
+      },
+      "weaponHitThreshold": {"value": 51, "source": {"offset": 301924, "length": 1, "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce", "module": 9, "cpuAddress": 39764, "meaning": "Weapon19 original masked-byte hit threshold"}}
+    },
+    {
+      "id": "rom.armor.11",
+      "category": "armor",
+      "originalId": 11,
+      "buyPrice": 750,
+      "sellPrice": 375,
+      "maxCount": 10,
+      "name": "連衫裙",
+      "source": {
+        "confidence": "PROVISIONAL_NAME_WITH_VERIFIED_SCOPED_ROM_FIELDS",
+        "verifiedFields": ["originalId", "category", "price", "contribution", "actorAndSlot"],
+        "nameEvidence": {
+          "kind": "PROVISIONAL_REFERENCE",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "row": {"id": 44, "name": "连衫裙", "type": 3, "number1": 20, "buy_price": 750, "sell_price": 375, "role01": 0, "role02": 1, "role03": 0, "role04": 0, "res": "Icon_038"},
+          "licenseStatus": "UNKNOWN",
+          "targetOriginalGlyphOrNormalName": "NOT_VERIFIED"
+        },
+        "nameRange": {"offset": 93398, "length": 5, "sha256": "7c392393cecbe617c19271143f4425821d3ba6991dd736f8b736be33d8b8021a", "module": 2, "cpuAddress": 60614, "meaning": "Original terminated menu text"},
+        "priceRange": {"offset": 93091, "length": 2, "sha256": "15b09b6c5810b23c14e3f6584b53a4bd35192a675ec3fa6a57d7a21ca9155729", "module": 2, "cpuAddress": 60307, "meaning": "Original unsigned purchase price"},
+        "evidence": "game-data/provenance/world-party-xiaolongnv.json"
+      },
+      "preview": {"asset": "item-armor-11.png", "width": 24, "height": 24, "normalComparison": "NOT_RUN"},
+      "equipment": {
+        "originalId": 11,
+        "slot": "body",
+        "allowedCharacters": ["xiaolongnv"],
+        "originalActorIndexes": [1],
+        "originalPermittedSlots": ["body"],
+        "attackBonus": 0,
+        "defenseBonus": 20,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {"offset": 93179, "length": 2, "sha256": "5aeca385d8b781825b07bbec7c858b7170426c88088935850bc13dd6402368a5", "module": 2, "cpuAddress": 60395, "meaning": "Original equipment contribution"},
+          {"offset": 94159, "length": 9, "sha256": "14ffcafc51847f54bce183e792247c52b36b257256bb91075f08f9a51aa1b735", "module": 2, "cpuAddress": 61375, "meaning": "Actor1 original equipment slot terminated list"}
+        ],
+        "crossHandOccupancy": false,
+        "limit": "Runtime right-hand/body/feet only; original left-hand list membership does not implement left-hand combat."
+      }
+    },
+    {
+      "id": "rom.armor.38",
+      "category": "armor",
+      "originalId": 38,
+      "buyPrice": 300,
+      "sellPrice": 150,
+      "maxCount": 10,
+      "name": "錦鞋",
+      "source": {
+        "confidence": "PROVISIONAL_NAME_WITH_VERIFIED_SCOPED_ROM_FIELDS",
+        "verifiedFields": ["originalId", "category", "price", "contribution", "actorAndSlot"],
+        "nameEvidence": {
+          "kind": "PROVISIONAL_REFERENCE",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "row": {"id": 88, "name": "锦鞋", "type": 3, "number1": 4, "buy_price": 300, "sell_price": 150, "role01": 0, "role02": 1, "role03": 0, "role04": 0, "res": "Icon_049"},
+          "licenseStatus": "UNKNOWN",
+          "targetOriginalGlyphOrNormalName": "NOT_VERIFIED"
+        },
+        "nameRange": {"offset": 93531, "length": 4, "sha256": "c21dd4487d961e55e008f5f0f1ec379a2d9557a7177fd81d65d51ead4c4afdcc", "module": 2, "cpuAddress": 60747, "meaning": "Original terminated menu text"},
+        "priceRange": {"offset": 93145, "length": 2, "sha256": "f85ad8f0233b99ba122d3b79773c1a1936b3d3b988b9d1b475fd890b4032f3c4", "module": 2, "cpuAddress": 60361, "meaning": "Original unsigned purchase price"},
+        "evidence": "game-data/provenance/world-party-xiaolongnv.json"
+      },
+      "preview": {"asset": "item-armor-38.png", "width": 24, "height": 24, "normalComparison": "NOT_RUN"},
+      "equipment": {
+        "originalId": 38,
+        "slot": "feet",
+        "allowedCharacters": ["xiaolongnv"],
+        "originalActorIndexes": [1],
+        "originalPermittedSlots": ["feet"],
+        "attackBonus": 0,
+        "defenseBonus": 0,
+        "evasionValue": 4,
+        "operationEnabled": true,
+        "ruleSources": [
+          {"offset": 93233, "length": 2, "sha256": "c0ba8a33ac67f44abff5984dfbb6f56c46b880ac2b86e1f23e7fa9c402c53ae7", "module": 2, "cpuAddress": 60449, "meaning": "Original equipment contribution"},
+          {"offset": 94168, "length": 6, "sha256": "e6946fc2ed168f8188f79fa6f01316a3bb62bdedf0e3677807b694f50561544c", "module": 2, "cpuAddress": 61384, "meaning": "Actor1 original equipment slot terminated list"}
+        ],
+        "crossHandOccupancy": false,
+        "limit": "Runtime right-hand/body/feet only; original left-hand list membership does not implement left-hand combat."
+      }
+    }
+  ],
+  "graphics": {
+    "item-weapon-19.png": {
+      "width": 24,
+      "height": 24,
+      "transparentZero": true,
+      "paletteCodes": {"0": [0, 0, 0], "1": [89, 251, 154], "2": [255, 255, 255], "3": [32, 56, 239]},
+      "tiles": [
+        {"xy": [0, 0], "offset": 960976, "length": 16, "sha256": "ad746ca83422a390f0a2400827e5e020d1fbacad49cec7caf1155265ab8e0dc7"},
+        {"xy": [8, 0], "offset": 960992, "length": 16, "sha256": "2d42034a608fe6c6bbc7ab08eee0895019c62b22efab93c8c698c1fd36abfc84"},
+        {"xy": [16, 0], "offset": 958480, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [0, 8], "offset": 961232, "length": 16, "sha256": "5c61236b2b97081b1c3d05a051a064ffe8239688bcc1704af3642c7287d65289"},
+        {"xy": [8, 8], "offset": 961248, "length": 16, "sha256": "ce24f85c44eeac6af1581d12935d0269c949038ed5d9c3317fa477f7b12b1bad"},
+        {"xy": [16, 8], "offset": 961264, "length": 16, "sha256": "ee5609b92110b78962e54ff30ac63ea2692d71bb4154736f88566c95eac5e7e4"},
+        {"xy": [0, 16], "offset": 958480, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [8, 16], "offset": 961504, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [16, 16], "offset": 961520, "length": 16, "sha256": "74c9a876b5ea46d29bb6aee67504d6388ef1074c6b75be0c0abc6217fb6be55d"}
+      ],
+      "rgbaSha256": "3c5e2f7b12d5a5737b8a8b776a9b8c9d6420ccc7b02339b47b050b7fa7d8285c",
+      "captureKind": "NORMAL_ORIGINAL_EQUIPMENT_MENU",
+      "normalPlayEvidence": true,
+      "compositionSource": {"offset": 94626, "length": 12, "sha256": "fc4e003b18c135fc6b4e898a33b807a566c0c423e83018a0f815a424df0dbad9", "module": 2, "cpuAddress": 61842, "meaning": "Original item preview width/height/palette/tile composition"},
+      "chrBankSource": {"offset": 85839, "length": 1, "sha256": "528a84ce6b18eb7d0e54be01379122a76dfdca14c97f02e0424aabf0220d9f51", "module": 2, "cpuAddress": 53055, "meaning": "Original preview CHR bank selection"},
+      "nesPaletteCodes": [14, 43, 48, 18],
+      "paletteObservation": {"path": "private-derived/world-east-followup/party-equipment-girl/normal-girl-equipment-ppu.bin", "sha256": "35b5c32db1e0ff6254438c05ea843083231b53202ade353910e2664f5426ee61"},
+      "normalItemPreviewComparison": "PASS",
+      "observedRect": [200, 169, 24, 24],
+      "captureSha256": "fe56ca7cd1e4ba44f18cfce80ac05f15678a5aedbeab1f390ac2c730fd1d5e78",
+      "capturePath": "private-derived/world-east-followup/party-equipment-girl/normal-girl-equipment.png"
+    },
+    "item-armor-11.png": {
+      "width": 24,
+      "height": 24,
+      "transparentZero": true,
+      "paletteCodes": {"0": [0, 0, 0], "1": [255, 255, 255], "2": [255, 199, 255], "3": [0, 150, 0]},
+      "tiles": [
+        {"xy": [0, 0], "offset": 965696, "length": 16, "sha256": "10c5a71ea902eb7a1313cf435595c4ee601ac794eb697d39bf255dc3c7820a67"},
+        {"xy": [8, 0], "offset": 965712, "length": 16, "sha256": "0a9d63ab50bb822d8be96d61d8b9cd09245b32b5ca5ee1f1daa0f0e0078163b6"},
+        {"xy": [16, 0], "offset": 965728, "length": 16, "sha256": "20fe750d4b0f4e4ad4cd21315f7ba7a7a227208dcc8596604766adeaac464bc7"},
+        {"xy": [0, 8], "offset": 965952, "length": 16, "sha256": "4e4d9a60c9c8c06ae01210037d2acb42441eb68a54d17911cd3a755d16d0fb38"},
+        {"xy": [8, 8], "offset": 965968, "length": 16, "sha256": "035f5c794f81a34c94d09a5a48b02c4f70a5612d314df43ae8cdb9046c9382a5"},
+        {"xy": [16, 8], "offset": 965984, "length": 16, "sha256": "f38ad919133fd1a8bf6b2c1202b37c7034db2a79388d43d2e83e24dfaa52aaba"},
+        {"xy": [0, 16], "offset": 966208, "length": 16, "sha256": "014c495ab99be997dce6435a06b2fe85fbdf591e25509071a6da1f46150df57e"},
+        {"xy": [8, 16], "offset": 966224, "length": 16, "sha256": "92cc2663f4bbcaa22eb919713ed508cb694a6e32000633e47546c911f84bccdd"},
+        {"xy": [16, 16], "offset": 966240, "length": 16, "sha256": "cc613d8528cd32f548f5406e295568ab03777dd94199d3400f346aa24aabda83"}
+      ],
+      "rgbaSha256": "085c181cce021b0eaba323603cd869f81462d1aa0939d4ba979f1d1f84c98798",
+      "captureKind": "STATIC_ORIGINAL_COMPOSITION_WITH_OBSERVED_EQUIPMENT_MENU_PALETTE",
+      "normalPlayEvidence": false,
+      "compositionSource": {"offset": 95122, "length": 12, "sha256": "3d5477c973d7b17ad27354fa02e9767af114cbecc91113beedbf639d192223dd", "module": 2, "cpuAddress": 62338, "meaning": "Original item preview width/height/palette/tile composition"},
+      "chrBankSource": {"offset": 85881, "length": 1, "sha256": "0a2c6ea0370d1d49c411a6e2396695fcd4eab03d96e9e7a8a3ec1ec312d9ab38", "module": 2, "cpuAddress": 53097, "meaning": "Original preview CHR bank selection"},
+      "nesPaletteCodes": [62, 48, 52, 25],
+      "paletteObservation": {"path": "private-derived/world-east-followup/party-equipment-girl/normal-girl-equipment-ppu.bin", "sha256": "35b5c32db1e0ff6254438c05ea843083231b53202ade353910e2664f5426ee61"},
+      "normalItemPreviewComparison": "NOT_RUN"
+    },
+    "item-armor-38.png": {
+      "width": 24,
+      "height": 24,
+      "transparentZero": true,
+      "paletteCodes": {"0": [0, 0, 0], "1": [255, 255, 255], "2": [255, 117, 97], "3": [215, 203, 255]},
+      "tiles": [
+        {"xy": [0, 0], "offset": 966672, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [8, 0], "offset": 966672, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [16, 0], "offset": 966672, "length": 16, "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"},
+        {"xy": [0, 8], "offset": 969232, "length": 16, "sha256": "3cade479befb31e92d8a4720cc7e33d881861561a5d40e385c1c2046ac45cd41"},
+        {"xy": [8, 8], "offset": 969248, "length": 16, "sha256": "54d4507adbc75feffad03bd749de938fe7c02ec5e32ed1d86a23d0f270f02dce"},
+        {"xy": [16, 8], "offset": 969264, "length": 16, "sha256": "43db5c62a3f5f4109226f6087431fa550b473654444a874d8986702f20320c7a"},
+        {"xy": [0, 16], "offset": 969488, "length": 16, "sha256": "df4afad0ef61fe2899b5e2e7fac0016ae36a83be68edc3af9bb6ac1efa591c46"},
+        {"xy": [8, 16], "offset": 969504, "length": 16, "sha256": "9eee37761a415afa595f2e213428235473c72301fc9e704d4c811858ffe8d5f2"},
+        {"xy": [16, 16], "offset": 969520, "length": 16, "sha256": "adbc76dbedaadf86910828eb52764cdec448bb5320d25ae8a174da2d99c313e8"}
+      ],
+      "rgbaSha256": "4347cd11f45077a26bdf5384adecb87c1d6561e5471c2f206d8071593dde4c1c",
+      "captureKind": "STATIC_ORIGINAL_COMPOSITION_WITH_OBSERVED_EQUIPMENT_MENU_PALETTE",
+      "normalPlayEvidence": false,
+      "compositionSource": {"offset": 95467, "length": 12, "sha256": "865f1ee452ce1dd06dd4340c135c960e4d2f02fb376f39ffd408461894d667f5", "module": 2, "cpuAddress": 62683, "meaning": "Original item preview width/height/palette/tile composition"},
+      "chrBankSource": {"offset": 85908, "length": 1, "sha256": "af193a8cdcd0e3fb39e71147e59efa5cad40763d2611f5beff34a274f514362f", "module": 2, "cpuAddress": 53124, "meaning": "Original preview CHR bank selection"},
+      "nesPaletteCodes": [62, 32, 38, 51],
+      "paletteObservation": {"path": "private-derived/world-east-followup/party-equipment-girl/normal-girl-equipment-ppu.bin", "sha256": "35b5c32db1e0ff6254438c05ea843083231b53202ade353910e2664f5426ee61"},
+      "normalItemPreviewComparison": "NOT_RUN"
+    }
+  },
+  "equipmentSources": [
+    {"offset": 94064, "length": 8, "sha256": "e9dc9f8fd9f421fc76934efcb0930374b2ce8af36d52d7c016e90487ab3e6c58", "module": 2, "cpuAddress": 61280, "meaning": "Actor-index to equipment-slot pointer tables"},
+    {"offset": 94080, "length": 8, "sha256": "ae0f63852f544bc1d5e71e5c75b60a720568fa5953f2e0e2bd51ef1564f852cf", "module": 2, "cpuAddress": 61296, "meaning": "Actor1 four-slot pointers"},
+    {"offset": 76443, "length": 124, "sha256": "0db6a38459abf7d78076c2dd68c550aba4b8ef72e8165129139ccdb318dc0af0", "module": 2, "cpuAddress": 43659, "meaning": "Actual actor/slot/backpack selector"},
+    {"offset": 76401, "length": 25, "sha256": "2e25af89a7e3a770b45e74bbbdb1a75bdc94b4937ff74873db5499e90b113447", "module": 2, "cpuAddress": 43617, "meaning": "Original paired-hand weapon classifier"},
+    {"offset": 76426, "length": 17, "sha256": "d9d39b16b9cfec57112e2ff1c3bef6dbbd676218f123f8dc7779118ac432b0a5", "module": 2, "cpuAddress": 43642, "meaning": "Paired-hand weapon IDs"},
+    {"offset": 75546, "length": 102, "sha256": "d9682c7c3d3e8bfd8cc2e23b58c77697be79f5108a0c9c6c566c7aa6c32430b8", "module": 2, "cpuAddress": 42762, "meaning": "Original equipment pre-presentation paired-hand check"},
+    {"offset": 301881, "length": 23, "sha256": "fe84699dba2b55815c2fb88cfc8cd9348a02193075af7b4a202ba6ee24e3ad57", "module": 9, "cpuAddress": 39721, "meaning": "Original acting actor right-hand hit lookup"},
+    {"offset": 301924, "length": 1, "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce", "module": 9, "cpuAddress": 39764, "meaning": "Weapon19 threshold"}
+  ],
+  "verification": {
+    "originalSelectorCases": 16,
+    "originalWeaponHitByteCases": 256,
+    "originalEquipPrePresentationCases": 2,
+    "originalActor1GrowthBoundaryCases": 7,
+    "failures": 0,
+    "graphics": [
+      {
+        "asset": "item-weapon-19.png",
+        "pngSha256": "9137b5d9416f10065abf9b8c182ca974d26aafeae603d5218fe43fac44f3a6a6",
+        "rgbaSha256": "3c5e2f7b12d5a5737b8a8b776a9b8c9d6420ccc7b02339b47b050b7fa7d8285c",
+        "deterministicDoubleRebuild": true,
+        "normalScreenshotPixelsEqual": true
+      },
+      {
+        "asset": "item-armor-11.png",
+        "pngSha256": "ce0bcb47ea8a9a5e691cbffdf5331e9a7939bf22da03fd57fe42065fb295596e",
+        "rgbaSha256": "085c181cce021b0eaba323603cd869f81462d1aa0939d4ba979f1d1f84c98798",
+        "deterministicDoubleRebuild": true,
+        "normalScreenshotPixelsEqual": "NOT_RUN"
+      },
+      {
+        "asset": "item-armor-38.png",
+        "pngSha256": "e8b609241be143ef71cc89894f8a85c71e7f301dd64ee247a4366c61f747ac18",
+        "rgbaSha256": "4347cd11f45077a26bdf5384adecb87c1d6561e5471c2f206d8071593dde4c1c",
+        "deterministicDoubleRebuild": true,
+        "normalScreenshotPixelsEqual": "NOT_RUN"
+      }
+    ],
+    "androidRuntime": "NOT_RUN",
+    "resourceTests": {
+      "command": "python -m unittest discover -s tests -p test_world_xiaolongnv_resources.py -v",
+      "environment": "Linux/Python with fixed target ROM and existing Pillow",
+      "passed": 5,
+      "failed": 0,
+      "scope": "Resource source spans, actor-specific tables, complete graphics recipes and rejection of corrupted recipes; no Android runtime."
+    }
+  },
+  "evidence": {
+    "initialJoin": {"path": "private-derived/world-east-followup/party-init-evidence/report.json", "sha256": "4f84ab69dedaa093decb4d5dd2105000bc5e983c5fe7992e2605e7b68b3fe328", "sourceKind": "NORMAL_RAM_AND_UI_PLUS_CONTROLLED_ORIGINAL_CPU_STAGE2"},
+    "normalSource": {"path": "private-derived/world-east-followup/party-and-hell-entry-evidence.json", "sha256": "60d084222a38f4906d4eede860037ee8bbc1e1ff83ded9a1aea8a982ce678e9f"},
+    "normalCharacterUi": {"path": "private-derived/world-east-followup/party-status-from-menu/normal-status-open.png", "sha256": "512b42d01587903f1a109e2237ded211abab7879144ea798813beeab86975fdd"},
+    "localCpu": {"path": "private-derived/xiaolongnv-party/report.json", "sha256": "f77e669cc737017ef936da44e9fbd2c06fb1ba256ca9b1cd407d31700e10439e", "command": "python private-derived/xiaolongnv-party/probe.py"},
+    "recipeMethod": "Existing Reader + actual composition/CHR/palette, scoped_observed_graphic; weapon19 full cropped original pixels independently equal. No raw ROM/PPU committed."
+  },
+  "limits": [
+    "No shared runtime, exporter, CI, content pin or published artifact changed by this resource-only task.",
+    "Armor11/38 names are PROVISIONAL fixed Reference mappings; their complete normal previews are NOT_RUN. Recipe pixels are static original composition with observed menu palette, not invented art.",
+    "Weapon19 normal preview required FCEUX screenshot top crop8: OAM y176 maps screenshot y169. An initial y177 partial rectangle matched some ROM tiles but not full composition; rejected for item proof.",
+    "Existing export_world_from_base equipment validation currently assumes Nezha; root must adapt owner-specific validation before adding these definitions, not bypass it.",
+    "No left-hand battle, full spell list, Hell plot, actor1 normal level-up, native save or Android acceptance claim."
+  ]
+}
