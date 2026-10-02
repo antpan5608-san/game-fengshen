@@ -88,7 +88,10 @@ object ContentLoader {
                 edges(data,"sourceEdges"),edges(data,"targetEdges"),
                 data.optJSONArray("unavailableRegions")?.let{a->(0 until a.length()).map{i->
                     val r=a.getJSONArray(i);require(r.length()==4)
-                    EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}?:emptyList())
+                    EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}?:emptyList(),data.optJSONObject("terrain")?.let{t->
+                    require(t.getString("evidence").isNotBlank())
+                    t.getInt("tileset").also{require(it==OriginalTerrain.PALACE)}
+                })
             return data to result
         }
         val (data,opening)=scene("scene.json",114)

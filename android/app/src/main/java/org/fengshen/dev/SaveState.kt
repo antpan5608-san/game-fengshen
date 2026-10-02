@@ -158,7 +158,7 @@ data class CharacterState(val id:String,val level:Int,val experience:Int,val hp:
 
 data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:Int,val direction:Key,
     val characters:List<CharacterState>,val inventory:Map<String,Int> = emptyMap(),val flags:Map<String,Boolean> = emptyMap(),
-    val money:Int=0,val encounterSteps:Int=0,val interiorContext:InteriorContext?=null) {
+    val money:Int=0,val encounterSteps:Int=0,val interiorContext:InteriorContext?=null,val terrainMode:Int=0) {
     /** Published c11..c14 only exposed the three town0 stores (and inn in c14).
      * Infer that one evidenced legacy caller; new saves must carry their actual caller. */
     fun resolvedInteriorContext(content:Content):InteriorContext? {
@@ -175,13 +175,13 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         return JSONObject().put("saveSchemaVersion",1).put("contentVersion",contentVersion)
             .put("mapId",mapId).put("x",x).put("y",y).put("direction",direction.name)
             .put("characters",JSONArray().also{a->characters.forEach{a.put(it.json())}})
-            .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps).also{json->
+            .put("terrainMode",terrainMode).put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps).also{json->
                 interiorContext?.let{c->json.put("interiorContext",JSONObject().put("callerMapId",c.callerMapId)
                     .put("returnX",c.returnX).put("returnY",c.returnY))}
             }
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14","opening-segment-001-c15") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         val scene=content.scenes[mapId]?:return false
         val resolved=resolvedInteriorContext(content)
@@ -192,7 +192,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             val caller=content.scenes[c.callerMapId]?:return false
             if(caller.check(c.returnX,c.returnY)!=null)return false
         }
-        return scene.check(x/16,y/16)==null
+        return scene.check(x/16,y/16,terrainMode)==null
     }
     companion object {
         fun parse(text:String):SaveSnapshot {
@@ -205,7 +205,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             return SaveSnapshot(o.getString("contentVersion"),o.getInt("mapId"),o.getInt("x"),o.getInt("y"),
                 Key.valueOf(o.getString("direction")),(0 until chars.length()).map{CharacterState.parse(chars.getJSONObject(it))},
                 inventory,flags,o.optInt("money",0),o.optInt("encounterSteps",0),
-                o.optJSONObject("interiorContext")?.let{InteriorContext(it.getInt("callerMapId"),it.getInt("returnX"),it.getInt("returnY"))})
+                o.optJSONObject("interiorContext")?.let{InteriorContext(it.getInt("callerMapId"),it.getInt("returnX"),it.getInt("returnY"))},o.optInt("terrainMode",0))
         }
     }
 }

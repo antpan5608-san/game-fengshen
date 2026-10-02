@@ -184,7 +184,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),
                 error?.javaClass?.simpleName?:"target_map_or_spawn_unavailable",error?.stackTrace?.take(12)?.joinToString("\n")?:"")}}
     fun relayout(){clearBattleGesture();battlePresentation.invalidateInput();ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
-    fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0,world.interiorContext)
+    fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0,world.interiorContext,world.terrainMode)
     fun hasMeaningfulLocalSave():Boolean = hadPersistedAtStart || world.mapId!=114 ||
         world.x!=content.scene.spawnX*16+8 || world.y!=content.scene.spawnY*16+8 || characters!=listOf(content.initialPlayer) ||
         inventory.isNotEmpty() || flags.isNotEmpty() || money!=content.initialMoney
@@ -192,7 +192,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
-        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction,snapshot.resolvedInteriorContext(content)))return false
+        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction,snapshot.resolvedInteriorContext(content),snapshot.terrainMode))return false
         audio.scene(world.mapId)
         encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
         characters=snapshot.characters.map{hero->
@@ -290,6 +290,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 input.clear();npcTouch.clear();hudTouch.clear();return
             }
         }
+        if(step.suppressEncounter)return
         val group=encounter?.onCompletedStep(if(step.transitioned)-1 else step.mapId,step.x,step.y){battleRandom.nextInt(256)}?:return
         val rules=content.battle?:return
         persistState() // Stable pre-battle checkpoint; no mid-turn snapshot is written.
