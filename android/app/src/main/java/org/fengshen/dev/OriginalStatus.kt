@@ -23,11 +23,21 @@ object OriginalStatus {
     }
     fun applyStatus4(hero:CharacterState):CharacterState =
         if(hero.hp>0 && hero.statusMask in setOf(0,STATUS_BIT4))hero.copy(statusMask=STATUS_BIT4) else hero
-    /** 9:AA82..AB52: pass damage BEFORE its minimum-one floor, not already-clamped damage.
+    /** 9:AA08/AA82..AB52: physical and enemy ice share the nonzero status gate.
+     * Pass computed damage BEFORE its minimum-one floor, not already-clamped damage.
      * This only computes the amount; the existing action applies HP/death once. */
     fun incomingDamage(computedDamage:Int,statusMask:Int):Int {
         require(computedDamage<=0xffff && statusMask in 0..255)
         return if(computedDamage<=0)1 else if(statusMask and STATUS_BIT4!=0)(computedDamage shl 1) and 0xffff else computedDamage
+    }
+    /** 9:AD7E..AD99: pass the already-computed successful physical damage, after
+     * defense/minimum/multiplier/wrap. The original 8-bit byte-sum guard is not
+     * equivalent to a minimum-one clamp. Spell damage bypasses this branch.
+     * No RNG, HP mutation, or status recovery occurs here. */
+    fun outgoingPhysicalDamage(computedDamage:Int,statusMask:Int):Int {
+        require(computedDamage in 0..0xffff && statusMask in 0..255)
+        val byteSum=((computedDamage and 255)+(computedDamage ushr 8)) and 255
+        return if(statusMask and STATUS_BIT4!=0 && byteSum!=1)computedDamage ushr 1 else computedDamage
     }
     data class Status4Recovery(val character:CharacterState,val randomAfter:Int,val rotated:Boolean)
     /** Original single living character at 9:A69F completed-round boundary.
