@@ -16,6 +16,17 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertEqual('NPC_OVERLAY_ONLY',r['npcContexts'][176]['kind'])
         self.assertEqual(175,r['unresolved'][0]['index']);self.assertIsNone(r['effectiveMapCount'])
         self.assertFalse(r['referenceIsDenominator']);self.assertEqual('NO',r['summary']['allMapsUsable'])
+    def test_extra_tail_exit_is_preserved_without_promoting_or_excluding_the_context(self):
+        report=self.report;extra=report['unresolved'][0]
+        self.assertEqual('EXTRA_HEADER_CONTEXT_UNKNOWN',report['npcContexts'][175]['kind'])
+        self.assertFalse(extra['ordinaryChunkSlot']);self.assertIsNone(report['effectiveMapCount'])
+        self.assertEqual(1,len(extra['exits']));row=extra['exits'][0]
+        self.assertEqual(([3,10],73,[4,28]),(row['trigger'],row['targetMapId'],row['targetCell']))
+        self.assertEqual('UNKNOWN_SOURCE_CONTEXT_USAGE',row['conditionStatus'])
+        self.assertEqual(528,report['summary']['physicalExitRecordsIncludingUnresolved'])
+        self.assertEqual(527,report['summary']['exitRecords'])
+        self.assertEqual(1,report['summary']['unresolvedExitRecords'])
+        self.assertNotIn(175,[m['mapId'] for m in report['maps']])
     def test_shared_interiors_keep_each_real_service_context(self):
         services={s['id']:s for s in self.report['services']}
         for village in range(16):

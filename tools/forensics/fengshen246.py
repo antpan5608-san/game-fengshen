@@ -313,7 +313,8 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                 'pixelPosition':position,'positionEncoding':'CELL_TIMES_16_PLUS_120','cell':cell,
                 'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
         else:raise ValueError('Unterminated NPC/context list')
-        contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
+        contexts.append({'contextId':mid,'kind':('BASE_MAP' if mid<geometry_slots else
+            'EXTRA_HEADER_CONTEXT_UNKNOWN' if mid==geometry_slots else 'NPC_OVERLAY_ONLY'),
             'records':records,'runtime':'NOT_RUN'})
     catalog=extract_world_service_catalog(reader)
     stocks={(x["category"],x["contextIndex"]):x for x in catalog["stocks"]}
@@ -353,9 +354,25 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                 'interiorMapId':mid,'npcIndex':npc['index'],'source':npc['source'],
                 'conditions':'NEEDS_ORIGINAL_SPECIAL_SERVICE_AND_APPEARANCE_DISPATCH',
                 'operation':'NOT_IMPLEMENTED','verification':'PROVISIONAL_SERVICE_GROUP_CORRELATION'})
-    unresolved=[{'index':175,'kind':'EXTRA_HEADER_AND_EMPTY_NPC_SLOT','status':'UNKNOWN_EFFECTIVE_USAGE',
+    # Preserve the physical tail's real exit even though it cannot be decoded
+    # through the ordinary chunk domain. Absence of scanned incoming references
+    # is not proof of an unused map or permission to remove it from the unknowns.
+    extra_pointer=reader.word(8,exit_start+2*geometry_slots);extra_exits=[]
+    for index in range(128):
+        address=extra_pointer+index*5
+        if reader.read(8,address)[0]==254:break
+        raw=reader.read(8,address,5)
+        if raw[2]!=254 and raw[2]>=geometry_slots:raise ValueError('Extra exit destination outside known geometry')
+        extra_exits.append({'trigger':list(raw[:2]),'targetMapId':None if raw[2]==254 else raw[2],
+            'kind':'RETURN_TO_CALLER' if raw[2]==254 else 'DIRECT_OR_EDGE','targetCell':list(raw[3:]),
+            'source':reader.span(8,address,5,'Extra unresolved header context exit row'),
+            'conditionStatus':'UNKNOWN_SOURCE_CONTEXT_USAGE'})
+    else:raise ValueError('Unterminated extra header exit list')
+    unresolved=[{'index':geometry_slots,'kind':'EXTRA_HEADER_AND_EMPTY_NPC_SLOT','status':'UNKNOWN_EFFECTIVE_USAGE',
         'headerPointerSource':reader.span(0,header_start+350,2,'Extra header pointer beyond 175 chunk slots'),
-        'reason':'No corresponding chunk pointer; must not be silently counted as a parsed map or excluded as unused'}]
+        'exitPointerSource':reader.span(8,exit_start+350,2,'Extra exit pointer beyond 175 ordinary geometry slots'),
+        'exits':extra_exits,'ordinaryChunkSlot':False,
+        'reason':'No corresponding chunk pointer, but a real header and exit remain; not a parsed map, proven-unused slot or ordinary NPC overlay'}]
     for m in maps:m['incomingDirectReferences']=incoming[m['mapId']]
     return {'schemaVersion':1,'taskId':'WORLD-FULL-01','romSha256':SHA256,'effectiveMapCount':None,
         'effectiveMapCountStatus':'UNKNOWN_PENDING_EXTRA_SLOT_AND_DYNAMIC_CONTEXT_REVIEW',
@@ -371,7 +388,9 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             reader.span(0,0xa73f,56,'Temporarily substitute NPC overlay index then restore actual map')],
         'referenceMapCount':259,'referenceIsDenominator':False,
         'summary':{'serviceCandidateCounts':dict(collections.Counter(s['kind'] for s in services)),
-            'exitRecords':sum(len(m['exits']) for m in maps),'appRenderPassed':sum(m['appRender']=='PASS' for m in maps),
+            'exitRecords':sum(len(m['exits']) for m in maps),
+            'unresolvedExitRecords':len(extra_exits),
+            'physicalExitRecordsIncludingUnresolved':sum(len(m['exits']) for m in maps)+len(extra_exits),'appRenderPassed':sum(m['appRender']=='PASS' for m in maps),
             'allMapsUsable':'NO','limitation':'Only table inventory; no gameplay, service, event, or all-world promotion'}}
 
 def render_map(reader,m,path):
