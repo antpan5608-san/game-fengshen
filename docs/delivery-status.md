@@ -596,19 +596,19 @@ REUSE 原 android-build.yml/build-ci.ps1/ci_apk.py/check-reviewed-apk.ps1、chec
 artifacts/published/v22-public-verification.json、v22-workflow-verification.json、artifacts/ci/v22-final-build-log-receipt.json、auto-approval-test-results.json 均位于Git忽略目录；仅脱敏验证摘要和APK，不另归档原始旧诊断日志。云构建APKartifact保留30天，单元测试XML14天，生产receipt30天；正式对象保持既有.bin分发契约，手动下载安装需去掉文件名末尾.bin，应用设置→检查应用更新沿用原路径。
 
 【未完成清单（累计；只有实际完成才移除）】
-此处为十类累计欠账的权威清单，按TOWN-02与TOUCH-UX-01实际交付更新；原有“本轮”及播放器/模拟器次数指TOWN-01历史验证，不是云端CI重跑。原历史条目可由Git追溯。
+此处为十类累计欠账的权威清单，按TOWN-02、TOUCH-UX-01与NANHAI-01实际交付更新；原有“本轮”及播放器/模拟器次数指TOWN-01历史验证，不是云端CI重跑。原历史条目可由Git追溯。
 
 1. TOWN-01：跨类别出售完整流程、原版已穿装备直接替换及满包副作用规则、左手/其余商品迁移；牛黃丸及其他药品实际使用效果和合法场景/目标。TOWN-02/v23已关闭药草地图/菜单使用与补给闭环；战斗药草指令仍归第4类。TOUCH-UX-01已实现Android原卸下→装备等价原子封装，不替代原版直接替换/满包规则取证。
 2. 地图0：客栈收费/恢复/离店，住宅与特殊建筑、其余NPC/宝箱/剧情事件及条件；新室内原版BGM尚未核实并未启用。
-3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；南海龙宫/Boss/胜后状态未连续打通。34格白名单已解除，三图往返不再欠账。
-4. BATTLE-01/02：玩家命中/暴击、完整行动顺序、法术/战斗物品/防御指令、Boss行为；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
-5. 战斗展示：敌人1原名、完整武器/敌人动作、原版全字库、准确文字时序/框位/逐项奖励与调色差异；NES随机序列不与Android独立随机流等价。
-6. AUDIO-LOG-01：历史超时根因UNCONFIRMED、四类短音效、精确循环边界、长时真机稳定性；本轮12播放器/6Activity生命周期无播放器错误，AVD底层音频HAL曾有I/O警告，不以状态测试证明整个设备音频无故障。
+3. WORLD-01后续：地图16其余遭遇区/特殊格/事件与后续必经连接；NANHAI-01已关闭海底25/龙宫97必经连接、必要NPC、此Boss胜后及正常保存恢复；北部group4敌10/11行为7、两宫内宝箱奖励与后续连接/事件未开放。34格白名单已解除，三图往返不再欠账。
+4. BATTLE-01/02：完整暴击语义、多角色/其他分支行动顺序、法术/战斗物品/防御指令及其他Boss；NANHAI-01已恢复当前哪吒武器-1/0/1/2的已核命中/倍伤/敏捷排序、南海龙王物理/冰/逃跑与掉落；原卡带已有手动存档后的战败加载分支。当前已核单哪吒普通逃跑和新游戏战败分支已实现，不再写成全部逃跑/战败未实现。
+5. 战斗展示：敌人1原名、完整武器/敌人动作、原版全字库、准确文字时序/框位/逐项奖励与调色差异；NES随机序列不与Android独立随机流等价；敌4–7名称及六神丸名称仍PROVISIONAL，南海龙王原静态图/位置已接入，不代表完整动作。
+6. AUDIO-LOG-01：历史超时根因UNCONFIRMED、四类短音效、精确循环边界、长时真机稳定性；本轮12播放器/6Activity生命周期无播放器错误，AVD底层音频HAL曾有I/O警告，不以状态测试证明整个设备音频无故障。新海底/龙宫BGM来自固定Reference，场景关联PROVISIONAL，目标原曲/精确循环仍未核；本轮声音NOT_RUN。
 7. 开局内容：开场旁白时机、NPC移动、部分首谈/复谈/事件flag时机；殷氏100金额已增加局部ROM写入证据，整事件仍未完全验证。后续角色入队/法术/剧情尚未迁移。
 8. 更新器/设备：一加13T原误报根因与覆盖升级、触控、声音、长时性能实机验收待反馈；模拟器不能代替。
 9. 云端/内容：实际账号本地丢失/多设备恢复验收NOT_RUN；Go版本化内容包发布及Android下载/校验/缓存/离线回退尚未接通。现有pgsql个人存档保留；APK自升级不等于内容服务端化。
-10. 正式原版/发布门槛：全量地图/剧情/规则与canonical仍未开放，南海龙王里程碑未完成；不重启全量研究，不用未知阻塞现有已核功能。
-距离下一原版剧情节点最近3个阻塞: 地图0必要NPC/服务事件；通往南海的真实连接/条件；剧情Boss与胜后状态。
+10. 正式原版/发布门槛：全量地图/剧情/规则与canonical仍未开放，NANHAI-01南海龙王连续里程碑已通过正常Android验收，完整全游戏门槛仍未完成；不重启全量研究，不用未知阻塞现有已核功能。
+距离下一原版剧情节点最近3个阻塞: 后续海域真实连接/事件（数据/原版证据）；group4敌10/11行为7（数据/代码）；下一剧情战斗与必要指令/奖励（数据/代码/正常运行证据）。村庄可选服务不新增为路线前置。
 
 
 本轮云端v22发布完成；不自动展开新玩法区段，等待设备反馈或下一项具体开发任务。
@@ -858,5 +858,117 @@ TOWN-02地图/菜单药草闭环由此前v23关闭，本轮仅复用；药草战
 十类累计清单权威位置仍为docs/delivery-status.md的“未完成清单（累计；只有实际完成才移除）”；完整保留。Android等价原子替换已实现，但原卡带直接替换/满包规则待核，不冒称原版完成。
 下一原版节点最近3个阻塞：地图0必要NPC/服务/剧情事件；通往南海的真实连接/剧情条件；剧情Boss及胜后连续状态。
 本轮结束，不自动开始新地图、战斗或其他区段。
+
+END_DELIVERY_REPORT
+
+
+DELIVERY_REPORT
+
+task_id: NANHAI-01
+status: READY_FOR_REVIEW
+execution_kind: IMPLEMENTED
+
+【执行时间与实际工作】
+实际开始/结束时间: 2026-10-01 20:33:25 UTC / 2026-10-02 02:12:15 UTC（结案记录生成；后续文档提交另记）。
+总耗时及平台限制: 5小时38分钟，10小时上限内完成；本地无KVM的软件AVD两次ANR后复用原Actions KVM，不冒充本地运行成功。
+起始与结束提交: 起始3e799fb50594fee63b8fd7f8dbba659da1daae84；最终APK来源d87bb7540018913ad17d3865264924add6fa2580；结案文档提交另记。
+M1: PASS，正常进入海底并往返；M2: PASS，正常抵达守卫/龙王触发点；M3: PASS，真实战斗获胜、胜后再入与重启继续。
+最后通过的可运行检查点: [最终构建/运行36950387932](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932)，原AOSP API30 KVM；主线1384.244秒、冷启动测试3.314秒均OK。
+是否提前停止及实际原因: 提前达标结束；没有平台预算中断，不推进下一地区。
+
+【开工和后续巡检】
+命令/run_id: 原android-publish.yml mode=inspect + check-runtime.ps1；开工36922834320，检查点36933053909/36941528938/36946324010；实际发布[36953281754](https://github.com/antpan5608-san/game-fengshen/actions/runs/36953281754)自带preflight/postflight。
+查询时间和可信版本: 开工2026-10-01 20:38:20Z，24/23；最近检查点2026-10-02 00:30:51Z；发布前后preflight 01:57:14Z查询24/23；postflight 01:57:32Z查询25/24，均NO_ISSUES_OBSERVED，errors={}、cleanupFailures=0。
+模拟器/真机、正常/测试样本: 开工720事件、0测试、普通真机3会话/模拟器0，v24=290/v23=430；发布前727事件/0测试/普通真机3会话/模拟器0，24=297/23=430；发布后297事件/0测试/普通真机1会话/模拟器0，仅v24；旧v23已按两版保留规则移出。
+发现的实际问题: 上传窗口无ERROR、清理失败0；仅覆盖上传样本，旧音频超时仍UNCONFIRMED。
+本轮修复: 本段换图计数清零/目标日志字段、Boss完整图形位置；Windows PNG/UTF-8/路径测试、UI线程完成状态观察、随机命中测试假定及取证收集顺序问题修正。胜后再入测试修正合法转向预期，不放松经济/剧情断言。
+仍未解决与覆盖限制: 历史日志不等于本轮手机验收；v25无上传样本，不能宣称v25真机健康；发布前窗口18:17:50—次日01:05:15；一加13T与声音NOT_RUN。
+
+【玩家实际进度】
+原版起点: 正常新游戏114(8,21)。
+本次正常最远终点: 龙王胜后97(15,5)自由操作；冷启动后正常继续到97(15,6)，Lv8/HP57/57/EXP850/银两361/药草3/背包長劍1，胜标保留。
+逐节点操作路线: 114离家→16→可选0及三店补给→16(199,130)→25(39,42)→25(29,44)→97(15,29)→守卫→97(15,4)龙王→真实战斗→胜后对白→离宫/再入/复谈→保存/外部停止进程/重启继续。
+与v24相比真正新增的可玩内容: 两张真实必经地图、四连接、沿途敌群、三NPC及龙王剧情战斗/胜后一次结算；限定原版命中/倍伤/敏捷排序/掉落。三店/药草/直接触控/装备/三图/输入/云存档/更新器是保留历史成果。
+是否完成南海龙王胜后: YES，限本段连续里程碑；不是全游戏原版完整验收。
+不能到达的节点和具体原因: 海底北部group4未接入行为/后续地图事件；未开放后续大区，无虚假剧情锁。练级与买药只是验收策略，不新增任何出村/等级/供给前置。
+
+【地图与剧情】
+原有和新增不同地图ID: 原114/16/0/17/18/19；新增25/97；累计8。
+主场景/室内/分块: 新增主场景1（海底）/室内1（龙宫）/额外分块0。
+已提取、已打包、正常可达: 新增2/2/2；原三店及三图在同候选回归，合计8个不同ROM地图。
+连接与落点: 16(199,130)→25(39,42)、25(39,42)→16(199,130)、25(29,44)→97(15,29)、97(15,29)→25(29,44)；四条独立原记录，落地方向DOWN，已核换图计数0。
+新增NPC/对话/事件: 龙王151及守卫152×2；文本107.0/1/2/3；主线实测中间守卫和龙王，另一守卫数据/文本核验。
+必要条件及来源: 正常原版控制器流程与匹配ROM出口/脚本；龙王首谈触发真实战斗，胜标0761&1映射统一状态，只胜后写入。
+可选互动: 村庄对话/购物/用药/练级不是剧情前置；两宫内宝箱只恢复原图，奖励未编造。
+未开放局部内容: 宝箱事件、北部海域与后续故事；其他村庄建筑欠账保留。
+
+【Boss与胜后】
+Boss真实ID/名称/素材: ROM137 / source156 / 南海龍王；原128×112图形，已核位置(64,0)，渲染和命中共用区域。
+数据和行为依据: 匹配ROM记录、限定代码范围、正常原版实战；HP120、攻16、防13、敏8、EXP60、银两100；物理与冰8，冰分支41/128；同字节命中/倍伤与敏捷排序。
+实际执行能力/正常Android结果: 正常Lv8、实际購長劍/布衣后攻击；实际冰与物理行动可见，战胜HP120龙王，HP57→35，EXP763→823、银两246→346，实际随机获得長劍1；后续正常遇敌奖励另记。
+失败/逃跑规则: Boss逃跑必败且消耗行动；有时会miss，测试不强制反击命中。HP1受控fixture以正常战斗输入确认新游戏战败分支；原卡带手动存档后的战败加载仍欠账。
+奖励与一次性状态: EXP60/银两100、長劍随机50/128；分类容量/堆叠满只跳过掉落，不丢旧物品；胜标与奖励一次提交，待对白保存/恢复不重结算。
+胜后下一可操作状态: 留在97，自由移动；正常离宫→海底→再入龙宫，复谈不重战/不重奖；最终外部force-stop/重启存档一致，再走一步，角色/钱/库存/装备/flag不变。
+尚未等价: 完整动作/字库/调色/时序、所有法术与战斗药品、NES随机序列；地图97原版拒绝手动存档，Android沿用自动SaveSnapshot便利适配并独立验重启。
+
+【资源与实现】
+可信基底: v24/0.8.4-touch-ux-01，build36917255772，APK来源ef29edb9192bb299ed493b767c52b23c450b2094；SHA-256 def359de888614152768bdb70c4f12a5e09a653124db6eb0650e96a9edb76300。
+资源/指纹/来源: 复用匹配缓存ROM完整SHA f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25（luzeming0211/fc固定23d62347）；公开Reference v5100v5100/FengShenBang固定d636453f，MainData及两MP3；许可UNKNOWN，技术一致不代表授权。原Windows完整目录/手机未接入。
+新增取证: 只查两地图、四出口、必要NPC文本、遭遇/碰撞、Boss/物理/掉落/胜后flag与换图计数；原版正常游玩和受控实验分开。
+已验证/暂定: 关键路线、数值、触发、一次性状态按ROM与正常证据核；敌4–7名称、六神丸名称、新BGM场景关联为PROVISIONAL；成长2–7正常原版已核，后续行的运行覆盖另记。
+复用模块: 原Reader/ROM提取器、export_from_base、ci_apk.restore/verify、ContentLoader、World/InputState、OpeningBattle、TownTrade/OpeningEquipment/HerbUse、统一状态/SaveSnapshot、GameAudio/诊断/更新器及原两workflow。
+最小逻辑: 局部地图/实体/事件数据、本场行动/掉落/剧情结算、可选图形origin；未新建引擎/导入器/素材平台。
+素材和内容生成: 不变33媒体字节复用；旧场景封套版本跟随整包，地图16仅补真实海岸入口；可信c12基底+本段可追溯局部导出形成c13/59文件，不要求先有新APK。干净worktree和最终Windows checkout生成同manifest。
+
+【验收】
+N1: PASS，实际四次inspect及本次发布前/后巡检；v25无样本限制保留。
+N2: PASS，正常新游戏连续到达南海龙王胜后，不是只加载地图。
+N3: PASS，必要守卫/龙王对白、开战及胜标实际执行，没有虚构供给或等级锁。
+N4: PASS，真实Boss图形、物理/冰行动与正常胜利，最终原片/截图可查。
+N5: PASS，正常胜后离宫再入、复谈不重奖和冷启；待对白恢复/满堆叠另用受控fixture验证。
+N6: PASS（本轮适用分支），Boss逃跑必败耗行动与HP1真实输入战败受控验证；原卡带已有手动存档加载仍未实现。
+N7: PASS，实际adb install -r v24→v25，旧位置/方向/角色/钱/库存/装备/flag保持；不是卸载清档。
+N8: PASS，同候选三店、药草满HP消耗、装备原子替换、TOUCH-UX和INPUT-01回归。
+N9: PASS，最终构建/审核/审批/发布同d87提交/同签名/同APK19c53…，完整公网APK和59内容hash独立复核。
+N10: PASS（本段可追溯与诚实标记），provenance逐范围保留，暂定/差异与私有原版证据分别记录；不等于全canonical VERIFIED。
+实际命令/数量: 原build-ci.ps1、Gradle wrapper release门禁；Python相关12+5+7=24/24，JVM69/69（18个本段方法）；原ci/run-town02-runtime.sh。Android共29次测试入口、27种方法（字体方法重复3次），其中私有云读因无凭据返回NOT_RUN；Content12入口和其他断言通过，正常主线/冷启各1次。相关完整回归均在此审核产物上执行。失败尝试不算通过、不把重复运行算独立方法。全量历史Python曾68方法通过/8跳过，ImportIntegrityTests因缺game-data/raw/reference-project/dataset.json出现setUpClass错误，未伪称全量通过；该历史输入不在本段依赖。
+
+【可查看的运行证据】
+Actions run与artifact: [构建run36950387932](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932)；[fengshen-signed-apk](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932/artifacts/11204196500)（fengshen-remake-v25-release.apk）；[fengshen-town02-runtime-evidence完整原片](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932/artifacts/11203754303)；[fengshen-nanhai-checkpoints截图/索引](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932/artifacts/11203854195)；[fengshen-nanhai-entry-clip](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932/artifacts/11203849166)；[fengshen-nanhai-final-clips](https://github.com/antpan5608-san/game-fengshen/actions/runs/36950387932/artifacts/11203849171)。
+正常录像/时段/hash:
+
+`nanhai-ci-normal-00.mp4`：进入海底约136.45s；SHA-256 `c5779172c6415a90284509ee1de3aa22852a179cb46387c9a91c53b1c7a773f0`
+
+`nanhai-ci-normal-07.mp4`：守卫55.67s/龙王58.58s/冰74.59s/胜利83.70s/胜后84.23s/离宫98.48s/再入99.30s/复谈不重奖116.55s；SHA-256 `830c3fc3f819f534ed9515fe2e2be52525b117f1a9344ae9986f0cbe9fdfe869`
+
+`nanhai-ci-cold-restart.mp4`：外部force-stop、实际重启和继续，全段；SHA-256 `5c90b14514e7299c5323bb592409ec9ce36886b8ff2d8ffee601387140c7a6ae`
+
+全部8段正常原片及外部重启片保留；时间为索引近似，画面以原片为准，已独立核三份小型原片hash并实际抽看。
+至少五张实际截图: 同上述checkpoints artifact内：`nanhai-sea-entry.png`、`nanhai-guard-dialogue.png`、`nanhai-boss-ice.png`、`nanhai-boss-victory-result.png`、`nanhai-reentered-victory-dialogue.png`、`nanhai-cold-restored-continue.png`；已实际查看，非生成示意图。
+原版参照/Android对应: game-data/provenance/nanhai01.json保留ROM范围/hash与私有正常记录索引；原ROM/私有回放未公开上传。
+连续性/调试状态: NORMAL_CONTROLLER_NEW_GAME_NO_STATE_INJECTION；正常117场/地图药草19次；每段保留uptime、只读world存档边界及事件索引，短录屏切换间隙明确，战斗live HP看原片；未改等级/HP/物品/flag/RNG或强制胜利。受控fixture单列。
+声音: NOT_RUN，实际原片无音轨，不替换原版音轨。一加13T: NOT_RUN。录像/截图artifact保留14天，APK30天。
+
+【构建和发布】
+APK版本/versionCode: 0.8.5-nanhai-01 / 25；12790724字节。
+来源提交: d87bb7540018913ad17d3865264924add6fa2580；构建/runtime 36950387932；审批/发布[36953281754](https://github.com/antpan5608-san/game-fengshen/actions/runs/36953281754)。
+下载/hash/签名: [正式下载 v25](https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=25)，可沿App检查更新覆盖安装；手动文件须去掉.bin后缀。公网对象后续可覆盖，不可变来源见构建artifact; SHA-256 19c53eae0f804f86cfcf796b7c72f63459f946feaad54a8f7bef7e5b9ccf8280；org.fengshen.dev；证书SHA-256 5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6。
+内容版本/manifest: opening-segment-001-c13；badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4。基底c12/8ef01830b269d58294d6e6830676b4f9c9ac593e079eedf32de76c2fd35080f8与目标分开固定。
+旧档覆盖升级: 实际隔离AVD v24→25覆盖PASS；保存/冷启PASS；真实一加13T覆盖NOT_RUN，不覆盖真实玩家云进度。
+发布状态/发布后巡检/未发布原因: PUBLISHED_AND_VERIFIED；2026-10-02 01:57:19.9185492Z正式发布，原审批/发布和独立公网验签/完整字节/内容校验成功；发布后只保留25/24日志，25暂无样本；无未发布原因。
+只更新既有Fengshen APK.bin/version.json；Language不变；同源/签名/审核hash、原reviewer和日志最近两版保护保留。
+
+【复用与skill】
+已验证方法: 局部场景/ROM recipe导出、跨平台固定PNG/RGBA校验、独立出口/计数、Boss规则与一次结算、正常控制器连续流程、原片分段/状态边界及实际冷启；以最终run为准。
+直接复用: c12媒体/原loader/业务/存档/触控与原CI，未重复1958历史输入或全量研究。
+失败经验修正: 不按平台PNG压缩字节碰运气、不依赖默认中文编码/斜杠、不后台观察UI换图中间态、不假定第一回合必命中、不在pull前读App索引；交谈合法转向与经济变更分开。
+skill位置: .agents/skills/fengshen-content-iteration/SKILL.md 与 fengshen-touch-ux/SKILL.md；内容skill补已实跑连续主线/原片边界/冷启/发布方法；触控skill只补原图形origin共用绘制命中、UI线程观察及合法交谈转向，其他合理界面PRESERVE。
+未验证: 隐式CLI匹配未复测（历史401）；本轮显式读取、结构检查/六类场景人工复核，非自动触发PASS；真机/声音/真实账号恢复仍待实测，不编造提速百分比。
+
+【累计欠账】
+权威清单: docs/delivery-status.md“未完成清单（累计）”，十类保留。
+本轮关闭: 南海必经路线/剧情/Boss胜后子项；本段已核物理命中/倍率/排序、本场Boss行为与掉落。
+本轮新增/剩余: 宫内两宝箱奖励、北部group4行为/后续入口、新BGM精确映射/循环；完整动画/字库/规则、战斗药草、全村事件、真机与云端欠账均未关闭。
+下一真实节点最近3阻塞: ①后续海域真实连接/事件（数据/原版证据）；②group4敌10/11行为7（数据/代码）；③下一剧情战斗及必要指令/奖励（数据/代码/正常运行证据）。不自动开下一大区。
 
 END_DELIVERY_REPORT
