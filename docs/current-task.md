@@ -64,4 +64,4 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 最新inspect37008061310在20:40:34北京时间实际查询v27/v26：1270/2289事件，普通真机标记3会话、模拟器0、测试0；v26存在1条更新下载ProtocolException（旧版11:21:40 UTC、download_or_verify），传输原因未确定，更新校验/失败清理仍保持。无证据将其写已修复；真机日志不是本轮真机验收。声音/一加13T保持NOT_RUN。
 - 下一条可执行动作：完成c15本地相关回归及候选来源提交，原Actions构建v28候选并实际运行；冻结对应来源，等待runner时在隔离工作树继续全175几何/共享服务批次导出，不停止总任务。
 
-- 21:14北京时间：首轮v28候选37009625745构建成功、runtime失败。旧controlled Boss fixture从前项防具室内fixture换map97却沿用InteriorContext，validate拒绝；是仪器fixture不一致，不去掉存档保护。已显式清除其受控跨图上下文，保留全部Boss奖励/重复/战败断言，需新来源重建。正常北路线尚NOT_RUN，生产仍v27。
+- 首轮v28候选37009625745构建成功、runtime失败。旧controlled Boss fixture从前项防具室内fixture换map97却沿用InteriorContext，validate拒绝；是仪器fixture不一致，不去掉存档保护。已显式清除其受控跨图上下文，保留全部Boss奖励/重复/战败断言，需新来源重建。正常北路线尚NOT_RUN，生产仍v27。
