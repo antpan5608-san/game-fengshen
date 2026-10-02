@@ -1204,11 +1204,21 @@ class TouchTest:IsolatedGameTestCase(){
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
         fun completeDialogue(view:GameView){repeat(16){if(view.layer==GameView.Layer.DIALOGUE)tap(view,Pair(view.width*.5f,view.height*.5f))}}
-        fun waitCommands(){
-            for(i in 0..500){val presentation=p.get(v) as BattlePresentation
-                if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))return
-                SystemClock.sleep(40)}
-            fail("Controlled Boss presentation timeout")
+        fun waitCommands(view:GameView=v){
+            for(i in 0..500){
+                var ready=false
+                instrumentation.runOnMainSync{
+                    val presentation=p.get(view) as BattlePresentation
+                    val committed=GameView::class.java.getDeclaredField("battleCommitted").apply{isAccessible=true}.getBoolean(view)
+                    // RESULT and finishBattlePresentation() occur in one UI callback. Observe that callback,
+                    // including the real reward/save submission, rather than its transient screen value.
+                    ready=presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)&&
+                        (presentation.screen!=BattlePresentation.Screen.RESULT||committed)
+                }
+                if(ready)return
+                SystemClock.sleep(40)
+            }
+            fail("Controlled Boss presentation/commit timeout")
         }
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
         assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true)
@@ -1252,7 +1262,7 @@ class TouchTest:IsolatedGameTestCase(){
             characters=listOf(v2.content.initialPlayer.copy(hp=1)),flags=mapOf("opening.intro.seen" to true),inventory=emptyMap(),money=123)))}
         tap(v2,center(layoutFor(v2).buttons.getValue(Key.A)));completeDialogue(v2)
         val p2=p.get(v2) as BattlePresentation
-        for(i in 0..500){if(p2.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING))break;SystemClock.sleep(40)}
+        waitCommands(v2)
         val defeatDeadline=SystemClock.elapsedRealtime()+60000
         val dyingFight=f.get(v2) as OpeningBattle
         while(dyingFight.phase==BattlePhase.TARGET){
@@ -1261,7 +1271,8 @@ class TouchTest:IsolatedGameTestCase(){
                 tap(v2,center(v2.battleTargetBounds(dyingFight.enemies.first{it.hp>0}.slot)))
             SystemClock.sleep(40)
         }
-        for(i in 0..500){if(p2.screen==BattlePresentation.Screen.RESULT)break;SystemClock.sleep(40)}
+        waitCommands(v2)
+        assertEquals(BattlePresentation.Screen.RESULT,p2.screen)
         assertEquals(BattlePhase.DEFEAT,dyingFight.phase)
         assertEquals(114,v2.currentSnapshot().mapId);assertEquals(20,v2.currentSnapshot().characters.first().hp)
         assertEquals(0,v2.currentSnapshot().money);assertTrue(v2.currentSnapshot().inventory.isEmpty())
