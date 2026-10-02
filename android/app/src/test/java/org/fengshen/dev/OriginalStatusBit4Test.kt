@@ -69,7 +69,14 @@ class OriginalStatusBit4Test {
         assertEquals(listOf(affected),OriginalStatus.step(listOf(affected)))
         assertFalse(OriginalStatus.allDisabled(listOf(affected)))
         assertEquals("异常 04",OriginalStatus.label(4))
-        // Helpers alone do not authorize behavior9 while the actual scheduler is not integrated.
-        assertFalse(OriginalStatus.enemySupported(EnemyDefinition(16,"原版敌人 16",44,29,15,36,12,217,9)))
+    }
+    @Test fun integratedBehaviorNineDoesNotEnableUnimplementedStatusBehaviors() {
+        // The shared scheduler now implements behavior9; map persistence is tested separately.
+        val enemy=EnemyDefinition(16,"原版敌人 16",44,29,15,36,12,217,9)
+        assertTrue(OriginalStatus.enemySupported(enemy))
+        for(unsupported in listOf(1,2,4,5,6,8,10,255))
+            assertFalse("behavior=$unsupported",OriginalStatus.enemySupported(enemy.copy(behaviorByte=unsupported)))
+        // Existing ice still needs its verified numerical input.
+        assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=3,iceBaseDamage=null)))
     }
 }
