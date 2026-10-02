@@ -25,6 +25,31 @@ if [[ -c /dev/kvm && ! -w /dev/kvm ]] && command -v setfacl >/dev/null; then sud
 if [[ -r /dev/kvm && -w /dev/kvm ]]; then accel=auto; fi
 "$sdk/emulator/emulator" -avd fengshen-town02-ci -skin 2640x1216 -no-window -no-audio -no-boot-anim -no-snapshot -gpu swiftshader_indirect -accel "$accel" -memory 3072 -cores 2 > artifacts/town02-runtime/emulator.txt 2>&1 &
 emulator_pid=$!
+# Keep completed normal flow evidence even when a later independent flow fails.
+# These are copies of already hashed isolated App clips, never production logs.
+retain_world_clips(){
+python - <<'PYWORLDCLIPS'
+import json,shutil,hashlib
+from pathlib import Path
+for flow in ('world-west','world-village1','world-north-palace'):
+    recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
+    index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
+    if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
+    recording=json.loads(recording_path.read_text())
+    index=json.loads(index_path.read_text())
+    normal=[s for s in recording['segments'] if '-normal-' in s['file']]
+    cold=next(s for s in recording['segments'] if s.get('phase')=='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE')
+    out=Path('artifacts')/f'{flow}-review-clips';out.mkdir(parents=True,exist_ok=True)
+    selected=[];total=0
+    for segment in [normal[-1],cold]:
+        src=Path(segment['file']);assert hashlib.sha256(src.read_bytes()).hexdigest()==segment['sha256']
+        if total+src.stat().st_size>24*1024*1024:continue
+        shutil.copyfile(src,out/src.name);total+=src.stat().st_size;selected.append(segment)
+    (out/'clip-index.json').write_text(json.dumps({'segments':selected,'allSegmentIndex':recording,
+        'normalFlow':index,'kind':'UNCHANGED_RAW_ANDROID_APP_CONTINUATION_CLIPS_SILENT',
+        'limitBytes':24*1024*1024,'allFootageRetainedInOriginalRuntimeArtifact':True},indent=2))
+PYWORLDCLIPS
+}
 pull_evidence(){
 python - <<'PYEVIDENCE'
 import subprocess,re
@@ -46,6 +71,7 @@ for name in listed.stdout.splitlines():
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
 PYEVIDENCE
+retain_world_clips
 }
 finish_runtime(){
     set +e
@@ -142,13 +168,14 @@ python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory -
 python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerifiedNanhaiSave --silent --cold-test testWorldNorthColdStartMatchesNormalSave --budget-seconds 1800
 python tools/record_app_audio.py world-west testNormalWorldWestPalaceFromVerifiedNanhaiSave --silent --cold-test testWorldWestColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-village1 testNormalWorldVillageOneServicesFromVerifiedNanhaiSave --silent --cold-test testWorldVillageOneColdStartMatchesNormalSave --budget-seconds 1800
+python tools/record_app_audio.py world-north-palace testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave --silent --cold-test testWorldNorthPalacePearlColdStartMatchesNormalSave --budget-seconds 2400
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
 from pathlib import Path
 from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
-r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',worldNorthPalace='PASS',worldPearlUseAndColdRestart='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY
@@ -188,18 +215,5 @@ for segment in [normal[-1],cold]:
     'limitBytes':27*1024*1024,'allFootageRetainedInOriginalRuntimeArtifact':True},indent=2))
 # Each new continuation has its own bounded review artifact; every original
 # segment remains in the full runtime artifact, including segments not copied.
-for flow in ('world-west','world-village1'):
-    recording=json.loads(Path(f'artifacts/checkpoint-ui/{flow}-recording.json').read_text())
-    index=json.loads(Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json').read_text())
-    normal=[s for s in recording['segments'] if '-normal-' in s['file']]
-    cold=next(s for s in recording['segments'] if s.get('phase')=='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE')
-    out=Path('artifacts')/f'{flow}-review-clips';out.mkdir(parents=True,exist_ok=True)
-    selected=[];total=0
-    for segment in [normal[-1],cold]:
-        src=Path(segment['file']);assert hashlib.sha256(src.read_bytes()).hexdigest()==segment['sha256']
-        if total+src.stat().st_size>24*1024*1024:continue
-        shutil.copyfile(src,out/src.name);total+=src.stat().st_size;selected.append(segment)
-    (out/'clip-index.json').write_text(json.dumps({'segments':selected,'allSegmentIndex':recording,
-        'normalFlow':index,'kind':'UNCHANGED_RAW_ANDROID_APP_CONTINUATION_CLIPS_SILENT',
-        'limitBytes':24*1024*1024,'allFootageRetainedInOriginalRuntimeArtifact':True},indent=2))
+
 PYCLIPS
