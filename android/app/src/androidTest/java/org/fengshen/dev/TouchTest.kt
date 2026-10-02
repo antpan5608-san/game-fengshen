@@ -1123,9 +1123,11 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(0,v.currentSnapshot().encounterSteps);state("victory-palace-reentry")
         walkTo(15,4);val beforeRepeat=v.currentSnapshot()
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
-        state("reentered-victory-dialogue")
+        // Existing interaction faces the adjacent NPC; this is the only legitimate snapshot change.
+        val facingNpc=beforeRepeat.copy(direction=Key.UP)
+        assertEquals(facingNpc,v.currentSnapshot());state("reentered-victory-dialogue")
         repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
-        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(beforeRepeat,v.currentSnapshot())
+        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(facingNpc,v.currentSnapshot())
         assertEquals(true,v.currentSnapshot().flags["rom.event.97.39.1"]);state("reentered-no-reward")
         step(Key.DOWN);assertEquals(97,v.world.mapId);state("next-operable")
         instrumentation.runOnMainSync{v.persistState()}
