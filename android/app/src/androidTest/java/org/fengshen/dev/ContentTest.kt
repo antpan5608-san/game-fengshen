@@ -15,20 +15,16 @@ import org.json.JSONObject
 class ContentTest:IsolatedGameTestCase(){
     /** Isolated persistence/collision fixture, not normal acquisition or route evidence. */
     fun testControlledReusableWorldItemRestoresRemovedObjectState(){
-        val base=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
-        val target=WorldObjectTarget("rom.object.25.0",25,47,40,226,"rom.map.25.flag.1","rom.map.25.flag.128")
-        // c16 has no interactive whirlpool yet. This controlled fixture adds only
-        // its evidenced collision cell; the reused bitmap proves no visual equivalence.
-        val objectBefore=MapObject(target.id,25,47,40,base.mapObjects.first().sprite,target)
-        val sea=base.scenes.getValue(25)
-        val fixtureSea=sea.copy(dynamicObjectCells=sea.dynamicObjectCells+(40*sea.width+47))
-        val content=base.copy(scenes=base.scenes+(25 to fixtureSea),mapObjects=base.mapObjects.filter{it.id!=target.id}+objectBefore)
-        val rule=WorldItemUseDefinition(226,"rom.inventory.special.11.used")
-        val item=ItemDefinition(WorldItems.ID,"定海珠",null,"GAMEPLAY_VERIFIED",category="special",originalId=11,maxCount=1,worldUse=rule)
-        val before=SaveSnapshot(content.scene.version,25,47*16+8,41*16+8,Key.UP,
+        val content=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val target=content.mapObjects.single{it.id=="rom.object.25.0"}.itemTarget!!
+        val item=content.itemDefinitions.getValue(WorldItems.ID)
+        val rule=item.worldUse!!
+        // The real south neighbour is class 7 wall. Use the actual west approach;
+        // this inventory fixture is not normal acquisition or route evidence.
+        val before=SaveSnapshot(content.scene.version,25,46*16+8,40*16+8,Key.RIGHT,
             listOf(content.initialPlayer),mapOf(item.id to 1),mapOf("unrelated" to true))
-        assertTrue(before.validate(content))
-        assertFalse(before.copy(y=40*16+8).validate(content))
+        assertTrue("West approach must be a valid original standing cell",before.validate(content))
+        assertFalse(before.copy(x=47*16+8).validate(content))
         assertEquals(MovementBlock.PHYSICAL,content.sceneForState(25,before.flags)!!.blockType(47,40))
         repeat(10){assertTrue(WorldItems.available(before,item,rule,target,true))}
         assertEquals(mapOf("unrelated" to true),before.flags)
@@ -39,7 +35,7 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(after,roundTrip)
         assertEquals(1,roundTrip.inventory[item.id])
         assertEquals(true,roundTrip.flags[rule.usedFlagId])
-        assertTrue(roundTrip.copy(y=40*16+8).validate(content))
+        assertTrue(roundTrip.copy(x=47*16+8).validate(content))
         assertEquals(MovementBlock.NONE,content.sceneForState(25,roundTrip.flags)!!.blockType(47,40))
         // Original cached scene remains blocked: flag-dependent views do not mutate shared data.
         assertEquals(MovementBlock.PHYSICAL,content.scenes.getValue(25).blockType(47,40))
