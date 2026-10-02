@@ -14,6 +14,17 @@ data class EquipmentState(val rightHand:Int,val leftHand:Int,val body:Int,val fe
 }
 
 /** Only the ROM-observed opening knife cycle is enabled. -1 is the ROM empty-slot byte FF. */
+object InventoryCapacity {
+    fun category(id:String):String?=when {
+        id==OpeningEquipment.KNIFE_ID||id.startsWith("rom.weapon.")->"weapon"
+        id.startsWith("rom.armor.")->"armor"
+        id.startsWith("rom.medicine.")->"medicine"
+        else->null
+    }
+    fun hasCategorySlot(items:Map<String,Int>,id:String,category:String)=
+        (items[id]?:0)>0||items.count{it.value>0&&InventoryCapacity.category(it.key)==category}<16
+}
+
 object OpeningEquipment {
     const val KNIFE_ID="rom.item.0"
     fun equip(character:CharacterState,items:Map<String,Int>,definition:EquipmentDefinition):Pair<CharacterState,Map<String,Int>>? {
@@ -29,6 +40,8 @@ object OpeningEquipment {
     fun unequip(character:CharacterState,items:Map<String,Int>,definition:EquipmentDefinition):Pair<CharacterState,Map<String,Int>>? {
         val e=character.equipment?:return null
         if(!definition.operationEnabled || character.id !in definition.allowedCharacters || (items[definition.itemId]?:0)>=10)return null
+        val category=if(definition.slot=="rightHand")"weapon" else "armor"
+        if(!InventoryCapacity.hasCategorySlot(items,definition.itemId,category))return null
         val current=when(definition.slot){"rightHand"->e.rightHand;"body"->e.body;"feet"->e.feet;else->return null}
         if(current!=definition.originalId)return null
         val next=when(definition.slot){"rightHand"->e.copy(rightHand=-1);"body"->e.copy(body=-1);else->e.copy(feet=-1)}
@@ -68,7 +81,7 @@ object TownTrade {
         if(item.id !in shop.items || price==null || price<0)return Result(money,inventory,"商品尚未开放")
         if(money<price)return Result(money,inventory,"银两不足")
         if((inventory[item.id]?:0)>=item.maxCount)return Result(money,inventory,"数量已满")
-        if((inventory[item.id]?:0)==0 && inventory.count{it.value>0&&it.key in shop.items}>=16)return Result(money,inventory,"物品栏已满")
+        if(!InventoryCapacity.hasCategorySlot(inventory,item.id,item.category))return Result(money,inventory,"物品栏已满")
         return Result(money-price,inventory+(item.id to ((inventory[item.id]?:0)+1)))
     }
     fun sell(money:Int,inventory:Map<String,Int>,shop:ShopDefinition,item:ItemDefinition):Result {
@@ -145,19 +158,40 @@ data class CharacterState(val id:String,val level:Int,val experience:Int,val hp:
 
 data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:Int,val direction:Key,
     val characters:List<CharacterState>,val inventory:Map<String,Int> = emptyMap(),val flags:Map<String,Boolean> = emptyMap(),
-    val money:Int=0,val encounterSteps:Int=0) {
+    val money:Int=0,val encounterSteps:Int=0,val interiorContext:InteriorContext?=null) {
+    /** Published c11..c14 only exposed the three town0 stores (and inn in c14).
+     * Infer that one evidenced legacy caller; new saves must carry their actual caller. */
+    fun resolvedInteriorContext(content:Content):InteriorContext? {
+        interiorContext?.let{return it}
+        val knownLegacy=(mapId in 17..19&&contentVersion in (11..14).map{"opening-segment-001-c$it"})||
+            (mapId==22&&contentVersion=="opening-segment-001-c14")
+        if(!knownLegacy)return null
+        val entry=content.exits.singleOrNull{it.captureCaller&&it.fromMapId==0&&it.toMapId==mapId}?:return null
+        return InteriorContext(0,entry.triggerX,entry.triggerY)
+    }
     fun json():JSONObject {
         val items=JSONObject();inventory.toSortedMap().forEach{(id,count)->items.put(id,count)}
         val events=JSONObject();flags.toSortedMap().forEach{(id,value)->events.put(id,value)}
         return JSONObject().put("saveSchemaVersion",1).put("contentVersion",contentVersion)
             .put("mapId",mapId).put("x",x).put("y",y).put("direction",direction.name)
             .put("characters",JSONArray().also{a->characters.forEach{a.put(it.json())}})
-            .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps)
+            .put("inventory",items).put("flags",events).put("money",money).put("encounterSteps",encounterSteps).also{json->
+                interiorContext?.let{c->json.put("interiorContext",JSONObject().put("callerMapId",c.callerMapId)
+                    .put("returnX",c.returnX).put("returnY",c.returnY))}
+            }
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         val scene=content.scenes[mapId]?:return false
+        val resolved=resolvedInteriorContext(content)
+        if(resolved==null&&content.exits.any{it.returnToCaller&&it.fromMapId==mapId})return false
+        resolved?.let{c->
+            if(content.exits.none{it.captureCaller&&it.fromMapId==c.callerMapId&&it.toMapId==mapId&&
+                    it.triggerX==c.returnX&&it.triggerY==c.returnY})return false
+            val caller=content.scenes[c.callerMapId]?:return false
+            if(caller.check(c.returnX,c.returnY)!=null)return false
+        }
         return scene.check(x/16,y/16)==null
     }
     companion object {
@@ -170,7 +204,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             for(key in events.keys()){require(key.length in 1..96);flags[key]=events.getBoolean(key)}
             return SaveSnapshot(o.getString("contentVersion"),o.getInt("mapId"),o.getInt("x"),o.getInt("y"),
                 Key.valueOf(o.getString("direction")),(0 until chars.length()).map{CharacterState.parse(chars.getJSONObject(it))},
-                inventory,flags,o.optInt("money",0),o.optInt("encounterSteps",0))
+                inventory,flags,o.optInt("money",0),o.optInt("encounterSteps",0),
+                o.optJSONObject("interiorContext")?.let{InteriorContext(it.getInt("callerMapId"),it.getInt("returnX"),it.getInt("returnY"))})
         }
     }
 }

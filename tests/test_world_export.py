@@ -10,8 +10,8 @@ import export_development as exporter
 class WorldExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
-        cls.path=Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK',str(ci.ROOT/'artifacts/mobile-play01/f9-candidate/fengshen-remake-v26-release.apk')))
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-f0-content.json').read_text(encoding='utf-8'))
+        cls.path=Path(os.environ.get('FENGSHEN_WORLD_F0_BASE_APK',str(ci.ROOT/'artifacts/mobile-play01/f9-candidate/fengshen-remake-v26-release.apk')))
         if ci.sha(cls.path.read_bytes())!=cls.pin['iteration']['base']['apkSha256']:raise ValueError('Wrong immutable world base')
         cls.base=ci.content(cls.path,cls.pin['iteration']['base']);cls.proof=cls.pin['iteration']['provenance']
         cls.evidence=json.loads((ci.ROOT/cls.proof).read_text(encoding='utf-8'))
@@ -33,7 +33,7 @@ class WorldExportTests(unittest.TestCase):
         self.assertEqual(4,scene['inns'][0]['price']);self.assertEqual(0x72,scene['inns'][0]['blockedStatusMask'])
     def test_existing_content_rules_and_maps_stay_intact(self):
         before=json.loads(self.base['scene.json']);after=json.loads(self.result['scene.json'])
-        for name in ('initialPlayer','initialMoney','items','equipment','shops','nanhai'):
+        for name in ('initialPlayer','initialMoney','items','shops','nanhai'):
             if name in before:self.assertEqual(before[name],after[name],name)
         self.assertTrue({m['id'] for m in before['maps']}.issubset({m['id'] for m in after['maps']}))
         for name in ('combat.json','audio.json'):

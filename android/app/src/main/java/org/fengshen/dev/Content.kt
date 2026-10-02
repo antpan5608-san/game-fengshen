@@ -27,7 +27,8 @@ data class CharacterDefinition(val id:String,val name:String,val portraitAsset:S
     val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
 data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
     val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
-    val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null)
+    val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null,val antidoteUse:AntidoteUseDefinition?=null)
+data class AntidoteUseDefinition(val evidence:String)
 data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
     val allowedCharacters:Set<String>,val source:String,val defenseBonus:Int=0,val evasionValue:Int=0,
@@ -37,6 +38,8 @@ data class ShopDefinition(val id:String,val mapId:Int,val npcId:String,val name:
     val items:List<String>,val sellItems:Set<String>,val buyPrompt:String="")
 data class InnDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
     val price:Int,val blockedStatusMask:Int,val prompt:String,val evidence:String)
+data class ServiceBinding(val callerMapId:Int,val interiorMapId:Int,val npcId:String,
+    val shopId:String?=null,val innId:String?=null)
 data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitmap>,
     val scenes:Map<Int,Scene> = mapOf(scene.mapId to scene),val atlases:Map<Int,Bitmap> = mapOf(scene.mapId to atlas),
     val exits:List<MapExit> = emptyList(),val initialPlayer:CharacterState,
@@ -50,7 +53,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val enemyGraphics:Map<Int,Bitmap> = emptyMap(),val battleHorizon:Bitmap?=null,val battleHero:Bitmap?=null,
     val shops:Map<String,ShopDefinition> = emptyMap(),val mapObjects:List<MapObject> = emptyList(),
     val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet(),
-    val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap())
+    val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap(),
+    val serviceBindings:List<ServiceBinding> = emptyList())
 object ContentLoader {
     fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
@@ -110,7 +114,7 @@ object ContentLoader {
             require(direction==null || direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             val arrival=Key.valueOf(o.optString("arrivalDirection","DOWN"))
             require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
-            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false))
+            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false),o.optBoolean("captureCaller",false),o.optBoolean("returnToCaller",false))
         }}
         require(exits.all{exit->
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
@@ -181,6 +185,11 @@ object ContentLoader {
                         use.getString("target")=="living-party-member" && use.getInt("healHp")==50 &&
                         use.getBoolean("consumeAtFullHp"))
                     HerbUseDefinition(use.getInt("healHp"),use.getBoolean("consumeAtFullHp"),use.getString("evidence"))
+                },o.optJSONObject("antidoteUse")?.let{use->
+                    require(o.getString("id")==AntidoteUse.ID&&o.getString("category")=="medicine"&&o.getInt("originalId")==6&&
+                        use.getBoolean("mapMenu")&&use.getInt("cureStatusMask")==2&&use.getInt("confirmationConsumption")==1&&
+                        use.getInt("extraConsumptionWhenCured")==1&&use.getString("evidence").isNotBlank())
+                    AntidoteUseDefinition(use.getString("evidence"))
                 })
             item.id to item
         }
@@ -197,21 +206,33 @@ object ContentLoader {
         val shops=data.optJSONArray("shops")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i)
             fun refs(n:String)=o.getJSONArray(n).let{v->(0 until v.length()).map{v.getString(it)}}
-            require(o.getJSONObject("source").getString("confidence")=="GAMEPLAY_VERIFIED")
+            require(o.getJSONObject("source").getString("confidence") in setOf("GAMEPLAY_VERIFIED","ORIGINAL_ROM_STATIC"))
             ShopDefinition(o.getString("id"),o.getInt("mapId"),o.getString("npcId"),o.getString("name"),refs("items"),refs("sellItems").toSet(),o.optString("buyPrompt"))
         }.associateBy{it.id}}?:emptyMap()
-        require(shops.values.all{s->s.mapId in scenes && npcs.any{it.id==s.npcId&&it.shopId==s.id&&it.mapId==s.mapId} &&
+        val serviceBindings=data.optJSONArray("serviceBindings")?.let{a->(0 until a.length()).map{i->
+            val b=a.getJSONObject(i)
+            ServiceBinding(b.getInt("callerMapId"),b.getInt("interiorMapId"),b.getString("npcId"),
+                b.optString("shopId").takeIf{it.isNotEmpty()},b.optString("innId").takeIf{it.isNotEmpty()})
+        }}?:emptyList()
+        require(serviceBindings.map{Triple(it.callerMapId,it.interiorMapId,it.npcId)}.distinct().size==serviceBindings.size)
+        require(shops.values.all{s->s.mapId in scenes && npcs.any{it.id==s.npcId&&it.mapId==s.mapId&&
+                (it.shopId==s.id||serviceBindings.any{b->b.npcId==it.id&&b.interiorMapId==it.mapId&&b.shopId==s.id})} &&
             s.items.all{itemDefinitions[it]?.buyPrice!=null} && s.sellItems.all{itemDefinitions[it]?.sellPrice!=null}})
         val innRows=data.optJSONArray("inns")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i)
-            require(o.getString("confidence") in setOf("GAMEPLAY_VERIFIED","VERIFIED"))
+            require(o.getString("confidence") in setOf("GAMEPLAY_VERIFIED","VERIFIED","ORIGINAL_ROM_STATIC"))
             InnDefinition(o.getString("id"),o.getInt("mapId"),o.getString("npcId"),o.getString("name"),
                 o.getInt("price"),o.getInt("blockedStatusMask"),o.getString("prompt"),o.getString("evidence"))
         }}?:emptyList()
         require(innRows.map{it.id}.toSet().size==innRows.size)
         val inns=innRows.associateBy{it.id}
         require(inns.values.all{s->s.mapId in scenes && s.price in 0..9999999 && s.blockedStatusMask in 0..255 &&
-            s.evidence.isNotBlank() && npcs.any{it.id==s.npcId&&it.innId==s.id&&it.mapId==s.mapId}})
+            s.evidence.isNotBlank() && npcs.any{it.id==s.npcId&&it.mapId==s.mapId&&
+                (it.innId==s.id||serviceBindings.any{b->b.npcId==it.id&&b.interiorMapId==it.mapId&&b.innId==s.id})}})
+        require(serviceBindings.all{b->b.callerMapId in scenes&&b.interiorMapId in scenes&&
+            npcs.any{it.id==b.npcId&&it.mapId==b.interiorMapId}&&((b.shopId!=null) xor (b.innId!=null))&&
+            (b.shopId==null||shops[b.shopId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)&&
+            (b.innId==null||inns[b.innId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)})
         require(npcs.all{(it.shopId==null||it.shopId in shops)&&(it.innId==null||it.innId in inns)&&
             !(it.shopId!=null&&it.innId!=null)})
         val sprites=mapOf(Key.UP to bitmap("player-up.png",16,16),
@@ -254,17 +275,9 @@ object ContentLoader {
                 groups.indices.all{groups[it].id==it} && groups.all{it.members.isNotEmpty() &&
                     it.members.map{m->m.slot}.distinct().size==it.members.size &&
                     it.members.all{m->m.slot in 0..6 && m.enemyId in enemies}} &&
-                enemies.values.all{it.hp>0 && it.hitByte in 0..255 && (it.behaviorByte==0 ||
-                    (it.id==137&&it.behaviorByte==3&&it.iceBaseDamage==8))} &&
+                enemies.values.all{it.hp>0 && it.hitByte in 0..255 && OriginalStatus.enemySupported(it)} &&
                 growth.zipWithNext().all{it.first.threshold<it.second.threshold})
-            BattleContent(zone.getInt("mapId"),rects,groups,enemies,growth,
-                o.getInt("initialArmorContribution"),gate.getInt("stepCounterMin"),
-                gate.getInt("stepCounterForced"),gate.getInt("randomByteThreshold"),
-                o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
-                    a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap(),
-                o.optJSONObject("escape")?.optBoolean("enabled")==true,
-                o.optJSONObject("defeat")?.optBoolean("enabled")==true,
-                o.optJSONArray("zones")?.let{a->(0 until a.length()).map{i->
+            fun parseZones(name:String):List<EncounterZone> = o.optJSONArray(name)?.let{a->(0 until a.length()).map{i->
                     val z=a.getJSONObject(i);val zr=z.getJSONArray("rectangles").let{rs->(0 until rs.length()).map{j->
                         val r=rs.getJSONArray(j);require(r.length()==4)
                         EncounterRect(r.getInt(0),r.getInt(1),r.getInt(2),r.getInt(3))}}
@@ -272,11 +285,20 @@ object ContentLoader {
                         val g=gs.getJSONObject(j);val entities=g.getJSONArray("entities").let{es->(0 until es.length()).map{k->
                             val e=es.getJSONObject(k);EncounterMember(e.getInt("slot"),e.getInt("enemyId"))}}
                         require(entities.isNotEmpty()&&entities.map{it.slot}.distinct().size==entities.size&&
-                            entities.all{it.slot in 0..6&&enemies[it.enemyId]?.behaviorByte==0})
+                            entities.all{it.slot in 0..6&&enemies[it.enemyId]?.let(OriginalStatus::enemySupported)==true})
                         EncounterGroup(g.getInt("id"),entities,z.getInt("id"))}}
                     require(z.getInt("mapId") in scenes&&zg.isNotEmpty()&&z.getInt("randomThreshold") in 0..255)
                     EncounterZone(z.getInt("mapId"),zr,zg,z.getInt("randomThreshold"),z.optString("randomGate")=="HIGH")
-                }}?:emptyList(),
+                }}?:emptyList()
+            val parsedZones=parseZones("zones")+parseZones("fallbackZones")
+            BattleContent(zone.getInt("mapId"),rects,groups,enemies,growth,
+                o.getInt("initialArmorContribution"),gate.getInt("stepCounterMin"),
+                gate.getInt("stepCounterForced"),gate.getInt("randomByteThreshold"),
+                o.optJSONObject("escape")?.getJSONObject("enemyAgility")?.let{a->
+                    a.keys().asSequence().associate{it.toInt() to a.getInt(it)}}?:emptyMap(),
+                o.optJSONObject("escape")?.optBoolean("enabled")==true,
+                o.optJSONObject("defeat")?.optBoolean("enabled")==true,
+                parsedZones,
                 o.optJSONObject("physicalRules")?.let{p->
                     require(p.getBoolean("sameRandomByte"))
                     val h=p.getJSONObject("weaponHitThreshold");val t=ints(p,"multiplierThresholds").toList()
@@ -354,6 +376,6 @@ object ContentLoader {
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
             mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
-            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns)
+            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings)
     }
 }

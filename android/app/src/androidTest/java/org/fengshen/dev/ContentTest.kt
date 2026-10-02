@@ -223,7 +223,7 @@ class ContentTest:IsolatedGameTestCase(){
         val equipped=OpeningEquipment.equip(removed.first,removed.second+(cloth.itemId to 1),cloth)!!
         assertEquals(1,equipped.first.equipment!!.body);assertEquals(6,cloth.defenseBonus)
         assertNull(OpeningEquipment.equip(equipped.first,equipped.second,cloth))
-        val save=SaveSnapshot(c.scene.version,18,7*16+8,7*16+8,Key.UP,listOf(equipped.first),equipped.second,money=85)
+        val save=SaveSnapshot(c.scene.version,18,7*16+8,7*16+8,Key.UP,listOf(equipped.first),equipped.second,money=85,interiorContext=InteriorContext(0,6,19))
         assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
     }
 }

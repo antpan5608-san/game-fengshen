@@ -1,0 +1,2287 @@
+{
+  "baseManifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495",
+  "combatOverlay": {
+    "enemies": [
+      {
+        "attack": 24,
+        "behaviorByte": 7,
+        "defense": 12,
+        "experienceReward": 17,
+        "hitByte": 217,
+        "hp": 30,
+        "id": 10,
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.6",
+          "threshold": 10
+        },
+        "moneyReward": 7,
+        "name": "原版敌人 10",
+        "nameConfidence": "UNKNOWN",
+        "source": {
+          "cpuAddress": 60506,
+          "length": 16,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+          "module": 1,
+          "offset": 60522,
+          "sha256": "74daaad5e78d0cdf209bd65945d1b9673e868a9eb349b608d3086766ded1a30c"
+        }
+      },
+      {
+        "attack": 26,
+        "behaviorByte": 0,
+        "defense": 12,
+        "experienceReward": 19,
+        "hitByte": 217,
+        "hp": 33,
+        "id": 11,
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.0",
+          "threshold": 10
+        },
+        "moneyReward": 8,
+        "name": "原版敌人 11",
+        "nameConfidence": "UNKNOWN",
+        "source": {
+          "cpuAddress": 60522,
+          "length": 16,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+          "module": 1,
+          "offset": 60538,
+          "sha256": "5f8924b7f08e6a5db2e1b62ce49a105bd0fe799ff35963225661200ef8075d67"
+        }
+      }
+    ],
+    "enemyAgility": {
+      "10": 6,
+      "11": 7
+    },
+    "fallbackZones": [
+      {
+        "defaultSource": {
+          "cpuAddress": 61024,
+          "length": 1,
+          "meaning": "Original sea map default encounter ID",
+          "module": 0,
+          "offset": 28272,
+          "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+        },
+        "groups": [
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 3,
+                "sourceType": 5
+              }
+            ],
+            "id": 0,
+            "range": {
+              "cpuAddress": 45503,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45519,
+              "sha256": "0e35b3d50ceca3075dd2230b62519d54af4c57e1a0e06eb181db6fa0ffe93f5a"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 3,
+                "sourceType": 5
+              }
+            ],
+            "id": 1,
+            "range": {
+              "cpuAddress": 45506,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45522,
+              "sha256": "0e35b3d50ceca3075dd2230b62519d54af4c57e1a0e06eb181db6fa0ffe93f5a"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 3,
+                "sourceType": 5
+              }
+            ],
+            "id": 2,
+            "range": {
+              "cpuAddress": 45509,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45525,
+              "sha256": "0e35b3d50ceca3075dd2230b62519d54af4c57e1a0e06eb181db6fa0ffe93f5a"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 3,
+                "sourceType": 6
+              }
+            ],
+            "id": 3,
+            "range": {
+              "cpuAddress": 45512,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45528,
+              "sha256": "2f53db8966c8a72183491316fc5785308fd5c1dc1589fc53aace2aee694d63a5"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 3,
+                "sourceType": 6
+              }
+            ],
+            "id": 4,
+            "range": {
+              "cpuAddress": 45515,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45531,
+              "sha256": "2f53db8966c8a72183491316fc5785308fd5c1dc1589fc53aace2aee694d63a5"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 3,
+                "sourceType": 6
+              }
+            ],
+            "id": 5,
+            "range": {
+              "cpuAddress": 45518,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45534,
+              "sha256": "2f53db8966c8a72183491316fc5785308fd5c1dc1589fc53aace2aee694d63a5"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 2,
+                "sourceType": 5
+              },
+              {
+                "enemyId": 5,
+                "slot": 5,
+                "sourceType": 5
+              }
+            ],
+            "id": 6,
+            "range": {
+              "cpuAddress": 45521,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45537,
+              "sha256": "3cf422ae58e5eb6462f31b9d384cc05aecbc896df915dacd7693f925adb94cfa"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 2,
+                "sourceType": 6
+              },
+              {
+                "enemyId": 4,
+                "slot": 4,
+                "sourceType": 6
+              }
+            ],
+            "id": 7,
+            "range": {
+              "cpuAddress": 45526,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45542,
+              "sha256": "9fba28290f42d787af4b431bafb66fd138fb96cbe0965ce8111ecd79cd706534"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 2,
+                "sourceType": 5
+              },
+              {
+                "enemyId": 4,
+                "slot": 4,
+                "sourceType": 6
+              }
+            ],
+            "id": 8,
+            "range": {
+              "cpuAddress": 45531,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45547,
+              "sha256": "840b470a3f8d352994bad4012db1402707c8887fa1cd3f62b3442103877af2df"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 5,
+                "slot": 2,
+                "sourceType": 5
+              },
+              {
+                "enemyId": 4,
+                "slot": 4,
+                "sourceType": 6
+              }
+            ],
+            "id": 9,
+            "range": {
+              "cpuAddress": 45536,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45552,
+              "sha256": "840b470a3f8d352994bad4012db1402707c8887fa1cd3f62b3442103877af2df"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 1,
+                "sourceType": 6
+              },
+              {
+                "enemyId": 4,
+                "slot": 3,
+                "sourceType": 6
+              },
+              {
+                "enemyId": 4,
+                "slot": 5,
+                "sourceType": 6
+              }
+            ],
+            "id": 10,
+            "range": {
+              "cpuAddress": 45541,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45557,
+              "sha256": "232dad87c0f73dc36dc99f276d414346b8729141ae25a06e74260db911de99be"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 4,
+                "slot": 1,
+                "sourceType": 6
+              },
+              {
+                "enemyId": 4,
+                "slot": 3,
+                "sourceType": 6
+              },
+              {
+                "enemyId": 5,
+                "slot": 5,
+                "sourceType": 5
+              }
+            ],
+            "id": 11,
+            "range": {
+              "cpuAddress": 45548,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45564,
+              "sha256": "abc61d33cbd27e7577711bcf6da7cf656606b70e3cf437fc2c4061bb590206dd"
+            }
+          }
+        ],
+        "id": 1,
+        "mapId": 25,
+        "randomGate": "LOW",
+        "randomThreshold": 16,
+        "rectangles": [],
+        "source": "game-data/provenance/nanhai01.json"
+      }
+    ],
+    "graphics": [
+      {
+        "asset": "battle-enemy-10.png",
+        "enemyId": 10,
+        "height": 40,
+        "origin": [
+          96,
+          72
+        ],
+        "width": 64
+      },
+      {
+        "asset": "battle-enemy-11.png",
+        "enemyId": 11,
+        "height": 56,
+        "origin": [
+          112,
+          72
+        ],
+        "width": 48
+      }
+    ],
+    "zones": [
+      {
+        "groups": [
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              }
+            ],
+            "id": 0,
+            "range": {
+              "cpuAddress": 45681,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45697,
+              "sha256": "40a4034c15c1cfc0e0b9a732f04bb086187cf76dbbc8bbd523868434a1817755"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              }
+            ],
+            "id": 1,
+            "range": {
+              "cpuAddress": 45684,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45700,
+              "sha256": "40a4034c15c1cfc0e0b9a732f04bb086187cf76dbbc8bbd523868434a1817755"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              }
+            ],
+            "id": 2,
+            "range": {
+              "cpuAddress": 45687,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45703,
+              "sha256": "40a4034c15c1cfc0e0b9a732f04bb086187cf76dbbc8bbd523868434a1817755"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 3,
+                "sourceType": 8
+              }
+            ],
+            "id": 3,
+            "range": {
+              "cpuAddress": 45690,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45706,
+              "sha256": "7a8eb284e7597661ed267284a5cc47348c3d30adf5cf102953f0e52dc806362d"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 3,
+                "sourceType": 8
+              }
+            ],
+            "id": 4,
+            "range": {
+              "cpuAddress": 45693,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45709,
+              "sha256": "7a8eb284e7597661ed267284a5cc47348c3d30adf5cf102953f0e52dc806362d"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 3,
+                "sourceType": 8
+              }
+            ],
+            "id": 5,
+            "range": {
+              "cpuAddress": 45696,
+              "length": 3,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45712,
+              "sha256": "7a8eb284e7597661ed267284a5cc47348c3d30adf5cf102953f0e52dc806362d"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 2,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 10,
+                "slot": 4,
+                "sourceType": 7
+              }
+            ],
+            "id": 6,
+            "range": {
+              "cpuAddress": 45699,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45715,
+              "sha256": "f342ad6f3a6c93017aa5480769af8ca484a3e7664772c52848e3e3e9cb6d3b3a"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 2,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 11,
+                "slot": 4,
+                "sourceType": 8
+              }
+            ],
+            "id": 7,
+            "range": {
+              "cpuAddress": 45704,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45720,
+              "sha256": "c1892953cca24bab6557a11571949a805bfb6a7470758d15c60586ea30ca954a"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 2,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 10,
+                "slot": 4,
+                "sourceType": 7
+              }
+            ],
+            "id": 8,
+            "range": {
+              "cpuAddress": 45709,
+              "length": 5,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45725,
+              "sha256": "32d3ae0b471b86db397291bd452d3d72aeef5b76a9c5cb04f2a3285d6b730063"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 1,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 10,
+                "slot": 5,
+                "sourceType": 7
+              }
+            ],
+            "id": 9,
+            "range": {
+              "cpuAddress": 45714,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45730,
+              "sha256": "3931d6d7cc3a5070d42bc135f68feac7fb0d99f1ca34d98630a2684be4194e34"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 1,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 11,
+                "slot": 3,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 11,
+                "slot": 5,
+                "sourceType": 8
+              }
+            ],
+            "id": 10,
+            "range": {
+              "cpuAddress": 45721,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45737,
+              "sha256": "3075a19a1f9fc1b8229f60f0ab007ae22b34263db26ffaf3a68fad8962da9256"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 1,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 11,
+                "slot": 5,
+                "sourceType": 8
+              }
+            ],
+            "id": 11,
+            "range": {
+              "cpuAddress": 45728,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45744,
+              "sha256": "d27e70e3cefe7c9c365ba26864100c3175ecf5cfc2c3ba58b734bfcb2a899f00"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 10,
+                "slot": 1,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 11,
+                "slot": 3,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 11,
+                "slot": 5,
+                "sourceType": 8
+              }
+            ],
+            "id": 12,
+            "range": {
+              "cpuAddress": 45735,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45751,
+              "sha256": "197f3ed8d2a4ffb2ec681a2d4308b36e09f2060d8c2132c75e99ecfac035f7f5"
+            }
+          },
+          {
+            "entities": [
+              {
+                "enemyId": 11,
+                "slot": 1,
+                "sourceType": 8
+              },
+              {
+                "enemyId": 10,
+                "slot": 3,
+                "sourceType": 7
+              },
+              {
+                "enemyId": 10,
+                "slot": 5,
+                "sourceType": 7
+              }
+            ],
+            "id": 13,
+            "range": {
+              "cpuAddress": 45742,
+              "length": 7,
+              "meaning": "Encounter slot/sourceType pairs, terminator00",
+              "module": 1,
+              "offset": 45758,
+              "sha256": "cb07501ca454e04728f51f146357eb3f66fbf721ed1cd2d5c74475bee4c1dce5"
+            }
+          }
+        ],
+        "id": 4,
+        "mapId": 25,
+        "randomGate": "LOW",
+        "randomThreshold": 16,
+        "rectangleSource": {
+          "cpuAddress": 49698,
+          "length": 10,
+          "meaning": "Sea northern original region",
+          "module": 11,
+          "offset": 377394,
+          "sha256": "02b8a6232ef17d20e40db5bc06024dd1155051531f8f81dcd7939844b2b1d72c"
+        },
+        "rectangles": [
+          [
+            2,
+            0,
+            30,
+            22
+          ],
+          [
+            31,
+            0,
+            63,
+            35
+          ]
+        ]
+      }
+    ]
+  },
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "evidence": {
+    "defaultEncounter": {
+      "rectangleBoundary": "strict left/top, inclusive right/bottom; default1 outside both exact rectangles",
+      "source": {
+        "cpuAddress": 61024,
+        "length": 1,
+        "meaning": "Original sea map default encounter ID",
+        "module": 0,
+        "offset": 28272,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+      },
+      "sourcePriority": [
+        1,
+        4
+      ]
+    },
+    "originalNormalRoute": {
+      "attempts": {
+        "first": "Missing menu confirmation; no transaction",
+        "second": "Two normal purchases; helper expected one; corrected observed input sequence"
+      },
+      "baselineSaveSha256": "1ef67ee00b09f39f9384dda3eea57ffaa20e5be80a73abc1fb70a0e05a89c2c6",
+      "captures": [
+        {
+          "cell": [
+            200,
+            130
+          ],
+          "encounterSteps": 0,
+          "mapId": 16,
+          "money": 315,
+          "path": "private-derived/world-north-normal/verified-normal-save-start-ram.bin",
+          "sha256": "0d4f7ba5730d3ff3376ae9b330b6188cf8308d92c8296d922933a8c03922996e",
+          "statusMask": 0
+        },
+        {
+          "cell": [
+            6,
+            7
+          ],
+          "encounterSteps": 0,
+          "mapId": 19,
+          "money": 255,
+          "path": "private-derived/world-north-normal/normal-antidote-purchased-ram.bin",
+          "sha256": "c26dbdf07be8d2861bd44e30aca72f4cddb171ffc566466adebada9c0930ec5f",
+          "statusMask": 0
+        },
+        {
+          "cell": [
+            186,
+            102
+          ],
+          "encounterSteps": 0,
+          "mapId": 16,
+          "money": 255,
+          "path": "private-derived/world-north-normal/northwest-land-arrival-ram.bin",
+          "sha256": "8dfcc046b3b8334920b6374bad84b21b797e2d9381e5d2dff2e46c64e8b0b202",
+          "statusMask": 0
+        },
+        {
+          "cell": [
+            26,
+            14
+          ],
+          "encounterSteps": 0,
+          "mapId": 25,
+          "money": 255,
+          "path": "private-derived/world-north-normal/northwest-sea-return-ram.bin",
+          "sha256": "0fc65dc2257f8f12e9efe572851e583a8de7934399fac87c9fa36c8ea54a9879",
+          "statusMask": 0
+        }
+      ],
+      "kind": "CONTINUATION_FROM_VERIFIED_NORMAL_SAVE",
+      "ramWrites": false,
+      "result": "CONTINUATION_FROM_VERIFIED_NORMAL_SAVE; controllerOnly=true noRAMWrites=true success=true failed=nil phase=RETURN map=25 x=536 y=344"
+    }
+  },
+  "exitContextUpdates": [
+    {
+      "captureCaller": true,
+      "fromMapId": 0,
+      "source": {
+        "cpuAddress": 52195,
+        "length": 79,
+        "meaning": "Original indoor caller capture",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 17,
+      "trigger": [
+        13,
+        18
+      ]
+    },
+    {
+      "fromMapId": 17,
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57304,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286696,
+        "sha256": "a867e9cce44959b02c2b871719b9b9c5a5fd19cb55d364b559dad3e72d68a483"
+      },
+      "spawn": [
+        13,
+        18
+      ],
+      "toMapId": 0,
+      "trigger": [
+        7,
+        12
+      ]
+    },
+    {
+      "captureCaller": true,
+      "fromMapId": 0,
+      "source": {
+        "cpuAddress": 52195,
+        "length": 79,
+        "meaning": "Original indoor caller capture",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 18,
+      "trigger": [
+        6,
+        19
+      ]
+    },
+    {
+      "fromMapId": 18,
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57304,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286696,
+        "sha256": "a867e9cce44959b02c2b871719b9b9c5a5fd19cb55d364b559dad3e72d68a483"
+      },
+      "spawn": [
+        6,
+        19
+      ],
+      "toMapId": 0,
+      "trigger": [
+        7,
+        12
+      ]
+    },
+    {
+      "captureCaller": true,
+      "fromMapId": 0,
+      "source": {
+        "cpuAddress": 52195,
+        "length": 79,
+        "meaning": "Original indoor caller capture",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178"
+      },
+      "spawn": [
+        6,
+        12
+      ],
+      "toMapId": 19,
+      "trigger": [
+        24,
+        25
+      ]
+    },
+    {
+      "fromMapId": 19,
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57310,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286702,
+        "sha256": "478721e6123668dd6cc50499468d328493836fee4d47ad7b2b31d807e8971afe"
+      },
+      "spawn": [
+        24,
+        25
+      ],
+      "toMapId": 0,
+      "trigger": [
+        6,
+        12
+      ]
+    },
+    {
+      "captureCaller": true,
+      "fromMapId": 0,
+      "source": {
+        "cpuAddress": 52195,
+        "length": 79,
+        "meaning": "Original indoor caller capture",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178"
+      },
+      "spawn": [
+        12,
+        12
+      ],
+      "toMapId": 22,
+      "trigger": [
+        6,
+        25
+      ]
+    },
+    {
+      "fromMapId": 22,
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57316,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286708,
+        "sha256": "21dfc41ca59e60a4b2c8b87c6ed6f3688848a19b85479ff189df83c21ebc0fda"
+      },
+      "spawn": [
+        6,
+        25
+      ],
+      "toMapId": 0,
+      "trigger": [
+        12,
+        14
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 25,
+      "kind": "EXIT_RECORD",
+      "normalEvidence": "NORMAL_CONTROLLER_ONLY_VERIFIED_SAVE_CONTINUATION",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57454,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286846,
+        "sha256": "9cf76e15c0759349c4618e1773c674fef621eac7cf180fee0122dea5e6d9444e"
+      },
+      "spawn": [
+        186,
+        102
+      ],
+      "toMapId": 16,
+      "trigger": [
+        26,
+        14
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "normalEvidence": "NORMAL_CONTROLLER_ONLY_VERIFIED_SAVE_CONTINUATION",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57213,
+        "length": 5,
+        "meaning": "Original exit dispatch row",
+        "module": 8,
+        "offset": 286605,
+        "sha256": "a7dbdb23e2d79431d8b71e149cc52311b18cdad3df517670f97e216ca2fef44e"
+      },
+      "spawn": [
+        26,
+        14
+      ],
+      "toMapId": 25,
+      "trigger": [
+        186,
+        102
+      ]
+    }
+  ],
+  "graphics": {
+    "battle-enemy-10.png": {
+      "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+      "captureSha256": "963ed3ed03fe60c602571c4943d11d9d38bb61958032749272ce14ca85d9c574",
+      "height": 40,
+      "normalPlayEvidence": false,
+      "observedRect": [
+        96,
+        72,
+        64,
+        40
+      ],
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          60,
+          190,
+          255
+        ],
+        "2": [
+          219,
+          40,
+          0
+        ],
+        "3": [
+          77,
+          223,
+          73
+        ]
+      },
+      "rgbaSha256": "8eba51419a2c5e0cd06c49b2b0b7291ea3b1838ea8b7859f82f703efc633131d",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 789728,
+          "sha256": "1b8f41d5d86d0111968ebe391dddf43ee383fcbc094884ca57e97d746b8abee1",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789744,
+          "sha256": "e4e7c98d550dccee5448d163062bfdc91b6a60b744dc14b1da29c7404a832470",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789760,
+          "sha256": "feec77247d2d8c5d3353fef0a6de09447b7e36248aef6e070b637205a11b096f",
+          "xy": [
+            16,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789776,
+          "sha256": "a0f98ca17eb12ea48b3aaad20d8f74fbcf7032b0d4a73c347363053bbca5d431",
+          "xy": [
+            24,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789792,
+          "sha256": "9d38c65358c98a3e05234443a374992ffec6531d7971df64a1d839068b02bc03",
+          "xy": [
+            32,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789808,
+          "sha256": "0cb2d0d8818375e10bbc3278deb002579a7380e7d6c2c61ab80a42e18f1394f5",
+          "xy": [
+            40,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789824,
+          "sha256": "5a6122a653ced0ee3f0080304c28c079b354095a819259a485febb9ac17e97d1",
+          "xy": [
+            48,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            56,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789920,
+          "sha256": "eb0c9f185c5fb012c6c935c4ebf689aaa0b991c3cfc747302b65882a86933482",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789936,
+          "sha256": "eab8ec005793143d93404ae1dcd37134e71709be8498f2db75bba4d443b38b60",
+          "xy": [
+            8,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789952,
+          "sha256": "5f9977538bc9361e1d5e5325f4be8d61772e9d76b233802c3b853d86bb030c3d",
+          "xy": [
+            16,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789968,
+          "sha256": "c86c173eb754261c33f888184e3bdd9b8b7e11de5eee9cf27ae6532f9fbf1462",
+          "xy": [
+            24,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789984,
+          "sha256": "1fe845195618b9a94fc6900da2d5d2f6cd5f5a62828116e06c8f8a6772dc5bf9",
+          "xy": [
+            32,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790000,
+          "sha256": "054ab29f41f92c0312b735a74d72d56f5be4809952eb194f7d0539c9c1aa5bcc",
+          "xy": [
+            40,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790016,
+          "sha256": "13aeef49a656ab7d0cf996593dac53c4ff7f122d42fda7f55f9a92bb85d6c124",
+          "xy": [
+            48,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            56,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790096,
+          "sha256": "ae65427c1c78067e4af6259e58668581d1c811b7180adaf916af6741f32a9930",
+          "xy": [
+            0,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790112,
+          "sha256": "915fee5c5510dda96ce032b7b7143331e1def49952e25300d051554353ad94e6",
+          "xy": [
+            8,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790128,
+          "sha256": "360a203802499b8604398a50b39122942d9fdcfca67bba8005e1f1c42b3fed07",
+          "xy": [
+            16,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790144,
+          "sha256": "6e6bf8bf23bfe01e604780d48532dad0da16aa6991163f364883b5c50ea6d91e",
+          "xy": [
+            24,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790160,
+          "sha256": "23f6de02377c545a9ee363d765d17f0959fa885d8629e15387e70bea952118a2",
+          "xy": [
+            32,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790176,
+          "sha256": "081dc4018646a03821e01fcac95ee49bff2c8960cfcb6d0f5f20fc54a5875797",
+          "xy": [
+            40,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790192,
+          "sha256": "9043daf9622bcc202382d324f4733ee42d57db03aa489fe3bbfc66b325e9ea19",
+          "xy": [
+            48,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790208,
+          "sha256": "8a5f16f43d7be9d5da1bb71656fa69fcc035482b234cfd571954d046f0ca954a",
+          "xy": [
+            56,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790272,
+          "sha256": "795b0d0606cd9e5d3d04355c0dc124acccc379196d4b551b2935cece43a20e2b",
+          "xy": [
+            0,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790288,
+          "sha256": "927602a0490f4f394f542c6cc138ec8dc882f510601660b1702de5e2e9e76cdd",
+          "xy": [
+            8,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790304,
+          "sha256": "74fd51f3cec7c3a0c95df5acbe9c0ce8f8cff0dbbad30a34a56da210d4ee938e",
+          "xy": [
+            16,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790320,
+          "sha256": "4c5ab93c68e70c5ab126febf87fa971eb3873e5ba2dd92df1b8dbbff55564be4",
+          "xy": [
+            24,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790336,
+          "sha256": "7837336cd7d93d3f8df633141b0601ee116f225a7015740d4e1b7f454b89316c",
+          "xy": [
+            32,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790352,
+          "sha256": "fe13423014074498618afc3b937de392b87320395ec6cda6c5ecc57384a335b0",
+          "xy": [
+            40,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790368,
+          "sha256": "b0fb65e81d64bbd3a2233d5a1c9b8284b9b14617cf619a49d8d32629726f6aa4",
+          "xy": [
+            48,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790384,
+          "sha256": "e4c30349002604400ccf8b3d606bb2561781f6e3469838ed699a35420d0ba0b0",
+          "xy": [
+            56,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790400,
+          "sha256": "7ceb9306d07ab5af2c7c3dd2724b3f3611bdd3e880bbe8aed220085a0d717ef3",
+          "xy": [
+            0,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790416,
+          "sha256": "fea084f3978485015003b4d48a8a9b617f83b1631ff9fc6b5566567d071c9a03",
+          "xy": [
+            8,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790432,
+          "sha256": "3812f96a55007dd44cf29b44b00be0382010cfe34329d1976225b40f0f764ee3",
+          "xy": [
+            16,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790448,
+          "sha256": "3ef6acf7836c298a87371f59fe1c439511aef84a3e134c08d94a5adcb69c5869",
+          "xy": [
+            24,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790464,
+          "sha256": "fed28be003c6d3716b1b84d21b490644295168ff3758d4cb142831dc72d27359",
+          "xy": [
+            32,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790480,
+          "sha256": "f2a776b5555855366b78efcf6b430929bf82d759135be1c81439a7ada48e7d4b",
+          "xy": [
+            40,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790496,
+          "sha256": "978ee1128ba19cd0ce278ee1fb807cd7a661bc55e74928a38b49ef47fd2f0312",
+          "xy": [
+            48,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 790512,
+          "sha256": "c373754f7d5e51e576cc6d423e8e7a83f59cdabfea4371a8aa5362b16fef30df",
+          "xy": [
+            56,
+            32
+          ]
+        }
+      ],
+      "transparentZero": false,
+      "width": 64
+    },
+    "battle-enemy-11.png": {
+      "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+      "captureSha256": "d20c7bfc5265d3cfbcf02d1dfa6927d325353215e29034aae37158422762d17a",
+      "height": 56,
+      "normalPlayEvidence": false,
+      "observedRect": [
+        112,
+        72,
+        48,
+        56
+      ],
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          32,
+          56,
+          239
+        ],
+        "2": [
+          255,
+          154,
+          56
+        ],
+        "3": [
+          170,
+          231,
+          255
+        ]
+      },
+      "rgbaSha256": "5278d8dfdbe171752f2dceb4fd518ec42774f4934c87c7b10d5c19b4cc79a1e4",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 788560,
+          "sha256": "96a3731a0390f14acdc5b254a88b18fa4f8ef981a2b5c7aea623b47567e0159d",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788576,
+          "sha256": "1ec59b809153fd54eace90cd6a5580fa379bd49899e329c3234dd021f4afe340",
+          "xy": [
+            16,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788592,
+          "sha256": "0481498b4c665fb9e4209073d5f5dceb095e9719f0e840aad069a0f0b6c567c1",
+          "xy": [
+            24,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            32,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788720,
+          "sha256": "8fb0fa675a90adccc31fcd569450005eae7a96b3b62d11bc0ba0d40481360e3a",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788736,
+          "sha256": "be17e83b42e7f3413147f814a623007a3ab40d76cfe814b4366220daf6679da3",
+          "xy": [
+            8,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788752,
+          "sha256": "5a4ebf157e72c2a4a3cd3bf5d98cf987f45da0372009a602d0828fa3fafef13b",
+          "xy": [
+            16,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788768,
+          "sha256": "8de0f0cffb821968a2ad230ff4d525e4968432b7064341886d94c7cda877a975",
+          "xy": [
+            24,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788784,
+          "sha256": "5024cec2f90a10dfbb49af51adae836457dcffb9a5194487c91ed08d3f8bf306",
+          "xy": [
+            32,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788944,
+          "sha256": "6199e87da47f4bbc15cc5b0d41121581a516ddc6cbe1236d1ecf430558701ba1",
+          "xy": [
+            0,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788960,
+          "sha256": "c570cef895fd85ba17572f419f91900dfbe3674d4478910018a42a35b32556a0",
+          "xy": [
+            8,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788976,
+          "sha256": "2f953d929d4be03d50834cd488efcbaf92044ec7c4fb81fd6f17fbcf2823de9d",
+          "xy": [
+            16,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 788992,
+          "sha256": "e23b9a88460e7a6d1f0e8f395f7dab2daf119f3fa820b3e4a94670f28e1e37bf",
+          "xy": [
+            24,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789008,
+          "sha256": "61e246970a5b9bef8b4de6a29d5a86bbd3a45ea27d618a91a5457ae3ba046e66",
+          "xy": [
+            32,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            16
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789200,
+          "sha256": "9cb32e10b6509c11cae9fcc8136b575b7d1bd8a8a08f504ed77b8f0589e7fa74",
+          "xy": [
+            0,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789216,
+          "sha256": "760b37654eb85969fd968aea4e79c96ef1e31d5881f2843425a81da0e71cf233",
+          "xy": [
+            8,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789232,
+          "sha256": "cbf6f9a34315a890e6e5fd83f0df170d40394c1fb9686357b92259ead33da30d",
+          "xy": [
+            16,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789248,
+          "sha256": "29fc5a20d8135c5428ace39b88fb49e6c735f2b867bfdcd083b92dae4cb229d2",
+          "xy": [
+            24,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789264,
+          "sha256": "10dd840a844709e9846ca847e49d829e596c84295415229fbbde058b72368320",
+          "xy": [
+            32,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            24
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789408,
+          "sha256": "5f1ff08ac95bd267363a29aab9477a3410403ec1d4aa4d706b77304957dc641b",
+          "xy": [
+            0,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789424,
+          "sha256": "b04c16bf25cdcef8e1825e1a1962437eb85e1382952deaf0de4e97f570d8d6d4",
+          "xy": [
+            8,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789440,
+          "sha256": "990d53bd0ee32c4fe18384bb2de7bfe4ca78901bfba10e80671cbfa2f3699f53",
+          "xy": [
+            16,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789456,
+          "sha256": "81fdfd757e1bdf89cf6020343e71da12a616eeacd7402d837d82e4ea04e53d1b",
+          "xy": [
+            24,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789472,
+          "sha256": "f4df6c40efb404b6c2b1f39b53cc739c17f9edec4271d3983b0c072d6096a815",
+          "xy": [
+            32,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            32
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789552,
+          "sha256": "9320058cbe3ea3c43d92993226d73eb7b2d0b7adf8736043305e0c83ec9de69c",
+          "xy": [
+            0,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789568,
+          "sha256": "22e3d2554b8e849c773579b24dec7d034c36a58cbf2179d8439776ab1e7f17d2",
+          "xy": [
+            8,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789584,
+          "sha256": "c34edfd07dfd634cf5b487d434ba4d53c108afcf112bac5363b38308303d4e20",
+          "xy": [
+            16,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789600,
+          "sha256": "d23394383e645e8a0627326ed237f0c9e2e0051f3cceb16aca83d2e331d7cfa7",
+          "xy": [
+            24,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789616,
+          "sha256": "7471a6ac69618da367c0c515ed8d242ba37e62cd1a024897fd0a41c05a5b70b6",
+          "xy": [
+            32,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            40
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789632,
+          "sha256": "0c18d6c1241195df53de0286b090f617ed8de2bfb7d6bed7cc9e2bfb5c738ec9",
+          "xy": [
+            0,
+            48
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            48
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 789648,
+          "sha256": "1f7d446bf8abadfdb41d06776f7e58c73d13272c635b8d6fe5fddf1a5ba19aef",
+          "xy": [
+            16,
+            48
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            24,
+            48
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            32,
+            48
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 528166,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            40,
+            48
+          ]
+        }
+      ],
+      "transparentZero": false,
+      "width": 48
+    }
+  },
+  "itemUpdates": [
+    {
+      "antidoteUse": {
+        "confirmationConsumption": 1,
+        "cureStatusMask": 2,
+        "evidence": "game-data/provenance/world-status.json",
+        "extraConsumptionWhenCured": 1,
+        "mapMenu": true
+      },
+      "description": "地图菜单解毒。确认先消耗1份；解除中毒时原版再尝试消耗1份，仅1份也可解毒。不会恢复HP或复活；取消不消耗。战斗用法尚未接入。",
+      "id": "rom.medicine.6"
+    }
+  ],
+  "limitations": [
+    "Sea north enemies10/11 enabled with original poison/field tick/antidote; other palace scripts and non-route exits remain unimplemented.",
+    "Original enemy10/11 names remain UNKNOWN; original glyphs/animations/PRNG sequence are not claimed equivalent.",
+    "Global geometry decode and 54 stock tables are not full-world App completion."
+  ],
+  "maps": [],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 40618,
+      "length": 1,
+      "meaning": "Source type7 remaps enemy10",
+      "module": 1,
+      "offset": 40634,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "cpuAddress": 36292,
+      "length": 12,
+      "meaning": "Special behavior thresholds",
+      "module": 9,
+      "offset": 298452,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a"
+    },
+    {
+      "cpuAddress": 36329,
+      "length": 202,
+      "meaning": "Original physical/special choice",
+      "module": 9,
+      "offset": 298489,
+      "sha256": "e564ab20da4ce8d4e4f1467697c383bcecb18f32115c32ed56949c1eb7343855"
+    },
+    {
+      "cpuAddress": 41170,
+      "length": 89,
+      "meaning": "Original status rank dispatch and status table",
+      "module": 9,
+      "offset": 303330,
+      "sha256": "e699109b047f56448c43139d67996baa2cce701e6f79efc8f4cc501bcec3d939"
+    },
+    {
+      "cpuAddress": 47664,
+      "length": 80,
+      "meaning": "Completed-step poison",
+      "module": 0,
+      "offset": 14912,
+      "sha256": "d0400c59c556fcd49cf4093ac694370a9b79b1b8a6c8cb5a242be9c4be2c0a6e"
+    },
+    {
+      "cpuAddress": 47843,
+      "length": 24,
+      "meaning": "All-disabled party failure flags",
+      "module": 0,
+      "offset": 15091,
+      "sha256": "e84121fa7245bec441043b523a8933280ecd96afd75ba6e388de572cea5060ff"
+    },
+    {
+      "cpuAddress": 38421,
+      "length": 60,
+      "meaning": "Map medicine confirm consumes once",
+      "module": 2,
+      "offset": 71205,
+      "sha256": "d6ce64caa22185ac15f296aff858d21c942bb4bf6f9ccdd640c881aaa1c1f50f"
+    },
+    {
+      "cpuAddress": 38736,
+      "length": 40,
+      "meaning": "Medicine6 removes poison and repeats inventory consumption",
+      "module": 2,
+      "offset": 71520,
+      "sha256": "50a3dbb9b7eb14b95d5665ba47db793cc228858efd7efde528c978e72e7aa464"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 108,
+      "meaning": "Inventory consume search and exhausted-slot handling",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701"
+    },
+    {
+      "cpuAddress": 49698,
+      "length": 10,
+      "meaning": "Sea northern zone4 original two rectangles",
+      "module": 11,
+      "offset": 377394,
+      "sha256": "02b8a6232ef17d20e40db5bc06024dd1155051531f8f81dcd7939844b2b1d72c"
+    },
+    {
+      "cpuAddress": 45361,
+      "length": 1,
+      "meaning": "Zone4 exact group count",
+      "module": 1,
+      "offset": 45377,
+      "sha256": "4d7b3ef7300acf70c892d8327db8272f54434adbc61a4e130a563cb59a0d0f47"
+    },
+    {
+      "cpuAddress": 43340,
+      "length": 4,
+      "meaning": "Zone4 group root and associated context",
+      "module": 1,
+      "offset": 43356,
+      "sha256": "0b88624fcc3b01875e8440e1f272bdfb64b2bdf225a1ee6994af224e1dc96d91"
+    },
+    {
+      "cpuAddress": 49470,
+      "length": 5,
+      "meaning": "Original sea rectangle pointer order: zone1 then zone4, terminator",
+      "module": 11,
+      "offset": 377166,
+      "sha256": "dce9509bb5d194eeccbb8a3cd25ae758a7b02f1559e7975c0e116f829b7c725c"
+    }
+  ],
+  "sceneCapabilityUpdates": [
+    {
+      "implementedCapabilities": [
+        "ENEMY10_POISON",
+        "FIELD_POISON",
+        "MAP_ANTIDOTE",
+        "FIELD_DEFEAT"
+      ],
+      "mapId": 25
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "sea-north-and-original-status",
+  "taskId": "WORLD-FULL-01"
+}

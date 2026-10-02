@@ -110,4 +110,13 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 
 `export_development.py --world-inventory <report> --base-apk <reviewed-apk>`复用原Reader枚举物理几何表、NPC overlay域、真实出口/服务门口；解码、打包和实际App运行字段分开。相同grid不合并状态ID，未证明使用的尾槽保留UNKNOWN；Reference TMX扩边数据不替代原格网。原E0C3选择/E3A6背景/E438精灵palette及PPU零色镜像已与正常防具/客栈截图核对；只代表静态默认palette，不宣称脚本光照变体已核。
 
-F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取仍待实际执行，不无限重试，不修改代理。
+F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取已执行成功：旧收集器给town01画面加touch-ux-前缀，按真实文件名筛选后取回7张原App服务PNG并人工检查。先前筛选零图片和未保留F0原片仍是限制；后续必须核artifact实际文件，不能将测试PASS当录像已保留。不要无限重试或修改代理。
+
+
+## 已验证的共享状态与局部敌群取证
+
+- 原库存读取E685/E68D和各类本地ID，批次生成服务目录；名字、物品使用和装备槽位分别核，不将Reference商品ID直接当ROM ID。旧商品和一次性奖励仍走统一状态。
+- 原版敌图形依赖所属遇敌区域的CHR银行。只改敌人source而保留另一地区的环境会产生黑屏/乱码；改用原完整zone/group loader后成功，现probe-world-enemy.lua用限定WORLD_ENEMY_ZONE/GROUP和FENGSHEN_ROOT记录受控输入，不改ROM，不算正常路线。参数范围以脚本为准。
+- 原export_development.observed_graphic_recipe从明确矩形回查每个16字节ROM图块；完整图块/RGBA一致后，原scoped_observed_graphic在CI重建。淡出/多palette/部分匹配必须拒绝。原整组加载仅证明已注明静态姿态，不升级全动画或名称。
+- 牛黄丸局部实验复用probe-town02-herb.lua的可选HERB_ITEM_ID/OUTPUT_FOLDER；默认药草行为不变。原状态/数量写hook定位成功：确认先扣一次，解毒时原例程再查库存扣一次；仅1份的再次查找没有数量可扣。正常购买/路线与受控异常状态实验分别留记录，不混作正常玩耍证明。
+- 历史F0 golden独立固定于ci/golden-world-f0-content.json，避免新基底使旧全黑回归预期失真；本地显式FENGSHEN_WORLD_F0_BASE_APK与当前FENGSHEN_CONTENT_BASE_APK各验来源/hash。新的runner下载与扩展App方法仍以当前任务实际结果为准。

@@ -74,6 +74,59 @@ def extract_town_shops(reader):
             'Selling cross-category goods at a different merchant remains a development restriction, not an original rule.',
             'Equipment replacement requires an explicit remove then equip; automatic replacement side effects remain unverified.']}
 
+def extract_world_service_catalog(reader):
+    """Original category-local stocks/prices/slot membership, without guessing effects or text."""
+    if digest(reader.data)!=SHA256:raise ValueError('Service catalog requires target ROM fingerprint')
+    categories={0:'medicine',2:'weapon',3:'armor'};stocks=[];items={}
+    slots={slot:set(reader.read(2,address,length))-{255} for slot,address,length in
+        [('rightHand',0xef88,19),('body',0xef9b,11),('feet',0xefa6,10)]}
+    for type_id,category in categories.items():
+        root=reader.word(2,0xe685+2*type_id);prices=reader.word(2,0xe68d+2*type_id)
+        names=reader.word(2,0xe60e+2*type_id)
+        for context in range(18):
+            stock=reader.word(2,root+context*2);ids=[]
+            for offset in range(17):
+                value=reader.read(2,stock+offset)[0]
+                if value==255:break
+                ids.append(value)
+            else:raise ValueError('Stock exceeds original sixteen slots')
+            if len(ids)>16 or len(set(ids))!=len(ids):raise ValueError('Invalid original stock list')
+            stocks.append({'category':category,'contextIndex':context,'originalIds':ids,
+                'stockPointerSource':reader.span(2,root+context*2,2,'Original stock context pointer'),
+                'stockSource':reader.span(2,stock,len(ids)+1,'Original terminated stock')})
+            for item in ids:
+                key=(category,item)
+                if key in items:continue
+                pointer=reader.word(2,names+2*item)
+                raw=reader.read(2,pointer,min(32,0x10000-pointer))
+                if 255 not in raw:raise ValueError('Unterminated item name stream')
+                raw=raw[:raw.index(255)+1];price=reader.word(2,prices+2*item)
+                row={'id':'rom.item.0' if key==('weapon',0) else f'rom.{category}.{item}',
+                    'category':category,'originalId':item,'buyPrice':price,'sellPrice':max(1,price//2),
+                    'maxCount':10,'nameHex':raw.hex(),'displayNameStatus':'REQUIRES_EXISTING_TEXT_OR_SOURCED_PROVISIONAL_MAPPING',
+                    'priceSource':reader.span(2,prices+2*item,2,'Original unsigned purchase price'),
+                    'nameSource':reader.span(2,pointer,len(raw),'Original terminated menu text'),
+                    'useEffect':'NOT_INFERRED'}
+                if category in ('weapon','armor'):
+                    typ=0 if category=='weapon' else 1;contribution=reader.word(2,0xe95e+2*typ)+item*2
+                    row['contribution']=reader.word(2,contribution)
+                    row['contributionSource']=reader.span(2,contribution,2,'Original equipment contribution')
+                    legal=[slot for slot,values in slots.items() if item in values and
+                        (slot=='rightHand')==(category=='weapon')]
+                    row['nezhaPermittedByCategoryList']=bool(legal)
+                    row['slotStatus']='VERIFIED_CURRENT_SCOPE' if (category=='weapon' and item<=2) or category=='armor' else 'NEEDS_SLOT_FILTER_DISPATCH'
+                    row['nezhaPermittedSlots']=legal if row['slotStatus']=='VERIFIED_CURRENT_SCOPE' else []
+                    row['listMembershipCandidates']=legal
+                    row['equipmentOperation']='REQUIRES_ORIGINAL_SLOT_AND_TRANSACTION_RULES'
+                items[key]=row
+    return {'romSha256':SHA256,'stocks':stocks,'items':list(items.values()),
+        'stockDispatch':{'normalCallerRange':[0,15],'map81Context':16,'map21Context':17,
+            'source':reader.span(2,0xc02f,92,'Original normal/special merchant selection')},
+        'innPrices':[reader.word(2,0xc6bb+2*i) for i in range(16)],
+        'innPriceSource':reader.span(2,0xc6bb,32,'Original sixteen normal lodging prices'),
+        'limitations':['Stocks/prices do not establish all NPC appearance or route conditions',
+            'No effect, slot type, reward, or script condition inferred from a display name']}
+
 def cpu_offset(module,address,length=1):
     if not 0<=module<16 or not 0x8000<=address or address+length>0x10000:
         raise ValueError('CPU range escapes selected PRG module')
@@ -255,6 +308,8 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
         else:raise ValueError('Unterminated NPC/context list')
         contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
             'records':records,'runtime':'NOT_RUN'})
+    catalog=extract_world_service_catalog(reader)
+    stocks={(x["category"],x["contextIndex"]):x for x in catalog["stocks"]}
     services=[];kinds={21:('weapon',17),22:('armor',18),23:('medicine',19),24:('other-clinic-candidate',20),25:('inn',22)}
     village_bases=list(reader.read(0,0xd2b7,16));overlay=list(reader.read(0,0xd2c7,96))
     for mid in range(16):
@@ -267,6 +322,10 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                 'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
                 'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
                 'verification':'STRUCTURAL_ROM_DISPATCH'})
+    for service in services:
+        kind=service['kind'];caller=service['callerMapId']
+        if kind in ('weapon','armor','medicine'):service['stock']=stocks[kind,caller]
+        elif kind=='inn':service['price']=catalog['innPrices'][caller]
     # The merchant/inn text groups match witnessed services, but their special appearance
     # conditions and stock dispatch must still be verified independently.
     for context in contexts[:geometry_slots]:
@@ -286,6 +345,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
     return {'schemaVersion':1,'taskId':'WORLD-FULL-01','romSha256':SHA256,'effectiveMapCount':None,
         'effectiveMapCountStatus':'UNKNOWN_PENDING_EXTRA_SLOT_AND_DYNAMIC_CONTEXT_REVIEW',
         'structuralGeometryCount':len(maps),'npcContextCount':len(contexts),'packagedCount':len(packed),
+        'serviceCatalog':catalog,
         'maps':maps,'npcContexts':contexts,'services':services,'unresolved':unresolved,
         'tableEvidence':[reader.span(0,chunk_start,350,'175 chunk pointer slots ending at header table'),
             reader.span(0,header_start,352,'176 header pointer slots; final slot unresolved'),

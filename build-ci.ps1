@@ -34,6 +34,10 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Nanhai scoped content gates failed'}
     & python -m unittest discover -s tests -p test_world_export.py
     if($LASTEXITCODE -ne 0){throw 'World content/service gates failed'}
+    & python -m unittest discover -s tests -p test_world_north_export.py
+    if($LASTEXITCODE -ne 0){throw 'World north/status content gates failed'}
+    & python -m unittest discover -s tests -p test_world_inventory.py
+    if($LASTEXITCODE -ne 0){throw 'Original world inventory gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

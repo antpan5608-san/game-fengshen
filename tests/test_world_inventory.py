@@ -35,6 +35,21 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertTrue(all(m['appRender']=='NOT_RUN' for m in rows))
         self.assertEqual(527,self.report['summary']['exitRecords'])
         self.assertEqual('RETURN_TO_CALLER',next(m for m in rows if m['mapId']==22)['exits'][0]['kind'])
+    def test_category_local_stock_and_prices_are_not_reference_ids(self):
+        catalog=self.report['serviceCatalog'];items={x['id']:x for x in catalog['items']}
+        self.assertEqual(54,len(catalog['stocks']))
+        self.assertEqual(15,items['rom.medicine.0']['buyPrice'])
+        self.assertEqual(20,items['rom.medicine.6']['buyPrice'])
+        self.assertEqual(7,items['rom.medicine.0']['sellPrice'])
+        self.assertEqual(['rightHand'],items['rom.item.0']['nezhaPermittedSlots'])
+        self.assertEqual(['feet'],items['rom.armor.28']['nezhaPermittedSlots'])
+        self.assertTrue(items['rom.weapon.9']['nezhaPermittedByCategoryList'])
+        self.assertEqual('NEEDS_SLOT_FILTER_DISPATCH',items['rom.weapon.9']['slotStatus'])
+        self.assertEqual([],items['rom.weapon.9']['nezhaPermittedSlots'])
+        self.assertEqual([4,8,20,40],catalog['innPrices'][:4])
+        rows={s['id']:s for s in self.report['services']}
+        self.assertEqual([0,6],rows['rom.service.0.medicine']['stock']['originalIds'])
+        self.assertEqual(550,rows['rom.service.15.inn']['price'])
     def test_changed_rom_is_not_an_inventory_source(self):
         wrong=bytearray(self.reader.data);wrong[32]^=1
         with self.assertRaisesRegex(ValueError,'fingerprint'):extract_world_inventory(Reader(bytes(wrong),verify=False))

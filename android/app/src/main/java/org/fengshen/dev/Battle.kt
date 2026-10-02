@@ -61,10 +61,10 @@ class OpeningEncounter(private val content:BattleContent,initialSteps:Int=0) {
 
 data class BattleEnemy(val slot:Int,val definition:EnemyDefinition,var hp:Int)
 enum class BattlePhase { TARGET, VICTORY, DEFEAT, ESCAPED }
-enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL }
+enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL, STATUS }
 data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,Int>,
     val actorSlot:Int?=null,val targetSlot:Int?=null,val kind:BattleActionKind=BattleActionKind.TEXT,
-    val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null)
+    val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null,val heroStatusMask:Int=0)
 data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:Int,val defeatedEnemyIds:List<Int>,
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
 data class BattleSettlement(val character:CharacterState,val money:Int,val experience:Int,val levels:List<Int>)
@@ -74,7 +74,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
         val definition=content.enemies[m.enemyId]?:error("Missing enemy ${m.enemyId}")
-        require(definition.behaviorByte==0 || (definition.id==137&&definition.behaviorByte==3&&definition.iceBaseDamage==8))
+        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte!=7||content.physicalRules!=null))
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
@@ -100,7 +100,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
         delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null)=
-        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy)
+        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy,hero.statusMask)
     /** Byte-exact 9:8A49..8AAF for the enabled normal enemies. Carry at entry is 1.
      * Random sequence remains independent of NES $43; no fixed success probability. */
     fun escape(nextByte:()->Int):BattleTurn? {
@@ -178,12 +178,19 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(enemies.all{it.hp==0})phase=BattlePhase.VICTORY
             }else{
                 val enemy=enemies.first{it.slot==actor};if(enemy.hp<=0)continue
-                val random=roll();val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
+                val random=roll()
+                if(enemy.definition.behaviorByte==7&&OriginalStatus.choosesPoison(random)){
+                    steps.add(frame("${enemy.definition.name} 毒系攻击",actor=actor,kind=BattleActionKind.ATTACK))
+                    val before=hero.statusMask;hero=OriginalStatus.poison(hero)
+                    steps.add(frame(if(hero.statusMask!=before)"中毒" else "异常状态保持",actor=actor,kind=BattleActionKind.STATUS))
+                    continue // Original status branch applies no physical damage or extra RNG draw.
+                }
+                val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
                 steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=actor,kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK))
                 if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=actor,kind=BattleActionKind.MISS));continue}
                 val armor=equippedArmorBonus ?: if(hero.equipment?.body==0)content.armorContribution else 0
                 val damage=if(ice)enemy.definition.iceBaseDamage!! else max(1,enemy.definition.attack-armor-hero.stamina)
-                val actual=minOf(damage,hero.hp);received+=actual;hero=hero.copy(hp=hero.hp-actual)
+                val actual=minOf(damage,hero.hp);received+=actual;hero=hero.copy(hp=hero.hp-actual,statusMask=if(hero.hp==actual)OriginalStatus.DEAD else hero.statusMask)
                 steps.add(frame("受到 $actual 点伤害",actor=actor,kind=BattleActionKind.DAMAGE,delta=-actual,beforeHero=hero.hp+actual))
                 if(hero.hp==0)phase=BattlePhase.DEFEAT
             }

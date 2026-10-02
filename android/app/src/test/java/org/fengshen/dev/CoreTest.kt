@@ -16,6 +16,25 @@ class CoreTest {
         assertFalse(world.tryRestore(2,40,8));assertEquals(1,world.mapId);assertEquals(24,world.x)
         world.prepareTarget={true};assertTrue(world.tryRestore(2,40,8));assertEquals(2,world.mapId)
     }
+    @Test fun sharedInteriorReturnsToItsOwnCallerAcrossRestore(){
+        fun room(id:Int)=Scene("test",3,1,IntArray(3),IntArray(3),setOf(0,1,2),0,0,id)
+        val maps=listOf(0,1,22).associateWith{room(it)}
+        val exits=listOf(MapExit(0,1,0,22,0,0,captureCaller=true),
+            MapExit(1,2,0,22,0,0,captureCaller=true),MapExit(22,1,0,0,1,0,returnToCaller=true))
+        val world=World(maps,exits,1)
+        repeat(16){world.tick(Key.RIGHT)}
+        assertEquals(22,world.mapId);assertEquals(InteriorContext(1,2,0),world.interiorContext)
+        val restarted=World(maps,exits,0)
+        assertTrue(restarted.tryRestore(22,world.x,world.y,context=world.interiorContext))
+        repeat(8){restarted.tick(Key.RIGHT)}
+        assertEquals(1,restarted.mapId);assertEquals(40,restarted.x);assertNull(restarted.interiorContext)
+    }
+    @Test fun failedInteriorLoadDoesNotCaptureOrChangeCaller(){
+        fun room(id:Int)=Scene("test",3,1,IntArray(3),IntArray(3),setOf(0,1,2),0,0,id)
+        val w=World(mapOf(0 to room(0),22 to room(22)),listOf(MapExit(0,1,0,22,0,0,captureCaller=true)),0)
+        w.prepareTarget={it!=22};repeat(8){w.tick(Key.RIGHT)}
+        assertEquals(0,w.mapId);assertNull(w.interiorContext)
+    }
     @Test fun lazySceneHashFailureRemainsDiagnosableAndOriginIsKept(){
         val first=Scene("test",3,1,IntArray(3),IntArray(3),setOf(0,1,2),0,0,1)
         val maps=ResourceMap(listOf(1,2),2){if(it==1)first else error("Content checksum mismatch")}
