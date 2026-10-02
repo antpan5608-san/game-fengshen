@@ -48,5 +48,5 @@ fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int):BattleTouchLa
         Box(f.x,f.y,f.w,status.y-f.y),13*dp*fontScale)
 }
 
-data class BattleTouchCommand(val battleId:String,val revision:Int,val kind:String,val slot:Int?=null)
+data class BattleTouchCommand(val battleId:String,val revision:Int,val kind:String,val slot:Int?=null,val itemId:String?=null,val targetId:String?=null)
 data class BattleTouchGesture(val pointer:Int,val x:Float,val y:Float,val command:BattleTouchCommand,var cancelled:Boolean=false,var lastY:Float=y)

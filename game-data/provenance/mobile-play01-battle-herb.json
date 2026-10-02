@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "taskId": "MOBILE-PLAY-01",
+  "itemId": "rom.medicine.0",
+  "originalId": 0,
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "source": {
+    "romAcquisition": "game-data/provenance/rom-acquisition.json",
+    "normalBattleHerb": "game-data/provenance/nanhai01.json#evidence.normalBoss.battleHerb",
+    "licenseStatus": "Unchanged/unknown; hash proves bytes, not permission"
+  },
+  "rules": {
+    "healHp": 50,
+    "capAtMaxHp": true,
+    "consumeAtFullHp": true,
+    "consumeTiming": "At explicit command confirmation, before ordered actor actions",
+    "actionOrder": "Existing descending agility, player before enemy on ties",
+    "usesAction": true,
+    "healRandomReads": 0,
+    "fasterLethalEnemy": "Confirmed item remains consumed, player heal not executed",
+    "cancel": "No consumption, no enemy turn",
+    "noInventory": "No available medicine command, no effect or enemy turn",
+    "legalRuntimeScope": "Existing single living Nezha only; no other party/medicine inferred"
+  },
+  "romRanges": [
+    {
+      "offset": 299865,
+      "length": 30,
+      "sha256": "dd57bb7ee545171ad1c2aa1a76962ab06703e070d68d5b51f22160878ded9a32",
+      "module": 9,
+      "cpuAddress": 37705,
+      "meaning": "Medicine originalId dispatcher; first pointer at9365 is9384"
+    },
+    {
+      "offset": 299924,
+      "length": 27,
+      "sha256": "49c7bf23f8ebc2a233a6f2d7975ce2911adcd7de146a85993f539f09b7dd3f8c",
+      "module": 9,
+      "cpuAddress": 37764,
+      "meaning": "Herb target dead-bit20 guard, immediate +50, jump toHPclamp"
+    },
+    {
+      "offset": 303158,
+      "length": 86,
+      "sha256": "f9edfd0147bdde88b1d06f94b0dc016d1b8c5490eb3fdc9c32a331742ba932ae",
+      "module": 9,
+      "cpuAddress": 40998,
+      "meaning": "16bit HP add and maxHP cap; no RNG"
+    },
+    {
+      "offset": 310191,
+      "length": 42,
+      "sha256": "9ecffb83bd9bd53c33cb55f8364196085eac1ca2796752b053a63ca5f408d91b",
+      "module": 9,
+      "cpuAddress": 48031,
+      "meaning": "Quantity decrement at confirmed command before the actor queue"
+    }
+  ],
+  "experiments": [
+    {
+      "case": "injured",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 30,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 71,
+      "settledQuantity": 2,
+      "hpWrites": [
+        "2208\tWRITE\t0514\t21\tPC=AB37 HP=21 count=2",
+        "2296\tWRITE\t0514\t71\tPC=A075 HP=71 count=2"
+      ],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/injured/use-trace.tsv",
+          "sha256": "ba4e7cfa88d46ee693fe22bcbaa51d3eb2ecc521283cab8a42d64ade0ae88ef5",
+          "bytes": 402
+        },
+        {
+          "path": "private-derived/mobile-play01/injured/controlled-medicine-target.png",
+          "sha256": "c80fbe99f02d0bffd88cdcbf3144a2ecf067c7ee7d9ecbb5bd1a599bf1758fc3",
+          "bytes": 3652
+        },
+        {
+          "path": "private-derived/mobile-play01/injured/controlled-use-result.png",
+          "sha256": "8bb98b44d70a44f2af5503e8049102d40898866dc020b050e33e36e570730e9d",
+          "bytes": 3564
+        },
+        {
+          "path": "private-derived/mobile-play01/injured/controlled-use-result-ram.bin",
+          "sha256": "05c9d535ff9593af2a27a424cd2d02d5b3757fd07ab412201b3c67e1da78f4e7",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "near-full",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 95,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 100,
+      "settledQuantity": 2,
+      "hpWrites": [
+        "2208\tWRITE\t0514\t86\tPC=AB37 HP=86 count=2",
+        "2296\tWRITE\t0514\t100\tPC=A066 HP=100 count=2"
+      ],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/near-full/use-trace.tsv",
+          "sha256": "7fa886d76a53f79869a92bb7294cc3d7e0990d00e6637993c1a9480728120e5c",
+          "bytes": 405
+        },
+        {
+          "path": "private-derived/mobile-play01/near-full/controlled-medicine-target.png",
+          "sha256": "fc35680315decbd467c5f5293ed7a2db3ab3ac393312b8d0c2302e5dd74c45b6",
+          "bytes": 3659
+        },
+        {
+          "path": "private-derived/mobile-play01/near-full/controlled-use-result.png",
+          "sha256": "adf4535d6676be9d49892173f41b3e22540296e1f3b73c8b0ec4088dc2d98949",
+          "bytes": 3554
+        },
+        {
+          "path": "private-derived/mobile-play01/near-full/controlled-use-result-ram.bin",
+          "sha256": "4550e236ef040fbb2602d98c1b76c442bbe15e58df7d41c1b49f08d145cc718d",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "full",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 100,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 100,
+      "settledQuantity": 2,
+      "hpWrites": [
+        "2208\tWRITE\t0514\t91\tPC=AB37 HP=91 count=2",
+        "2296\tWRITE\t0514\t100\tPC=A066 HP=100 count=2"
+      ],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/full/use-trace.tsv",
+          "sha256": "166fa69c1ac77a96592cbbac02d24634b02275dbcf9549294bc3cdcebde3d308",
+          "bytes": 411
+        },
+        {
+          "path": "private-derived/mobile-play01/full/controlled-medicine-target.png",
+          "sha256": "7daf3f520e551934c57ae2091cc686f3b7120490d69f7b7a50c96791732d6222",
+          "bytes": 3651
+        },
+        {
+          "path": "private-derived/mobile-play01/full/controlled-use-result.png",
+          "sha256": "adf4535d6676be9d49892173f41b3e22540296e1f3b73c8b0ec4088dc2d98949",
+          "bytes": 3554
+        },
+        {
+          "path": "private-derived/mobile-play01/full/controlled-use-result-ram.bin",
+          "sha256": "f158512fe74394e246fe2dfe89b2d9428c3cd20c8aab3852a73694503ac49fd4",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "cancel",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 30,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 30,
+      "settledQuantity": 3,
+      "hpWrites": [],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/cancel/use-trace.tsv",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "private-derived/mobile-play01/cancel/controlled-medicine-target.png",
+          "sha256": "a97ef8e8ca409dece8970d93978c37c777b5b5d8c7b1036075788fefdb34a714",
+          "bytes": 3655
+        },
+        {
+          "path": "private-derived/mobile-play01/cancel/controlled-use-result.png",
+          "sha256": "cbcca3a00e739aa3b8097bf64ec602c1eccab9dbc4580dc7b0ba917c64c34bcd",
+          "bytes": 3384
+        },
+        {
+          "path": "private-derived/mobile-play01/cancel/controlled-use-result-ram.bin",
+          "sha256": "7e901c99cbfea589d02fb3b38b28eb5a2b60c3dc2fcd3b81c800214c5a925d95",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "dead",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 0,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 0,
+      "settledQuantity": 2,
+      "hpWrites": [],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/dead/use-trace.tsv",
+          "sha256": "69ca389587d8bf18bc7a28773e206953e716d2b9c0cd5a97dc8b024d42f044d2",
+          "bytes": 234
+        },
+        {
+          "path": "private-derived/mobile-play01/dead/controlled-medicine-target.png",
+          "sha256": "ca9864f215ca4a164f45280948ea874919c11c2809c9dce9a026a90b6d10ea04",
+          "bytes": 3654
+        },
+        {
+          "path": "private-derived/mobile-play01/dead/controlled-use-result.png",
+          "sha256": "5547646a9572048a710d18faa8eae1ba64b6de50582906c7759ed558cbb9c1b0",
+          "bytes": 1689
+        },
+        {
+          "path": "private-derived/mobile-play01/dead/controlled-use-result-ram.bin",
+          "sha256": "9d192105d45e8f1c929f9fa3920b7b064a12bac40703fc1acbea52fbd720bfd6",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "no-inventory",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 30,
+      "maxHp": 100,
+      "beforeQuantity": 0,
+      "settledHp": 30,
+      "settledQuantity": 0,
+      "hpWrites": [],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/no-inventory/use-trace.tsv",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        {
+          "path": "private-derived/mobile-play01/no-inventory/controlled-medicine-target.png",
+          "sha256": "810257b5887ab5454b9e5761c217bf8b4b0b9623a6f47fc3583c5eb467e44c22",
+          "bytes": 3283
+        },
+        {
+          "path": "private-derived/mobile-play01/no-inventory/controlled-use-result.png",
+          "sha256": "3a4131937a2a14643c1700fa6dbe5e37475643e5941277341de017932610018a",
+          "bytes": 3285
+        },
+        {
+          "path": "private-derived/mobile-play01/no-inventory/controlled-use-result-ram.bin",
+          "sha256": "28a168cc9f8c9e2ceb478aecbcb207e8ef63f13a62406c1a077a3a9b15cfd1c6",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "death-before-action",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 5,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 0,
+      "settledQuantity": 2,
+      "hpWrites": [
+        "2208\tWRITE\t0514\t252\tPC=AB37 HP=252 count=2",
+        "2208\tWRITE\t0514\t0\tPC=AB47 HP=65280 count=2"
+      ],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/death-before-action/use-trace.tsv",
+          "sha256": "81a4f936c0e8ccfb82a89fb5597413edd33e051c729f8aca37b8a36d54f19769",
+          "bytes": 404
+        },
+        {
+          "path": "private-derived/mobile-play01/death-before-action/controlled-medicine-target.png",
+          "sha256": "08b2616a9d472ec1f2e63b072f78b27cb88e28e7b138f1f54d5c9fd33ac43a29",
+          "bytes": 3657
+        },
+        {
+          "path": "private-derived/mobile-play01/death-before-action/controlled-use-result.png",
+          "sha256": "e799bd9ac2d7f74ef227514c3e76f79a4bea240b2def6177976ad2aa8a8e0b9d",
+          "bytes": 1605
+        },
+        {
+          "path": "private-derived/mobile-play01/death-before-action/controlled-use-result-ram.bin",
+          "sha256": "117c92868c588548d31c8845dd0e9453b99dec0b652fd90606e68e0d972f2d9c",
+          "bytes": 2048
+        }
+      ]
+    },
+    {
+      "case": "player-first",
+      "kind": "CONTROLLED_ORIGINAL_STATE_EXPERIMENT",
+      "beforeHp": 30,
+      "maxHp": 100,
+      "beforeQuantity": 3,
+      "settledHp": 72,
+      "settledQuantity": 2,
+      "hpWrites": [
+        "2130\tWRITE\t0514\t80\tPC=A075 HP=80 count=2",
+        "2276\tWRITE\t0514\t72\tPC=AB37 HP=72 count=2"
+      ],
+      "evidence": [
+        {
+          "path": "private-derived/mobile-play01/player-first/use-trace.tsv",
+          "sha256": "1004e47756641c004145058faf35f3d1c823434c6b2696c5e2528434e9b1743e",
+          "bytes": 324
+        },
+        {
+          "path": "private-derived/mobile-play01/player-first/controlled-medicine-target.png",
+          "sha256": "c80fbe99f02d0bffd88cdcbf3144a2ecf067c7ee7d9ecbb5bd1a599bf1758fc3",
+          "bytes": 3652
+        },
+        {
+          "path": "private-derived/mobile-play01/player-first/controlled-use-result.png",
+          "sha256": "912d8fe8336a82759cf65272f758360c1af5868395ed0fabc0705e9e682a2b8d",
+          "bytes": 3562
+        },
+        {
+          "path": "private-derived/mobile-play01/player-first/controlled-use-result-ram.bin",
+          "sha256": "997a0fd95f2d01526ef98b67a766406ffd75146a138f22eeadc643e3ed12e9f5",
+          "bytes": 2048
+        }
+      ]
+    }
+  ],
+  "verification": "Scoped ROM and CONTROLLED_ORIGINAL_STATE_EXPERIMENT plus existing controller-only normal Boss reference; Android proof is separate",
+  "limitations": [
+    "All fresh original probes load the existing controlled-estate state and write explicit HP/maxHP/inventory/status fixtures. Not new normal-play evidence.",
+    "Forcing the sole actor dead while a command is already open is unreachable in valid single-character battle: original confirms/consumes then skips the dead actor. No claim that cancellation refunds this forced-invalid state. UI refuses a dead current actor. Other dead party targets remain outside scope.",
+    "First probe failed because installed FCEUX exposes registerexec but not registerread; corrected hooks use observed scoped PCs, not another emulator.",
+    "Magic AFB5 scaling table is unrelated to medicine9384; not used for herb."
+  ]
+}

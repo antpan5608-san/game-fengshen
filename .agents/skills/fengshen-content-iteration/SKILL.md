@@ -86,3 +86,10 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 - 原record_app_audio.py --silent配合--cold-test testNanhaiColdStartMatchesNormalSave和--budget-seconds在原KVM runtime已实跑：未剪辑分段、SHA/Android uptime、每段只读保存world边界、外部force-stop/实际GameView冷启与继续。战斗live HP以原片为准；分段拉取有短间隙，索引时间近似，静音不等于音频验收。
 - App外部索引必须先用原pull_evidence收集再挑小型原片；此前收集顺序错使正常App通过但整个run失败，保留门禁。小型原片只是原文件副本，原完整artifact继续保留全段，不生成示意图/假战斗。
 - 原check-reviewed-apk.ps1要求同main/来源/签名/审核APK字节和成功runtime receipt，新增区段门槛由实际测试和原workflow承载。审核时冻结来源；修候选必须重新构建验证。发布后文档提交可以不同，明确APK来源。原publish pre/post巡检与公网完整APK独立复核已成功；新版本无样本如实记录。
+
+
+## 已验证的限定资源与断言诊断
+
+运行升级基底可以与内容导出基底不同，原ci/content-source.json的runtimeBaseline固定实际已发布APK；receipt.buildRunID可能是字符串，仅将编号统一成字符串比较，来源/hash/证书/manifest照常严格检查。实际原校验块通过，错误来源/编号/版本/内容fixture仍拒绝。
+
+完整App录像artifact可能超过当前32MiB传输限制，直接GH下载也曾实际403；不要移除代理或反复下载。原android-publish.yml的inspect可带runtime_evidence_run_id读取同仓库main原build的完成run，只抽取受限大小的隔离仪器txt到fengshen-runtime-assertion-diagnostics并继续真实巡检；已实际取回缺失的失败断言。此入口不上传APK、不登记版本、不清理数据，不将失败artifact作为可信内容基底。之后原录屏器会在正常断言失败时输出对应日志尾部，原小型checkpoint artifact保留txt；原始生产客户端日志不进入这些产物。
