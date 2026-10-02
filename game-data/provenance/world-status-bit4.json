@@ -1,0 +1,708 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "evidenceKind": "ACTUAL_ORIGINAL_CPU_WITH_PRG_MAPPER_AND_ISOLATED_BOUNDARY_FIXTURES",
+  "scope": "Only enemy16 behavior9 and its necessary status04 effects; original single living Nezha normal attack input fixtures",
+  "enemy": {
+    "id": "rom.enemy.16",
+    "romEnemyId": 16,
+    "hp": 44,
+    "attack": 29,
+    "defense": 15,
+    "experienceReward": 36,
+    "moneyReward": 12,
+    "remainingBytes": [
+      10,
+      9,
+      217,
+      20,
+      0,
+      0
+    ],
+    "remainingFieldSemantics": "UNKNOWN",
+    "pointer": {
+      "offset": 60040,
+      "length": 2,
+      "sha256": "2abd540aac1cfd989dac445f5b5df8170c4d0f42cb9408ab351f24cead190011",
+      "module": 1,
+      "cpuAddress": 60024,
+      "meaning": "Enemy stat pointer"
+    },
+    "range": {
+      "offset": 60618,
+      "length": 16,
+      "sha256": "c660a2bc9c8053f6de81cdac57fbcbe0f38b3f8175e38fd0aeae70c9802e86bb",
+      "module": 1,
+      "cpuAddress": 60602,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+    },
+    "confidence": "HIGH",
+    "rawHex": "2c001d000f0024000c000a09d9140000"
+  },
+  "rules": {
+    "specialChoice": "(random & 127) < 41",
+    "specialHit": "((random >> 1) & 63) < 25 (always true for this chosen branch)",
+    "physicalHit": "random < 217",
+    "target": "one selected living party member; current verified single Nezha target0",
+    "directSpecialDamage": 0,
+    "appliedStatus": 4,
+    "statusLabel": "UNKNOWN_ORIGINAL_CHINESE_NAME",
+    "canReplaceStatuses": [
+      0,
+      4
+    ],
+    "otherExactStatusesUnchanged": [
+      1,
+      2,
+      8,
+      16,
+      32,
+      64
+    ],
+    "playerCommand": "status04 does not skip selected action (gate uses mask38)",
+    "incomingDamage": "positive computed damage doubled with original16-bit arithmetic; floor/minimum1 bypass is not doubled; clamp against remaining HP separately",
+    "roundRecovery": "After 11 scheduling slots, status04/08 rotate shared RNG byte right once and clear to0 iff newbit0=0 (previousbit1=0)",
+    "battleExit": "status04 persists; teardown only clears08",
+    "singleActionRandom": "Original selection/status/damage phase does not increment random43; sound bank switch fully executed, restores9",
+    "timing": "Enemy action: selection8DE9 -> presentation -> damageA956 -> statusA0D2 -> presentation -> actor advancementA60E; recovery only at end of scheduler cycle"
+  },
+  "sources": [
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Enemy ability selection and physical/special hit use same current RNG byte"
+    },
+    {
+      "offset": 298461,
+      "length": 1,
+      "sha256": "68aa2e2ee5dff96e3355e6c7ee373e3d6a4e17f75f9518d843709c0c9bc3e3d4",
+      "module": 9,
+      "cpuAddress": 36301,
+      "meaning": "Behavior9 secondary special hit threshold25"
+    },
+    {
+      "offset": 298690,
+      "length": 91,
+      "sha256": "4eb4db8983ee958b789ea1bfd47538de245037700579bc0f4421fd1c0893bd6f",
+      "module": 9,
+      "cpuAddress": 36530,
+      "meaning": "Single living-target selection; not all-party ability"
+    },
+    {
+      "offset": 308470,
+      "length": 32,
+      "sha256": "b2ad530ca1842eaadd3ca01135d1416a08ab3bdb9f2faa4971dc9b3c5eacf7aa",
+      "module": 9,
+      "cpuAddress": 46310,
+      "meaning": "Sound enqueue preserves registers and restores actual PRG mapping"
+    },
+    {
+      "offset": 298833,
+      "length": 29,
+      "sha256": "815ce0d0b972bfca1172cb59e5803859397a6319ff1df15946f0c74e8e57b45d",
+      "module": 9,
+      "cpuAddress": 36673,
+      "meaning": "Damage dispatch then special-status dispatch in same actual enemy action"
+    },
+    {
+      "offset": 305510,
+      "length": 46,
+      "sha256": "e6375c861e9ad124de79018112414385a2ba36e8b97e0476cc90da4aa564e4a4",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Special behavior >=5 exits with zero damage before shared status handler"
+    },
+    {
+      "offset": 303330,
+      "length": 88,
+      "sha256": "879ee97c1fa5b95ce41911bbe8fca90ce2b36614dfa92068eebd6592232d0d3c",
+      "module": 9,
+      "cpuAddress": 41170,
+      "meaning": "Status priority match and exact replacement, behavior9 gives04"
+    },
+    {
+      "offset": 303407,
+      "length": 11,
+      "sha256": "87f3d5f2e6010c0a0a2f663f56f8f56a0e53adfce1b9de32781943788aa1bff8",
+      "module": 9,
+      "cpuAddress": 41247,
+      "meaning": "Status precedence table:20,10,02,08,04,00 at indexes5..10"
+    },
+    {
+      "offset": 295423,
+      "length": 29,
+      "sha256": "1f8cb1512b645bb3a10def1cd39a09dab359f82e300d48f76d409f1c9aa5fd62",
+      "module": 9,
+      "cpuAddress": 33263,
+      "meaning": "Living actor status38 skips existing command; status04 does not"
+    },
+    {
+      "offset": 305810,
+      "length": 218,
+      "sha256": "5898bf9d1902fa085a99fa57c6bf4be3ebd441b828474f6d80e6c7579c78fcbb",
+      "module": 9,
+      "cpuAddress": 43650,
+      "meaning": "Physical damage subtraction, minimum1 bypass, nonzero damage doubled by status04"
+    },
+    {
+      "offset": 304815,
+      "length": 73,
+      "sha256": "62c8c4c89793239399b2a10d366c6025f57c7e742435d6e4b66aef56f2c77158",
+      "module": 9,
+      "cpuAddress": 42655,
+      "meaning": "After11 actor slots: status04/08 recover if original RNG bit1 zero, ROR mutates same byte"
+    },
+    {
+      "offset": 299666,
+      "length": 46,
+      "sha256": "e17b72be6d3fa9bdabd25d3ccaad5510ae7d6c1a433ec7eb7d5aa4b73786b180",
+      "module": 9,
+      "cpuAddress": 37506,
+      "meaning": "Battle teardown clears08 only,04 persists"
+    },
+    {
+      "offset": 294994,
+      "length": 2,
+      "sha256": "59f70ce6766f9fb4828e3eede1a96ef070bb72b9ce9711629dd451243c03081a",
+      "module": 9,
+      "cpuAddress": 32834,
+      "meaning": "Battle frame increments shared RNG byte; controlled fixed-byte tests are not frame-exact RNG equivalence"
+    }
+  ],
+  "statusCases": [
+    {
+      "before": 0,
+      "after": 4,
+      "hpUnchanged": true,
+      "steps": 53
+    },
+    {
+      "before": 1,
+      "after": 1,
+      "hpUnchanged": true,
+      "steps": 46
+    },
+    {
+      "before": 2,
+      "after": 2,
+      "hpUnchanged": true,
+      "steps": 32
+    },
+    {
+      "before": 4,
+      "after": 4,
+      "hpUnchanged": true,
+      "steps": 48
+    },
+    {
+      "before": 8,
+      "after": 8,
+      "hpUnchanged": true,
+      "steps": 37
+    },
+    {
+      "before": 16,
+      "after": 16,
+      "hpUnchanged": true,
+      "steps": 27
+    },
+    {
+      "before": 32,
+      "after": 32,
+      "hpUnchanged": true,
+      "steps": 22
+    },
+    {
+      "before": 64,
+      "after": 64,
+      "hpUnchanged": true,
+      "steps": 46
+    },
+    {
+      "before": 6,
+      "after": 6,
+      "hpUnchanged": true,
+      "steps": 46
+    }
+  ],
+  "damageCases": [
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 100,
+      "damage": 29,
+      "hpAfter": 71,
+      "statusAfter": 0,
+      "steps": 1272
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 12,
+      "hpBefore": 100,
+      "damage": 5,
+      "hpAfter": 95,
+      "statusAfter": 0,
+      "steps": 1134
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 16,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 0,
+      "steps": 1134
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 17,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 0,
+      "steps": 1127
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 18,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 0,
+      "steps": 1122
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 30,
+      "stamina": 0,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 0,
+      "steps": 1107
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 29,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 40,
+      "damage": 29,
+      "hpAfter": 11,
+      "statusAfter": 0,
+      "steps": 1272
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 32767,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 32767,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1631
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 32768,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 32768,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1631
+    },
+    {
+      "beforeStatus": 0,
+      "attack": 65535,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 65535,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1631
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 100,
+      "damage": 58,
+      "hpAfter": 42,
+      "statusAfter": 4,
+      "steps": 1277
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 12,
+      "hpBefore": 100,
+      "damage": 10,
+      "hpAfter": 90,
+      "statusAfter": 4,
+      "steps": 1275
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 16,
+      "hpBefore": 100,
+      "damage": 2,
+      "hpAfter": 98,
+      "statusAfter": 4,
+      "steps": 1137
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 17,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 4,
+      "steps": 1127
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 12,
+      "stamina": 18,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 4,
+      "steps": 1122
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 30,
+      "stamina": 0,
+      "hpBefore": 100,
+      "damage": 1,
+      "hpAfter": 99,
+      "statusAfter": 4,
+      "steps": 1107
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 29,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 40,
+      "damage": 58,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1289
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 32767,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 65534,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1634
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 32768,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 0,
+      "hpAfter": 1000,
+      "statusAfter": 4,
+      "steps": 1019
+    },
+    {
+      "beforeStatus": 4,
+      "attack": 65535,
+      "armor": 0,
+      "stamina": 0,
+      "hpBefore": 1000,
+      "damage": 65534,
+      "hpAfter": 0,
+      "statusAfter": 32,
+      "steps": 1634
+    }
+  ],
+  "roundRecoveryBoundaryCases": [
+    {
+      "beforeStatus": 4,
+      "randomBefore": 0,
+      "afterStatus": 0,
+      "randomAfter": 128,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 1,
+      "afterStatus": 0,
+      "randomAfter": 128,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 2,
+      "afterStatus": 4,
+      "randomAfter": 129,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 3,
+      "afterStatus": 4,
+      "randomAfter": 129,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 4,
+      "afterStatus": 0,
+      "randomAfter": 130,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 5,
+      "afterStatus": 0,
+      "randomAfter": 130,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 6,
+      "afterStatus": 4,
+      "randomAfter": 131,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 7,
+      "afterStatus": 4,
+      "randomAfter": 131,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 128,
+      "afterStatus": 0,
+      "randomAfter": 192,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 129,
+      "afterStatus": 0,
+      "randomAfter": 192,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 130,
+      "afterStatus": 4,
+      "randomAfter": 193,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 131,
+      "afterStatus": 4,
+      "randomAfter": 193,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 252,
+      "afterStatus": 0,
+      "randomAfter": 254,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 253,
+      "afterStatus": 0,
+      "randomAfter": 254,
+      "steps": 248
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 254,
+      "afterStatus": 4,
+      "randomAfter": 255,
+      "steps": 30
+    },
+    {
+      "beforeStatus": 4,
+      "randomBefore": 255,
+      "afterStatus": 4,
+      "randomAfter": 255,
+      "steps": 30
+    }
+  ],
+  "beforeRoundEndCases": [
+    {
+      "counterBefore": 0,
+      "counterAfter": 1,
+      "statusUnchanged": true,
+      "randomUnchanged": true,
+      "steps": 5
+    },
+    {
+      "counterBefore": 4,
+      "counterAfter": 5,
+      "statusUnchanged": true,
+      "randomUnchanged": true,
+      "steps": 5
+    },
+    {
+      "counterBefore": 9,
+      "counterAfter": 10,
+      "statusUnchanged": true,
+      "randomUnchanged": true,
+      "steps": 5
+    }
+  ],
+  "playerCommandCases": [
+    {
+      "status": 0,
+      "existingPlayerCommandContinues": true,
+      "steps": 20
+    },
+    {
+      "status": 2,
+      "existingPlayerCommandContinues": true,
+      "steps": 22
+    },
+    {
+      "status": 4,
+      "existingPlayerCommandContinues": true,
+      "steps": 22
+    },
+    {
+      "status": 8,
+      "existingPlayerCommandContinues": false,
+      "steps": 23
+    },
+    {
+      "status": 16,
+      "existingPlayerCommandContinues": false,
+      "steps": 23
+    },
+    {
+      "status": 32,
+      "existingPlayerCommandContinues": false,
+      "steps": 23
+    }
+  ],
+  "battleTeardownCases": [
+    {
+      "statusBefore": 0,
+      "statusAfter": 0,
+      "steps": 73
+    },
+    {
+      "statusBefore": 2,
+      "statusAfter": 2,
+      "steps": 73
+    },
+    {
+      "statusBefore": 4,
+      "statusAfter": 4,
+      "steps": 73
+    },
+    {
+      "statusBefore": 8,
+      "statusAfter": 0,
+      "steps": 73
+    },
+    {
+      "statusBefore": 16,
+      "statusAfter": 16,
+      "steps": 73
+    },
+    {
+      "statusBefore": 32,
+      "statusAfter": 32,
+      "steps": 73
+    }
+  ],
+  "cpuVerification": {
+    "command": "python private-derived/world-enemy16-behavior9/probe.py",
+    "environment": "Linux Python3/py65, existing Reader and cached target ROM; actual6000..6003 PRG mapper",
+    "privateReportSha256": "aa9f46db5854c9897b615527916d9873d5dedb40f9411c848cced3fb8a6b4764",
+    "fixtureCounts": {
+      "choices": 256,
+      "statuses": 9,
+      "roundRecovery": 1536,
+      "preEnd": 3,
+      "damage": 20,
+      "commands": 6,
+      "teardown": 6
+    },
+    "total": 1836,
+    "failures": 0
+  },
+  "sameBehaviorOtherEnemyIdsObservedNotEnabled": [
+    26,
+    37,
+    59,
+    64,
+    69,
+    74,
+    83,
+    109,
+    124,
+    133,
+    135,
+    146,
+    153,
+    156,
+    157,
+    170
+  ],
+  "normalOriginalEncounter": "NOT_RUN",
+  "androidAcceptance": "NOT_RUN",
+  "remainingUnknown": [
+    "No normal original encounter, original displayed status name, or Android acceptance recorded here.",
+    "Multi-character targeting was read from original dispatch but only single living Nezha fixture exercised.",
+    "NES shared RNG increments per frame; deterministic byte fixtures do not prove Android/NES random-sequence equality.",
+    "No new medicine/cure, actor type, transport or other enemy enabled.",
+    "Status persistence requires existing save support; do not silently clear on victory or turn abnormal status into death.",
+    "Other matching behavior IDs are inventory only, not runtime verification."
+  ],
+  "licenseStatus": "UNKNOWN",
+  "helperValidation": {
+    "command": "bash android/gradlew -p android :app:testDebugUnitTest --tests org.fengshen.dev.OriginalStatusBit4Test --tests org.fengshen.dev.OriginalStatusTest --offline",
+    "environment": "Existing Linux JDK21/Android SDK, Gradle wrapper",
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "scope": "Eight new pure-helper methods and seven existing poison/antidote methods. Behavior9 not enabled until Battle scheduler integration. Android NOT_RUN."
+  }
+}

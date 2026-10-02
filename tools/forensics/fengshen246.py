@@ -313,7 +313,8 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                 'pixelPosition':position,'positionEncoding':'CELL_TIMES_16_PLUS_120','cell':cell,
                 'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
         else:raise ValueError('Unterminated NPC/context list')
-        contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
+        contexts.append({'contextId':mid,'kind':('BASE_MAP' if mid<geometry_slots else
+            'EXTRA_HEADER_CONTEXT_UNKNOWN' if mid==geometry_slots else 'NPC_OVERLAY_ONLY'),
             'records':records,'runtime':'NOT_RUN'})
     catalog=extract_world_service_catalog(reader)
     stocks={(x["category"],x["contextIndex"]):x for x in catalog["stocks"]}
@@ -353,9 +354,25 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                 'interiorMapId':mid,'npcIndex':npc['index'],'source':npc['source'],
                 'conditions':'NEEDS_ORIGINAL_SPECIAL_SERVICE_AND_APPEARANCE_DISPATCH',
                 'operation':'NOT_IMPLEMENTED','verification':'PROVISIONAL_SERVICE_GROUP_CORRELATION'})
-    unresolved=[{'index':175,'kind':'EXTRA_HEADER_AND_EMPTY_NPC_SLOT','status':'UNKNOWN_EFFECTIVE_USAGE',
+    # Preserve the physical tail's real exit even though it cannot be decoded
+    # through the ordinary chunk domain. Absence of scanned incoming references
+    # is not proof of an unused map or permission to remove it from the unknowns.
+    extra_pointer=reader.word(8,exit_start+2*geometry_slots);extra_exits=[]
+    for index in range(128):
+        address=extra_pointer+index*5
+        if reader.read(8,address)[0]==254:break
+        raw=reader.read(8,address,5)
+        if raw[2]!=254 and raw[2]>=geometry_slots:raise ValueError('Extra exit destination outside known geometry')
+        extra_exits.append({'trigger':list(raw[:2]),'targetMapId':None if raw[2]==254 else raw[2],
+            'kind':'RETURN_TO_CALLER' if raw[2]==254 else 'DIRECT_OR_EDGE','targetCell':list(raw[3:]),
+            'source':reader.span(8,address,5,'Extra unresolved header context exit row'),
+            'conditionStatus':'UNKNOWN_SOURCE_CONTEXT_USAGE'})
+    else:raise ValueError('Unterminated extra header exit list')
+    unresolved=[{'index':geometry_slots,'kind':'EXTRA_HEADER_AND_EMPTY_NPC_SLOT','status':'UNKNOWN_EFFECTIVE_USAGE',
         'headerPointerSource':reader.span(0,header_start+350,2,'Extra header pointer beyond 175 chunk slots'),
-        'reason':'No corresponding chunk pointer; must not be silently counted as a parsed map or excluded as unused'}]
+        'exitPointerSource':reader.span(8,exit_start+350,2,'Extra exit pointer beyond 175 ordinary geometry slots'),
+        'exits':extra_exits,'ordinaryChunkSlot':False,
+        'reason':'No corresponding chunk pointer, but a real header and exit remain; not a parsed map, proven-unused slot or ordinary NPC overlay'}]
     for m in maps:m['incomingDirectReferences']=incoming[m['mapId']]
     return {'schemaVersion':1,'taskId':'WORLD-FULL-01','romSha256':SHA256,'effectiveMapCount':None,
         'effectiveMapCountStatus':'UNKNOWN_PENDING_EXTRA_SLOT_AND_DYNAMIC_CONTEXT_REVIEW',
@@ -371,7 +388,9 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             reader.span(0,0xa73f,56,'Temporarily substitute NPC overlay index then restore actual map')],
         'referenceMapCount':259,'referenceIsDenominator':False,
         'summary':{'serviceCandidateCounts':dict(collections.Counter(s['kind'] for s in services)),
-            'exitRecords':sum(len(m['exits']) for m in maps),'appRenderPassed':sum(m['appRender']=='PASS' for m in maps),
+            'exitRecords':sum(len(m['exits']) for m in maps),
+            'unresolvedExitRecords':len(extra_exits),
+            'physicalExitRecordsIncludingUnresolved':sum(len(m['exits']) for m in maps)+len(extra_exits),'appRenderPassed':sum(m['appRender']=='PASS' for m in maps),
             'allMapsUsable':'NO','limitation':'Only table inventory; no gameplay, service, event, or all-world promotion'}}
 
 def render_map(reader,m,path):
@@ -432,6 +451,46 @@ def extract_enemy(reader,enemy_id):
       'pointer':reader.span(1,0xea58+2*enemy_id,2,'Enemy stat pointer'),
       'range':reader.span(1,pointer,16,'Enemy record: five uint16le stats/rewards, six unresolved bytes'),
       'confidence':'HIGH','rawHex':data.hex()}
+
+def extract_enemy_ice_base(reader,enemy_id):
+    """Original behavior3 dispatch; ordinary enemies do not use the dragon table."""
+    original=extract_enemy(reader,enemy_id)
+    if original['remainingBytes'][1]!=3:raise ValueError('Enemy does not use the original ice behavior')
+    if 12<=enemy_id<137:
+        value=(enemy_id-12)*3+13
+        source=reader.span(9,0xaa24,0xaa3f-0xaa24,'Original ordinary ice: (enemyID-12)*3+13')
+    elif 137<=enemy_id<=144:
+        value=reader.word(9,0xa906+2*(enemy_id-137))
+        source=reader.span(9,0xa906+2*(enemy_id-137),2,'Original dragon ice table value')
+    else:raise ValueError('Ice identity outside verified original dispatch domain')
+    return {'iceBaseDamage':value,'iceSource':source}
+
+def extract_encounter_groups(reader,zone_id):
+    """Bounded original zone group table; no inferred enemy behavior or map conditions."""
+    if digest(reader.data)!=SHA256 or not 0<=zone_id<=255:
+        raise ValueError('Encounter groups require target ROM and byte zone ID')
+    count=reader.read(1,0xb12d+zone_id)[0];root=reader.word(1,0xa93c+zone_id*4)
+    if not 1<=count<=255 or not 0x8000<=root<=0xffff-count*2:
+        raise ValueError('Invalid original group table')
+    groups=[]
+    for index in range(count):
+        address=reader.word(1,root+index*2);raw=bytearray();entities=[]
+        for cursor in range(0,16,2):
+            first=reader.read(1,address+cursor)[0];raw.append(first)
+            if first==0:break
+            source=reader.read(1,address+cursor+1)[0];raw.append(source)
+            if first not in range(1,8):raise ValueError('Original encounter slot outside seven slots')
+            entities.append({'slot':first-1,'sourceType':source,'enemyId':reader.read(1,0x9ea3+source)[0]})
+        else:raise ValueError('Unterminated original encounter group')
+        if not entities:raise ValueError('Empty original encounter group')
+        # Preserve actual repeated-slot writes; do not silently repair the source table.
+        groups.append({'id':index,'entities':entities,'rawHex':raw.hex(),
+            'duplicateSlots':sorted({e['slot'] for e in entities if sum(x['slot']==e['slot'] for x in entities)>1}),
+            'pointer':reader.span(1,root+index*2,2,'Original encounter group pointer'),
+            'range':reader.span(1,address,len(raw),'Original slot/source pairs, 00 terminated')})
+    return {'id':zone_id,'groups':groups,
+        'groupCountRange':reader.span(1,0xb12d+zone_id,1,'Original zone group count'),
+        'groupRootRange':reader.span(1,0xa93c+zone_id*4,4,'Original zone group table and graphics context')}
 
 def extract_opening_encounter(reader):
     """Bounded map-16 zone 0 and its complete 19-entry group table.

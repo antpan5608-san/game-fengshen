@@ -1,0 +1,153 @@
+{
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "evidenceKind": "ACTUAL_ORIGINAL_CPU_ROUTINES_WITH_ISOLATED_RAM_FIXTURES",
+  "normalAndroid": "NOT_RUN",
+  "baseCases": [
+    {
+      "enemyId": 12,
+      "baseDamage": 13,
+      "cpuInstructions": 84,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 93,
+      "baseDamage": 256,
+      "cpuInstructions": 90,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 99,
+      "baseDamage": 274,
+      "cpuInstructions": 94,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 110,
+      "baseDamage": 307,
+      "cpuInstructions": 90,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 117,
+      "baseDamage": 328,
+      "cpuInstructions": 92,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 120,
+      "baseDamage": 337,
+      "cpuInstructions": 92,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 132,
+      "baseDamage": 373,
+      "cpuInstructions": 92,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 137,
+      "baseDamage": 8,
+      "cpuInstructions": 30,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 138,
+      "baseDamage": 10,
+      "cpuInstructions": 30,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 139,
+      "baseDamage": 13,
+      "cpuInstructions": 30,
+      "stoppedBeforeDefenseAndPresentation": true
+    },
+    {
+      "enemyId": 141,
+      "baseDamage": 18,
+      "cpuInstructions": 30,
+      "stoppedBeforeDefenseAndPresentation": true
+    }
+  ],
+  "choiceScope": "Segmented original branch arithmetic around bank-switched sound callback, no claim of whole emulator execution",
+  "scope": "Existing single living Nezha, ordinary command/status0; no invented timing/party/defend behavior",
+  "spans": [
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Original special-action thresholds"
+    },
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Physical/special choice and hit on same random byte"
+    },
+    {
+      "offset": 305510,
+      "length": 56,
+      "sha256": "6c2e26a9a89d4026d22b2b2a7e4878555728c6fb30902aea9a232683144a749c",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Behavior pointer dispatch, behavior3 to AA08"
+    },
+    {
+      "offset": 305688,
+      "length": 58,
+      "sha256": "1fe02321b18a7dbe37662130e694205fef5323a4a4d0533a1c2e66cb322e7b7c",
+      "module": 9,
+      "cpuAddress": 43528,
+      "meaning": "Ice base: boss table or unsigned enemyID minus12 times3 plus13"
+    },
+    {
+      "offset": 307098,
+      "length": 20,
+      "sha256": "3557fadc5383f2b6a6966403ada169f50a9c9cfd10c1ce7ea0e5d57b669ed07a",
+      "module": 9,
+      "cpuAddress": 44938,
+      "meaning": "Original unsigned8 by8 multiplication"
+    },
+    {
+      "offset": 306045,
+      "length": 33,
+      "sha256": "1563cac194a423248065151d24ea4b21b90a16997cff325a41976c1a8c25b3b7",
+      "module": 9,
+      "cpuAddress": 43885,
+      "meaning": "Defense modifier, outside present normal-command fixture"
+    },
+    {
+      "offset": 305946,
+      "length": 82,
+      "sha256": "3bc7f9a59184396664a80f3a785ccad35ce2a122a7faad98fa1dc952ac4358f9",
+      "module": 9,
+      "cpuAddress": 43786,
+      "meaning": "Shared nonzero damage, status4 doubling and HP subtraction"
+    }
+  ],
+  "limitations": [
+    "Unsegmented AI run reached unmapped sound callback FFD9; only segmented branch arithmetic verified",
+    "No new original normal screenshot or full action here",
+    "Defense/status4/multiple party members require their existing actual capabilities; not claimed restored"
+  ],
+  "choiceCasesSummary": {
+    "count": 256,
+    "randomDomain": [
+      0,
+      255
+    ],
+    "expectedIce": "(random & 127)<41",
+    "expectedHit": "ice || random<hitByte",
+    "result": "PASS_SEGMENTED_CPU_ARITHMETIC"
+  },
+  "privateReport": {
+    "path": "private-derived/world-north-ice/ice-evidence.json",
+    "sha256": "68387b92c4837e225abd7f1e847efe1e5f7425fe5f5eef7173be07ab2ba3705a"
+  }
+}

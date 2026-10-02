@@ -16,6 +16,17 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertEqual('NPC_OVERLAY_ONLY',r['npcContexts'][176]['kind'])
         self.assertEqual(175,r['unresolved'][0]['index']);self.assertIsNone(r['effectiveMapCount'])
         self.assertFalse(r['referenceIsDenominator']);self.assertEqual('NO',r['summary']['allMapsUsable'])
+    def test_extra_tail_exit_is_preserved_without_promoting_or_excluding_the_context(self):
+        report=self.report;extra=report['unresolved'][0]
+        self.assertEqual('EXTRA_HEADER_CONTEXT_UNKNOWN',report['npcContexts'][175]['kind'])
+        self.assertFalse(extra['ordinaryChunkSlot']);self.assertIsNone(report['effectiveMapCount'])
+        self.assertEqual(1,len(extra['exits']));row=extra['exits'][0]
+        self.assertEqual(([3,10],73,[4,28]),(row['trigger'],row['targetMapId'],row['targetCell']))
+        self.assertEqual('UNKNOWN_SOURCE_CONTEXT_USAGE',row['conditionStatus'])
+        self.assertEqual(528,report['summary']['physicalExitRecordsIncludingUnresolved'])
+        self.assertEqual(527,report['summary']['exitRecords'])
+        self.assertEqual(1,report['summary']['unresolvedExitRecords'])
+        self.assertNotIn(175,[m['mapId'] for m in report['maps']])
     def test_shared_interiors_keep_each_real_service_context(self):
         services={s['id']:s for s in self.report['services']}
         for village in range(16):
@@ -64,6 +75,14 @@ class WorldInventoryTests(unittest.TestCase):
         rows={s['id']:s for s in self.report['services']}
         self.assertEqual([0,6],rows['rom.service.0.medicine']['stock']['originalIds'])
         self.assertEqual(550,rows['rom.service.15.inn']['price'])
+    def test_ordinary_ice_uses_its_actual_formula_and_dragon_ice_keeps_table(self):
+        from forensics.fengshen246 import extract_enemy_ice_base
+        for enemy,value in [(12,13),(93,256),(99,274),(110,307),(117,328),(120,337),(132,373),(137,8),(138,10),(139,13),(141,18)]:
+            actual=extract_enemy_ice_base(self.reader,enemy)
+            self.assertEqual(value,actual['iceBaseDamage'])
+            self.assertEqual(0xaa24 if enemy<137 else 0xa906+2*(enemy-137),actual['iceSource']['cpuAddress'])
+        for enemy in (0,8,13,15,140):
+            with self.assertRaisesRegex(ValueError,'ice behavior'):extract_enemy_ice_base(self.reader,enemy)
     def test_changed_rom_is_not_an_inventory_source(self):
         wrong=bytearray(self.reader.data);wrong[32]^=1
         with self.assertRaisesRegex(ValueError,'fingerprint'):extract_world_inventory(Reader(bytes(wrong),verify=False))

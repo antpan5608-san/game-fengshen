@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "evidenceKind": "ACTUAL_UNMODIFIED_ROM_CPU_LOADER_AND_SEPARATE_SCHEDULER_REWARD_BOUNDARIES",
+  "zoneId": 5,
+  "rules": {
+    "group11RawHex": "020d040f020d00",
+    "rawRecordCount": 3,
+    "liveInstanceCount": 2,
+    "runtimeEntities": [
+      {
+        "slot": 1,
+        "sourceType": 13,
+        "enemyId": 12
+      },
+      {
+        "slot": 3,
+        "sourceType": 15,
+        "enemyId": 13
+      }
+    ],
+    "actualSequence": "Every row overwrites011F[slot] and increments011E. Existing6900/6901 graphical slot makes8E88 return before stats reload. Three original rows initialize only two stat slots.",
+    "group11Outcome": "slot1 HP35 enemy12; slot3 HP30 enemy13; both have one scheduled action; EXP42/money19 for one living party hero.",
+    "normalizationScope": "Deduplicate IDENTICAL repeated (slot,sourceType,enemyId) rows for runtime instances, preserve all original raw rows/count/ranges in provenance.",
+    "doNotGeneralize": "Conflicting sourceType for same slot is NOT generic last-write-wins: source array is last-write but stats first-initialized. Unknown conflicting duplicates must be inspected rather than normalized silently."
+  },
+  "sources": [
+    {
+      "offset": 45378,
+      "length": 1,
+      "sha256": "4d7b3ef7300acf70c892d8327db8272f54434adbc61a4e130a563cb59a0d0f47",
+      "module": 1,
+      "cpuAddress": 45362,
+      "meaning": "Original zone group count"
+    },
+    {
+      "offset": 43360,
+      "length": 4,
+      "sha256": "eb21d4d44321b48c199893e67072f9542e8a168932fd1d38374906d1b1b77d3a",
+      "module": 1,
+      "cpuAddress": 43344,
+      "meaning": "Original zone group table and graphics context"
+    },
+    {
+      "offset": 36085,
+      "length": 84,
+      "sha256": "3583e4a7a789269179763a497bb0a62f5183c95833fb83d05a2f060de1d6c5f7",
+      "module": 1,
+      "cpuAddress": 36069,
+      "meaning": "Original RNG group selection and zone table pointer"
+    },
+    {
+      "offset": 36262,
+      "length": 126,
+      "sha256": "4e147bf6d77dc368bfa02adf5478805644a0147329f61d9f5d30c4fcd97aa667",
+      "module": 1,
+      "cpuAddress": 36246,
+      "meaning": "Original slot write loader: increments raw count for every source row"
+    },
+    {
+      "offset": 36504,
+      "length": 177,
+      "sha256": "294d91defe427b22e893c430b98bf9071f8a1cbaa41b9c03a24616c6129bcdf3",
+      "module": 1,
+      "cpuAddress": 36488,
+      "meaning": "Existing graphic slot bypasses repeated stat initialization"
+    },
+    {
+      "offset": 39268,
+      "length": 83,
+      "sha256": "2abf0cd579b4733e9ce9b800d8412ef01d065d8319f84cc2f6b66495115f9ecf",
+      "module": 1,
+      "cpuAddress": 39252,
+      "meaning": "Graphics source collection; deduplicates original source identities"
+    },
+    {
+      "offset": 45816,
+      "length": 7,
+      "sha256": "cf5c3f94b5a61fcad4afd8705e45a4603186bab6f1044c4d66865817402ea41b",
+      "module": 1,
+      "cpuAddress": 45800,
+      "meaning": "Zone5 group11 actual repeated slot record, not a corrected table"
+    },
+    {
+      "offset": 294994,
+      "length": 227,
+      "sha256": "e13738f0f18bf0b6837314b4e4d45331ad041e57a88aa6e1bc37b4fc52533352",
+      "module": 9,
+      "cpuAddress": 32834,
+      "meaning": "Original action queue has fixed enemy slots, not one per raw source row"
+    },
+    {
+      "offset": 295326,
+      "length": 42,
+      "sha256": "4fb1e522ddfbde83fe2bc144576f8c2f044a2beda01469fbc013ff2413c565db",
+      "module": 9,
+      "cpuAddress": 33166,
+      "meaning": "Original enemy action eligibility from each unique slot HP"
+    },
+    {
+      "offset": 306663,
+      "length": 59,
+      "sha256": "6589b59203561c463e0866852dbbd7d7c5b55561b5ea102862595343a64bab4b",
+      "module": 9,
+      "cpuAddress": 44503,
+      "meaning": "Money sums seven slot reward records"
+    },
+    {
+      "offset": 306722,
+      "length": 147,
+      "sha256": "7aff0e68554574f3096c350419d3a7f07c1d66e320a73811011ccbbfa739cd6c",
+      "module": 9,
+      "cpuAddress": 44562,
+      "meaning": "EXP sums seven slot reward records then divides among living party members"
+    }
+  ],
+  "tests": {
+    "groupLoaderSchedulerRewardGraphicsCases": 14,
+    "randomSelectorBoundaryCases": 7,
+    "failures": 0
+  },
+  "limits": [
+    "CPU RAM initialization is an isolated loader-boundary fixture, not a normal encounter or Android battle.",
+    "Reward routine is called as post-victory boundary; no forced victory footage or player save manipulation.",
+    "Only zone5 original14 groups studied; this does not normalize conflicting duplicates elsewhere.",
+    "Enemy behavior/animation correctness is separate; two live instances does not mean zone5 is already playable."
+  ],
+  "privateEvidenceSha256": "559549b7bd752697425d9398de959b8e22ebac97c3200e3ee47c75e2b863bc2e",
+  "normalAndroid": "NOT_RUN"
+}

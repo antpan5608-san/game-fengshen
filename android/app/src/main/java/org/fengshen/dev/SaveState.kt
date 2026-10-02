@@ -19,6 +19,7 @@ object InventoryCapacity {
         id==OpeningEquipment.KNIFE_ID||id.startsWith("rom.weapon.")->"weapon"
         id.startsWith("rom.armor.")->"armor"
         id.startsWith("rom.medicine.")->"medicine"
+        id.startsWith("rom.special.")->"special"
         else->null
     }
     fun hasCategorySlot(items:Map<String,Int>,id:String,category:String)=
@@ -181,9 +182,9 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             }
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14","opening-segment-001-c15") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14","opening-segment-001-c15","opening-segment-001-c16") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
-        val scene=content.scenes[mapId]?:return false
+        val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
         if(resolved==null&&content.exits.any{it.returnToCaller&&it.fromMapId==mapId})return false
         resolved?.let{c->

@@ -3,6 +3,8 @@ package org.fengshen.dev
 /** Target ROM 9:A0D2..A129 and 0:BA30..BA7F, checked with isolated original runs. */
 object OriginalStatus {
     const val POISON=2
+    // Original behavior9 writes this exact state; its Chinese name is not yet verified.
+    const val STATUS_BIT4=4
     const val DEAD=32
     fun label(mask:Int)=when(mask){0->"正常";POISON->"中毒";DEAD->"死亡";else->"异常 %02X".format(mask)}
     fun enemySupported(enemy:EnemyDefinition)=enemy.behaviorByte==0 ||
@@ -14,6 +16,29 @@ object OriginalStatus {
     }
     fun poison(hero:CharacterState):CharacterState =
         if(hero.statusMask in setOf(0,POISON,8,4))hero.copy(statusMask=POISON) else hero
+    /** 9:8DE9/A0D2; selection and the secondary hit gate share one byte. */
+    fun choosesStatus4(random:Int):Boolean {
+        require(random in 0..255)
+        return (random and 127)<41 && ((random ushr 1) and 63)<25
+    }
+    fun applyStatus4(hero:CharacterState):CharacterState =
+        if(hero.hp>0 && hero.statusMask in setOf(0,STATUS_BIT4))hero.copy(statusMask=STATUS_BIT4) else hero
+    /** 9:AA82..AB52: pass damage BEFORE its minimum-one floor, not already-clamped damage.
+     * This only computes the amount; the existing action applies HP/death once. */
+    fun incomingDamage(computedDamage:Int,statusMask:Int):Int {
+        require(computedDamage<=0xffff && statusMask in 0..255)
+        return if(computedDamage<=0)1 else if(statusMask and STATUS_BIT4!=0)(computedDamage shl 1) and 0xffff else computedDamage
+    }
+    data class Status4Recovery(val character:CharacterState,val randomAfter:Int,val rotated:Boolean)
+    /** Original single living character at 9:A69F completed-round boundary.
+     * CMP #11 supplies carry1 to ROR; this proposal neither draws RNG nor mutates state.
+     * No status8 capability, multi-character carry chain, or battle-exit cure is implied. */
+    fun recoverStatus4AtRoundEnd(hero:CharacterState,random:Int):Status4Recovery {
+        require(random in 0..255)
+        if(hero.hp==0 || hero.statusMask and STATUS_BIT4==0)return Status4Recovery(hero,random,false)
+        val nextRandom=(random ushr 1) or 128
+        return Status4Recovery(if(nextRandom and 1==0)hero.copy(statusMask=0) else hero,nextRandom,true)
+    }
     fun step(characters:List<CharacterState>):List<CharacterState> = characters.map{hero->
         if(hero.statusMask and POISON==0 || hero.hp==0)hero else {
             val hp=hero.hp-1;hero.copy(hp=hp,statusMask=if(hp==0)DEAD else hero.statusMask)
