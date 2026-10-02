@@ -1115,6 +1115,18 @@ class TouchTest:IsolatedGameTestCase(){
         repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
         assertEquals(GameView.Layer.MAP,v.layer);val settled=v.currentSnapshot();assertTrue(settled.flags["rom.event.97.39.1.dialogue.pending"]!=true)
         talk();assertEquals(GameView.Layer.MAP,v.layer);assertEquals(settled,v.currentSnapshot());state("repeat-no-reward")
+        // A repeated conversation alone does not prove persisted plot state survives real exits.
+        // Leave and re-enter using only normal movement; incidental encounters keep their legitimate rewards.
+        walkTo(15,29);assertEquals(25,v.world.mapId);assertEquals(0,v.currentSnapshot().encounterSteps)
+        assertEquals(true,v.currentSnapshot().flags["rom.event.97.39.1"]);state("victory-palace-return")
+        walkTo(29,45);walkTo(29,44);assertEquals(97,v.world.mapId)
+        assertEquals(0,v.currentSnapshot().encounterSteps);state("victory-palace-reentry")
+        walkTo(15,4);val beforeRepeat=v.currentSnapshot()
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        state("reentered-victory-dialogue")
+        repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}
+        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(beforeRepeat,v.currentSnapshot())
+        assertEquals(true,v.currentSnapshot().flags["rom.event.97.39.1"]);state("reentered-no-reward")
         step(Key.DOWN);assertEquals(97,v.world.mapId);state("next-operable")
         instrumentation.runOnMainSync{v.persistState()}
         File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-expected-save.json").writeText(v.currentSnapshot().json().toString())
