@@ -1451,7 +1451,7 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{
             assertTrue(v.restoreSnapshot(base.copy(mapId=97,x=15*16+8,y=4*16+8,direction=Key.UP,
                 characters=listOf(hero),inventory=mapOf("rom.weapon.2" to 10),money=123,
-                flags=mapOf("opening.intro.seen" to true),encounterSteps=32)))
+                flags=mapOf("opening.intro.seen" to true),encounterSteps=32,interiorContext=null)))
         }
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
