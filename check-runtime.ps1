@@ -14,27 +14,16 @@ try {
     }
     $raw=& node (Join-Path $PSScriptRoot 'server/runtime-admin.mjs') summary
     if($LASTEXITCODE -ne 0) {throw 'Protected diagnostic query failed'}
+    # Both publication and inspect reports are public-safe. The protected query
+    # contains raw samples, including nested errors[*].sample; never echo/store it.
+    $projection=@();if($SummaryOnly){$projection+='--summary-only'}
+    $safe=($raw -join "`n") | & node (Join-Path $PSScriptRoot 'server/runtime-summary.mjs') @projection
+    if($LASTEXITCODE -ne 0) {throw 'Protected diagnostic summary projection failed'}
     # app_start legitimately precedes content loading, so contentVersion may be
     # empty. Hashtable parsing supports this JSON map key without inventing a version.
-    $result=($raw -join "`n")|ConvertFrom-Json -AsHashtable
+    $result=($safe -join "`n")|ConvertFrom-Json -AsHashtable
 } catch {$result=[ordered]@{status='UNAVAILABLE';reason='protected_query_or_configuration_unavailable'}}
 finally {foreach($k in $saved.Keys){[Environment]::SetEnvironmentVariable($k,$saved[$k])}}
-if($SummaryOnly) {
-    # Preserve counts/coverage and trusted release authority, never individual events,
-    # stacks, installation IDs or raw historical diagnostics in logs/artifacts.
-    $summary=[ordered]@{}
-    foreach($key in @('status','reason','queriedAt','queryRange','lastReportedAt','eventCount',
-        'sessionCount','emulatorSessions','realDeviceSessions','testEventCount','errors','coverageLimits')) {
-        if($result.Contains($key)) {$summary[$key]=$result[$key]}
-    }
-    if($result.Contains('retention')) {
-        $summary.retention=[ordered]@{}
-        foreach($key in @('allowedReleases','cleanupFailures','storedVersionCounts','releaseAuthority')) {
-            if($result.retention.Contains($key)) {$summary.retention[$key]=$result.retention[$key]}
-        }
-    }
-    $result=$summary
-}
 $report=[ordered]@{task_id=$runtimeTask;stage=$Stage;queriedAt=[DateTime]::UtcNow.ToString('o');environment='fleetpilots.com/fengshen-api';result=$result;
     coverageLimits=@('Only instrumented applications that actually upload are represented.','No real-device samples is not evidence of real-device health.','Historical v15/v16 have no client diagnostics.','Query does not change releases, logs, saves or accounts.')}
 $dir=Join-Path $PSScriptRoot 'reports';New-Item -ItemType Directory -Force $dir|Out-Null
