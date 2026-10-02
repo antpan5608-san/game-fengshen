@@ -196,6 +196,7 @@ data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Bool
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
     var prepareTarget:((Int)->Boolean)?=null
+    var sceneResolver:((Int)->Scene?)?=null
     var transitionFailure:Exception?=null;private set
     constructor(scene:Scene):this(mapOf(scene.mapId to scene),emptyList(),scene.mapId)
     init {require(initialMapId in scenes && exits.all{it.fromMapId in scenes && it.toMapId in scenes})}
@@ -204,7 +205,8 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     var terrainMode=0;private set
     private var stepTerrainMode=0
     private var stepSuppressEncounter=false
-    val scene get()=scenes.getValue(mapId)
+    private fun resolvedScene(id:Int)=if(sceneResolver==null)scenes[id] else sceneResolver!!.invoke(id)
+    val scene get()=requireNotNull(resolvedScene(mapId))
     var x=scene.spawnX*16+8; private set
     var y=scene.spawnY*16+8; private set
     var direction=Key.DOWN; private set
@@ -232,7 +234,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int=0,facing:Key=Key.DOWN,context:InteriorContext?=null)=
         tryRestore(targetMapId,px,py,pending,facing,context,0)
     fun tryRestore(targetMapId:Int,px:Int,py:Int,pending:Int,facing:Key,context:InteriorContext?,mode:Int):Boolean {
-        val target=scenes[targetMapId]?:return false
+        val target=resolvedScene(targetMapId)?:return false
         if(target.check(px/16,py/16,mode)==null && pending in 0..16 && facing in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
             if(prepareTarget?.invoke(targetMapId)==false)return false
             terrainMode=mode;stepTerrainMode=mode;stepSuppressEncounter=false;interiorContext=context;mapId=targetMapId;x=px;y=py;remaining=pending;direction=facing;stepScale=1f;movementCredit=0f;lastCompletedStep=null
@@ -248,7 +250,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         val caller=interiorContext.takeIf{exit.returnToCaller}
         val destination=caller?.callerMapId?:exit.toMapId
         val landingX=caller?.returnX?:exit.spawnX;val landingY=caller?.returnY?:exit.spawnY
-        val target=try{scenes[destination]}catch(e:Exception){transitionFailure=e;null}
+        val target=try{resolvedScene(destination)}catch(e:Exception){transitionFailure=e;null}
         val valid=target!=null&&target.check(landingX,landingY,terrainMode)==null
         val ready=try{valid&&prepareTarget?.invoke(destination)!=false}catch(e:Exception){transitionFailure=e;false}
         if(!ready){

@@ -20,14 +20,17 @@ class DirectorySource(private val root: File): ContentSource {
 data class StoryEffect(val type:String,val id:String?,val amount:Int,val source:String)
 data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firstDialogue:String,
     val repeatDialogue:String?,val firstEffects:List<StoryEffect>,val source:String,val mapId:Int=114,
-    val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null,val innId:String?=null)
-data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap)
+    val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null,val innId:String?=null,
+    val treasure:TreasureDefinition?=null,val openedSprite:Bitmap?=null)
+data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
+    val itemTarget:WorldObjectTarget?=null)
 data class StoryText(val id:String,val text:String,val source:String)
 data class CharacterDefinition(val id:String,val name:String,val portraitAsset:String,val portrait:Bitmap,
     val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
 data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
     val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
-    val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null,val antidoteUse:AntidoteUseDefinition?=null)
+    val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null,val antidoteUse:AntidoteUseDefinition?=null,
+    val worldUse:WorldItemUseDefinition?=null)
 data class AntidoteUseDefinition(val evidence:String)
 data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
@@ -54,7 +57,20 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val shops:Map<String,ShopDefinition> = emptyMap(),val mapObjects:List<MapObject> = emptyList(),
     val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet(),
     val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap(),
-    val serviceBindings:List<ServiceBinding> = emptyList())
+    val serviceBindings:List<ServiceBinding> = emptyList()) {
+    // One state-dependent scene view. Arrays and atlases stay in the existing
+    // bounded loader; this never holds every visited map alive.
+    private var stateScene:Scene?=null
+    private var stateFlags:Map<String,Boolean>?=null
+    fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
+        if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
+        val base=scenes[mapId]?:return null
+        val removed=mapObjects.mapNotNull{it.itemTarget}.filter{it.mapId==mapId&&flags[it.removedFlagId]==true}
+            .map{it.y*base.width+it.x}.toSet()
+        val result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
+        stateScene=result;stateFlags=flags;return result
+    }
+}
 object ContentLoader {
     fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
@@ -159,19 +175,28 @@ object ContentLoader {
                     .also{require(it.type in setOf("money","item") && it.amount in 1..9999 && (it.type!="item"||it.id!=null))}
             }}
             StoryNpc(n.getString("id"),cell[0],cell[1],bitmap(n.getString("sprite"),16,16),
-                n.getString("firstDialogue"),n.optString("repeatDialogue").takeIf{it.isNotEmpty()&&it!="null"},
+                n.optString("firstDialogue"),n.optString("repeatDialogue").takeIf{it.isNotEmpty()&&it!="null"},
                 effects,n.getJSONObject("source").getString("confidence"),mapId,
                 n.optString("shopId").takeIf{it.isNotEmpty()},
                 n.optJSONArray("interactionCell")?.let{it.getInt(0) to it.getInt(1)},
-                n.optString("innId").takeIf{it.isNotEmpty()})
+                n.optString("innId").takeIf{it.isNotEmpty()},
+                n.optJSONObject("treasure")?.let{t->
+                    require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
+                    TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount"))
+                },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)})
         }
         val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val cell=ints(o,"cell");val mid=o.getInt("mapId")
-            require(o.getString("interaction")=="NOT_IMPLEMENTED"&&mid in scenes&&cell.size==2&&
+            require(o.getString("interaction") in setOf("NOT_IMPLEMENTED","WORLD_ITEM_TARGET")&&mid in scenes&&cell.size==2&&
                 cell[0] in 0 until scenes.getValue(mid).width&&cell[1] in 0 until scenes.getValue(mid).height)
-            MapObject(o.getString("id"),mid,cell[0],cell[1],bitmap(o.getString("sprite"),16,16))
+            MapObject(o.getString("id"),mid,cell[0],cell[1],bitmap(o.getString("sprite"),16,16),
+                if(o.getString("interaction")=="WORLD_ITEM_TARGET")o.getJSONObject("itemTarget").let{t->
+                    require(t.getInt("spriteId")==226&&t.getString("evidence").isNotBlank())
+                    WorldObjectTarget(o.getString("id"),mid,cell[0],cell[1],t.getInt("spriteId"),
+                        t.getString("removedFlagId"),t.getString("completionFlagId"))
+                }else null)
         }}?:emptyList()
-        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{it.firstDialogue in dialogues && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
+        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         val itemArray=data.getJSONArray("items")
         val itemDefinitions=(0 until itemArray.length()).associate{i->
             val o=itemArray.getJSONObject(i);val source=o.getJSONObject("source").getString("confidence")
@@ -193,9 +218,18 @@ object ContentLoader {
                         use.getBoolean("mapMenu")&&use.getInt("cureStatusMask")==2&&use.getInt("confirmationConsumption")==1&&
                         use.getInt("extraConsumptionWhenCured")==1&&use.getString("evidence").isNotBlank())
                     AntidoteUseDefinition(use.getString("evidence"))
+                },o.optJSONObject("worldUse")?.let{use->
+                    require(o.getString("id")=="rom.special.11"&&o.getString("category")=="special"&&
+                        o.getInt("originalId")==11&&o.getInt("maxCount")==1&&use.getInt("targetSpriteId")==226&&
+                        use.getBoolean("reusable")&&use.getString("evidence").isNotBlank())
+                    WorldItemUseDefinition(use.getInt("targetSpriteId"),use.getString("usedFlagId"))
                 })
             item.id to item
         }
+        require(npcs.filter{it.treasure!=null}.all{npc->
+            val t=npc.treasure!!;val item=itemDefinitions[t.itemId]
+            npc.openedSprite!=null&&t.flagId.isNotBlank()&&item?.category=="special"&&item.originalId==11&&item.maxCount==1
+        })
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->
             val o=itemArray.getJSONObject(i);val e=o.optJSONObject("equipment")?:return@mapNotNull null
             require(o.getJSONObject("source").getString("confidence") in setOf("GAMEPLAY_VERIFIED","PROVISIONAL_REFERENCE"))
@@ -317,7 +351,15 @@ object ContentLoader {
                     val members=(0 until es.length()).map{j->val m=es.getJSONObject(j);EncounterMember(m.getInt("slot"),m.getInt("enemyId"))}
                     StoryBattleDefinition(b.getString("id"),b.getString("npcId"),b.getString("flagId"),
                         EncounterGroup(g.getInt("id"),members),b.getString("victoryDialogue")).also{boss->
-                        require(boss.id.matches(Regex("rom\\.boss\\.\\d+"))&&boss.flagId.matches(Regex("rom\\.event\\.\\d+\\.\\d+\\.\\d+"))&&
+                        boss.entryTrigger=b.optJSONObject("entryTrigger")?.let{t->
+                            require(t.getString("evidence").isNotBlank())
+                            val mid=t.getInt("mapId");val x=t.getInt("x");val y=t.getInt("y")
+                            require(mid in scenes&&x in 0 until scenes.getValue(mid).width&&y in 0 until scenes.getValue(mid).height)
+                            StoryEntryTrigger(mid,x,y)
+                        }
+                        boss.commitAfterDialogue=b.optBoolean("commitAfterDialogue",false)
+                        require(!boss.commitAfterDialogue||boss.entryTrigger!=null)
+                        require(boss.id.matches(Regex("rom\\.boss\\.\\d+"))&&(boss.flagId.matches(Regex("rom\\.event\\.\\d+\\.\\d+\\.\\d+"))||boss.flagId.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+")))&&
                             boss.victoryDialogue in dialogues&&validEncounterGroup(boss.group,enemies)&&
                             npcs.any{it.id==boss.npcId}&&b.getString("source").isNotBlank())}
                 }.associateBy{it.npcId}}?:emptyMap(),

@@ -28,8 +28,21 @@ data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThres
     fun damage(attack:Int,defense:Int,level:Int,roll:Int):Int =
         if(attack<defense)1 else ((attack-defense)*multiplier(level,roll)) and 65535
 }
+data class StoryEntryTrigger(val mapId:Int,val x:Int,val y:Int)
 data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:String,val group:EncounterGroup,
-    val victoryDialogue:String)
+    val victoryDialogue:String) {
+    // Keep the existing constructor ABI for cross-APK instrumentation. Set only by ContentLoader.
+    var entryTrigger:StoryEntryTrigger?=null;internal set
+    var commitAfterDialogue:Boolean=false;internal set
+    val pendingFlag get()=flagId+".dialogue.pending"
+    fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
+    fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
+        entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
+    fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> =
+        (if(commitAfterDialogue)flags else flags+(flagId to true))+(pendingFlag to true)
+    fun completeDialogue(flags:Map<String,Boolean>):Map<String,Boolean> =
+        if(alreadyWon(flags))(flags+(flagId to true))-pendingFlag else flags
+}
 /** Structural/implemented-behavior checks; witnessed opening sizes belong in golden tests. */
 fun validEncounterGroup(group:EncounterGroup,enemies:Map<Int,EnemyDefinition>):Boolean =
     group.id in 0..255&&group.members.size in 1..7&&group.members.map{it.slot}.distinct().size==group.members.size&&

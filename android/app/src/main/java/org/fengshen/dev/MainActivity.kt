@@ -177,6 +177,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var noticeUntil=0L
     private var mapNotice=""
     init {holder.addCallback(this);isFocusable=true;isFocusableInTouchMode=true;contentDescription="封神全屏地图"
+        world.sceneResolver={mid->content.sceneForState(mid,flags)}
         world.prepareTarget={target->try{content.atlases.getValue(target);true}catch(e:Exception){
             input.clear();Diagnostics.record("scene_load","ERROR",JSONObject().put("mapId",target).put("success",false),e.javaClass.simpleName,e.stackTrace.take(12).joinToString("\n"));false}}
         world.transitionObserver={from,to,success->
@@ -192,7 +193,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
-        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction,snapshot.resolvedInteriorContext(content),snapshot.terrainMode))return false
+        val priorFlags=flags;flags=snapshot.flags
+        if(!world.tryRestore(snapshot.mapId,snapshot.x,snapshot.y,0,snapshot.direction,snapshot.resolvedInteriorContext(content),snapshot.terrainMode)){
+            flags=priorFlags;return false
+        }
         audio.scene(world.mapId)
         encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
         characters=snapshot.characters.map{hero->
@@ -290,6 +294,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 input.clear();npcTouch.clear();hudTouch.clear();return
             }
         }
+        if(openEntryStoryIfNeeded())return
         if(step.suppressEncounter)return
         val group=encounter?.onCompletedStep(if(step.transitioned)-1 else step.mapId,step.x,step.y){battleRandom.nextInt(256)}?:return
         val rules=content.battle?:return
@@ -365,8 +370,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     content.itemDefinitions.mapValues{it.value.category}){battleRandom.nextInt(256)}
                 inventory=loot.inventory
                 storyBattle?.let{story->
-                    // The victory flag and rewards share one snapshot; first talk never sets this flag.
-                    flags=flags+(story.flagId to true)+(story.flagId+".dialogue.pending" to true)
+                    // Rewards and durable pending dialogue commit once. Some original events
+                    // set their map flag only after the victory text, never on first approach.
+                    flags=story.rewardFlags(flags)
                 }
                 battleMessage="胜利！经验 +${reward.experience}  银两 +${current.enemies.sumOf{it.definition.moneyReward}}"+
                     (if(reward.levels.isEmpty())"" else "  等级 ${reward.levels.last()}")+
@@ -603,16 +609,39 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val direction=facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
         val story=content.battle?.storyBattles?.get(npc.id)
+        // A guarded chest enters its original story battle first. The acquisition
+        // transaction only runs after that exact victory flag is committed.
+        npc.treasure?.takeIf{story==null||flags[story.flagId]==true}?.let{treasure->
+            val item=content.itemDefinitions[treasure.itemId]?:return
+            val before=currentSnapshot();val result=WorldItems.openTreasure(before,treasure,item)
+            if(!result.applied){showNotice(result.error?:"没有取得物品");return}
+            inventory=result.inventory;flags=result.flags
+            if(persistStateResult())showNotice("获得${item.name}")
+            else {inventory=before.inventory;flags=before.flags;showNotice("保存失败，未取得物品")}
+            clearUxGesture();uxRevision++;return
+        }
+        if(story!=null&&flags[story.pendingFlag]==true){
+            openDialogue(content.dialogues.getValue(story.victoryDialogue),npc);return
+        }
         val id=if(flags[story?.flagId?:npc.id]==true)npc.repeatDialogue?:npc.firstDialogue else npc.firstDialogue
         content.dialogues[id]?.let{openDialogue(it,npc)}
     }
     fun mapControlEnabled(key:Key)=layer==Layer.MAP&&(key==Key.MENU || (key==Key.A && interactionTarget()!=null))
+    private fun openEntryStoryIfNeeded():Boolean {
+        if(layer!=Layer.MAP||world.remaining!=0)return false
+        val story=content.battle?.storyBattles?.values?.firstOrNull{
+            it.triggersAt(world.mapId,world.x/16,world.y/16,flags)}?:return false
+        val npc=content.npcs.first{it.id==story.npcId}
+        openDialogue(content.dialogues.getValue(npc.firstDialogue),npc)
+        return true
+    }
     fun startOpeningIfNeeded(){
         val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
         if(pending!=null){
             val npc=content.npcs.first{it.id==pending.npcId}
             openDialogue(content.dialogues.getValue(pending.victoryDialogue),npc);return
         }
+        if(openEntryStoryIfNeeded())return
         if(world.mapId==114 && world.x==content.scene.spawnX*16+8 && world.y==content.scene.spawnY*16+8 &&
             flags["opening.intro.seen"]!=true)content.intro?.let{openDialogue(it,null)}
     }
@@ -629,9 +658,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val npc=dialogueNpc
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
-            if(flags[story.flagId]==true){
-                if(flags[story.flagId+".dialogue.pending"]==true)encounter?.restore(0)
-                flags=flags-(story.flagId+".dialogue.pending");dismissDialogue();persistState();return
+            if(story.alreadyWon(flags)){
+                val before=flags
+                if(flags[story.pendingFlag]==true)encounter?.restore(0)
+                flags=story.completeDialogue(flags)
+                if(!persistStateResult()){flags=before;showNotice("保存失败，请重试继续对话");return}
+                dismissDialogue();return
             }
             dismissDialogue()
             if(!persistStateResult()){
@@ -653,11 +685,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun showNotice(message:String){mapNotice=message;noticeUntil=SystemClock.uptimeMillis()+3500}
     private fun startStoryBattle(story:StoryBattleDefinition){
         val rules=content.battle?:return
-        if(flags[story.flagId]==true||world.remaining!=0||characters.first().hp<=0)return
+        if(story.alreadyWon(flags)||world.remaining!=0||characters.first().hp<=0)return
         storyBattle=story;battleSavePending=false
         battle=OpeningBattle(story.group,rules,characters.first(),
             equipmentBonus(characters.first(),"rightHand"),equipmentBonus(characters.first(),"body"))
-        selectedBattleSlot=story.group.members.first().slot;battleMessage="南海龍王 · 剧情战斗"
+        selectedBattleSlot=story.group.members.first().slot;battleMessage="${rules.enemies.getValue(story.group.members.first().enemyId).name} · 剧情战斗"
         battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
@@ -668,7 +700,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
     private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
-    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
+    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->{if(dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)?.entryTrigger}==null)dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
@@ -785,6 +817,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 result==null->"当前装备条件不满足";else->""}
             return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
+        item.worldUse?.let{rule->
+            val snapshot=currentSnapshot();val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
+            val target=content.mapObjects.asSequence().mapNotNull{it.itemTarget}
+                .firstOrNull{WorldItems.available(snapshot,item,rule,it,mapMenu)}
+            val reason=when{!mapMenu->"仅支持地图/菜单使用";(inventory[id]?:0)<=0->"已无该物品";
+                target==null->"请面向可使用的原版对象";else->""}
+            return ItemAction("world-use","使用${item.name}",target!=null,reason,target?.id)
+        }
         if(MapItemUse.supported(item)){
             val living=if(item.antidoteUse!=null)characters else characters.filter{it.hp>0};val target=if(living.size==1)living.single() else hero
             val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
@@ -801,7 +841,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun feedback(message:String){modalDetailScroll=0f;uxFeedback=message;uxFeedbackUntil=SystemClock.elapsedRealtime()+3000}
     private fun commitModal(before:SaveSnapshot,message:String){
         if(persistStateResult())feedback(message)
-        else {characters=before.characters;inventory=before.inventory;money=before.money;feedback("保存失败，操作未完成")}
+        else {characters=before.characters;inventory=before.inventory;flags=before.flags;money=before.money;feedback("保存失败，操作未完成")}
         uxRevision++;clearUxGesture()
     }
     private fun panelHit(x:Float,y:Float):ModalCommand? {
@@ -839,6 +879,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
             "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
             "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
+            "world-use"->{
+                val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return;val rule=item.worldUse?:return
+                val current=itemAction()
+                if(selectedItemId!=id||current.kind!="world-use"||!current.enabled||current.target!=cmd.targetId)return
+                val target=content.mapObjects.firstOrNull{it.id==cmd.targetId}?.itemTarget?:return
+                val before=currentSnapshot();val result=WorldItems.use(before,item,rule,target,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                inventory=result.inventory;flags=result.flags
+                commitModal(before,"已使用${item.name}")
+            }
             "equip","unequip","use"->{
                 val before=currentSnapshot();val id=cmd.itemId?:return;val target=cmd.targetId?:return
                 val index=characters.indexOfFirst{it.id==target};if(index<0)return
@@ -1053,7 +1103,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         if(l.wide||!modalDetailsOpen){
             val rows=if(panelTab==CharacterTab.ITEMS)panelItems().map{e->val item=content.itemDefinitions[e.key]
-                val status=when{item?.let(MapItemUse::supported)==true->if(characters.isEmpty()||(item.antidoteUse==null&&characters.none{it.hp>0}))"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
+                val status=when{item?.worldUse!=null->"地图对象使用";item?.let(MapItemUse::supported)==true->if(characters.isEmpty()||(item.antidoteUse==null&&characters.none{it.hp>0}))"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
                 Triple(e.key,"${item?.name?:"未知物品"}\n×${e.value} · $status",item?.preview)}
             else listOf("rightHand","leftHand","body","feet").map{slot->
                 val e=hero.equipment;val id=when(slot){"rightHand"->e?.rightHand;"leftHand"->e?.leftHand;"body"->e?.body;else->e?.feet}
@@ -1100,7 +1150,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(key){
             Key.MENU->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             Key.A->when(layer){Layer.MAP->interactionTarget()?.let{openNpc(it)};Layer.MENU->confirmMenu();Layer.DIALOGUE->advanceDialogue();Layer.BATTLE->confirmBattle();Layer.CHARACTER,Layer.INVENTORY->if(directPanel()){val b=modalLayout().primary;panelHit(b.x+b.w/2,b.y+b.h/2)?.let{runPanelCommand(it)}};else->Unit}
-            Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
+            Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->{if(dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)?.entryTrigger}==null)dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
             Key.START->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             else->Unit
         }
@@ -1244,14 +1294,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         paint.color=Color.WHITE;paint.alpha=255
         val actors=content.npcs.filter{it.mapId==world.mapId}.sortedBy{it.y}
-        val objects=content.mapObjects.filter{it.mapId==world.mapId}
+        val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
-            c.drawBitmap(npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         c.drawBitmap(content.sprites.getValue(world.direction),(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
         for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8>world.y})
-            c.drawBitmap(npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         if(layer==Layer.MAP){
             overlayPaint.color=0xff75ded5.toInt();overlayPaint.alpha=230
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)

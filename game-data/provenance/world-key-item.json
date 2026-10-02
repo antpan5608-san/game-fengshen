@@ -1,0 +1,786 @@
+{
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "evidenceKind": "STATIC_TARGET_ROM_AND_CONTROLLED_UNMODIFIED_CPU_ROUTINES",
+  "item": {
+    "originalCategory": 1,
+    "originalId": 11,
+    "stableIdentity": "original.category1.item11",
+    "projectNamespace": "rom.special.11",
+    "nameGlyphHex": "02701c78ff",
+    "readableName": "定海珠",
+    "idBase": 1408,
+    "quantityBase": 1472,
+    "categorySlots": 16,
+    "maxCount": 1,
+    "quantityBits": "low7=count,bit7=used marker",
+    "reusable": true,
+    "nameEvidence": "Normal original chest claim message and category1 ID11 inventory, 2026-10-02"
+  },
+  "chest": {
+    "mapId": 139,
+    "npcIndex": 1,
+    "position": [
+      2,
+      3
+    ],
+    "spriteId": 144,
+    "record": {
+      "index": 1,
+      "rawHex": "90010b009800a8003d8e01020002",
+      "range": {
+        "offset": 284674,
+        "length": 14,
+        "sha256": "897a095d7ff24ca0fb99dfa66466c084dea22e651f416476129ac84721cfb9aa",
+        "module": 8,
+        "cpuAddress": 55282,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "entityByte": 144,
+      "xCandidate": 152,
+      "yCandidate": 168,
+      "animationProgramPointer": 36413,
+      "animationModule": 0,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "confidence": "HIGH"
+    },
+    "flagAddress": 1931,
+    "flagMask": 2,
+    "order": [
+      "read chest flag; if already set, no reward offered",
+      "offer category1/id11",
+      "grant through shared inventory routine",
+      "on success set chest flagmask2",
+      "on full category or duplicate-max failure leave inventory/flag unchanged"
+    ],
+    "scope": "Independent grant only after coordinate event13/Boss139 victory dialogue completes. Normal bit0x80 ->0x82 only on successful acquisition."
+  },
+  "mapUse": {
+    "targetMap": 25,
+    "npcIndex": 0,
+    "targetPosition": [
+      47,
+      40
+    ],
+    "targetSprite": 226,
+    "record": {
+      "index": 0,
+      "rawHex": "e2ffff006803f802629901020001",
+      "range": {
+        "offset": 280020,
+        "length": 14,
+        "sha256": "9a8151c35eaf01a8c78cba02327711795d7f1601ba03fe32c823adccc7720167",
+        "module": 8,
+        "cpuAddress": 50628,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "entityByte": 226,
+      "xCandidate": 872,
+      "yCandidate": 760,
+      "animationProgramPointer": 39266,
+      "animationModule": 0,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "confidence": "HIGH"
+    },
+    "sceneConstraint": "map/menu use, genuine adjacent facing-object result sprite226; no map ID comparison in this item branch",
+    "legalAdjacentCoordinates": [
+      [
+        47,
+        41,
+        "UP"
+      ],
+      [
+        47,
+        39,
+        "DOWN"
+      ],
+      [
+        48,
+        40,
+        "LEFT"
+      ],
+      [
+        46,
+        40,
+        "RIGHT"
+      ]
+    ],
+    "eventId": 42,
+    "flagAddress": 1817,
+    "objectFlagMask": 1,
+    "eventCompletionMask": 128,
+    "order": [
+      "resolve actual adjacent facing object",
+      "item11 + sprite226 OR object mask into map event byte",
+      "set event42",
+      "inventory use retains quantity1 and sets high used-bit",
+      "event42 removes current sprite226 objects",
+      "event completion preserves other flags and ORs0x80",
+      "map load omits sprite226 while mask1 remains set"
+    ],
+    "consumption": 0,
+    "cancel": "no inventory or map flag change",
+    "invalidTarget": "no inventory or map flag change",
+    "absentItem": "not selectable in original inventory list; use routine assumes selection precondition",
+    "reentry": "load-time flag filter removes original whirlpool record; no repeated consumption or reward",
+    "liveEventPath": "0:F6D9 maps bank46; 11:CAE9 table CBB2 -> D3F5 -> 0:F68E removes all sprite226 slots -> 11:CD9A ORs current map event bit128. Menu already set bit1 and item used bit.",
+    "helperExperimentLimit": "Earlier module10 B736/BED7/B8AB CPU experiment exercised an equivalent isolated helper; it is not the current live main-game dispatch."
+  },
+  "fixtureCount": 46,
+  "allAssertionsPassed": true,
+  "spans": [
+    {
+      "offset": 284674,
+      "length": 14,
+      "sha256": "897a095d7ff24ca0fb99dfa66466c084dea22e651f416476129ac84721cfb9aa",
+      "module": 8,
+      "cpuAddress": 55282,
+      "meaning": "Map139 chest index1 record sprite144 category1 item11 flagmask2"
+    },
+    {
+      "offset": 280020,
+      "length": 14,
+      "sha256": "9a8151c35eaf01a8c78cba02327711795d7f1601ba03fe32c823adccc7720167",
+      "module": 8,
+      "cpuAddress": 50628,
+      "meaning": "Map25 whirlpool index0 record sprite226 coordinate47,40 flagmask1"
+    },
+    {
+      "offset": 21945,
+      "length": 2,
+      "sha256": "26d462ac6ae109bbd28b3573d64536e3810f64f1ff3c0b68858799a5058c682e",
+      "module": 0,
+      "cpuAddress": 54697,
+      "meaning": "Map139 event byte pointer078B"
+    },
+    {
+      "offset": 21717,
+      "length": 2,
+      "sha256": "9bc23741223ce09509d6bc0f0509f6438495d9be65a9157da1bdef6309247462",
+      "module": 0,
+      "cpuAddress": 54469,
+      "meaning": "Map25 event byte pointer0719"
+    },
+    {
+      "offset": 9693,
+      "length": 85,
+      "sha256": "c0e70640ec4a7b16404c8a8b162332a960d5e53493b59beb0268c916ce63d695",
+      "module": 0,
+      "cpuAddress": 42445,
+      "meaning": "Actual map event pointer dispatch low/high map ID"
+    },
+    {
+      "offset": 73424,
+      "length": 190,
+      "sha256": "049109701982557223164a54052e21250114f654616c8fcc0bbd64819ebd609c",
+      "module": 2,
+      "cpuAddress": 40640,
+      "meaning": "Original reward dispatch adds item then sets chest flag only if inventory grant succeeded"
+    },
+    {
+      "offset": 73967,
+      "length": 177,
+      "sha256": "2e56db28d8ab1e338fc6f0dd538c333de216969745ca580e28b3c06b975381d3",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Original inventory grant, per-category count and 16-slot capacity"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Category max counts10,1,10,10 and inventory ID base pointers0570/0580/0590/05A0"
+    },
+    {
+      "offset": 79941,
+      "length": 69,
+      "sha256": "4b7ab99b1dd86cb83116add92c4e98737ed5a81fea1462dc10c2de3e65bb4441",
+      "module": 2,
+      "cpuAddress": 47157,
+      "meaning": "Original inventory selection skips zero lower-seven-bit quantities"
+    },
+    {
+      "offset": 72764,
+      "length": 123,
+      "sha256": "e3e013d1533ec38cc9d3d8cd02b655263e6b1d7bdf47ab66dd88c5e9212c9a8a",
+      "module": 2,
+      "cpuAddress": 39980,
+      "meaning": "Cancel/action then scene item dispatch"
+    },
+    {
+      "offset": 90729,
+      "length": 51,
+      "sha256": "24f7d0f9db80a4894b9988f5cc8562eaebd6963c6a5bf20d06d86c0be05301b8",
+      "module": 2,
+      "cpuAddress": 57945,
+      "meaning": "Original map item invokes module10 object-facing dispatcher"
+    },
+    {
+      "offset": 91293,
+      "length": 44,
+      "sha256": "7015dccfb00a1b90793fbc9e330d2f224de762e5d106db65c4d3770ae78e21b6",
+      "module": 2,
+      "cpuAddress": 58509,
+      "meaning": "Category1 item11 requires target sprite226, ORs its mask, selects event42"
+    },
+    {
+      "offset": 91493,
+      "length": 58,
+      "sha256": "b00a30667fd217586882b4875bc4ebc032ae4058b189915d15f98b3bbfa3bf0f",
+      "module": 2,
+      "cpuAddress": 58709,
+      "meaning": "Reject result / success dispatch and use bookkeeping order"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Use inventory bookkeeping: reusable special item not decremented; high used-bit set"
+    },
+    {
+      "offset": 92141,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59357,
+      "meaning": "Category1 item11 reusable flag=1"
+    },
+    {
+      "offset": 10627,
+      "length": 75,
+      "sha256": "a5b60f47e7ecabd49d4c12713923d3f6db80cc3d15902164f49632c9243b9611",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Map load filters sprite>=204 when its stored mask is set"
+    },
+    {
+      "offset": 91680,
+      "length": 2,
+      "sha256": "bb3b788ba8552c6c7d1649e5f0cea02b3ca9789b75edea64aad59b01f7d54d20",
+      "module": 2,
+      "cpuAddress": 58896,
+      "meaning": "Category1 item-name pointer root"
+    },
+    {
+      "offset": 92110,
+      "length": 2,
+      "sha256": "8b36a1ff6e77d274f73ff049ab191dbd8c9d476a00bc7f6f3ff7d136976c214c",
+      "module": 2,
+      "cpuAddress": 59326,
+      "meaning": "Category1 id11 item-name pointer"
+    },
+    {
+      "offset": 92242,
+      "length": 5,
+      "sha256": "647ea5646f89e7af348fb0d0f83bc17f024a1115d84cafd59375df29056a9a00",
+      "module": 2,
+      "cpuAddress": 59458,
+      "meaning": "Category1 id11 original name glyph stream; readable name matched separately by normal original agent"
+    },
+    {
+      "offset": 30441,
+      "length": 14,
+      "sha256": "40cbccfca18daa6c56c3ff73001160f0ce6dd8c5e76e0ae2a014320aaab342ab",
+      "module": 0,
+      "cpuAddress": 63193,
+      "meaning": "Actual main event dispatcher maps PRG8K bank46 into C000-DFFF then restores bank2"
+    },
+    {
+      "offset": 30455,
+      "length": 14,
+      "sha256": "065e142a192bc72cd799776ff1498ccd3248901450d7523ffa0b62acd26890c6",
+      "module": 0,
+      "cpuAddress": 63207,
+      "meaning": "Actual map-position script trigger maps PRG8K bank46 then calls D825"
+    },
+    {
+      "offset": 1101,
+      "length": 3,
+      "sha256": "ded64a71b470ea898242d8de5a9ece89bb9277b3b39d87a30defa8f96ced4fde",
+      "module": 0,
+      "cpuAddress": 33853,
+      "meaning": "Live game invokes banked map-position trigger"
+    },
+    {
+      "offset": 1980,
+      "length": 3,
+      "sha256": "1c95234c3e31e566dafe67782048354d987ad7e630aa0e94a91a32ab6f15ae26",
+      "module": 0,
+      "cpuAddress": 34732,
+      "meaning": "Live game invokes banked event-phase dispatcher"
+    },
+    {
+      "offset": 706,
+      "length": 28,
+      "sha256": "ae9f10e953e23721292fb19afe09df27c654c7f223820d0f5888476238d706fb",
+      "module": 0,
+      "cpuAddress": 33458,
+      "meaning": "Shared inline jump table dispatcher"
+    },
+    {
+      "offset": 383029,
+      "length": 26,
+      "sha256": "66069341793d51fd08d2756cbdbcabc05ad0d5c0347987e0d01fcaa2a7dd77b1",
+      "module": 11,
+      "cpuAddress": 55333,
+      "meaning": "Uncompleted map script high-bit guard"
+    },
+    {
+      "offset": 383300,
+      "length": 22,
+      "sha256": "7c5dfea14bbc3f6ad914c1a792d96cd684c1f8fb45e6ab1d67774041c2daedca",
+      "module": 11,
+      "cpuAddress": 55604,
+      "meaning": "Map139 original coordinate-trigger branch selects event13"
+    },
+    {
+      "offset": 383578,
+      "length": 44,
+      "sha256": "eefe1bbbf059edbc705fc14fc06d2060df92bf69446f707e5292506d308a21d6",
+      "module": 11,
+      "cpuAddress": 55882,
+      "meaning": "Match actual scroll+7 cell position against terminated coordinate list"
+    },
+    {
+      "offset": 383663,
+      "length": 3,
+      "sha256": "d7af0f309c1de62319fd9370fc3da776af27ff3c92573eb482b72f322cff83c9",
+      "module": 11,
+      "cpuAddress": 55967,
+      "meaning": "Map139 trigger cell2,4 then00 terminator"
+    },
+    {
+      "offset": 379784,
+      "length": 2,
+      "sha256": "3baa59e72f1be0093e2d2f51aec217428a0832bd42a094d8bb8a869f20a80842",
+      "module": 11,
+      "cpuAddress": 52088,
+      "meaning": "Actual bank46 event13 pointsD02B"
+    },
+    {
+      "offset": 380987,
+      "length": 49,
+      "sha256": "2e36f6c0e500a9e77af0b88327ffccd38b20bb328fae0ef3791f26c5b1a90d3f",
+      "module": 11,
+      "cpuAddress": 53291,
+      "meaning": "Event13 intro17/source154, combat return and message3, finalization"
+    },
+    {
+      "offset": 379902,
+      "length": 11,
+      "sha256": "0d4a0e8ee9b305cdacef652fa86125e46a81889fda782196f9fd80ac8c6e8fb7",
+      "module": 11,
+      "cpuAddress": 52206,
+      "meaning": "Set current script and increment event stage"
+    },
+    {
+      "offset": 379975,
+      "length": 13,
+      "sha256": "2f5ae54770ced8ac940aca7b1fd6c0d784e3486131f1b20da46a22f32aeed82c",
+      "module": 11,
+      "cpuAddress": 52279,
+      "meaning": "Enter battle scene3 with return scene11"
+    },
+    {
+      "offset": 379927,
+      "length": 26,
+      "sha256": "374e837cdd8124a88fa70205686746ceb26aa254496c4e824783ab656469b162",
+      "module": 11,
+      "cpuAddress": 52231,
+      "meaning": "Enter post-battle dialogue scene13/menu10 then next event stage"
+    },
+    {
+      "offset": 380330,
+      "length": 85,
+      "sha256": "c92c91ec7b7ce78ceac911b1c577921beb0088a666fdba34b79322e2829a9781",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Original completion resets event and ORs high flagbit80; no key grant"
+    },
+    {
+      "offset": 377440,
+      "length": 5,
+      "sha256": "0819035a1300a2f9fc0991e2e47a15c95331511dd4323160fbcd2ae8115bdd08",
+      "module": 11,
+      "cpuAddress": 49744,
+      "meaning": "Script processor returns immediately when script complete"
+    },
+    {
+      "offset": 379842,
+      "length": 2,
+      "sha256": "5ded9b4b48af394eca635d497ea03dab22813123f2d78a21bd26532c5c15908b",
+      "module": 11,
+      "cpuAddress": 52146,
+      "meaning": "Actual bank46 event42 pointsD3F5"
+    },
+    {
+      "offset": 381957,
+      "length": 9,
+      "sha256": "ee7e036299af1922ce455699fb6d08d91de2fa0c95e04a89c1efaa7177b149bf",
+      "module": 11,
+      "cpuAddress": 54261,
+      "meaning": "Actual event42 deletes sprite226 then completes"
+    },
+    {
+      "offset": 30366,
+      "length": 61,
+      "sha256": "1a6bd90359d87a5818c69600385da7e861623cc297e29c3f8392664b16857def",
+      "module": 0,
+      "cpuAddress": 63118,
+      "meaning": "Fixed-bank original live object deletion helper"
+    }
+  ],
+  "limits": [
+    "Controlled initialized CPU RAM, not normal playthrough or Android gameplay.",
+    "Menu/render frame scheduling and audiovisual feedback not emulated.",
+    "No battle use rule inferred.",
+    "No legal use without owned item inferred from forcing a low-level dispatcher call.",
+    "No newly invented rule on selling/dropping this key item; those operations outside scope.",
+    "Raw RAM/savestates/ROM remain private; public provenance should only retain minimal spans, facts and controlled-test summary.",
+    "No claim that key use grants access beyond verified facing-object event.",
+    "Two real level7 failures retained separately; level8 normal victory and post-dialogue claim verified. Normal Android acquisition/use remains NOT_RUN."
+  ],
+  "taskId": "WORLD-FULL-01",
+  "source": {
+    "repository": "https://github.com/luzeming0211/fc",
+    "commit": "23d6234710a5e09db33b17aa21722eb2bc79945e",
+    "acquisitionEvidence": "game-data/provenance/rom-acquisition.json",
+    "licenseStatus": "UNKNOWN",
+    "analysisDate": "2026-10-02",
+    "input": "Existing fingerprint-matched cache; not downloaded again"
+  },
+  "normalAndroid": "NOT_RUN",
+  "privateEvidenceSha256": "4c57f41760e061cdb0cd576f41ccb3c24c1730702bb74659cdbe937d31a9d3a8",
+  "guard": {
+    "bankMap": "main module0 banks0/1/3 retained; 8K bank46 from module11:C000-DFFF selected by original6002 writes",
+    "trigger": {
+      "mapId": 139,
+      "cell": [
+        2,
+        4
+      ],
+      "automatic": true,
+      "requiresEventBit128Clear": true,
+      "eventId": 13
+    },
+    "phases": {
+      "0": "script17; sourceType154",
+      "1": "after script completion enter scene3 combat",
+      "2": "after battle return show message3/menu10/scene13",
+      "3": "after dialogue complete OR078B with128; no pearl grant"
+    },
+    "treasure": "Separate ordinary chest grant after script: category1/id11, ORmask2 only after inventory success; expected final078B=130 if initial0 and victory then claim.",
+    "fixtureCount": 40,
+    "allAssertionsPassed": true,
+    "limits": [
+      "No whole combat or victory was simulated; phase2/3 probes begin at supplied post-combat/post-message boundaries.",
+      "Other agent normal victory/defeat/retry evidence is authoritative for battle return semantics.",
+      "Earlier key-item-report chest tests exercise only the grant stage, not this prior coordinate script.",
+      "Do not call openTreasure directly on reaching2,4 or erase the guarded intro/post-battle dialogue.",
+      "Exact dialogue glyph/rendered content follows normal original capture; this report only verifies message ID dispatch."
+    ],
+    "privateEvidenceSha256": "5926c4843738be0afd19de3b659fd9eb916a6c2d32047b856948f1364c060350",
+    "spans": [
+      {
+        "offset": 30441,
+        "length": 14,
+        "sha256": "40cbccfca18daa6c56c3ff73001160f0ce6dd8c5e76e0ae2a014320aaab342ab",
+        "module": 0,
+        "cpuAddress": 63193,
+        "meaning": "Actual main event dispatcher maps PRG8K bank46 into C000-DFFF then restores bank2"
+      },
+      {
+        "offset": 30455,
+        "length": 14,
+        "sha256": "065e142a192bc72cd799776ff1498ccd3248901450d7523ffa0b62acd26890c6",
+        "module": 0,
+        "cpuAddress": 63207,
+        "meaning": "Actual map-position script trigger maps PRG8K bank46 then calls D825"
+      },
+      {
+        "offset": 1101,
+        "length": 3,
+        "sha256": "ded64a71b470ea898242d8de5a9ece89bb9277b3b39d87a30defa8f96ced4fde",
+        "module": 0,
+        "cpuAddress": 33853,
+        "meaning": "Live game invokes banked map-position trigger"
+      },
+      {
+        "offset": 1980,
+        "length": 3,
+        "sha256": "1c95234c3e31e566dafe67782048354d987ad7e630aa0e94a91a32ab6f15ae26",
+        "module": 0,
+        "cpuAddress": 34732,
+        "meaning": "Live game invokes banked event-phase dispatcher"
+      },
+      {
+        "offset": 706,
+        "length": 28,
+        "sha256": "ae9f10e953e23721292fb19afe09df27c654c7f223820d0f5888476238d706fb",
+        "module": 0,
+        "cpuAddress": 33458,
+        "meaning": "Shared inline jump table dispatcher"
+      },
+      {
+        "offset": 383029,
+        "length": 26,
+        "sha256": "66069341793d51fd08d2756cbdbcabc05ad0d5c0347987e0d01fcaa2a7dd77b1",
+        "module": 11,
+        "cpuAddress": 55333,
+        "meaning": "Uncompleted map script high-bit guard"
+      },
+      {
+        "offset": 383300,
+        "length": 22,
+        "sha256": "7c5dfea14bbc3f6ad914c1a792d96cd684c1f8fb45e6ab1d67774041c2daedca",
+        "module": 11,
+        "cpuAddress": 55604,
+        "meaning": "Map139 original coordinate-trigger branch selects event13"
+      },
+      {
+        "offset": 383578,
+        "length": 44,
+        "sha256": "eefe1bbbf059edbc705fc14fc06d2060df92bf69446f707e5292506d308a21d6",
+        "module": 11,
+        "cpuAddress": 55882,
+        "meaning": "Match actual scroll+7 cell position against terminated coordinate list"
+      },
+      {
+        "offset": 383663,
+        "length": 3,
+        "sha256": "d7af0f309c1de62319fd9370fc3da776af27ff3c92573eb482b72f322cff83c9",
+        "module": 11,
+        "cpuAddress": 55967,
+        "meaning": "Map139 trigger cell2,4 then00 terminator"
+      },
+      {
+        "offset": 379784,
+        "length": 2,
+        "sha256": "3baa59e72f1be0093e2d2f51aec217428a0832bd42a094d8bb8a869f20a80842",
+        "module": 11,
+        "cpuAddress": 52088,
+        "meaning": "Actual bank46 event13 pointsD02B"
+      },
+      {
+        "offset": 380987,
+        "length": 49,
+        "sha256": "2e36f6c0e500a9e77af0b88327ffccd38b20bb328fae0ef3791f26c5b1a90d3f",
+        "module": 11,
+        "cpuAddress": 53291,
+        "meaning": "Event13 intro17/source154, combat return and message3, finalization"
+      },
+      {
+        "offset": 379902,
+        "length": 11,
+        "sha256": "0d4a0e8ee9b305cdacef652fa86125e46a81889fda782196f9fd80ac8c6e8fb7",
+        "module": 11,
+        "cpuAddress": 52206,
+        "meaning": "Set current script and increment event stage"
+      },
+      {
+        "offset": 379975,
+        "length": 13,
+        "sha256": "2f5ae54770ced8ac940aca7b1fd6c0d784e3486131f1b20da46a22f32aeed82c",
+        "module": 11,
+        "cpuAddress": 52279,
+        "meaning": "Enter battle scene3 with return scene11"
+      },
+      {
+        "offset": 379927,
+        "length": 26,
+        "sha256": "374e837cdd8124a88fa70205686746ceb26aa254496c4e824783ab656469b162",
+        "module": 11,
+        "cpuAddress": 52231,
+        "meaning": "Enter post-battle dialogue scene13/menu10 then next event stage"
+      },
+      {
+        "offset": 380330,
+        "length": 85,
+        "sha256": "c92c91ec7b7ce78ceac911b1c577921beb0088a666fdba34b79322e2829a9781",
+        "module": 11,
+        "cpuAddress": 52634,
+        "meaning": "Original completion resets event and ORs high flagbit80; no key grant"
+      },
+      {
+        "offset": 377440,
+        "length": 5,
+        "sha256": "0819035a1300a2f9fc0991e2e47a15c95331511dd4323160fbcd2ae8115bdd08",
+        "module": 11,
+        "cpuAddress": 49744,
+        "meaning": "Script processor returns immediately when script complete"
+      },
+      {
+        "offset": 379842,
+        "length": 2,
+        "sha256": "5ded9b4b48af394eca635d497ea03dab22813123f2d78a21bd26532c5c15908b",
+        "module": 11,
+        "cpuAddress": 52146,
+        "meaning": "Actual bank46 event42 pointsD3F5"
+      },
+      {
+        "offset": 381957,
+        "length": 9,
+        "sha256": "ee7e036299af1922ce455699fb6d08d91de2fa0c95e04a89c1efaa7177b149bf",
+        "module": 11,
+        "cpuAddress": 54261,
+        "meaning": "Actual event42 deletes sprite226 then completes"
+      },
+      {
+        "offset": 30366,
+        "length": 61,
+        "sha256": "1a6bd90359d87a5818c69600385da7e861623cc297e29c3f8392664b16857def",
+        "module": 0,
+        "cpuAddress": 63118,
+        "meaning": "Fixed-bank original live object deletion helper"
+      }
+    ]
+  },
+  "normalAcquisition": {
+    "kind": "NORMAL_ORIGINAL_CONTROLLER_ONLY_CONTINUATION",
+    "noRAMWrites": true,
+    "legitimateTraining": {
+      "levelBefore": 7,
+      "levelAfter": 8,
+      "battles": 34,
+      "experienceBefore": 609,
+      "experienceAfter": 704
+    },
+    "bossReward": {
+      "experience": 110,
+      "money": 200
+    },
+    "frames": [
+      {
+        "name": "normal-after-victory-confirm",
+        "privateRAMSha256": "0bc61248a9666b4f8b571165e3e0f3268f4c93b55408a496155c2ed7b8e271b7",
+        "screenshotSha256": "72b03a1192586fc0f57dddacceed40aeea5615f9dd7201b38685d8a69b41430c",
+        "map139EventByte": 128,
+        "specialIds": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "specialQuantities": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "normal-chest-claim-result",
+        "privateRAMSha256": "4eaa7ac2930c2894765da98d23e4a4b3700c53e7a0b4af90497ee1d85aee3eb2",
+        "screenshotSha256": "47911c52a35d2681c12c29b7017863dfea0fc65fdf3b51e2c0a1ad59ed421735",
+        "map139EventByte": 130,
+        "specialIds": [
+          11,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "specialQuantities": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "normal-repeat-chest-result",
+        "privateRAMSha256": "9f3677a46a25702387fc0d4866a5ec041dc5fb563be72e66aff89b31960842f0",
+        "screenshotSha256": "3d51d854a0fd63bb18b2f725bc15bfd65d2024ee737db05227298f4da1e9be1c",
+        "map139EventByte": 130,
+        "specialIds": [
+          11,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "specialQuantities": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "repeatGrant": false,
+    "android": "NOT_RUN"
+  }
+}
