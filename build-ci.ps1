@@ -32,6 +32,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Scoped content export tests failed'}
     & python -m unittest discover -s tests -p test_nanhai_export.py
     if($LASTEXITCODE -ne 0){throw 'Nanhai scoped content gates failed'}
+    & python -m unittest discover -s tests -p test_world_export.py
+    if($LASTEXITCODE -ne 0){throw 'World content/service gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

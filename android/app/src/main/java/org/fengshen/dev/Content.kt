@@ -20,7 +20,7 @@ class DirectorySource(private val root: File): ContentSource {
 data class StoryEffect(val type:String,val id:String?,val amount:Int,val source:String)
 data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firstDialogue:String,
     val repeatDialogue:String?,val firstEffects:List<StoryEffect>,val source:String,val mapId:Int=114,
-    val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null)
+    val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null,val innId:String?=null)
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap)
 data class StoryText(val id:String,val text:String,val source:String)
 data class CharacterDefinition(val id:String,val name:String,val portraitAsset:String,val portrait:Bitmap,
@@ -35,6 +35,8 @@ data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:Str
 
 data class ShopDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
     val items:List<String>,val sellItems:Set<String>,val buyPrompt:String="")
+data class InnDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
+    val price:Int,val blockedStatusMask:Int,val prompt:String,val evidence:String)
 data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitmap>,
     val scenes:Map<Int,Scene> = mapOf(scene.mapId to scene),val atlases:Map<Int,Bitmap> = mapOf(scene.mapId to atlas),
     val exits:List<MapExit> = emptyList(),val initialPlayer:CharacterState,
@@ -48,7 +50,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val enemyGraphics:Map<Int,Bitmap> = emptyMap(),val battleHorizon:Bitmap?=null,val battleHero:Bitmap?=null,
     val shops:Map<String,ShopDefinition> = emptyMap(),val mapObjects:List<MapObject> = emptyList(),
     val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet(),
-    val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap())
+    val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap())
 object ContentLoader {
     fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
@@ -90,7 +92,8 @@ object ContentLoader {
             (0 until a.length()).map{i->a.getJSONObject(i)}.map{o->
                 Triple(o.getInt("id"),checkedName(o.getString("scene")),checkedName(o.getString("atlas")))}
         } else listOf(Triple(114,"scene.json","tiles.png"),Triple(16,"scene16.json","tiles16.png"))
-        require(mapFiles.size in 2..8 && mapFiles.map{it.first}.toSet().size==mapFiles.size &&
+        // ROM dispatch IDs are bytes; cardinality is a format bound, not the last task's sample count.
+        require(mapFiles.size in 1..256 && mapFiles.all{it.first in 0..255} && mapFiles.map{it.first}.toSet().size==mapFiles.size &&
             mapFiles.any{it.first==114 && it.second=="scene.json"})
         val scenes=mapFiles.associate{(id,name,_)->id to if(id==114)opening else scene(name,id).second}
         val initial=data.getJSONObject("initialPlayer")
@@ -143,7 +146,8 @@ object ContentLoader {
                 n.getString("firstDialogue"),n.optString("repeatDialogue").takeIf{it.isNotEmpty()&&it!="null"},
                 effects,n.getJSONObject("source").getString("confidence"),mapId,
                 n.optString("shopId").takeIf{it.isNotEmpty()},
-                n.optJSONArray("interactionCell")?.let{it.getInt(0) to it.getInt(1)})
+                n.optJSONArray("interactionCell")?.let{it.getInt(0) to it.getInt(1)},
+                n.optString("innId").takeIf{it.isNotEmpty()})
         }
         val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val cell=ints(o,"cell");val mid=o.getInt("mapId")
@@ -189,6 +193,18 @@ object ContentLoader {
         }.associateBy{it.id}}?:emptyMap()
         require(shops.values.all{s->s.mapId in scenes && npcs.any{it.id==s.npcId&&it.shopId==s.id&&it.mapId==s.mapId} &&
             s.items.all{itemDefinitions[it]?.buyPrice!=null} && s.sellItems.all{itemDefinitions[it]?.sellPrice!=null}})
+        val innRows=data.optJSONArray("inns")?.let{a->(0 until a.length()).map{i->
+            val o=a.getJSONObject(i)
+            require(o.getString("confidence") in setOf("GAMEPLAY_VERIFIED","VERIFIED"))
+            InnDefinition(o.getString("id"),o.getInt("mapId"),o.getString("npcId"),o.getString("name"),
+                o.getInt("price"),o.getInt("blockedStatusMask"),o.getString("prompt"),o.getString("evidence"))
+        }}?:emptyList()
+        require(innRows.map{it.id}.toSet().size==innRows.size)
+        val inns=innRows.associateBy{it.id}
+        require(inns.values.all{s->s.mapId in scenes && s.price in 0..9999999 && s.blockedStatusMask in 0..255 &&
+            s.evidence.isNotBlank() && npcs.any{it.id==s.npcId&&it.innId==s.id&&it.mapId==s.mapId}})
+        require(npcs.all{(it.shopId==null||it.shopId in shops)&&(it.innId==null||it.innId in inns)&&
+            !(it.shopId!=null&&it.innId!=null)})
         val sprites=mapOf(Key.UP to bitmap("player-up.png",16,16),
             Key.DOWN to bitmap("player-down.png",16,16),Key.LEFT to bitmap("player-left.png",16,16),Key.RIGHT to bitmap("player-right.png",16,16))
         val portraitAsset=initial.optString("portraitAsset","player-down.png")
@@ -329,6 +345,6 @@ object ContentLoader {
             scenes,atlases,exits,initialPlayer,
             data.getInt("initialMoney"),intro,npcs,dialogues,itemDefinitions.mapValues{it.value.name},
             mapOf(initialPlayer.id to initialName),mapOf(definition.id to definition),itemDefinitions,equipmentDefinitions,battle,audio,
-            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins)
+            enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns)
     }
 }

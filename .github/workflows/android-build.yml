@@ -73,11 +73,20 @@ jobs:
           $runtime=(Get-Content ci/content-source.json -Raw|ConvertFrom-Json).runtimeBaseline
           $upgradeRun=if($runtime){$runtime.buildRunId}else{$base.buildRunId}
           "upgrade_run_id=$upgradeRun"|Add-Content $env:GITHUB_OUTPUT
+          $golden=(Get-Content ci/golden-nanhai-content.json -Raw|ConvertFrom-Json).iteration.base
+          "golden_run_id=$($golden.buildRunId)"|Add-Content $env:GITHUB_OUTPUT
       - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: fengshen-signed-apk
           path: artifacts/content-base
           run-id: ${{ steps.content_base.outputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Retain the fixed historical Nanhai golden input
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/golden-base
+          run-id: ${{ steps.content_base.outputs.golden_run_id }}
           github-token: ${{ github.token }}
       - name: Build, test and verify existing signature/content
         env:
@@ -95,6 +104,11 @@ jobs:
           $baseReceipt=Get-Content artifacts/content-base/apk-receipt.json -Raw|ConvertFrom-Json
           if($baseReceipt.sourceCommit -ne $pin.sourceCommit -or $baseReceipt.buildRunID -ne $pin.buildRunId -or $baseReceipt.sha256 -ne $pin.apkSha256 -or $baseReceipt.versionCode -ne $pin.versionCode -or $baseReceipt.contentHash -ne $pin.manifestSha256){throw 'Immutable base receipt/source/content differs'}
           $env:FENGSHEN_CONTENT_BASE_APK=$base[0].FullName
+          $goldenPin=(Get-Content ci/golden-nanhai-content.json -Raw|ConvertFrom-Json).iteration.base
+          $golden=@(Get-ChildItem artifacts/golden-base/*-release.apk)
+          $goldenReceipt=Get-Content artifacts/golden-base/apk-receipt.json -Raw|ConvertFrom-Json
+          if($golden.Count -ne 1 -or (Get-FileHash $golden[0].FullName).Hash.ToLowerInvariant() -ne $goldenPin.apkSha256 -or $goldenReceipt.sourceCommit -ne $goldenPin.sourceCommit -or $goldenReceipt.buildRunID -ne $goldenPin.buildRunId -or $goldenReceipt.contentHash -ne $goldenPin.manifestSha256){throw 'Historical golden source/hash/receipt differs'}
+          $env:FENGSHEN_GOLDEN_BASE_APK=$golden[0].FullName
           ./build-ci.ps1 -VersionCode $env:VERSION_CODE -VersionName $env:VERSION_NAME -ContentApk $base[0].FullName -RuntimeTests
           if($LASTEXITCODE -ne 0){throw 'Cloud build failed'}
           $receipt=Get-Content artifacts/ci/apk-receipt.json -Raw|ConvertFrom-Json

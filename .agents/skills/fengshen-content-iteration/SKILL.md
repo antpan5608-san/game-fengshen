@@ -1,6 +1,6 @@
 ---
 name: fengshen-content-iteration
-description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检与CI验证；不用于全量研究、纯规划或其他项目。
+description: 在Fengshen当前授权的内容迭代或地图批量接入中复用可信APK基底、原巡检与CI验证；不自行扩大全量研究，不用于纯规划或其他项目。
 ---
 
 # 适用与输入
@@ -97,3 +97,10 @@ description: 在Fengshen单项内容迭代中复用可信APK基底、原巡检�
 原runtime已实际完成单指点怪、信息不耗行动、动作HP快照、正常成长与本场战斗药草，再跑正常新游戏至龙王胜后及外部冷启。相关局部fixture与主线证据分开；重复字体执行次数与独立方法数分开。局部取证复用匹配缓存和probe-mobile-battle-herb.lua，需已有受控存档及FENGSHEN_ROOT/BATTLE_HERB_CASE；不可把受控实验冒充正常原版游玩。
 
 发布成功后才更新runtimeBaseline为实际审核APK，并对该APK执行原run-town02-runtime.sh的PYBASE校验块；iteration.base仍服务原确定性内容导出，不一起盲改。原片可能包含Android metadata数据轨，ffprobe核对实际video与audio流，不能误将数据轨当损坏视频。用原片SHA、uptime事件索引、外部冷启片及GitHub artifact入口支持交付；静音原片依然声音NOT_RUN。
+
+## 已验证的图集故障与共享服务证据定位
+
+- 黑屏先检查实际审核APK图集像素，不仅验证PNG可解码和hash。曾有防具图集全部不透明黑；匹配ROM的正常进店、淡入完成后取得真实palette，复用scoped_map_atlas生成配方。全黑/淡出palette必须拒绝，不能靠换成别店图集消除黑屏。test_world_export.py已本地验证确定性、原媒体字节不变及错价/状态/出口/palette/span拒绝；App流程须另验。
+- 住宿原版正常按键与受控边界分开；价格、排除状态和返回出口分别查原Reader span。恢复HP/MP不等于复活或清除所有异常；不可用队员保持原状。原版取消、钱不足、满状态及多队员受控实验已运行，具体案例见world-full01 provenance；不把fixture写成正常路线。
+- 村庄室内共享地图ID：caller与辅助NPC上下文各有独立RAM来源；不能按村庄数量复制地图或把NPC overlay当缺失几何。完整有效集合仍须按当前任务核定。
+- 更换可信内容基底时，历史Nanhai golden配置独立固定，test_nanhai_export.py用FENGSHEN_GOLDEN_BASE_APK；当前局部导出用FENGSHEN_CONTENT_BASE_APK。两者各自验hash，不把新任务集合写进旧golden。新的runner下载/住宿正常流程仍以当前任务实际结果为准。

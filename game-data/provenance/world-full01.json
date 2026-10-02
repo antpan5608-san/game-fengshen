@@ -1,0 +1,987 @@
+{
+  "atlasCorrections": [
+    {
+      "captureKind": "NORMAL_CONTROLLER_ONLY_FROM_VERIFIED_SAVE; 300 frames after entry",
+      "capturePpuSha256": "4a78f3863025a7445554c82dce93021974389f6bb314ac842a82b7253a72f6aa",
+      "gridSha256": "6d2d1d997c748d90553431b6a37b46cd1aae08d9b59c45c34ba3705b82f9c30f",
+      "mapId": 18,
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "previousAssetSha256": "42c7d7a412f704e9468d9ba58292b23e1d659ddb4e839345ad08bb37b44ee2e5"
+    }
+  ],
+  "baseManifestSha256": "badb0194e1342b66732cb2258fed7da2e80910f46fa74cccaac2a339cc4fcbc4",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.inn.0",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "evidence": "game-data/provenance/world-full01.json"
+      },
+      "text": "客官，我們客棧住一晚只要4兩。"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "evidence": {
+    "armorFailure": {
+      "apkVersionCode": 26,
+      "atlasSha256": "42c7d7a412f704e9468d9ba58292b23e1d659ddb4e839345ad08bb37b44ee2e5",
+      "blackPixels": 65536,
+      "reason": "Faded palette accepted by previous town export",
+      "uniqueRGBAColors": 1
+    },
+    "controlledCases": [
+      {
+        "after-close": {
+          "hp": 100,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 10,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "case": "injured"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "case": "cancel"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 3,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 3,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "case": "poor"
+      },
+      {
+        "after-close": {
+          "hp": 100,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 10,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "before": {
+          "hp": 100,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 10,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "case": "full"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 2
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 2
+        },
+        "case": "status2"
+      },
+      {
+        "after-close": {
+          "hp": 100,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 10,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 0
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 4
+        },
+        "case": "status4"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 16
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 16
+        },
+        "case": "status16"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 32
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 32
+        },
+        "case": "status32"
+      },
+      {
+        "after-close": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 64
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 1,
+          "secondHp": 0,
+          "secondStatus": 0,
+          "status": 64
+        },
+        "case": "status64"
+      },
+      {
+        "after-close": {
+          "hp": 100,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 311,
+          "mp": 10,
+          "partyCount": 2,
+          "secondHp": 0,
+          "secondStatus": 32,
+          "status": 0
+        },
+        "before": {
+          "hp": 5,
+          "maxHp": 100,
+          "maxMp": 10,
+          "money": 315,
+          "mp": 1,
+          "partyCount": 2,
+          "secondHp": 0,
+          "secondStatus": 32,
+          "status": 0
+        },
+        "case": "party"
+      }
+    ],
+    "normalOriginal": {
+      "innEntry": [
+        22,
+        12,
+        12
+      ],
+      "innReturn": {
+        "cell": [
+          6,
+          25
+        ],
+        "directionRAM": 0,
+        "mapId": 0,
+        "money": 303,
+        "noRAMwrites": true
+      },
+      "innReturnLimitation": "Repeated normal A presses during exit probe purchased three separate legitimate stays; not proof of one-gesture settlement.",
+      "kind": "CONTINUATION_FROM_VERIFIED_ORIGINAL_SAVE",
+      "noRAMwrites": true,
+      "start": "/workspace/scratch/nanhai-route/normal-training-level7.fc8"
+    }
+  },
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "collisionClass": 25,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 3,
+      "fromMapId": 0,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52202,
+        "length": 28,
+        "meaning": "Class25 indoor map assignment and context",
+        "module": 0,
+        "offset": 19450,
+        "sha256": "9800a73ec9367b224ed53d49a6b350f9a89c84f4aee0b7c5df6d1ef89e34942f"
+      },
+      "spawn": [
+        12,
+        12
+      ],
+      "toMapId": 22,
+      "trigger": [
+        6,
+        25
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 22,
+      "kind": "RETURN_TO_CALLER",
+      "source": {
+        "cpuAddress": 57316,
+        "length": 5,
+        "meaning": "Shared inn FE return to saved caller",
+        "module": 8,
+        "offset": 286708,
+        "sha256": "21dfc41ca59e60a4b2c8b87c6ed6f3688848a19b85479ff189df83c21ebc0fda"
+      },
+      "spawn": [
+        6,
+        25
+      ],
+      "toMapId": 0,
+      "trigger": [
+        12,
+        14
+      ]
+    }
+  ],
+  "graphics": {
+    "npc-22-inn.png": {
+      "captureKind": "NORMAL_CONTROLLER_ONLY_FROM_VERIFIED_SAVE",
+      "capturePpuSha256": "4961e80ac0dec1950d544c7e8bb81200569a2ea02b59aa450e69563e08bce5e6",
+      "captureRamSha256": "c42f06cac345fc0a4cd8d7762b640d2011622600bb6f85dd62d4cca0365fe6fa",
+      "height": 16,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          88,
+          248,
+          152
+        ]
+      },
+      "rgbaSha256": "676d52fe306c66b2c2d496c781fe6a49481b0fbf17b9150ed1c700567dda318e",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 867376,
+          "sha256": "d5b080d99f63f088317912a281ab9f43f554de2950d8e345782eca561374cef3",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 867392,
+          "sha256": "c2af565a2a02e2d5ab2b8dda77de9c857bf9a6447ade8b1f79866429f38b7192",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 867632,
+          "sha256": "417d2204586d74aadf119153feb5ab01335320e97c153234eafae19f6b6ce299",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 867648,
+          "sha256": "6dccd6d3e73a5816dba57c1b33e424e54ba79f8f074c745c9591747096f4363b",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "width": 16
+    }
+  },
+  "inns": [
+    {
+      "blockedStatusMask": 114,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "evidence": "game-data/provenance/world-full01.json",
+      "id": "rom.inn.0",
+      "mapId": 22,
+      "name": "客栈",
+      "npcId": "rom.npc.22.0",
+      "price": 4,
+      "priceSource": {
+        "cpuAddress": 50875,
+        "length": 2,
+        "meaning": "Village0 fixed lodging price",
+        "module": 2,
+        "offset": 83659,
+        "sha256": "c0ba8a33ac67f44abff5984dfbb6f56c46b880ac2b86e1f23e7fa9c402c53ae7"
+      },
+      "prompt": "客官，我們客棧住一晚只要4兩。",
+      "statusFlagSources": [
+        {
+          "cpuAddress": 50962,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83746,
+          "sha256": "c3641f8544d7c02f3580b07c0f9887f0c6a27ff5ab1d4a3e29caf197cfc299ae"
+        },
+        {
+          "cpuAddress": 50969,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83753,
+          "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+        },
+        {
+          "cpuAddress": 50976,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83760,
+          "sha256": "c555eab45d08845ae9f10d452a99bfcb06f74a50b988fe7e48dd323789b88ee3"
+        },
+        {
+          "cpuAddress": 50983,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83767,
+          "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+        }
+      ]
+    }
+  ],
+  "licenseStatus": "UNKNOWN",
+  "limitations": [
+    "WORLD-FULL-01 F0 is not complete-world delivery; all-map/context enumeration and implementation remain in progress."
+  ],
+  "maps": [
+    {
+      "gridSha256": "0e6668501d6c67d239c4799c1bf9847cdae022fc528fc3743ce27774e84d3d09",
+      "limitations": [
+        "Other villages share this map ID but their caller context is not wired in this F0 checkpoint.",
+        "Original indoor BGM not yet verified; existing fallback is not claimed equivalent."
+      ],
+      "mapId": 22,
+      "npcCells": [
+        92
+      ],
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        12,
+        12
+      ],
+      "walkableClasses": [
+        0,
+        2
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        12,
+        5
+      ],
+      "firstDialogue": "rom.dialogue.inn.0",
+      "firstEffects": [],
+      "id": "rom.npc.22.0",
+      "innId": "rom.inn.0",
+      "interactionCell": [
+        12,
+        7
+      ],
+      "mapId": 22,
+      "originalIndex": 0,
+      "repeatDialogue": "rom.dialogue.inn.0",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "evidence": "game-data/provenance/world-full01.json",
+        "record": {
+          "cpuAddress": 50643,
+          "length": 14,
+          "meaning": "Original innkeeper NPC",
+          "module": 8,
+          "offset": 280035,
+          "sha256": "b7db5a664558730319495e4904f4ea87ca4bb1d595406f71f53a7dd4bcf98a21"
+        }
+      },
+      "sprite": "npc-22-inn.png"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 52195,
+      "length": 79,
+      "meaning": "Original shared indoor entry/caller and context",
+      "module": 0,
+      "offset": 19443,
+      "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178"
+    },
+    {
+      "cpuAddress": 50820,
+      "length": 55,
+      "meaning": "Inn price and confirmation",
+      "module": 2,
+      "offset": 83604,
+      "sha256": "db0ae24a4512a2b9afa2dff6d802b75640b01978f7bc40a91b68ea9d92fe9d45"
+    },
+    {
+      "cpuAddress": 50947,
+      "length": 90,
+      "meaning": "Eligibility/HP/MP/status restore",
+      "module": 2,
+      "offset": 83731,
+      "sha256": "03dfb2b79a081360e1901b6e4e22efb78d186a6792db70eaac898d8c620f588f"
+    },
+    {
+      "cpuAddress": 51049,
+      "length": 27,
+      "meaning": "Single confirmed deduction",
+      "module": 2,
+      "offset": 83833,
+      "sha256": "ab76a9793718ca45d61507e79812a3782f1d299a9bebba365fbba5cc8aba16d5"
+    },
+    {
+      "cpuAddress": 50512,
+      "length": 32,
+      "meaning": "Unsigned 24-bit subtraction",
+      "module": 2,
+      "offset": 83296,
+      "sha256": "9a70c927d4fdda6e0bcc0ac270e005eb567309d3527027ec08f8d8aabea5b1eb"
+    },
+    {
+      "cpuAddress": 51142,
+      "length": 54,
+      "meaning": "Unsigned 24-bit affordability",
+      "module": 2,
+      "offset": 83926,
+      "sha256": "47d60dc5efdbbf57b9a41376cc21918e498318b623708cb7df6ef2b19bba850e"
+    },
+    {
+      "cpuAddress": 37977,
+      "length": 13,
+      "meaning": "HP maximum copied to current",
+      "module": 2,
+      "offset": 70761,
+      "sha256": "7e34f2265fd3a46d04f917518363afc127a4e93de1762cd3e4bf4d48fef0dd02"
+    }
+  ],
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01"
+}

@@ -65,7 +65,7 @@ class MainActivity:Activity() {
 }
 
 class GameView(private val activity:MainActivity,val content:Content):SurfaceView(activity),SurfaceHolder.Callback,Choreographer.FrameCallback {
-    enum class Layer { MAP, MENU, SETTINGS, DIALOGUE, CHARACTER, INVENTORY, BATTLE, SHOP }
+    enum class Layer { MAP, MENU, SETTINGS, DIALOGUE, CHARACTER, INVENTORY, BATTLE, SHOP, INN }
     enum class CharacterTab { ATTRIBUTES, EQUIPMENT, ITEMS, MAGIC }
     val world=World(content.scenes,content.exits,114)
     val input=InputState()
@@ -158,6 +158,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var characterPage=0
     private var equipmentSlot="rightHand"
     private var shop:ShopDefinition?=null
+    private var inn:InnDefinition?=null
+    val activeInnId get()=inn?.id
     private var shopMode="ROOT"
     private var selectedShopItemId:String?=null
     private var shopRevision=0
@@ -503,7 +505,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
-        val merchant=nearbyNpcs().firstOrNull{it.shopId!=null}
+        val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null}
         if(merchant!=null)return merchant
         val (x,y)=world.destinationCell()
         val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId}.map{NpcCell(it.id,it.x,it.y)})?.id
@@ -527,6 +529,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(npc.shopId!=null){
             if(npc !in nearbyNpcs())return
             world.face(Key.UP);openShop(content.shops.getValue(npc.shopId));return
+        }
+        if(npc.innId!=null){
+            if(npc !in nearbyNpcs())return
+            world.face(Key.UP);openInn(content.inns.getValue(npc.innId));return
         }
         val direction=facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
@@ -596,7 +602,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
     private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
-    fun handleBack():Boolean {when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack()};return true}
+    fun handleBack():Boolean {when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->dismissDialogue();Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
@@ -669,6 +675,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun directPanel()=true // All existing character tabs reuse the same scoped touch geometry.
     private fun modalLayout():TouchModalLayout {
+        if(layer==Layer.INN){
+            val dp=resources.displayMetrics.density
+            val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,0,0,false)
+            val gap=max(48f,22*resources.configuration.fontScale+16)*dp
+            return l.copy(list=Box(l.list.x,l.list.y-gap,l.list.w,l.list.h+gap),
+                detail=Box(l.detail.x,l.detail.y-gap,l.detail.w,l.detail.h+gap))
+        }
         val l=touchModalLayout(ui.safe,resources.displayMetrics.density,resources.configuration.fontScale,
             if(layer==Layer.SHOP)2 else 4,if(layer==Layer.SHOP)0 else characters.size,layer!=Layer.SHOP&&panelTab==CharacterTab.EQUIPMENT)
         if(layer!=Layer.SHOP&&panelTab in listOf(CharacterTab.ATTRIBUTES,CharacterTab.MAGIC)){
@@ -788,6 +801,50 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         shop=definition;shopMode="BUY";selectedShopItemId=null;shopMessage="";shopRevision++;resetModalSelection()
         input.clear();shopTouch.clear();npcTouch.clear();clock.reset();layer=Layer.SHOP
     }
+    private fun openInn(definition:InnDefinition){
+        if(layer!=Layer.MAP||finishPendingStep())return
+        inn=definition;resetModalSelection();uxFeedback="";input.clear();npcTouch.clear();clock.reset();layer=Layer.INN
+    }
+    private fun closeInn(){
+        inn=null;layer=Layer.MAP;input.clear();resetModalSelection();clock.reset()
+    }
+    fun innStayBounds()=modalLayout().primary
+    private fun innHit(x:Float,y:Float):ModalCommand? {
+        val s=inn?:return null;val l=modalLayout()
+        if(l.close.contains(x,y))return ModalCommand("inn-close",shopId=s.id)
+        if(l.primary.contains(x,y))return ModalCommand("inn-stay",shopId=s.id)
+        return null
+    }
+    private fun runInnCommand(cmd:ModalCommand){
+        val s=inn?:return;if(layer!=Layer.INN||cmd.shopId!=s.id)return
+        uxRevision++;clearUxGesture();input.clear()
+        if(cmd.kind=="inn-close"){closeInn();return}
+        if(cmd.kind!="inn-stay")return
+        val before=currentSnapshot();val result=InnStay.apply(money,characters,s)
+        if(result.error!=null){feedback(result.error);return}
+        money=result.money;characters=result.characters
+        if(persistStateResult()){
+            closeInn();mapNotice="住宿完成 · 支付${s.price}两";noticeUntil=SystemClock.uptimeMillis()+3000
+            Diagnostics.record("inn_stay",details=JSONObject().put("serviceID",s.id).put("price",s.price).put("success",true))
+        }else{
+            money=before.money;characters=before.characters;feedback("保存失败，住宿未完成")
+        }
+    }
+    private fun drawInn(c:Canvas){
+        val s=inn?:return;val l=modalLayout();val dp=resources.displayMetrics.density
+        touchFrame(c,s.name,"银两 $money",emptyList(),0)
+        val rowText=characters.map{h->"${heroName(h.id)} HP ${h.hp}/${h.maxHp} MP ${h.mp}/${h.maxMp?:h.mp}\n"+
+            if(InnStay.eligible(h,s))"住宿恢复HP/MP" else "当前状态不会被住宿恢复"}
+        val list=if(l.wide)l.list else l.detail
+        c.save();c.clipRect(list.x,list.y,list.x+list.w,list.y+list.h)
+        touchText(c,(if(l.wide)"" else s.prompt+"\n")+rowText.joinToString("\n"),
+            Box(list.x+8*dp,list.y+8*dp-modalDetailScroll,list.w-16*dp,list.h),14f);c.restore()
+        if(l.wide){c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
+            touchText(c,s.prompt+"\n固定收费 ${s.price}两\n不复活；当前异常状态可能无法通过住宿恢复。\n"+uxFeedback,
+                Box(l.detail.x+8*dp,l.detail.y+8*dp-modalDetailScroll,l.detail.w-16*dp,l.detail.h),14f);c.restore()}
+        touchButton(c,l.primary,"住宿 · ${s.price}两",money>=s.price)
+        if(uxFeedback.isNotEmpty()&&!l.wide)touchText(c,uxFeedback,Box(l.frame.x+8*dp,l.frame.y+48*dp,l.close.x-l.frame.x-16*dp,1f),12f)
+    }
     private fun shopEntries():List<String> {
         val s=shop?:return emptyList()
         return if(shopMode=="SELL")s.sellItems.filter{(inventory[it]?:0)>0}.sorted() else s.items
@@ -846,10 +903,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun modalTouch(e:MotionEvent):Boolean {
         input.clear()
         if(e.actionMasked==MotionEvent.ACTION_CANCEL||!active||!focused){clearUxGesture();return true}
-        val l=modalLayout();fun hit(x:Float,y:Float)=if(layer==Layer.SHOP)shopHit(x,y) else panelHit(x,y)
+        val l=modalLayout();fun hit(x:Float,y:Float)=when(layer){Layer.SHOP->shopHit(x,y);Layer.INN->innHit(x,y);else->panelHit(x,y)}
         when(e.actionMasked){
             MotionEvent.ACTION_DOWN->{clearUxGesture();val x=e.x;val y=e.y
-                val area=when{(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;(l.wide||modalDetailsOpen)&&l.detail.contains(x,y)->2;else->0}
+                val area=when{layer==Layer.INN&&(l.list.contains(x,y)||l.detail.contains(x,y))->2;(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;(l.wide||modalDetailsOpen)&&l.detail.contains(x,y)->2;else->0}
                 uxGesture=ModalGesture(e.getPointerId(0),x,y,y,hit(x,y),uxRevision,modalState(),area)}
             MotionEvent.ACTION_POINTER_DOWN->{clearUxGesture();uxBlocked=true}
             MotionEvent.ACTION_MOVE->{val g=uxGesture
@@ -863,7 +920,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
             MotionEvent.ACTION_UP->{val g=uxGesture;val command=g?.command
                 if(!uxBlocked&&g!=null&&!g.dragged&&g.pointer==e.getPointerId(e.actionIndex)&&g.revision==uxRevision&&g.state==modalState()&&command!=null&&command==hit(e.x,e.y)){
-                    if(layer==Layer.SHOP)runShopCommand(command) else runPanelCommand(command)
+                    when(layer){Layer.SHOP->runShopCommand(command);Layer.INN->runInnCommand(command);else->runPanelCommand(command)}
                 };clearUxGesture();performClick()}
             MotionEvent.ACTION_POINTER_UP->Unit
         };return true
@@ -892,7 +949,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         touchButton(c,l.close,"关闭")
         if(!l.wide&&modalDetailsOpen)touchButton(c,l.back,"列表")
         titles.forEachIndexed{i,t->touchButton(c,l.tabs[i],t,selected=i==selected)}
-        if(layer!=Layer.SHOP&&characters.size>1)characters.forEachIndexed{i,h->touchButton(c,l.party[i],heroName(h.id),selected=i==characterPage)}
+        if(layer !in listOf(Layer.SHOP,Layer.INN)&&characters.size>1)characters.forEachIndexed{i,h->touchButton(c,l.party[i],heroName(h.id),selected=i==characterPage)}
     }
     private fun touchRows(c:Canvas,rows:List<Triple<String,String,Bitmap?>>,selected:String?){
         val l=modalLayout();val dp=resources.displayMetrics.density;c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
@@ -971,6 +1028,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     private fun activate(key:Key){
+        if(layer==Layer.INN){when(key){Key.A->inn?.let{runInnCommand(ModalCommand("inn-stay",shopId=it.id))};Key.B,Key.MENU->closeInn();else->Unit};return}
         if(layer==Layer.SHOP){when(key){Key.A->runShopAction(4)
             Key.B,Key.MENU->shopBack();Key.UP->runShopAction(7);Key.DOWN->runShopAction(8);else->Unit};return}
         when(key){
@@ -983,7 +1041,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
         if(layer==Layer.BATTLE)return battleTouchEvent(e)
-        if(layer==Layer.SHOP || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
+        if(layer in listOf(Layer.SHOP,Layer.INN) || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
         if(e.actionMasked==MotionEvent.ACTION_CANCEL){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();dialogueTouch.clear();battleTouch.clear();shopTouch.clear();clearUxGesture();return true}
         if(!active||!focused||layer==Layer.SETTINGS){input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();return true}
         when(e.actionMasked){
@@ -1133,7 +1191,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         c.restore()
         when(layer){Layer.MAP->{drawControls(c);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
-            Layer.CHARACTER,Layer.INVENTORY->drawInfoPanel(c);Layer.BATTLE->drawBattle(c);Layer.SHOP->drawShop(c)}
+            Layer.CHARACTER,Layer.INVENTORY->drawInfoPanel(c);Layer.BATTLE->drawBattle(c);Layer.SHOP->drawShop(c);Layer.INN->drawInn(c)}
         if(world.message!=previousMessage){previousMessage=world.message;if(world.message.startsWith("开发边界")){mapNotice=world.message;noticeUntil=SystemClock.uptimeMillis()+1800}}
         if(layer==Layer.MAP&&SystemClock.uptimeMillis()<noticeUntil){
             val dp=resources.displayMetrics.density;val label=mapNotice
