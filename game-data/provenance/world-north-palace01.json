@@ -3854,7 +3854,26 @@
         "sha256": "ed4d0ec101586fa725669be7a50c4b99d8c687f4cc7a0fe089098a7698ebab4c"
       },
       "android": "NOT_RUN"
-    }
+    },
+    "nameCorrections": [
+      {
+        "itemId": "rom.armor.2",
+        "previousName": "皮衣",
+        "name": "魚皮衣",
+        "unchanged": [
+          "originalId",
+          "buyPrice",
+          "sellPrice",
+          "slot",
+          "defenseBonus"
+        ],
+        "evidence": {
+          "path": "private-derived/world-east-followup/leather/normal-leather-selected.png",
+          "sha256": "f3919a62020e6b17bbf92b8862ca98b280e8117200f99aa20e2c2c30af87bd8e",
+          "scope": "Normal original armor store selection, stable originalId2; earlier shortened transcription corrected"
+        }
+      }
+    ]
   },
   "exitContextUpdates": [
     {
@@ -13831,7 +13850,7 @@
       "buyPrice": 200,
       "sellPrice": 100,
       "maxCount": 10,
-      "name": "皮衣",
+      "name": "魚皮衣",
       "source": {
         "confidence": "GAMEPLAY_VERIFIED",
         "originalVerified": false,
@@ -13863,8 +13882,9 @@
           "meaning": "Original terminated menu text"
         },
         "nameEvidence": {
-          "path": "private-derived/world-village1-normal/V1_ARMOR_VIEW-stock-1.png",
-          "sha256": "bb04d0e75ad84fb6c20679d35f0fd1367f5e6943679775d52f35431a419e37e0"
+          "path": "private-derived/world-east-followup/leather/normal-leather-selected.png",
+          "sha256": "f3919a62020e6b17bbf92b8862ca98b280e8117200f99aa20e2c2c30af87bd8e",
+          "scope": "Normal original armor store selection, stable originalId2; earlier shortened transcription corrected"
         },
         "evidence": "game-data/provenance/world-west-services01.json"
       },

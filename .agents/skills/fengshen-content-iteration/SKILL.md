@@ -135,3 +135,9 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原场景tileset4以原阶梯/上下层状态推进；`OriginalTerrain`纯决策、World移动和SaveSnapshot共享mode，原观察路线正反向及失败回滚JVM已执行。不能把该profile套所有tileset，不能把静态图可达当真实动态机关已恢复。
 - 原observed_graphic_recipe对齐的是每块8×8图块，原OAM画面起点可为非8倍数；明确起点/尺寸后逐块ROM和RGBA必须全匹配。实际装备预览起点y=49全匹配，强行切到y=48曾失败，不放宽像素校验。
 - 默认遇敌表根为EE47，EE60只是某地图的叶项；剧情sourceType经原映射才是enemyID。敌人掉落稳定ID必须在最终物品定义中存在；未知使用效果不因补掉落而编造。上述局部新Android流程以实际runner结果为准，本地编译不是App验收。
+
+## 已验证的原始记录与事件阶段区分
+
+- 原遇敌区条目是4字节（组表指针与图形上下文）；按原count完整批次读，不能用2字节步长。`extract_encounter_groups`保留全部raw行；原某组重复同一slot/source时，实际loader只初始化两实例、调度/奖励也按两slot处理。只有已核的完全相同重复行可生成唯一运行实例；原三条`sourceEntities`及计数仍保留。冲突source重复不能推断后写覆盖。原CPU与`test_world_north_palace_export.py`已验证，正常Android另验。
+- 宝箱grant子程序不证明之前没有剧情：应核坐标触发、实际映射bank、战斗返回与对白完成分别写哪些flag。原主循环切8K bank46的事件路径和module10同号helper不能混为同一现场；已有分阶段CPU与正常输入证据分别保留。原独立宝箱/可复用道具由`WorldItems`在统一状态提出一次事务，保存失败回滚；138方法阶段及后续146方法JVM和仪器编译已执行，App新流程未执行时不能宣称冷启通过。
+- 旧内容golden另存原pin；新目标只修已确认差异，未变媒体逐字节复用。名称依正常原屏修正时不顺带改价格、贡献或物品效果；原Reference名称只能保持PROVISIONAL。相关35世界导出方法已实际执行；旧基底环境变量须分别指定，不能因缺历史输入删golden。

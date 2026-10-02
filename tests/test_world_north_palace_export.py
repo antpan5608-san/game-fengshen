@@ -46,6 +46,8 @@ class NorthPalaceExportTests(unittest.TestCase):
         key=next(i for i in self.scene['items']if i['id']=='rom.special.11')
         self.assertEqual((1,11,'special'),(key['maxCount'],key['originalId'],key['category']))
         self.assertTrue(key['worldUse']['reusable']);self.assertNotIn('buyPrice',key);self.assertNotIn('sellPrice',key)
+        armor=next(i for i in self.scene['items']if i['id']=='rom.armor.2')
+        self.assertEqual(('魚皮衣',200,12),(armor['name'],armor['buyPrice'],armor['equipment']['defenseBonus']))
         obj=next(o for o in self.scene['mapObjects']if o['id']=='rom.object.25.0')
         self.assertEqual([47,40],obj['cell']);self.assertEqual('rom.map.25.flag.1',obj['itemTarget']['removedFlagId'])
         sea=json.loads(self.result['scene25.json']);self.assertIn(40*64+47,sea['dynamicObjectCells'])
