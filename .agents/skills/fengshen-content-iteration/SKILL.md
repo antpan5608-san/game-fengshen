@@ -120,3 +120,18 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原export_development.observed_graphic_recipe从明确矩形回查每个16字节ROM图块；完整图块/RGBA一致后，原scoped_observed_graphic在CI重建。淡出/多palette/部分匹配必须拒绝。原整组加载仅证明已注明静态姿态，不升级全动画或名称。
 - 牛黄丸局部实验复用probe-town02-herb.lua的可选HERB_ITEM_ID/OUTPUT_FOLDER；默认药草行为不变。原状态/数量写hook定位成功：确认先扣一次，解毒时原例程再查库存扣一次；仅1份的再次查找没有数量可扣。正常购买/路线与受控异常状态实验分别留记录，不混作正常玩耍证明。
 - 历史F0 golden独立固定于ci/golden-world-f0-content.json，避免新基底使旧全黑回归预期失真；本地显式FENGSHEN_WORLD_F0_BASE_APK与当前FENGSHEN_CONTENT_BASE_APK各验来源/hash。新的runner下载与扩展App方法仍以当前任务实际结果为准。
+
+## 已验证的世界输入缓存与成长表边界
+
+- `export_development.py --world-cache private-derived/world-scene-cache`在原Reader/图集配方上恢复物理几何与默认图集，输入固定ROM、生成器及palette hash；第二次实际命中缓存。输出仅允许既有忽略的私有目录，公开artifacts输出实际被拒绝。175几何/38去重图集是静态输入恢复，不是175地图已打包或正常可达；灯光和事件状态另核。
+- NPC坐标先按原`cell*16+120`解码，再核当前室内范围。编号23上下文有真实记录，不能当空哨兵删除；额外NPC overlay出现条件仍需原状态分派。`test_world_inventory.py`实际验证已知店员坐标和未决overlay记录保留。
+- 同一角色成长表批次用原`extract_growth_candidates`及`extend_world_growth`，保留已核低等级行；等级上限必须有升级例程判断，不只看表长度。`test_world_growth_export.py`已本地核对原表、高等级静态数据、旧行不变及错误角色/上限/span拒绝。其他角色不得借用哪吒表；高等级正常App未执行时保持NOT_RUN。
+- 泛化加载器用稳定ID、唯一slot、原字段范围和已实现行为门禁，旧golden断言继续保留；移除样本数量硬限制不等于全部敌人规则已实现。上述新批次当前只有本地验证，原runner/App结果以当前任务记录为准。
+
+
+## 已验证的共享商店与分层地形局部接续
+
+- `test_world_west_services_export.py`从可信基底两次导出，核未变媒体逐字节一致、caller库存/价格、单手合法槽位/贡献/命中、遇敌组及manifest；同一室内须保留旧caller绑定，不因新增村庄覆盖原商店。原武器选择器的双手列表不能直接当单手候选。
+- 原场景tileset4以原阶梯/上下层状态推进；`OriginalTerrain`纯决策、World移动和SaveSnapshot共享mode，原观察路线正反向及失败回滚JVM已执行。不能把该profile套所有tileset，不能把静态图可达当真实动态机关已恢复。
+- 原observed_graphic_recipe对齐的是每块8×8图块，原OAM画面起点可为非8倍数；明确起点/尺寸后逐块ROM和RGBA必须全匹配。实际装备预览起点y=49全匹配，强行切到y=48曾失败，不放宽像素校验。
+- 默认遇敌表根为EE47，EE60只是某地图的叶项；剧情sourceType经原映射才是enemyID。敌人掉落稳定ID必须在最终物品定义中存在；未知使用效果不因补掉落而编造。上述局部新Android流程以实际runner结果为准，本地编译不是App验收。

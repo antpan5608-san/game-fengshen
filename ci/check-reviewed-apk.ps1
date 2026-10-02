@@ -25,3 +25,5 @@ if($runtime.battleHerb -ne 'PASS'){throw 'This candidate must verify the scoped 
 
 if($runtime.worldCurrentServices -ne 'PASS'){throw 'Current village services must verify the reviewed APK'}
 if($runtime.worldSeaNorth -ne 'PASS' -or $runtime.worldStatusAndAntidote -ne 'PASS' -or $runtime.worldSaveProtection -ne 'PASS'){throw 'World north/status/save gates must verify this exact APK'}
+
+if($runtime.worldWestPalace -ne 'PASS' -or $runtime.worldSharedVillageServices -ne 'PASS' -or $runtime.worldTerrainRestore -ne 'PASS'){throw 'World palace/services/terrain restart gates must verify this exact APK'}

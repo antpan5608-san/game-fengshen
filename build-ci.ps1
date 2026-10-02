@@ -38,6 +38,10 @@ try {
     if($LASTEXITCODE -ne 0){throw 'World north/status content gates failed'}
     & python -m unittest discover -s tests -p test_world_inventory.py
     if($LASTEXITCODE -ne 0){throw 'Original world inventory gates failed'}
+    & python -m unittest discover -s tests -p test_world_growth_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original owner growth gates failed'}
+    & python -m unittest discover -s tests -p test_world_west_services_export.py
+    if($LASTEXITCODE -ne 0){throw 'Shared village services and West palace content gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

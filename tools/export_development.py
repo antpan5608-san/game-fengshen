@@ -85,6 +85,56 @@ def scoped_map_atlas(reader,map_data,palette,rgb):
                     image.putpixel((t%16*16+q%2*8+x,t//16*16+q//2*8+y),tuple(rgb[color])+(255,))
     return deterministic_rgba_png(image)
 
+def cache_world_scenes(reader, destination, rgb):
+    """Recover original geometry/default atlases in the existing private resource cache.
+
+    This is input recovery, not a playable package: no spawn, flags, collision
+    permissions, NPCs or encounter suppression are invented here.
+    """
+    from forensics.fengshen246 import extract_default_map_palette
+    destination=Path(destination).resolve()
+    if not any(destination.is_relative_to((ROOT/p).resolve()) for p in ('private-derived','.ci-private')):
+        raise ValueError('World cache must remain in an existing ignored private directory')
+    if digest(reader.data)!=SHA256:raise ValueError('World cache requires matching target ROM')
+    count=(0xdcfc-0xdb9e)//2
+    signature=digest((Path(__file__).read_bytes()+
+        (ROOT/'tools/forensics/fengshen246.py').read_bytes()+json.dumps(rgb).encode()))
+    pin={'schemaVersion':1,'romSha256':SHA256,'generatorSha256':signature,'geometrySlots':count}
+    destination.mkdir(parents=True,exist_ok=True);index=destination/'index.json'
+    def child(name):
+        p=(destination/name).resolve()
+        if not p.is_relative_to(destination):raise ValueError('Escaped cache path')
+        return p
+    if index.is_file():
+        prior=load(index)
+        if prior.get('input')==pin and [m.get('mapId') for m in prior.get('maps',[])]==list(range(count)):
+            if all(child(m[k]).is_file() and digest(child(m[k]).read_bytes())==m[k+'Sha256']
+                    for m in prior['maps'] for k in ('geometry','atlas')):
+                return dict(prior,cacheReused=True)
+    rows=[];atlas_assets=set()
+    for mid in range(count):
+        data=extract_map(reader,mid);palette=extract_default_map_palette(reader,mid)
+        raw=(json.dumps(data,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode()
+        png=scoped_map_atlas(reader,data,palette['palette'],rgb);asset=digest(png)
+        geometry=f'map{mid}.json';atlas=f'atlases/{asset}.png'
+        gp=child(geometry);ap=child(atlas);ap.parent.mkdir(parents=True,exist_ok=True)
+        gp.write_bytes(raw)
+        if not ap.is_file() or digest(ap.read_bytes())!=asset:ap.write_bytes(png)
+        image=Image.open(io.BytesIO(png));colors=set(image.getdata())
+        black=all(c[:3]==(0,0,0) for c in colors)
+        rows.append({'mapId':mid,'geometry':geometry,'geometrySha256':digest(raw),
+            'atlas':atlas,'atlasSha256':asset,'atlasRgbaSha256':digest(image.tobytes()),
+            'paletteSource':palette,'gridSha256':data['gridSha256'],
+            'visualInput':'BLACK_REQUIRES_STATE_PALETTE' if black else 'STATIC_DEFAULT_RECOVERED',
+            'runtime':'NOT_RUN','normalReachability':'NOT_VERIFIED'})
+        atlas_assets.add(asset)
+    report={'input':pin,'maps':rows,'uniqueAtlases':len(atlas_assets),'cacheReused':False,
+        'effectiveMapCount':None,'effectiveMapCountStatus':'UNKNOWN_EXTRA_HEADER_SLOT_175',
+        'limitations':['Static input cache only; does not enable maps, services, events or encounters',
+            'Scripted lighting, dynamic map/NPC states and extra header slot remain unverified']}
+    save(index,report)
+    return report
+
 def scoped_observed_graphic(reader,recipe):
     """Rebuild the existing observed-ROM-tile recipe without uploading private PPU dumps."""
     width,height=recipe['width'],recipe['height']
@@ -116,8 +166,10 @@ def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False):
     """
     if digest(reader.data)!=SHA256:raise ValueError('Graphic evidence needs target ROM')
     x,y,width,height=rect
-    if any(v%8 for v in rect) or not 8<=width<=256 or not 8<=height<=240:
-        raise ValueError('Graphic evidence rectangle must align to tiles')
+    # Sprite OAM origins are pixel positions (NES stores y-1); only the
+    # composition dimensions, not its screen origin, are tile multiples.
+    if any(not isinstance(v,int) for v in rect) or x<0 or y<0 or width%8 or height%8 or not 8<=width<=256 or not 8<=height<=240:
+        raise ValueError('Graphic evidence dimensions must align to tiles')
     with Image.open(capture_path) as capture:
         if x<0 or y<0 or x+width>capture.width or y+height>capture.height:raise ValueError('Capture rectangle escapes image')
         observed=capture.convert('RGB').crop((x,y,x+width,y+height))
@@ -293,6 +345,38 @@ def export_nanhai_from_base(payload,evidence,provenance_path,target_pin):
     result['scene.json']=encoded(scene)
     return result
 
+def extend_world_growth(reader, combat, proof, provenance_path):
+    """Batch the original owner's table; preserve witnessed rows and do not borrow another actor."""
+    from forensics.fengshen246 import extract_growth_candidates
+    original=extract_growth_candidates(reader);owner=original['groups'][0]
+    if proof.get('actorIndex')!=0 or proof.get('confidence')!='ORIGINAL_ROM_STATIC':
+        raise ValueError('Growth owner or evidence differs')
+    for key in ('growthRange','thresholdRange'):
+        if proof[key]!=owner[key]:raise ValueError('Growth table range differs')
+        checked_span(reader,proof[key])
+    cap=proof['levelCapSource']
+    # Absolute LDA $0504,X / CMP #$4F / BCS $AF04; the stored level is zero based.
+    if checked_span(reader,cap)!=bytes.fromhex('bd0405c94fb036'):
+        raise ValueError('Original level-cap dispatch differs')
+    if proof['maxLevel']!=80 or proof['levels']!=[2,80]:raise ValueError('Growth domain differs from original limit')
+    previous={r['level']:r for r in combat['nezhaGrowth']};rows=[]
+    fields=('level','threshold','hp','mp','strength','stamina','agility','spirit')
+    for raw in owner['rows'][1:]:
+        row=dict(level=raw['index']+1,threshold=raw['cumulativeExpCandidate'],hp=raw['hpDeltaCandidate'],
+            mp=raw['mpDeltaCandidate'],strength=raw['strengthDeltaCandidate'],stamina=raw['staminaDeltaCandidate'],
+            agility=raw['agilityDeltaCandidate'],spirit=raw['spiritDeltaCandidate'],runtimeVerified=False,
+            source=raw['growthRange'],thresholdSource=raw['thresholdRange'],evidence=provenance_path)
+        if row['level'] in previous:
+            old=previous.pop(row['level'])
+            if any(old[k]!=row[k] for k in fields):raise ValueError('Existing witnessed growth row differs')
+            row=old
+        rows.append(row)
+    if previous or any(a['threshold']>=b['threshold'] for a,b in zip(rows,rows[1:])):
+        raise ValueError('Growth lost old rows or cumulative ordering')
+    combat['nezhaGrowth']=rows
+    combat['growthLimit']={'owner':'nezha','level':proof['maxLevel'],'confidence':proof['confidence'],
+        'evidence':provenance_path,'source':cap}
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -328,6 +412,19 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if recipe.get('directionalCollision'):
+            # Shared tileset-0 town edges have one original dispatch, not one
+            # new collision implementation per village.
+            if original['tilesetId']!=0:raise ValueError('Town directional profile on another tileset')
+            town=extract_town_shops(reader)
+            for field in ('sourceEdges','targetEdges'):data[field]=town[field]
+        if recipe.get('terrain'):
+            terrain=recipe['terrain'];proof=load(ROOT/terrain['evidence'])
+            if original['tilesetId']!=4 or terrain['tileset']!=4 or proof['romSha256']!=SHA256:
+                raise ValueError('Terrain profile differs from original tileset')
+            for field in ('sourceDispatch','targetDispatch','selector','targetSelector'):
+                checked_span(reader,proof['profile'][field])
+            data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
         result[f'tiles{mid}.png']=scoped_map_atlas(reader,original,recipe['palette'],evidence['emulatorRgb'])
         scene['maps'].append({'id':mid,'scene':f'scene{mid}.json','atlas':f'tiles{mid}.png'});known.add(mid)
@@ -346,10 +443,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         elif exit['kind']=='EXIT_RECORD':
             if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
                 raise ValueError('Original exit record differs')
+        elif exit['kind']=='EDGE_RECORD':
+            original=extract_map(reader,exit['fromMapId']);x,y=exit['trigger'];direction=exit.get('direction')
+            boundary=(direction=='LEFT' and x==0 or direction=='RIGHT' and x==original['width']-1 or
+                direction=='UP' and y==0 or direction=='DOWN' and y==original['height']-1)
+            if list(raw)!=[255,exit['spawn'][1],exit['toMapId']]+exit['spawn'] or not boundary:
+                raise ValueError('Original edge return or observed boundary differs')
+            if exit.get('triggerMode')!='EDGE' or not exit.get('runtimeEvidence'):
+                raise ValueError('Edge requires observed departure, not swapped coordinates')
         else:raise ValueError('Unsupported transition kind needs original evidence')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
             {'source':exit['source'],'evidence':provenance_path}|
-            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller') if k in exit})
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction') if k in exit})
         for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
             mid=exit[idfield]
             if mid==114:raise ValueError('Opening scene overlay requires explicit review')
@@ -386,20 +491,36 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         combat=json.loads(result['combat.json'])
         for enemy in overlay.get('enemies',[]):
             original=extract_enemy(reader,enemy['id'])
-            if enemy['id'] not in (10,11) or enemy['id'] in {x['id'] for x in combat['enemies']}:raise ValueError('Enemy overlay overlaps or escapes evidence')
+            if enemy['id'] in {x['id'] for x in combat['enemies']}:raise ValueError('Enemy overlay overlaps existing ID')
             if any(enemy[k]!=original[k] for k in ('hp','attack','defense','experienceReward','moneyReward')):
                 raise ValueError('Enemy overlay stats differ from ROM')
             tail=original['remainingBytes']
             if (enemy['behaviorByte'],enemy['hitByte'],overlay['enemyAgility'][str(enemy['id'])])!=(tail[1],tail[2],tail[0]):
                 raise ValueError('Enemy overlay behavior/agility differs')
-            if enemy.get('loot')!={'category':'medicine','itemId':f'rom.medicine.{tail[5]}','threshold':tail[3]}:
+            category={0:'medicine',2:'weapon',3:'armor'}.get(tail[4])
+            item_id='rom.item.0' if category=='weapon' and tail[5]==0 else f'rom.{category}.{tail[5]}'
+            if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
+            if enemy['behaviorByte']==3:
+                if not 137<=enemy['id']<=144 or enemy.get('iceBaseDamage')!=reader.word(9,0xa906+2*(enemy['id']-137)):
+                    raise ValueError('Ice damage differs from original boss table')
+                checked_span(reader,enemy['iceSource'])
+            elif enemy['behaviorByte'] not in (0,7) or 'iceBaseDamage' in enemy:
+                raise ValueError('Enemy behavior requires implementation and evidence')
         for zone in overlay.get('zones',[]):
-            if zone['id']!=4 or zone['mapId']!=25 or zone['randomThreshold']!=16 or zone['randomGate']!='LOW':
-                raise ValueError('Unreviewed encounter region')
-            raw=checked_span(reader,zone['rectangleSource'])
-            if raw!=bytes([zone['id']]+[v for rect in zone['rectangles'] for v in rect]+[0]):raise ValueError('Encounter rectangles differ')
+            if zone['rectangles']:
+                raw=checked_span(reader,zone['rectangleSource'])
+                if raw!=bytes([zone['id']]+[v for rect in zone['rectangles'] for v in rect]+[0]):raise ValueError('Encounter rectangles differ')
+                if zone['mapId'] not in (16,23,25) or zone['randomThreshold']!=16 or zone['randomGate']!='LOW':
+                    raise ValueError('Unreviewed rectangular encounter dispatcher')
+            else:
+                mid=zone['mapId']
+                if mid not in known or reader.read(0,0xee47+mid)[0]!=zone['id'] or zone['id']==255:
+                    raise ValueError('Default encounter region differs from original map table')
+                checked_span(reader,zone['defaultSource']);checked_span(reader,zone['mapTypeSource'])
+                if reader.read(0,0xed87+mid)[0]!=10 or zone['randomThreshold']!=245 or zone['randomGate']!='HIGH':
+                    raise ValueError('Unreviewed default encounter probability branch')
             expected_count=reader.read(1,0xb12d+zone['id'])[0]
             if len(zone['groups'])!=expected_count or [g['id'] for g in zone['groups']]!=list(range(expected_count)):
                 raise ValueError('Encounter groups incomplete')
@@ -422,6 +543,23 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if graphic['origin']+[graphic['width'],graphic['height']]!=recipe['observedRect']:
                 raise ValueError('Enemy graphic placement differs from observed rectangle')
         combat['presentation']['graphics']+=overlay.get('graphics',[])
+        for boss in overlay.get('bosses',[]):
+            if boss['id'] in {b['id'] for b in combat.get('bosses',[])}:raise ValueError('Duplicate story battle')
+            raw=checked_span(reader,boss['npcSource'])
+            if list(raw[10:14])!=[1,2,boss['eventId'],boss['eventArgument']]:
+                raise ValueError('Original story battle dispatch differs')
+            if boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
+                raise ValueError('Story flag must retain original event identity')
+            if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
+                raise ValueError('Original story enemy source differs')
+            for span in boss['ruleSources']:checked_span(reader,span)
+            combat.setdefault('bosses',[]).append(boss)
+        combat['presentation'].setdefault('blackBackgroundEnemyIds',[]).extend(overlay.get('blackBackgroundEnemyIds',[]))
+        combat['presentation'].setdefault('horizons',[]).extend(overlay.get('horizons',[]))
+        for hit in overlay.get('weaponHits',[]):
+            if checked_span(reader,hit['source'])[0]!=hit['threshold'] or reader.read(9,0x9b41+hit['originalId'])[0]!=hit['threshold']:
+                raise ValueError('Original weapon hit threshold differs')
+            combat['physicalRules']['weaponHitThreshold'][str(hit['originalId'])]=hit['threshold']
         result['combat.json']=encoded(combat)
     for patch in evidence.get('sceneCapabilityUpdates',[]):
         if patch['mapId']!=25 or not overlay:raise ValueError('Scene capability update lacks implemented encounters')
@@ -436,16 +574,61 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if name in result or '/' in name or '\\' in name or not name.endswith('.png'):
             raise ValueError('Unsafe/overlapping world graphic')
         result[name]=scoped_observed_graphic(reader,recipe)
+    if evidence.get('growthExtension'):
+        combat=json.loads(result['combat.json'])
+        extend_world_growth(reader,combat,evidence['growthExtension'],provenance_path)
+        result['combat.json']=encoded(combat)
     for inn in evidence.get('inns',[]):
         if int.from_bytes(checked_span(reader,inn['priceSource']),'little')!=inn['price']:
             raise ValueError('Lodging price differs from original table')
         flags=[checked_span(reader,span)[0] for span in inn['statusFlagSources']]
         if inn['blockedStatusMask']!=sum(set(flags)) or any(x not in (2,16,32,64) for x in flags):
             raise ValueError('Lodging status policy differs from original routine')
-    for name in ('npcs','dialogues','inns'):
+    if evidence.get('shops') or evidence.get('items'):
+        from forensics.fengshen246 import extract_world_service_catalog
+        catalog=extract_world_service_catalog(reader)
+        items={i['id']:i for i in catalog['items']}
+        stocks={(s['category'],s['contextIndex']):s for s in catalog['stocks']}
+        for item in evidence.get('items',[]):
+            original=items.get(item['id'])
+            if original is None or any(item[k]!=original[k] for k in ('category','originalId','buyPrice','sellPrice','maxCount')):
+                raise ValueError('Service item differs from original catalog')
+            checked_span(reader,item['source']['priceRange']);checked_span(reader,item['source']['nameRange'])
+            if not item['source'].get('nameEvidence'):raise ValueError('Service name needs a source')
+            equipment=item.get('equipment')
+            if equipment:
+                slot=equipment['slot'];bonus=original['contribution']
+                if slot not in original['listMembershipCandidates'] or equipment['allowedCharacters']!=['nezha']:
+                    raise ValueError('Equipment owner or category list differs')
+                if original['crossHandOccupancy'] and equipment.get('operationEnabled',True):
+                    raise ValueError('Cross-hand equipment requires its original paired transaction')
+                expected=(bonus if slot=='rightHand' else 0,bonus if slot=='body' else 0,bonus if slot=='feet' else 0)
+                if tuple(equipment[k] for k in ('attackBonus','defenseBonus','evasionValue'))!=expected:
+                    raise ValueError('Equipment contribution differs')
+                for span in equipment['ruleSources']:checked_span(reader,span)
+        for shop in evidence.get('shops',[]):
+            stock=stocks.get((shop['source']['category'],shop['source']['callerMapId']))
+            if stock is None:raise ValueError('Unknown original service stock context')
+            expected=[items['rom.item.0' if stock['category']=='weapon' and i==0 else f'rom.{stock["category"]}.{i}']['id'] for i in stock['originalIds']]
+            if shop['items']!=expected or shop['sellItems']!=expected:
+                raise ValueError('Service stock differs from original category/context')
+            checked_span(reader,shop['source']['stockRange'])
+    for name in ('npcs','dialogues','inns','shops','items'):
         old=scene.get(name,[]);added=evidence.get(name,[])
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
+    bindings=scene.get('serviceBindings',[])+evidence.get('serviceBindings',[])
+    if len({(b['callerMapId'],b['interiorMapId'],b['npcId']) for b in bindings})!=len(bindings):
+        raise ValueError('Duplicate service caller binding')
+    if bindings:scene['serviceBindings']=bindings
+    if overlay:
+        # A legitimate random drop must be loadable even when no current shop
+        # stocks it. Reject missing definitions before signing/building an APK.
+        item_categories={i['id']:i['category'] for i in scene['items']}
+        for enemy in combat['enemies']:
+            loot=enemy.get('loot')
+            if loot and item_categories.get(loot['itemId'])!=loot['category']:
+                raise ValueError('Encounter loot has no matching item definition')
     scene['limitations']=scene.get('limitations',[])+evidence.get('limitations',[])
     result['scene.json']=encoded(scene)
     return result
@@ -1023,8 +1206,15 @@ if __name__=='__main__':
     parser.add_argument('--provenance')
     parser.add_argument('--version')
     parser.add_argument('--world-inventory',type=Path,help='Write table/context coverage without generating an APK')
+    parser.add_argument('--world-cache',type=Path,help='Recover geometry/default atlases into ignored private cache only')
     args=parser.parse_args()
-    if args.world_inventory:
+    if args.world_cache:
+        rgb=load(ROOT/'game-data/provenance/world-full01.json')['emulatorRgb']
+        report=cache_world_scenes(iteration_reader(),args.world_cache,rgb)
+        print(json.dumps({'geometrySlots':len(report['maps']),'uniqueAtlases':report['uniqueAtlases'],
+            'cacheReused':report['cacheReused'],'blackDefaultIds':[m['mapId'] for m in report['maps']
+                if m['visualInput']=='BLACK_REQUIRES_STATE_PALETTE'],'appRuntime':'NOT_RUN','uploaded':False}))
+    elif args.world_inventory:
         from forensics.fengshen246 import extract_world_inventory
         pin=load(ROOT/'ci/content-source.json')
         packaged=load(ROOT/pin['iteration']['provenance'])

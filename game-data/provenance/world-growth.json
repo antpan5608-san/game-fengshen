@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "original-owner-growth-batch",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "growthExtension": {
+    "actorIndex": 0,
+    "confidence": "ORIGINAL_ROM_STATIC",
+    "levels": [
+      2,
+      80
+    ],
+    "maxLevel": 80,
+    "growthRange": {
+      "offset": 373616,
+      "length": 560,
+      "sha256": "5c2bf00ab80f53aa43d934cf60fc651f85736f95b8fe92f5e385fc6be96bc541",
+      "cpuAddress": 54112,
+      "prg8kBank": 45,
+      "meaning": "80 contiguous seven-byte growth rows"
+    },
+    "thresholdRange": {
+      "offset": 375856,
+      "length": 240,
+      "sha256": "c2647b8c341c19f17dc212c8cb644a032b6703f0413b4dae671243d31d5d921e",
+      "cpuAddress": 56352,
+      "prg8kBank": 45,
+      "meaning": "80 contiguous uint24le experience values"
+    },
+    "levelCapSource": {
+      "offset": 306903,
+      "length": 7,
+      "sha256": "22d4c0bd8b32da763a0890325a44b61cce90d5d3b8d8de69d89e1f7f2fc06a1f",
+      "module": 9,
+      "cpuAddress": 44743,
+      "meaning": "Stored level index >=79 skips further upgrade; displayed level is index+1"
+    },
+    "limitations": [
+      "Higher-level rows are ROM-static data, not normal-play runtime verification",
+      "Other owners not substituted; current party remains actual joined characters"
+    ]
+  },
+  "evidence": {
+    "comparison": [
+      {
+        "offset": 373272,
+        "length": 142,
+        "sha256": "f9f7b7f82b87f2a320d2f0ff4c199c9ffb1e1c666f1f18e381c834833d4ceba2",
+        "cpuAddress": 53768,
+        "prg8kBank": 45,
+        "meaning": "Experience comparison and level index increment"
+      },
+      {
+        "offset": 373422,
+        "length": 194,
+        "sha256": "388fb2ce24e7746861b7cb6eae2c7f27e51b9d828e6394a808f27023bc2e0d81",
+        "cpuAddress": 53918,
+        "prg8kBank": 45,
+        "meaning": "Apply seven-byte growth deltas"
+      }
+    ]
+  },
+  "licenseStatus": "UNKNOWN"
+}

@@ -78,6 +78,7 @@ def extract_world_service_catalog(reader):
     """Original category-local stocks/prices/slot membership, without guessing effects or text."""
     if digest(reader.data)!=SHA256:raise ValueError('Service catalog requires target ROM fingerprint')
     categories={0:'medicine',2:'weapon',3:'armor'};stocks=[];items={}
+    cross_hand=set(reader.read(2,0xaa7a,17))-{255}
     slots={slot:set(reader.read(2,address,length))-{255} for slot,address,length in
         [('rightHand',0xef88,19),('body',0xef9b,11),('feet',0xefa6,10)]}
     for type_id,category in categories.items():
@@ -114,8 +115,9 @@ def extract_world_service_catalog(reader):
                     legal=[slot for slot,values in slots.items() if item in values and
                         (slot=='rightHand')==(category=='weapon')]
                     row['nezhaPermittedByCategoryList']=bool(legal)
-                    row['slotStatus']='VERIFIED_CURRENT_SCOPE' if (category=='weapon' and item<=2) or category=='armor' else 'NEEDS_SLOT_FILTER_DISPATCH'
-                    row['nezhaPermittedSlots']=legal if row['slotStatus']=='VERIFIED_CURRENT_SCOPE' else []
+                    row['slotStatus']='NEEDS_CROSS_HAND_TRANSACTION' if category=='weapon' and item in cross_hand else 'ORIGINAL_SLOT_FILTER_VERIFIED'
+                    row['nezhaPermittedSlots']=legal if row['slotStatus']=='ORIGINAL_SLOT_FILTER_VERIFIED' else []
+                    row['crossHandOccupancy']=category=='weapon' and item in cross_hand
                     row['listMembershipCandidates']=legal
                     row['equipmentOperation']='REQUIRES_ORIGINAL_SLOT_AND_TRANSACTION_RULES'
                 items[key]=row
@@ -124,6 +126,8 @@ def extract_world_service_catalog(reader):
             'source':reader.span(2,0xc02f,92,'Original normal/special merchant selection')},
         'innPrices':[reader.word(2,0xc6bb+2*i) for i in range(16)],
         'innPriceSource':reader.span(2,0xc6bb,32,'Original sixteen normal lodging prices'),
+        'equipmentSelectorSource':reader.span(2,0xaa8b,124,'Actual owner, slot and inventory candidate filter'),
+        'crossHandSource':reader.span(2,0xaa7a,17,'Original cross-hand occupying weapon IDs and FF'),
         'limitations':['Stocks/prices do not establish all NPC appearance or route conditions',
             'No effect, slot type, reward, or script condition inferred from a display name']}
 
@@ -302,8 +306,11 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             address=pointer+index*14
             if reader.read(8,address)[0]==255:break
             b=reader.read(8,address,14)
+            position=[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')]
+            # A8F5/A90E/A92E encodes an NPC cell as cell*16 + $78, not screen pixels.
+            cell=[(v-0x78)//16 for v in position] if all(v>=0x78 and (v-0x78)%16==0 for v in position) else None
             records.append({'index':index,'textGroup':b[0],'firstMessage':b[1],'repeatMessage':b[2],
-                'pixelPosition':[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')],
+                'pixelPosition':position,'positionEncoding':'CELL_TIMES_16_PLUS_120','cell':cell,
                 'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
         else:raise ValueError('Unterminated NPC/context list')
         contexts.append({'contextId':mid,'kind':'BASE_MAP' if mid<geometry_slots else 'NPC_OVERLAY_ONLY',
@@ -316,8 +323,16 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
         for klass,cells in maps[mid]['doorCandidates'].items():
             kind,interior=kinds[klass]
             context_index=village_bases[mid]+interior-17
+            additional=context_index
+            overlay_id=overlay[additional]
+            room=maps[interior]
+            overlay_rows=contexts[overlay_id]['records']
             services.append({'id':f'rom.service.{mid}.{kind}','kind':kind,'callerMapId':mid,
                 'interiorMapId':interior,'entryCells':cells,'npcOverlayId':overlay[context_index],
+                'baseNpcContextId':interior,
+                'additionalNpcCandidates':[{'contextId':overlay_id,'npcIndex':n['index'],'cell':n['cell'],
+                    'positionInRoom':n['cell'] is not None and 0<=n['cell'][0]<room['width'] and 0<=n['cell'][1]<room['height'],
+                    'appearance':'NEEDS_NPC_STATE_DISPATCH'} for n in overlay_rows],
                 'contextSource':reader.span(0,0xd2c7+context_index,1,'Original additional indoor NPC context'),
                 'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
                 'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
@@ -352,6 +367,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             reader.span(8,npc_start,npc_slots*2,'NPC/overlay pointer slots ending at first list'),
             reader.span(8,exit_start,352,'Geometry exit pointers plus extra slot'),
             reader.span(0,0xcbe3,79,'Shared indoor/caller/context dispatch'),
+            reader.span(0,0xa8f5,68,'NPC cell encoding: x/y times sixteen plus 120'),
             reader.span(0,0xa73f,56,'Temporarily substitute NPC overlay index then restore actual map')],
         'referenceMapCount':259,'referenceIsDenominator':False,
         'summary':{'serviceCandidateCounts':dict(collections.Counter(s['kind'] for s in services)),
