@@ -18,16 +18,43 @@ def call(cpu,address):
 def main():
     p=argparse.ArgumentParser();p.add_argument('--rom',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
     r=Reader(a.rom.read_bytes());selector=r.read(10,0x8000,32768);grant=r.read(2,0x8000,32768)
+    disciple=bytes.fromhex(extract_npcs(r,171)['records'][0]['rawHex'])
     record=bytes.fromhex(extract_npcs(r,171)['records'][1]['rawHex'])
     if(record[0],record[12],record[13])!=(175,12,2):raise ValueError('Original scoped teacher differs')
     fa=r.word(0,0xd493+342)
+    disciple_rows=['flagBefore\tpartyCount\tmessage\tflagAfter']
+    for flag,party in itertools.product(range(256),(1,2,3,4)):
+        c=MPU();c.memory[0x8000:]=selector;c.memory[0xa3]=fa&255;c.memory[0xa4]=fa>>8;c.memory[fa]=flag
+        c.memory[0xa2]=1;c.memory[0x500]=party;c.memory[0x400:0x40e]=disciple;c.memory[0x3d]=0;c.memory[0x3e]=4
+        c.pc=0xa160
+        for _ in range(80):
+            if c.pc==0xa18a:break
+            c.step()
+        else:raise RuntimeError('Original disciple first/repeat selector did not finish')
+        if c.memory[0xa1]==11:call(c,0xcc01)
+        expected=6 if flag&1 or party==4 else 5;after=flag|1 if party==4 else flag
+        if(c.memory[0x3b],c.memory[fa])!=(expected,after):raise AssertionError('Original disciple selector differs')
+        disciple_rows.append('\t'.join(map(str,(flag,party,c.memory[0x3b],c.memory[fa]))))
+    a.output.parent.mkdir(parents=True,exist_ok=True)
+    disciple_raw=('\n'.join(disciple_rows)+'\n').encode('ascii')
+    (a.output.parent/'world-room171-disciple-original-cpu.tsv').write_bytes(disciple_raw)
+    print('Original disciple cases=1024 sha256='+hashlib.sha256(disciple_raw).hexdigest())
     rows=['flagBefore\twitness\thasItem19\tpartyCount\tglobal7c7\tmessage\tflagAfter'];failures=0
     for flag,witness,has,party,global7 in itertools.product(range(256),(0,1),(0,1),(1,2,3,4),(0,128)):
         cpu=MPU();cpu.memory[0x8000:]=selector;cpu.memory[0xa3]=fa&255;cpu.memory[0xa4]=fa>>8;cpu.memory[fa]=flag
         cpu.memory[0xa2]=2;cpu.memory[0x7c8]=witness;cpu.memory[0x7c7]=global7;cpu.memory[0x500]=party
-        cpu.memory[0x580]=19;cpu.memory[0x5c0]=has;cpu.memory[0x3b]=2 if flag&2 else 0
-        call(cpu,0xcc1b);msg=cpu.memory[0x3b];after=cpu.memory[fa]
-        expected=2 if flag&2 else 0;newflag=flag
+        cpu.memory[0x580]=19;cpu.memory[0x5c0]=has
+        # Execute the actual NPC raw first/repeat selector before action12.
+        # A set NPC flag skips the postprocessor; it selects record byte2 (3).
+        cpu.memory[0x400:0x40e]=record;cpu.memory[0x3d]=0;cpu.memory[0x3e]=4
+        cpu.pc=0xa160
+        for _ in range(80):
+            if cpu.pc==0xa18a:break
+            cpu.step()
+        else:raise RuntimeError('Actual original first/repeat selector did not finish')
+        if cpu.memory[0xa1]==12:call(cpu,0xcc1b)
+        msg=cpu.memory[0x3b];after=cpu.memory[fa]
+        expected=record[2] if flag&2 else record[1];newflag=flag
         if not flag&2 and witness:
             expected=1
             if has:

@@ -2248,11 +2248,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testForest101ColdRestartAndRealContinentReturn(){normalWorldStoryContinuation(true,true,forest101=true)}
     fun testNormalTree107FromVerifiedContinentBridgeSave(){normalWorldStoryContinuation(false,true,tree107=true)}
     fun testTree107ColdRestartAndRealReturn(){normalWorldStoryContinuation(true,true,tree107=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false){
+    fun testNormalRoom171GiftFromVerifiedTreeSave(){normalWorldStoryContinuation(false,true,room171=true)}
+    fun testRoom171GiftColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,room171=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2307,7 +2309,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2495,48 +2497,91 @@ class TouchTest:IsolatedGameTestCase(){
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
         }
+        // Read-only route planning across the actual four floors. Every edge
+        // is normal joystick input, including independently recorded stairs.
+        fun treeRouteTo(goal:Triple<Int,Int,Int>):List<Key>?{
+            val start=Triple(v.world.mapId,v.world.x/16,v.world.y/16)
+            val queue=java.util.ArrayDeque<Triple<Int,Int,Int>>();queue.add(start)
+            val parents=mutableMapOf<Triple<Int,Int,Int>,Pair<Triple<Int,Int,Int>,Key>>()
+            parents[start]=start to Key.UP;val currentFlags=v.currentSnapshot().flags
+            while(queue.isNotEmpty()&&goal !in parents){
+                val at=queue.removeFirst();val scene=v.content.sceneForState(at.first,currentFlags)!!
+                for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                    if(scene.probeFrom(at.second,at.third,key)!=MovementBlock.NONE)continue
+                    val nx=at.second+d.first;val ny=at.third+d.second
+                    val exit=v.content.exits.firstOrNull{it.fromMapId==at.first&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null&&it.contactActorId==null}
+                    val next=if(exit!=null)Triple(exit.toMapId,exit.spawnX,exit.spawnY)else Triple(at.first,nx,ny)
+                    if(next.first !in 107..110||next in parents)continue
+                    parents[next]=at to key;queue.add(next)
+                }
+            }
+            if(goal !in parents)return null
+            val keys=mutableListOf<Key>();var at=goal
+            while(at!=start){val p=parents.getValue(at);keys.add(p.second);at=p.first}
+            return keys.asReversed()
+        }
+        fun treeWalkTo(goal:Triple<Int,Int,Int>){
+            var replans=0
+            while(Triple(v.world.mapId,v.world.x/16,v.world.y/16)!=goal){
+                assertTrue("Tree route must converge using normal inputs",replans++<512)
+                val keys=treeRouteTo(goal);assertNotNull("No original floor route to $goal",keys)
+                // Replan after every real edge: runner load may hold a stick
+                // longer, and encounters can change party/flag conditions.
+                step(keys!!.first())
+            }
+        }
+        fun interactTreeNpc(id:String){
+            val npc=v.content.npcs.single{it.id==id}
+            val goal=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{Triple(npc.mapId,npc.x+it.first,npc.y+it.second)}
+                .firstOrNull{treeRouteTo(it)!=null}
+            assertNotNull("Original NPC must have a reachable adjacent cell",goal)
+            treeWalkTo(goal!!);talk()
+        }
+        if(room171){
+            assertEquals(true,source.flags["rom.global.7c8.1"])
+            state(if(cold)"cold-exact-normal-teacher-save"else"verified-tree-source-no-state-grants")
+            if(!cold){
+                assertEquals(110,v.world.mapId);assertEquals(0,source.inventory["rom.special.19"]?:0)
+                treeWalkTo(Triple(107,7,13));step(Key.DOWN)
+                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                walkTo(168,149);walkTo(168,161);walkTo(213,155)
+                assertEquals(101,v.world.mapId);assertEquals(8 to 51,v.world.x/16 to v.world.y/16)
+                walkTo(32,13);step(Key.UP)
+                assertEquals(171,v.world.mapId);assertEquals(7 to 14,v.world.x/16 to v.world.y/16)
+                state("normal-forest-original-door-and-room")
+                walkTo(7,5);step(Key.UP)
+                assertEquals(7 to 5,v.world.x/16 to v.world.y/16)
+                val before=v.currentSnapshot();val npc=v.content.npcs.single{it.id=="rom.npc.171.1"}
+                val item=v.content.itemDefinitions.getValue("rom.special.19")
+                val expected=OriginalNpcTalk.begin(before,npc.originalTalk!!,item)
+                assertEquals(1,expected.snapshot.inventory[item.id])
+                tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                assertEquals(expected.snapshot.inventory,v.currentSnapshot().inventory)
+                assertEquals(before.characters,v.currentSnapshot().characters)
+                assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.flags,v.currentSnapshot().flags)
+                state("normal-teacher-gift-before-dialogue-no-free-join")
+                dialogue();val once=v.currentSnapshot();talk()
+                assertEquals(once,v.currentSnapshot())
+                state("normal-teacher-owned-repeat-no-duplicate-gift")
+                checkSourceUnchanged();persistChecked()
+                File(root,"world-room171-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            }else{
+                assertEquals(171,v.world.mapId);assertEquals(1,source.inventory["rom.special.19"])
+                walkTo(7,5);step(Key.UP);val before=v.currentSnapshot();talk()
+                assertEquals(before,v.currentSnapshot());state("cold-repeat-no-reward-or-party-change")
+                walkTo(7,13);step(Key.DOWN)
+                assertEquals(101,v.world.mapId);assertEquals(32 to 12,v.world.x/16 to v.world.y/16)
+                state("cold-original-room-return-to-forest")
+                step(Key.DOWN);walkTo(32,12);assertEquals(171,v.world.mapId)
+                walkTo(7,5);step(Key.UP);val beforeRepeat=v.currentSnapshot();talk()
+                assertEquals(beforeRepeat,v.currentSnapshot())
+                checkSourceUnchanged();persistChecked();state("cold-normal-reentry-no-duplicate-gift-and-save")
+            }
+            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
+        }
         if(tree107){
             assertEquals(true,source.flags["rom.map.86.flag.128"])
-            // Read-only route planning across the actual four floors. Every edge
-            // is normal joystick input, including independently recorded stairs.
-            fun treeRouteTo(goal:Triple<Int,Int,Int>):List<Key>?{
-                val start=Triple(v.world.mapId,v.world.x/16,v.world.y/16)
-                val queue=java.util.ArrayDeque<Triple<Int,Int,Int>>();queue.add(start)
-                val parents=mutableMapOf<Triple<Int,Int,Int>,Pair<Triple<Int,Int,Int>,Key>>()
-                parents[start]=start to Key.UP;val currentFlags=v.currentSnapshot().flags
-                while(queue.isNotEmpty()&&goal !in parents){
-                    val at=queue.removeFirst();val scene=v.content.sceneForState(at.first,currentFlags)!!
-                    for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
-                        if(scene.probeFrom(at.second,at.third,key)!=MovementBlock.NONE)continue
-                        val nx=at.second+d.first;val ny=at.third+d.second
-                        val exit=v.content.exits.firstOrNull{it.fromMapId==at.first&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null&&it.contactActorId==null}
-                        val next=if(exit!=null)Triple(exit.toMapId,exit.spawnX,exit.spawnY)else Triple(at.first,nx,ny)
-                        if(next.first !in 107..110||next in parents)continue
-                        parents[next]=at to key;queue.add(next)
-                    }
-                }
-                if(goal !in parents)return null
-                val keys=mutableListOf<Key>();var at=goal
-                while(at!=start){val p=parents.getValue(at);keys.add(p.second);at=p.first}
-                return keys.asReversed()
-            }
-            fun treeWalkTo(goal:Triple<Int,Int,Int>){
-                var replans=0
-                while(Triple(v.world.mapId,v.world.x/16,v.world.y/16)!=goal){
-                    assertTrue("Tree route must converge using normal inputs",replans++<512)
-                    val keys=treeRouteTo(goal);assertNotNull("No original floor route to $goal",keys)
-                    // Replan after every real edge: runner load may hold a stick
-                    // longer, and encounters can change party/flag conditions.
-                    step(keys!!.first())
-                }
-            }
-            fun interactTreeNpc(id:String){
-                val npc=v.content.npcs.single{it.id==id}
-                val goal=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{Triple(npc.mapId,npc.x+it.first,npc.y+it.second)}
-                    .firstOrNull{treeRouteTo(it)!=null}
-                assertNotNull("Original NPC must have a reachable adjacent cell",goal)
-                treeWalkTo(goal!!);talk()
-            }
             state(if(cold)"cold-exact-normal-tree-save"else"verified-bridge-source-no-state-grants")
             if(!cold){
                 assertEquals(16,v.world.mapId);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)

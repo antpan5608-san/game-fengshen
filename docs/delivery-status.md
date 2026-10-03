@@ -1,3 +1,14 @@
+## 当前有效玉泉山检查点（2026-10-03T20:29:55.768873+00:00，本地未发布）
+
+- WORLD-FULL-01持续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效分母UNKNOWN。用户已授权有大幅可玩进展且App实际运行不崩溃、存档及原保护通过时阶段发布，不等待所有非阻断欠账清零。
+- 发布来源main冻结263e7dbce24a3baa26abfb0c267783dfe0ad3a9e，v55/0.8.8-world-full01-f3/run37149570155：签名build SUCCESS，原KVM正常runtime仍执行。v54/run37138936199完成FAILURE：地府服务驱动过早从23步行去55,70无合法路径；已按实际单向地形把10/13区自然遇敌检查移到原殿间路线，并将正常25级补给训练移到首殿前，未改地形/敌人/玩家状态或制造返程。不能发布未通过完整门禁的v54。
+- 独立本树c38：215文件/39地图，manifest ba1e8aafa6c5576d515a182152e6d9bb82a38ee68ccf6bda9d258e3bb60734f9；固定c37父pin与审核v27同一不可变APK，不变媒体逐字节复用。新增171房、101↔171两条独立出口、原教师/道童图形、counter7,5UP及实际无遇敌FF定义。药草/装备/旧地图规则不变。
+- 师父action12送玉佩发生在对白前，实际16行special容量检查，满包失败可重试，不发伪领取flag、不自动入队；道童action11仅按原队伍/flag选5/6。玉佩rom.special.19只接真实取得，尚无worldUse，不宣称杨戬入队闭环完成。NPC移动、室内独立BGM和两段暂定文字继续欠账。
+- 原8192师父selector、6gift、1024道童、36碰撞CPU案例已运行零差异。修正旧师父已完成flag的repeat选择：实际raw selector直接message3且跳过action12，旧研究message2错误不作运行依据；保留correctionHistory。两段文字明确PROVISIONAL，其余对照实际原版受控画面，均不冒称本轮正常Android。
+- 本地4房间导出方法PASS（45.604秒）、271 JVM/53 suites/0失败错误跳过、仪器APK编译PASS；原ci_apk.restore全新空目录215文件逐字节一致。新增正常神木存档→真实返回→森林→房171counter→取得/重复→外部冷启/离店式原出口返回驱动已编译并接原workflow/同产物审核，实际Android仍NOT_RUN。
+- 实际inspect37149229309于2026-10-03T19:48:56.3907953Z查询可信27/26=1398/2289，共3687事件，普通真机7会话/模拟器0/测试0/清理0。仍精确旧v26下载ProtocolException1、root UNCONFIRMED；保留ISSUES_FOUND。原safe preflight对象实际release-assessment ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES（最初误传外层wrapper失败已修），新生产PowerShell评估尚未运行。一加13T/声音NOT_RUN。
+- 下一动作：保存可复现本地c38提交；v55完成立即读取实际首错或沿原同产物自动审批发布；继续核玉佩event29、杨戬初始化/装备/成长及重入NPC移除，按原事务接实际使用，不以39地图或取得资源结案。
+
 DELIVERY_REPORT
 
 task_id: WORLD-01  

@@ -10,7 +10,7 @@ from forensics.fengshen246 import extract_encounter_groups
 class Tree107ExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'));cls.path='game-data/provenance/world-tree107-content.json'
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-tree107-content.json').read_text(encoding='utf-8'));cls.path='game-data/provenance/world-tree107-content.json'
         cls.p=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'));cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text(encoding='utf-8'))
         cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])
         cls.old=ex.export_from_base(cls.base,cls.parent['iteration']['provenance'],cls.parent);cls.result=ex.export_from_base(cls.base,cls.path,cls.pin);cls.r=ex.iteration_reader()

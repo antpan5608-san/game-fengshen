@@ -16,7 +16,7 @@
     {
       "path": "android/app/src/test/resources/world-teacher171-selector-original-cpu.tsv",
       "caseCount": 8192,
-      "sha256": "2b6f3a498c8a3510652034f24c47ec41d80a2dc2ce37712c8bd3c3336fe27dec",
+      "sha256": "69becec1beb983930f9a04ce2f5684c7af8ba0d00aadfbd6facef7128081786b",
       "failures": 0
     },
     {
@@ -90,6 +90,14 @@
       "module": 2,
       "cpuAddress": 41360,
       "meaning": "Original category count caps and base addresses"
+    },
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original raw NPC first/repeat selector and conditional action dispatch before A18A"
     }
   ],
   "rules": {
@@ -113,18 +121,21 @@
       3,
       4
     ],
-    "otherCompletionCondition": "actual party count4 and global7c7 bit128, only when item19 already owned"
+    "otherCompletionCondition": "actual party count4 and global7c7 bit128, only when item19 already owned",
+    "recordFirstMessage": 0,
+    "recordRepeatMessage": 3
   },
   "observedRules": [
     "No witness and no mapflag: message0 and no gift",
     "Witness and item absent: message1, grant special19 if capacity permits; mapflag stays unchanged",
     "Grant failure retains message1 without adding item or claiming map completion",
     "Already owned: message2/3/7 selected by party count; no repeated gift",
-    "Flag2 already set: original repeat message2, no grant"
+    "Flag2 already set: actual raw byte2 selects message3 and skips action12, no grant"
   ],
   "remainingUnknown": [
     "Item19 actual use scene/target/consumption and Yang join are not established by teacher grant",
     "Teacher full dialogue pages are separately traced from original real keys; selection TSV is not text proof",
     "Normal Android room171 service/talk/save/cold behavior NOT_RUN"
-  ]
+  ],
+  "correction": "Prior controlled selector initialized completed-flag message to2; now actual A160..A18A raw-record preselector executes before action12. Message2 only belongs to witness+owned item and party<3 while mapflag unset. This evidence is not yet used by a shipped room."
 }

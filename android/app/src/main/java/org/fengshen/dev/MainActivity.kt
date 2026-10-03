@@ -680,7 +680,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         npc.originalTalk?.let{rule->
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()
-            commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule),npc);return
+            commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule,content.itemDefinitions[rule.itemId]),npc);return
         }
         val story=content.battle?.storyBattles?.get(npc.id)
         // A guarded chest enters its original story battle first. The acquisition

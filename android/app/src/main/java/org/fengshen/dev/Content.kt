@@ -245,12 +245,31 @@ object ContentLoader {
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("originalTalk")?.let{t->
-                    require(t.getInt("actionId")==17&&t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
-                        npc.id=="rom.npc.110.0"&&npc.mapId==110&&npc.firstEffects.isEmpty())
                     val rule=OriginalNpcTalkDefinition(npc.mapId,t.getString("mapFlagId"),t.getString("witnessFlagId"),
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
-                    require(rule.mapFlagId=="rom.map.110.flag.2"&&rule.witnessFlagId=="rom.global.7c8.1"&&
-                        rule.itemId=="rom.special.19"&&rule.firstDialogue=="rom.dialogue.120.0"&&rule.repeatDialogue=="rom.dialogue.120.1")
+                    rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
+                    when(rule.actionId){
+                        17->require(t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
+                            npc.id=="rom.npc.110.0"&&npc.mapId==110&&rule.mapFlagId=="rom.map.110.flag.2"&&
+                            rule.witnessFlagId=="rom.global.7c8.1"&&rule.itemId=="rom.special.19"&&
+                            rule.firstDialogue=="rom.dialogue.120.0"&&rule.repeatDialogue=="rom.dialogue.120.1")
+                        11->require(t.getString("evidence")=="game-data/provenance/world-room171-resources.json"&&
+                            npc.id=="rom.npc.171.0"&&npc.mapId==171&&rule.mapFlagId=="rom.map.171.flag.1"&&
+                            rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
+                            rule.firstDialogue=="rom.dialogue.181.5"&&rule.repeatDialogue=="rom.dialogue.181.6")
+                        12->{
+                            require(t.getString("evidence")=="game-data/provenance/world-teacher171-talk.json"&&
+                                npc.id=="rom.npc.171.1"&&npc.mapId==171&&rule.mapFlagId=="rom.map.171.flag.2"&&
+                                rule.witnessFlagId=="rom.global.7c8.1"&&rule.itemId=="rom.special.19"&&
+                                rule.firstDialogue=="rom.dialogue.181.0"&&rule.repeatDialogue=="rom.dialogue.181.3")
+                            val messages=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=messages.keys().asSequence().associate{k->k.toInt() to messages.getString(k)}
+                            require(rule.messageDialogues==listOf(0,1,2,3,7).associateWith{i->"rom.dialogue.181.$i"})
+                            rule.completionWitnessFlagId=t.getString("completionWitnessFlagId")
+                            require(rule.completionWitnessFlagId=="rom.global.7c7.128")
+                        }
+                        else->error("Original actor action has no scoped implementation")
+                    }
                     npc.originalTalk=rule
                 }
                 n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->
@@ -274,6 +293,7 @@ object ContentLoader {
                 }else null)
         }}?:emptyList()
         require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
+        require(npcs.all{it.originalTalk?.messageDialogues?.values?.all{id->id in dialogues}!=false})
         val itemArray=data.getJSONArray("items")
         require((0 until itemArray.length()).map{itemArray.getJSONObject(it).getString("id")}.distinct().size==itemArray.length()){"重复的稳定物品ID"}
         val itemDefinitions=(0 until itemArray.length()).associate{i->

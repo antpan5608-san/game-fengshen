@@ -13,6 +13,24 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    fun testRoom171OriginalCounterAndTeacherSignalDefinition(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(171)
+        assertEquals(16,scene.width);assertEquals(15,scene.height);assertEquals(setOf(0,2),scene.walkableClasses)
+        assertEquals(3,c.npcs.count{it.mapId==171});assertFalse(c.battle!!.zones.any{it.mapId==171})
+        val npc=c.npcs.single{it.id=="rom.npc.171.1"};val rule=npc.originalTalk!!
+        assertEquals(12,rule.actionId);assertEquals(7 to 5,npc.interactionCell);assertEquals(Key.UP,npc.interactionDirection)
+        val item=c.itemDefinitions.getValue("rom.special.19")
+        assertEquals(19,item.originalId);assertEquals("special",item.category);assertEquals(1,item.maxCount)
+        assertNull(item.worldUse);assertNull(item.buyPrice);assertNull(item.sellPrice)
+        val old=SaveSnapshot("opening-segment-001-c37",171,7*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer),emptyMap(),mapOf("rom.global.7c8.1" to true),0)
+        assertTrue(old.validate(c));val grant=OriginalNpcTalk.begin(old,rule,item)
+        assertTrue(grant.applied);assertEquals(1,grant.snapshot.inventory[item.id])
+        assertEquals("rom.dialogue.181.1",grant.nextDialogue);assertTrue(grant.snapshot.flags[rule.mapFlagId]!=true)
+        val repeat=OriginalNpcTalk.begin(grant.snapshot,rule,item)
+        assertEquals("rom.dialogue.181.2",repeat.nextDialogue);assertEquals(grant.snapshot,repeat.snapshot)
+        assertEquals(old.money,repeat.snapshot.money);assertEquals(old.characters,repeat.snapshot.characters)
+    }
     fun testTreeFourFloorsActorContactsFullRegionsAndYangInitialTalk(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         for(mid in 107..110){

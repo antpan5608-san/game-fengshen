@@ -517,6 +517,66 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_room171_resources(reader):
+    """One scoped room using existing recipe/ROM verification, not a new importer."""
+    from forensics.fengshen246 import extract_map,extract_npcs,extract_default_map_palette,extract_text
+    path='game-data/provenance/world-room171-resources.json';p=load(ROOT/path)
+    original=extract_map(reader,171);m=p['map'];palette=extract_default_map_palette(reader,171)
+    required={(0,0xca98,29),(0,0xce35,29),(0,reader.word(0,0xcaa5+4)+1,8),
+              (0,reader.word(0,0xce42+4)+1,20),(10,0xcc01,26),(10,0xa160,42),
+              (0,0xed87+171,1),(0,0xee47+171,1)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='room171-original-foot-actors-and-teacher-before-text-gift' or \
+            (m['mapId'],m['width'],m['height'],m['tilesetId'])!=(171,16,15,2) or \
+            m['gridSha256']!=original['gridSha256'] or original['tilesetId']!=2 or m['walkableClasses']!=[0,2] or \
+            m['staticPalette']!=palette or len(m['palette'])!=32 or \
+            any(v!=(palette['palette'][0] if i%4==0 else palette['palette'][i])for i,v in enumerate(m['palette'])) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            reader.read(0,0xed87+171,1)!=b'\xff' or reader.read(0,0xee47+171,1)!=b'\xff':
+        raise ValueError('Room171 source, palette, walls or encounter absence differs')
+    for s in p['sources']:checked_span(reader,s)
+    records=extract_npcs(reader,171)['records']
+    if p['npcRecords']!=records:raise ValueError('Original room actors differ')
+    if p['rules']!={'npcId':'rom.npc.171.1','mapId':171,'npcCell':[7,3],
+                    'normalTalkCell':[7,5],'normalTalkDirection':'UP'}:
+        raise ValueError('Teacher interaction must keep its original counter position')
+    for key,count in [('cpuExpected',36),('discipleCpuExpected',1024)]:
+        v=p[key];raw=(ROOT/v['path']).read_bytes()
+        if v['caseCount']!=count or v['failures']!=0 or digest(raw)!=v['sha256'] or len(raw.splitlines())!=count+1:
+            raise ValueError('Room171 original CPU table differs')
+    for line in (ROOT/p['cpuExpected']['path']).read_text(encoding='ascii').splitlines()[1:]:
+        source,target,direction,blocked,plane=map(int,line.split('\t'))
+        if source not in (0,1,2)or target not in (0,1,2)or direction not in (1,2,3,4)or blocked!=int(target==1)or plane!=0:
+            raise ValueError('Room171 collision table contradicts original foot result')
+    for line in (ROOT/p['discipleCpuExpected']['path']).read_text(encoding='ascii').splitlines()[1:]:
+        flag,party,message,after=map(int,line.split('\t'))
+        if message!=(6 if flag&1 or party==4 else 5)or after!=(flag|1 if party==4 else flag):
+            raise ValueError('Original disciple action11 result differs')
+    if {d['id']for d in p['dialogues']}!={f'rom.dialogue.181.{i}'for i in range(8)}:
+        raise ValueError('Missing original room messages')
+    for d in p['dialogues']:
+        t=extract_text(reader,181,int(d['id'].split('.')[-1]))
+        if d['source']['range']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']:
+            raise ValueError('Room message bytes or original index differs')
+    if len(p['npcs'])!=3:raise ValueError('Missing room actor')
+    for npc,record in zip(p['npcs'],records):
+        i=record['index'];raw=bytes.fromhex(record['rawHex'])
+        if npc['id']!=f'rom.npc.171.{i}'or npc['mapId']!=171 or npc['spriteId']!=record['entityByte']or \
+                npc['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]or npc['source']['record']!=record['range']or \
+                npc['firstEffects']or npc['firstDialogue']!=f'rom.dialogue.181.{raw[1]}'or \
+                npc['repeatDialogue']!=f'rom.dialogue.181.{raw[2] if raw[2]!=255 else raw[1]}':
+            raise ValueError('Room actor position, first/repeat or side effects differs')
+    teacher=load(ROOT/'game-data/provenance/world-teacher171-talk.json')
+    if teacher['romSha256']!=SHA256 or teacher['npcSource']!=records[1]['range']or \
+            teacher['rules']['recordFirstMessage']!=0 or teacher['rules']['recordRepeatMessage']!=3:
+        raise ValueError('Teacher must retain actual raw first/repeat selection')
+    for v in teacher['cpuExpected']:
+        raw=(ROOT/v['path']).read_bytes()
+        if digest(raw)!=v['sha256']or len(raw.splitlines())!=v['caseCount']+1 or v['failures']!=0:
+            raise ValueError('Teacher original selector/gift evidence differs')
+    for s in teacher['sources']:checked_span(reader,s)
+    for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
+    return p
+
 def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/provenance/world-hell-hall-batch-terrain.json'):
     """Actual two-plane matrices for this batch; never a transport or field-damage rule."""
     scopes={'game-data/provenance/world-hell-hall-batch-terrain.json':
@@ -953,6 +1013,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('room171CollisionEvidence'):
+            room=validate_world_room171_resources(reader)
+            if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
+                    original['tilesetId']!=2 or set(collision)!={0,1,2}or allowed!=[0,2]or recipe['palette']!=room['map']['palette']:
+                raise ValueError('Room171 collision scope or reviewed palette differs')
         forest=recipe.get('forestCollisionEvidence')
         if forest:
             proof=load(ROOT/forest)
@@ -1370,6 +1435,19 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item['id']=='rom.special.19':
+                    room=validate_world_room171_resources(reader)
+                    if item!=room['items'][0] or item['originalId']!=19 or item['maxCount']!=1 or \
+                            any(k in item for k in ('buyPrice','sellPrice','worldUse','fieldProtectionUse')):
+                        raise ValueError('Teacher signal cannot infer prices or an unimplemented use')
+                    names=reader.word(2,0xe610);pointer=reader.word(2,names+38)
+                    s=item['source']['nameRange'];raw=checked_span(reader,s)
+                    expected=reader.read(2,pointer,32);expected=expected[:expected.index(255)+1]
+                    grant=next(s for s in load(ROOT/'game-data/provenance/world-teacher171-talk.json')['sources']
+                               if(s['module'],s['cpuAddress'],s['length'])==(2,0xb510,21))
+                    if s['cpuAddress']!=pointer or raw!=expected or item['name']!='玉佩' or checked_span(reader,grant)!=reader.read(2,0xb510,21):
+                        raise ValueError('Signal name or actual teacher grant differs')
+                    continue
                 if 'fieldProtectionUse'in item:
                     validate_world_field_protection_item(reader,item)
                     continue
@@ -1449,7 +1527,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('originalTalk'):
+        if npc.get('originalTalk') and npc['mapId']==171:
+            room=validate_world_room171_resources(reader)
+            expected=next((n for n in room['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in evidence['dialogues']for d in room['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=v for n,v in room['graphics'].items()):
+                raise ValueError('Original room171 actor, dialogue or graphic differs')
+        elif npc.get('originalTalk'):
             from forensics.fengshen246 import extract_npcs
             path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)
             record=extract_npcs(reader,110)['records'][0]
