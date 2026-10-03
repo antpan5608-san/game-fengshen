@@ -9,7 +9,7 @@ import export_development as ex
 class ForestDirectionExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-forest-direction-content.json').read_text(encoding='utf-8'))
         cls.path='game-data/provenance/world-forest101-direction-content.json'
         cls.p=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'))
         cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text(encoding='utf-8'))

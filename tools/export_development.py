@@ -683,10 +683,20 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
-    path='game-data/provenance/world-hell-chest-grants.json';proof=load(ROOT/path)
-    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-actual-ordinary-chest-grant' or \
-            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['testCount']!=72 or proof['failures']!=0:
+    path=npc['treasure']['evidence'];proof=load(ROOT/path)
+    scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
+            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21)}
+    if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
+    if path=='game-data/provenance/world-tree107-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or \
+                digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=22 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(107,0,3,30),(107,1,2,7),(108,0,0,14)]:
+            raise ValueError('Tree chest source, original CPU or reused capacity rules differ')
     from forensics.fengshen246 import extract_npcs
     matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
     if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
@@ -873,6 +883,33 @@ def validate_world_exit_geometry(scene,result):
         if not valid(row['fromMapId'],row['trigger'])or not valid(row['toMapId'],row['spawn']):
             raise ValueError(f"Invalid exit geometry {row['fromMapId']}:{row['trigger']} -> {row['toMapId']}:{row['spawn']}; original state evidence is required")
 
+def validate_world_tree_contact(reader,path):
+    if path!='game-data/provenance/world-tree-contact.json':raise ValueError('Unknown actor contact evidence')
+    proof=load(ROOT/path)
+    required={(0,0xa973,77),(0,0xc68a,258),(0,0xc78c,26),(0,0xc894,100),(0,0xc9ea,35),(0,0xaa1f,41)}
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='continent-E7-E8-original-contact-foot-D6-tree107' or \
+            proof['cpuCaseCount']!=2384 or proof['cpuFailures']!=0 or \
+            proof['activeCpuSha256']!=digest(reader.read(0,0x8000,32768)) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required or \
+            proof['rules']!={'walkerId':214,'toMapId':107,'spawn':[7,14],'preserveArrivalDirection':True,
+                'resetEncounterSteps':True,'return':[16,169,149],'whenRemoved':'ordinary_floor_no_contact_entry',
+                'triggerBeforeCompletedStep':True}:
+        raise ValueError('Tree contact destination, timing or actor rule differs')
+    for span in proof['sources']:checked_span(reader,span)
+    raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+    if digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=2385:
+        raise ValueError('Original actor contact CPU table differs')
+    from forensics.fengshen246 import extract_npcs
+    records={n['entityByte']:n for n in extract_npcs(reader,16)['records']}
+    if [b['actorId']for b in proof['bindings']]!=[231,232]:raise ValueError('Unreviewed actor contact')
+    for b in proof['bindings']:
+        original=records[b['actorId']];record=checked_span(reader,b['recordSource'])
+        cell=[(original[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if b['recordSource']!=original['range'] or b['mapId']!=16 or b['cell']!=cell or \
+                b['removedFlagId']!=f'rom.map.16.flag.{record[13]}':
+            raise ValueError('Original actor contact presence or cell differs')
+    return proof
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -920,7 +957,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if forest:
             proof=load(ROOT/forest)
             required={(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
-            if forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+            tree=forest=='game-data/provenance/world-tree107-terrain.json'
+            if tree:
+                binding=next((b for b in proof['maps']if b['mapId']==mid),None)
+                if mid not in (107,108,109,110) or binding is None or binding['gridSha256']!=original['gridSha256'] or \
+                        original['tilesetId']!=5 or set(collision)!={0,1} or allowed!=[0] or \
+                        proof['scopeRevision']!='tree107-110-foot0-wall1-requested-direction' or \
+                        proof['romSha256']!=SHA256 or proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or \
+                        proof['sourceEdges']!={} or proof['targetEdges']!={} or \
+                        recipe['palette']!=binding['palette']['palette'] or \
+                        {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+                    raise ValueError('Tree floor lacks actual forest dispatcher, grid or palette')
+            elif forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
                     proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
                     proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
                     proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
@@ -998,6 +1046,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             klass=reader.read(c['module'],c['cpuAddress']+tile)[0]
             if klass!=exit['collisionClass'] or exit['toMapId']!=klass-exit['dispatchSubtract']:
                 raise ValueError('Original indoor collision dispatch differs')
+        elif exit['kind']=='ACTOR_CONTACT':
+            proof=validate_world_tree_contact(reader,exit['contactEvidence'])
+            binding=next((b for b in proof['bindings']if b['actorId']==exit['contactActorId']),None)
+            if binding is None or exit['fromMapId']!=16 or exit['toMapId']!=107 or \
+                    exit['source']!=binding['recordSource'] or exit['trigger']!=binding['cell'] or \
+                    exit['spawn']!=[7,14] or exit.get('triggerMode')!='ACTOR_CONTACT' or \
+                    exit.get('preserveArrivalDirection') is not True or exit.get('resetEncounterSteps') is not True or \
+                    not any(b['id']==f'rom.barrier.16.{exit["contactActorId"]}' and b['cell']==exit['trigger'] and
+                        b['removedFlagId']==binding['removedFlagId']for b in scene.get('sceneBarriers',[])):
+                raise ValueError('Actor contact must retain original filtered barrier and destination')
         elif exit['kind']=='EXIT_RECORD':
             if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
                 raise ValueError('Original exit record differs')
@@ -1011,8 +1069,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Edge requires observed departure, not swapped coordinates')
         else:raise ValueError('Unsupported transition kind needs original evidence')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
-            {'source':exit['source'],'evidence':provenance_path}|
-            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection') if k in exit})
+            {'source':exit['source'],'evidence':exit['contactEvidence']if exit['kind']=='ACTOR_CONTACT'else provenance_path}|
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection','contactActorId') if k in exit})
         if exit.get('preserveArrivalDirection'):
             source=exit['arrivalDirectionSource']
             checked_span(reader,source)
@@ -1391,6 +1449,26 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('originalTalk'):
+            from forensics.fengshen246 import extract_npcs
+            path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)
+            record=extract_npcs(reader,110)['records'][0]
+            expected={k:proof['rules'][k]for k in ('actionId','mapFlagId','witnessFlagId','itemId')}|{'evidence':path}
+            raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+            if proof['romSha256']!=SHA256 or proof['scopeRevision']!='tree110-yang-actor-action17-witness-and-item19' or \
+                    proof['cpuCaseCount']!=1024 or proof['cpuFailures']!=0 or \
+                    proof['activeCpuSha256']!=digest(reader.read(10,0x8000,32768)) or \
+                    digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=1025 or \
+                    npc['id']!='rom.npc.110.0' or npc['mapId']!=110 or npc['cell']!=[6,6] or npc['spriteId']!=130 or \
+                    npc['source']['record']!=record['range'] or proof['npcSource']!=record['range'] or \
+                    npc['originalTalk']!=expected or npc['firstEffects'] or \
+                    npc['firstDialogue']!=proof['rules']['firstDialogue'] or npc['repeatDialogue']!=proof['rules']['repeatDialogue'] or \
+                    evidence['graphics'].get(npc['sprite'])!=proof['graphic']:
+                raise ValueError('Original NPC action17 selection, flags or actor differs')
+            for span in proof['sources']:checked_span(reader,span)
+            for dialogue in proof['dialogues']:
+                checked_span(reader,dialogue['source']['range'])
+                if dialogue not in evidence['dialogues']:raise ValueError('Original actor dialogue source differs')
         if npc.get('clinicId'):
             from forensics.fengshen246 import extract_npcs
             records=extract_npcs(reader,20)['records']

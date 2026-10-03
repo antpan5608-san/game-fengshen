@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "room171-teacher-action12-and-before-text-special19-gift",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "npcSource": {
+    "offset": 285324,
+    "length": 14,
+    "sha256": "c2801d370dc65c5482a076aff4933150e053bfe4c6c4aae3159461419e672c32",
+    "module": 8,
+    "cpuAddress": 55932,
+    "meaning": "Fixed 14-byte NPC source record"
+  },
+  "cpuExpected": [
+    {
+      "path": "android/app/src/test/resources/world-teacher171-selector-original-cpu.tsv",
+      "caseCount": 8192,
+      "sha256": "2b6f3a498c8a3510652034f24c47ec41d80a2dc2ce37712c8bd3c3336fe27dec",
+      "failures": 0
+    },
+    {
+      "path": "android/app/src/test/resources/world-teacher171-gift-original-cpu.tsv",
+      "caseCount": 6,
+      "sha256": "8c74007a5202070e915441da74865e44c76b171b99ee8f29cffa37d70857b150",
+      "failures": 0
+    }
+  ],
+  "sources": [
+    {
+      "offset": 347179,
+      "length": 72,
+      "sha256": "dc1cf37e4643a4be3852cd2e1284c8164bf13f7f63cfb19f1351c502c15a2a4f",
+      "module": 10,
+      "cpuAddress": 52251,
+      "meaning": "Actual teacher action12 selector"
+    },
+    {
+      "offset": 348506,
+      "length": 53,
+      "sha256": "53fe7fe9e0705ac6f691d9c1edd520e306cdaf12797a437322499abfa0283109",
+      "module": 10,
+      "cpuAddress": 53578,
+      "meaning": "Original owned category quantity lookup"
+    },
+    {
+      "offset": 347961,
+      "length": 15,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Original current map flag OR"
+    },
+    {
+      "offset": 347949,
+      "length": 6,
+      "sha256": "4fa0f251151c5959b263982ab1760c8ff3a2f92100ed59e0de8eb3a6eb5e4d01",
+      "module": 10,
+      "cpuAddress": 53021,
+      "meaning": "Original postprocessor common flag reset"
+    },
+    {
+      "offset": 79136,
+      "length": 21,
+      "sha256": "09cc66548ae7294b7e23ce01784b6aadb4e453d282e49d799a4644f4abe08aa6",
+      "module": 2,
+      "cpuAddress": 46352,
+      "meaning": "Actual room171 dialogue1 special19 gift dispatch before text"
+    },
+    {
+      "offset": 79390,
+      "length": 9,
+      "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe",
+      "module": 2,
+      "cpuAddress": 46606,
+      "meaning": "Original gift category special and A0EB grant"
+    },
+    {
+      "offset": 73979,
+      "length": 169,
+      "sha256": "dbe4dc6c7e546cabe99df068b2bc4e23db2af0fad2cee705d61e80de2b867c08",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original inventory grant with count and category capacity"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original category count caps and base addresses"
+    }
+  ],
+  "rules": {
+    "mapId": 171,
+    "actorId": 175,
+    "npcIndex": 1,
+    "actionId": 12,
+    "mask": 2,
+    "mapFlagId": "rom.map.171.flag.2",
+    "witnessFlagId": "rom.global.7c8.1",
+    "itemId": "rom.special.19",
+    "giftMessage": 1,
+    "giftBeforeText": true,
+    "category": 1,
+    "maxQuantity": 1,
+    "maxCategoryRows": 16,
+    "noAutomaticSeenOrGiftFlag": true,
+    "partyCountBranches": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "otherCompletionCondition": "actual party count4 and global7c7 bit128, only when item19 already owned"
+  },
+  "observedRules": [
+    "No witness and no mapflag: message0 and no gift",
+    "Witness and item absent: message1, grant special19 if capacity permits; mapflag stays unchanged",
+    "Grant failure retains message1 without adding item or claiming map completion",
+    "Already owned: message2/3/7 selected by party count; no repeated gift",
+    "Flag2 already set: original repeat message2, no grant"
+  ],
+  "remainingUnknown": [
+    "Item19 actual use scene/target/consumption and Yang join are not established by teacher grant",
+    "Teacher full dialogue pages are separately traced from original real keys; selection TSV is not text proof",
+    "Normal Android room171 service/talk/save/cold behavior NOT_RUN"
+  ]
+}

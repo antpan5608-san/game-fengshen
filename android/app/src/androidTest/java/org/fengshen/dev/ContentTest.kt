@@ -13,6 +13,28 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    fun testTreeFourFloorsActorContactsFullRegionsAndYangInitialTalk(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in 107..110){
+            val scene=c.scenes.getValue(mid);assertEquals(16,scene.width);assertEquals(15,scene.height)
+            assertEquals(setOf(0),scene.walkableClasses)
+            val zone=c.battle!!.zones.single{it.mapId==mid};assertEquals(11,zone.groups.size)
+            assertTrue(zone.highGate);assertEquals(245,zone.randomThreshold)
+            assertEquals(setOf(41,42),zone.groups.flatMap{it.members}.map{it.enemyId}.toSet())
+        }
+        val contacts=c.exits.filter{it.contactActorId!=null};assertEquals(2,contacts.size)
+        assertEquals(setOf(231,232),contacts.map{it.contactActorId}.toSet())
+        for(e in contacts){assertEquals(16,e.fromMapId);assertEquals(107,e.toMapId);assertEquals(7,e.spawnX);assertEquals(14,e.spawnY)}
+        val back=c.exits.single{it.fromMapId==107&&it.toMapId==16};assertEquals(169,back.spawnX);assertEquals(149,back.spawnY)
+        val chest=c.npcs.filter{it.mapId in 107..108&&it.treasure!=null};assertEquals(3,chest.size)
+        assertEquals(setOf("rom.weapon.7","rom.armor.30","rom.medicine.14"),chest.map{it.treasure!!.itemId}.toSet())
+        val npc=c.npcs.single{it.id=="rom.npc.110.0"};assertNotNull(npc.originalTalk)
+        assertEquals("rom.global.7c8.1",npc.originalTalk!!.witnessFlagId)
+        assertEquals("rom.special.19",npc.originalTalk!!.itemId)
+        assertTrue(c.dialogues.containsKey(npc.originalTalk!!.firstDialogue))
+        val old=SaveSnapshot("opening-segment-001-c36",16,238*16+8,160*16+8,Key.UP,listOf(c.initialPlayer),emptyMap(),emptyMap(),93)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
     fun testForest101OriginalFootEdgesCompleteRegionAndRealReturn(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val s=c.scenes.getValue(101)
         assertEquals(setOf(0,3,7,8,9),s.walkableClasses)

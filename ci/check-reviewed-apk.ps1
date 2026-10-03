@@ -41,3 +41,5 @@ if($runtime.worldVillageThreeServicesAndColdRestart -ne 'PASS'){throw 'Village3 
 if($runtime.worldContinentBridgeAndZone16Normal -ne 'PASS' -or $runtime.worldContinentBridgeColdRestart -ne 'PASS'){throw 'Original bridges, complete zone16 encounters and actual cold return must verify this exact APK'}
 if($runtime.worldForest101Normal -ne 'PASS' -or $runtime.worldForest101ColdRestart -ne 'PASS'){throw 'Original forest101 route, full zone17 and actual cold return must verify this exact APK'}
 if($runtime.worldMedicalControlledCommands -ne 'PASS' -or $runtime.worldMedicalNormalEntryAndColdRestart -ne 'PASS'){throw 'Medical real entry/cold restart and separately controlled commands must verify this exact APK'}
+
+if($runtime.worldTree107Normal -ne 'PASS' -or $runtime.worldTree107ColdRestart -ne 'PASS'){throw 'Actual tree actor contact, four floors, original chests, Yang talk and cold return must verify this exact APK'}

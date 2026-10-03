@@ -68,6 +68,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Forest base regression failed' }
     & python -m unittest discover -s tests -p test_world_forest_direction_export.py
     if($LASTEXITCODE -ne 0){throw 'Forest101 original movement, complete region and restore gates failed'}
+    & python -m unittest discover -s tests -p test_world_tree107_export.py
+    if ($LASTEXITCODE -ne 0) { throw 'Original tree contacts, four floors, chests, full encounters and Yang talk gates failed' }
     & python -m unittest discover -s tests -p test_world_continent_barrier_export.py
     if ($LASTEXITCODE -ne 0) { throw 'Original world actor conditions gates failed' }
     & python -m unittest discover -s tests -p test_world_continent_bridge_export.py

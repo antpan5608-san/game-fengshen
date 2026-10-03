@@ -677,6 +677,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val direction=if(npc.interactionDirection!=null&&npc.interactionCell==(x to y))npc.interactionDirection!!
             else facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
+        npc.originalTalk?.let{rule->
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot()
+            commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule),npc);return
+        }
         val story=content.battle?.storyBattles?.get(npc.id)
         // A guarded chest enters its original story battle first. The acquisition
         // transaction only runs after that exact victory flag is committed.
@@ -799,6 +804,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
             startStoryBattle(story);return
         }
+        if(npc?.originalTalk!=null){dismissDialogue();return}
         if(npc==null)flags=flags+("opening.intro.seen" to true)
         else if(flags[npc.id]!=true){
             for(effect in npc.firstEffects)when(effect.type){

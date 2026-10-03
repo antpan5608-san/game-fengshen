@@ -27,6 +27,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var scriptedActor:Boolean=false;internal set
     var interactionDirection:Key?=null;internal set
     var clinicId:String?=null;internal set
+    var originalTalk:OriginalNpcTalkDefinition?=null;internal set
 }
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
@@ -235,13 +236,23 @@ object ContentLoader {
                     require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
                     TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount")).also{treasure->
                         if(t.has("categoryGrant")){
-                            require(t.getString("evidence")=="game-data/provenance/world-hell-chest-grants.json")
+                            require(t.getString("evidence") in setOf("game-data/provenance/world-hell-chest-grants.json",
+                                "game-data/provenance/world-tree107-chests.json"))
                             treasure.categoryGrant=t.getInt("categoryGrant").also{require(it in 0..3)}
                         }
                     }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
+                n.optJSONObject("originalTalk")?.let{t->
+                    require(t.getInt("actionId")==17&&t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
+                        npc.id=="rom.npc.110.0"&&npc.mapId==110&&npc.firstEffects.isEmpty())
+                    val rule=OriginalNpcTalkDefinition(npc.mapId,t.getString("mapFlagId"),t.getString("witnessFlagId"),
+                        t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
+                    require(rule.mapFlagId=="rom.map.110.flag.2"&&rule.witnessFlagId=="rom.global.7c8.1"&&
+                        rule.itemId=="rom.special.19"&&rule.firstDialogue=="rom.dialogue.120.0"&&rule.repeatDialogue=="rom.dialogue.120.1")
+                    npc.originalTalk=rule
+                }
                 n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->
                     require(n.getString("interactionEvidence").isNotBlank())
                     val point=npc.interactionCell?:error("Missing original interaction point")

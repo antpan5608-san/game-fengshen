@@ -515,5 +515,10 @@ jobs:
             artifacts/checkpoint-ui/world-forest101-*.json
             artifacts/checkpoint-ui/world-forest101-*-test.txt
             artifacts/world-forest101-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-tree107-*.png
+            artifacts/checkpoint-ui/touch-ux-world-tree107-*.json
+            artifacts/checkpoint-ui/world-tree107-*.json
+            artifacts/checkpoint-ui/world-tree107-*-test.txt
+            artifacts/world-tree107-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

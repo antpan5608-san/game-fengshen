@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "continent-E7-E8-original-contact-foot-D6-tree107",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_REAL_KEYS_FROM_POSITION_ENTRY_NOT_NORMAL_ANDROID",
+  "cpuExpectedPath": "android/app/src/test/resources/world-tree-contact-original-cpu.tsv",
+  "cpuCaseCount": 2384,
+  "cpuFailures": 0,
+  "activeCpuSha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853",
+  "sources": [
+    {
+      "offset": 10627,
+      "length": 77,
+      "sha256": "1ac25f3c153d203cb70526104a0d0f38f1ddfc920847e559c1b72b77130ecf95",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original actor presence filtering on its map flag"
+    },
+    {
+      "offset": 18074,
+      "length": 258,
+      "sha256": "99155ed8ef19a885a62cad8b365225387be303af764bea7cb0f25170ff097890",
+      "module": 0,
+      "cpuAddress": 50826,
+      "meaning": "Original actor contact rectangle/dispatch scanner"
+    },
+    {
+      "offset": 18332,
+      "length": 26,
+      "sha256": "8f332008302b2917d259b9a9ab50e4ae06a23cbc0c580691645ce9e227c75966",
+      "module": 0,
+      "cpuAddress": 51084,
+      "meaning": "D6-only tree contact to map107 and load request"
+    },
+    {
+      "offset": 18596,
+      "length": 100,
+      "sha256": "95524fb982728d75d8ea1f0fb5b273cc8f0eb6d3c347ab17fb648c6b69fd6d33",
+      "module": 0,
+      "cpuAddress": 51348,
+      "meaning": "Original requested-direction actor contact rectangles"
+    },
+    {
+      "offset": 18938,
+      "length": 35,
+      "sha256": "5eb4e1404f563ad11ef4361823c87dee04ee2b3be1adc9a76dd7a866882d086a",
+      "module": 0,
+      "cpuAddress": 51690,
+      "meaning": "Original saved caller map and camera"
+    },
+    {
+      "offset": 10799,
+      "length": 41,
+      "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+      "module": 0,
+      "cpuAddress": 43551,
+      "meaning": "Original map reconstruction retains facing"
+    }
+  ],
+  "bindings": [
+    {
+      "actorId": 231,
+      "mapId": 16,
+      "cell": [
+        170,
+        148
+      ],
+      "removedFlagId": "rom.map.16.flag.2",
+      "recordSource": {
+        "offset": 280064,
+        "length": 14,
+        "sha256": "03ee839ef260658818ba169079e73514906c40158605b2786863b74060bda1d5",
+        "module": 8,
+        "cpuAddress": 50672,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "actorId": 232,
+      "mapId": 16,
+      "cell": [
+        170,
+        149
+      ],
+      "removedFlagId": "rom.map.16.flag.4",
+      "recordSource": {
+        "offset": 280078,
+        "length": 14,
+        "sha256": "76be2be1f5eba2bd5b1af732e55cead466773104ca412f16367e39c4f73d3dbd",
+        "module": 8,
+        "cpuAddress": 50686,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    }
+  ],
+  "rules": {
+    "walkerId": 214,
+    "toMapId": 107,
+    "spawn": [
+      7,
+      14
+    ],
+    "preserveArrivalDirection": true,
+    "resetEncounterSteps": true,
+    "return": [
+      16,
+      169,
+      149
+    ],
+    "whenRemoved": "ordinary_floor_no_contact_entry",
+    "triggerBeforeCompletedStep": true
+  },
+  "controllerEvidence": [
+    {
+      "actorId": 232,
+      "beforePath": "private-derived/world-tree107-return-reentry-controller/02-real-world-return-ram.bin",
+      "beforeSha256": "f8852e3677272ae8635570b6a3f66882011ca5aa0e126051e2237a3efb9cf7ba",
+      "afterPath": "private-derived/world-tree107-return-reentry-controller/03-real-tree-reentry-ram.bin",
+      "afterSha256": "11f44edf00ee03104ca8f718936596082fcf97f0761d4da366cca1613da8cb2e",
+      "noNewRamWrites": true,
+      "actualAfter": [
+        107,
+        7,
+        14
+      ]
+    },
+    {
+      "actorId": 231,
+      "beforePath": "private-derived/world-tree-crown231-trace-controller/00-fresh-world-return-source-ram.bin",
+      "beforeSha256": "f8852e3677272ae8635570b6a3f66882011ca5aa0e126051e2237a3efb9cf7ba",
+      "afterPath": "private-derived/world-tree-crown231-trace-controller/02-actual-crown-attempt-ram.bin",
+      "afterSha256": "4ab0d4fe1275e1d3e16120a7f13616ad9d747c3830982f702bbd83bd007e3910",
+      "noNewRamWrites": true,
+      "actualAfter": [
+        107,
+        7,
+        14
+      ]
+    }
+  ],
+  "limits": [
+    "Only the two actual tree actors; other mainland barriers are not removed",
+    "Source is controlled entry position, then actual keys; not normal Android/new-game evidence"
+  ],
+  "cpuExpectedSha256": "f445b350fa80646bb7d8f25cd4150874d536dc00acb2ffad4254f88155fbc15f"
+}

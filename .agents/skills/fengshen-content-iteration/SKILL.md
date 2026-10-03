@@ -265,3 +265,10 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 
 - 当前授权可接受明确非阻断历史故障时，诊断投影仍保留status/ERROR/计数；原runtime-summary.mjs的独立--release-assessment只核已经精确review的旧版本下载中断与可信两版hash。19 Node/投影方法、22原审批隔离场景和实际脱敏inspect输入评估已运行；新错误、崩溃、丢档或查询不可用仍拒绝。PowerShell/生产路径未实际执行前保持待核，不将ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES写NO_ISSUES_OBSERVED。动态例外存ci/runtime-nonblocking-issues.json，不复制进skill。
+
+
+## 已验证的树内局部接续（正常App仍待验）
+
+复用原export_from_base固定父配方、Reader独立出口、scoped_map_atlas与observed_graphic_recipe，接触入口只解除已核接触对象的那一格探测，不删旗标或打开其余墙。树内原同zone在各地图分别绑定完整组；大陆原遇敌矩形在module11而非同址module0，必须核真实指针/跨度，不能抄区域编号。四层局部导出四方法、完整世界回归、JVM与原ci_apk.restore空assets逐字节已实际执行；正常App入口虽已接原runtime/receipt门禁，不能由编译宣称PASS。
+
+NPC首谈action与一次性seen分开；原action17在对白前写见面旗标，未拥有指定物品不加mapflag或队员。原CPU表和OriginalNpcTalkTest核状态，原真实按键核正文；重复对话不能套统一seen规则。后续teacher选择/礼物容量探针已运行，派生表不证明物品使用或入队。菜单取证长按可能跨层，改成单帧按键后逐屏检查实际阶段；原始ROM/PPU/RAM继续忽略目录。
