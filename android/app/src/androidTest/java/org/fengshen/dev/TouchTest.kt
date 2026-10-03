@@ -1930,13 +1930,13 @@ class TouchTest:IsolatedGameTestCase(){
                 (10-(bag[AntidoteUse.ID]?:0)).coerceAtLeast(0)*20
         }
         // A normal player's preparation, not a new game gate. Actual original
-        // fights earn every level/coin; original 4-liang inn restores HP. Level 9
+        // fights earn every level/coin; original 4-liang inn restores HP. Level 12
         // is this recording's chosen safety margin, not a North access condition.
-        if(v.currentSnapshot().characters.first().level<9||v.currentSnapshot().money<supplyCost()+8){
+        if(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
             training=true;state("normal-training-start")
             inn();walkTo(0,14);step(Key.LEFT);walkTo(200,130)
             var trainingSteps=0
-            while(v.currentSnapshot().characters.first().level<9||v.currentSnapshot().money<supplyCost()+8){
+            while(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
                 assertTrue("Bounded normal preparation exhausted; no resource grants",trainingSteps++<3000)
                 if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
                     walkTo(202,130);assertEquals(0,v.world.mapId);inn()
