@@ -30246,7 +30246,8 @@
     "Five new enemy graphic recipes are controlled original full-group captures, not normal Android proof. Names from Reference are PROVISIONAL; medicine4 name/effect and weapon18 equipment operation are UNKNOWN/unimplemented.",
     "Behavior8 status progression is original CPU evidence plus isolated JUnit; actual Android flows remain NOT_RUN.",
     "Village2 route/three shops/inn are scoped ROM + original normal door/inn evidence; clinic and remaining NPC/story are explicitly unimplemented, Android NOT_RUN.",
-    "Only absent medicine7 merchant prices filled from original catalog; old identity/name/use retained. No new medicine effect inferred."
+    "Only absent medicine7 merchant prices filled from original catalog; old identity/name/use retained. No new medicine effect inferred.",
+    "Canonical source confidence vocabulary applies to every item, including unresolved-name medicines; it does not promote unknown name/use/license fields."
   ],
   "maps": [
     {
@@ -34635,7 +34636,7 @@
       "name": "原名未核（藥品4）",
       "description": "原版掉落已接入；使用或裝備操作尚未接入。",
       "source": {
-        "confidence": "VERIFIED_ID_PRICE_UNKNOWN_NAME_USE",
+        "confidence": "PROVISIONAL_REFERENCE",
         "verifiedFields": [
           "originalId",
           "category",
@@ -35202,57 +35203,6 @@
         ],
         "crossHandOccupancy": false,
         "evidence": "game-data/provenance/world-village2-equipment.json"
-      }
-    },
-    {
-      "id": "rom.medicine.12",
-      "category": "medicine",
-      "originalId": 12,
-      "buyPrice": 80,
-      "sellPrice": 40,
-      "maxCount": 10,
-      "name": "蛛絲",
-      "description": "原版商店商品；名稱暫定，有據功能才開放。",
-      "source": {
-        "confidence": "PROVISIONAL_NAME_WITH_VERIFIED_ROM_PRICE",
-        "verifiedFields": [
-          "originalId",
-          "category",
-          "buyPrice",
-          "sellPrice",
-          "maxCount"
-        ],
-        "remainingUnknown": [
-          "Original name screenshot",
-          "Full use rules"
-        ],
-        "priceRange": {
-          "offset": 92082,
-          "length": 2,
-          "sha256": "6fd27b6685dd017d06230f819aafdbd609480ce22aa2590ed1ed2f46c6af6716",
-          "module": 2,
-          "cpuAddress": 59298,
-          "meaning": "Original unsigned purchase price"
-        },
-        "nameRange": {
-          "offset": 92044,
-          "length": 4,
-          "sha256": "a3d3ecd3f2cede04c629850a244d3149fedacb16e1d8bd27a56603c5994cdcb6",
-          "module": 2,
-          "cpuAddress": 59260,
-          "meaning": "Original terminated menu text"
-        },
-        "nameEvidence": {
-          "kind": "PROVISIONAL_REFERENCE",
-          "repository": "https://github.com/v5100v5100/FengShenBang",
-          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
-          "path": "Resources/res/MainData",
-          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
-          "licenseStatus": "UNKNOWN",
-          "targetOriginalDisplayedName": "NOT_VERIFIED",
-          "rowId": 103
-        },
-        "evidence": "game-data/provenance/world-village2-content.json"
       }
     }
   ],

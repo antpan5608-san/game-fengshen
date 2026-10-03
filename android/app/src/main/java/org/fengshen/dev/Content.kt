@@ -214,9 +214,10 @@ object ContentLoader {
         }}?:emptyList()
         require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         val itemArray=data.getJSONArray("items")
+        require((0 until itemArray.length()).map{itemArray.getJSONObject(it).getString("id")}.distinct().size==itemArray.length()){"重复的稳定物品ID"}
         val itemDefinitions=(0 until itemArray.length()).associate{i->
             val o=itemArray.getJSONObject(i);val source=o.getJSONObject("source").getString("confidence")
-            require(source in setOf("PROVISIONAL_REFERENCE","GAMEPLAY_VERIFIED"))
+            require(source in setOf("PROVISIONAL_REFERENCE","GAMEPLAY_VERIFIED")){"不支持的物品来源状态: ${o.getString("id")}: $source"}
             val preview=o.optJSONObject("preview")
             val item=ItemDefinition(o.getString("id"),o.getString("name"),o.optString("description").takeIf{it.isNotBlank()},source,
                 o.optString("category","weapon"),o.optInt("originalId",0),
