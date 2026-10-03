@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c23",
-  "manifestSha256": "2806bb6af10312a8f4382e963b3e6cf465980829056aa874283b415f28a77c13",
+  "contentVersion": "opening-segment-001-c22",
+  "manifestSha256": "6441de972a20f6d992a70b0b353a337779cd81d521eb90234ba69b6ab4a319ab",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-first-hall-content.json"
+    "provenance": "game-data/provenance/world-village2-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

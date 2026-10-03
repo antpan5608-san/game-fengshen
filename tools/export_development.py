@@ -523,6 +523,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1,14}:
                     raise ValueError('Ground profile classes differ from original map')
+            elif terrain['tileset']==3 and proof.get('scopeRevision')=='map70-first-hall-ground-mode':
+                if mid!=70 or original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0 or proof['testCount']!=576 or proof['failures']!=0:
+                    raise ValueError('First hall lacks original ground matrix')
+                for span in proof['sources']:checked_span(reader,span)
+                if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
+                    raise ValueError('First hall ground classes differ')
             else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
@@ -734,6 +740,17 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     expected['evidence']=boss['continuation']['evidence']
                     if boss['continuation']!=expected or boss.get('commitAfterDialogue',False):
                         raise ValueError('Story continuation order or state differs')
+                elif boss.get('victoryFlags'):
+                    proof=load(ROOT/boss['victoryFlagEvidence']);rule=proof['rules']
+                    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246':
+                        raise ValueError('Unknown battle map flags')
+                    for span in proof['sources']:checked_span(reader,span)
+                    if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
+                            boss['flagId']!=rule['bossVictoryFlag'] or boss['victoryFlags']!=rule['victoryFlags'] or boss.get('commitAfterDialogue',False):
+                        raise ValueError('First hall battle flags or timing differ')
+                    if checked_span(reader,rule['sourceTypeInstruction'])!=bytes.fromhex('a99f') or \
+                            checked_span(reader,rule['setDialogueAndEventFlag'])!=bytes.fromhex('a9022078d3'):
+                        raise ValueError('First hall source or event2 instruction differs')
                 elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
             if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
@@ -853,6 +870,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('interactionDirection'):
+            proof=load(ROOT/npc['interactionEvidence']);rule=proof['rules']
+            if proof['romSha256']!=SHA256 or (npc['id'],npc['mapId'],npc['cell'],npc['interactionCell'],npc['interactionDirection'])!= \
+                    (rule['npcId'],rule['mapId'],rule['npcCell'],rule['normalTalkCell'],rule['normalTalkDirection']):
+                raise ValueError('Original nonadjacent interaction point differs')
+            checked_span(reader,npc['source']['record'])
         if npc.get('scriptedActor'):
             story=next((b for b in overlay.get('bosses',[]) if b['npcId']==npc['id']),None) if overlay else None
             if story is None or not story.get('actorScriptSource') or npc.get('firstEffects'):
@@ -890,6 +913,19 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if not 0<=cell[0]<data['width'] or not 0<=cell[1]<data['height']:raise ValueError('Map object outside grid')
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
+    for barrier in evidence.get('sceneBarriers',[]):
+        proof=load(ROOT/barrier['evidence']);rule=proof['rules'];raw=checked_span(reader,barrier['recordSource'])
+        cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
+        if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246' or \
+                barrier['mapId']!=70 or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
+                barrier['removedFlagId']!=rule['barrierRemovedFlag'] or barrier['cell']!=rule['barrierCell']:
+            raise ValueError('Original first hall collision actor differs')
+        for span in proof['sources']:checked_span(reader,span)
+        name=next(m['scene'] for m in scene['maps']if m['id']==barrier['mapId']);data=json.loads(result[name])
+        if cell[1]*data['width']+cell[0] not in data['dynamicObjectCells']:
+            raise ValueError('Original barrier must start as a collision actor')
+        if any(b['id']==barrier['id']for b in scene.get('sceneBarriers',[])):raise ValueError('Duplicate original barrier')
+        scene.setdefault('sceneBarriers',[]).append(barrier)
     bindings=scene.get('serviceBindings',[])+evidence.get('serviceBindings',[])
     if len({(b['callerMapId'],b['interiorMapId'],b['npcId']) for b in bindings})!=len(bindings):
         raise ValueError('Duplicate service caller binding')

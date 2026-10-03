@@ -6,7 +6,7 @@ data class TerrainDecision(val block:MovementBlock,val nextMode:Int,val suppress
 object OriginalTerrain {
     const val PALACE=4
     const val CAVE_GROUND=3
-    private val caveGroundClasses=setOf(0,1,4,8,10,11,13,14,19,20,21)
+    private val caveGroundClasses=setOf(0,1,2,3,4,5,6,7,8,9,10,11,13,14,19,20,21,23)
     fun supported(profile:Int?,mode:Int)=mode==0||(profile==PALACE&&mode==1)
     fun standing(profile:Int?,collision:Int,mode:Int):Boolean {
         if(profile==CAVE_GROUND)return mode==0&&collision in caveGroundClasses&&collision !in setOf(1,14)
@@ -21,7 +21,15 @@ object OriginalTerrain {
         if(profile==CAVE_GROUND){
             require(mode==0)
             if(source !in caveGroundClasses||target !in caveGroundClasses)return TerrainDecision(MovementBlock.DEVELOPMENT,mode)
+            // Original source23 vertical stair/portal branch precedes the target wall check.
+            if(source==23)return TerrainDecision(if(key in setOf(Key.UP,Key.DOWN))MovementBlock.NONE else MovementBlock.PHYSICAL,0)
             val blocked=when(source){
+                2->key==Key.LEFT
+                3->key==Key.RIGHT
+                5->key in setOf(Key.DOWN,Key.LEFT)
+                6->key==Key.UP
+                7->key==Key.DOWN
+                9->key in setOf(Key.DOWN,Key.RIGHT)
                 4->key in setOf(Key.UP,Key.LEFT)
                 8->key in setOf(Key.UP,Key.RIGHT)
                 10->key in setOf(Key.UP,Key.DOWN)

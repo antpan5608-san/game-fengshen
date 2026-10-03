@@ -26,11 +26,12 @@ class HellGroundTest {
         assertEquals(MovementBlock.PHYSICAL,scene.probeFrom(1,1,Key.DOWN))
         assertEquals(MovementBlock.NONE,scene.probeFrom(0,1,Key.RIGHT))
     }
+    // Class23 is now scoped by the actual first-hall matrix; 24 stays unknown.
     @Test fun unverifiedUpperPlaneOrOtherClassesAreNotMadeWalkable(){
         assertFalse(OriginalTerrain.supported(3,1))
         assertFalse(OriginalTerrain.standing(3,14,0))
         assertFalse(OriginalTerrain.standing(3,1,0))
-        assertFalse(OriginalTerrain.standing(3,23,0))
-        assertEquals(MovementBlock.DEVELOPMENT,OriginalTerrain.step(3,0,23,Key.UP,0).block)
+        assertFalse(OriginalTerrain.standing(3,24,0))
+        assertEquals(MovementBlock.DEVELOPMENT,OriginalTerrain.step(3,0,24,Key.UP,0).block)
     }
 }

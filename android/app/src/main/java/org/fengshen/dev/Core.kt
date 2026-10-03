@@ -123,6 +123,16 @@ fun layout(w:Int,h:Int,density:Float,insets:SafeInsets,mode:DisplayMode,c:Contro
         Key.MENU to control(c.menuX,c.menuY,min(safe.h*.07f,58*density)*c.menuSize))
     return ScreenLayout(game,safe,stick,buttons,scale,game.w/scale,game.h/scale,mode)
 }
+/** Original invisible collision actor removed by its map-local flag. No tile or exit mutation. */
+data class SceneBarrier(val id:String,val mapId:Int,val x:Int,val y:Int,val removedFlagId:String) {
+    init {require(id.isNotBlank()&&mapId in 0..255&&x>=0&&y>=0&&removedFlagId.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+")))}
+    fun apply(scene:Scene,flags:Map<String,Boolean>):Scene {
+        if(scene.mapId!=mapId||flags[removedFlagId]!=true)return scene
+        require(x<scene.width&&y<scene.height)
+        return scene.copy(dynamicObjectCells=scene.dynamicObjectCells-(y*scene.width+x))
+    }
+}
+
 /** Original scene-local mechanism. The flag denotes Android session continuation,
  * not an original cartridge manual-save event byte (see world-east-mechanism.json). */
 data class SceneCellChange(val x:Int,val y:Int,val fromTile:Int,val toTile:Int,
@@ -208,7 +218,7 @@ data class Scene(val version: String,val width: Int,val height: Int,val grid: In
         if(!OriginalTerrain.supported(terrainProfile,mode))return "原版交通状态未接入 · 保留存档"
         if(terrainProfile!=null&&!OriginalTerrain.standing(terrainProfile,collision[i],mode))return "原版地形层级 · 阻挡"
         if(collision[i] !in walkableClasses && i !in transitionCells)return if(collision[i] in setOf(1,3,4,5,7))"原版碰撞 · 阻挡" else "开发边界 · 碰撞类别未开放"
-        if(i in dynamicObjectCells)return "开发边界 · 动态对象未接入"
+        if(i in dynamicObjectCells)return "原版对象 · 阻挡"
         if(i !in enabled)return "开发边界 · 尚未开放"
         return null
     }
