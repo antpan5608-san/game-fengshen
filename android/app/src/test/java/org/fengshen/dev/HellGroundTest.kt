@@ -14,7 +14,7 @@ class HellGroundTest {
             val result=OriginalTerrain.step(OriginalTerrain.CAVE_GROUND,source,target,key,0)
             val blocked=target in setOf(1,14)||key in (denied[source]?:emptySet())
             assertEquals("$source/$target/$key",if(blocked)MovementBlock.PHYSICAL else MovementBlock.NONE,result.block)
-            assertEquals(0,result.nextMode);assertEquals(source==19,result.suppressEncounter)
+            assertEquals(0,result.nextMode);assertFalse(result.suppressEncounter)
         }
     }
     @Test fun horizontalBridgePermitsLongitudinalMovementAndRejectsSideDeparture(){
@@ -27,8 +27,10 @@ class HellGroundTest {
         assertEquals(MovementBlock.NONE,scene.probeFrom(0,1,Key.RIGHT))
     }
     // Class23 is now scoped by the actual first-hall matrix; 24 stays unknown.
-    @Test fun unverifiedUpperPlaneOrOtherClassesAreNotMadeWalkable(){
-        assertFalse(OriginalTerrain.supported(3,1))
+    @Test fun unsupportedStandingClassesAreNotMadeWalkable(){
+        assertTrue(OriginalTerrain.supported(3,1))
+        assertFalse(OriginalTerrain.standing(3,0,1))
+        assertFalse(OriginalTerrain.standing(3,20,1))
         assertFalse(OriginalTerrain.standing(3,14,0))
         assertFalse(OriginalTerrain.standing(3,1,0))
         assertFalse(OriginalTerrain.standing(3,24,0))

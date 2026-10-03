@@ -511,6 +511,58 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_hall_batch_terrain(reader,map_id):
+    """Actual two-plane matrices for this batch; never a transport or field-damage rule."""
+    proof=load(ROOT/'game-data/provenance/world-hell-hall-batch-terrain.json')
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-ground-and-upper-plane-bridge-zero' or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or str(map_id) not in proof['maps'] or \
+            proof['inputModes']!=[0,1] or proof['initialBridgeState']!=0 or proof['testCount']!=6840 or proof['failures']!=0:
+        raise ValueError('Hell terrain batch outside original CPU scope')
+    rule=proof['maps'][str(map_id)];original=extract_map(reader,map_id)
+    cc=original['collisionCandidate'];lookup=reader.read(cc['module'],cc['cpuAddress'],256)
+    import collections
+    counts=dict(collections.Counter(str(lookup[t])for row in original['grid']for t in row))
+    if original['tilesetId']!=3 or rule['mapId']!=map_id or rule['gridSha256']!=original['gridSha256'] or \
+            rule['classCounts']!=counts or rule['testCount']!=len(counts)**2*8:
+        raise ValueError('Hell terrain class matrix or grid differs')
+    expected={'source23VerticalSelectsUpperOnlyForTarget14':True,'upperStandingClasses':[10,11,13,14,17,18,23],
+        'upperBridge20Through22':'NOT_IMPLEMENTED','9b':'ORIGINAL_SPRITE_OCCLUSION_NOT_ENCOUNTER_CONTROL'}
+    if proof['rules']!=expected or proof['encounterGate']['suppressesOn9b'] is not False or \
+            proof['encounterGate']['testCount']!=480 or proof['encounterGate']['failures']!=0:
+        raise ValueError('Terrain/encounter semantics differ from original CPU scope')
+    required={(0,0xca98,29),(0,0xcc87,215),(0,0xce35,29),(0,0xd099,153),(0,0xd214,115),
+        (0,0x874c,34),(11,0xc0b3,100),(11,0xed87+23,46)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Hell terrain lacks original plane, direction, occlusion or encounter code')
+    for span in proof['sources']:checked_span(reader,span)
+    for data in [proof,proof['encounterGate']]:
+        if digest((ROOT/data['cpuExpectedPath']).read_bytes())!=data['cpuExpectedSha256']:
+            raise ValueError('Original terrain/gate CPU expectations differ')
+    return rule
+
+def validate_world_hall_batch_npc_graphic(reader,sprite_id):
+    """One genuinely visible original actor pose, including independent companion records."""
+    from forensics.fengshen246 import extract_npcs
+    proof=load(ROOT/'game-data/provenance/world-hell-hall-batch-resources.json')
+    if proof['romSha256']!=SHA256 or sprite_id not in [192,193,194,195,196,197,208,209,210,254]:
+        raise ValueError('NPC graphic outside completed original pose scope')
+    entry=proof['npcSprites'][str(sprite_id)];recipe=entry['recipe']
+    if entry['spriteId']!=sprite_id or entry['confidence']!='VERIFIED_ONE_CONTROLLED_ORIGINAL_POSE' or \
+            recipe['captureKind']!='CONTROLLED_ORIGINAL_NPC_WORLD_POSITION_AND_COMPANION_ONLY' or \
+            recipe['normalPlayEvidence'] is not False or recipe['opaquePixelMatch'] is not True or \
+            recipe['width']!=16 or recipe['height']!=16 or recipe['transparentZero'] is not True:
+        raise ValueError('NPC pose evidence does not justify this bounded graphic')
+    if not entry['bindings']:raise ValueError('NPC pose has no original record identity')
+    for binding in entry['bindings']:
+        if binding['mapId'] not in range(61,69):raise ValueError('NPC binding outside scoped original maps')
+        npc=extract_npcs(reader,binding['mapId'])['records'][binding['npcIndex']]
+        if npc['range']!=binding['source'] or checked_span(reader,binding['source'])[0]!=sprite_id:
+            raise ValueError('NPC graphic binding differs from actual original record')
+    raw=scoped_observed_graphic(reader,recipe)
+    image=Image.open(io.BytesIO(raw)).convert('RGBA');opaque=sum(p[3]!=0 for p in image.getdata())
+    if not opaque or opaque!=recipe['opaquePixelCount']:raise ValueError('Transparent or incomplete NPC pose')
+    return recipe
+
 def validate_world_hall_batch_script(reader,map_id):
     """Same original finalization, independently checked per event/gate, never a universal flag4."""
     from forensics.fengshen246 import extract_npcs
@@ -657,6 +709,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
+            elif terrain['tileset']==3 and proof.get('scopeRevision')=='hell-halls61-through68-ground-and-upper-plane-bridge-zero':
+                validate_world_hall_batch_terrain(reader,mid)
+                if set(allowed)!=set(collision)-{1}:
+                    raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
             else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
