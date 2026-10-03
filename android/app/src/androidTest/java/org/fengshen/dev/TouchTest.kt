@@ -1963,18 +1963,25 @@ class TouchTest:IsolatedGameTestCase(){
         // is this recording's chosen safety margin, not a North access condition.
         if(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
             training=true;state("normal-training-start")
-            inn();walkTo(0,14);step(Key.LEFT);walkTo(200,130)
+            // Use the already-playable southern sea's original encounters,
+            // rather than thousands of opening-zone fights worth 1..3 EXP.
+            // This is a player's training route, never an encounter/EXP override.
+            inn();walkTo(0,14);step(Key.LEFT);walkTo(199,130)
+            assertEquals(25,v.world.mapId);walkTo(39,41)
             var trainingSteps=0
             while(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
-                assertTrue("Bounded normal preparation exhausted; no resource grants",trainingSteps++<3000)
+                assertTrue("Bounded normal preparation exhausted; no resource grants",trainingSteps++<5000)
+                if(trainingSteps%64==0)state("normal-training-progress-$trainingSteps")
                 if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
+                    walkTo(39,42);assertEquals(16,v.world.mapId)
                     walkTo(202,130);assertEquals(0,v.world.mapId);inn()
-                    walkTo(0,14);step(Key.LEFT);walkTo(200,130)
+                    walkTo(0,14);step(Key.LEFT);walkTo(199,130)
+                    assertEquals(25,v.world.mapId);walkTo(39,41)
                 }
                 var trainingDirection:Key?=null
                 instrumentation.runOnMainSync{
                     val x=v.world.x/16;val y=v.world.y/16
-                    val preferred=if(y>130)Key.UP else Key.DOWN
+                    val preferred=if(y>41)Key.UP else Key.DOWN
                     trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
@@ -1986,6 +1993,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertNotNull("No legal normal training step; no collision bypass",trainingDirection)
                 step(trainingDirection!!)
             }
+            walkTo(39,42);assertEquals(16,v.world.mapId)
             walkTo(202,130);assertEquals(0,v.world.mapId);training=false;state("normal-training-complete")
         }
         val store=enterService(0,19)

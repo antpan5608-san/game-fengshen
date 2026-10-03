@@ -74,6 +74,19 @@ object OriginalStatus {
             val hp=hero.hp-1;hero.copy(hp=hp,statusMask=if(hp==0)DEAD else hero.statusMask)
         }
     }
+    /** Original 0:BA30..BAFA: poison precedes map67 damage. Use the completed
+     * step's SOURCE map, even when World already transitioned. Protection here
+     * is an evidenced RAM-boundary input, not an inferred item-use capability. */
+    fun step(characters:List<CharacterState>,sourceMapId:Int,fieldProtected:Boolean=false):List<CharacterState> {
+        val poisoned=step(characters)
+        if(sourceMapId!=67 || fieldProtected)return poisoned
+        return poisoned.map{hero->
+            if(hero.hp==0 || hero.statusMask and 0x40!=0)hero else {
+                val hp=maxOf(0,hero.hp-10)
+                hero.copy(hp=hp,statusMask=if(hp==0)DEAD else hero.statusMask)
+            }
+        }
+    }
     fun allDisabled(characters:List<CharacterState>)=characters.isNotEmpty()&&characters.all{it.statusMask and 0x60!=0}
 }
 

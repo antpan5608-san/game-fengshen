@@ -296,7 +296,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedStepSeq==world.completedStepSeq)return
         processedStepSeq=world.completedStepSeq
         val step=world.lastCompletedStep?:return
-        characters=OriginalStatus.step(characters)
+        // No map67 protection item is enabled until its activation/lifetime is evidenced.
+        characters=OriginalStatus.step(characters,step.mapId)
         if(OriginalStatus.allDisabled(characters)){
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }

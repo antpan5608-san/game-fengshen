@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "completed-source-step-poison-and-field67",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_CPU_FULL_STEP_AND_AUDIO_REQUEST_NOT_NORMAL_APP",
+  "cpuCaseCount": 3840,
+  "cpuReportSha256": "d984f18e609514b5701bbd043b34da89298c4853a09191cac422c342bcc706d5",
+  "cpuExpectedPath": "android/app/src/test/resources/hell-field67-step-cpu.tsv",
+  "cpuExpectedSha256": "651254605cc5951f3a490f2229a9fe7c6c9d76d1399818b0b24fbc1fc7dee719",
+  "rules": {
+    "poisonFirst": true,
+    "poisonDamage": 1,
+    "fieldMapId": 67,
+    "fieldDamage": 10,
+    "livingHpTest": "HP>0",
+    "perActorProtectionMask": 64,
+    "pending6814Activates686fIn67": true,
+    "globalProtectionDoesNotSkipPoison": true,
+    "hpFloor": 0,
+    "zeroHpSetsExactStatus": 32,
+    "failureMask": 96,
+    "sourceMapBeforeExitDispatch": true
+  },
+  "sources": [
+    {
+      "offset": 14912,
+      "length": 203,
+      "sha256": "19a72022a9799d6c41ba95126bf46eb04f1cfc57f5e86d6e693d9eff737c29ae",
+      "module": 0,
+      "cpuAddress": 47664,
+      "meaning": "Unchanged completed-step poison, map67 damage, protection and failure"
+    },
+    {
+      "offset": 16058,
+      "length": 35,
+      "sha256": "3c6cb0316e84556499989690e021ffcc90a5e6e3b52307faa41aff9b8727cb9a",
+      "module": 0,
+      "cpuAddress": 48810,
+      "meaning": "Coordinate increment reaches full16 boundary before BA30 and exit dispatch"
+    },
+    {
+      "offset": 15914,
+      "length": 54,
+      "sha256": "5f9e3d269e14e3a1cf824c6d2d8bb6ab6fc15c4082b167aee7bad61d4bfe8f83",
+      "module": 0,
+      "cpuAddress": 48666,
+      "meaning": "Original audio request queue, not skipped in controlled CPU execution"
+    }
+  ],
+  "verificationLimits": [
+    "Audio request queue instructions BE1A run unchanged; no player output/sound correctness inferred.",
+    "HP-positive dead/special status and HP0/status0 are arithmetic fixtures, not legal gameplay targets.",
+    "Item12 protection activation/lifetime and normal original map67 traversal not proven by this routine.",
+    "Homogeneous party fixture counts1,2,4; not a normal route, sound output or Android run.",
+    "Protection boundary is tested; no protection item activation/consumption/lifetime is enabled.",
+    "Map67 not packaged by this code/evidence checkpoint; no map-count or normal reachability claim."
+  ],
+  "remainingUnknown": [
+    "Item12 category/identity/use target and consumption/lifetime of map67 global protection.",
+    "Normal original and Android map67 traversal and return.",
+    "Original short sound output and sprite field feedback."
+  ]
+}

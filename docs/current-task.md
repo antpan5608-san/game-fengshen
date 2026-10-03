@@ -17,14 +17,15 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T08:01:55.796635+00:00）
+## 当前有效状态（2026-10-03T08:27:48.544804+00:00）
 
-- WORLD-FULL-01持续F3/F4；正式v27/c14，原v43/run37104551493来源f38b4fa8/c24构建成功，正常runtime仍执行中，未覆盖main来源。
-- 独立树/workspace/game-fengshen-world-hell-batch已安全合并该冻结提交，新增c25/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6。后续六殿61–66真实几何/完整敌群/6Boss/6普通箱；初始隐藏对象仅已知透明姿态，调查/归还仍未开放，不据此封整个64。
-- 两全新restore目录162文件一致、113世界Python方法通过125.917秒、235 JVM及instrument编译通过；原取证边界/限定多殿预算4测试PASS。新正常触控续跑/按原规则练级补给/实际所得装备/6Boss复谈及外部冷启入口已编译，App仍NOT_RUN。
-- inspect37107749426实际07:52:07.994UTC（15:52:07.994北京）查27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；同一旧v26 ProtocolException阻塞严格生产上传。
-- 下一动作：检查v43最终真实结果并保留失败现场；冻结后续同提交c25候选验证，等待时继续67地图每步伤害/保护和68胜后86去向。64两条原坐标超出几何出口保留待核，不截断/改传送。
-- 有效分母UNKNOWN，ALL_MAPS_USABLE=NO；十类累计欠账不关闭，声音/一加13T NOT_RUN。
+- WORLD-FULL-01持续F3/F4；正式v27/c14。v43/run37104551493来源f38b4fa8/c24构建与独立验包成功，但runtime于08:18UTC失败：北海前正常练级在开局低经验敌区耗尽3000步；不是获资源/游戏崩溃证据。南海/北侧海域/西海/村庄1及各冷启通过；北宫/Boss139及后续本次NOT_RUN。
+- 本树/workspace/game-fengshen-world-hell-batch保留已合并c25六殿61–66/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6。新六殿正常App仍NOT_RUN，不能以编译通过写全世界可玩。
+- 原版BA30完整CPU含BE1A音频请求队列3840边界完成；新增world-hell-field67-step派生预期。原移动完成入口使用来源step.mapId，毒先1HP再map67伤10HP，角色bit64/global保护边界分开，保持旧step(List) ABI。map67未打包、保护物品激活/生命周期未接入，原版受控菜单不冒充正常取得/Android。
+- 新定向10 JVM、1 Python通过；最终238全JVM0失败/错误/跳过及instrument编译成功。北海测试准备改用已可玩南海弱敌区，自然遇敌/原奖励/正常付费回村住宿，目标12不变，5000步有界且每64步留真实快照；新测试App待运行，不改游戏规则。
+- 最近实际inspect37107749426为07:52:07.994UTC，27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；同一旧v26 ProtocolException继续阻塞严格生产上传。
+- 下一动作：提交可复现c25+修正测试驱动，按原CI验证新同提交候选；等待时继续67保护/侧室69/158/159、68胜后86实际场景，不停止在25图。64两条超几何原出口仍待核，不截断或伪造传送。
+- 有效分母UNKNOWN、ALL_MAPS_USABLE=NO，十类清单保留；声音/一加13T NOT_RUN。
 
 ## 历史检查点（以下由最近的“当前有效检查点”接续）
 
