@@ -79,7 +79,10 @@ class ContentTest:IsolatedGameTestCase(){
         val rules=c.battle!!
         assertEquals(16,rules.zoneMapId)
         assertEquals(19,rules.groups.size)
-        assertEquals(setOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,137,138,139,140),rules.enemies.keys)
+        // The original opening zone remains intact when later scoped zones add
+        // enemy definitions to the same unified package.
+        assertTrue(rules.enemies.keys.containsAll(setOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,137,138,139,140)))
+        assertTrue(rules.groups.flatMap{it.members}.all{it.enemyId in rules.enemies})
         assertEquals(listOf(2,3),rules.groups[11].members.map{it.enemyId})
         for(group in rules.groups){
             val fight=OpeningBattle(group,rules,c.initialPlayer.copy(hp=1000,maxHp=1000),2) // Isolated group-execution fixture, not normal gameplay.
