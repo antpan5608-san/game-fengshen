@@ -46,11 +46,11 @@ class HellRouteDriverTests(unittest.TestCase):
                 parents[next_at]=(at,e);q.append(next_at)
         return None
     def test_village_cannot_reach_later_partitions_without_original_halls(self):
-        self.assertIsNone(self.route((23,55,92),(23,55,70),[]))
-        self.assertIsNone(self.route((23,55,92),(23,55,35),[]))
-        self.assertEqual([],self.route((23,55,92),(23,28,80),[]))
+        self.assertIsNone(self.route((23,55,91),(23,55,70),[]))
+        self.assertIsNone(self.route((23,55,91),(23,55,35),[]))
+        self.assertEqual([],self.route((23,55,91),(23,28,80),[]))
     def test_normal_sequence_has_each_real_next_door_without_a_reverse_supply_assumption(self):
-        start=(23,55,92)
+        start=(23,55,91)
         for mid in self.halls:
             m=self.maps[mid]
             entry=next(e for e in self.world['exits']if e['fromMapId']==23 and e['toMapId']==mid and e['spawn']==m['spawn'])
@@ -61,6 +61,19 @@ class HellRouteDriverTests(unittest.TestCase):
         # Original source11 forbids lateral departure at the lower bridge;
         # a reciprocal hall exit alone does not prove a full village return.
         self.assertIsNone(self.route((23,28,80),(23,55,91),[]))
+    def test_village_return_and_first_training_cells_are_real_connected_ground(self):
+        m=self.maps[23];w=m['width']
+        self.assertEqual(1,m['collision'][92*w+55])
+        self.assertEqual(1,m['collision'][93*w+55])
+        for point in [(23,54,91),(23,54,93),(23,54,94)]:
+            self.assertEqual(0,m['collision'][point[2]*w+point[1]])
+            self.assertIn(point[2]*w+point[1],m['enabledCells'])
+            self.assertEqual([],self.route((23,55,91),point,[]))
+        self.assertEqual([],self.route((23,54,94),(23,54,93),[]))
+        self.assertEqual([],self.route((23,54,91),(23,55,91),[]))
+        zone=next(z for z in json.loads(self.result['combat.json'])['zones']if z['mapId']==23 and z['id']==8)
+        for x,y in [(54,93),(54,94)]:
+            self.assertTrue(any(l<x<=r and t<y<=b for l,t,r,b in zone['rectangles']))
     def test_later_encounters_are_reachable_from_their_actual_completed_hall_landings(self):
         for mid,target in [(61,(23,50,60)),(65,(23,51,32))]:
             gate=next(b for b in self.world['sceneBarriers']if b['mapId']==mid)

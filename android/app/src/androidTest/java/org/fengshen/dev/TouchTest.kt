@@ -3090,7 +3090,7 @@ class TouchTest:IsolatedGameTestCase(){
                 leaveService(entry);supply()
             }
             buyAndEquip();restock();inn(2);training=true
-            walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(55,93)
+            walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(54,93)
             var steps=0
             while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<25}){
                 assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<7000)
@@ -3098,7 +3098,7 @@ class TouchTest:IsolatedGameTestCase(){
                 val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
                 if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){
                     walkTo(55,91);assertEquals(2,v.world.mapId);buyAndEquip();restock();inn(2)
-                    walkTo(30,19);walkTo(55,93)
+                    walkTo(30,19);walkTo(54,93)
                 }
                 step(if(v.world.y/16>93)Key.UP else Key.DOWN)
             }
@@ -3175,7 +3175,9 @@ class TouchTest:IsolatedGameTestCase(){
             // Later exterior partitions require the original completed halls.
             // Their natural encounters are checked in the hall-batch phase,
             // not reached by pretending exterior23 is one connected field.
-            step(Key.DOWN);walkTo(55,91);assertEquals(2,v.world.mapId)
+            // The independent return spawns on 55,91; 55,92 is a real wall.
+            // Depart west, then enter the actual same doorway again.
+            step(Key.LEFT);walkTo(55,91);assertEquals(2,v.world.mapId)
             assertEquals(source.flags,v.currentSnapshot().flags);assertEquals(0,bossEntries)
             checkSourceUnchanged();persistChecked()
             File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
