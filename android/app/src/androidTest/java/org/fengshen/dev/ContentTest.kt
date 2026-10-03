@@ -13,6 +13,24 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Bundled Hell data/loader fixture; it does not claim normal route acceptance. */
+    fun testScopedHellZonesRetainEveryGroupAndSupportedStatusBehavior(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val rules=c.battle!!
+        val zones=rules.zones.filter{it.mapId==23}
+        assertEquals(3,zones.size)
+        assertEquals(listOf(13,12,15),zones.map{it.groups.size})
+        assertTrue(c.scenes.getValue(23).unavailableRegions.isEmpty())
+        for(id in listOf(22,23,28,29,30)){
+            val enemy=rules.enemies.getValue(id)
+            assertTrue(OriginalStatus.enemySupported(enemy))
+            assertNotNull(c.enemyGraphics[id]);assertNotNull(c.itemDefinitions[enemy.loot!!.itemId])
+        }
+        assertEquals(8,rules.enemies.getValue(29).behaviorByte)
+        assertEquals(7,rules.enemies.getValue(30).behaviorByte)
+        assertNull(c.equipmentDefinitions["rom.weapon.18"])
+        assertNull(c.itemDefinitions.getValue("rom.medicine.4").herbUse)
+    }
     /** Isolated persistence/collision fixture, not normal acquisition or route evidence. */
     fun testControlledReusableWorldItemRestoresRemovedObjectState(){
         val content=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -79,7 +97,9 @@ class ContentTest:IsolatedGameTestCase(){
         val rules=c.battle!!
         assertEquals(16,rules.zoneMapId)
         assertEquals(19,rules.groups.size)
-        assertEquals(setOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,137,138,139,140),rules.enemies.keys)
+        // Later scoped zones share this package; the opening golden stays required.
+        assertTrue(rules.enemies.keys.containsAll(setOf(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,137,138,139,140)))
+        assertTrue(rules.groups.flatMap{it.members}.all{it.enemyId in rules.enemies})
         assertEquals(listOf(2,3),rules.groups[11].members.map{it.enemyId})
         for(group in rules.groups){
             val fight=OpeningBattle(group,rules,c.initialPlayer.copy(hp=1000,maxHp=1000),2) // Isolated group-execution fixture, not normal gameplay.

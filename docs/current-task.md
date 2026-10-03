@@ -186,3 +186,13 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - c19 pin/hash和16地图不变，不因仪器/CI变更伪造内容版本。下一动作：冻结本树来源，原签名CI实际运行；其间继续map23 zone10/13真实分区及必要事件，未恢复区域保留明确状态。
 
 - 原自动审批隔离回归 test_environment_review.py 22项实际通过，未修改reviewer/权限/发布保护。新增正常驱动与ContentTest均已通过本地instrument编译；只有后续原runner实际执行才计App通过。
+
+## 当前地狱敌群集成检查点（2026-10-03 09:30 北京时间）
+
+- 总任务继续。生产v27/c14未变；洞窟37083324430实际runtime进行中，东海候选已因开局全包敌人集合旧断言取消待运行33，修正后的main91f2708d/run37086134007/version34排队。没有东海App PASS或生产发布。
+- 独立work/world-hell-after-east树补原版behavior8→08状态及全活人08跳过收指令后实际敌方行动/恢复；退出只清08、保留04/毒/死亡与真实受伤。原CPU269受控用例、212 JVM方法通过；正常App仍NOT_RUN。
+- c20候选内容：16地图/114文件，manifest675793d57caf191ff527f3fccb1ce64a383a13757c06f724f1473d09fc8b659b。匹配缓存ROM及原完整zone/group loader取得敌22/23/28/29/30真实图块，zone10全部12组、zone13全部15组接入，保留原矩形/概率/掉落；这只关闭遇敌分区数据缺口，幽灵NPC/后续出口仍未接入。
+- 原export_from_base/ci_apk.restore两个干净临时目录114文件逐字节一致；旧媒体/已有物品不变。66项世界Python方法0失败/错误/跳过；仪器编译通过。先前恢复未设置ANDROID_SDK_ROOT失败后使用现有SDK重试通过；新仪器首次误用不存在的zone.id/参数签名编译失败后按实际Schema修正，失败不计通过。未跑本地不稳定AVD。
+- 新物品仅补必要掉落weapon18/medicine4；竹鞭为固定Reference数值匹配暂名，药品4因香草/鹰翼同价不能猜名/效果；没有新增未核装备或使用逻辑。c19独立golden保留，不让新分区覆盖历史断言。
+- 原版已从正常东海胜后state经方向键到地图2(30,19)，两人/存档保持；仅是CONTINUATION_FROM_VERIFIED_ORIGINAL_SAVE，不是Android或冷启动验收。村庄2室内入口、住宿与商品继续局部核对。
+- 下一动作：完成紧邻村庄2实际服务证据与原批次导出/同候选正常触屏验收；同时回读洞窟及东海原runtime，不反复触发同源CI。总世界有效数量仍UNKNOWN/ALL_MAPS_USABLE=NO，旧v26下载异常发布门禁保留。

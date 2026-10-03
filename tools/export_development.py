@@ -620,6 +620,22 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         if enemy['iceSource'].get(key)!=original_ice['iceSource'][key]:
                             raise ValueError('Ice evidence span differs from original dispatch')
                 checked_span(reader,enemy['iceSource'])
+            elif enemy['behaviorByte']==8:
+                if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
+                    raise ValueError('Behavior8 requires its scoped status evidence')
+                proof=load(ROOT/enemy['behaviorEvidence'])
+                rules=proof['rules']
+                if (proof['romSha256'],proof['scopeRevision'],proof['enemyId'],proof['behavior'],proof['statusMask']) != \
+                        (SHA256,'behavior8-state08-and-no-eligible-command-progress',29,8,8) or \
+                        rules['legalReplaceMasks']!=[0,4,8] or rules['hpChangedByStatus'] is not False or \
+                        rules['commandSkipMask']!=56 or rules['battleExitClearMask']!=8 or \
+                        rules['battleExitKeeps']!=[2,4,16,32]:
+                    raise ValueError('Behavior8 status rules differ from original dispatch')
+                required={(9,0x8dc4,12),(9,0x8de9,201),(9,0xa0d2,88),(9,0xb68e,119),
+                          (9,0xa69f,73),(9,0x818e,126),(9,0x9282,46)}
+                if {(s['module'],s['cpuAddress'],s['length']) for s in proof['sources']}!=required:
+                    raise ValueError('Behavior8 lacks command progression and exit evidence')
+                for span in proof['sources']:checked_span(reader,span)
             elif enemy['behaviorByte'] not in (0,7,9) or 'iceBaseDamage' in enemy:
                 raise ValueError('Enemy behavior requires implementation and evidence')
         for zone in overlay.get('zones',[]):

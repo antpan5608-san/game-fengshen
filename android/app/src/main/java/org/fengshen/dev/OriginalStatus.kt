@@ -5,11 +5,12 @@ object OriginalStatus {
     const val POISON=2
     // Original behavior9 writes this exact state; its Chinese name is not yet verified.
     const val STATUS_BIT4=4
+    const val STATUS_BIT8=8 // Original behavior8; displayed name remains unverified.
     const val DEAD=32
     fun label(mask:Int)=when(mask){0->"正常";POISON->"中毒";DEAD->"死亡";else->"异常 %02X".format(mask)}
     fun enemySupported(enemy:EnemyDefinition)=enemy.behaviorByte==0 ||
         (enemy.behaviorByte==3&&enemy.iceBaseDamage!=null&&enemy.iceBaseDamage in 0..65535) ||
-        enemy.behaviorByte in setOf(7,9) // Original shared AI dispatch is keyed by behavior, not enemy ID.
+        enemy.behaviorByte in setOf(7,8,9) // Original shared AI dispatch is keyed by behavior, not enemy ID.
     fun choosesPoison(random:Int):Boolean {
         require(random in 0..255)
         return (random and 127)<41 && ((random ushr 1) and 63)<25
@@ -23,6 +24,10 @@ object OriginalStatus {
     }
     fun applyStatus4(hero:CharacterState):CharacterState =
         if(hero.hp>0 && hero.statusMask in setOf(0,STATUS_BIT4))hero.copy(statusMask=STATUS_BIT4) else hero
+    /** 9:8DC4/A0D2: same two byte gates as behavior9, but original priority
+     * permits state08 to replace state04, never poison/death/unknown masks. */
+    fun applyStatus8(hero:CharacterState):CharacterState =
+        if(hero.hp>0&&hero.statusMask in setOf(0,STATUS_BIT4,STATUS_BIT8))hero.copy(statusMask=STATUS_BIT8) else hero
     /** 9:AA08/AA82..AB52: physical and enemy ice share the nonzero status gate.
      * Pass computed damage BEFORE its minimum-one floor, not already-clamped damage.
      * This only computes the amount; the existing action applies HP/death once. */

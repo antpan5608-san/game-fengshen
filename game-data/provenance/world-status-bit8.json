@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_ANDROID",
+  "scopeRevision": "behavior8-state08-and-no-eligible-command-progress",
+  "enemyId": 29,
+  "behavior": 8,
+  "statusMask": 8,
+  "rules": {
+    "choice": "same byte, (byte&127)<41; secondary((byte>>1)&63)<25; otherwise normal hitByte",
+    "legalReplaceMasks": [
+      0,
+      4,
+      8
+    ],
+    "hpChangedByStatus": false,
+    "target": "existing stable two-actor ordinary target from same byte",
+    "commandSkipMask": 56,
+    "allStunned": "B68E skips every08 actor, BA18 chooses stage5; enemies act and shared-byte recovery executes, no player command or item consumption",
+    "recovery": "Existing A69F sequential04/08 rotations; clear whole status if resultingbit0=0",
+    "battleExitClearMask": 8,
+    "battleExitKeeps": [
+      2,
+      4,
+      16,
+      32
+    ]
+  },
+  "sources": [
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Original per-behavior secondary hit thresholds"
+    },
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Original same-byte AI and target"
+    },
+    {
+      "offset": 303330,
+      "length": 88,
+      "sha256": "879ee97c1fa5b95ce41911bbe8fca90ce2b36614dfa92068eebd6592232d0d3c",
+      "module": 9,
+      "cpuAddress": 41170,
+      "meaning": "Original status priority and behavior8→state08"
+    },
+    {
+      "offset": 308894,
+      "length": 119,
+      "sha256": "09780984adf321cddbf4c39a83f76ed377d8e9c7572974a6edbb8291840c1f8a",
+      "module": 9,
+      "cpuAddress": 46734,
+      "meaning": "Original skips ineligible command collection"
+    },
+    {
+      "offset": 304815,
+      "length": 73,
+      "sha256": "62c8c4c89793239399b2a10d366c6025f57c7e742435d6e4b66aef56f2c77158",
+      "module": 9,
+      "cpuAddress": 42655,
+      "meaning": "Original shared-byte status recovery"
+    },
+    {
+      "offset": 295326,
+      "length": 126,
+      "sha256": "5fa8b427be398423674813b5de49ceadf6eb6aa17b2d9a33b7a2439372d6c7dd",
+      "module": 9,
+      "cpuAddress": 33166,
+      "meaning": "Mapordered stableactor toactiveparty and revalidateHP/status"
+    },
+    {
+      "offset": 299666,
+      "length": 46,
+      "sha256": "e17b72be6d3fa9bdabd25d3ccaad5510ae7d6c1a433ec7eb7d5aa4b73786b180",
+      "module": 9,
+      "cpuAddress": 37506,
+      "meaning": "Both actor battle-exit status cleanup"
+    }
+  ],
+  "cpuEvidence": {
+    "path": "private-derived/world-status-bit8/report.json",
+    "sha256": "c657cbd3f7eb0a64b1ccd57b485cfd781c244e47ae8ba257e1b7d748438d7f0d",
+    "cases": 269,
+    "families": {
+      "statusPriority": 9,
+      "dispatchSameByte": 256,
+      "commandCollection": 4
+    },
+    "normalPlay": false,
+    "androidRuntime": false
+  },
+  "limits": [
+    "State08 displayed Chinese name not transcribed; keep accurate hex label.",
+    "Only current two original active actors. No third/fourth actor or other status/skill capability enabled.",
+    "No normal Android PASS implied by controlled CPU or JUnit fixtures."
+  ]
+}
