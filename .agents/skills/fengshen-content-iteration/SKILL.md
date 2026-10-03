@@ -148,3 +148,7 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 原export_world_from_base按独立initialization/owner成长/倍率指针及装备列表span校验additionalCharacters；事件最终页用原StoryFollowup一次提案加入、换图和落flag。world-east-palace-script.json、world-party-xiaolongnv.json及world-two-party.json分别保存证据范围。不同遇敌矩形不扩成整图默认区；未恢复区域仍按原矩形明确标记。既有物品重复时用固定baseDefinitionSha256复用，不能重复追加或静默覆盖。
 
 原ci_apk.restore的两个干净临时destination已实际生成相同109文件；test_world_east_export.py覆盖原媒体字节、目标manifest和错入队/成长/倍率/剧情/库存定义拒绝。以上是本地内容与纯规则结果，新角色正常App/覆盖升级/冷启必须另运行，不把编译写PASS。
+
+历史缺可选字段 fixture 若刻意移除 combat.json，必须同时移除后续 scoped scriptedActor；真实loader的孤立演员校验保留。否则测试构造不一致的混合版本而报错。该修正已编译，真实ContentTest复验以当前run为准。
+
+当前共享 normalWorldStoryContinuation 触控/BFS驱动的东海、逐页对白、两角色及外部冷启入口已编译，尚待runner正常流程，未列为已成功运行方法。
