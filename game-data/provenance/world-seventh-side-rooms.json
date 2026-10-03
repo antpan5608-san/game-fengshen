@@ -1,0 +1,631 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "seventh-hall-three-side-rooms",
+  "kind": "CONTROLLED_ORIGINAL_INPUT_AND_CPU_NOT_NORMAL_ANDROID",
+  "sprite191": {
+    "recipe": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1029680,
+          "length": 16,
+          "sha256": "9423ff809445411e42cfbc11e856324b7cb3fa154095474ed82a2a0f0296e5e3",
+          "spriteTile": 98,
+          "attribute": 2,
+          "oamRamAddress": 548
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1029696,
+          "length": 16,
+          "sha256": "9eae569b66fa61bb5e395dc382f400dbb3ee4a7e005d4c4ac02fa94f08f2a828",
+          "spriteTile": 99,
+          "attribute": 2,
+          "oamRamAddress": 552
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1029936,
+          "length": 16,
+          "sha256": "b6d507401b87b1a77715c5f838a2883e1efa0b277e3402272f1389f378cfb925",
+          "spriteTile": 114,
+          "attribute": 2,
+          "oamRamAddress": 556
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1029952,
+          "length": 16,
+          "sha256": "e8b284851e20e6d5dae7fa82c9820d759e47ccee673e934a4533369ba2079460",
+          "spriteTile": 115,
+          "attribute": 2,
+          "oamRamAddress": 560
+        }
+      ],
+      "rgbaSha256": "49c604b356044adf0abc999f2715f9b9bfbcee5fff52b7e30348c8354f81b096",
+      "observedRect": [
+        160,
+        41,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLED_POSITION_REAL_SIDE_ROOM_ENTRY_VISIBLE_ORIGINAL_OAM",
+      "normalPlayEvidence": false,
+      "captureSha256": "feb98e70839af251622361c918cd13be717aad1fee71e27da017706ebdc643db",
+      "ppuSha256": "83a41bf319b71b2635e30f91701d90826dd221e33409c5df3f274a0f2e26b40b",
+      "ramSha256": "c7920d40eb87648129488a1f87af4876400da683a1ab05995c9c3c526f531ad1",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 198,
+      "scope": "One genuinely visible original sprite191 pose; no animation or event inferred"
+    },
+    "bindings": [
+      {
+        "mapId": 69,
+        "npcIndex": 1,
+        "record": {
+          "offset": 280956,
+          "length": 14,
+          "sha256": "809f9302083e84b7c41780835bbdc58053fe28ea92cf7eaefd0d36e6877a7919",
+          "module": 8,
+          "cpuAddress": 51564,
+          "meaning": "Fixed 14-byte NPC source record"
+        }
+      },
+      {
+        "mapId": 158,
+        "npcIndex": 1,
+        "record": {
+          "offset": 285410,
+          "length": 14,
+          "sha256": "66c0fc1525cddecaefe94b34a0e6f38550cb40ce303cf783072b2fd90c9e43dc",
+          "module": 8,
+          "cpuAddress": 56018,
+          "meaning": "Fixed 14-byte NPC source record"
+        }
+      },
+      {
+        "mapId": 159,
+        "npcIndex": 1,
+        "record": {
+          "offset": 285439,
+          "length": 14,
+          "sha256": "27998a188844ca45691dc3936a5d514def26d08b4dd3edc06eaf4a6bdf2241d2",
+          "module": 8,
+          "cpuAddress": 56047,
+          "meaning": "Fixed 14-byte NPC source record"
+        }
+      }
+    ]
+  },
+  "maps": [
+    {
+      "mapId": 69,
+      "gridSha256": "c44159148090a5bc6801b897936fc09435f16971876c94394787bc9f20109dd8",
+      "palette": {
+        "mapId": 69,
+        "palette": [
+          14,
+          17,
+          24,
+          56,
+          25,
+          8,
+          24,
+          17,
+          25,
+          8,
+          24,
+          56,
+          25,
+          17,
+          33,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 30,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 24925,
+            "length": 2,
+            "sha256": "a408e4962b09eeb917c2bcea0d94ddaedfa8207c3bf70fd90fd52bb579d13b4a",
+            "module": 0,
+            "cpuAddress": 57677,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25586,
+            "length": 2,
+            "sha256": "f9fe880ea7927f7c126e9f68fbfe833aa75b765faaeecd2631c3be2410519a62",
+            "module": 0,
+            "cpuAddress": 58338,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26106,
+            "length": 16,
+            "sha256": "da231c26b734f584330de34d7f00a2a30484a115b6c07c47045b49ec3c7ae3df",
+            "module": 0,
+            "cpuAddress": 58858,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEntry": {
+        "offset": 287233,
+        "length": 5,
+        "sha256": "b66efd20d611795fd6d39476dc6aa0b0a932e342f71c9361a28dd937c9956f83",
+        "module": 8,
+        "cpuAddress": 57841,
+        "meaning": "Independent original entry triggered with real keys from controlled map67 position"
+      },
+      "entry": {
+        "trigger": [
+          19,
+          24
+        ],
+        "spawn": [
+          7,
+          13
+        ]
+      },
+      "entryRamSha256": "c7920d40eb87648129488a1f87af4876400da683a1ab05995c9c3c526f531ad1",
+      "entryScreenshotSha256": "feb98e70839af251622361c918cd13be717aad1fee71e27da017706ebdc643db",
+      "talks": [
+        {
+          "npcIndex": 0,
+          "group": 79,
+          "message": 0,
+          "screenshotSha256": "2f2c827d4d3e4bbc1357bc3b8872b57d33622c680bee4ab5d8dd94672f10b67e",
+          "ramSha256": "2f0fabab0d32ad0d8c90ac0fd0903a6bd2bae4f9ad9c69ebdff3170b26c45e2d",
+          "record": {
+            "offset": 280942,
+            "length": 14,
+            "sha256": "d5377adeec29f7d3673087ee010258dd6e622d50087aa38ecd29a6779bd3368b",
+            "module": 8,
+            "cpuAddress": 51550,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        },
+        {
+          "npcIndex": 1,
+          "group": 79,
+          "message": 3,
+          "screenshotSha256": "b4d49a98acd7ff1736bf8b4d6abafcc2b465cde9d9657c2d633a65cb76feaab7",
+          "ramSha256": "0bce8284082b64229b2f868765180b0aeaf6270017c3359b2fed5128f94cba6b",
+          "record": {
+            "offset": 280956,
+            "length": 14,
+            "sha256": "809f9302083e84b7c41780835bbdc58053fe28ea92cf7eaefd0d36e6877a7919",
+            "module": 8,
+            "cpuAddress": 51564,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        },
+        {
+          "npcIndex": 2,
+          "group": 79,
+          "message": 6,
+          "screenshotSha256": "ccc7f7d088d7a4536c10061766ed1e16c987e122d61096f6280d722c688e0138",
+          "ramSha256": "d6eaabbc9cf785effaa3eaa02819c487e9a0263d8f1ed98719f22458c0826cde",
+          "record": {
+            "offset": 280970,
+            "length": 14,
+            "sha256": "820b37b85e64916be6a273b5f57c3461a80718f3b7d0087daf3b0d8209b482f1",
+            "module": 8,
+            "cpuAddress": 51578,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        }
+      ]
+    },
+    {
+      "mapId": 158,
+      "gridSha256": "c44159148090a5bc6801b897936fc09435f16971876c94394787bc9f20109dd8",
+      "palette": {
+        "mapId": 158,
+        "palette": [
+          14,
+          17,
+          24,
+          56,
+          25,
+          8,
+          24,
+          17,
+          25,
+          8,
+          24,
+          56,
+          25,
+          14,
+          14,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 31,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25103,
+            "length": 2,
+            "sha256": "6c54b558756aa9f6402748c0b8f1f3d7b83aa502e00c50c3d8ff587ab86f89d0",
+            "module": 0,
+            "cpuAddress": 57855,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25588,
+            "length": 2,
+            "sha256": "e18eff3f2ec1783006db319cbf9259201014cbaf75a3c4e52a38bebc54f42971",
+            "module": 0,
+            "cpuAddress": 58340,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26122,
+            "length": 16,
+            "sha256": "f05c6b04f53456d7208f3c10862e07e1d353e2470951f6f96d09b9a9fd23ee0d",
+            "module": 0,
+            "cpuAddress": 58874,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEntry": {
+        "offset": 287243,
+        "length": 5,
+        "sha256": "687ef553483b75eac1b54cd5fb86605a925688027109db30da9e4f289a27844b",
+        "module": 8,
+        "cpuAddress": 57851,
+        "meaning": "Independent original entry triggered with real keys from controlled map67 position"
+      },
+      "entry": {
+        "trigger": [
+          6,
+          17
+        ],
+        "spawn": [
+          7,
+          13
+        ]
+      },
+      "entryRamSha256": "01ccb1f53a5d6881648453ac0c7981e7e358d1f09682618a6de7fd720723ac30",
+      "entryScreenshotSha256": "e37db3e17b412c63e2244d70484a5c720edfb5c7e028ea97aec5b6e0da8eabee",
+      "talks": [
+        {
+          "npcIndex": 0,
+          "group": 168,
+          "message": 1,
+          "screenshotSha256": "eb28c7a44638a90c1b9ed93a472ebf278efbd669d2ef5a17824363270493aee5",
+          "ramSha256": "5d2b24918567e2ca667e089acdc200654f009d62ff3761b527bab50d890f71ad",
+          "record": {
+            "offset": 285396,
+            "length": 14,
+            "sha256": "f112f5af8d53a7712af2125d5a5ea213413a24873296b004657792a7e618970b",
+            "module": 8,
+            "cpuAddress": 56004,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        },
+        {
+          "npcIndex": 1,
+          "group": 168,
+          "message": 4,
+          "screenshotSha256": "8ded54b9e31dcd60d3210b1af699e3bbe3125d6a60257db129a9a26e3eff2396",
+          "ramSha256": "1e05cc3b6e1082f5dc9789094340036f38a1b54d8dbe0526999e2b6d61af07ee",
+          "record": {
+            "offset": 285410,
+            "length": 14,
+            "sha256": "66c0fc1525cddecaefe94b34a0e6f38550cb40ce303cf783072b2fd90c9e43dc",
+            "module": 8,
+            "cpuAddress": 56018,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        }
+      ]
+    },
+    {
+      "mapId": 159,
+      "gridSha256": "c44159148090a5bc6801b897936fc09435f16971876c94394787bc9f20109dd8",
+      "palette": {
+        "mapId": 159,
+        "palette": [
+          14,
+          17,
+          24,
+          56,
+          25,
+          8,
+          24,
+          17,
+          25,
+          8,
+          24,
+          56,
+          25,
+          14,
+          14,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 31,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25105,
+            "length": 2,
+            "sha256": "6c54b558756aa9f6402748c0b8f1f3d7b83aa502e00c50c3d8ff587ab86f89d0",
+            "module": 0,
+            "cpuAddress": 57857,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25588,
+            "length": 2,
+            "sha256": "e18eff3f2ec1783006db319cbf9259201014cbaf75a3c4e52a38bebc54f42971",
+            "module": 0,
+            "cpuAddress": 58340,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26122,
+            "length": 16,
+            "sha256": "f05c6b04f53456d7208f3c10862e07e1d353e2470951f6f96d09b9a9fd23ee0d",
+            "module": 0,
+            "cpuAddress": 58874,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEntry": {
+        "offset": 287253,
+        "length": 5,
+        "sha256": "26a4aa67912afd0bfdb670461bb0c74183c044f725f8af33056e971f01583aeb",
+        "module": 8,
+        "cpuAddress": 57861,
+        "meaning": "Independent original entry triggered with real keys from controlled map67 position"
+      },
+      "entry": {
+        "trigger": [
+          26,
+          13
+        ],
+        "spawn": [
+          7,
+          13
+        ]
+      },
+      "entryRamSha256": "77cdbad2af0fe99db634636bd82c966d60f92edb1f0c808d525161fd20c769c9",
+      "entryScreenshotSha256": "1c537371b3e6fe3368073c818bed9913c36756dfc9bc2b1c8de7a0b4ed66f185",
+      "talks": [
+        {
+          "npcIndex": 1,
+          "group": 169,
+          "message": 5,
+          "screenshotSha256": "1eb94c20cc0a9ab6ccf0819ff44972dcaa8cae25bf9c4431a6928fe83e2de64b",
+          "ramSha256": "87e19f63bbc68fc6e3f74e806dc566bd2ce55acb1daac0e9dc605bb999f8d8c1",
+          "record": {
+            "offset": 285439,
+            "length": 14,
+            "sha256": "27998a188844ca45691dc3936a5d514def26d08b4dd3edc06eaf4a6bdf2241d2",
+            "module": 8,
+            "cpuAddress": 56047,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "kind": "ACTUAL_ORIGINAL_KEYS_CONTROLLED_PLAYER_POSITION_DIALOGUE"
+        }
+      ]
+    }
+  ],
+  "normalAndroid": "NOT_RUN",
+  "limitations": [
+    "Controlled source67 entry and talk, not normal new-game route.",
+    "Moving NPC159/index0 normal conversation not observed; its ROM message remains PROVISIONAL_REFERENCE and initial static pose only.",
+    "Original moving NPC animation/timing and all sprites occlusion remain debt."
+  ]
+}

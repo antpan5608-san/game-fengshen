@@ -483,3 +483,17 @@ jobs:
             artifacts/world-hall-batch-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain scoped final halls and rebirth normal checkpoints
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-rebirth-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-rebirth-*.png
+            artifacts/checkpoint-ui/touch-ux-world-rebirth-*.json
+            artifacts/checkpoint-ui/world-rebirth-*.json
+            artifacts/checkpoint-ui/world-rebirth-*-test.txt
+            artifacts/world-rebirth-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14

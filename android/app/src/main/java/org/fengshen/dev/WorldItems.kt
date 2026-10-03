@@ -8,6 +8,7 @@ data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int
 data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val spriteId:Int,
     val removedFlagId:String,val completionFlagId:String)
 data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String)
+data class WorldFieldProtectionDefinition(val evidence:String)
 
 /** Scoped original category-1/item-11 transactions. Evidence: world-key-item.json.
  * Results are proposals only: the caller owns gesture validation, commit and save rollback.
@@ -15,6 +16,10 @@ data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String)
  */
 object WorldItems {
     const val ID="rom.special.11"
+    const val FIELD_PROTECTION_ID="rom.special.12"
+    const val FIELD_PENDING_FLAG="runtime.field67.protection.pending"
+    const val FIELD_ACTIVE_FLAG="runtime.field67.protection.active"
+    const val FIELD_USED_FLAG="rom.inventory.special.12.used"
     private const val TARGET_SPRITE=226
     data class Result(val inventory:Map<String,Int>,val flags:Map<String,Boolean>,
         val applied:Boolean,val error:String?=null)
@@ -23,6 +28,32 @@ object WorldItems {
         item.originalId==11&&item.maxCount==1
     private fun validId(id:String)=id.isNotBlank()&&id.length<=96
     private fun reject(snapshot:SaveSnapshot,error:String)=Result(snapshot.inventory,snapshot.flags,false,error)
+
+    /** Original map67/category1/id12: no character/object target, quantity1 is
+     * retained and its used marker set. Selection is not execution. */
+    fun fieldProtectionUnavailable(snapshot:SaveSnapshot,item:ItemDefinition,inMapMenu:Boolean):String? {
+        if(item.id!=FIELD_PROTECTION_ID||item.category!="special"||item.originalId!=12||item.maxCount!=1||
+            item.fieldProtectionUse?.evidence!="game-data/provenance/world-field67-item12.json")return "物品使用规则尚未核验"
+        if(!inMapMenu)return "只能在地图菜单使用"
+        val count=snapshot.inventory[item.id]?:0
+        if(count<=0)return "没有此物"
+        if(count!=1)return "物品数量异常"
+        if(snapshot.mapId!=67)return "原版仅在第七殿使用"
+        return null
+    }
+    fun useFieldProtection(snapshot:SaveSnapshot,item:ItemDefinition,inMapMenu:Boolean):Result {
+        fieldProtectionUnavailable(snapshot,item,inMapMenu)?.let{return reject(snapshot,it)}
+        return Result(snapshot.inventory,snapshot.flags+mapOf(FIELD_PENDING_FLAG to true,FIELD_USED_FLAG to true),true)
+    }
+    /** BA85..BA92 promotes pending at a SOURCE-map67 completed step; original
+     * 858E clears pending on map reconstruction, not the already active bit.
+     * New-game/defeat reset uses the existing whole-state reset. */
+    fun fieldFlagsAfterStep(flags:Map<String,Boolean>,step:CompletedStep):Map<String,Boolean> {
+        var next=flags
+        if(step.mapId==67&&flags[FIELD_PENDING_FLAG]==true)next=next+(FIELD_ACTIVE_FLAG to true)
+        if(step.transitioned)next=next-FIELD_PENDING_FLAG
+        return next
+    }
 
     /** Original inventory-grant stage only. The caller must first complete the original
      * encounter/dialogue dispatch; map 139's chest is guarded by a story battle.

@@ -47,17 +47,67 @@ data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:St
     fun stage(storyId:String,flags:Map<String,Boolean>)=dialogueIds.indices.firstOrNull{flags[stageKey(storyId,it)]!=true}
 }
 
+/** Original scene scripts use the same durable dialogue continuation as Boss followup.
+ * Cutscene movement proposals retain the witnessed completed-step poison costs. */
+data class StoryMovement(val destination:StoryDestination,val completedSteps:Int) {
+    init {require(completedSteps in 1..32)}
+}
+data class SceneStoryDefinition(val id:String,val npcId:String,val flagId:String,
+    val entryTrigger:StoryEntryTrigger,val continuation:StoryContinuation,
+    val openingMovement:StoryMovement,val movementsBeforeDialogue:Map<Int,StoryMovement>) {
+    val pendingFlag get()=flagId+".dialogue.pending"
+    fun triggersAt(snapshot:SaveSnapshot)=snapshot.mapId==entryTrigger.mapId&&snapshot.x/16==entryTrigger.x&&
+        snapshot.y/16==entryTrigger.y&&snapshot.flags[flagId]!=true&&snapshot.flags[pendingFlag]!=true
+    fun pendingDialogue(flags:Map<String,Boolean>)=continuation.stage(id,flags)?.let{continuation.dialogueIds[it]}
+    fun validPending(snapshot:SaveSnapshot):Boolean {
+        if(snapshot.flags[pendingFlag]!=true)return true
+        if(snapshot.mapId!=entryTrigger.mapId||snapshot.flags[flagId]==true)return false
+        val stage=continuation.stage(id,snapshot.flags)?:return false
+        return continuation.dialogueIds.indices.drop(stage).all{snapshot.flags[continuation.stageKey(id,it)]!=true}
+    }
+}
+
 /** One durable dialogue-step proposal; rendering never moves the party or grants actors. */
 object StoryFollowup {
     data class Result(val snapshot:SaveSnapshot,val nextDialogue:String?,val applied:Boolean,val error:String?=null)
     fun advance(before:SaveSnapshot,story:StoryBattleDefinition,currentDialogue:String,
         templates:Map<String,CharacterState>):Result {
+        val chain=story.continuation?:return Result(before,null,false,"当前剧情没有后续阶段")
+        return advance(before,story.id,story.pendingFlag,chain,currentDialogue,templates,story::completeDialogue)
+    }
+    fun begin(before:SaveSnapshot,story:SceneStoryDefinition):Result {
+        if(!story.triggersAt(before)||story.continuation.dialogueIds.indices.any{
+                before.flags[story.continuation.stageKey(story.id,it)]==true})
+            return Result(before,null,false,"场景剧情状态已变化")
+        val pending=before.copy(flags=before.flags+(story.pendingFlag to true))
+        return Result(move(pending,story.openingMovement),story.continuation.dialogueIds.first(),true)
+    }
+    fun advance(before:SaveSnapshot,story:SceneStoryDefinition,currentDialogue:String):Result {
+        if(!story.validPending(before))return Result(before,null,false,"场景剧情存档状态不一致")
+        val result=advance(before,story.id,story.pendingFlag,story.continuation,currentDialogue,emptyMap()){
+            (it+(story.flagId to true))-story.pendingFlag}
+        if(!result.applied||result.nextDialogue==null)return result
+        val index=story.continuation.stage(story.id,result.snapshot.flags)?:return result
+        return story.movementsBeforeDialogue[index]?.let{result.copy(snapshot=move(result.snapshot,it))}?:result
+    }
+    private fun move(before:SaveSnapshot,movement:StoryMovement):SaveSnapshot {
+        // Original map86 has no encounter region. This is a traced scene-script
+        // move, not a playable shortcut or an instruction to draw/award.
+        require(before.mapId==86&&movement.destination.mapId==86)
+        var party=before.characters
+        repeat(movement.completedSteps){party=OriginalStatus.step(party,86)}
+        val d=movement.destination
+        return before.copy(x=d.x*16+8,y=d.y*16+8,direction=d.direction?:before.direction,
+            characters=party,terrainMode=d.terrainMode?:before.terrainMode,
+            encounterSteps=d.encounterSteps?:before.encounterSteps)
+    }
+    private fun advance(before:SaveSnapshot,storyId:String,pendingFlag:String,chain:StoryContinuation,
+        currentDialogue:String,templates:Map<String,CharacterState>,complete:(Map<String,Boolean>)->Map<String,Boolean>):Result {
         fun reject(reason:String)=Result(before,null,false,reason)
-        val chain=story.continuation?:return reject("当前剧情没有后续阶段")
-        if(before.flags[story.pendingFlag]!=true)return reject("剧情状态已变化")
-        val index=chain.stage(story.id,before.flags)?:return reject("后续剧情已经完成")
+        if(before.flags[pendingFlag]!=true)return reject("剧情状态已变化")
+        val index=chain.stage(storyId,before.flags)?:return reject("后续剧情已经完成")
         if(chain.dialogueIds[index]!=currentDialogue)return reject("对话阶段已变化")
-        val progressed=before.flags+(chain.stageKey(story.id,index) to true)
+        val progressed=before.flags+(chain.stageKey(storyId,index) to true)
         if(index+1<chain.dialogueIds.size)
             return Result(before.copy(flags=progressed),chain.dialogueIds[index+1],true)
         val characters=before.characters.toMutableList()
@@ -66,7 +116,7 @@ object StoryFollowup {
             if(characters.any{it.id==id}||characters.size>=4)return reject("当前队伍与入队剧情不一致")
             characters.add(actor)
         }
-        val completed=story.completeDialogue(progressed)+chain.completionFlags.associateWith{true}
+        val completed=complete(progressed)+chain.completionFlags.associateWith{true}
         val next=before.copy(characters=characters,flags=completed)
         val destination=chain.destination?:return Result(next,null,true)
         return Result(next.copy(mapId=destination.mapId,x=destination.x*16+8,y=destination.y*16+8,

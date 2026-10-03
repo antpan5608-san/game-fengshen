@@ -1,0 +1,556 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "final-hall-exit-map86-rebirth-original-scene-script",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_INPUT_NOT_NORMAL_ROUTE",
+  "cpuCaseCount": 56,
+  "cpuReportSha256": "cd04be07007f5600718b08abd970b8a6cf18416e2987c86438c84b2dd8106399",
+  "cpuExpectedPath": "android/app/src/test/resources/rebirth-script-cpu.tsv",
+  "cpuExpectedSha256": "9f4cbba005045297c4df34771ff0c0c7adf61e1033edac8fcc2ea96be884100c",
+  "mappedBanks": [
+    0,
+    1,
+    46,
+    3
+  ],
+  "rule": {
+    "id": "rom.scene-story.86.rebirth",
+    "npcId": "rom.npc.86.0",
+    "mapId": 86,
+    "trigger": [
+      12,
+      5
+    ],
+    "flagId": "rom.map.86.flag.128",
+    "eventId": 2,
+    "scriptId": 3,
+    "openingPosition": [
+      7,
+      4
+    ],
+    "openingDirection": "UP",
+    "openingSteps": 6,
+    "openingEncounterSteps": 6,
+    "laterMovementBeforeMessage": 10,
+    "laterPosition": [
+      7,
+      5
+    ],
+    "laterDirection": "LEFT",
+    "laterSteps": 1,
+    "laterEncounterSteps": 7,
+    "dialogueIds": [
+      "rom.dialogue.96.2",
+      "rom.dialogue.96.3",
+      "rom.dialogue.96.4",
+      "rom.dialogue.96.5",
+      "rom.dialogue.96.6",
+      "rom.dialogue.96.7",
+      "rom.dialogue.96.8",
+      "rom.dialogue.96.9",
+      "rom.dialogue.96.10",
+      "rom.dialogue.96.11",
+      "rom.dialogue.96.12"
+    ],
+    "destination": {
+      "mapId": 16,
+      "x": 238,
+      "y": 160,
+      "direction": "UP",
+      "terrainMode": 0,
+      "encounterSteps": 0
+    },
+    "reward": "NO_ADDITIONAL_STATS_ITEMS_OR_MONEY",
+    "reentryCompleted": "NO_SCRIPT_RESTART",
+    "mapType": 255,
+    "defaultZone": 255,
+    "initialTerrainMode": 0
+  },
+  "sources": [
+    {
+      "offset": 383029,
+      "length": 78,
+      "sha256": "bd26cdb8cdc224cea2856e28936c10a1101362f9c96e1ebc73b6472a5bc66237",
+      "module": 11,
+      "cpuAddress": 55333,
+      "meaning": "Actual completed-map gate and map86 coordinate-trigger"
+    },
+    {
+      "offset": 383578,
+      "length": 46,
+      "sha256": "d1301002bf49715a2e6ba473a7be9875158040fefe4ffd9647d4eda4c25d52b4",
+      "module": 11,
+      "cpuAddress": 55882,
+      "meaning": "Original camera+7 coordinate comparison"
+    },
+    {
+      "offset": 383633,
+      "length": 3,
+      "sha256": "561ea8ffb0c7cc3a5c049ed6bedc5da89ba1cce12456bbdef68c0d1ac424578f",
+      "module": 11,
+      "cpuAddress": 55937,
+      "meaning": "Actual map86 trigger12,5 sentinel0"
+    },
+    {
+      "offset": 379730,
+      "length": 39,
+      "sha256": "80cafb5650de36b714c6fd9aac28388d7c2219bcf2ea8c8d7cb628059712d2e3",
+      "module": 11,
+      "cpuAddress": 52034,
+      "meaning": "Actual completion flag80 gate and event2 pointer"
+    },
+    {
+      "offset": 380169,
+      "length": 10,
+      "sha256": "0149e3550ccaaad9745899a63d235485b3c1eda3ab2d3822e356930b46454d4a",
+      "module": 11,
+      "cpuAddress": 52473,
+      "meaning": "Actual event2 stage table"
+    },
+    {
+      "offset": 380179,
+      "length": 7,
+      "sha256": "d544fbd2e7a3ec2034090e7c9a4be0ea9024b5bb9630bbd5a662cfbb213cfc91",
+      "module": 11,
+      "cpuAddress": 52483,
+      "meaning": "Actual script3 initializer"
+    },
+    {
+      "offset": 379902,
+      "length": 11,
+      "sha256": "0d4a0e8ee9b305cdacef652fa86125e46a81889fda782196f9fd80ac8c6e8fb7",
+      "module": 11,
+      "cpuAddress": 52206,
+      "meaning": "Actual pending script initializer"
+    },
+    {
+      "offset": 379913,
+      "length": 10,
+      "sha256": "b1b0eed86f44f26b530a5ac9dbec6e640f12c37ba06de73920362a20b47a279a",
+      "module": 11,
+      "cpuAddress": 52217,
+      "meaning": "Actual unfinished/finished script stage boundary"
+    },
+    {
+      "offset": 380186,
+      "length": 25,
+      "sha256": "21643a3093caeebec5e106b917074ed62e6acadafe2753eed196574cb7ddd735",
+      "module": 11,
+      "cpuAddress": 52490,
+      "meaning": "Actual map16 camera231,153 and saved reentry values"
+    },
+    {
+      "offset": 380058,
+      "length": 111,
+      "sha256": "b33f3ac9b3b6777498ed42016b37af66baedd343e88da67e26ec9e92543d2f5c",
+      "module": 11,
+      "cpuAddress": 52362,
+      "meaning": "Original final completion OR flag80 and controller reset"
+    },
+    {
+      "offset": 377532,
+      "length": 2,
+      "sha256": "7070351544dd9df961f68f5b8dd173cad1f54b1c0dc6eaa3f5b0ab43d4a576f5",
+      "module": 11,
+      "cpuAddress": 49836,
+      "meaning": "Actual script3 stream pointer"
+    },
+    {
+      "offset": 377688,
+      "length": 59,
+      "sha256": "f3ffec3729a5cbda7f1ef0c60d3200142bfd1ff220d8f1194d0bcc92d0b6eb72",
+      "module": 11,
+      "cpuAddress": 49992,
+      "meaning": "Actual script3 movement/dialogue-command sequence"
+    },
+    {
+      "offset": 21839,
+      "length": 2,
+      "sha256": "3a8a7d7bbd5cb0927125f30967a9ade9a9e30d2d0e399d710a33f9f89c060b46",
+      "module": 0,
+      "cpuAddress": 54591,
+      "meaning": "Original map86 completion byte pointer"
+    },
+    {
+      "offset": 14912,
+      "length": 207,
+      "sha256": "eee6b92bab2d53d4a7a7c8734e05b27e0d659e5e5cfecaaab1b091d929aba5e8",
+      "module": 0,
+      "cpuAddress": 47664,
+      "meaning": "Original completed-step poison and scoped field effect"
+    },
+    {
+      "offset": 376848,
+      "length": 5,
+      "sha256": "3885df1a6c9991ecfb4ac33fd94fba411fb5d2ed0b5611822b6cb801a343d870",
+      "module": 11,
+      "cpuAddress": 49152,
+      "meaning": "Negative encounter-region sentinel returns before RNG or encounter gate"
+    }
+  ],
+  "npcSource": {
+    "offset": 282104,
+    "length": 14,
+    "sha256": "635a11971f7a67d129ab13b1851a14ca3e8ada051a8904bd1f45d1aca256c90d",
+    "module": 8,
+    "cpuAddress": 52712,
+    "meaning": "Fixed 14-byte NPC source record"
+  },
+  "npcGraphic": {
+    "unusedPaletteIndices": [],
+    "width": 16,
+    "height": 16,
+    "transparentZero": true,
+    "paletteCodes": {
+      "0": [
+        0,
+        0,
+        0
+      ],
+      "1": [
+        0,
+        0,
+        0
+      ],
+      "3": [
+        93,
+        150,
+        255
+      ],
+      "2": [
+        255,
+        117,
+        97
+      ]
+    },
+    "tiles": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "offset": 864496,
+        "length": 16,
+        "sha256": "ab74fd01060101fae34fd6926459c581187a7a044f81d0f860d438241be3b17d",
+        "spriteTile": 14,
+        "attribute": 2,
+        "oamRamAddress": 532
+      },
+      {
+        "xy": [
+          8,
+          0
+        ],
+        "offset": 864512,
+        "length": 16,
+        "sha256": "3ea571b6f81edf7cf84d001643af8cf6776fa7a439c62393c8b88f44bd36a365",
+        "spriteTile": 15,
+        "attribute": 2,
+        "oamRamAddress": 536
+      },
+      {
+        "xy": [
+          0,
+          8
+        ],
+        "offset": 864752,
+        "length": 16,
+        "sha256": "17b942d10c28bd5a02eb9a93fe9cdceb58c3b8e793af4c2ee9ef692aeb7488b3",
+        "spriteTile": 30,
+        "attribute": 2,
+        "oamRamAddress": 540
+      },
+      {
+        "xy": [
+          8,
+          8
+        ],
+        "offset": 864768,
+        "length": 16,
+        "sha256": "ff48271ba3292d5296491b35336ef8a58df714d6440c5c46ccbde667de755ddf",
+        "spriteTile": 31,
+        "attribute": 2,
+        "oamRamAddress": 544
+      }
+    ],
+    "rgbaSha256": "81c8ec7c6e8843136a8f3cb3b357122e15b9eea8ed230ac34ccdfa0501c5249a",
+    "observedRect": [
+      32,
+      73,
+      16,
+      16
+    ],
+    "captureKind": "CONTROLLED_COMPLETED_REBIRTH_FLAG_REAL_EXIT_VISIBLE_POSE_NO_DIALOGUE_CHR",
+    "normalPlayEvidence": false,
+    "captureSha256": "34d02f460fade9845aa8e7fada9b7a9ee14ecd26b569bfa8533ef844ae52ba17",
+    "ppuSha256": "7412060a9a3adf2b968f03bd391b4b4663795164519f64a579dd6267a68ecb4c",
+    "ramSha256": "8c9688857df3e4a8c96949700bb022882cc62dfe7eed39ad94b65773e214fa25",
+    "opaquePixelMatch": true,
+    "opaquePixelCount": 204,
+    "scope": "One actual original sprite132 pose; no unverified font-time CHR imported"
+  },
+  "normalAndroid": "NOT_RUN",
+  "boundaries": [
+    {
+      "name": "01-actual-map86-entry",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 2,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "e5e6a5ad9ef44f44f674ed6bcf90360139b43b80374025d7366d314516ad9f6e",
+      "screenshotSha256": "b9c95d10d4ff7232831af4a6f29957005712f744c5ad719aeeadafe61fe6325d"
+    },
+    {
+      "name": "02-map86-menu-or-dialogue",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 3,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "09ff46ad1e4247416df842d5d920541a12498a93a8b106462e79420ac4ffee9d",
+      "screenshotSha256": "8c67263387737a60e3ed8ea3340b83b3325f430079face89e7b2e9fffadb3d5d"
+    },
+    {
+      "name": "03-dialogue-advance-01",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 4,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "f91a848499301b9591112f902d6064cfd3e634e7ac9b695ebc139059d978a5ff",
+      "screenshotSha256": "4e9089720545bc86544901a71211f9936f38ee47362f2338c7ecaead4b523aac"
+    },
+    {
+      "name": "03-dialogue-advance-02",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 5,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "fe4de0c83d916983bcdcaf9eb3a5bd0adf45b574ce0e997ad93f68439d1d21a8",
+      "screenshotSha256": "3417e6c9cd50b4ef80a6e6ae231febeac4d88940434e23b5819c33ebc8fb7506"
+    },
+    {
+      "name": "03-dialogue-advance-03",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 6,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "5023350374547c0b198070cff83ac4d69e5cf0cef0e394f853172ed8f88118ee",
+      "screenshotSha256": "8e4a4d7c0c5bcb3ffafc747f189c1213b61e78b95a51789e63f6f225d023f5b7"
+    },
+    {
+      "name": "03-dialogue-advance-04",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 6,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "64df177d54d9b83d43f191eef5a82d9594659b3333fbbcb90ba0b4619febdabb",
+      "screenshotSha256": "8e9a000894fb49048b4855eca08bba4b84663ffd258e105247edfc1e93eead64"
+    },
+    {
+      "name": "03-dialogue-advance-05",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 7,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "c57423d6f8fa466bda5c5cfcb228717bea20c16a9486999e73ea43c2aa356acc",
+      "screenshotSha256": "a3a8cdd194b250271df1193b02ae065295b570e1ed653af5e64ba1557dce93e3"
+    },
+    {
+      "name": "03-dialogue-advance-06",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 8,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "ba9021912c4f8473f0e3181c0600d8a048a0da193019d5ea4f23f03e638f9727",
+      "screenshotSha256": "3b2c063c008ea7718580ca403c5e7d762467da272f88856e3d0773f53f8a84db"
+    },
+    {
+      "name": "03-dialogue-advance-07",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 8,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "edbc412dc282f3f5ba016e4ad904095acef46ae4fc9c306c2eaeed17d009b29f",
+      "screenshotSha256": "4cc3e7912e1902783ef928f924bd8390d6a4168ce258d319957f4df1019d1990"
+    },
+    {
+      "name": "03-dialogue-advance-08",
+      "mapId": 86,
+      "cell": [
+        7,
+        4
+      ],
+      "message": 9,
+      "direction": 0,
+      "encounterSteps": 6,
+      "flag86": 0,
+      "ramSha256": "f55dffa571077d703c0039824d3be8f89c7388852de25f1a8a19db20b87cb702",
+      "screenshotSha256": "c1e6b957540604a5f195eaeb413884b36cb5bfc4a406b15a7d5a6841d97e4d2b"
+    },
+    {
+      "name": "03-dialogue-advance-09",
+      "mapId": 86,
+      "cell": [
+        7,
+        5
+      ],
+      "message": 10,
+      "direction": 2,
+      "encounterSteps": 7,
+      "flag86": 0,
+      "ramSha256": "dff03cbd5624d20cfb22e249ef0e6c6069847e7011b6d9052a2f65094267e664",
+      "screenshotSha256": "1d97bad37bed84d2b9a624115b5ce3c8431a4e6713bdbb28b505fce26fff1b7a"
+    },
+    {
+      "name": "03-dialogue-advance-10",
+      "mapId": 86,
+      "cell": [
+        7,
+        5
+      ],
+      "message": 11,
+      "direction": 2,
+      "encounterSteps": 7,
+      "flag86": 0,
+      "ramSha256": "5126bb5c74a4a9b699b2804816b6980b7511d6a9236788d63f5bb6a3d28005fb",
+      "screenshotSha256": "e1d3f3ac8fd1ff175cb148f15d600a5d00682adaee2c81c57550a899bd578181"
+    },
+    {
+      "name": "03-dialogue-advance-11",
+      "mapId": 86,
+      "cell": [
+        7,
+        5
+      ],
+      "message": 12,
+      "direction": 2,
+      "encounterSteps": 7,
+      "flag86": 0,
+      "ramSha256": "14eb4299cb3f61c6b5f03eab9b0f0be8107c85ab7cc5e92d0ca98ec9b1502048",
+      "screenshotSha256": "189abc9bc77306fd886070a0ba5a10b70f02d1d5f691178a44b5a852f7b06aa1"
+    },
+    {
+      "name": "03-dialogue-advance-12",
+      "mapId": 16,
+      "cell": [
+        238,
+        160
+      ],
+      "message": 12,
+      "direction": 0,
+      "encounterSteps": 0,
+      "flag86": 128,
+      "ramSha256": "9dffed7e7eb897313b943d4714414826538b497f7fd6f2d0033a6b3ddcc9fa78",
+      "screenshotSha256": "daae03726167679e4df714eb40ba8e935f34d7afece26d9f37a2278b8f123492"
+    }
+  ],
+  "poisonBoundaries": [
+    {
+      "name": "00-controlled-post-win-before-exit",
+      "mapId": 68,
+      "partyHp": [
+        35,
+        29
+      ],
+      "status": [
+        2,
+        2
+      ],
+      "encounterSteps": 0,
+      "ramSha256": "8c7a37add0e087be97d5020afbf7278f653b50091b86a2c65e3138e5aa569d0a"
+    },
+    {
+      "name": "01-actual-map86-entry",
+      "mapId": 86,
+      "partyHp": [
+        28,
+        22
+      ],
+      "status": [
+        2,
+        2
+      ],
+      "encounterSteps": 6,
+      "ramSha256": "3d1dadad54d7a378f6578fca480e9c0762fe0e53cd7d58bbdb992ad00171912c"
+    },
+    {
+      "name": "03-dialogue-advance-09",
+      "mapId": 86,
+      "partyHp": [
+        27,
+        21
+      ],
+      "status": [
+        2,
+        2
+      ],
+      "encounterSteps": 7,
+      "ramSha256": "18ab5eaade1e51c94d9d0f5e8d534dc641619b62f4171bd7dbe484ac762a4895"
+    },
+    {
+      "name": "03-dialogue-advance-12",
+      "mapId": 16,
+      "partyHp": [
+        27,
+        21
+      ],
+      "status": [
+        2,
+        2
+      ],
+      "encounterSteps": 0,
+      "ramSha256": "62c7036314aba65d4b73a3cd01f0f5a53cf9abd2d18246d9bdb1a87fe1153534"
+    }
+  ],
+  "limitations": [
+    "Source68 victory flag/gate and position were controlled; real exit and original keys followed. This is not actual normal final-king victory.",
+    "One visible original TaiYi pose from completed-event graphic fixture; dialogue font CHR capture failed and was rejected.",
+    "Android script approach uses traced cutscene destinations/step effects; complete original actor animation and exact movement timing remain debt.",
+    "Original manual-card save/load equivalence remains NOT_RUN."
+  ]
+}

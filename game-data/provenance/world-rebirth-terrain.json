@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "map86-rebirth-ground-and-upper-plane-bridge-zero",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "inputModes": [
+    0,
+    1
+  ],
+  "initialBridgeState": 0,
+  "testCount": 128,
+  "failures": 0,
+  "maps": {
+    "86": {
+      "mapId": 86,
+      "gridSha256": "2d515b9f4d5515c0b03fb57f357f7279530610b335629efda90db9784c378f14",
+      "classCounts": {
+        "0": 59,
+        "1": 175,
+        "4": 3,
+        "8": 3
+      },
+      "testCount": 128
+    }
+  },
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Original collision source dispatcher"
+    },
+    {
+      "offset": 19607,
+      "length": 215,
+      "sha256": "a118646fa613c07d783eeb31976365917292580ea2c333942ec1762bb48382b5",
+      "module": 0,
+      "cpuAddress": 52359,
+      "meaning": "Tileset3 source-plane table and direction dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Original collision target dispatcher"
+    },
+    {
+      "offset": 20649,
+      "length": 153,
+      "sha256": "028a66c214d87469fc1161db986e50c24087eae0a0fa441cd0346489bdf1b9bf",
+      "module": 0,
+      "cpuAddress": 53401,
+      "meaning": "Tileset3 target-plane and stair dispatch"
+    },
+    {
+      "offset": 21028,
+      "length": 115,
+      "sha256": "fc726076185b454cb84a59fc1d05d3899ed7ff15afde7b7c3301b872aefa9f83",
+      "module": 0,
+      "cpuAddress": 53780,
+      "meaning": "Original directional barriers"
+    },
+    {
+      "offset": 1884,
+      "length": 34,
+      "sha256": "b2c50ccedebf387743cb66c3ea8043a955ae2224b1f6d92d78985be488444269",
+      "module": 0,
+      "cpuAddress": 34636,
+      "meaning": "9B sprite occlusion branch; not encounter suppression"
+    },
+    {
+      "offset": 377027,
+      "length": 100,
+      "sha256": "03813f125a34e0d6848b753e65400e9524d8621dc694091bea94ac7bc5ad9132",
+      "module": 11,
+      "cpuAddress": 49331,
+      "meaning": "Actual encounter gate does not read 9B"
+    },
+    {
+      "offset": 388526,
+      "length": 46,
+      "sha256": "bc3a71ffa813b3d0ba6fd374807e87ea405d82f9f265b5ec596d273d12da6e8a",
+      "module": 11,
+      "cpuAddress": 60830,
+      "meaning": "Actual map-type bytes for scoped encounter fixtures"
+    }
+  ],
+  "cpuExpectedPath": "android/app/src/test/resources/rebirth-ground-cpu.tsv",
+  "cpuExpectedSha256": "5e4bc117bd25a42c1c4adcf1e80e368979cb5163a8ce5edee2a17f1c04674131",
+  "controlledReportSha256": "01cc2e11a0c037ba2c3028fa0218358577aedd5ae38d15104b57474753918dc7",
+  "encounterGate": {
+    "testCount": 480,
+    "failures": 0,
+    "cpuExpectedPath": "android/app/src/test/resources/hell-ground-encounter-gate-cpu.tsv",
+    "cpuExpectedSha256": "9663280bc711892b4555b9a4957b42bb77bd7af63939c4c1e44cfd950cd0153b",
+    "controlledReportSha256": "5e8eaa05fc4549218aaaef8ea12d1bb66b3e2ff43eaf145b2cc3f99abac5eed2",
+    "suppressesOn9b": false
+  },
+  "rules": {
+    "source23VerticalSelectsUpperOnlyForTarget14": true,
+    "upperStandingClasses": [
+      10,
+      11,
+      13,
+      14,
+      17,
+      18,
+      23
+    ],
+    "upperBridge20Through22": "NOT_IMPLEMENTED",
+    "9b": "ORIGINAL_SPRITE_OCCLUSION_NOT_ENCOUNTER_CONTROL"
+  },
+  "normalAndroid": "NOT_RUN",
+  "limits": [
+    "Nonadjacent collision fixtures are not normal reachability",
+    "Only classes present in scoped eight maps; bridge state zero",
+    "Original sprite-priority/partial occlusion is not yet rendered; no field-damage rule inferred",
+    "No transport, ice movement, NPC or item condition inferred"
+  ],
+  "cpuReportSha256": "cf8b22192843d8e4c3714d2eb82966e2906de2cef42860369bec8021c91f2196"
+}

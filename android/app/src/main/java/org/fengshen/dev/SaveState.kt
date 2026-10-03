@@ -182,8 +182,9 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
             }
     }
     fun validate(content:Content):Boolean {
-        if(contentVersion !in setOf(content.scene.version,"opening-to-world-b1","opening-segment-001-c1","opening-segment-001-c2","opening-segment-001-c3","opening-segment-001-c4","opening-segment-001-c5","opening-segment-001-c6","opening-segment-001-c7","opening-segment-001-c8","opening-segment-001-c9","opening-segment-001-c10","opening-segment-001-c11","opening-segment-001-c12","opening-segment-001-c13","opening-segment-001-c14","opening-segment-001-c15","opening-segment-001-c16","opening-segment-001-c17") || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
+        if(!compatibleContentVersion(contentVersion,content.scene.version) || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
+        if(content.sceneStories.values.any{!it.validPending(this)})return false
         val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
         if(resolved==null&&content.exits.any{it.returnToCaller&&it.fromMapId==mapId})return false
@@ -196,6 +197,11 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         return scene.check(x/16,y/16,terrainMode)==null
     }
     companion object {
+        /** Known schema1 content iterations through the seventh-hall side-room checkpoint.
+         * This admits their version marker only; scene, actor, inventory, caller
+         * and flag-dependent position checks remain mandatory below. */
+        fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
+            saved in (1..27).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

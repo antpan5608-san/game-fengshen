@@ -15,7 +15,7 @@ class TouchTest:IsolatedGameTestCase(){
     private fun inExistingEncounterRegion(content:BattleContent,mapId:Int,x:Int,y:Int)=
         content.zones.any{it.contains(mapId,x,y)}||
             (mapId==content.zoneMapId&&content.zoneRects.any{it.contains(x,y)})
-    private fun launch():Pair<MainActivity,GameView>{
+    private fun launch(dismissOpening:Boolean=true):Pair<MainActivity,GameView>{
         val activity=instrumentation.startActivitySync(Intent(instrumentation.targetContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         var view:GameView?=null
         // A fresh emulator install may still be dex-optimizing while the content loader runs.
@@ -31,7 +31,7 @@ class TouchTest:IsolatedGameTestCase(){
             fail("App failed to become interactive: $visibleMessage")
         }
         instrumentation.runOnMainSync{view!!.active=true;view!!.focused=true}
-        if(view!!.layer==GameView.Layer.DIALOGUE)tap(view!!,Pair(view!!.width*.5f,view!!.height*.5f))
+        if(dismissOpening&&view!!.layer==GameView.Layer.DIALOGUE)tap(view!!,Pair(view!!.width*.5f,view!!.height*.5f))
         return activity to view!!
     }
     private fun send(v:GameView,action:Int,points:List<Pair<Float,Float>>){
@@ -96,6 +96,52 @@ class TouchTest:IsolatedGameTestCase(){
             SystemClock.sleep(5)
         }
         instrumentation.runOnMainSync{assertEquals("Unfinished normal touch step",0,v.world.remaining)}
+    }
+    /** Explicit isolated pending-story fixture, not the normal final-hall recording. */
+    fun testControlledRebirthCancelPendingRestartAndOnceOnlyCompletion(){
+        var (activity,v)=launch()
+        val c=v.content;val story=c.sceneStories.getValue("rom.npc.86.0")
+        val base=SaveSnapshot(c.scene.version,86,12*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(HerbUse.ID to 2),emptyMap(),887)
+        val pending=StoryFollowup.begin(base,story).snapshot
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(pending));v.startOpeningIfNeeded()}
+        assertEquals(GameView.Layer.DIALOGUE,v.layer);assertEquals(pending,v.currentSnapshot())
+        val middle=Pair(v.width*.5f,v.height*.5f)
+        send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_CANCEL,listOf(middle))
+        send(v,MotionEvent.ACTION_UP,listOf(middle));assertEquals(pending,v.currentSnapshot())
+        instrumentation.runOnMainSync{v.handleBack()};assertEquals(pending,v.currentSnapshot())
+        assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        val text=GameView::class.java.getDeclaredField("dialogueText").apply{isAccessible=true}
+        fun currentId()=(text.get(v)as StoryText).id
+        for(index in 0..4){
+            val id=story.continuation.dialogueIds[index];assertEquals(id,currentId())
+            var pages=0
+            while(v.layer==GameView.Layer.DIALOGUE&&currentId()==id){
+                assertTrue(pages++<32);tap(v,Pair(v.width*.5f,v.height*.5f))}
+        }
+        val mid=v.currentSnapshot();assertEquals("rom.dialogue.96.7",currentId())
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        assertEquals(mid,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        screenshot(v,"world-rebirth-controlled-pending-before-restart")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()};instrumentation.waitForIdleSync()
+        val restarted=launch(false);activity=restarted.first;v=restarted.second
+        assertEquals(mid,v.currentSnapshot());assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertEquals("rom.dialogue.96.7",currentId())
+        screenshot(v,"world-rebirth-controlled-pending-restored")
+        for(index in 5..10){
+            val id=story.continuation.dialogueIds[index];assertEquals(id,currentId())
+            var pages=0
+            while(v.layer==GameView.Layer.DIALOGUE&&currentId()==id){
+                assertTrue(pages++<32);tap(v,Pair(v.width*.5f,v.height*.5f))}
+        }
+        assertEquals(GameView.Layer.MAP,v.layer);val done=v.currentSnapshot()
+        assertEquals(16,done.mapId);assertEquals(238,done.x/16);assertEquals(160,done.y/16)
+        assertEquals(base.characters,done.characters);assertEquals(base.inventory,done.inventory);assertEquals(base.money,done.money)
+        assertTrue(done.flags[story.flagId]==true);assertTrue(done.flags[story.pendingFlag]!=true)
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(v.width*.5f,v.height*.5f)));assertEquals(done,v.currentSnapshot())
+        assertEquals(done,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        screenshot(v,"world-rebirth-controlled-completed-no-extra-reward")
+        instrumentation.runOnMainSync{activity.finish()}
     }
     fun testUnrestorableSaveCannotBeOverwritten(){
         val (activity,v)=launch()
@@ -1515,7 +1561,9 @@ class TouchTest:IsolatedGameTestCase(){
             if(v.layer!=GameView.Layer.MAP)return
             if(v.currentSnapshot().characters.first().statusMask and OriginalStatus.POISON!=0)medicine(AntidoteUse.ID)
             val s=v.currentSnapshot();val h=s.characters.first()
-            if(h.hp<=h.maxHp/2&&(s.inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID)
+            // The continuation crosses genuine multi-enemy sea groups. A half-HP
+            // policy could die before the next turn; use bought herbs earlier.
+            if(h.hp<=h.maxHp*3/4&&(s.inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID)
         }
         fun finishFight(){
             var entered:OpeningBattle?=null
@@ -1538,7 +1586,7 @@ class TouchTest:IsolatedGameTestCase(){
                     state("boss-herb-action");capturedBattleHerb=true
                 }
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
-                    val heal=fight.hero.hp<=fight.hero.maxHp/2||(boss&&bossHerbs==0&&fight.hero.hp<fight.hero.maxHp)
+                    val heal=fight.hero.hp<=fight.hero.maxHp*3/4||(boss&&bossHerbs==0&&fight.hero.hp<fight.hero.maxHp)
                     if(heal&&v.battleHerbCount()>0){
                         val before=fight.hero;val count=v.battleHerbCount()
                         tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
@@ -1647,7 +1695,8 @@ class TouchTest:IsolatedGameTestCase(){
         fun neededSupplyMoney():Int {
             val saved=v.currentSnapshot()
             val pills=((if(west)6 else 3)-(saved.inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0)*20
-            return pills+if(west)(10-(saved.inventory[HerbUse.ID]?:0)).coerceAtLeast(0)*15 else 200
+            val herbs=(10-(saved.inventory[HerbUse.ID]?:0)).coerceAtLeast(0)*15
+            return pills+herbs+if(west)0 else 200
         }
         if(v.currentSnapshot().money<neededSupplyMoney()){
             state("normal-earned-supply-start")
@@ -1681,9 +1730,9 @@ class TouchTest:IsolatedGameTestCase(){
         val supplyEntry=enterService(0,19)
         val antidotes=((if(west)6 else 3)-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0)
         if(antidotes>0)trade(AntidoteUse.ID,true,antidotes)
-        if(west){
+        run{
             val herbs=(10-(v.currentSnapshot().inventory[HerbUse.ID]?:0)).coerceAtLeast(0)
-            assertTrue("Normal South victory funds must buy intended West supply",v.currentSnapshot().money>=herbs*15)
+            assertTrue("Normally earned funds must buy the intended route supply",v.currentSnapshot().money>=herbs*15)
             if(herbs>0)trade(HerbUse.ID,true,herbs)
         }
         state("normal-town-supply-purchased");leaveService(supplyEntry)
@@ -2139,11 +2188,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldSecondHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,false,true)}
     fun testNormalWorldHallBatchFromVerifiedSecondHallSave(){normalWorldStoryContinuation(false,true,hallBatch=true)}
     fun testWorldHallBatchColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,hallBatch=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false){
+    fun testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave(){normalWorldStoryContinuation(false,true,rebirth=true)}
+    fun testWorldRebirthColdRestartAndContinueMatchesNormalSave(){normalWorldStoryContinuation(true,true,rebirth=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2198,7 +2249,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch){
+            if(firstHall||secondHall||hallBatch||rebirth){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2212,14 +2263,16 @@ class TouchTest:IsolatedGameTestCase(){
             var entered:OpeningBattle?=null
             instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)entered=battleField.get(v) as OpeningBattle}
             val initial=entered?:return;val beforeFight=v.currentSnapshot()
-            val boss=initial.enemies.any{if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
+            val boss=initial.enemies.any{if(rebirth)it.definition.id in listOf(150,151) else if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
                 it.definition.id==if(secondHall)143 else if(firstHall)142 else if(east)141 else 140};fights++
             if(initial.party.size==2){twoActorBattles++;state("two-actor-natural-encounter")}
             if(boss){
                 assertFalse("A completed story must never start again after cold restart",cold)
-                if(hallBatch)assertTrue("No repeated hall battle",++bossEntries<=6)
+                if(rebirth)assertTrue("No repeated final hall battle",++bossEntries<=2)
+                else if(hallBatch)assertTrue("No repeated hall battle",++bossEntries<=6)
                 else assertEquals("Only the original one-shot encounter may start",1,++bossEntries)
-                assertEquals(if(hallBatch)mapOf(144 to 850,145 to 1150,146 to 1300,147 to 1540,148 to 1860,149 to 2100).getValue(initial.enemies.single().definition.id)
+                assertEquals(if(rebirth)mapOf(150 to 2500,151 to 3500).getValue(initial.enemies.single().definition.id)
+                    else if(hallBatch)mapOf(144 to 850,145 to 1150,146 to 1300,147 to 1540,148 to 1860,149 to 2100).getValue(initial.enemies.single().definition.id)
                     else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
@@ -2384,12 +2437,12 @@ class TouchTest:IsolatedGameTestCase(){
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
         }
-        if(hallBatch){
-            val maps=listOf(61,62,63,64,65,66)
+        if(hallBatch||rebirth){
+            val maps=if(rebirth)listOf(67,68)else listOf(61,62,63,64,65,66)
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             assertTrue(source.flags["rom.map.60.flag.2"]==true)
             assertTrue(source.flags["rom.map.60.flag.2.dialogue.pending"]!=true)
-            assertEquals(23,v.world.mapId)
+            assertEquals(if(rebirth&&cold)16 else 23,v.world.mapId)
             fun leaveLanding(){
                 val cell=v.world.x/16 to v.world.y/16
                 if(v.content.exits.any{it.fromMapId==v.world.mapId&&it.triggerX==cell.first&&it.triggerY==cell.second}){
@@ -2409,6 +2462,25 @@ class TouchTest:IsolatedGameTestCase(){
                 leaveService(entry);inn(2)
                 assertTrue("Actual inn must leave living party",v.currentSnapshot().characters.all{it.hp>0})
                 state("normal-bought-supply-and-paid-inn")
+            }
+            if(rebirth&&cold){
+                val story=v.content.sceneStories.getValue("rom.npc.86.0")
+                assertTrue(source.flags[story.flagId]==true);assertTrue(source.flags[story.pendingFlag]!=true)
+                assertEquals(238,v.world.x/16);assertEquals(160,v.world.y/16)
+                for(mid in maps){val done=v.content.npcs.filter{it.mapId==mid}.mapNotNull{v.content.battle!!.storyBattles[it.id]}.single()
+                    assertTrue(done.alreadyWon(source.flags));for(flag in done.victoryFlags)assertTrue(source.flags[flag]==true)}
+                state("cold-original-world-next-state-full-party-and-flags")
+                // Original 86 -> 16 is not evidence of a reverse portal.
+                // Continue from the actual scripted world landing only.
+                val key=listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).first{candidate->
+                    val nx=v.world.x/16+(if(candidate==Key.RIGHT)1 else if(candidate==Key.LEFT)-1 else 0)
+                    val ny=v.world.y/16+(if(candidate==Key.DOWN)1 else if(candidate==Key.UP)-1 else 0)
+                    v.world.scene.probeFrom(v.world.x/16,v.world.y/16,candidate,v.world.terrainMode)==MovementBlock.NONE&&
+                        v.content.exits.none{e->e.fromMapId==16&&e.triggerX==nx&&e.triggerY==ny}}
+                step(key);assertEquals(16,v.world.mapId);assertEquals(source.flags,v.currentSnapshot().flags)
+                assertEquals(0,bossEntries);state("cold-completed-rebirth-no-script-restart-and-normal-move")
+                checkSourceUnchanged();persistChecked();state("cold-real-return-and-continue")
+                instrumentation.runOnMainSync{activity.finish()};return
             }
             if(!cold){
                 leaveLanding();walkTo(55,91);assertEquals(2,v.world.mapId);restock()
@@ -2457,6 +2529,14 @@ class TouchTest:IsolatedGameTestCase(){
                         assertEquals(before.money,after.money);assertEquals(before.characters,after.characters)
                         talk();assertEquals(after.inventory,v.currentSnapshot().inventory);assertEquals(after.flags,v.currentSnapshot().flags)
                         state("normal-map-$mid-chest-${npc.id}-applied-${expected.applied}")
+                        if(rebirth&&item.id==WorldItems.FIELD_PROTECTION_ID){
+                            assertTrue("Acquire the real protection chest before crossing the hall",expected.applied)
+                            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,item.id)
+                            val selected=v.currentSnapshot();tap(v,center(v.panelItemBounds(item.id)));assertEquals(selected,v.currentSnapshot())
+                            tap(v,center(v.panelPrimaryBounds()));assertEquals(selected.inventory,v.currentSnapshot().inventory)
+                            assertTrue(v.currentSnapshot().flags[WorldItems.FIELD_PENDING_FLAG]==true)
+                            instrumentation.runOnMainSync{v.handleBack()};state("normal-earned-protection-used-not-consumed")
+                        }
                         val owner=when(item.id){"rom.weapon.19"->"xiaolongnv";"rom.weapon.5"->"nezha";else->null}
                         if(owner!=null&&(v.currentSnapshot().inventory[item.id]?:0)>0){
                             val def=v.content.equipmentDefinitions.getValue(item.id)
@@ -2476,6 +2556,22 @@ class TouchTest:IsolatedGameTestCase(){
                     assertTrue(story.alreadyWon(v.currentSnapshot().flags));assertTrue(v.currentSnapshot().flags[gate.removedFlagId]==true)
                     assertTrue(v.currentSnapshot().flags[story.pendingFlag]!=true)
                 }
+                if(rebirth&&mid==67&&!cold){
+                    for(room in listOf(69,158,159))for(side in v.content.exits.filter{it.fromMapId==67&&it.toMapId==room}){
+                        leaveLanding();walkTo(side.triggerX,side.triggerY);assertEquals(room,v.world.mapId)
+                        state("normal-side-room-$room-entry-${side.spawnX}-${side.spawnY}")
+                        for(npc in v.content.npcs.filter{it.mapId==room}){
+                            val cell=npc.interactionCell?: (npc.x to npc.y+1)
+                            walkTo(cell.first,cell.second);val beforeTalk=v.currentSnapshot();talk()
+                            assertEquals(GameView.Layer.MAP,v.layer);assertEquals(beforeTalk.money,v.currentSnapshot().money)
+                            assertEquals(beforeTalk.inventory,v.currentSnapshot().inventory);assertEquals(beforeTalk.characters,v.currentSnapshot().characters)
+                            state("normal-side-dialogue-${npc.id}")
+                        }
+                        walkTo(side.spawnX,side.spawnY);assertEquals(67,v.world.mapId)
+                        assertEquals(side.triggerX,v.world.x/16);assertEquals(side.triggerY,v.world.y/16)
+                    }
+                    assertTrue(v.currentSnapshot().flags[WorldItems.FIELD_ACTIVE_FLAG]==true)
+                }
                 walkTo(king.interactionCell!!.first,king.interactionCell.second)
                 val before=v.currentSnapshot();talk()
                 if(!cold){
@@ -2492,6 +2588,34 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(paid.money,v.currentSnapshot().money);assertEquals(paid.inventory,v.currentSnapshot().inventory)
                 assertEquals(paid.characters,v.currentSnapshot().characters);assertEquals(paid.flags,v.currentSnapshot().flags)
                 assertNull(v.world.scene.check(gate.x,gate.y));state("normal-map-$mid-repeat-no-reward")
+                if(rebirth&&mid==68){
+                    // Last physical step executes the real exit; its auto-scene
+                    // immediately restores the traced opening position.
+                    walkTo(12,2);val beforeScene=v.currentSnapshot();step(Key.UP)
+                    assertEquals(86,v.world.mapId);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                    val sceneStory=v.content.sceneStories.getValue("rom.npc.86.0")
+                    val text=GameView::class.java.getDeclaredField("dialogueText").apply{isAccessible=true}
+                    assertEquals(7,v.world.x/16);assertEquals(4,v.world.y/16);state("normal-rebirth-original-opening")
+                    for((index,id)in sceneStory.continuation.dialogueIds.withIndex()){
+                        assertEquals(id,(text.get(v)as StoryText).id);val beforeText=v.currentSnapshot()
+                        instrumentation.runOnMainSync{v.handleBack()};assertEquals(beforeText,v.currentSnapshot())
+                        assertEquals(GameView.Layer.DIALOGUE,v.layer);state("normal-rebirth-dialogue-$index")
+                        var pages=0
+                        while(v.layer==GameView.Layer.DIALOGUE&&(text.get(v)as StoryText).id==id){
+                            assertTrue("Bounded original scene pages",pages++<32);tap(v,Pair(v.width*.5f,v.height*.5f))}
+                        assertTrue(v.currentSnapshot().flags[sceneStory.continuation.stageKey(sceneStory.id,index)]==true)
+                        assertEquals(beforeScene.money,v.currentSnapshot().money);assertEquals(beforeScene.inventory,v.currentSnapshot().inventory)
+                    }
+                    assertEquals(GameView.Layer.MAP,v.layer);assertEquals(16,v.world.mapId)
+                    assertEquals(238,v.world.x/16);assertEquals(160,v.world.y/16)
+                    assertTrue(v.currentSnapshot().flags[sceneStory.flagId]==true)
+                    assertTrue(v.currentSnapshot().flags[sceneStory.pendingFlag]!=true)
+                    assertEquals(beforeScene.characters,v.currentSnapshot().characters) // Real antidotes kept both unpoisoned.
+                    assertEquals(2,bossEntries);checkSourceUnchanged();persistChecked()
+                    File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                    state("normal-final-hall-rebirth-next-world-state-saved")
+                    instrumentation.runOnMainSync{activity.finish()};return
+                }
                 walkTo(exit.triggerX,exit.triggerY);assertEquals(23,v.world.mapId)
                 assertEquals(exit.spawnX,v.world.x/16);assertEquals(exit.spawnY,v.world.y/16)
                 persistChecked();state("normal-map-$mid-original-open-gate-saved")
