@@ -10,7 +10,13 @@ object OriginalStatus {
     fun label(mask:Int)=when(mask){0->"正常";POISON->"中毒";DEAD->"死亡";else->"异常 %02X".format(mask)}
     fun enemySupported(enemy:EnemyDefinition)=enemy.behaviorByte==0 ||
         (enemy.behaviorByte==3&&enemy.iceBaseDamage!=null&&enemy.iceBaseDamage in 0..65535) ||
+        (enemy.behaviorByte==1&&enemy.iceBaseDamage==null&&enemy.specialBaseDamage!=null&&enemy.specialBaseDamage!! in 0..65535) ||
         enemy.behaviorByte in setOf(7,8,9) // Original shared AI dispatch is keyed by behavior, not enemy ID.
+    /** Original behavior1's secondary threshold57 always passes this choice branch. */
+    fun choosesSpecial1(random:Int):Boolean {
+        require(random in 0..255)
+        return (random and 127)<41
+    }
     fun choosesPoison(random:Int):Boolean {
         require(random in 0..255)
         return (random and 127)<41 && ((random ushr 1) and 63)<25

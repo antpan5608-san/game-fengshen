@@ -461,6 +461,30 @@ def extend_world_mechanisms(reader, scene, mechanisms, provenance_path):
         scene.setdefault('mechanisms',[]).append({k:definition[k] for k in ('id','mapId','x','y','sessionFlag','evidence')}|
             {'changes':changes,'resumePolicy':'ANDROID_SESSION_NOT_ORIGINAL_MANUAL_SAVE','source':provenance_path})
 
+def validate_world_behavior1(reader,enemy):
+    """Accept only the scoped original AI/damage proof, not a name-based guess."""
+    from forensics.fengshen246 import extract_enemy_special_base
+    path='game-data/provenance/world-enemy-behavior1.json'
+    if enemy.get('specialDamageEvidence')!=path or 'iceBaseDamage' in enemy:
+        raise ValueError('Behavior1 requires its independent original damage evidence')
+    proof=load(ROOT/path);rules=proof['rules']
+    if (proof['romSha256'],proof['scopeRevision'],proof['behavior']) != \
+            (SHA256,'behavior1-all-living-targets-and-original-damage',1) or \
+            rules['specialChoice']!='(random &127)<41' or \
+            rules['specialHit']!='((random>>1)&63)<57, always true in actual choice branch' or \
+            rules['allTarget'] is not True or rules['baseDamageIgnoresArmorAndStamina'] is not True:
+        raise ValueError('Behavior1 rules differ from original dispatch')
+    if proof['verifiedEnemyIds']!=[24,88,143,162,166,172,176] or enemy['id'] not in proof['verifiedEnemyIds']:
+        raise ValueError('Behavior1 identity outside verified CPU scope')
+    required={(9,0x8dc4,12),(9,0x8de9,201),(9,0xa956,117),(9,0xa912,2),(9,0xab6d,41),(9,0xab0a,79)}
+    if {(s['module'],s['cpuAddress'],s['length']) for s in proof['sources']}!=required:
+        raise ValueError('Behavior1 lacks choice, target, damage or HP evidence')
+    for span in proof['sources']:checked_span(reader,span)
+    actual=extract_enemy_special_base(reader,enemy['id'])
+    if enemy.get('specialBaseDamage')!=actual['specialBaseDamage'] or enemy.get('specialSource')!=actual['specialSource']:
+        raise ValueError('Behavior1 damage differs from original dispatch')
+    checked_span(reader,enemy['specialSource'])
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -523,12 +547,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1,14}:
                     raise ValueError('Ground profile classes differ from original map')
-            elif terrain['tileset']==3 and proof.get('scopeRevision')=='map70-first-hall-ground-mode':
-                if mid!=70 or original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0 or proof['testCount']!=576 or proof['failures']!=0:
-                    raise ValueError('First hall lacks original ground matrix')
+            elif terrain['tileset']==3 and proof.get('scopeRevision') in ('map70-first-hall-ground-mode','map60-second-hall-ground-mode'):
+                if mid!=proof['mapId'] or original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0 or proof['testCount']!=576 or proof['failures']!=0:
+                    raise ValueError('Hell hall lacks its original ground matrix')
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
-                    raise ValueError('First hall ground classes differ')
+                    raise ValueError('Hell hall ground classes differ')
             else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
@@ -614,6 +638,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
+            if enemy['behaviorByte']!=1 and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
+                raise ValueError('Behavior1 damage cannot be assigned to another behavior')
             if enemy['behaviorByte']==3:
                 from forensics.fengshen246 import extract_enemy_ice_base
                 original_ice=extract_enemy_ice_base(reader,enemy['id'])
@@ -626,6 +652,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         if enemy['iceSource'].get(key)!=original_ice['iceSource'][key]:
                             raise ValueError('Ice evidence span differs from original dispatch')
                 checked_span(reader,enemy['iceSource'])
+            elif enemy['behaviorByte']==1:
+                validate_world_behavior1(reader,enemy)
             elif enemy['behaviorByte']==8:
                 if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
                     raise ValueError('Behavior8 requires its scoped status evidence')
@@ -742,15 +770,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Story continuation order or state differs')
                 elif boss.get('victoryFlags'):
                     proof=load(ROOT/boss['victoryFlagEvidence']);rule=proof['rules']
-                    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246':
+                    if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246'):
                         raise ValueError('Unknown battle map flags')
                     for span in proof['sources']:checked_span(reader,span)
                     if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
                             boss['flagId']!=rule['bossVictoryFlag'] or boss['victoryFlags']!=rule['victoryFlags'] or boss.get('commitAfterDialogue',False):
-                        raise ValueError('First hall battle flags or timing differ')
-                    if checked_span(reader,rule['sourceTypeInstruction'])!=bytes.fromhex('a99f') or \
-                            checked_span(reader,rule['setDialogueAndEventFlag'])!=bytes.fromhex('a9022078d3'):
-                        raise ValueError('First hall source or event2 instruction differs')
+                        raise ValueError('Hell hall battle flags or timing differ')
+                    if rule['eventArgument']!=2 or checked_span(reader,rule['sourceTypeInstruction'])!=bytes([0xa9,rule['sourceType']]) or \
+                            rule['sourceTypeInstruction']['cpuAddress']!=reader.word(10,0xd1e3+2*rule['eventId'])+12 or \
+                            checked_span(reader,rule['setDialogueAndEventFlag'])!=bytes([0xa9,rule['repeatMessage'],0x20,0x78,0xd3]):
+                        raise ValueError('Hell hall source or message/event instruction differs')
                 elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
             if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
@@ -916,10 +945,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     for barrier in evidence.get('sceneBarriers',[]):
         proof=load(ROOT/barrier['evidence']);rule=proof['rules'];raw=checked_span(reader,barrier['recordSource'])
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
-        if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246' or \
-                barrier['mapId']!=70 or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
+        if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246') or \
+                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
                 barrier['removedFlagId']!=rule['barrierRemovedFlag'] or barrier['cell']!=rule['barrierCell']:
-            raise ValueError('Original first hall collision actor differs')
+            raise ValueError('Original hell hall collision actor differs')
         for span in proof['sources']:checked_span(reader,span)
         name=next(m['scene'] for m in scene['maps']if m['id']==barrier['mapId']);data=json.loads(result[name])
         if cell[1]*data['width']+cell[0] not in data['dynamicObjectCells']:

@@ -14,7 +14,10 @@ data class EncounterZone(val mapId:Int,val rectangles:List<EncounterRect>,val gr
 }
 data class EnemyDefinition(val id:Int,val name:String,val hp:Int,val attack:Int,val defense:Int,
     val experienceReward:Int,val moneyReward:Int,val hitByte:Int,val behaviorByte:Int,
-    val iceBaseDamage:Int?=null,val loot:BattleLoot?=null)
+    val iceBaseDamage:Int?=null,val loot:BattleLoot?=null) {
+    // Behavior1 name is not transcribed; keep it distinct from verified ice.
+    var specialBaseDamage:Int?=null;internal set
+}
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
     init {require(weaponHitThreshold.isNotEmpty()&&weaponHitThreshold.all{(id,n)->id in -1..255&&n in 0..64}&&
@@ -138,7 +141,7 @@ class OpeningEncounter(private val content:BattleContent,initialSteps:Int=0) {
 
 data class BattleEnemy(val slot:Int,val definition:EnemyDefinition,var hp:Int)
 enum class BattlePhase { TARGET, VICTORY, DEFEAT, ESCAPED }
-enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL, STATUS }
+enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL, STATUS, SPECIAL }
 data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,Int>,
     val actorSlot:Int?=null,val targetSlot:Int?=null,val kind:BattleActionKind=BattleActionKind.TEXT,
     val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null,val heroStatusMask:Int=0) {
@@ -160,7 +163,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
         val definition=content.enemies[m.enemyId]?:error("Missing enemy ${m.enemyId}")
-        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(7,8,9)||content.physicalRules!=null))
+        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(1,7,8,9)||content.physicalRules!=null))
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
@@ -354,15 +357,16 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 08" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
                 }
                 val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
-                val targets=if(ice)partyStates.filter{it.hp>0} else listOf(target)
-                steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=slot,
-                    kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK,targetId=if(targets.size==1)target.id else null))
-                if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id));continue}
-                // The original all-target ice iterates present living party slots using this one AI byte.
+                val special=enemy.definition.behaviorByte==1&&enemy.definition.specialBaseDamage!=null&&OriginalStatus.choosesSpecial1(random)
+                val targets=if(ice||special)partyStates.filter{it.hp>0} else listOf(target)
+                steps.add(frame(when{ice->"${enemy.definition.name} 冰系攻击";special->"${enemy.definition.name} 特殊攻击1（原名未核）";else->"${enemy.definition.name} 攻击"},actor=slot,
+                    kind=when{ice->BattleActionKind.ICE;special->BattleActionKind.SPECIAL;else->BattleActionKind.ATTACK},targetId=if(targets.size==1)target.id else null))
+                if(!ice&&!special&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id));continue}
+                // Original behavior1/3 iterates present living party slots using this one AI byte.
                 // A fallen first target does not skip the second; defeat is checked after the whole action.
                 for(victim in targets){
                     val armor=armorBonuses[victim.id]?:if(victim.equipment?.body==0)content.armorContribution else 0
-                    val computed=if(ice)enemy.definition.iceBaseDamage!! else enemy.definition.attack-armor-victim.stamina
+                    val computed=when{ice->enemy.definition.iceBaseDamage!!;special->enemy.definition.specialBaseDamage!!;else->enemy.definition.attack-armor-victim.stamina}
                     val damage=OriginalStatus.incomingDamage(computed,victim.statusMask);val actual=minOf(damage,victim.hp)
                     received+=actual;setCharacter(victim.id,victim.copy(hp=victim.hp-actual,statusMask=if(victim.hp==actual)OriginalStatus.DEAD else victim.statusMask))
                     steps.add(frame("受到 $actual 点伤害",actor=slot,kind=BattleActionKind.DAMAGE,delta=-actual,
@@ -454,7 +458,7 @@ class BattlePresentation {
     var resultElapsedMs=0L;private set
     val actionDurationMs get()=duration(action)
     private fun duration(step:BattleActionStep?)=when(step?.kind){
-        BattleActionKind.ATTACK->450L;BattleActionKind.ICE->650L;BattleActionKind.DAMAGE,BattleActionKind.HEAL->500L
+        BattleActionKind.ATTACK->450L;BattleActionKind.ICE,BattleActionKind.SPECIAL->650L;BattleActionKind.DAMAGE,BattleActionKind.HEAL->500L
         BattleActionKind.MISS->350L;BattleActionKind.DEATH->320L;BattleActionKind.ESCAPE->450L
         BattleActionKind.ESCAPED,BattleActionKind.ESCAPE_FAILED->400L;else->450L}
     fun invalidateInput(){revision++}

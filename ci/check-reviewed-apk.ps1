@@ -33,3 +33,4 @@ if($runtime.worldCave85Normal -ne 'PASS' -or $runtime.worldCave85OnceAndColdRest
 if($runtime.worldEastPalaceNormal -ne 'PASS' -or $runtime.worldEastPartyAndColdRestart -ne 'PASS'){throw 'East palace mechanism/Boss/followup/party/normal battle/cold restart gates must verify this exact APK'}
 if($runtime.worldHellVillageNormal -ne 'PASS' -or $runtime.worldHellVillageColdRestart -ne 'PASS' -or $runtime.worldWholly08Controller -ne 'PASS'){throw 'Hell partitions/shared village services/08 command progression/cold restart gates must verify this exact APK'}
 if($runtime.worldFirstHallNormal -ne 'PASS' -or $runtime.worldFirstHallColdRestart -ne 'PASS'){throw 'First hall normal Qin battle/flags/collision gate/cold restart must verify this exact APK'}
+if($runtime.worldSecondHallNormal -ne 'PASS' -or $runtime.worldSecondHallColdRestart -ne 'PASS'){throw 'Second hall normal Chu battle/independent flags/open gate/cold restart must verify this exact APK'}

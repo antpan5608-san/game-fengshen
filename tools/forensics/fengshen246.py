@@ -465,6 +465,24 @@ def extract_enemy_ice_base(reader,enemy_id):
     else:raise ValueError('Ice identity outside verified original dispatch domain')
     return {'iceBaseDamage':value,'iceSource':source}
 
+def extract_enemy_special_base(reader,enemy_id):
+    """Behavior1 only, checked against original CPU damage for all seven identities.
+
+    This numerical behavior does not establish the original displayed skill name.
+    """
+    if digest(reader.data)!=SHA256:raise ValueError('Special damage requires target ROM fingerprint')
+    original=extract_enemy(reader,enemy_id)
+    if original['remainingBytes'][1]!=1:raise ValueError('Enemy does not use original behavior1')
+    if 20<=enemy_id<137:
+        value=(enemy_id-20)*5+8
+        source=reader.span(9,0xa9aa,0x1b,'Original ordinary behavior1: (enemyID-20)*5+8')
+    elif 137<=enemy_id<177:
+        address=0xa906+2*(enemy_id-137)
+        value=reader.word(9,address)
+        source=reader.span(9,address,2,'Original behavior1 fixed boss damage')
+    else:raise ValueError('Behavior1 identity outside verified original dispatch domain')
+    return {'specialBaseDamage':value,'specialSource':source}
+
 def extract_encounter_groups(reader,zone_id):
     """Bounded original zone group table; no inferred enemy behavior or map conditions."""
     if digest(reader.data)!=SHA256 or not 0<=zone_id<=255:

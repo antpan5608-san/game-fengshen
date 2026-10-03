@@ -13,6 +13,25 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Candidate definitions and durable flags only; not a normal second hall victory. */
+    fun testControlledSecondHallSpecialAndIndependentMapFlags(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val b=c.battle!!;val boss=b.storyBattles.getValue("rom.npc.60.1")
+        val e=b.enemies.getValue(143)
+        assertEquals(1,e.behaviorByte);assertEquals(600,e.hp);assertEquals(15,e.specialBaseDamage);assertNull(e.iceBaseDamage)
+        assertEquals(10,b.zones.single{it.mapId==60}.groups.size)
+        assertEquals(MovementBlock.PHYSICAL,c.sceneForState(60,emptyMap())!!.blockType(28,22))
+        val first=b.storyBattles.getValue("rom.npc.70.1").completeDialogue(b.storyBattles.getValue("rom.npc.70.1").rewardFlags(emptyMap()))
+        assertFalse(boss.alreadyWon(first));assertEquals(MovementBlock.PHYSICAL,c.sceneForState(60,first)!!.blockType(28,22))
+        val won=boss.rewardFlags(first);val save=SaveSnapshot(c.scene.version,60,1*16+8,28*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(HerbUse.ID to 2),won,380)
+        assertTrue(save.validate(c));val restored=SaveSnapshot.parse(save.json().toString());assertEquals(save,restored)
+        assertTrue(boss.alreadyWon(restored.flags));assertEquals("rom.dialogue.70.4",boss.pendingDialogue(restored.flags))
+        assertNull(c.sceneForState(60,restored.flags)!!.check(28,22));assertEquals(won,boss.rewardFlags(won))
+        val done=boss.completeDialogue(won);assertTrue(done["rom.map.70.flag.4"]==true);assertTrue(done["rom.map.60.flag.4"]==true)
+        assertNull(boss.pendingDialogue(done));assertEquals(done,boss.completeDialogue(done))
+    }
+
     /** Controlled actual c23 loader/state roundtrip; not a normal Boss victory. */
     fun testControlledFirstHallBarrierBattleAndColdFlags(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

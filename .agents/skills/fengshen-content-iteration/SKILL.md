@@ -183,3 +183,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 新批次测试加入Windows原CI时，也检查测试内每个中文JSON读取。曾有仅一个legacy read_text遗漏UTF-8使门禁失败；改显式编码后在隔离Path.open默认cp1252的原8方法实际通过。不能仅在Linux通过就声称已排除Windows默认编码问题。
 
 - 出口静态校验必须与当前剧情门碰撞分开：原门对象占出口曾使整包在ContentLoader拒绝。先严格解析已核SceneBarrier，用仅移除此类对象的几何视图校验出口；运行sceneForState仍须真实flag，普通NPC和墙不能因此通过。validExitPlacement的合法门/墙/其他对象/越界/不改变原状态JVM测试及仪器编译已实际运行；新App验收以当前CI为准。
+
+- 新行为先独立核实际CPU分派、同字节随机、目标范围与基础伤害，再扩原OpeningBattle与extractor。world-enemy-behavior1.json及444行独立CPU预期已用于5专项JVM/3导出证据方法；直接A956扣血捕获在死亡flag分派前，不能混作整回合状态。私有CPU实验仍依赖隔离原版存档/mapper，不能声称公开干净环境可复现所有原实验；正常Android另验。
