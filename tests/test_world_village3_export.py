@@ -10,14 +10,14 @@ from forensics.fengshen246 import extract_map,extract_world_service_catalog
 class Village3ExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/golden-world-village3-content.json').read_text())
-        cls.path='game-data/provenance/world-village3-content.json';cls.p=json.loads((ci.ROOT/cls.path).read_text())
-        cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text())
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-village3-content.json').read_text(encoding='utf-8'))
+        cls.path='game-data/provenance/world-village3-content.json';cls.p=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'))
+        cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text(encoding='utf-8'))
         cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])
         cls.old=ex.export_from_base(cls.base,cls.parent['iteration']['provenance'],cls.parent)
         cls.result=ex.export_from_base(cls.base,cls.path,cls.pin);cls.scene=json.loads(cls.result['scene.json']);cls.r=ex.iteration_reader()
     def changed(self,p,pin=None):
-        def load(path):return p if Path(path).resolve()==(ci.ROOT/self.path).resolve()else json.loads(Path(path).read_text())
+        def load(path):return p if Path(path).resolve()==(ci.ROOT/self.path).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
         with patch.object(ex,'load',side_effect=load):return ex.export_from_base(self.base,self.path,pin or self.pin,verify_target=False)
     def test_pinned_local_checkpoint_restores_without_previous_candidate_apk_or_changed_media(self):
         self.assertEqual(self.result,ex.export_from_base(self.base,self.path,self.pin))
