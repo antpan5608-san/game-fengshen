@@ -346,7 +346,7 @@ object ContentLoader {
             require(rects.isNotEmpty() && enemies.isNotEmpty() && groups.size in 1..32 &&
                 groups.indices.all{groups[it].id==it} && groups.all{validEncounterGroup(it,enemies)} &&
                 enemies.values.all{it.hp>0 && it.hitByte in 0..255 && OriginalStatus.enemySupported(it)} &&
-                growth.map{it.level}.distinct().size==growth.size&&growth.all{it.level in 2..99&&it.threshold in 1..0xffffff}&&
+                growth.map{it.level}.distinct().size==growth.size&&growth.all(::validGrowthRow)&&
                 growth.zipWithNext().all{it.first.threshold<it.second.threshold})
             fun parseZones(name:String):List<EncounterZone> = o.optJSONArray(name)?.let{a->(0 until a.length()).map{i->
                     val z=a.getJSONObject(i);val zr=z.getJSONArray("rectangles").let{rs->(0 until rs.length()).map{j->
@@ -432,8 +432,7 @@ object ContentLoader {
                                 GrowthRow(r.getInt("level"),r.getInt("threshold"),r.getInt("hp"),r.getInt("mp"),
                                     r.getInt("strength"),r.getInt("stamina"),r.getInt("agility"),r.getInt("spirit"),r.getBoolean("runtimeVerified"))}
                             require(values.isNotEmpty()&&values.map{it.level}.distinct().size==values.size&&
-                                values.all{it.level in 2..99&&it.threshold in 1..0xffffff&&
-                                    listOf(it.hp,it.mp,it.strength,it.stamina,it.agility,it.spirit).all{v->v in 0..255}}&&
+                                values.all(::validGrowthRow)&&
                                 values.zipWithNext().all{it.second.level==it.first.level+1&&it.second.threshold>it.first.threshold})
                             rows[owner]=values
                             if(g.has("knownMaxLevel")){

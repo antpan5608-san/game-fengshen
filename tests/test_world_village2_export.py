@@ -72,6 +72,13 @@ class Village2ExportTests(unittest.TestCase):
             def read(path):return evidence if Path(path).resolve()==(ci.ROOT/self.proof).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
             with patch.object(exporter,'load',side_effect=read):
                 with self.assertRaises(ValueError,msg=kind):exporter.export_from_base(self.base,self.proof,self.pin,verify_target=False)
+    def test_actual_joined_growth_retains_uint16_hp_and_uint8_other_deltas(self):
+        rows=json.loads(self.result['combat.json'])['characterGrowth'][0]['rows']
+        row=next(r for r in rows if r['level']==59)
+        self.assertEqual((992795,256,8,28,15,9,5),tuple(row[k] for k in ['threshold','hp','mp','strength','stamina','agility','spirit']))
+        for row in rows:
+            self.assertTrue(0<=row['hp']<=65535)
+            self.assertTrue(all(0<=row[k]<=255 for k in ['mp','strength','stamina','agility','spirit']))
     def test_target_source_labels_match_existing_loader_without_promoting_provisional_names(self):
         # The previous candidate had valid bytes but invented a composite label
         # rejected by ContentLoader. Keep the existing vocabulary and facts.
