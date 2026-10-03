@@ -495,5 +495,15 @@ jobs:
             artifacts/checkpoint-ui/world-rebirth-*.json
             artifacts/checkpoint-ui/world-rebirth-*-test.txt
             artifacts/world-rebirth-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-village3-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village3-*.json
+            artifacts/checkpoint-ui/world-village3-*.json
+            artifacts/checkpoint-ui/world-village3-*-test.txt
+            artifacts/world-village3-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-medical-*.png
+            artifacts/checkpoint-ui/touch-ux-world-medical-*.json
+            artifacts/checkpoint-ui/world-medical-*.json
+            artifacts/checkpoint-ui/world-medical-*-test.txt
+            artifacts/world-medical-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

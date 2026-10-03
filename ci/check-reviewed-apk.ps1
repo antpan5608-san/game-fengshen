@@ -37,3 +37,5 @@ if($runtime.worldSecondHallNormal -ne 'PASS' -or $runtime.worldSecondHallColdRes
 
 if($runtime.worldHallBatchNormal -ne 'PASS' -or $runtime.worldHallBatchColdRestart -ne 'PASS'){throw 'Hell hall batch actual normal routes/chests/battles/independent flags/cold restart must verify this exact APK'}
 if($runtime.worldFinalHallsNormal -ne 'PASS' -or $runtime.worldRebirthDialogueAndColdRestart -ne 'PASS'){throw 'Final halls, protection, side rooms, actual rebirth dialogue and cold continuation must verify this exact APK'}
+if($runtime.worldVillageThreeServicesAndColdRestart -ne 'PASS'){throw 'Village3 normal trades, equipment, lodging, original dialogue and cold reentry must verify this exact APK'}
+if($runtime.worldMedicalControlledCommands -ne 'PASS' -or $runtime.worldMedicalNormalEntryAndColdRestart -ne 'PASS'){throw 'Medical real entry/cold restart and separately controlled commands must verify this exact APK'}

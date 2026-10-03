@@ -7,6 +7,7 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import android.graphics.Bitmap
 import java.io.File
+import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
@@ -652,6 +653,53 @@ class TouchTest:IsolatedGameTestCase(){
         }
         val saved=v.currentSnapshot();instrumentation.runOnMainSync{v.persistState();activity.finish()}
         val(reopened,reloaded)=launch();assertEquals(saved,reloaded.currentSnapshot());instrumentation.runOnMainSync{reopened.finish()}
+    }
+    /** Isolated real UI gestures; not normal acquisition, death or poison evidence. */
+    fun testControlledMedicalCommandsCancellationGestureAndSave(){
+        val(activity,v)=launch();val baseline=v.currentSnapshot()
+        fun fixture(role:String,status:Int,hp:Int=0,money:Int=887){
+            instrumentation.runOnMainSync{
+                if(v.layer!=GameView.Layer.MAP)v.handleBack()
+                val girl=v.content.joinCharacters.getValue("xiaolongnv").copy(hp=hp,statusMask=status)
+                val point=if(role=="revival")3 to 7 else 13 to 5
+                assertTrue(v.restoreSnapshot(baseline.copy(mapId=20,x=point.first*16+8,y=point.second*16+8,
+                    money=money,characters=listOf(v.content.initialPlayer.copy(hp=minOf(5,v.content.initialPlayer.maxHp)),girl),
+                    interiorContext=InteriorContext(3,7,18))))
+            }
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.3.$role",v.activeClinicId)
+        }
+        fixture("revival",32);val before=v.currentSnapshot()
+        tap(v,center(v.clinicTargetBounds("xiaolongnv")));assertEquals(before,v.currentSnapshot())
+        val action=center(v.clinicReviveBounds())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+        send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(before,v.currentSnapshot())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));instrumentation.runOnMainSync{instrumentation.callActivityOnPause(activity);instrumentation.callActivityOnResume(activity)}
+        send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(before,v.currentSnapshot())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_POINTER_DOWN or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action))
+        send(v,MotionEvent.ACTION_POINTER_UP or(1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(action,action));send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(before,v.currentSnapshot())
+        instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
+        fixture("revival",32);tap(v,center(v.clinicTargetBounds("xiaolongnv")))
+        val expected=ClinicRevival.apply(v.currentSnapshot().money,v.currentSnapshot().characters,"xiaolongnv",v.content.clinics.getValue("rom.clinic.3.revival"))
+        tap(v,center(v.clinicReviveBounds()));assertEquals(GameView.Layer.MAP,v.layer)
+        assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.characters,v.currentSnapshot().characters)
+        val saved=v.currentSnapshot();send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(saved,v.currentSnapshot())
+        assertEquals(saved,SaveSnapshot.parse(instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)!!))
+        fixture("care",34);tap(v,center(v.clinicTreatmentBounds("poison")))
+        val poisoned=v.currentSnapshot();tap(v,center(v.clinicTargetBounds("xiaolongnv")));assertEquals(poisoned,v.currentSnapshot())
+        tap(v,center(v.clinicReviveBounds()));assertEquals(poisoned.money-2,v.currentSnapshot().money)
+        assertEquals(32,v.currentSnapshot().characters[1].statusMask);assertEquals(0,v.currentSnapshot().characters[1].hp)
+        fixture("care",4,29);tap(v,center(v.clinicTreatmentBounds("confusion")))
+        tap(v,center(v.clinicTargetBounds("xiaolongnv")));tap(v,center(v.clinicReviveBounds()))
+        assertEquals(884,v.currentSnapshot().money);assertEquals(0,v.currentSnapshot().characters[1].statusMask)
+        assertEquals(29,v.currentSnapshot().characters[1].hp)
+        fixture("care",2,29,1);tap(v,center(v.clinicTreatmentBounds("poison")))
+        val poor=v.currentSnapshot();tap(v,center(v.clinicTargetBounds("xiaolongnv")));tap(v,center(v.clinicReviveBounds()))
+        assertEquals(poor,v.currentSnapshot());instrumentation.runOnMainSync{v.handleBack()}
+        val persisted=v.currentSnapshot();instrumentation.runOnMainSync{v.persistState();activity.finish()}
+        val(reopened,reloaded)=launch();assertEquals(persisted,reloaded.currentSnapshot())
+        instrumentation.runOnMainSync{reopened.finish()}
     }
     fun testControlledOneHitAndSameKindInstances(){
         val(activity,v)=launch();val rules=v.content.battle!!
@@ -2190,11 +2238,15 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldHallBatchColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,hallBatch=true)}
     fun testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave(){normalWorldStoryContinuation(false,true,rebirth=true)}
     fun testWorldRebirthColdRestartAndContinueMatchesNormalSave(){normalWorldStoryContinuation(true,true,rebirth=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false){
+    fun testNormalWorldVillageThreeServicesFromVerifiedRebirthSave(){normalWorldStoryContinuation(false,true,village3=true)}
+    fun testWorldVillageThreeColdRestartAndRealReentry(){normalWorldStoryContinuation(true,true,village3=true)}
+    fun testNormalMedicalServicesFromVerifiedVillageThreeSave(){normalWorldStoryContinuation(false,true,medical=true)}
+    fun testMedicalServicesColdRestartAndReentry(){normalWorldStoryContinuation(true,true,medical=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2385,7 +2437,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun dialogue(){repeat(24){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
         fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)));dialogue()}
-        fun enterService(caller:Int,room:Int):MapExit{
+        fun enterService(caller:Int,room:Int,serviceNpc:String?=null):MapExit{
             assertEquals(caller,v.world.mapId);val entry=v.content.exits.first{it.fromMapId==caller&&it.toMapId==room}
             if(v.world.x/16==entry.triggerX&&v.world.y/16==entry.triggerY){
                 // The actual return lands on the door. Walking to the same cell
@@ -2396,9 +2448,9 @@ class TouchTest:IsolatedGameTestCase(){
             }
             walkTo(entry.triggerX,entry.triggerY);assertEquals(room,v.world.mapId)
             assertEquals(InteriorContext(caller,entry.triggerX,entry.triggerY),v.currentSnapshot().interiorContext)
-            val keeper=v.content.npcs.first{it.mapId==room&&(if(room==22)it.innId!=null else it.shopId!=null)}
+            val keeper=v.content.npcs.first{it.mapId==room&&(when(room){22->it.innId!=null;20->it.clinicId!=null;else->it.shopId!=null})&&(serviceNpc==null||it.id==serviceNpc)}
             walkTo(keeper.interactionCell!!.first,keeper.interactionCell.second);talk()
-            assertEquals(if(room==22)GameView.Layer.INN else GameView.Layer.SHOP,v.layer)
+            assertEquals(if(room in listOf(20,22))GameView.Layer.INN else GameView.Layer.SHOP,v.layer)
             return entry
         }
         fun leaveService(entry:MapExit){
@@ -2436,6 +2488,102 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(medical){
+            assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
+            state(if(cold)"cold-exact-medical-source-no-state-grants"else"verified-village3-source-owned-state")
+            walkTo(239,160);assertEquals(3,v.world.mapId)
+            val summary=JSONObject().put("sourceSha256",sourceHash).put("normalInputsOnly",true)
+                .put("revivalNormal","NOT_RUN_NO_DEAD_TARGET").put("poisonNormal","NOT_RUN_NO_TARGET")
+                .put("confusionNormal","NOT_RUN_NO_TARGET")
+            for((role,npc)in listOf("revival" to "rom.npc.20.1","care" to "rom.npc.20.0")){
+                val entry=enterService(3,20,npc);assertEquals("rom.clinic.3.$role",v.activeClinicId)
+                state("normal-medical-$role-real-door-and-service")
+                val definition=v.content.clinics.getValue(v.activeClinicId!!)
+                val options=if(role=="revival")listOf<String?>(null)else listOf("poison","confusion")
+                for(option in options){
+                    if(option!=null)tap(v,center(v.clinicTreatmentBounds(option)))
+                    val before=v.currentSnapshot()
+                    val legal=before.characters.firstOrNull{if(role=="revival")ClinicRevival.eligible(it,definition)
+                        else ClinicCare.eligible(it,definition.treatments.single{t->t.id==option})}
+                    val selected=legal?:before.characters.first()
+                    tap(v,center(v.clinicTargetBounds(selected.id)));assertEquals(before,v.currentSnapshot())
+                    state("normal-medical-$role-${option?:"revive"}-selected-readonly")
+                    if(!cold&&legal!=null){
+                        val expected=if(role=="revival")ClinicRevival.apply(before.money,before.characters,legal.id,definition)
+                            else ClinicCare.apply(before.money,before.characters,legal.id,definition,option!!)
+                        assertTrue("Normal earnings must fund actual requested medical service",expected.applied)
+                        tap(v,center(v.clinicReviveBounds()));assertEquals(GameView.Layer.MAP,v.layer)
+                        assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.characters,v.currentSnapshot().characters)
+                        assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.flags,v.currentSnapshot().flags)
+                        summary.put(if(role=="revival")"revivalNormal"else"${option}Normal","PASS")
+                        state("normal-medical-$role-${option?:"revive"}-actual-owned-target-treated")
+                        // A second supported condition needs another real conversation.
+                        if(option!=options.last()){
+                            val keeper=v.content.npcs.single{it.id==npc};walkTo(keeper.interactionCell!!.first,keeper.interactionCell.second)
+                            talk();assertEquals(GameView.Layer.INN,v.layer)
+                        }
+                    }else{
+                        if(!cold){tap(v,center(v.clinicReviveBounds()));assertEquals(before,v.currentSnapshot())}
+                        state("normal-medical-$role-${option?:"revive"}-unneeded-or-cold-cancel-no-charge")
+                    }
+                }
+                leaveService(entry);assertEquals(3,v.world.mapId)
+            }
+            walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(239 to 160,v.world.x/16 to v.world.y/16)
+            step(Key.LEFT);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+            assertEquals(0,bossEntries);checkSourceUnchanged();persistChecked()
+            if(!cold){
+                File(root,"world-medical-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                File(root,"world-medical-normal-summary.json").writeText(summary.toString())
+            }
+            state(if(cold)"cold-medical-reentry-cancel-and-owned-save-kept"else"normal-medical-entries-real-state-and-return-saved")
+            instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(village3){
+            assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
+            assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+            state(if(cold)"cold-exact-owned-party-inventory-and-flags" else "verified-rebirth-source-no-state-grants")
+            walkTo(239,160);assertEquals(3,v.world.mapId)
+            assertEquals(15 to 29,v.world.x/16 to v.world.y/16);state("normal-world-to-village3-original-door")
+            if(!cold){
+                for((room,id)in listOf(17 to "rom.weapon.6",18 to "rom.armor.12",19 to "rom.medicine.10")){
+                    val entry=enterService(3,room);state("normal-shop-$room-open")
+                    trade(id,true);state("normal-shop-$room-bought")
+                    trade(id,false);state("normal-shop-$room-sold");leaveService(entry)
+                }
+                val entry=enterService(3,17);trade("rom.weapon.6",true);leaveService(entry)
+                val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+                tap(v,center(v.panelCharacterBounds("nezha")));scrollToItem(v,"rom.weapon.6")
+                tap(v,center(v.panelItemBounds("rom.weapon.6")));assertEquals(before,v.currentSnapshot())
+                tap(v,center(v.panelPrimaryBounds()));val expected=OpeningEquipment.replace(before.characters.single{it.id=="nezha"},before.inventory,
+                    v.content.equipmentDefinitions.getValue("rom.weapon.6"),v.content.equipmentDefinitions.values)!!
+                assertEquals(expected.first,v.currentSnapshot().characters.single{it.id=="nezha"})
+                assertEquals(expected.second,v.currentSnapshot().inventory)
+                instrumentation.runOnMainSync{v.handleBack()};state("normal-original-permitted-weapon6-atomic-replacement")
+                for(actor in v.currentSnapshot().characters.filter{it.statusMask and OriginalStatus.POISON!=0})medicine(AntidoteUse.ID,actor.id)
+                inn(3);assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
+                state("normal-original40-inn-all-actor-recovery-and-return")
+                walkTo(16,20);val beforeTalk=v.currentSnapshot()
+                tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                state("normal-original-village3-resident-dialogue");dialogue()
+                assertEquals(beforeTalk.money,v.currentSnapshot().money);assertEquals(beforeTalk.inventory,v.currentSnapshot().inventory)
+                assertEquals(beforeTalk.characters,v.currentSnapshot().characters)
+            }else{
+                val entry=enterService(3,22);val before=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
+                leaveService(entry);state("cold-real-service-reentry-cancel-no-charge")
+            }
+            walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(239 to 160,v.world.x/16 to v.world.y/16);state("normal-independent-original-world-return")
+            step(Key.LEFT);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+            assertEquals(0,bossEntries);checkSourceUnchanged();persistChecked()
+            if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state(if(cold)"cold-complete-real-route-and-service-continuation" else "normal-village3-trades-gear-lodging-dialogue-saved")
+            instrumentation.runOnMainSync{activity.finish()};return
         }
         if(hallBatch||rebirth){
             val maps=if(rebirth)listOf(67,68)else listOf(61,62,63,64,65,66)
@@ -2866,17 +3014,19 @@ class TouchTest:IsolatedGameTestCase(){
             purchaseGear();inn(1)
             training=true;state("optional-normal-sea-training-start")
             walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
-            walkTo(186,102);assertEquals(25,v.world.mapId);walkTo(27,14)
+            // (27,14) is original coral class 7, not a training cell.
+            // Use the existing connected southern sea, with normal encounters.
+            walkTo(186,102);assertEquals(25,v.world.mapId);walkTo(39,41)
             var trainingSteps=0
             while(v.currentSnapshot().characters.first().level<13||v.currentSnapshot().money<needed()){
                 assertTrue("Bounded real East preparation exhausted; no injected level or money",trainingSteps++<6000)
                 if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
                     walkTo(26,14);assertEquals(16,v.world.mapId);walkTo(191,102);assertEquals(1,v.world.mapId)
-                    purchaseGear();inn(1);walkTo(15,29);step(Key.DOWN);walkTo(186,102);walkTo(27,14)
+                    purchaseGear();inn(1);walkTo(15,29);step(Key.DOWN);walkTo(186,102);walkTo(39,41)
                 }
                 var direction:Key?=null
                 instrumentation.runOnMainSync{
-                    val x=v.world.x/16;val y=v.world.y/16;val preferred=if(y>14)Key.UP else Key.DOWN
+                    val x=v.world.x/16;val y=v.world.y/16;val preferred=if(y>41)Key.UP else Key.DOWN
                     direction=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
@@ -2893,7 +3043,10 @@ class TouchTest:IsolatedGameTestCase(){
                 val count=(10-(v.currentSnapshot().inventory[id]?:0)).coerceAtLeast(0);if(count>0)trade(id,true,count)
             }
             leaveService(store);inn(1);state("normal-preparation-purchased-and-saved")
-            walkTo(15,29);step(Key.DOWN);walkTo(186,102);assertEquals(25,v.world.mapId)
+            // The east palace is on the separate eastern sea component.
+            // Enter through its observed original mainland door, not across coral.
+            walkTo(15,29);step(Key.DOWN);walkTo(214,110);assertEquals(25,v.world.mapId)
+            assertEquals(54,v.world.x/16);assertEquals(22,v.world.y/16)
             walkTo(49,21);assertEquals(95,v.world.mapId)
             assertEquals(13,v.world.x/16);assertEquals(29,v.world.y/16);assertEquals(lastMovementKey,v.world.direction)
             state("east-real-preserved-direction-entry")

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "ORIGINAL_ACTOR1_TERMINATED_SLOT_MEMBERSHIP_AND_CONTRIBUTION",
+  "items": [
+    {
+      "id": "rom.weapon.21",
+      "equipment": {
+        "originalId": 21,
+        "slot": "rightHand",
+        "allowedCharacters": [
+          "xiaolongnv"
+        ],
+        "attackBonus": 46,
+        "defenseBonus": 0,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {
+            "offset": 92572,
+            "length": 2,
+            "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce",
+            "module": 2,
+            "cpuAddress": 59788,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94144,
+            "length": 15,
+            "sha256": "b0e67829f758335d7c911536047312ffaa04020b3f32ed35a4faa394a918878e",
+            "module": 2,
+            "cpuAddress": 61360,
+            "meaning": "Actor1 original equipment slot terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    },
+    {
+      "id": "rom.armor.12",
+      "equipment": {
+        "originalId": 12,
+        "slot": "body",
+        "allowedCharacters": [
+          "xiaolongnv"
+        ],
+        "attackBonus": 0,
+        "defenseBonus": 35,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {
+            "offset": 93181,
+            "length": 2,
+            "sha256": "9def996cb1ea87e596b6cadccca3839a352e99d9ce07e635cdb239f38ca294f8",
+            "module": 2,
+            "cpuAddress": 60397,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94159,
+            "length": 9,
+            "sha256": "14ffcafc51847f54bce183e792247c52b36b257256bb91075f08f9a51aa1b735",
+            "module": 2,
+            "cpuAddress": 61375,
+            "meaning": "Actor1 original equipment slot terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    }
+  ],
+  "limits": [
+    "Existing atomic right-hand/body transaction only; no cross-hand rules inferred.",
+    "Source recipe checkpoint already has actor1; no new actor or story join here.",
+    "Android equipment/runtime NOT_RUN."
+  ]
+}

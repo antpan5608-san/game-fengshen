@@ -31,7 +31,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -146,6 +146,7 @@ run_test testUnrestorableSaveCannotBeOverwritten
 run_test testWorldLegacyInteriorContextAndRestart
 run_test testControlledWorldAntidoteAndFieldPoison
 run_test testControlledInnTransactionsAndGestureSafety
+run_test testControlledMedicalCommandsCancellationGestureAndSave
 run_test testControlledWholly08PartyAdvancesWithoutTouchCommand
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
@@ -181,6 +182,10 @@ python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVe
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600
+python tools/record_app_audio.py world-village3 testNormalWorldVillageThreeServicesFromVerifiedRebirthSave --silent --cold-test testWorldVillageThreeColdRestartAndRealReentry --budget-seconds 1800
+python tools/record_app_audio.py world-medical testNormalMedicalServicesFromVerifiedVillageThreeSave --silent --cold-test testMedicalServicesColdRestartAndReentry --budget-seconds 1800
+# Clinical sub-results are App-written evidence; pull before constructing receipt.
+pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
 python - <<'PY'
 import json,os
@@ -189,6 +194,9 @@ from tools import ci_apk as ci
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',worldNorthPalace='PASS',worldPearlUseAndColdRestart='PASS',worldCave85Normal='PASS',worldCave85OnceAndColdRestart='PASS',worldEastPalaceNormal='PASS',worldEastPartyAndColdRestart='PASS',worldHellVillageNormal='PASS',worldHellVillageColdRestart='PASS',worldWholly08Controller='PASS',worldFirstHallNormal='PASS',worldFirstHallColdRestart='PASS',worldSecondHallNormal='PASS',worldSecondHallColdRestart='PASS',worldHallBatchNormal='PASS',worldHallBatchColdRestart='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 r.update(worldFinalHallsNormal='PASS',worldRebirthDialogueAndColdRestart='PASS')
+r.update(worldVillageThreeServicesAndColdRestart='PASS',worldMedicalControlledCommands='PASS',worldMedicalNormalEntryAndColdRestart='PASS')
+medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
+for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY

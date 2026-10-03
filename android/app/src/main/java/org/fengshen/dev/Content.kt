@@ -26,6 +26,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     // Keep the existing constructor for instrumentation against the reviewed APK.
     var scriptedActor:Boolean=false;internal set
     var interactionDirection:Key?=null;internal set
+    var clinicId:String?=null;internal set
 }
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
@@ -51,8 +52,15 @@ data class ShopDefinition(val id:String,val mapId:Int,val npcId:String,val name:
     val items:List<String>,val sellItems:Set<String>,val buyPrompt:String="")
 data class InnDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
     val price:Int,val blockedStatusMask:Int,val prompt:String,val evidence:String)
+data class ClinicTreatment(val id:String,val name:String,val statusMask:Int,val price:Int)
+data class ClinicDefinition(val id:String,val mapId:Int,val npcId:String,val name:String,
+    val evidence:String,val deadMask:Int=32,val recoveredHp:Int=1,val recoveredStatus:Int=1,
+    val feeDenominator:Int=100,val minimumFee:Int=1,val moneyLimit:Int=999999,
+    val kind:String="REVIVAL",val treatments:List<ClinicTreatment> = emptyList())
 data class ServiceBinding(val callerMapId:Int,val interiorMapId:Int,val npcId:String,
-    val shopId:String?=null,val innId:String?=null)
+    val shopId:String?=null,val innId:String?=null) {
+    var clinicId:String?=null;internal set
+}
 data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitmap>,
     val scenes:Map<Int,Scene> = mapOf(scene.mapId to scene),val atlases:Map<Int,Bitmap> = mapOf(scene.mapId to atlas),
     val exits:List<MapExit> = emptyList(),val initialPlayer:CharacterState,
@@ -68,6 +76,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val battleHorizons:Map<Int,Bitmap> = emptyMap(),val blackBattleEnemyIds:Set<Int> = emptySet(),
     val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap(),
     val serviceBindings:List<ServiceBinding> = emptyList()) {
+    var clinics:Map<String,ClinicDefinition> = emptyMap();internal set
     // One state-dependent scene view. Arrays and atlases stay in the existing
     // bounded loader; this never holds every visited map alive.
     var joinCharacters:Map<String,CharacterState> = emptyMap()
@@ -223,13 +232,14 @@ object ContentLoader {
                     }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
+                npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->
                     require(n.getString("interactionEvidence").isNotBlank())
                     val point=npc.interactionCell?:error("Missing original interaction point")
                     require(point.first in 0 until npcScene.width&&point.second in 0 until npcScene.height)
                     npc.interactionDirection=Key.valueOf(dir).also{require(it in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))}
                 }
-                require(!npc.scriptedActor||(npc.shopId==null&&npc.innId==null&&npc.treasure==null&&effects.isEmpty()))
+                require(!npc.scriptedActor||(npc.shopId==null&&npc.innId==null&&npc.clinicId==null&&npc.treasure==null&&effects.isEmpty()))
             }
         }
         val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
@@ -318,7 +328,7 @@ object ContentLoader {
         val serviceBindings=data.optJSONArray("serviceBindings")?.let{a->(0 until a.length()).map{i->
             val b=a.getJSONObject(i)
             ServiceBinding(b.getInt("callerMapId"),b.getInt("interiorMapId"),b.getString("npcId"),
-                b.optString("shopId").takeIf{it.isNotEmpty()},b.optString("innId").takeIf{it.isNotEmpty()})
+                b.optString("shopId").takeIf{it.isNotEmpty()},b.optString("innId").takeIf{it.isNotEmpty()}).also{it.clinicId=b.optString("clinicId").takeIf{it.isNotEmpty()}}
         }}?:emptyList()
         require(serviceBindings.map{Triple(it.callerMapId,it.interiorMapId,it.npcId)}.distinct().size==serviceBindings.size)
         require(shops.values.all{s->s.mapId in scenes && npcs.any{it.id==s.npcId&&it.mapId==s.mapId&&
@@ -335,12 +345,27 @@ object ContentLoader {
         require(inns.values.all{s->s.mapId in scenes && s.price in 0..9999999 && s.blockedStatusMask in 0..255 &&
             s.evidence.isNotBlank() && npcs.any{it.id==s.npcId&&it.mapId==s.mapId&&
                 (it.innId==s.id||serviceBindings.any{b->b.npcId==it.id&&b.interiorMapId==it.mapId&&b.innId==s.id})}})
+        val clinicRows=data.optJSONArray("clinics")?.let{a->(0 until a.length()).map{i->
+            val o=a.getJSONObject(i)
+            require(o.getString("confidence")=="GAMEPLAY_VERIFIED")
+            ClinicDefinition(o.getString("id"),o.getInt("mapId"),o.getString("npcId"),o.getString("name"),
+                o.getString("evidence"),o.getInt("deadMask"),o.getInt("recoveredHp"),o.getInt("recoveredStatus"),
+                o.getInt("feeDenominator"),o.getInt("minimumFee"),o.getInt("moneyLimit"),o.getString("kind"),
+                o.getJSONArray("treatments").let{v->(0 until v.length()).map{j->val t=v.getJSONObject(j)
+                    ClinicTreatment(t.getString("id"),t.getString("name"),t.getInt("statusMask"),t.getInt("price"))}})
+        }}?:emptyList()
+        require(clinicRows.map{it.id}.distinct().size==clinicRows.size)
+        val clinics=clinicRows.associateBy{it.id}
+        require(clinics.values.all{s->(ClinicRevival.valid(s)||ClinicCare.valid(s))&&s.mapId in scenes&&npcs.any{
+            it.id==s.npcId&&it.mapId==s.mapId&&(it.clinicId==s.id||serviceBindings.any{b->
+                b.npcId==it.id&&b.interiorMapId==it.mapId&&b.clinicId==s.id})}})
         require(serviceBindings.all{b->b.callerMapId in scenes&&b.interiorMapId in scenes&&
-            npcs.any{it.id==b.npcId&&it.mapId==b.interiorMapId}&&((b.shopId!=null) xor (b.innId!=null))&&
+            npcs.any{it.id==b.npcId&&it.mapId==b.interiorMapId}&&listOf(b.shopId,b.innId,b.clinicId).count{it!=null}==1&&
             (b.shopId==null||shops[b.shopId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)&&
-            (b.innId==null||inns[b.innId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)})
+            (b.innId==null||inns[b.innId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)&&
+            (b.clinicId==null||clinics[b.clinicId]?.let{it.mapId==b.interiorMapId&&it.npcId==b.npcId}==true)})
         require(npcs.all{(it.shopId==null||it.shopId in shops)&&(it.innId==null||it.innId in inns)&&
-            !(it.shopId!=null&&it.innId!=null)})
+            (it.clinicId==null||it.clinicId in clinics)&&listOf(it.shopId,it.innId,it.clinicId).count{v->v!=null}<=1})
         val sprites=mapOf(Key.UP to bitmap("player-up.png",16,16),
             Key.DOWN to bitmap("player-down.png",16,16),Key.LEFT to bitmap("player-left.png",16,16),Key.RIGHT to bitmap("player-right.png",16,16))
         val portraitAsset=initial.optString("portraitAsset","player-down.png")
@@ -596,6 +621,7 @@ object ContentLoader {
             mapOf(initialPlayer.id to initialName)+extraCharacters.associate{it.first.id to it.second.name},
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
+                content.clinics=clinics
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers

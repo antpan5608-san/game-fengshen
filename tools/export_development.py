@@ -148,9 +148,15 @@ def scoped_observed_graphic(reader,recipe):
         if xx%8 or yy%8 or not 0<=xx<=width-8 or not 0<=yy<=height-8 or (xx,yy) in occupied:
             raise ValueError('Overlapping or escaped graphic tile')
         occupied.add((xx,yy))
+        for flag in ('flipX','flipY'):
+            if flag in tile and not isinstance(tile[flag],bool):raise ValueError('Graphic flip must be boolean')
+        if 'attribute' in tile and (bool(tile['attribute']&64)!=tile.get('flipX',False) or bool(tile['attribute']&128)!=tile.get('flipY',False)):
+            raise ValueError('Graphic OAM flip differs from the observed attribute')
         for y in range(8):
             for x in range(8):
-                value=((raw[y]>>(7-x))&1)+2*((raw[y+8]>>(7-x))&1)
+                sx=7-x if tile.get('flipX',False)else x
+                sy=7-y if tile.get('flipY',False)else y
+                value=((raw[sy]>>(7-sx))&1)+2*((raw[sy+8]>>(7-sx))&1)
                 color=tuple(colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
                 image.putpixel((xx+x,yy+y),color)
     if len(occupied)!=width*height//64:raise ValueError('Incomplete graphic recipe')
@@ -792,6 +798,36 @@ def validate_world_status16(reader,enemy):
         raise ValueError('Behavior6 lacks hit/miss/priority/defeat/no-input sources')
     for span in p['sources']:checked_span(reader,span)
 
+def validate_world_clinic_definition(reader,clinic):
+    path='game-data/provenance/world-clinic-rules.json'
+    p=load(ROOT/path)
+    required={(2,0xc86f,153),(2,0x86cd,41),(2,0xc550,32),(2,0xcabb,230),
+        (2,0xca61,41),(2,0xc7c6,54),(2,0xee8b,98)}
+    if clinic['evidence']!=path or p['romSha256']!=SHA256 or \
+            p['kind']!='CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID' or \
+            p['activePrgBanks']!=[8,9,10,11] or p['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+            not p['doctorActiveCpuSha256s'] or any(h!=p['activeCpuSha256']for h in p['doctorActiveCpuSha256s']) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Medical service lacks actual original menu/active CPU evidence')
+    for span in p['sources']:checked_span(reader,span)
+    for kind,count in [('revival',15),('care',27)]:
+        raw=(ROOT/p[kind+'ExpectedPath']).read_bytes()
+        if digest(raw)!=p[kind+'ExpectedSha256'] or len(raw.splitlines())-1!=count or p[kind+'CaseCount']!=count:
+            raise ValueError('Medical original menu expectations differ')
+    constants={'deadMask':32,'recoveredHp':1,'recoveredStatus':1,'feeDenominator':100,
+        'minimumFee':1,'moneyLimit':999999}
+    treatments=[{'id':'poison','name':'中毒','statusMask':2,'price':2},
+        {'id':'confusion','name':'錯亂','statusMask':4,'price':3}]
+    if any(clinic[k]!=v for k,v in constants.items()) or \
+            any(p['rules']['revival'][k]!=v for k,v in constants.items()) or \
+            p['rules']['treatment']['options']!=treatments or p['rules']['treatment']['thirdMenuOption']!='CANCEL_NOT_ANOTHER_CONDITION':
+        raise ValueError('Medical rule differs from original target/price/status policy')
+    role={'REVIVAL':('revival',1,[]),'TREATMENT':('care',0,treatments)}.get(clinic['kind'])
+    if role is None or clinic['mapId']!=20 or clinic['npcId']!=f'rom.npc.20.{role[1]}' or \
+            clinic['id']!=f'rom.clinic.{clinic["callerMapId"]}.{role[0]}' or clinic['treatments']!=role[2]:
+        raise ValueError('Medical definition, actor or available operations differ')
+    return p
+
 def validate_world_exit_geometry(scene,result):
     """Match the existing loader's gate-open placement check before signing.
 
@@ -837,6 +873,22 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('World map overlaps or differs from pinned ROM')
         c=original['collisionCandidate'];classes=reader.read(c['module'],c['cpuAddress'],256)
         grid=[t for row in original['grid'] for t in row];collision=[classes[t] for t in grid]
+        if mid==20 and evidence.get('clinics'):
+            resource=load(ROOT/evidence['evidence']['clinicResources']['path'])
+            scope=resource['collisionScope']
+            if digest((ROOT/evidence['evidence']['clinicResources']['path']).read_bytes())!=evidence['evidence']['clinicResources']['sha256'] or \
+                    resource['romSha256']!=SHA256 or original['tilesetId']!=2 or set(collision)!={0,1,2,5} or \
+                    recipe['walkableClasses']!=[0,2,5] or recipe.get('directionalCollision') or \
+                    scope['kind']!='ORIGINAL_CONTROLLER_REAL_ROOM_EDGES_NOT_TOWN_DIRECTIONAL_PROFILE' or \
+                    scope['sampleCount']!=14 or len(scope['samples'])!=14:
+                raise ValueError('Medical room must preserve its actual plain-room collision scope')
+            previous=[13,5]
+            for sample in scope['samples']:
+                x,y=sample['before'];dx,dy={'UP':(0,-1),'DOWN':(0,1),'LEFT':(-1,0),'RIGHT':(1,0)}[sample['key']]
+                target=[x+dx,y+dy];blocked=target in [[13,4],[3,6]] or collision[target[1]*original['width']+target[0]]==1
+                if sample['mapId']!=20 or sample['before']!=previous or sample['after']!=(previous if blocked else target):
+                    raise ValueError('Medical room movement differs from actual original controller samples')
+                previous=sample['after']
         transitions=set()
         for exit in evidence['exits']:
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
@@ -912,7 +964,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             original=extract_map(reader,exit['fromMapId']);x,y=exit['trigger'];direction=exit.get('direction')
             boundary=(direction=='LEFT' and x==0 or direction=='RIGHT' and x==original['width']-1 or
                 direction=='UP' and y==0 or direction=='DOWN' and y==original['height']-1)
-            if list(raw)!=[255,exit['spawn'][1],exit['toMapId']]+exit['spawn'] or not boundary:
+            if raw[0]!=255 or list(raw[2:])!=[exit['toMapId']]+exit['spawn'] or not boundary:
                 raise ValueError('Original edge return or observed boundary differs')
             if exit.get('triggerMode')!='EDGE' or not exit.get('runtimeEvidence'):
                 raise ValueError('Edge requires observed departure, not swapped coordinates')
@@ -1164,6 +1216,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         flags=[checked_span(reader,span)[0] for span in inn['statusFlagSources']]
         if inn['blockedStatusMask']!=sum(set(flags)) or any(x not in (2,16,32,64) for x in flags):
             raise ValueError('Lodging status policy differs from original routine')
+    for clinic in evidence.get('clinics',[]):
+        validate_world_clinic_definition(reader,clinic)
+        if clinic['callerMapId']not in known or not any(b['callerMapId']==clinic['callerMapId']and
+                b['interiorMapId']==20 and b['npcId']==clinic['npcId']and b.get('clinicId')==clinic['id']
+                for b in evidence.get('serviceBindings',[])):
+            raise ValueError('Medical service needs its original caller binding')
     if evidence.get('shops') or evidence.get('items') or evidence.get('existingItemPriceUpdates'):
         from forensics.fengshen246 import extract_world_service_catalog
         catalog=extract_world_service_catalog(reader)
@@ -1209,7 +1267,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     proof=load(ROOT/equipment['evidence'])
                     expected=next((x for x in proof['items'] if x['id']==item['id']),None)
                     if proof['romSha256']!=SHA256 or expected is None or equipment!=(expected['equipment']|{'evidence':equipment['evidence']}) or \
-                            not set(equipment['allowedCharacters']).issubset({x['initialState']['id'] for x in evidence.get('additionalCharacters',[])}):
+                            not set(equipment['allowedCharacters']).issubset({x['initialState']['id'] for x in scene.get('additionalCharacters',[])+evidence.get('additionalCharacters',[])}):
                         raise ValueError('Equipment owner or original slot evidence differs')
                 if original['crossHandOccupancy'] and equipment.get('operationEnabled',True):
                     raise ValueError('Cross-hand equipment requires its original paired transaction')
@@ -1251,11 +1309,22 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if definition['entryTrigger']['mapId'] not in known or definition['continuation']['destination']['mapId'] not in known:
             raise ValueError('Scene story destination not packaged')
         scene.setdefault('sceneStories',[]).append(definition)
-    for name in ('npcs','dialogues','inns','shops','items'):
+    for name in ('npcs','dialogues','inns','clinics','shops','items'):
         old=scene.get(name,[]);added=evidence.get(name,[])
+        if name=='clinics' and not(old or added):continue # Keep reviewed historical recipe bytes unchanged.
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('clinicId'):
+            from forensics.fengshen246 import extract_npcs
+            records=extract_npcs(reader,20)['records']
+            index=next((i for i in range(2)if npc['id']==f'rom.npc.20.{i}'),None)
+            if index is None:raise ValueError('Unknown original medical actor')
+            record=records[index];cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+            if npc['mapId']!=20 or npc['cell']!=cell or npc['interactionCell']!=[cell[0],cell[1]+1] or \
+                    npc['spriteId']!=record['entityByte'] or npc['source']['record']!=record['range'] or npc['firstEffects'] or \
+                    not any(c['id']==npc['clinicId']and c['npcId']==npc['id']for c in evidence.get('clinics',[])):
+                raise ValueError('Medical actor/target/effects differs from original record')
         if npc.get('spriteEvidence')=='game-data/provenance/world-hell-hall-batch-resources.json':
             recipe=validate_world_hall_batch_npc_graphic(reader,npc['spriteId'])
             if evidence['graphics'].get(npc['sprite'])!=recipe:
@@ -1366,14 +1435,28 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     result['scene.json']=encoded(scene)
     return result
 
-def export_from_base(payload, provenance_path, target_pin, verify_target=True):
+def export_from_base(payload, provenance_path, target_pin, verify_target=True, _visited=frozenset()):
     """Reuse checked base bytes; dispatch the current bounded, evidenced iteration."""
     evidence_path=(ROOT/provenance_path).resolve()
     if not evidence_path.is_relative_to(ROOT) or evidence_path.suffix!='.json':
         raise ValueError('Invalid iteration provenance path')
+    if evidence_path in _visited:raise ValueError('Cyclic scoped base export')
+    visited=_visited|{evidence_path}
     evidence=load(evidence_path)
     if evidence['romSha256']!=SHA256 or evidence['taskId'] not in ('TOWN-02','NANHAI-01','WORLD-FULL-01'):
         raise ValueError('Unexpected iteration evidence')
+    if evidence.get('baseExport'):
+        # Restore a pinned local checkpoint recipe from the same reviewed APK;
+        # no failed candidate APK, second importer or hand-edited assets are used.
+        base=evidence['baseExport'];pin_path=(ROOT/base['pinPath']).resolve()
+        if not pin_path.is_relative_to(ROOT) or pin_path.suffix!='.json' or digest(pin_path.read_bytes())!=base['pinSha256']:
+            raise ValueError('Scoped base pin differs')
+        parent=load(pin_path);proof_path=(ROOT/parent['iteration']['provenance']).resolve()
+        if not proof_path.is_relative_to(ROOT) or proof_path.suffix!='.json' or digest(proof_path.read_bytes())!=base['provenanceSha256']:
+            raise ValueError('Scoped base provenance differs')
+        if parent['iteration']['base']!=target_pin['iteration']['base'] or parent['manifestSha256']!=evidence['baseManifestSha256']:
+            raise ValueError('Scoped checkpoint must retain the same reviewed APK base')
+        payload=export_from_base(payload,parent['iteration']['provenance'],parent,_visited=visited)
     if evidence['taskId'] in ('NANHAI-01','WORLD-FULL-01'):
         result=(export_nanhai_from_base if evidence['taskId']=='NANHAI-01' else export_world_from_base)(payload,evidence,provenance_path,target_pin)
         encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')

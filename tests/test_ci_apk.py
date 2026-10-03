@@ -69,6 +69,22 @@ class ContentTransportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'file set'):
             ci.content(self.apk)
 
+    def test_hashed_original_map_domain_is_not_capped_at_256_export_files(self):
+        # Ordinary original maps already need at least two entries each, before
+        # sprites/audio. This checks transport only, not playable map completeness.
+        payload={f'map-{i}.json':b'{}' for i in range(350)}
+        payload['scene.json']=self.payload
+        manifest=json.dumps(dict(schemaVersion=1,version='fixture-c1',files={k:ci.sha(v)for k,v in payload.items()})).encode()
+        self.pin['manifestSha256']=ci.sha(manifest)
+        with zipfile.ZipFile(self.apk,'w')as z:
+            for name,value in payload.items():z.writestr('assets/development/'+name,value)
+            z.writestr('assets/development/manifest.json',manifest)
+        self.assertEqual(352,len(ci.content(self.apk)))
+
+    def test_archive_entry_safety_bound_remains_enforced(self):
+        self.write(extra=[(f'entry-{i}.json',b'')for i in range(ci.MAX_CONTENT_ENTRIES)])
+        with self.assertRaisesRegex(ValueError,'excessive'):ci.content(self.apk)
+
     def test_path_traversal_and_windows_paths_rejected(self):
         for name in ('../escape', '/absolute', 'C:drive', 'nested\\escape', './alias'):
             with self.subTest(name=name):

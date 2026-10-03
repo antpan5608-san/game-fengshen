@@ -223,3 +223,17 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原exit表一行不保证当前状态可站立：export_world_from_base在签名前调用validate_world_exit_geometry，镜像原loader地形/已核可移除actor/区域规则。真实实体墙行移至原provenance的unresolvedExitRows，保留hash和未知上下文，不放宽collision。test_world_final_hall_export实际验证拒绝两条墙行、仍能确定性生成；EncounterRect原语义为左/上排除、右/下包含。加载器仍独立复查，导出/本地编译不替代App门禁。
 
 - 具体原版证据类别不能代替项目source.confidence枚举。原ci_apk.restore和receipt现在实际提前核PROVISIONAL_REFERENCE/GAMEPLAY_VERIFIED；originalEvidenceKind保留受控菜单/CPU等验证范围，分类不等于正常游玩。test_ci_apk.py已实际验证错误分类虽hash正确也拒绝，旧assets不变，正确分类不改具体证据；历史golden只用于复现比较，不能作为通过App门禁的基底。
+
+
+## 已验证的配方检查点复用
+
+- 小批新增定义可用原export_from_base的baseExport递归复现固定父pin/provenance；父配方与新增配方始终用同一已审核原APK，不以未通过候选APK恢复素材。实际test_world_village3_export验证父JSON原字节/hash、中间manifest、不同基底/循环拒绝和旧媒体逐字节不变，ci_apk.restore严格恢复成功。不是第二套导入器或跳过签名。
+- 父pin/来源JSON和CPU TSV固定text eol=lf；test_world_evidence_checkout在隔离Git仓库autocrlf=true实际checkout比较blob/文件hash通过。不读取时归一化，不全库强制renormalize用户修改。
+- 旧批次负例从该批次固定golden读完整定义；新增量缺旧Boss不代表生产缺Boss。实际洞窟/第一殿定向重跑保留原反向断言并通过，首轮错误仍在任务记录。
+- 静态NPC只有原真实步行进入可见区后才提取OAM/PPU/CHR；写未知actor字段或仅改坐标曾无法激活渲染。实际可见部件按原OAM flipX/flipY复建、核RGBA；透明/错误翻转拒绝。受控起始源不能改称正常新游戏。新App流程编译后还须同候选runner实际验证。
+
+## 已验证的医馆局部来源与回归（正常App待验）
+
+- 同名室内不保证同碰撞profile/palette；真实医馆控制按键证明床边class5可以横移，套村庄方向规则曾被原导出guard拒绝。只核当前地图实际tileset/移动/墙/NPC，再形成局部定义；不能移除guard或泛化未知场景。默认palette须逐32项核实际淡入完成结果，不强制所有零色相同。
+- 菜单必须执行到真实收费/状态写入阶段；只到价格提示未治疗，第三项实际退出。独立原向量用效果确认时RAM，不能把后续通用菜单清理混作药效。活跃CPU逐bank与匹配ROM比较，不能用对白后的切回bank。world-clinic-rules记录受控范围/原向量SHA，ClinicRevivalTest/ClinicCareTest与test_world_clinic_export已实际通过；不宣称正常死队友复活已运行。
+- 递归父配方新增可选schema只在非空时写入，避免空clinics改变已审核历史manifest。真实autocrlf checkout已扩验父链JSON/医馆TSV，严格空目录ci_apk.restore与本地目标逐字节一致。正常临床UI和患者分项尚待原runner；无真实患者记NOT_RUN，不为验收制造病症。
