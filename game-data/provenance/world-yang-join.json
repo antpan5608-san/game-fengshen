@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "scopeRevision": "item19-facing-yang-event29-before-dialogue-join-and-context207",
+  "kind": "CONTROLLED_ORIGINAL_REAL_KEYS_PLUS_SCOPED_CPU_NOT_NORMAL_ANDROID",
+  "rules": {
+    "mapId": 110,
+    "npcId": "rom.npc.110.0",
+    "npcCell": [
+      6,
+      6
+    ],
+    "targetSpriteId": 130,
+    "itemId": "rom.special.19",
+    "category": 1,
+    "originalId": 19,
+    "eventId": 29,
+    "scriptId": 34,
+    "quantityRetained": true,
+    "usedFlagId": "rom.inventory.special.19.used",
+    "witnessFlagId": "rom.global.7c8.1",
+    "npcTalkFlagId": "rom.map.110.flag.2",
+    "completionFlagId": "rom.map.110.flag.128",
+    "contextFlagId": "rom.npccontext.110.207",
+    "overlayPointer": 2015,
+    "overlayValue": 207,
+    "dialogueIds": [
+      "rom.dialogue.120.2",
+      "rom.dialogue.120.3"
+    ],
+    "joinCharacterId": "yangjian",
+    "joinBeforeFirstDialogue": true,
+    "noPositionMove": true,
+    "noFreeReward": true,
+    "encounterStepsReset": "NOT_PROVEN_PRESERVE"
+  },
+  "sources": [
+    {
+      "offset": 90780,
+      "length": 26,
+      "sha256": "62e0f35d442c7a29009ba190995fda85f48b5b35f6ecbb3b8d22407218a34fd5",
+      "module": 2,
+      "cpuAddress": 57996,
+      "meaning": "Item19 actual map110/facing actor130 branch sets event29"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Actual reusable category1 inventory bookkeeping"
+    },
+    {
+      "offset": 92149,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59365,
+      "meaning": "Original item19 reusable flag1"
+    },
+    {
+      "offset": 379816,
+      "length": 2,
+      "sha256": "33a347247b804d1bb48b23cb9af5e4df5020469f4ccc50a2b04dd215c3c5aaf7",
+      "module": 11,
+      "cpuAddress": 52120,
+      "meaning": "Event29 dispatcher pointer"
+    },
+    {
+      "offset": 382890,
+      "length": 20,
+      "sha256": "52ca3011545c6fffaa542d855e5ea225fbc68f1c769905a4d8ef62893902caf8",
+      "module": 11,
+      "cpuAddress": 55194,
+      "meaning": "Two-stage event29 selector and script34/context207 setup"
+    },
+    {
+      "offset": 378995,
+      "length": 26,
+      "sha256": "b937e1d3a8ce8eb7ca77c1d9f67df5d7e69d5e9fb6efcfd8337be10840b1a644",
+      "module": 11,
+      "cpuAddress": 51299,
+      "meaning": "Actual script34 FF-terminated two-dialogue stream"
+    },
+    {
+      "offset": 380330,
+      "length": 85,
+      "sha256": "c92c91ec7b7ce78ceac911b1c577921beb0088a666fdba34b79322e2829a9781",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Common original event completion OR mapflag128; no encounter5B write"
+    },
+    {
+      "offset": 22352,
+      "length": 2,
+      "sha256": "44b2fc1a1b13735be0cd60876732612ca8c5bf2ff8a7d8a2aecb321977e81f9f",
+      "module": 0,
+      "cpuAddress": 55104,
+      "meaning": "Map110 overlay pointer7DF"
+    },
+    {
+      "offset": 10119,
+      "length": 49,
+      "sha256": "e2139e954c96ead04739884d299016beb8efc35c6f6c6f82669acae605986637",
+      "module": 0,
+      "cpuAddress": 42871,
+      "meaning": "Original alternate NPC context replaces base NPC list"
+    },
+    {
+      "offset": 275647,
+      "length": 2,
+      "sha256": "3eec4657dcd851d29243e2e5434c4ebbe23e2ca1fc6784db932a28b9628509b2",
+      "module": 8,
+      "cpuAddress": 46255,
+      "meaning": "NPC list pointer"
+    },
+    {
+      "offset": 282415,
+      "length": 1,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+      "module": 8,
+      "cpuAddress": 53023,
+      "meaning": "14-byte records terminated by FF"
+    },
+    {
+      "offset": 298690,
+      "length": 91,
+      "sha256": "4eb4db8983ee958b789ea1bfd47538de245037700579bc0f4421fd1c0893bd6f",
+      "module": 9,
+      "cpuAddress": 36530,
+      "meaning": "Actual target selection with present party count3"
+    },
+    {
+      "offset": 296248,
+      "length": 79,
+      "sha256": "5559b0bfacd0e9152430e3dcf465d82538786265e7311bebe51f6978d8c8d2e6",
+      "module": 9,
+      "cpuAddress": 34088,
+      "meaning": "Actual actor2 physical multiplier"
+    },
+    {
+      "offset": 296331,
+      "length": 2,
+      "sha256": "7aa69ae16189e61d94134cafa5aa30f7b4ff24fb198183ea3d625cd6a77c864b",
+      "module": 9,
+      "cpuAddress": 34171,
+      "meaning": "Original actor2 multiplier pointer"
+    },
+    {
+      "offset": 296455,
+      "length": 36,
+      "sha256": "ee0b51bd4b2402d27325549b98504fc0a44e68090ef3bef670ed706684f0bf09",
+      "module": 9,
+      "cpuAddress": 34295,
+      "meaning": "Original actor2 physical multiplier data"
+    },
+    {
+      "offset": 306428,
+      "length": 218,
+      "sha256": "9337e35ddc56627413801eabad3a88962ceb2c7169ce40c4b97fc0172062dccf",
+      "module": 9,
+      "cpuAddress": 44268,
+      "meaning": "Original acting actor equipment and base attack word fields"
+    }
+  ],
+  "cpuExpected": {
+    "path": "android/app/src/test/resources/world-yang-join-original-cpu.tsv",
+    "caseCount": 5926,
+    "failures": 0,
+    "sha256": "04c425badc1772435df8379ade00c2fbe74a8731a1b2175aab23391fdc5b67cb"
+  },
+  "multiplierExpected": {
+    "path": "android/app/src/test/resources/world-yang-multiplier-original.tsv",
+    "sha256": "66f9744867fbdc9bb856d89dc941c69921746aad196a7c054510bd67271c2d81"
+  },
+  "controlledEvidence": {
+    "07-A": {
+      "ram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/07-A-ram.bin",
+        "sha256": "9a0d77d0f60c49e8666075cbb0e3ef475eb5530c513592b528c083e90ccdb7e3"
+      },
+      "sram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/07-A-sram.bin",
+        "sha256": "6aa09b9a95afb99d6c71298101fe4bf495ced84c66beba880828a66ef00a301e"
+      }
+    },
+    "09-A": {
+      "ram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/09-A-ram.bin",
+        "sha256": "219ba79527bdc9d44c140b75318e4556497f36b97eb36d935a3ba658df134b03"
+      },
+      "sram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/09-A-sram.bin",
+        "sha256": "e4888afb4e529c264e8f90d6ce3f664a5553b952e4c5cd14f5ea41c655315c4b"
+      }
+    },
+    "15-A": {
+      "ram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/15-A-ram.bin",
+        "sha256": "6019d742af5c74e389d338ee2e095878b585e41fe6817f18187abe8387390c26"
+      },
+      "sram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/15-A-sram.bin",
+        "sha256": "4b0007575c36a987fc1e3c676ff02fad1e2080b4a747b8fc08469811d443c697"
+      }
+    },
+    "20-A": {
+      "ram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/20-A-ram.bin",
+        "sha256": "a1ecb90edcc3dd14c0987f031d7b1cc1926ea0f23b49db1aafdd698384576dfa"
+      },
+      "sram": {
+        "path": "private-derived/world-jade19-yang-use-controlled/20-A-sram.bin",
+        "sha256": "6e5f10cdc780aed2a7a6f29e94ab3f128b27e8962dd094e13e81a0908f560d33"
+      }
+    }
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.120.2",
+      "text": "『果然是師父的信物，哪吒！我這就跟著你們，一起去斬妖除魔。』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-yang-join.json",
+        "range": {
+          "offset": 106764,
+          "length": 31,
+          "sha256": "e1119a1dbc900a1b3485f17569227100545ab93a498b3a9cc870b367ebccae51",
+          "module": 3,
+          "cpuAddress": 41212,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101790,
+            "length": 2,
+            "sha256": "a729a3e66576405fc23670430ab195a131d6faa1cee1c1f76109ea16a0642a01",
+            "module": 3,
+            "cpuAddress": 36238,
+            "meaning": "Message pointer"
+          }
+        ],
+        "captureSha256": "c9acce877d78673be440f317ee1be753616bf441025e68940f7199fbc84a2b8a",
+        "scope": "CONTROLLED_ORIGINAL_ITEM19_MENU_USE_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.120.3",
+      "text": "『從這裏往西北看，九龍島烏雲不散，必有妖怪，不妨先到那兒看看！』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-yang-join.json",
+        "range": {
+          "offset": 106795,
+          "length": 33,
+          "sha256": "2c816fbb31c2ab0f63b4ccfa6c1dad6e7ea5518b2fa1545c4ea71339a776a2ff",
+          "module": 3,
+          "cpuAddress": 41243,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101792,
+            "length": 2,
+            "sha256": "85f6d911f4972281145b37113282a0c370afe8ed3bdf63ff865cde28fd945b71",
+            "module": 3,
+            "cpuAddress": 36240,
+            "meaning": "Message pointer"
+          }
+        ],
+        "captureSha256": "9cbf64edbd59f94338e216d480195f937253154c8cf18fc76fc2852b800146af",
+        "scope": "CONTROLLED_ORIGINAL_ITEM19_MENU_USE_NOT_NORMAL_ANDROID"
+      }
+    }
+  ],
+  "remainingUnknown": [
+    "Normal Android acquisition→use→third-party battle→cold restart",
+    "Original paired equipment33 operations",
+    "Actor2 learned spells",
+    "NPC movement equivalence"
+  ]
+}

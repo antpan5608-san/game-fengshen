@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "tree110-yang-actor-action17-witness-and-item19",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_REAL_KEYS_FROM_POSITION_ENTRY_NOT_NORMAL_ANDROID",
+  "npcSource": {
+    "offset": 283333,
+    "length": 14,
+    "sha256": "aa5b3ffd353642bdb89061957b2524c45ba8f8fa5d1fe0bc18ca930ecd4b9991",
+    "module": 8,
+    "cpuAddress": 53941,
+    "meaning": "Fixed 14-byte NPC source record"
+  },
+  "cpuExpectedPath": "android/app/src/test/resources/world-yang-talk-original-cpu.tsv",
+  "cpuCaseCount": 1024,
+  "cpuFailures": 0,
+  "activeCpuSha256": "6c5110dc31a33257c5143f789ceddb2a25e223a33d93a65125bb150a191ac3be",
+  "sources": [
+    {
+      "offset": 347251,
+      "length": 39,
+      "sha256": "afbc4747c2e6ce9eb455aa64ec581a152261e42b767d17aaf1ebc589f8144550",
+      "module": 10,
+      "cpuAddress": 52323,
+      "meaning": "Actual action17 postprocessor; witnesses contact before text and checks item19"
+    },
+    {
+      "offset": 348506,
+      "length": 53,
+      "sha256": "53fe7fe9e0705ac6f691d9c1edd520e306cdaf12797a437322499abfa0283109",
+      "module": 10,
+      "cpuAddress": 53578,
+      "meaning": "Original inventory category and logical quantity lookup"
+    },
+    {
+      "offset": 347961,
+      "length": 15,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Original current map flag OR"
+    },
+    {
+      "offset": 336215,
+      "length": 180,
+      "sha256": "9754827b90ec45b16fc1bd4080af24a06735f6493fb7545cc0052ff415a75e2a",
+      "module": 10,
+      "cpuAddress": 41287,
+      "meaning": "Actual NPC first/repeat and action selector"
+    }
+  ],
+  "rules": {
+    "actionId": 17,
+    "mapFlagId": "rom.map.110.flag.2",
+    "witnessFlagId": "rom.global.7c8.1",
+    "itemId": "rom.special.19",
+    "firstDialogue": "rom.dialogue.120.0",
+    "repeatDialogue": "rom.dialogue.120.1",
+    "noAutomaticNpcSeenFlag": true,
+    "automaticPartyJoin": false
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.120.0",
+      "text": "『我是楊戩，你說我師父要我助你一臂之力，空口無憑要我如何相信你？』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106718,
+          "length": 34,
+          "sha256": "b98dae4d63603441c5c4236bc1d41447d46e2e9ac6b0559b81f7f4f135865dea",
+          "module": 3,
+          "cpuAddress": 41166,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101786,
+            "length": 2,
+            "sha256": "20d078e6c36cb6c7ea69074bbe9f2cb9f55f47a45973260d968d1a19538944cf",
+            "module": 3,
+            "cpuAddress": 36234,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-tree107-talk.json",
+        "captureSha256": "b11a3f64a662bd223095c7469df2a251caa18f9deb75ba638057f8cb30a9724e"
+      }
+    },
+    {
+      "id": "rom.dialogue.120.1",
+      "text": "『我是不会相信你的！』",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "range": {
+          "offset": 106752,
+          "length": 12,
+          "sha256": "bf2e6dd68403aea16477d8b31154ace237e71461a7759410f5d154ebf8e373c3",
+          "module": 3,
+          "cpuAddress": 41200,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101788,
+            "length": 2,
+            "sha256": "fa55aaa3f8051328a28c95ddd667834a473cae7d8d08512ee39004d97227bff8",
+            "module": 3,
+            "cpuAddress": 36236,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-tree107-talk.json",
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "rowId": 214,
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN"
+        }
+      }
+    }
+  ],
+  "graphic": {
+    "width": 16,
+    "height": 16,
+    "transparentZero": true,
+    "paletteCodes": {
+      "0": [
+        0,
+        0,
+        0
+      ],
+      "1": [
+        0,
+        0,
+        0
+      ],
+      "3": [
+        89,
+        251,
+        154
+      ],
+      "2": [
+        255,
+        190,
+        178
+      ]
+    },
+    "tiles": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "offset": 865376,
+        "length": 16,
+        "sha256": "a85aeb50c5315142e2e808ec7dbf4673064a29c29be85ed9b814b663409069ae",
+        "spriteTile": 69,
+        "attribute": 65,
+        "flipX": true,
+        "flipY": false
+      },
+      {
+        "xy": [
+          8,
+          0
+        ],
+        "offset": 865360,
+        "length": 16,
+        "sha256": "dfd2a1efd3d98cd24e1078e89e969e3cafae7f336bebf85e912eab18195178f6",
+        "spriteTile": 68,
+        "attribute": 65,
+        "flipX": true,
+        "flipY": false
+      },
+      {
+        "xy": [
+          0,
+          8
+        ],
+        "offset": 865632,
+        "length": 16,
+        "sha256": "83844e8e51ef9077a7ed85b5ecf20d0b19d7a29442ebe4364173ad31cdbd061c",
+        "spriteTile": 85,
+        "attribute": 65,
+        "flipX": true,
+        "flipY": false
+      },
+      {
+        "xy": [
+          8,
+          8
+        ],
+        "offset": 865616,
+        "length": 16,
+        "sha256": "88ff806ce6c502e9e7bd79ff58be65a45f8ebfe3c5eaace0c461056972e225e1",
+        "spriteTile": 84,
+        "attribute": 65,
+        "flipX": true,
+        "flipY": false
+      }
+    ],
+    "rgbaSha256": "07a3d328be69a83865f01910dcad7a291210c8683adcaf7798fdcfda994ebbea",
+    "observedRect": [
+      96,
+      105,
+      16,
+      16
+    ],
+    "captureKind": "CONTROLLED_ENTRY_SOURCE_REAL_FOUR_FLOOR_KEYS",
+    "captureSha256": "f891dcf5afc78bbe37863cb173eabc7ac3454051a957a04ce965f18822cb2096",
+    "oamRamAddress": 532,
+    "oamHex": "70454160704441687855416078544168",
+    "ppuSha256": "8efcab84e90c749f10ffa68826be147505e7b170420fcdb492c96deeeb7acac8",
+    "ramSha256": "d0160bcc7ed0dee283d8f297f6fb228a24d997c56eaddb7f36322a9eec4a4aa1",
+    "opaquePixelMatch": true,
+    "normalAndroid": "NOT_RUN"
+  },
+  "normalAndroid": "NOT_RUN",
+  "cpuExpectedSha256": "b9c412465af7177649a1e0af670b8bca0f1d689610918981b795d1ab826aed49"
+}

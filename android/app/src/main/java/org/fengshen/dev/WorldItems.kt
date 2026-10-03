@@ -7,7 +7,9 @@ data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int
 }
 data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val spriteId:Int,
     val removedFlagId:String,val completionFlagId:String)
-data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String)
+data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String) {
+    var yangJoin:OriginalYangJoinDefinition?=null;internal set
+}
 data class WorldFieldProtectionDefinition(val evidence:String)
 
 /** Scoped original category-1/item-11 transactions. Evidence: world-key-item.json.
@@ -80,8 +82,16 @@ object WorldItems {
         return Result(snapshot.inventory+(item.id to count+1),snapshot.flags+(treasure.flagId to true),true)
     }
 
+    fun facesTarget(snapshot:SaveSnapshot,target:WorldObjectTarget):Boolean {
+        val delta=when(snapshot.direction){Key.UP->0 to -1;Key.DOWN->0 to 1;Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;else->return false}
+        return snapshot.x>=0&&snapshot.y>=0&&snapshot.x%16==8&&snapshot.y%16==8&&
+            snapshot.x.toLong()+delta.first*16L==target.x.toLong()*16+8&&
+            snapshot.y.toLong()+delta.second*16L==target.y.toLong()*16+8
+    }
+
     private fun unavailable(snapshot:SaveSnapshot,item:ItemDefinition,rule:WorldItemUseDefinition,
         target:WorldObjectTarget,inMapMenu:Boolean):String? {
+        if(rule.yangJoin!=null)return OriginalYangJoin.unavailable(snapshot,item,target,inMapMenu)
         val flagIds=listOf(rule.usedFlagId,target.removedFlagId,target.completionFlagId)
         if(!supported(item)||rule.targetSpriteId!=TARGET_SPRITE||target.spriteId!=TARGET_SPRITE||
             !validId(target.id)||flagIds.any{!validId(it)}||flagIds.toSet().size!=3||
@@ -95,14 +105,7 @@ object WorldItems {
         if(snapshot.mapId!=target.mapId)return "当前场景不可用"
         // Save coordinates are pixel centers; target coordinates are map cells.
         // Do not use interactionTarget's single-neighbour facing fallback here.
-        val delta=when(snapshot.direction){
-            Key.UP->0 to -1;Key.DOWN->0 to 1;Key.LEFT->-1 to 0;Key.RIGHT->1 to 0
-            else->return "请站定并面向目标"
-        }
-        if(snapshot.x<0||snapshot.y<0||snapshot.x%16!=8||snapshot.y%16!=8||
-            snapshot.x.toLong()+delta.first*16L!=target.x.toLong()*16+8||
-            snapshot.y.toLong()+delta.second*16L!=target.y.toLong()*16+8)
-            return "请站定并面向目标"
+        if(!facesTarget(snapshot,target))return "请站定并面向目标"
         return null
     }
 
@@ -112,6 +115,7 @@ object WorldItems {
     fun use(snapshot:SaveSnapshot,item:ItemDefinition,rule:WorldItemUseDefinition,
         target:WorldObjectTarget,inMapMenu:Boolean):Result {
         unavailable(snapshot,item,rule,target,inMapMenu)?.let{return reject(snapshot,it)}
+        if(rule.yangJoin!=null)return reject(snapshot,"入队须通过统一剧情事务提交")
         // This reusable item keeps its quantity, including when its used bit was already set.
         return Result(snapshot.inventory,snapshot.flags+mapOf(rule.usedFlagId to true,
             target.removedFlagId to true,target.completionFlagId to true),true)

@@ -1,0 +1,969 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "cpuExpectedPath": "android/app/src/test/resources/forest101-direction-original-cpu.tsv",
+  "cpuExpectedSha256": "7c26390e0c4891e906635b6988e364d4c8b155cb7c014dce0568c93c2cae318a",
+  "activeCpuSha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853",
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Source tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source-class dispatch and occlusion"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Target tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target-class and source3 horizontal blocking"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Existing terrain mode conditions"
+    }
+  ],
+  "cpuCaseCount": 144,
+  "cpuFailures": 0,
+  "scopeRevision": "tree107-110-foot0-wall1-requested-direction",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_REAL_KEYS_FROM_POSITION_ENTRY_NOT_NORMAL_ANDROID",
+  "standingClasses": [
+    0
+  ],
+  "sourceEdges": {},
+  "targetEdges": {},
+  "maps": [
+    {
+      "mapId": 107,
+      "gridSha256": "0cce4a1a673752a7cae8f3a83dd56d26ee44beac7eb45cde9edbc40172a95ed3",
+      "tilesetId": 5,
+      "width": 16,
+      "height": 15,
+      "palette": {
+        "mapId": 107,
+        "palette": [
+          14,
+          14,
+          9,
+          48,
+          25,
+          9,
+          16,
+          48,
+          25,
+          7,
+          23,
+          38,
+          25,
+          1,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 39,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25001,
+            "length": 2,
+            "sha256": "8a76197204599702d0f07ca4bb29a6958d1c56121d2e7d652ca25e4663cb2f76",
+            "module": 0,
+            "cpuAddress": 57753,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25604,
+            "length": 2,
+            "sha256": "40aaf5b5203734c15738ea99d4095910d6b4cd22854453f70ce1240a0d779976",
+            "module": 0,
+            "cpuAddress": 58356,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26282,
+            "length": 16,
+            "sha256": "010f141817000a4e56e593a6eff4a5c40ee5dbad82e6929b0a77afbe63d434a8",
+            "module": 0,
+            "cpuAddress": 59034,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "classSet": [
+        0,
+        1
+      ]
+    },
+    {
+      "mapId": 108,
+      "gridSha256": "5cb919c82421003d7e7b8a8502d8c00b3200096d53c2e03558e9620c4b2f6e42",
+      "tilesetId": 5,
+      "width": 16,
+      "height": 15,
+      "palette": {
+        "mapId": 108,
+        "palette": [
+          14,
+          14,
+          9,
+          48,
+          25,
+          9,
+          16,
+          48,
+          25,
+          7,
+          23,
+          38,
+          25,
+          1,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 39,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25003,
+            "length": 2,
+            "sha256": "8a76197204599702d0f07ca4bb29a6958d1c56121d2e7d652ca25e4663cb2f76",
+            "module": 0,
+            "cpuAddress": 57755,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25604,
+            "length": 2,
+            "sha256": "40aaf5b5203734c15738ea99d4095910d6b4cd22854453f70ce1240a0d779976",
+            "module": 0,
+            "cpuAddress": 58356,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26282,
+            "length": 16,
+            "sha256": "010f141817000a4e56e593a6eff4a5c40ee5dbad82e6929b0a77afbe63d434a8",
+            "module": 0,
+            "cpuAddress": 59034,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "classSet": [
+        0,
+        1
+      ]
+    },
+    {
+      "mapId": 109,
+      "gridSha256": "bc0e7d8273ca13eb5f75d420aea84f24fcbeb09d4e9d0309a96aa80204823b43",
+      "tilesetId": 5,
+      "width": 16,
+      "height": 15,
+      "palette": {
+        "mapId": 109,
+        "palette": [
+          14,
+          14,
+          9,
+          48,
+          25,
+          9,
+          16,
+          48,
+          25,
+          7,
+          23,
+          38,
+          25,
+          1,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 39,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25005,
+            "length": 2,
+            "sha256": "8a76197204599702d0f07ca4bb29a6958d1c56121d2e7d652ca25e4663cb2f76",
+            "module": 0,
+            "cpuAddress": 57757,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25604,
+            "length": 2,
+            "sha256": "40aaf5b5203734c15738ea99d4095910d6b4cd22854453f70ce1240a0d779976",
+            "module": 0,
+            "cpuAddress": 58356,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26282,
+            "length": 16,
+            "sha256": "010f141817000a4e56e593a6eff4a5c40ee5dbad82e6929b0a77afbe63d434a8",
+            "module": 0,
+            "cpuAddress": 59034,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "classSet": [
+        0,
+        1
+      ]
+    },
+    {
+      "mapId": 110,
+      "gridSha256": "06990ed8b623db071981b3ba4a9e63fd3e066288aee74d7b072b9e33681614f8",
+      "tilesetId": 5,
+      "width": 16,
+      "height": 15,
+      "palette": {
+        "mapId": 110,
+        "palette": [
+          14,
+          14,
+          9,
+          48,
+          25,
+          9,
+          16,
+          48,
+          25,
+          7,
+          23,
+          38,
+          25,
+          1,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 39,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25007,
+            "length": 2,
+            "sha256": "8a76197204599702d0f07ca4bb29a6958d1c56121d2e7d652ca25e4663cb2f76",
+            "module": 0,
+            "cpuAddress": 57759,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25604,
+            "length": 2,
+            "sha256": "40aaf5b5203734c15738ea99d4095910d6b4cd22854453f70ce1240a0d779976",
+            "module": 0,
+            "cpuAddress": 58356,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26282,
+            "length": 16,
+            "sha256": "010f141817000a4e56e593a6eff4a5c40ee5dbad82e6929b0a77afbe63d434a8",
+            "module": 0,
+            "cpuAddress": 59034,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "classSet": [
+        0,
+        1
+      ]
+    }
+  ],
+  "controllerEvidence": {
+    "sourcePath": "private-derived/world-tree107-route-controller/00-entry-source.fc8",
+    "sourceSha256": "45524237f8446a7ad40daecaccdd65ebf794699f55b6fbe2c70db84f57e5429a",
+    "route": [
+      {
+        "before": [
+          107,
+          7,
+          14
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          13
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          13
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          12
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          12
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          11
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          11
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          10
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          10
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          9
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          9
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          7,
+          8
+        ]
+      },
+      {
+        "before": [
+          107,
+          7,
+          8
+        ],
+        "key": "RIGHT",
+        "after": [
+          107,
+          8,
+          8
+        ]
+      },
+      {
+        "before": [
+          107,
+          8,
+          8
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          8,
+          7
+        ]
+      },
+      {
+        "before": [
+          107,
+          8,
+          7
+        ],
+        "key": "RIGHT",
+        "after": [
+          107,
+          9,
+          7
+        ]
+      },
+      {
+        "before": [
+          107,
+          9,
+          7
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          9,
+          6
+        ]
+      },
+      {
+        "before": [
+          107,
+          9,
+          6
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          9,
+          5
+        ]
+      },
+      {
+        "before": [
+          107,
+          9,
+          5
+        ],
+        "key": "UP",
+        "after": [
+          107,
+          9,
+          4
+        ]
+      },
+      {
+        "before": [
+          107,
+          9,
+          4
+        ],
+        "key": "RIGHT",
+        "after": [
+          107,
+          10,
+          4
+        ]
+      },
+      {
+        "before": [
+          107,
+          10,
+          4
+        ],
+        "key": "RIGHT",
+        "after": [
+          108,
+          11,
+          5
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          5
+        ],
+        "key": "DOWN",
+        "after": [
+          108,
+          11,
+          6
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          6
+        ],
+        "key": "DOWN",
+        "after": [
+          108,
+          11,
+          7
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          7
+        ],
+        "key": "DOWN",
+        "after": [
+          108,
+          11,
+          8
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          8
+        ],
+        "key": "DOWN",
+        "after": [
+          108,
+          11,
+          9
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          9
+        ],
+        "key": "DOWN",
+        "after": [
+          108,
+          11,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          11,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          10,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          10,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          9,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          9,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          8,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          8,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          7,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          7,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          6,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          6,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          108,
+          5,
+          10
+        ]
+      },
+      {
+        "before": [
+          108,
+          5,
+          10
+        ],
+        "key": "LEFT",
+        "after": [
+          109,
+          6,
+          9
+        ]
+      },
+      {
+        "before": [
+          109,
+          6,
+          9
+        ],
+        "key": "UP",
+        "after": [
+          109,
+          6,
+          8
+        ]
+      },
+      {
+        "before": [
+          109,
+          6,
+          8
+        ],
+        "key": "UP",
+        "after": [
+          109,
+          6,
+          7
+        ]
+      },
+      {
+        "before": [
+          109,
+          6,
+          7
+        ],
+        "key": "RIGHT",
+        "after": [
+          109,
+          7,
+          7
+        ]
+      },
+      {
+        "before": [
+          109,
+          7,
+          7
+        ],
+        "key": "RIGHT",
+        "after": [
+          109,
+          8,
+          7
+        ]
+      },
+      {
+        "before": [
+          109,
+          8,
+          7
+        ],
+        "key": "RIGHT",
+        "after": [
+          109,
+          9,
+          7
+        ]
+      },
+      {
+        "before": [
+          109,
+          9,
+          7
+        ],
+        "key": "RIGHT",
+        "after": [
+          110,
+          9,
+          6
+        ]
+      },
+      {
+        "before": [
+          110,
+          9,
+          6
+        ],
+        "key": "LEFT",
+        "after": [
+          110,
+          8,
+          6
+        ]
+      },
+      {
+        "before": [
+          110,
+          8,
+          6
+        ],
+        "key": "LEFT",
+        "after": [
+          110,
+          7,
+          6
+        ]
+      }
+    ],
+    "actualStepsSha256": "a6763aec7e7cbd777ea244f9c23999f35c151d8a61158384e249fa9b50363f4a",
+    "noNewRamWrites": true,
+    "normalNewGame": false,
+    "normalAndroid": "NOT_RUN"
+  }
+}

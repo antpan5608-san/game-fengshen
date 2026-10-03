@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c39",
-  "manifestSha256": "e2696bab7b1f792bad8d2c160b7c46949d496180dc04037285f9fbc5cfd97e33",
+  "contentVersion": "opening-segment-001-c36",
+  "manifestSha256": "e67933f12cd5b6c9fe7b015eb90b25739dfd0108bd91e55c00e1edec818d8229",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-yang-join-content.json"
+    "provenance": "game-data/provenance/world-forest101-direction-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

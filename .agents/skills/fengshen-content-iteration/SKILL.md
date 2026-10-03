@@ -267,4 +267,25 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 当前授权可接受明确非阻断历史故障时，诊断投影仍保留status/ERROR/计数；原runtime-summary.mjs的独立--release-assessment只核已经精确review的旧版本下载中断与可信两版hash。19 Node/投影方法、22原审批隔离场景和实际脱敏inspect输入评估已运行；新错误、崩溃、丢档或查询不可用仍拒绝。PowerShell/生产路径未实际执行前保持待核，不将ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES写NO_ISSUES_OBSERVED。动态例外存ci/runtime-nonblocking-issues.json，不复制进skill。
 
 
-- 地府外图按实际独立出口分段，不能在村庄验收提前寻路至后段，或根据殿堂反向出口假定整条返村路径存在。test_world_hell_route_driver已实际检查十殿下一入口、下桥类别11反向限制及后两区真实落点附近往返；正常训练/补给前移只是驱动策略，不加游戏前置。对应新App尚待原runner，不能把三项静态检查写正常游玩PASS。录屏器限定准备预算与异常/持久化边界四项已运行，保持其他预算上限与同产物门禁。
+## 已验证的树内局部接续（正常App仍待验）
+
+复用原export_from_base固定父配方、Reader独立出口、scoped_map_atlas与observed_graphic_recipe，接触入口只解除已核接触对象的那一格探测，不删旗标或打开其余墙。树内原同zone在各地图分别绑定完整组；大陆原遇敌矩形在module11而非同址module0，必须核真实指针/跨度，不能抄区域编号。四层局部导出四方法、完整世界回归、JVM与原ci_apk.restore空assets逐字节已实际执行；正常App入口虽已接原runtime/receipt门禁，不能由编译宣称PASS。
+
+NPC首谈action与一次性seen分开；原action17在对白前写见面旗标，未拥有指定物品不加mapflag或队员。原CPU表和OriginalNpcTalkTest核状态，原真实按键核正文；重复对话不能套统一seen规则。后续teacher选择/礼物容量探针已运行，派生表不证明物品使用或入队。菜单取证长按可能跨层，改成单帧按键后逐屏检查实际阶段；原始ROM/PPU/RAM继续忽略目录。
+
+## 已验证的限定房间及原NPC后处理
+
+- 已提交raw NPC记录须先执行真实首谈/复谈selector再执行action后处理；已置NPC mask会跳过后处理，不能直接从action初值推复谈。`probe-world-teacher-talk.py`已实际校对师父8192、容量6及道童1024 CPU案例；碰撞probe另36案例，不将受控CPU当正常App路线。
+- 房间未定义遇敌时核原type/zone字节FF，不从邻接森林继承遇敌。counter交互cell/direction、独立返回、特殊物品16行容量沿原导出/统一状态事务；只取得物品时不要捏造worldUse或价格。局部export测试和原ci_apk.restore空目录215文件严格恢复已运行；新增正常Android房间路径已编译，实际运行仍待同候选门禁。
+
+## 已验证的地府正常路线驱动修正
+
+只用原单向地形和独立出口规划后续十殿，不交换出口猜返程。`test_world_hell_route_driver.py`已实际验证十条下一腿、10/13区自然遇敌邻格及旧服务点不可达反例；正常补给训练放在首个不可返回步行节点前，仍通过原买卖/付费客栈和自然战斗，不添加玩法门槛。首次殿前录屏可用原record_app_audio.py的限定7200秒预算（边界4方法通过）；本次修正实际App仍待原KVM运行，不将拓扑测试当正常通关。
+
+## 已验证的信物入队局部接续（正常App另验）
+
+先核物品dispatch、可复用数量标记、event/script阶段与独立NPC context；完成mapflag不等于NPC移除条件。`probe-world-yang-join.py`已在匹配缓存运行5926 CPU案例；原受控真实按键与初始化字段逐址校对发现strength/敏捷不能按写入顺序猜，初始手部贡献也不能直接套商品表。维持明确差异，不新增第二份存档属性或未核双手事务。
+
+原export_from_base的限定existingItemCapabilityUpdates/既存NPC目标只允许公开provenance所列稳定ID/字段，固定父配方和旧定义hash，未变媒体保持逐字节相同。局部4测试、完整世界166方法、LF实际checkout及ci_apk.restore空目录215文件严格校验已运行。入队复用StoryFollowup/统一commit/save rollback，UI仍选物品后明确执行；三人自然遇敌与冷启正常驱动仅编译，须同候选实际运行才能记PASS，不能拿CPU或导出替代。
+
+- 独立出口落点不是可任意离开的空地：真实runtime曾在23(55,91)固定向下撞55,92墙，原拓扑也核55,93墙。test_world_hell_route_driver新增实际落点西侧离开/返门与54,93↔54,94自然zone8邻格反例，4方法已运行；保留失败run，新正常App须重新审核，不放宽地形。

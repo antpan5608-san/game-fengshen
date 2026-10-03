@@ -13,6 +13,75 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    fun testOriginalYangSignalPendingSaveCollisionAndOwnBattleContent(){
+        // Isolated definition/save fixture; never a normal-route claim.
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val item=c.itemDefinitions.getValue(OriginalYangJoin.ITEM_ID);val rule=c.yangJoin()!!
+        val target=c.worldItemTargets().single{it.id==rule.npcId}
+        val old=SaveSnapshot(c.scene.version,110,7*16+8,6*16+8,Key.LEFT,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(item.id to 1),
+            mapOf("rom.global.7c8.1" to true),money=83,encounterSteps=17)
+        assertTrue(old.validate(c));assertNotNull(c.sceneForState(110,old.flags)!!.check(6,6))
+        val result=OriginalYangJoin.begin(old,item,target,c.joinCharacters["yangjian"],true)
+        assertTrue(result.applied);assertTrue(result.snapshot.validate(c))
+        val restored=SaveSnapshot.parse(result.snapshot.json().toString())
+        assertEquals(result.snapshot,restored);assertTrue(rule.validPending(restored))
+        assertFalse(c.npcVisible(c.npcs.single{it.id==rule.npcId},restored.flags))
+        assertNull(c.sceneForState(110,restored.flags)!!.check(6,6))
+        val page=StoryFollowup.advance(restored,rule,"rom.dialogue.120.2")
+        val savedPage=SaveSnapshot.parse(page.snapshot.json().toString());assertTrue(savedPage.validate(c))
+        val finished=StoryFollowup.advance(savedPage,rule,"rom.dialogue.120.3")
+        assertTrue(finished.applied);assertTrue(finished.snapshot.validate(c));assertEquals(17,finished.snapshot.encounterSteps)
+        assertEquals(1,finished.snapshot.inventory[item.id]);assertEquals(3,finished.snapshot.characters.size)
+        val actor=c.joinCharacters.getValue("yangjian")
+        assertEquals(96,actor.strength);assertEquals(28,actor.agility);assertEquals(58,OriginalYangJoin.initialHandContribution(finished.snapshot,actor))
+        assertEquals(79,c.battle!!.growthFor(actor.id).size);assertNotNull(c.battle!!.physicalFor(actor.id))
+        assertEquals(setOf("nezha","yangjian"),c.equipmentDefinitions.getValue("rom.armor.29").allowedCharacters)
+        assertFalse(c.equipmentDefinitions.getValue("rom.weapon.33").operationEnabled)
+        assertNull(OpeningEquipment.unequip(actor,emptyMap(),c.equipmentDefinitions.getValue("rom.weapon.33")))
+        assertFalse(OriginalYangJoin.begin(finished.snapshot,item,target,actor,true).applied)
+    }
+
+    fun testRoom171OriginalCounterAndTeacherSignalDefinition(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(171)
+        assertEquals(16,scene.width);assertEquals(15,scene.height);assertEquals(setOf(0,2),scene.walkableClasses)
+        assertEquals(3,c.npcs.count{it.mapId==171});assertFalse(c.battle!!.zones.any{it.mapId==171})
+        val npc=c.npcs.single{it.id=="rom.npc.171.1"};val rule=npc.originalTalk!!
+        assertEquals(12,rule.actionId);assertEquals(7 to 5,npc.interactionCell);assertEquals(Key.UP,npc.interactionDirection)
+        val item=c.itemDefinitions.getValue("rom.special.19")
+        assertEquals(19,item.originalId);assertEquals("special",item.category);assertEquals(1,item.maxCount)
+        assertNull(item.worldUse);assertNull(item.buyPrice);assertNull(item.sellPrice)
+        val old=SaveSnapshot("opening-segment-001-c37",171,7*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer),emptyMap(),mapOf("rom.global.7c8.1" to true),0)
+        assertTrue(old.validate(c));val grant=OriginalNpcTalk.begin(old,rule,item)
+        assertTrue(grant.applied);assertEquals(1,grant.snapshot.inventory[item.id])
+        assertEquals("rom.dialogue.181.1",grant.nextDialogue);assertTrue(grant.snapshot.flags[rule.mapFlagId]!=true)
+        val repeat=OriginalNpcTalk.begin(grant.snapshot,rule,item)
+        assertEquals("rom.dialogue.181.2",repeat.nextDialogue);assertEquals(grant.snapshot,repeat.snapshot)
+        assertEquals(old.money,repeat.snapshot.money);assertEquals(old.characters,repeat.snapshot.characters)
+    }
+    fun testTreeFourFloorsActorContactsFullRegionsAndYangInitialTalk(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in 107..110){
+            val scene=c.scenes.getValue(mid);assertEquals(16,scene.width);assertEquals(15,scene.height)
+            assertEquals(setOf(0),scene.walkableClasses)
+            val zone=c.battle!!.zones.single{it.mapId==mid};assertEquals(11,zone.groups.size)
+            assertTrue(zone.highGate);assertEquals(245,zone.randomThreshold)
+            assertEquals(setOf(41,42),zone.groups.flatMap{it.members}.map{it.enemyId}.toSet())
+        }
+        val contacts=c.exits.filter{it.contactActorId!=null};assertEquals(2,contacts.size)
+        assertEquals(setOf(231,232),contacts.map{it.contactActorId}.toSet())
+        for(e in contacts){assertEquals(16,e.fromMapId);assertEquals(107,e.toMapId);assertEquals(7,e.spawnX);assertEquals(14,e.spawnY)}
+        val back=c.exits.single{it.fromMapId==107&&it.toMapId==16};assertEquals(169,back.spawnX);assertEquals(149,back.spawnY)
+        val chest=c.npcs.filter{it.mapId in 107..108&&it.treasure!=null};assertEquals(3,chest.size)
+        assertEquals(setOf("rom.weapon.7","rom.armor.30","rom.medicine.14"),chest.map{it.treasure!!.itemId}.toSet())
+        val npc=c.npcs.single{it.id=="rom.npc.110.0"};assertNotNull(npc.originalTalk)
+        assertEquals("rom.global.7c8.1",npc.originalTalk!!.witnessFlagId)
+        assertEquals("rom.special.19",npc.originalTalk!!.itemId)
+        assertTrue(c.dialogues.containsKey(npc.originalTalk!!.firstDialogue))
+        val old=SaveSnapshot("opening-segment-001-c36",16,238*16+8,160*16+8,Key.UP,listOf(c.initialPlayer),emptyMap(),emptyMap(),93)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
     fun testForest101OriginalFootEdgesCompleteRegionAndRealReturn(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val s=c.scenes.getValue(101)
         assertEquals(setOf(0,3,7,8,9),s.walkableClasses)

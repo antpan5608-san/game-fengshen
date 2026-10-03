@@ -51,6 +51,22 @@ class OriginalPartyRulesTest {
         }
     }
 
+    @Test fun thirdActorUsesScopedOriginalTargetAndOwnMultiplierCpuCases(){
+        val raw=javaClass.getResourceAsStream("/world-yang-join-original-cpu.tsv")!!.bufferedReader().readLines().drop(1)
+        val multipliers=javaClass.getResourceAsStream("/world-yang-multiplier-original.tsv")!!.bufferedReader().readLines().single().split("\t").map{it.toInt()}
+        var targets=0;var physical=0
+        for(line in raw){val p=line.split("\t")
+            if(p[0]=="three-target"){
+                val alive=p[1].toInt();val byte=p[2].toInt()
+                val party=(0..2).map{OriginalPartyRules.Actor(it,it,if(alive and(1 shl it)!=0)10 else 0,0,10)}
+                assertEquals(p[4].toInt().takeIf{it>=0},OriginalPartyRules.enemyTarget(party,byte));targets++
+            }else if(p[0]=="three-multiplier"){
+                assertEquals(p[4].toInt(),OriginalPartyRules.physicalMultiplier(2,p[1].toInt(),p[2].toInt(),mapOf(2 to multipliers)));physical++
+            }
+        }
+        assertEquals(2048,targets);assertEquals(3584,physical)
+    }
+
     @Test fun deadEnemyRetargetUsesCurrentAgilityOrderNotSlotNumberOrDefinition(){
         val enemies=listOf(enemy(2),enemy(3,hp=0),enemy(5))
         val order=listOf(1,0,133,130,131)

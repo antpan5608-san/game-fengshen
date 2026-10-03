@@ -31,6 +31,31 @@ class PartyBattleTest {
         return OpeningBattle(group,c,party.first(),0,0).also{it.configureParty(party,mapOf("nezha" to 0,"xiaolongnv" to 1),
             mapOf("nezha" to 0,"xiaolongnv" to 20),mapOf("nezha" to 0,"xiaolongnv" to 20))}
     }
+    @Test fun thirdActorCollectsOnceUsesOwnInitialContributionAndReceivesOwnXpShare(){
+        val yang=CharacterState("yangjian",24,26000,495,495,54,96,60,28,69,maxMp=54,equipment=EquipmentState(33,33,18,29))
+        val enemy=EnemyDefinition(18,"fixture",50,25,0,39,13,255,0)
+        val group=EncounterGroup(1,listOf(EncounterMember(3,18)))
+        val thresholds=javaClass.getResourceAsStream("/world-yang-multiplier-original.tsv")!!.bufferedReader().readLines().single().split("\t").map{it.toInt()}
+        val own=PhysicalRules(physical.weaponHitThreshold+(33 to 64),thresholds)
+        val c=BattleContent(23,emptyList(),listOf(group),mapOf(18 to enemy),listOf(GrowthRow(13,2010,8,0,2,1,1,0,false)),0,6,50,16,
+            enemyAgility=mapOf(18 to 1),escapeEnabled=true,physicalRules=physical).also{
+            it.characterPhysicalRules=mapOf("xiaolongnv" to physical,"yangjian" to own)
+            it.characterGrowth=mapOf("xiaolongnv" to listOf(GrowthRow(13,2525,6,4,1,1,2,2,false)),
+                "yangjian" to listOf(GrowthRow(25,29899,56,3,9,4,2,2,false)))
+        }
+        val b=OpeningBattle(group,c,hero,0,0).also{it.configureParty(listOf(hero,girl,yang),
+            mapOf("nezha" to 0,"xiaolongnv" to 1,"yangjian" to 2),mapOf("nezha" to 0,"xiaolongnv" to 20,"yangjian" to 58),
+            mapOf("nezha" to 0,"xiaolongnv" to 20,"yangjian" to 50))}
+        assertNull(b.attack(3){error("first command cannot act")})
+        assertNull(b.attack(3){error("second command cannot act")});assertEquals("yangjian",b.inputHero!!.id)
+        var rolls=0;val turn=b.attack(3){rolls++;0}!!
+        assertEquals(BattlePhase.VICTORY,turn.phase);assertEquals(1,rolls)
+        assertEquals("yangjian",turn.actions.first().actorId)
+        val reward=b.settle(100)!!;assertEquals(113,reward.money)
+        assertEquals(mapOf("nezha" to 13,"xiaolongnv" to 13,"yangjian" to 13),reward.experienceByCharacter)
+        assertEquals(26013,reward.characters[2].experience);assertEquals(24,reward.characters[2].level)
+        assertNull(b.settle(reward.money))
+    }
     @Test fun firstCommandQueuesWithoutHpRandomOrRewardsThenFasterActorWins(){
         val b=make();var rolls=0
         assertEquals("nezha",b.inputHero!!.id)

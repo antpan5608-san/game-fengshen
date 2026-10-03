@@ -1,0 +1,3014 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "tree110-signal19-original-join-three-party",
+  "baseManifestSha256": "ba1e8aafa6c5576d515a182152e6d9bb82a38ee68ccf6bda9d258e3bb60734f9",
+  "baseExport": {
+    "pinPath": "ci/golden-world-room171-content.json",
+    "pinSha256": "12a41b9935d9008d2276e3d58da7a18eb13a02dc02abf937cb80a7706d766df9",
+    "provenanceSha256": "c4d06e857c38acf421eb1e18dba8dfdd3db65e7874106fe327008f813b31c8ba",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "maps": [],
+  "exits": [],
+  "graphics": {},
+  "npcs": [],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.120.2",
+      "text": "『果然是師父的信物，哪吒！我這就跟著你們，一起去斬妖除魔。』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-yang-join.json",
+        "range": {
+          "offset": 106764,
+          "length": 31,
+          "sha256": "e1119a1dbc900a1b3485f17569227100545ab93a498b3a9cc870b367ebccae51",
+          "module": 3,
+          "cpuAddress": 41212,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101790,
+            "length": 2,
+            "sha256": "a729a3e66576405fc23670430ab195a131d6faa1cee1c1f76109ea16a0642a01",
+            "module": 3,
+            "cpuAddress": 36238,
+            "meaning": "Message pointer"
+          }
+        ],
+        "captureSha256": "c9acce877d78673be440f317ee1be753616bf441025e68940f7199fbc84a2b8a",
+        "scope": "CONTROLLED_ORIGINAL_ITEM19_MENU_USE_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.120.3",
+      "text": "『從這裏往西北看，九龍島烏雲不散，必有妖怪，不妨先到那兒看看！』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-yang-join.json",
+        "range": {
+          "offset": 106795,
+          "length": 33,
+          "sha256": "2c816fbb31c2ab0f63b4ccfa6c1dad6e7ea5518b2fa1545c4ea71339a776a2ff",
+          "module": 3,
+          "cpuAddress": 41243,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101218,
+            "length": 2,
+            "sha256": "7cc5014be084d51e2040e375db0300bb20447234aa8666b311414a238708e33f",
+            "module": 3,
+            "cpuAddress": 35666,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101792,
+            "length": 2,
+            "sha256": "85f6d911f4972281145b37113282a0c370afe8ed3bdf63ff865cde28fd945b71",
+            "module": 3,
+            "cpuAddress": 36240,
+            "meaning": "Message pointer"
+          }
+        ],
+        "captureSha256": "9cbf64edbd59f94338e216d480195f937253154c8cf18fc76fc2852b800146af",
+        "scope": "CONTROLLED_ORIGINAL_ITEM19_MENU_USE_NOT_NORMAL_ANDROID"
+      }
+    }
+  ],
+  "shops": [],
+  "inns": [],
+  "serviceBindings": [],
+  "items": [
+    {
+      "id": "rom.armor.18",
+      "category": "armor",
+      "originalId": 18,
+      "buyPrice": 1800,
+      "sellPrice": 900,
+      "maxCount": 10,
+      "name": "竹片甲",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "evidence": "game-data/provenance/world-party-yangjian.json",
+        "priceRange": {
+          "offset": 93105,
+          "length": 2,
+          "sha256": "c3aefc14ee1131201d705d4da641e4729e40fcd15a0d80015a9deba1164959f9",
+          "module": 2,
+          "cpuAddress": 60321,
+          "meaning": "Original unsigned purchase price"
+        },
+        "nameRange": {
+          "offset": 93433,
+          "length": 5,
+          "sha256": "069bdd9232092d96053587eecf501fdb85d23c4e7a673610e1a8d4526fc0015f",
+          "module": 2,
+          "cpuAddress": 60649,
+          "meaning": "Original terminated menu text"
+        },
+        "nameEvidence": {
+          "kind": "PROVISIONAL_REFERENCE",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "row": {
+            "id": 62,
+            "name": "竹片甲",
+            "description": "采用竹片树藤缝制而成，是最常见的轻甲，但韧性不足。防御力加50",
+            "type": 3,
+            "number1": 50,
+            "res": "Icon_091",
+            "buy_price": 1800,
+            "sell_price": 900,
+            "mini_type": 3,
+            "isTwoHand": 0,
+            "role01": 0,
+            "role02": 0,
+            "role03": 1,
+            "role04": 0,
+            "isdisappear": 0,
+            "sell_storyId": 0
+          },
+          "licenseStatus": "UNKNOWN",
+          "targetOriginalGlyphOrNormalName": "NOT_VERIFIED"
+        }
+      },
+      "equipment": {
+        "originalId": 18,
+        "slot": "body",
+        "allowedCharacters": [
+          "yangjian"
+        ],
+        "originalActorIndexes": [
+          2
+        ],
+        "originalPermittedSlots": [
+          "body"
+        ],
+        "attackBonus": 0,
+        "defenseBonus": 50,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "evidence": "game-data/provenance/world-party-yangjian.json",
+        "ruleSources": [
+          {
+            "offset": 93193,
+            "length": 2,
+            "sha256": "913da1f8df6f8fd47593840d533ba0458cc9873996bf310460abb495b34c232a",
+            "module": 2,
+            "cpuAddress": 60409,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94187,
+            "length": 7,
+            "sha256": "13b92931fee4ac3c88bb64c46da538e42d40aad06bd0421d3e6acc9c9448c716",
+            "module": 2,
+            "cpuAddress": 61403,
+            "meaning": "Actual actor2 body terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    }
+  ],
+  "ruleRanges": [
+    {
+      "offset": 90780,
+      "length": 26,
+      "sha256": "62e0f35d442c7a29009ba190995fda85f48b5b35f6ecbb3b8d22407218a34fd5",
+      "module": 2,
+      "cpuAddress": 57996,
+      "meaning": "Item19 actual map110/facing actor130 branch sets event29"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Actual reusable category1 inventory bookkeeping"
+    },
+    {
+      "offset": 92149,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59365,
+      "meaning": "Original item19 reusable flag1"
+    },
+    {
+      "offset": 379816,
+      "length": 2,
+      "sha256": "33a347247b804d1bb48b23cb9af5e4df5020469f4ccc50a2b04dd215c3c5aaf7",
+      "module": 11,
+      "cpuAddress": 52120,
+      "meaning": "Event29 dispatcher pointer"
+    },
+    {
+      "offset": 382890,
+      "length": 20,
+      "sha256": "52ca3011545c6fffaa542d855e5ea225fbc68f1c769905a4d8ef62893902caf8",
+      "module": 11,
+      "cpuAddress": 55194,
+      "meaning": "Two-stage event29 selector and script34/context207 setup"
+    },
+    {
+      "offset": 378995,
+      "length": 26,
+      "sha256": "b937e1d3a8ce8eb7ca77c1d9f67df5d7e69d5e9fb6efcfd8337be10840b1a644",
+      "module": 11,
+      "cpuAddress": 51299,
+      "meaning": "Actual script34 FF-terminated two-dialogue stream"
+    },
+    {
+      "offset": 380330,
+      "length": 85,
+      "sha256": "c92c91ec7b7ce78ceac911b1c577921beb0088a666fdba34b79322e2829a9781",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Common original event completion OR mapflag128; no encounter5B write"
+    },
+    {
+      "offset": 22352,
+      "length": 2,
+      "sha256": "44b2fc1a1b13735be0cd60876732612ca8c5bf2ff8a7d8a2aecb321977e81f9f",
+      "module": 0,
+      "cpuAddress": 55104,
+      "meaning": "Map110 overlay pointer7DF"
+    },
+    {
+      "offset": 10119,
+      "length": 49,
+      "sha256": "e2139e954c96ead04739884d299016beb8efc35c6f6c6f82669acae605986637",
+      "module": 0,
+      "cpuAddress": 42871,
+      "meaning": "Original alternate NPC context replaces base NPC list"
+    },
+    {
+      "offset": 275647,
+      "length": 2,
+      "sha256": "3eec4657dcd851d29243e2e5434c4ebbe23e2ca1fc6784db932a28b9628509b2",
+      "module": 8,
+      "cpuAddress": 46255,
+      "meaning": "NPC list pointer"
+    },
+    {
+      "offset": 282415,
+      "length": 1,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+      "module": 8,
+      "cpuAddress": 53023,
+      "meaning": "14-byte records terminated by FF"
+    },
+    {
+      "offset": 298690,
+      "length": 91,
+      "sha256": "4eb4db8983ee958b789ea1bfd47538de245037700579bc0f4421fd1c0893bd6f",
+      "module": 9,
+      "cpuAddress": 36530,
+      "meaning": "Actual target selection with present party count3"
+    },
+    {
+      "offset": 296248,
+      "length": 79,
+      "sha256": "5559b0bfacd0e9152430e3dcf465d82538786265e7311bebe51f6978d8c8d2e6",
+      "module": 9,
+      "cpuAddress": 34088,
+      "meaning": "Actual actor2 physical multiplier"
+    },
+    {
+      "offset": 296331,
+      "length": 2,
+      "sha256": "7aa69ae16189e61d94134cafa5aa30f7b4ff24fb198183ea3d625cd6a77c864b",
+      "module": 9,
+      "cpuAddress": 34171,
+      "meaning": "Original actor2 multiplier pointer"
+    },
+    {
+      "offset": 296455,
+      "length": 36,
+      "sha256": "ee0b51bd4b2402d27325549b98504fc0a44e68090ef3bef670ed706684f0bf09",
+      "module": 9,
+      "cpuAddress": 34295,
+      "meaning": "Original actor2 physical multiplier data"
+    },
+    {
+      "offset": 306428,
+      "length": 218,
+      "sha256": "9337e35ddc56627413801eabad3a88962ceb2c7169ce40c4b97fc0172062dccf",
+      "module": 9,
+      "cpuAddress": 44268,
+      "meaning": "Original acting actor equipment and base attack word fields"
+    },
+    {
+      "offset": 115696,
+      "length": 19,
+      "sha256": "82c7b63772c542ba0fe1e49718b74112e5909fa421ea493657a16ca5d4bc40cb",
+      "module": 3,
+      "cpuAddress": 50144,
+      "meaning": "Actual map110 message2 initializer selector"
+    },
+    {
+      "offset": 115715,
+      "length": 141,
+      "sha256": "84b2a36776bc885985ef1a02ced85bcdaaf4b30a622785222f647d9b5c431fb8",
+      "module": 3,
+      "cpuAddress": 50163,
+      "meaning": "Actual actor2 initializer; joins before first event29 message"
+    },
+    {
+      "offset": 94068,
+      "length": 2,
+      "sha256": "9f6d6e893830ee03b649daf6f15a9063c5bb876360bfb32a628da6bb441b0ab9",
+      "module": 2,
+      "cpuAddress": 61284,
+      "meaning": "Actor2 equipment slot pointer root"
+    },
+    {
+      "offset": 94088,
+      "length": 8,
+      "sha256": "357dfeb35861a735d9d5fe4742b3c21edf5719d028406d878f19ebb14f667726",
+      "module": 2,
+      "cpuAddress": 61304,
+      "meaning": "Actor2 right/left/body/feet pointers"
+    },
+    {
+      "offset": 94174,
+      "length": 13,
+      "sha256": "a4eb34b0c454e5ef6e1cfda5f58d0ee6786c3b28ada2a58ab61c8c63150fba23",
+      "module": 2,
+      "cpuAddress": 61390,
+      "meaning": "Actual actor2 rightHand terminated list"
+    },
+    {
+      "offset": 94187,
+      "length": 7,
+      "sha256": "13b92931fee4ac3c88bb64c46da538e42d40aad06bd0421d3e6acc9c9448c716",
+      "module": 2,
+      "cpuAddress": 61403,
+      "meaning": "Actual actor2 body terminated list"
+    },
+    {
+      "offset": 94194,
+      "length": 10,
+      "sha256": "03cb43d163fe892161a934687127474291a92081529fb552aef718f693819393",
+      "module": 2,
+      "cpuAddress": 61410,
+      "meaning": "Actual actor2 feet terminated list"
+    },
+    {
+      "offset": 76426,
+      "length": 17,
+      "sha256": "d9d39b16b9cfec57112e2ff1c3bef6dbbd676218f123f8dc7779118ac432b0a5",
+      "module": 2,
+      "cpuAddress": 43642,
+      "meaning": "Original paired-hand classification"
+    }
+  ],
+  "existingItemCapabilityUpdates": [
+    {
+      "id": "rom.weapon.33",
+      "baseDefinitionSha256": "60149b077bbb5ff23e1e044157795f4e8a39721e2a88e2383c75f1225a1dd806",
+      "fields": {
+        "equipment": {
+          "originalId": 33,
+          "slot": "rightHand",
+          "allowedCharacters": [
+            "yangjian"
+          ],
+          "originalActorIndexes": [
+            2
+          ],
+          "originalPermittedSlots": [
+            "rightHand",
+            "leftHand"
+          ],
+          "attackBonus": 70,
+          "defenseBonus": 0,
+          "evasionValue": 0,
+          "operationEnabled": false,
+          "evidence": "game-data/provenance/world-party-yangjian.json",
+          "ruleSources": [
+            {
+              "offset": 92596,
+              "length": 2,
+              "sha256": "b88d3bf2366367bc11900a0183ff040bb3a26d46e5bd80b336b92d6c033e9eec",
+              "module": 2,
+              "cpuAddress": 59812,
+              "meaning": "Original equipment contribution"
+            },
+            {
+              "offset": 94174,
+              "length": 13,
+              "sha256": "a4eb34b0c454e5ef6e1cfda5f58d0ee6786c3b28ada2a58ab61c8c63150fba23",
+              "module": 2,
+              "cpuAddress": 61390,
+              "meaning": "Actual actor2 rightHand terminated list"
+            }
+          ],
+          "crossHandOccupancy": true,
+          "limit": "Original paired33 initialized contribution58 differs from catalog70; operations remain unavailable, no single-hand removal."
+        }
+      }
+    },
+    {
+      "id": "rom.armor.29",
+      "baseDefinitionSha256": "e7151bd0f2b75918eb10efe724d65cdc74fa5b8b6e2819c3b64ac9c9da3eb40d",
+      "fields": {
+        "equipment": {
+          "allowedCharacters": [
+            "nezha",
+            "yangjian"
+          ],
+          "attackBonus": 0,
+          "defenseBonus": 0,
+          "evasionValue": 5,
+          "evidence": "game-data/provenance/world-west-services01.json",
+          "operationEnabled": true,
+          "originalId": 29,
+          "ruleSources": [
+            {
+              "cpuAddress": 61280,
+              "length": 8,
+              "meaning": "Character ID to four-slot pointer table",
+              "module": 2,
+              "offset": 94064,
+              "sha256": "e9dc9f8fd9f421fc76934efcb0930374b2ce8af36d52d7c016e90487ab3e6c58"
+            },
+            {
+              "cpuAddress": 61288,
+              "length": 8,
+              "meaning": "Nezha right/left/body/feet pointers",
+              "module": 2,
+              "offset": 94072,
+              "sha256": "bff018c6f026ecd4a9daffa9b5656302136ec2e9bf11ddbec7358e54d2c961a1"
+            },
+            {
+              "cpuAddress": 61320,
+              "length": 19,
+              "meaning": "Nezha weapon IDs 0..17 and FF terminator",
+              "module": 2,
+              "offset": 94104,
+              "sha256": "6de6df8d975bb967a03e02a41eb4f95d36e94a88f90c81d69391c734ab217b89"
+            },
+            {
+              "cpuAddress": 61339,
+              "length": 11,
+              "meaning": "Nezha body IDs0..9 and FF",
+              "module": 2,
+              "offset": 94123,
+              "sha256": "de94d3ac8f954529520c3540014ca298611a389e74dd98f0c5333bc64482539c"
+            },
+            {
+              "cpuAddress": 61350,
+              "length": 10,
+              "meaning": "Nezha feet IDs28..34,42,43 and FF",
+              "module": 2,
+              "offset": 94134,
+              "sha256": "afd6bca4e910e918d8846eb67c8e3fb140ce1712dcad964523e6028ed4f39845"
+            },
+            {
+              "cpuAddress": 43659,
+              "length": 124,
+              "meaning": "Actual character/slot/inventory candidate filter",
+              "module": 2,
+              "offset": 76443,
+              "sha256": "0db6a38459abf7d78076c2dd68c550aba4b8ef72e8165129139ccdb318dc0af0"
+            },
+            {
+              "cpuAddress": 43617,
+              "length": 25,
+              "meaning": "Cross-hand list membership routine",
+              "module": 2,
+              "offset": 76401,
+              "sha256": "2e25af89a7e3a770b45e74bbbdb1a75bdc94b4937ff74873db5499e90b113447"
+            },
+            {
+              "cpuAddress": 43642,
+              "length": 17,
+              "meaning": "Cross-hand occupying weapon IDs and FF terminator",
+              "module": 2,
+              "offset": 76426,
+              "sha256": "d9d39b16b9cfec57112e2ff1c3bef6dbbd676218f123f8dc7779118ac432b0a5"
+            },
+            {
+              "cpuAddress": 43077,
+              "length": 58,
+              "meaning": "Current/opposite hand lookup",
+              "module": 2,
+              "offset": 75861,
+              "sha256": "1c858c7bf4460df72e62139b189a5b3abb0263646bb160be69a5e47ee6a72071"
+            },
+            {
+              "cpuAddress": 43206,
+              "length": 87,
+              "meaning": "Equip menu rejects occupied slot and opposite cross-hand weapon",
+              "module": 2,
+              "offset": 75990,
+              "sha256": "cecc271fb7f50ca380e440807631d14fbc2e28aeee7a8fe9cc3af838fc98c243"
+            },
+            {
+              "cpuAddress": 44134,
+              "length": 90,
+              "meaning": "Confirmation rechecks candidate cross-hand class and opposite hand",
+              "module": 2,
+              "offset": 76918,
+              "sha256": "7ef7d6b99221ae9a0872f395b1522f291c4061481114e0ebf447c45716575874"
+            },
+            {
+              "cpuAddress": 42762,
+              "length": 102,
+              "meaning": "Cross-hand occupancy check and paired ID commit",
+              "module": 2,
+              "offset": 75546,
+              "sha256": "d9682c7c3d3e8bfd8cc2e23b58c77697be79f5108a0c9c6c566c7aa6c32430b8"
+            },
+            {
+              "cpuAddress": 42906,
+              "length": 105,
+              "meaning": "Selected slot ID and attack/defense/evasion contribution commit",
+              "module": 2,
+              "offset": 75690,
+              "sha256": "b20a875e48bc612b152df73b5185a3c8316f080f943da6501c8a116b1ed2d4b8"
+            },
+            {
+              "cpuAddress": 44224,
+              "length": 75,
+              "meaning": "Contribution lookup and existing inventory removal call",
+              "module": 2,
+              "offset": 77008,
+              "sha256": "9f3bf5a350df952f9c2948822cd36dd9dbcfc1ccab9cd415cc20fc0da4f549a8"
+            },
+            {
+              "cpuAddress": 41372,
+              "length": 82,
+              "meaning": "Existing category inventory decrement",
+              "module": 2,
+              "offset": 74156,
+              "sha256": "4eb9d5c6785461cdbf6a46288cd4746b27a345179ff54e3d26f8d80213209b41"
+            },
+            {
+              "cpuAddress": 59742,
+              "length": 4,
+              "meaning": "Weapon and armor contribution root pointers",
+              "module": 2,
+              "offset": 92526,
+              "sha256": "e72f4adc70f5fce7ba49bb1d5955b208d308579fe08d422b8152d2bfb16746b7"
+            },
+            {
+              "cpuAddress": 59752,
+              "length": 2,
+              "meaning": "weapon3 contribution=16",
+              "module": 2,
+              "offset": 92536,
+              "sha256": "707bf0b938f307b5c222e670598b865d5e1f8a8003df82c7abbf7c9f8fa4d720"
+            },
+            {
+              "cpuAddress": 60377,
+              "length": 2,
+              "meaning": "armor2 contribution=12",
+              "module": 2,
+              "offset": 93161,
+              "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839"
+            },
+            {
+              "cpuAddress": 60431,
+              "length": 2,
+              "meaning": "armor29 contribution=5",
+              "module": 2,
+              "offset": 93215,
+              "sha256": "2921a11f25dadaa24aa79a548e4e81508c2e5e56af2d833d65e2bcce448ce2f5"
+            },
+            {
+              "offset": 94068,
+              "length": 2,
+              "sha256": "9f6d6e893830ee03b649daf6f15a9063c5bb876360bfb32a628da6bb441b0ab9",
+              "module": 2,
+              "cpuAddress": 61284,
+              "meaning": "Actor2 equipment slot pointer root"
+            },
+            {
+              "offset": 94088,
+              "length": 8,
+              "sha256": "357dfeb35861a735d9d5fe4742b3c21edf5719d028406d878f19ebb14f667726",
+              "module": 2,
+              "cpuAddress": 61304,
+              "meaning": "Actor2 right/left/body/feet pointers"
+            },
+            {
+              "offset": 94194,
+              "length": 10,
+              "sha256": "03cb43d163fe892161a934687127474291a92081529fb552aef718f693819393",
+              "module": 2,
+              "cpuAddress": 61410,
+              "meaning": "Actual actor2 feet terminated list"
+            }
+          ],
+          "slot": "feet",
+          "originalActorIndexes": [
+            0,
+            2
+          ],
+          "ownerExtensionEvidence": "game-data/provenance/world-party-yangjian.json"
+        }
+      }
+    },
+    {
+      "id": "rom.special.19",
+      "baseDefinitionSha256": "1a182093710bb502d686ab982ebb66ce2344fe9b4362db34b2cad0c065f20b5d",
+      "fields": {
+        "description": "玉鼎真人的信物；面向神木上的楊戩使用。",
+        "worldUse": {
+          "targetSpriteId": 130,
+          "reusable": true,
+          "usedFlagId": "rom.inventory.special.19.used",
+          "evidence": "game-data/provenance/world-yang-join.json"
+        }
+      }
+    }
+  ],
+  "existingNpcCapabilityUpdates": [
+    {
+      "id": "rom.npc.110.0",
+      "baseDefinitionSha256": "9aabb982f4d32c47c25f497557eee3e344f5db2c367e14c78e8002baf3e317b9",
+      "fields": {
+        "worldItemTarget": {
+          "spriteId": 130,
+          "removedFlagId": "rom.npccontext.110.207",
+          "completionFlagId": "rom.map.110.flag.128",
+          "evidence": "game-data/provenance/world-yang-join.json"
+        }
+      }
+    }
+  ],
+  "additionalCharacters": [
+    {
+      "initialState": {
+        "id": "yangjian",
+        "level": 24,
+        "experience": 26000,
+        "hp": 495,
+        "maxHp": 495,
+        "mp": 54,
+        "maxMp": 54,
+        "strength": 96,
+        "stamina": 60,
+        "agility": 28,
+        "spirit": 69,
+        "statusMask": 0,
+        "equipment": {
+          "rightHand": 33,
+          "leftHand": 33,
+          "body": 18,
+          "feet": 29
+        }
+      },
+      "name": "楊戩",
+      "portraitAsset": "npc-tree-yang130.png",
+      "originalActorIndex": 2,
+      "evidence": "game-data/provenance/world-party-yangjian.json",
+      "confidence": "GAMEPLAY_VERIFIED",
+      "portraitScope": "Actual actor130 sprite reused for mobile portrait, not an independent original portrait UI"
+    }
+  ],
+  "combatOverlay": {
+    "characterGrowth": [
+      {
+        "owner": "yangjian",
+        "originalActorIndex": 2,
+        "rows": [
+          {
+            "level": 2,
+            "threshold": 12,
+            "hp": 3,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374743,
+              "length": 7,
+              "sha256": "f286845cb9df8c6e63dfa0e43a4f315b7a24f9484f2a6d23703e2733e0fca4ad",
+              "cpuAddress": 55239,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376339,
+              "length": 3,
+              "sha256": "d188f7fe1ef021a4a9fde3862624fcc86ed39b0eb4a0490102f6756ceaa70ba9",
+              "cpuAddress": 56835,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 3,
+            "threshold": 30,
+            "hp": 3,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374750,
+              "length": 7,
+              "sha256": "f286845cb9df8c6e63dfa0e43a4f315b7a24f9484f2a6d23703e2733e0fca4ad",
+              "cpuAddress": 55246,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376342,
+              "length": 3,
+              "sha256": "41b4f4bbd537e643e17df9d05022226961b67545b566b7ed60bce031b3a0c6a6",
+              "cpuAddress": 56838,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 4,
+            "threshold": 88,
+            "hp": 4,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374757,
+              "length": 7,
+              "sha256": "8fd64ff0848032bc861ede264e9031d9bc181ab9814fe22045719a032d8e72f2",
+              "cpuAddress": 55253,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376345,
+              "length": 3,
+              "sha256": "aa1c6f74e2af6e55888f702e67b6c2cca28f989b12eee62208aa3422c8b8c8f5",
+              "cpuAddress": 56841,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 5,
+            "threshold": 182,
+            "hp": 5,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374764,
+              "length": 7,
+              "sha256": "4803a518c5772b0b457eebe6f6e17e3eddf4358b49076e450bef8b05dec0f356",
+              "cpuAddress": 55260,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376348,
+              "length": 3,
+              "sha256": "c4b96cfb34e90491928f39af20160897a2a9ae98e89dc7c87bfef0ec81c4e87c",
+              "cpuAddress": 56844,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 6,
+            "threshold": 320,
+            "hp": 6,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374771,
+              "length": 7,
+              "sha256": "2cbf0c58ec034419b5f2832b9da4f8aabd0ed05d5c080db68a60d190a3b1b5f4",
+              "cpuAddress": 55267,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376351,
+              "length": 3,
+              "sha256": "99f9e38a0c702feac1f8834578bfab5fbc8ebd9ee8ba4edf6b0786e3621012dc",
+              "cpuAddress": 56847,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 7,
+            "threshold": 513,
+            "hp": 7,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374778,
+              "length": 7,
+              "sha256": "1fcd23422a54cce3a0b59c2a3cfba7d4c1b4db16b376dd90fc7c159299a05953",
+              "cpuAddress": 55274,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376354,
+              "length": 3,
+              "sha256": "d7b3d4012540102c40a23acdeee417e06a42a74a5d66c7efe59f4e4aa0537c5c",
+              "cpuAddress": 56850,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 8,
+            "threshold": 769,
+            "hp": 8,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374785,
+              "length": 7,
+              "sha256": "9554d78a6d001ca8637dae51a076160b75e0e6d8a0cf5261e043335f643b2e3f",
+              "cpuAddress": 55281,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376357,
+              "length": 3,
+              "sha256": "58e09f6f516c8f737ea3b05eedc4e57691b2cadcca1b05420a7148b623338772",
+              "cpuAddress": 56853,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 9,
+            "threshold": 1100,
+            "hp": 10,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374792,
+              "length": 7,
+              "sha256": "ea76708ce4081db916254f34d3ce56be2f09b09182abe42da9c73778555beabf",
+              "cpuAddress": 55288,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376360,
+              "length": 3,
+              "sha256": "e3646637f5ea299d378507450ada711351cc11021ce7d30b7588a63426877ad3",
+              "cpuAddress": 56856,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 10,
+            "threshold": 1517,
+            "hp": 11,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374799,
+              "length": 7,
+              "sha256": "42910be191cc66aa9ddb6333eef81933e2d34c6a99a9d2ae8846b28e1cbb06d7",
+              "cpuAddress": 55295,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376363,
+              "length": 3,
+              "sha256": "5c155c2287798494f1aabe77f897f94eab0bae77a2ad71bbd7efd7fcee4c91e4",
+              "cpuAddress": 56859,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 11,
+            "threshold": 2033,
+            "hp": 13,
+            "mp": 2,
+            "strength": 2,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374806,
+              "length": 7,
+              "sha256": "bafdd5749d97c0587babfc11216ae08ac0ad0b10c9b7a1589dde95f407746cd1",
+              "cpuAddress": 55302,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376366,
+              "length": 3,
+              "sha256": "20dd212b6a5a2a5234e743cd7b1c5d0fddc9c78a73540687e7f1ddb98af2150f",
+              "cpuAddress": 56862,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 12,
+            "threshold": 2661,
+            "hp": 15,
+            "mp": 2,
+            "strength": 3,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374813,
+              "length": 7,
+              "sha256": "eb6d27b2d4ed4bea6895e1b742c21630e6880f0b6eaf52e59ebf958eeb03a7c4",
+              "cpuAddress": 55309,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376369,
+              "length": 3,
+              "sha256": "977e0df79be6f23dd5d3e43f685ab744f9642c2c8a463e2281fce4fc7a8a524a",
+              "cpuAddress": 56865,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 13,
+            "threshold": 3416,
+            "hp": 17,
+            "mp": 2,
+            "strength": 3,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374820,
+              "length": 7,
+              "sha256": "e455fbb4a9c432c0f4bbe20746d573a9f298f481647cf94650e9f9a872ea23d4",
+              "cpuAddress": 55316,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376372,
+              "length": 3,
+              "sha256": "30661f48e06919735cb54f1ded05afab59825f8e3e366479dbf51250cd1ab5ac",
+              "cpuAddress": 56868,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 14,
+            "threshold": 4314,
+            "hp": 19,
+            "mp": 2,
+            "strength": 3,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374827,
+              "length": 7,
+              "sha256": "d36ae26e116253f99417f439a7ab2f45dd7efb3a096715136300638624179d0d",
+              "cpuAddress": 55323,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376375,
+              "length": 3,
+              "sha256": "1a04f2107d62ff2a35787b209f45ca00a98d2c5afa8709a915d9e942299e9b42",
+              "cpuAddress": 56871,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 15,
+            "threshold": 5373,
+            "hp": 22,
+            "mp": 2,
+            "strength": 3,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374834,
+              "length": 7,
+              "sha256": "140a9bd02443fb5097ed8c8ab2330714eefc955f350e74fbd1537198e3739bf5",
+              "cpuAddress": 55330,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376378,
+              "length": 3,
+              "sha256": "da1f6b75353e5436b880adfc7cc7798fbd4e32ae951ef1078352d00c1e00bc67",
+              "cpuAddress": 56874,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 16,
+            "threshold": 6612,
+            "hp": 24,
+            "mp": 2,
+            "strength": 4,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374841,
+              "length": 7,
+              "sha256": "6da35d2a02d192bc6fbebadb78f9428e1e4eae3586679ce656091c8dd1479adf",
+              "cpuAddress": 55337,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376381,
+              "length": 3,
+              "sha256": "93d2546d9fefbad1797297bdbc695a187071720cbba10a97351d60145208ab25",
+              "cpuAddress": 56877,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 17,
+            "threshold": 8050,
+            "hp": 27,
+            "mp": 2,
+            "strength": 4,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374848,
+              "length": 7,
+              "sha256": "6dff4598f1124352092a87d717c76655b5896c8319b5b0b063cc00ace2439d2e",
+              "cpuAddress": 55344,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376384,
+              "length": 3,
+              "sha256": "6970b909121d5bcee0e96b0ee36e825a150df3471c89fac173c6af053af2d27f",
+              "cpuAddress": 56880,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 18,
+            "threshold": 9712,
+            "hp": 30,
+            "mp": 2,
+            "strength": 4,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374855,
+              "length": 7,
+              "sha256": "7135b3aca5ceded8a9e321270a3b57c2254ddbed2d106085077f0c72c5b21d79",
+              "cpuAddress": 55351,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376387,
+              "length": 3,
+              "sha256": "4d23447d2696bc8c51fade104d45640b74f4266b68ce885f85a754e477793418",
+              "cpuAddress": 56883,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 19,
+            "threshold": 11620,
+            "hp": 33,
+            "mp": 2,
+            "strength": 5,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374862,
+              "length": 7,
+              "sha256": "838e87df39f51022a95a3b772a91788878630f08509db9ac1fc0d31265c6b326",
+              "cpuAddress": 55358,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376390,
+              "length": 3,
+              "sha256": "80d8409920b515dd354321684e2d7bb231c5f944359b8d58144c236fbcfe57c0",
+              "cpuAddress": 56886,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 20,
+            "threshold": 13801,
+            "hp": 37,
+            "mp": 2,
+            "strength": 5,
+            "stamina": 2,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374869,
+              "length": 7,
+              "sha256": "0019c27400a4d7cb605b16b6a8a267760bbec65effddc6b066a584fe55a9f231",
+              "cpuAddress": 55365,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376393,
+              "length": 3,
+              "sha256": "cccb5d627b874d42233fe1eab9bb0792b3bc9b501175815c0101cd3623400457",
+              "cpuAddress": 56889,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 21,
+            "threshold": 16284,
+            "hp": 40,
+            "mp": 2,
+            "strength": 5,
+            "stamina": 3,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374876,
+              "length": 7,
+              "sha256": "14035733801ba6554ad89274532f65bc07d06606aa48812c692b7253b7e5b556",
+              "cpuAddress": 55372,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376396,
+              "length": 3,
+              "sha256": "acfdb9fb9f0d45fc9c1a292ff2451d1a8471e0c94749ba75be6e4c1fbcceae1f",
+              "cpuAddress": 56892,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 22,
+            "threshold": 19100,
+            "hp": 44,
+            "mp": 2,
+            "strength": 6,
+            "stamina": 3,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374883,
+              "length": 7,
+              "sha256": "8969e18c24b3eeddc1f5d74e1f9561bb316631028514b3921ce9654d3239d03b",
+              "cpuAddress": 55379,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376399,
+              "length": 3,
+              "sha256": "cb9e3a9aaa61e2228f38e8dae1890adfcb3cb84e1435e0152936b3654ed536e5",
+              "cpuAddress": 56895,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 23,
+            "threshold": 22283,
+            "hp": 48,
+            "mp": 2,
+            "strength": 6,
+            "stamina": 3,
+            "agility": 2,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374890,
+              "length": 7,
+              "sha256": "43024b322467e3d98f57c88e506425de4486ddb11d5df93d353688a1185aec7c",
+              "cpuAddress": 55386,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376402,
+              "length": 3,
+              "sha256": "b813295c13797c9ed231addf70b9288e31056952172bc259f3496cbea14a1c65",
+              "cpuAddress": 56898,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 24,
+            "threshold": 25870,
+            "hp": 51,
+            "mp": 2,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374897,
+              "length": 7,
+              "sha256": "8432e8e34c943179635d3d88d103c587beb733a79416aea1cef812859310c610",
+              "cpuAddress": 55393,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376405,
+              "length": 3,
+              "sha256": "4a26b820a433275841505b6249de22ceeb37997c3ad8bf553baa2a065226df5f",
+              "cpuAddress": 56901,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 25,
+            "threshold": 29899,
+            "hp": 56,
+            "mp": 3,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374904,
+              "length": 7,
+              "sha256": "99b299b9a8d284fd5beed98299a1e7e37d659713bdedfe080ac3ca5488686eca",
+              "cpuAddress": 55400,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376408,
+              "length": 3,
+              "sha256": "80fba4c350257e0e350a8232f0faeff133851b4fde595a7980977056c1f71205",
+              "cpuAddress": 56904,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 26,
+            "threshold": 34414,
+            "hp": 60,
+            "mp": 3,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374911,
+              "length": 7,
+              "sha256": "69c7cc7c6133a87c8febedb5643811a5f51c802414f31a9b48ea21f9a290697f",
+              "cpuAddress": 55407,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376411,
+              "length": 3,
+              "sha256": "459dd23534cd03c0dfd2cf1021f181707bf704e6b98ba86e0e93649d7b7d5da1",
+              "cpuAddress": 56907,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 27,
+            "threshold": 39462,
+            "hp": 64,
+            "mp": 3,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374918,
+              "length": 7,
+              "sha256": "2addfafe975260327ff193a7960be38b184bab3e7f4ac790beb822cf713e675b",
+              "cpuAddress": 55414,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376414,
+              "length": 3,
+              "sha256": "fd049ed085f3e18a6cd70baee2225afa5aa59e130113c6301d290d2ce27acbba",
+              "cpuAddress": 56910,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 28,
+            "threshold": 45094,
+            "hp": 69,
+            "mp": 3,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374925,
+              "length": 7,
+              "sha256": "deb51a3fe783954e39f150be9efa2c4686b500cfedffc8fdefefd5121b5cf90f",
+              "cpuAddress": 55421,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376417,
+              "length": 3,
+              "sha256": "acb602b539f7c0f0742ab0dd55bb307ed6449f5abf180488415c89b1ac55928d",
+              "cpuAddress": 56913,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 29,
+            "threshold": 51363,
+            "hp": 74,
+            "mp": 3,
+            "strength": 9,
+            "stamina": 4,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374932,
+              "length": 7,
+              "sha256": "f59ec7be3807f7f1b7c7908ebf8d4cdbd9862523eaa5a1099abbd647277ea57c",
+              "cpuAddress": 55428,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376420,
+              "length": 3,
+              "sha256": "3af8788ff4f1cf6f46a07685fb8db8138b60fa75f69179e44f7d4ebc1db31438",
+              "cpuAddress": 56916,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 30,
+            "threshold": 58330,
+            "hp": 79,
+            "mp": 3,
+            "strength": 11,
+            "stamina": 5,
+            "agility": 2,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374939,
+              "length": 7,
+              "sha256": "b19ccae0d87ba4c30588330d408aed2ef3694d08e67941faff05bd65ac1d027d",
+              "cpuAddress": 55435,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376423,
+              "length": 3,
+              "sha256": "772a62ff5d9e48fdd4db7473c5cd58bfd795e8a697bb70d8bcd4071127b9d1ae",
+              "cpuAddress": 56919,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 31,
+            "threshold": 66059,
+            "hp": 84,
+            "mp": 3,
+            "strength": 13,
+            "stamina": 5,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374946,
+              "length": 7,
+              "sha256": "da12eea1477424b4a904b71db5975e8eb3163bc533cb9dc235b41593a9ecae9c",
+              "cpuAddress": 55442,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376426,
+              "length": 3,
+              "sha256": "a232d7a59800a766d57e7ad34ef309f8569d152dc7daed931cb436c0c3812088",
+              "cpuAddress": 56922,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 32,
+            "threshold": 74619,
+            "hp": 89,
+            "mp": 3,
+            "strength": 14,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374953,
+              "length": 7,
+              "sha256": "2d314309707da29562e70c6ab3421208e450c3830eeb49daa47a347a03d5307c",
+              "cpuAddress": 55449,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376429,
+              "length": 3,
+              "sha256": "ff52d232671e082cd143e2b5654a455e2ea0af1f0f3df0d27626a83027a799e3",
+              "cpuAddress": 56925,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 33,
+            "threshold": 84085,
+            "hp": 94,
+            "mp": 3,
+            "strength": 15,
+            "stamina": 7,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374960,
+              "length": 7,
+              "sha256": "eff89d182ea2bfbfd07ed3a29443d12554ab1b155ba85cf9b6fa03bb44df377f",
+              "cpuAddress": 55456,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376432,
+              "length": 3,
+              "sha256": "27821dcc4696977b0009d9c08cf03d0c30e2cfb0f1e9ff50f486a6b142d85cbc",
+              "cpuAddress": 56928,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 34,
+            "threshold": 94539,
+            "hp": 100,
+            "mp": 3,
+            "strength": 15,
+            "stamina": 8,
+            "agility": 3,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374967,
+              "length": 7,
+              "sha256": "0b94acc1e1ed763728a03d8edd2516db7c53ff410f4c44c359c5d0453f232d7c",
+              "cpuAddress": 55463,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376435,
+              "length": 3,
+              "sha256": "3e2a33dd9c81ea980c4e628e5a5b0095b8e7755a2078514ccba203bfb9d89d38",
+              "cpuAddress": 56931,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 35,
+            "threshold": 106070,
+            "hp": 106,
+            "mp": 4,
+            "strength": 16,
+            "stamina": 9,
+            "agility": 3,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374974,
+              "length": 7,
+              "sha256": "0cbe70497a0fbc05f66e4831e64cc194949bd066e5e6ca6a44608ff28d5e7d2b",
+              "cpuAddress": 55470,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376438,
+              "length": 3,
+              "sha256": "90428c1b62b8358d514313fc844134ab7be9d6df418c32d1be1f9c824eceb7d5",
+              "cpuAddress": 56934,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 36,
+            "threshold": 118772,
+            "hp": 112,
+            "mp": 4,
+            "strength": 16,
+            "stamina": 9,
+            "agility": 3,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374981,
+              "length": 7,
+              "sha256": "ea837c8b98a07053bb1e40dc034e85db6bed4b891faa20d378ca3a96ccd40475",
+              "cpuAddress": 55477,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376441,
+              "length": 3,
+              "sha256": "645e79efc67ead879d35891ae7d1901bf1ba8f0649f67258c9e44e20bb9135fb",
+              "cpuAddress": 56937,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 37,
+            "threshold": 132749,
+            "hp": 118,
+            "mp": 4,
+            "strength": 16,
+            "stamina": 10,
+            "agility": 3,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374988,
+              "length": 7,
+              "sha256": "b2c776079cea5f7d4598ac0a4d50ce1dfe791abb353a72a49478b1aff0fda2f4",
+              "cpuAddress": 55484,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376444,
+              "length": 3,
+              "sha256": "727f1adf683cf300d802c94dc3d2bd8ed55d8bfdc8c724946c9ca0f017f6839b",
+              "cpuAddress": 56940,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 38,
+            "threshold": 148112,
+            "hp": 124,
+            "mp": 4,
+            "strength": 17,
+            "stamina": 10,
+            "agility": 4,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 374995,
+              "length": 7,
+              "sha256": "9176ee147094c68686f17dc29f6b9f7a7b4a1d549db75018d4a58a886cf52ed3",
+              "cpuAddress": 55491,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376447,
+              "length": 3,
+              "sha256": "1237ec4817e9fb46174f5e54672f9909cd2d4387f2855d32d94bb68ff652937d",
+              "cpuAddress": 56943,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 39,
+            "threshold": 164981,
+            "hp": 131,
+            "mp": 4,
+            "strength": 17,
+            "stamina": 10,
+            "agility": 4,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375002,
+              "length": 7,
+              "sha256": "6a2c316cfa8b802378fefad6db05c61a5f58eeb59c83863188d9a270ba69df32",
+              "cpuAddress": 55498,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376450,
+              "length": 3,
+              "sha256": "fa3792c978ea4a0c5df76616059fedf5041780a5f4c9aa231274ef8d23f1ad88",
+              "cpuAddress": 56946,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 40,
+            "threshold": 183487,
+            "hp": 137,
+            "mp": 4,
+            "strength": 17,
+            "stamina": 10,
+            "agility": 4,
+            "spirit": 3,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375009,
+              "length": 7,
+              "sha256": "31dc8a8316bf329a04b1a2dd43db177108254f7af11cfead7dd36cb6558251d0",
+              "cpuAddress": 55505,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376453,
+              "length": 3,
+              "sha256": "156d825d080ca3bbf31a9e1d29375b9710b34c64f5419d4c1028dc606a58e44d",
+              "cpuAddress": 56949,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 41,
+            "threshold": 203770,
+            "hp": 144,
+            "mp": 4,
+            "strength": 18,
+            "stamina": 10,
+            "agility": 4,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375016,
+              "length": 7,
+              "sha256": "d0c5c46be09a8f352856c7309093476030f231a6fafe2c355eb6424fef1071a8",
+              "cpuAddress": 55512,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376456,
+              "length": 3,
+              "sha256": "97f3cf580e166bc53dd7e9f9d22827fc62db1235f7332e54ce68864f3de570a9",
+              "cpuAddress": 56952,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 42,
+            "threshold": 225983,
+            "hp": 151,
+            "mp": 4,
+            "strength": 19,
+            "stamina": 11,
+            "agility": 4,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375023,
+              "length": 7,
+              "sha256": "229611bf00ce7810b37c4a2a44323090cc85db53f5cf6fd91a4b3a64d27da928",
+              "cpuAddress": 55519,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376459,
+              "length": 3,
+              "sha256": "bccef149dfc49f6058505c77f188f86466ad0e50b65342bb33745d1202180fb6",
+              "cpuAddress": 56955,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 43,
+            "threshold": 250289,
+            "hp": 158,
+            "mp": 5,
+            "strength": 19,
+            "stamina": 12,
+            "agility": 4,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375030,
+              "length": 7,
+              "sha256": "7fe1ff714ac85807d722ef2ea72fac1262934652b4c0bb5ccdc6160256c80c7f",
+              "cpuAddress": 55526,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376462,
+              "length": 3,
+              "sha256": "749596e3225a131d9c7b080bbd1eb3fd2dd12f90c49e613ccd33bfc996321805",
+              "cpuAddress": 56958,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 44,
+            "threshold": 276866,
+            "hp": 165,
+            "mp": 5,
+            "strength": 20,
+            "stamina": 13,
+            "agility": 5,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375037,
+              "length": 7,
+              "sha256": "57a1e8db77fd218ae95635a7736c37d10630539c1d7dc98a36ff3374b7b05b6c",
+              "cpuAddress": 55533,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376465,
+              "length": 3,
+              "sha256": "29c24626790b07d7b7162ca767463afb241323d715752b0ef582a282c1d2a0b7",
+              "cpuAddress": 56961,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 45,
+            "threshold": 305906,
+            "hp": 173,
+            "mp": 5,
+            "strength": 21,
+            "stamina": 14,
+            "agility": 5,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375044,
+              "length": 7,
+              "sha256": "f9553b0b8c0a198d2b13c0adf20f401bfe35fdd22cef3ef615ba577331cc1d10",
+              "cpuAddress": 55540,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376468,
+              "length": 3,
+              "sha256": "3ea003dbe4f8234ad53c164f27a80b529ff655dee6ae8b730ddac3c3fb0d0356",
+              "cpuAddress": 56964,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 46,
+            "threshold": 337613,
+            "hp": 180,
+            "mp": 5,
+            "strength": 22,
+            "stamina": 15,
+            "agility": 5,
+            "spirit": 4,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375051,
+              "length": 7,
+              "sha256": "5a558e4d5fe560ddb0b64beb1a1f1c14a1ede2c6a018a3b01494c3668d80e9b6",
+              "cpuAddress": 55547,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376471,
+              "length": 3,
+              "sha256": "901761f9c31e35260a32dbf592344deaf5441d929e81bba6f4bc56c1954c759e",
+              "cpuAddress": 56967,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 47,
+            "threshold": 372213,
+            "hp": 188,
+            "mp": 5,
+            "strength": 23,
+            "stamina": 15,
+            "agility": 5,
+            "spirit": 5,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375058,
+              "length": 7,
+              "sha256": "6b333c5a74ed827af7729aaaef0e505fb12a3b514aab11bf6279085d37fc5390",
+              "cpuAddress": 55554,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376474,
+              "length": 3,
+              "sha256": "f493611fca37818b53a2540b30553f9e8edf0b0db6e7506fadf84af0a1b4ddf1",
+              "cpuAddress": 56970,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 48,
+            "threshold": 409945,
+            "hp": 196,
+            "mp": 5,
+            "strength": 24,
+            "stamina": 15,
+            "agility": 5,
+            "spirit": 5,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375065,
+              "length": 7,
+              "sha256": "5a61123e5ab6ae20964b374fccab8baa966e794d3aedb9355874ecdcdde5b5c7",
+              "cpuAddress": 55561,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376477,
+              "length": 3,
+              "sha256": "d07800b0e801b57c359ce69af406b03109bf3722c24d6bbfe59ad23e0ccd981a",
+              "cpuAddress": 56973,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 49,
+            "threshold": 451069,
+            "hp": 204,
+            "mp": 6,
+            "strength": 25,
+            "stamina": 15,
+            "agility": 6,
+            "spirit": 5,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375072,
+              "length": 7,
+              "sha256": "b8ee49f2e75268e2370dbf928d1d5019d7c20974cdfcf54d76334f95eb34a8e0",
+              "cpuAddress": 55568,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376480,
+              "length": 3,
+              "sha256": "dd311ede1bcd32ffd3926f898154f27469bf61fa4bcd41dede33d3e17769e97e",
+              "cpuAddress": 56976,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 50,
+            "threshold": 495865,
+            "hp": 212,
+            "mp": 6,
+            "strength": 26,
+            "stamina": 15,
+            "agility": 6,
+            "spirit": 5,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375079,
+              "length": 7,
+              "sha256": "df1c83d65286fa6d28870e67edb381494dc9a7e855bdb00556e23c66b1eb7ebd",
+              "cpuAddress": 55575,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376483,
+              "length": 3,
+              "sha256": "0af8ac3d44c346eba8c7ac6f9ea381e6d02a2a16cd0f5a27a59ba51bcaf1c15c",
+              "cpuAddress": 56979,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 51,
+            "threshold": 544636,
+            "hp": 220,
+            "mp": 6,
+            "strength": 27,
+            "stamina": 15,
+            "agility": 6,
+            "spirit": 5,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375086,
+              "length": 7,
+              "sha256": "9fd51ac702d5268f49a11e3cf02631a82ef480978fab48e1c57b72f371aab15f",
+              "cpuAddress": 55582,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376486,
+              "length": 3,
+              "sha256": "528cb7a3d6d1a72f2ee07a6afbd5d59de24c74270b32f3e056a592418e79128d",
+              "cpuAddress": 56982,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 52,
+            "threshold": 597706,
+            "hp": 229,
+            "mp": 6,
+            "strength": 28,
+            "stamina": 16,
+            "agility": 6,
+            "spirit": 6,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375093,
+              "length": 7,
+              "sha256": "dd67d1c133918072c43f3aee8a515a9131366de4230b7f1de9777529b2d17793",
+              "cpuAddress": 55589,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376489,
+              "length": 3,
+              "sha256": "a02779682db5ce3110635f1569d0a258982d333f5c609d4e0d4b8256eb901c4a",
+              "cpuAddress": 56985,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 53,
+            "threshold": 655429,
+            "hp": 238,
+            "mp": 6,
+            "strength": 28,
+            "stamina": 16,
+            "agility": 7,
+            "spirit": 6,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375100,
+              "length": 7,
+              "sha256": "040366031f637072df9fb125447a8541f2832266a303a5dc01f67a062222a829",
+              "cpuAddress": 55596,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376492,
+              "length": 3,
+              "sha256": "a5813eb057a10f76c7219668273e87017af375480552265dde852375925a48aa",
+              "cpuAddress": 56988,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 54,
+            "threshold": 718181,
+            "hp": 247,
+            "mp": 6,
+            "strength": 29,
+            "stamina": 17,
+            "agility": 7,
+            "spirit": 6,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375107,
+              "length": 7,
+              "sha256": "74d2c8f91634da9ca1ec2f88a5ace694fb15e2129b2fa4c8c01ff6b3b7c80446",
+              "cpuAddress": 55603,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376495,
+              "length": 3,
+              "sha256": "bfea3c1cfa109f6890ef7f52d262c6e5dc02945063dbb9a0dc8ecb7806aa5bde",
+              "cpuAddress": 56991,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 55,
+            "threshold": 786373,
+            "hp": 256,
+            "mp": 7,
+            "strength": 30,
+            "stamina": 18,
+            "agility": 7,
+            "spirit": 6,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375114,
+              "length": 7,
+              "sha256": "3f9fa15c10bf8cda1a7fef0090b227d0356a57304752d010ba6884056d6bfef1",
+              "cpuAddress": 55610,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376498,
+              "length": 3,
+              "sha256": "7fb60268c793da3c4089d92885f6a58aa38f5864927f7e4db3a57f6446b057bf",
+              "cpuAddress": 56994,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 56,
+            "threshold": 860445,
+            "hp": 265,
+            "mp": 7,
+            "strength": 31,
+            "stamina": 18,
+            "agility": 7,
+            "spirit": 6,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375121,
+              "length": 7,
+              "sha256": "97afbcd642e5f0741e712855aac70faf8d7c0a06f669144f36f8c130ecfdd466",
+              "cpuAddress": 55617,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376501,
+              "length": 3,
+              "sha256": "be36704cdcee89eb1e59eb7b306ce29e58621108cbf028bec48c2f1e10fdaf04",
+              "cpuAddress": 56997,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 57,
+            "threshold": 940870,
+            "hp": 274,
+            "mp": 7,
+            "strength": 32,
+            "stamina": 19,
+            "agility": 8,
+            "spirit": 7,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375128,
+              "length": 7,
+              "sha256": "f5f9c2267beaf9360e006d36c3e7740583f44d7ec6c8cb7dbd0231c51cb8fb0d",
+              "cpuAddress": 55624,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376504,
+              "length": 3,
+              "sha256": "dedd7fd8726800a0d9cfb2db7767e084dc1e775ad802cc7d41ad5d3c98135abf",
+              "cpuAddress": 57000,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 58,
+            "threshold": 1028161,
+            "hp": 284,
+            "mp": 7,
+            "strength": 33,
+            "stamina": 20,
+            "agility": 8,
+            "spirit": 7,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375135,
+              "length": 7,
+              "sha256": "3450f6ba3a484047e453f798e3f0942319ed77e59f30c0b81044024613b1bec6",
+              "cpuAddress": 55631,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376507,
+              "length": 3,
+              "sha256": "970a313d968156d25fd6daceffcb6e485237d9e67083cbcde2d6294e6726d872",
+              "cpuAddress": 57003,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 59,
+            "threshold": 1122869,
+            "hp": 294,
+            "mp": 7,
+            "strength": 34,
+            "stamina": 20,
+            "agility": 8,
+            "spirit": 7,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375142,
+              "length": 7,
+              "sha256": "0bc49cb600ec180d97922fb8856db8cfa5770b2921237610e5a42aa23474f3e8",
+              "cpuAddress": 55638,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376510,
+              "length": 3,
+              "sha256": "1015c56686d126d4e1ac7b93ecb4a9d53e5ec7d873511af1e75102511d299f75",
+              "cpuAddress": 57006,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 60,
+            "threshold": 1225587,
+            "hp": 34,
+            "mp": 8,
+            "strength": 35,
+            "stamina": 20,
+            "agility": 8,
+            "spirit": 7,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375149,
+              "length": 7,
+              "sha256": "8432894a480966d8b06a27fa2d2153b9ae473e7cf774220ab79b4975e863356a",
+              "cpuAddress": 55645,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376513,
+              "length": 3,
+              "sha256": "8a06e872da559af935ea1499bc42277d15ba4b94e539c4516fbba93c1ce37777",
+              "cpuAddress": 57009,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 61,
+            "threshold": 1336956,
+            "hp": 44,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375156,
+              "length": 7,
+              "sha256": "27321909bdac057e1377b63e9b04832340a8a04517322d80be50f543875f789f",
+              "cpuAddress": 55652,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376516,
+              "length": 3,
+              "sha256": "6f9db4df567e511b78a843139887437ebd05792c40a15b6cb13e43897024c07b",
+              "cpuAddress": 57012,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 62,
+            "threshold": 1457664,
+            "hp": 56,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375163,
+              "length": 7,
+              "sha256": "8a6f5aeee154616ce6d0a907bf732e920d65ad16bfdcdaa71f441697e9c259a1",
+              "cpuAddress": 55659,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376519,
+              "length": 3,
+              "sha256": "ec11258db31a761de3f3e7b537a05488a582f56898d4f4deb9c4875e5a5633f6",
+              "cpuAddress": 57015,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 63,
+            "threshold": 1588454,
+            "hp": 68,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375170,
+              "length": 7,
+              "sha256": "313ddd8f7a34020343994c8a9eda6703e84804703ac7232736bb7b546ee6f794",
+              "cpuAddress": 55666,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376522,
+              "length": 3,
+              "sha256": "8742af2eee1c760b4f8b105ddcd234a3b750815a1eecb61db775b5fe309404da",
+              "cpuAddress": 57018,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 64,
+            "threshold": 1730125,
+            "hp": 80,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375177,
+              "length": 7,
+              "sha256": "61b152c4b243ca4e84041b7a4ea03192bcf932dcd441e427c6f859222850b0da",
+              "cpuAddress": 55673,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376525,
+              "length": 3,
+              "sha256": "2b525310f844b5a599ea547ac7329730bc551b1eb8d83643c444cae99b9487e8",
+              "cpuAddress": 57021,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 65,
+            "threshold": 1883538,
+            "hp": 95,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375184,
+              "length": 7,
+              "sha256": "4334c67d4c8902baa5ede6705584b4c8f77c7e5bb8c85a2f092f63c3eabde749",
+              "cpuAddress": 55680,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376528,
+              "length": 3,
+              "sha256": "f8c81abf0940e19f1a35cbf20f4f84037d360592f921f810a93e336208e4226b",
+              "cpuAddress": 57024,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 66,
+            "threshold": 2049620,
+            "hp": 110,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375191,
+              "length": 7,
+              "sha256": "998920482a3e02f176dcd70c881c9278c1379d837e39f32daa04500fd7db6855",
+              "cpuAddress": 55687,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376531,
+              "length": 3,
+              "sha256": "31c0770758738b4eb121c4e0bf2dc890621b68411fa1120dbbe0be28135f4794",
+              "cpuAddress": 57027,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 67,
+            "threshold": 2229369,
+            "hp": 125,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375198,
+              "length": 7,
+              "sha256": "b8b870d92b1b71d0fb7cb499de7523038768ddd538284ab32c731d7d678d3f5a",
+              "cpuAddress": 55694,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376534,
+              "length": 3,
+              "sha256": "980d112bf6ea4473cb63a9e920876deb8885c5d2c4c2c3417bf915373e847317",
+              "cpuAddress": 57030,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 68,
+            "threshold": 2423859,
+            "hp": 95,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375205,
+              "length": 7,
+              "sha256": "4334c67d4c8902baa5ede6705584b4c8f77c7e5bb8c85a2f092f63c3eabde749",
+              "cpuAddress": 55701,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376537,
+              "length": 3,
+              "sha256": "f177038818e8b62c0bec8501e4d0eb337814d6f4a5629b3c50a4138b80b2ed0d",
+              "cpuAddress": 57033,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 69,
+            "threshold": 2634246,
+            "hp": 100,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375212,
+              "length": 7,
+              "sha256": "4fd5e272b39259d6cd4c00846be5501c6f000410f6b00c6fba125e36a12f5379",
+              "cpuAddress": 55708,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376540,
+              "length": 3,
+              "sha256": "eff34c84e3a0d3dcd73d3686aaf50aeccf135dc16b487b0a251aba02f873b751",
+              "cpuAddress": 57036,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 70,
+            "threshold": 2861776,
+            "hp": 112,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375219,
+              "length": 7,
+              "sha256": "3352c347482213b8ab39dfa71192b3c0e17dc9663905bf56c09499c32e754ddd",
+              "cpuAddress": 55715,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376543,
+              "length": 3,
+              "sha256": "44fb0ed6d4ae04e14f9a92878f9dae6fa6bd006871e41acf8225a4beb6c3c97d",
+              "cpuAddress": 57039,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 71,
+            "threshold": 3107787,
+            "hp": 123,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375226,
+              "length": 7,
+              "sha256": "665f47c5a8cb975758a742954d823cc2803325cc640fe67f3059ba5f17ddc25f",
+              "cpuAddress": 55722,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376546,
+              "length": 3,
+              "sha256": "c78b5ac25771b454e1193fb41a2179fb6341bfd2d5df38ce6f4ef823e126f2df",
+              "cpuAddress": 57042,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 72,
+            "threshold": 3373721,
+            "hp": 135,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375233,
+              "length": 7,
+              "sha256": "23ab509b2dabc41224857a31b559e10754e3ed2b326347138aecac0256f4516f",
+              "cpuAddress": 55729,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376549,
+              "length": 3,
+              "sha256": "f42621f6c4520afb6cb9455e536cdcca0d673670f06bf9e4fdda4362447da63a",
+              "cpuAddress": 57045,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 73,
+            "threshold": 3661130,
+            "hp": 147,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375240,
+              "length": 7,
+              "sha256": "6833fb3e2136bb7e0bce241db9b70ff9f6da7ccbd5d20c0382443ebe4aad942c",
+              "cpuAddress": 55736,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376552,
+              "length": 3,
+              "sha256": "c31dceb04fa026650dbdecb0c4b0a8f24cdd31b680327a0bc97854239fc23c3d",
+              "cpuAddress": 57048,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 74,
+            "threshold": 3971683,
+            "hp": 159,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375247,
+              "length": 7,
+              "sha256": "e5cf51ac50662049630e4c51cf52b138f6e1408e239dc3df768100ab4be4fccc",
+              "cpuAddress": 55743,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376555,
+              "length": 3,
+              "sha256": "6c3e92e08202d8632e95f448bdb30075d938cf6988d346eef7d645727971987d",
+              "cpuAddress": 57051,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 75,
+            "threshold": 4307174,
+            "hp": 172,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375254,
+              "length": 7,
+              "sha256": "74e530fa21fea785eabefcf1bc5c5cafe735eceb5ad73e0e4c754b939fdc1f5a",
+              "cpuAddress": 55750,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376558,
+              "length": 3,
+              "sha256": "bb8fc003d894e5bec130c006698a8abde19405088ec9b027c22a4d6a47663385",
+              "cpuAddress": 57054,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 76,
+            "threshold": 4669537,
+            "hp": 184,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375261,
+              "length": 7,
+              "sha256": "c7dc8897b315406bd6802f5df8079271ec89dfeaf52841c1809911bf55fd6a75",
+              "cpuAddress": 55757,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376561,
+              "length": 3,
+              "sha256": "5573705a68c00c6e7734492430542c4fd8ea05a099655443fbcc0538b4f6fd9c",
+              "cpuAddress": 57057,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 77,
+            "threshold": 5060848,
+            "hp": 197,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375268,
+              "length": 7,
+              "sha256": "87a82e1b4e8bf438ba6cb35fc862dbc0d7c8cbcd0ae02470f63c1107ae6af5e7",
+              "cpuAddress": 55764,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376564,
+              "length": 3,
+              "sha256": "26a3cd56d10da92230b81451c8b938def2d76e80beb134cdb4824e122f334557",
+              "cpuAddress": 57060,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 78,
+            "threshold": 5483344,
+            "hp": 210,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375275,
+              "length": 7,
+              "sha256": "66ab061feb7277b1db1fdfa79449612b79552408d77a38e5073085c86f8c0d41",
+              "cpuAddress": 55771,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376567,
+              "length": 3,
+              "sha256": "370eae04afed8992dbfac8b010c222c79007dca06dd00352f3f3ac70d561e10a",
+              "cpuAddress": 57063,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 79,
+            "threshold": 5939428,
+            "hp": 223,
+            "mp": 4,
+            "strength": 10,
+            "stamina": 6,
+            "agility": 3,
+            "spirit": 2,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375282,
+              "length": 7,
+              "sha256": "7be89c11d8112d1266becabc8bb29486761667500609e1dc555225097d55c5f0",
+              "cpuAddress": 55778,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376570,
+              "length": 3,
+              "sha256": "f97605e82f58da807e10aa09cfe384017077dca61b80f69c3a3c0a6ad68b9b85",
+              "cpuAddress": 57066,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          },
+          {
+            "level": 80,
+            "threshold": 6431686,
+            "hp": 14,
+            "mp": 1,
+            "strength": 1,
+            "stamina": 1,
+            "agility": 1,
+            "spirit": 1,
+            "runtimeVerified": false,
+            "source": {
+              "offset": 375289,
+              "length": 7,
+              "sha256": "26fcd8d0cdd158b3baf3ae5046370e9969f30cebc558360eed4475517e5e5d52",
+              "cpuAddress": 55785,
+              "prg8kBank": 45,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization"
+            },
+            "thresholdSource": {
+              "offset": 376573,
+              "length": 3,
+              "sha256": "f950e2d2252e55244f5fbb50d679888950f12f8e419721a934aed17e28168061",
+              "cpuAddress": 57069,
+              "prg8kBank": 45,
+              "meaning": "uint24le cumulative experience candidate"
+            },
+            "evidence": "game-data/provenance/world-party-yangjian.json"
+          }
+        ],
+        "knownMaxLevel": 80,
+        "evidence": "game-data/provenance/world-party-yangjian.json",
+        "growthRange": {
+          "offset": 374736,
+          "length": 560,
+          "sha256": "a9ab48a9a082ba257bbf2f2ae06c0718df5fdd7134cb8a8c771b710ba80ada16",
+          "cpuAddress": 55232,
+          "prg8kBank": 45,
+          "meaning": "80 contiguous seven-byte growth rows"
+        },
+        "thresholdRange": {
+          "offset": 376336,
+          "length": 240,
+          "sha256": "446bb920d0d87bdcf4d190cd3c13e3a9801b697f73b60fa718c300e825d063e2",
+          "cpuAddress": 56832,
+          "prg8kBank": 45,
+          "meaning": "80 contiguous uint24le experience values"
+        },
+        "levelCapSource": {
+          "offset": 306903,
+          "length": 7,
+          "sha256": "22d4c0bd8b32da763a0890325a44b61cce90d5d3b8d8de69d89e1f7f2fc06a1f",
+          "module": 9,
+          "cpuAddress": 44743,
+          "meaning": "Original storedlevel79 cap"
+        }
+      }
+    ],
+    "characterMultiplierThresholds": {
+      "yangjian": [
+        242,
+        230,
+        179,
+        128,
+        89,
+        38,
+        38,
+        12,
+        12,
+        5,
+        7,
+        5,
+        255,
+        255,
+        255,
+        243,
+        229,
+        191,
+        153,
+        101,
+        50,
+        15,
+        18,
+        25,
+        0,
+        0,
+        0,
+        255,
+        255,
+        255,
+        255,
+        241,
+        165,
+        104,
+        68,
+        50
+      ]
+    },
+    "characterMultiplierSources": {
+      "yangjian": {
+        "pointer": {
+          "offset": 296331,
+          "length": 2,
+          "sha256": "7aa69ae16189e61d94134cafa5aa30f7b4ff24fb198183ea3d625cd6a77c864b",
+          "module": 9,
+          "cpuAddress": 34171,
+          "meaning": "Actor2 physical multiplier pointer"
+        },
+        "source": {
+          "offset": 296455,
+          "length": 36,
+          "sha256": "ee0b51bd4b2402d27325549b98504fc0a44e68090ef3bef670ed706684f0bf09",
+          "module": 9,
+          "cpuAddress": 34295,
+          "meaning": "Actor2 multiplier table"
+        }
+      }
+    },
+    "weaponHits": [
+      {
+        "originalId": 33,
+        "threshold": 51,
+        "source": {
+          "offset": 301938,
+          "length": 1,
+          "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+          "module": 9,
+          "cpuAddress": 39778,
+          "meaning": "Weapon33 original hit threshold"
+        }
+      }
+    ]
+  }
+}

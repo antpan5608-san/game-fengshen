@@ -517,6 +517,66 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_room171_resources(reader):
+    """One scoped room using existing recipe/ROM verification, not a new importer."""
+    from forensics.fengshen246 import extract_map,extract_npcs,extract_default_map_palette,extract_text
+    path='game-data/provenance/world-room171-resources.json';p=load(ROOT/path)
+    original=extract_map(reader,171);m=p['map'];palette=extract_default_map_palette(reader,171)
+    required={(0,0xca98,29),(0,0xce35,29),(0,reader.word(0,0xcaa5+4)+1,8),
+              (0,reader.word(0,0xce42+4)+1,20),(10,0xcc01,26),(10,0xa160,42),
+              (0,0xed87+171,1),(0,0xee47+171,1)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='room171-original-foot-actors-and-teacher-before-text-gift' or \
+            (m['mapId'],m['width'],m['height'],m['tilesetId'])!=(171,16,15,2) or \
+            m['gridSha256']!=original['gridSha256'] or original['tilesetId']!=2 or m['walkableClasses']!=[0,2] or \
+            m['staticPalette']!=palette or len(m['palette'])!=32 or \
+            any(v!=(palette['palette'][0] if i%4==0 else palette['palette'][i])for i,v in enumerate(m['palette'])) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            reader.read(0,0xed87+171,1)!=b'\xff' or reader.read(0,0xee47+171,1)!=b'\xff':
+        raise ValueError('Room171 source, palette, walls or encounter absence differs')
+    for s in p['sources']:checked_span(reader,s)
+    records=extract_npcs(reader,171)['records']
+    if p['npcRecords']!=records:raise ValueError('Original room actors differ')
+    if p['rules']!={'npcId':'rom.npc.171.1','mapId':171,'npcCell':[7,3],
+                    'normalTalkCell':[7,5],'normalTalkDirection':'UP'}:
+        raise ValueError('Teacher interaction must keep its original counter position')
+    for key,count in [('cpuExpected',36),('discipleCpuExpected',1024)]:
+        v=p[key];raw=(ROOT/v['path']).read_bytes()
+        if v['caseCount']!=count or v['failures']!=0 or digest(raw)!=v['sha256'] or len(raw.splitlines())!=count+1:
+            raise ValueError('Room171 original CPU table differs')
+    for line in (ROOT/p['cpuExpected']['path']).read_text(encoding='ascii').splitlines()[1:]:
+        source,target,direction,blocked,plane=map(int,line.split('\t'))
+        if source not in (0,1,2)or target not in (0,1,2)or direction not in (1,2,3,4)or blocked!=int(target==1)or plane!=0:
+            raise ValueError('Room171 collision table contradicts original foot result')
+    for line in (ROOT/p['discipleCpuExpected']['path']).read_text(encoding='ascii').splitlines()[1:]:
+        flag,party,message,after=map(int,line.split('\t'))
+        if message!=(6 if flag&1 or party==4 else 5)or after!=(flag|1 if party==4 else flag):
+            raise ValueError('Original disciple action11 result differs')
+    if {d['id']for d in p['dialogues']}!={f'rom.dialogue.181.{i}'for i in range(8)}:
+        raise ValueError('Missing original room messages')
+    for d in p['dialogues']:
+        t=extract_text(reader,181,int(d['id'].split('.')[-1]))
+        if d['source']['range']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']:
+            raise ValueError('Room message bytes or original index differs')
+    if len(p['npcs'])!=3:raise ValueError('Missing room actor')
+    for npc,record in zip(p['npcs'],records):
+        i=record['index'];raw=bytes.fromhex(record['rawHex'])
+        if npc['id']!=f'rom.npc.171.{i}'or npc['mapId']!=171 or npc['spriteId']!=record['entityByte']or \
+                npc['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]or npc['source']['record']!=record['range']or \
+                npc['firstEffects']or npc['firstDialogue']!=f'rom.dialogue.181.{raw[1]}'or \
+                npc['repeatDialogue']!=f'rom.dialogue.181.{raw[2] if raw[2]!=255 else raw[1]}':
+            raise ValueError('Room actor position, first/repeat or side effects differs')
+    teacher=load(ROOT/'game-data/provenance/world-teacher171-talk.json')
+    if teacher['romSha256']!=SHA256 or teacher['npcSource']!=records[1]['range']or \
+            teacher['rules']['recordFirstMessage']!=0 or teacher['rules']['recordRepeatMessage']!=3:
+        raise ValueError('Teacher must retain actual raw first/repeat selection')
+    for v in teacher['cpuExpected']:
+        raw=(ROOT/v['path']).read_bytes()
+        if digest(raw)!=v['sha256']or len(raw.splitlines())!=v['caseCount']+1 or v['failures']!=0:
+            raise ValueError('Teacher original selector/gift evidence differs')
+    for s in teacher['sources']:checked_span(reader,s)
+    for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
+    return p
+
 def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/provenance/world-hell-hall-batch-terrain.json'):
     """Actual two-plane matrices for this batch; never a transport or field-damage rule."""
     scopes={'game-data/provenance/world-hell-hall-batch-terrain.json':
@@ -683,10 +743,20 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
-    path='game-data/provenance/world-hell-chest-grants.json';proof=load(ROOT/path)
-    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-actual-ordinary-chest-grant' or \
-            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['testCount']!=72 or proof['failures']!=0:
+    path=npc['treasure']['evidence'];proof=load(ROOT/path)
+    scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
+            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21)}
+    if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
+    if path=='game-data/provenance/world-tree107-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or \
+                digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=22 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(107,0,3,30),(107,1,2,7),(108,0,0,14)]:
+            raise ValueError('Tree chest source, original CPU or reused capacity rules differ')
     from forensics.fengshen246 import extract_npcs
     matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
     if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
@@ -873,6 +943,88 @@ def validate_world_exit_geometry(scene,result):
         if not valid(row['fromMapId'],row['trigger'])or not valid(row['toMapId'],row['spawn']):
             raise ValueError(f"Invalid exit geometry {row['fromMapId']}:{row['trigger']} -> {row['toMapId']}:{row['spawn']}; original state evidence is required")
 
+def validate_world_tree_contact(reader,path):
+    if path!='game-data/provenance/world-tree-contact.json':raise ValueError('Unknown actor contact evidence')
+    proof=load(ROOT/path)
+    required={(0,0xa973,77),(0,0xc68a,258),(0,0xc78c,26),(0,0xc894,100),(0,0xc9ea,35),(0,0xaa1f,41)}
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='continent-E7-E8-original-contact-foot-D6-tree107' or \
+            proof['cpuCaseCount']!=2384 or proof['cpuFailures']!=0 or \
+            proof['activeCpuSha256']!=digest(reader.read(0,0x8000,32768)) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required or \
+            proof['rules']!={'walkerId':214,'toMapId':107,'spawn':[7,14],'preserveArrivalDirection':True,
+                'resetEncounterSteps':True,'return':[16,169,149],'whenRemoved':'ordinary_floor_no_contact_entry',
+                'triggerBeforeCompletedStep':True}:
+        raise ValueError('Tree contact destination, timing or actor rule differs')
+    for span in proof['sources']:checked_span(reader,span)
+    raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+    if digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=2385:
+        raise ValueError('Original actor contact CPU table differs')
+    from forensics.fengshen246 import extract_npcs
+    records={n['entityByte']:n for n in extract_npcs(reader,16)['records']}
+    if [b['actorId']for b in proof['bindings']]!=[231,232]:raise ValueError('Unreviewed actor contact')
+    for b in proof['bindings']:
+        original=records[b['actorId']];record=checked_span(reader,b['recordSource'])
+        cell=[(original[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if b['recordSource']!=original['range'] or b['mapId']!=16 or b['cell']!=cell or \
+                b['removedFlagId']!=f'rom.map.16.flag.{record[13]}':
+            raise ValueError('Original actor contact presence or cell differs')
+    return proof
+
+def validate_world_yang_join(reader,evidence):
+    """Only event29 deltas on the pinned room171 parent, not a generic updater."""
+    path='game-data/provenance/world-yang-join.json';party_path='game-data/provenance/world-party-yangjian.json'
+    proof=load(ROOT/path);party=load(ROOT/party_path)
+    rules=dict(mapId=110,npcId='rom.npc.110.0',npcCell=[6,6],targetSpriteId=130,itemId='rom.special.19',category=1,
+        originalId=19,eventId=29,scriptId=34,quantityRetained=True,usedFlagId='rom.inventory.special.19.used',
+        witnessFlagId='rom.global.7c8.1',npcTalkFlagId='rom.map.110.flag.2',completionFlagId='rom.map.110.flag.128',
+        contextFlagId='rom.npccontext.110.207',overlayPointer=0x7df,overlayValue=207,
+        dialogueIds=['rom.dialogue.120.2','rom.dialogue.120.3'],joinCharacterId='yangjian',joinBeforeFirstDialogue=True,
+        noPositionMove=True,noFreeReward=True,encounterStepsReset='NOT_PROVEN_PRESERVE')
+    if proof['romSha256']!=SHA256 or party['romSha256']!=SHA256 or proof['rules']!=rules or \
+            proof['scopeRevision']!='item19-facing-yang-event29-before-dialogue-join-and-context207':
+        raise ValueError('Original Yang item/event/timing differs')
+    for span in proof['sources']+party['initializationSources']+party['equipmentSources']:checked_span(reader,span)
+    required={(2,0xe28c,26),(2,0xa22c,108),(2,0xe7e5,1),(11,0xd79a,20),(11,0xc863,26),
+        (11,0xcd9a,85),(0,0xd740,2),(0,0xa777,49),(9,0x8eb2,91),(9,0x8528,79),(9,0xacec,218)}
+    if not required.issubset({(x.get('module'),x['cpuAddress'],x['length'])for x in proof['sources']}):
+        raise ValueError('Missing original item19/third-actor branch')
+    cpu=proof['cpuExpected'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['caseCount']!=5926 or cpu['failures']!=0 or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=5927:
+        raise ValueError('Original item19 CPU expectations differ')
+    m=proof['multiplierExpected'];raw=(ROOT/m['path']).read_bytes()
+    if digest(raw)!=m['sha256'] or list(map(int,raw.decode('ascii').strip().split('\t')))!=list(reader.read(9,reader.word(9,0x857b),36)):
+        raise ValueError('Actor2 multiplier expectations differ')
+    expected=dict(id='yangjian',level=24,experience=26000,hp=495,maxHp=495,mp=54,maxMp=54,strength=96,
+        stamina=60,agility=28,spirit=69,statusMask=0,equipment=dict(rightHand=33,leftHand=33,body=18,feet=29))
+    if {k:party['initialCharacter'][k]for k in expected}!=expected or \
+            {(x['module'],x['cpuAddress'],x['length'])for x in party['initializationSources']}!={(3,0xc3e0,19),(3,0xc3f3,141)}:
+        raise ValueError('Yang initialization must preserve actual strength/agility, not swapped fields')
+    contribution=party['initialEquipmentContributions']
+    if {k:contribution[k]for k in ('rightHand','body','feet','catalogWeapon33','totalInitialAttack')}!=dict(
+            rightHand=58,body=50,feet=5,catalogWeapon33=70,totalInitialAttack=154):
+        raise ValueError('Original initial contribution and catalog must remain distinct')
+    if evidence['existingItemCapabilityUpdates']!=party['itemCapabilityUpdates'] or \
+            {x['id']for x in evidence['existingItemCapabilityUpdates']}!={'rom.special.19','rom.weapon.33','rom.armor.29'}:
+        raise ValueError('Unreviewed stable-item capability delta')
+    by_id={x['id']:x['fields']for x in evidence['existingItemCapabilityUpdates']}
+    if by_id['rom.special.19']!={'description':'玉鼎真人的信物；面向神木上的楊戩使用。','worldUse':dict(
+            targetSpriteId=130,reusable=True,usedFlagId=rules['usedFlagId'],evidence=path)}:
+        raise ValueError('Item19 use cannot add money, consume quantity or skip dialogue')
+    weapon=by_id['rom.weapon.33']['equipment']
+    if set(by_id['rom.weapon.33'])!={'equipment'} or any(weapon[k]!=v for k,v in dict(originalId=33,
+            slot='rightHand',allowedCharacters=['yangjian'],originalActorIndexes=[2],attackBonus=70,
+            defenseBonus=0,evasionValue=0,operationEnabled=False,crossHandOccupancy=True,evidence=party_path).items()):
+        raise ValueError('Paired original33 cannot silently enable single-hand transactions')
+    feet=by_id['rom.armor.29']['equipment']
+    if set(by_id['rom.armor.29'])!={'equipment'} or feet['allowedCharacters']!=['nezha','yangjian'] or \
+            feet['originalActorIndexes']!=[0,2] or feet['ownerExtensionEvidence']!=party_path:
+        raise ValueError('Foot equipment must preserve old owner and original actor2 list')
+    if evidence['items']!=party['items'] or [i['id']for i in evidence['items']]!=['rom.armor.18'] or \
+            evidence['dialogues']!=proof['dialogues'] or [d['id']for d in evidence['dialogues']]!=rules['dialogueIds']:
+        raise ValueError('Unreviewed Yang equipment/dialogue additions')
+    return proof
+
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -916,11 +1068,27 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('room171CollisionEvidence'):
+            room=validate_world_room171_resources(reader)
+            if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
+                    original['tilesetId']!=2 or set(collision)!={0,1,2}or allowed!=[0,2]or recipe['palette']!=room['map']['palette']:
+                raise ValueError('Room171 collision scope or reviewed palette differs')
         forest=recipe.get('forestCollisionEvidence')
         if forest:
             proof=load(ROOT/forest)
             required={(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
-            if forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+            tree=forest=='game-data/provenance/world-tree107-terrain.json'
+            if tree:
+                binding=next((b for b in proof['maps']if b['mapId']==mid),None)
+                if mid not in (107,108,109,110) or binding is None or binding['gridSha256']!=original['gridSha256'] or \
+                        original['tilesetId']!=5 or set(collision)!={0,1} or allowed!=[0] or \
+                        proof['scopeRevision']!='tree107-110-foot0-wall1-requested-direction' or \
+                        proof['romSha256']!=SHA256 or proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or \
+                        proof['sourceEdges']!={} or proof['targetEdges']!={} or \
+                        recipe['palette']!=binding['palette']['palette'] or \
+                        {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+                    raise ValueError('Tree floor lacks actual forest dispatcher, grid or palette')
+            elif forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
                     proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
                     proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
                     proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
@@ -998,6 +1166,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             klass=reader.read(c['module'],c['cpuAddress']+tile)[0]
             if klass!=exit['collisionClass'] or exit['toMapId']!=klass-exit['dispatchSubtract']:
                 raise ValueError('Original indoor collision dispatch differs')
+        elif exit['kind']=='ACTOR_CONTACT':
+            proof=validate_world_tree_contact(reader,exit['contactEvidence'])
+            binding=next((b for b in proof['bindings']if b['actorId']==exit['contactActorId']),None)
+            if binding is None or exit['fromMapId']!=16 or exit['toMapId']!=107 or \
+                    exit['source']!=binding['recordSource'] or exit['trigger']!=binding['cell'] or \
+                    exit['spawn']!=[7,14] or exit.get('triggerMode')!='ACTOR_CONTACT' or \
+                    exit.get('preserveArrivalDirection') is not True or exit.get('resetEncounterSteps') is not True or \
+                    not any(b['id']==f'rom.barrier.16.{exit["contactActorId"]}' and b['cell']==exit['trigger'] and
+                        b['removedFlagId']==binding['removedFlagId']for b in scene.get('sceneBarriers',[])):
+                raise ValueError('Actor contact must retain original filtered barrier and destination')
         elif exit['kind']=='EXIT_RECORD':
             if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
                 raise ValueError('Original exit record differs')
@@ -1011,8 +1189,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Edge requires observed departure, not swapped coordinates')
         else:raise ValueError('Unsupported transition kind needs original evidence')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
-            {'source':exit['source'],'evidence':provenance_path}|
-            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection') if k in exit})
+            {'source':exit['source'],'evidence':exit['contactEvidence']if exit['kind']=='ACTOR_CONTACT'else provenance_path}|
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection','contactActorId') if k in exit})
         if exit.get('preserveArrivalDirection'):
             source=exit['arrivalDirectionSource']
             checked_span(reader,source)
@@ -1312,6 +1490,19 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item['id']=='rom.special.19':
+                    room=validate_world_room171_resources(reader)
+                    if item!=room['items'][0] or item['originalId']!=19 or item['maxCount']!=1 or \
+                            any(k in item for k in ('buyPrice','sellPrice','worldUse','fieldProtectionUse')):
+                        raise ValueError('Teacher signal cannot infer prices or an unimplemented use')
+                    names=reader.word(2,0xe610);pointer=reader.word(2,names+38)
+                    s=item['source']['nameRange'];raw=checked_span(reader,s)
+                    expected=reader.read(2,pointer,32);expected=expected[:expected.index(255)+1]
+                    grant=next(s for s in load(ROOT/'game-data/provenance/world-teacher171-talk.json')['sources']
+                               if(s['module'],s['cpuAddress'],s['length'])==(2,0xb510,21))
+                    if s['cpuAddress']!=pointer or raw!=expected or item['name']!='玉佩' or checked_span(reader,grant)!=reader.read(2,0xb510,21):
+                        raise ValueError('Signal name or actual teacher grant differs')
+                    continue
                 if 'fieldProtectionUse'in item:
                     validate_world_field_protection_item(reader,item)
                     continue
@@ -1378,6 +1569,29 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
+    if evidence.get('existingItemCapabilityUpdates') or evidence.get('existingNpcCapabilityUpdates'):
+        proof=validate_world_yang_join(reader,evidence)
+        for update in evidence['existingItemCapabilityUpdates']:
+            old=next((i for i in scene['items']if i['id']==update['id']),None)
+            if old is None or digest(encoded(old))!=update['baseDefinitionSha256']:
+                raise ValueError('Item capability parent definition differs')
+            if update['id']=='rom.armor.29':
+                new=update['fields']['equipment'];prior=old['equipment']
+                if any(new[k]!=v for k,v in prior.items()if k not in ('allowedCharacters','ruleSources')):
+                    raise ValueError('Existing feet contribution/rules must remain unchanged')
+                if new['ruleSources'][:len(prior['ruleSources'])]!=prior['ruleSources']:
+                    raise ValueError('Existing equipment evidence was replaced')
+            for span in update['fields'].get('equipment',{}).get('ruleSources',[]):checked_span(reader,span)
+            old.update(update['fields'])
+        updates=evidence.get('existingNpcCapabilityUpdates',[])
+        if len(updates)!=1 or updates[0]['id']!=proof['rules']['npcId'] or updates[0]['fields']!={
+                'worldItemTarget':dict(spriteId=130,removedFlagId='rom.npccontext.110.207',
+                    completionFlagId='rom.map.110.flag.128',evidence='game-data/provenance/world-yang-join.json')}:
+            raise ValueError('Unreviewed original NPC context change')
+        update=updates[0];old=next(n for n in scene['npcs']if n['id']==update['id'])
+        if digest(encoded(old))!=update['baseDefinitionSha256'] or old['mapId']!=110 or old['cell']!=[6,6]:
+            raise ValueError('NPC capability parent differs')
+        old.update(update['fields'])
     for definition in evidence.get('sceneStories',[]):
         validate_world_rebirth_script(reader,definition)
         if any(s['id']==definition['id']or s['npcId']==definition['npcId']for s in scene.get('sceneStories',[])):
@@ -1391,6 +1605,32 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('originalTalk') and npc['mapId']==171:
+            room=validate_world_room171_resources(reader)
+            expected=next((n for n in room['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in evidence['dialogues']for d in room['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=v for n,v in room['graphics'].items()):
+                raise ValueError('Original room171 actor, dialogue or graphic differs')
+        elif npc.get('originalTalk'):
+            from forensics.fengshen246 import extract_npcs
+            path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)
+            record=extract_npcs(reader,110)['records'][0]
+            expected={k:proof['rules'][k]for k in ('actionId','mapFlagId','witnessFlagId','itemId')}|{'evidence':path}
+            raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+            if proof['romSha256']!=SHA256 or proof['scopeRevision']!='tree110-yang-actor-action17-witness-and-item19' or \
+                    proof['cpuCaseCount']!=1024 or proof['cpuFailures']!=0 or \
+                    proof['activeCpuSha256']!=digest(reader.read(10,0x8000,32768)) or \
+                    digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=1025 or \
+                    npc['id']!='rom.npc.110.0' or npc['mapId']!=110 or npc['cell']!=[6,6] or npc['spriteId']!=130 or \
+                    npc['source']['record']!=record['range'] or proof['npcSource']!=record['range'] or \
+                    npc['originalTalk']!=expected or npc['firstEffects'] or \
+                    npc['firstDialogue']!=proof['rules']['firstDialogue'] or npc['repeatDialogue']!=proof['rules']['repeatDialogue'] or \
+                    evidence['graphics'].get(npc['sprite'])!=proof['graphic']:
+                raise ValueError('Original NPC action17 selection, flags or actor differs')
+            for span in proof['sources']:checked_span(reader,span)
+            for dialogue in proof['dialogues']:
+                checked_span(reader,dialogue['source']['range'])
+                if dialogue not in evidence['dialogues']:raise ValueError('Original actor dialogue source differs')
         if npc.get('clinicId'):
             from forensics.fengshen246 import extract_npcs
             records=extract_npcs(reader,20)['records']

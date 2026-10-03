@@ -1,0 +1,1006 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "room171-original-foot-actors-and-teacher-before-text-gift",
+  "kind": "CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+  "map": {
+    "mapId": 171,
+    "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+    "tilesetId": 2,
+    "width": 16,
+    "height": 15,
+    "walkableClasses": [
+      0,
+      2
+    ],
+    "palette": [
+      14,
+      7,
+      23,
+      55,
+      14,
+      7,
+      38,
+      22,
+      14,
+      33,
+      23,
+      22,
+      14,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      14,
+      14,
+      54,
+      43,
+      14,
+      14,
+      38,
+      34,
+      14,
+      14,
+      38,
+      32
+    ],
+    "staticPalette": {
+      "mapId": 171,
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "backgroundSelector": 28,
+      "spriteSelector": 0,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "source": [
+        {
+          "offset": 25129,
+          "length": 2,
+          "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04",
+          "module": 0,
+          "cpuAddress": 57881,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25582,
+          "length": 2,
+          "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567",
+          "module": 0,
+          "cpuAddress": 58334,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26074,
+          "length": 16,
+          "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9",
+          "module": 0,
+          "cpuAddress": 58826,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ],
+      "routineEvidence": [
+        {
+          "offset": 10249,
+          "length": 44,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+          "module": 0,
+          "cpuAddress": 43001,
+          "meaning": "Signed map ID selector dispatch"
+        },
+        {
+          "offset": 9120,
+          "length": 110,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+          "module": 0,
+          "cpuAddress": 41872,
+          "meaning": "Original queued background then sprite palette writes"
+        }
+      ]
+    },
+    "settledPpuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+    "settledCaptureSha256": "495040f52ccb9c1d584901f031c0e7a4a8ae864f63897c776bf2aca3d92dd294",
+    "paletteScope": "Observed settled original room default; universal background/sprite color0 mirrors14, remaining24 entries equal static table"
+  },
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Original source tileset selector"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Original target tileset selector"
+    },
+    {
+      "offset": 19573,
+      "length": 8,
+      "sha256": "bcd58d0de349b1a7fb1a4e93c3e8d12288371d52bca8b44dcb65750a0813ab17",
+      "module": 0,
+      "cpuAddress": 52325,
+      "meaning": "Tileset2 source rule"
+    },
+    {
+      "offset": 20616,
+      "length": 20,
+      "sha256": "808979c00d4bc62e29f7e2e73669c132c974d6b76fb4f1111b48c9253e9604a9",
+      "module": 0,
+      "cpuAddress": 53368,
+      "meaning": "Tileset2 target rule"
+    },
+    {
+      "offset": 347153,
+      "length": 26,
+      "sha256": "4a61a500cb0c9b1e366cfe4359b1773cdc9719651129e432bf790db88632914c",
+      "module": 10,
+      "cpuAddress": 52225,
+      "meaning": "Original action11 party4 message6 and flag1"
+    },
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first repeat selector before postprocessor"
+    },
+    {
+      "offset": 28226,
+      "length": 1,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+      "module": 0,
+      "cpuAddress": 60978,
+      "meaning": "Original room171 type255 no encounters"
+    },
+    {
+      "offset": 28418,
+      "length": 1,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+      "module": 0,
+      "cpuAddress": 61170,
+      "meaning": "Original room171 default zone255"
+    }
+  ],
+  "cpuExpected": {
+    "path": "android/app/src/test/resources/world-room171-terrain-original-cpu.tsv",
+    "caseCount": 36,
+    "failures": 0,
+    "sha256": "692dbec65361873934fc84432a432c606ae6b5c863f045dee8f43b974aeb518e"
+  },
+  "discipleCpuExpected": {
+    "path": "android/app/src/test/resources/world-room171-disciple-original-cpu.tsv",
+    "caseCount": 1024,
+    "failures": 0,
+    "sha256": "6bf868272999b3c2110da4fec5db1d2696c621d4248d507e45ff4271fd180603"
+  },
+  "npcRecords": [
+    {
+      "index": 0,
+      "rawHex": "b20506051801d800f99401020b01",
+      "range": {
+        "offset": 285310,
+        "length": 14,
+        "sha256": "f9fcd6f3260568deac63d1b996397ce22dbfc84d693764c3f6e9d6ff88eaa8df",
+        "module": 8,
+        "cpuAddress": 55918,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "entityByte": 178,
+      "xCandidate": 280,
+      "yCandidate": 216,
+      "animationProgramPointer": 38137,
+      "animationModule": 0,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "confidence": "HIGH"
+    },
+    {
+      "index": 1,
+      "rawHex": "af000300e800a800a59401020c02",
+      "range": {
+        "offset": 285324,
+        "length": 14,
+        "sha256": "c2801d370dc65c5482a076aff4933150e053bfe4c6c4aae3159461419e672c32",
+        "module": 8,
+        "cpuAddress": 55932,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "entityByte": 175,
+      "xCandidate": 232,
+      "yCandidate": 168,
+      "animationProgramPointer": 38053,
+      "animationModule": 0,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "confidence": "HIGH"
+    },
+    {
+      "index": 2,
+      "rawHex": "b204ff05c800f800f99401020000",
+      "range": {
+        "offset": 285338,
+        "length": 14,
+        "sha256": "f0f7afa9f249f162b4e6995dc4939bf2725caf9441c63ee42b77c3846f012df7",
+        "module": 8,
+        "cpuAddress": 55946,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "entityByte": 178,
+      "xCandidate": 200,
+      "yCandidate": 248,
+      "animationProgramPointer": 38137,
+      "animationModule": 0,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "confidence": "HIGH"
+    }
+  ],
+  "graphics": {
+    "npc-teacher-175.png": {
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1024528,
+          "length": 16,
+          "sha256": "b717c85cf11f5743c8651d494c39ed383d38b65676cdf88f3c7363bf3359890a",
+          "spriteTile": 160,
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1024544,
+          "length": 16,
+          "sha256": "de7dd7ed6176b3996a68c82d4d2a41c82186e193675d6c2660ba03be05e2c8cb",
+          "spriteTile": 161,
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1024784,
+          "length": 16,
+          "sha256": "bb51878f73c1a271a5734e74ce8b1b5c9feade7782d6773992710e324067f4e3",
+          "spriteTile": 176,
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1024800,
+          "length": 16,
+          "sha256": "6effb44f807fc845de29418ed0971df7259664ab9c9740f08fe00b089309c6e4",
+          "spriteTile": 177,
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "f5dde98fe61f7bb0a3e061348920fc03d806b5cec1c9deffe27429a328b2830b",
+      "observedRect": [
+        112,
+        73,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLED_POSITION_ENTRY_REAL_ROOM_KEYS",
+      "captureSha256": "495040f52ccb9c1d584901f031c0e7a4a8ae864f63897c776bf2aca3d92dd294",
+      "oamRamAddress": 548,
+      "oamHex": "50a0027050a1027858b0027058b10278",
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "ff06fc7522293ecfa84b21b20ac31b4b3a9f14b6464fb3b8b9d9c04968e62b21",
+      "opaquePixelMatch": true,
+      "normalAndroid": "NOT_RUN"
+    },
+    "npc-disciple-178.png": {
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1024240,
+          "length": 16,
+          "sha256": "172d898186c0eb8b89891721b7d270ebe4d4a567693208d3d1de7d4131cdffab",
+          "spriteTile": 142,
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1024256,
+          "length": 16,
+          "sha256": "e905d66243d8b3929ecb6b8a97bb7ca99b79ad643e7435c031fd44b91ca75b1c",
+          "spriteTile": 143,
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 872240,
+          "length": 16,
+          "sha256": "e7f90f838e8aca5ac8bf432f8c12904c7422d97a0feef0b3b6aa9e86f6a9630f",
+          "spriteTile": 158,
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1024512,
+          "length": 16,
+          "sha256": "ffa301c95fe14f67f941aa6fef31aebd65d3ca5c0bc7891c6346bbdd510bebb0",
+          "spriteTile": 159,
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "9cb8f7f4be51256595a69a95d194e30d8cdf59cb63fc90889a691152b76f3404",
+      "observedRect": [
+        160,
+        140,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLED_POSITION_ENTRY_REAL_ROOM_KEYS",
+      "captureSha256": "495040f52ccb9c1d584901f031c0e7a4a8ae864f63897c776bf2aca3d92dd294",
+      "oamRamAddress": 532,
+      "oamHex": "938e00a0938f00a89b9e00a09b9f00a8",
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "ff06fc7522293ecfa84b21b20ac31b4b3a9f14b6464fb3b8b9d9c04968e62b21",
+      "opaquePixelMatch": true,
+      "normalAndroid": "NOT_RUN"
+    }
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.181.0",
+      "text": "『我乃玉鼎真人，得知你要斬妖除魔，我徒兒楊戩擅長攻擊法術，想必能助你一臂之力，可惜他不在這兒。』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106338,
+          "length": 49,
+          "sha256": "d6833fd41807a158a3770cdb48e9de758faf261a6bc12d26ec1504ca1c9385fa",
+          "module": 3,
+          "cpuAddress": 40786,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101750,
+            "length": 2,
+            "sha256": "c681cbe9d1871baee22f1ea18555301b8f647c3e8688a395cf1fce0e3d8944f1",
+            "module": 3,
+            "cpuAddress": 36198,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-room171-center-talk-controlled/talk-A-3.png",
+            "sha256": "1a6e50a9784f42fdf15d77b3967cd446032b825bca77e20993ca188fa92547a3"
+          },
+          {
+            "path": "private-derived/world-room171-center-talk-controlled/talk-A-4.png",
+            "sha256": "f2aea0e0f0c4ebedd84ead6f91f20e543281d365241f13989258749410a624a3"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.1",
+      "text": "『我徒弟也真是的，這玉佩你拿去，這樣就沒問題了！』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106387,
+          "length": 26,
+          "sha256": "3776e15fca19ec72019ec0569b27c14b12819c8ee9a55293e3e60841104d6ec4",
+          "module": 3,
+          "cpuAddress": 40835,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101752,
+            "length": 2,
+            "sha256": "f252ac7ef45dc1f0c843ff5cc951a5425929376c3f52dadfdcfe725be4823fb5",
+            "module": 3,
+            "cpuAddress": 36200,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-room171-center-global7c8-controlled/talk-A-2.png",
+            "sha256": "b15f1c90a5eee6b3593a24d2b6e33fc2b9b60e68c78627be1b67b6206490a6f4"
+          },
+          {
+            "path": "private-derived/world-room171-center-global7c8-controlled/talk-A-3.png",
+            "sha256": "f730a808bda6cf9615e6092ea54e0eaca2fefc31758181baf53ee4a45131ea88"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.2",
+      "text": "『往後如果有遇到困難，可以回來找我。』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106413,
+          "length": 20,
+          "sha256": "cc18ef2512167bbafecfa46bb69c8a8104afd40ee2ff29ae39fd9445618638d6",
+          "module": 3,
+          "cpuAddress": 40861,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101754,
+            "length": 2,
+            "sha256": "eafe19f860371758efbbec67c9146e3f84755f7b30bc9ada4e2da821b6f0f612",
+            "module": 3,
+            "cpuAddress": 36202,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-room171-center-global7c8-controlled/talk-A-5.png",
+            "sha256": "53eea5fa14c72f3ab4cf286ce435bcbf1f590e1682324e7df6fd39b72af14595"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.3",
+      "text": "『斬妖除魔的大任全交給你們了，勇敢的孩子，去吧！』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106433,
+          "length": 26,
+          "sha256": "a29845dc731d6f164096c18caa2f5031a583ddef2e79d876310eda0ef60ebfc1",
+          "module": 3,
+          "cpuAddress": 40881,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101756,
+            "length": 2,
+            "sha256": "c9e1065d3f04c3842e75f709ae8052dcc8bbf6917986665d7eb3dce280f8d1be",
+            "module": 3,
+            "cpuAddress": 36204,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-teacher171-owned-repeat-verified-flag-controlled/party3-A2.png",
+            "sha256": "3191003297c02aa62d50cdad3d76731cbd64c6e7a2fe4b31553c8f7a364d5b62"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.4",
+      "text": "『這兒是玉泉山。』",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "range": {
+          "offset": 106459,
+          "length": 10,
+          "sha256": "2efad0bea546072d2d0253edd0141e95afb7f2ee6e0611d410d90e44eb16cb5e",
+          "module": 3,
+          "cpuAddress": 40907,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101758,
+            "length": 2,
+            "sha256": "6995a1232f1869542cc7a97e03b8f067097faa41231dd1f53d9d9c375b83fbc8",
+            "module": 3,
+            "cpuAddress": 36206,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "rowId": 201
+        }
+      }
+    },
+    {
+      "id": "rom.dialogue.181.5",
+      "text": "『告訴你，楊戩最喜歡爬樹了！』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106469,
+          "length": 16,
+          "sha256": "0717de97f02f892fdfb21a356e5d33fe2ef846e1651b03195246d96ea75f9dc9",
+          "module": 3,
+          "cpuAddress": 40917,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101760,
+            "length": 2,
+            "sha256": "ca57385dd278c4874100a47a1dd56343eac3f55c5965136e9e53bec25278aba2",
+            "module": 3,
+            "cpuAddress": 36208,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-room171-right-chase-controlled/talk-A-2.png",
+            "sha256": "ce7f2c440d6c45bb9a154c13f7e7ddb5d46962ba7f04d2251c7b5215848ddd2f"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.6",
+      "text": "『師父回來了！』",
+      "source": {
+        "confidence": "CONTROLLED_ORIGINAL_DIALOGUE_OBSERVED",
+        "originalVerified": true,
+        "range": {
+          "offset": 106485,
+          "length": 9,
+          "sha256": "1b68168c01c4b0d63af972d3c879bd7145a479d4cedc6825dfc9ccf8469f4c19",
+          "module": 3,
+          "cpuAddress": 40933,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101762,
+            "length": 2,
+            "sha256": "c0c5c9b969e5a521d726fa6ccbfb52ae06f6dca8feb7e1356ab5f6311d80b2fd",
+            "module": 3,
+            "cpuAddress": 36210,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-room171-right-flag1-controlled/talk-A-2.png",
+            "sha256": "b20d070b51d7f335d161933d51d91fa3b1e5f363ca46b4cda72ad2a5050ca44b"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rom.dialogue.181.7",
+      "text": "『這是棋盤山的桃精和柳鬼作亂，想辦法制服，那東方兩尊泥像，是千里眼及順風耳，將兩尊泥像打碎，這樣就能接近沼澤的桃樹柳樹，再使用打神鞭，就可打敗桃精柳鬼了！』",
+      "source": {
+        "confidence": "PROVISIONAL_SCREEN_TRANSCRIPTION",
+        "originalVerified": false,
+        "range": {
+          "offset": 106494,
+          "length": 80,
+          "sha256": "6710976d8ddf7b8705546ae759d4d6b4361bcf976b90b010dfb539ce9701fd25",
+          "module": 3,
+          "cpuAddress": 40942,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101340,
+            "length": 2,
+            "sha256": "8ae061e6bb41d4cababf7ab67e03e1bf5a76591020c4d4c21d9ddb915ab97317",
+            "module": 3,
+            "cpuAddress": 35788,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101764,
+            "length": 2,
+            "sha256": "14f1661692f22f6c3cf6c02b93e5b7181e77392914ebf37682bba63274c48f71",
+            "module": 3,
+            "cpuAddress": 36212,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-room171-resources.json",
+        "captures": [
+          {
+            "path": "private-derived/world-teacher171-owned-repeat-verified-flag-controlled/party4-A2.png",
+            "sha256": "86d9fca771d2aefaa1d1344760443ca699bf2d38de957b80a16c166977e02d04"
+          },
+          {
+            "path": "private-derived/world-teacher171-owned-repeat-verified-flag-controlled/party4-A3.png",
+            "sha256": "0de0bafb5e4921d9aa4a0a2e66448e827a264d5e0a07f547d9b88735e0665598"
+          },
+          {
+            "path": "private-derived/world-teacher171-owned-repeat-verified-flag-controlled/party4-A4.png",
+            "sha256": "7644f9f661bce092e04305171b6640ad168130bb77b7a6783a23ed17c63f5211"
+          },
+          {
+            "path": "private-derived/world-teacher171-owned-repeat-verified-flag-controlled/party4-A5.png",
+            "sha256": "f68553b933b9f10804b16e7eb5ff17a7d2eeb2d04975e70264f97a793250db11"
+          }
+        ]
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.171.0",
+      "mapId": 171,
+      "cell": [
+        10,
+        6
+      ],
+      "spriteId": 178,
+      "sprite": "npc-disciple-178.png",
+      "firstDialogue": "rom.dialogue.181.5",
+      "repeatDialogue": "rom.dialogue.181.6",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285310,
+          "length": 14,
+          "sha256": "f9fcd6f3260568deac63d1b996397ce22dbfc84d693764c3f6e9d6ff88eaa8df",
+          "module": 8,
+          "cpuAddress": 55918,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room171-resources.json"
+      },
+      "originalTalk": {
+        "actionId": 11,
+        "mapFlagId": "rom.map.171.flag.1",
+        "witnessFlagId": "",
+        "itemId": "",
+        "evidence": "game-data/provenance/world-room171-resources.json"
+      }
+    },
+    {
+      "id": "rom.npc.171.1",
+      "mapId": 171,
+      "cell": [
+        7,
+        3
+      ],
+      "spriteId": 175,
+      "sprite": "npc-teacher-175.png",
+      "firstDialogue": "rom.dialogue.181.0",
+      "repeatDialogue": "rom.dialogue.181.3",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285324,
+          "length": 14,
+          "sha256": "c2801d370dc65c5482a076aff4933150e053bfe4c6c4aae3159461419e672c32",
+          "module": 8,
+          "cpuAddress": 55932,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room171-resources.json"
+      },
+      "interactionCell": [
+        7,
+        5
+      ],
+      "interactionDirection": "UP",
+      "interactionEvidence": "game-data/provenance/world-room171-resources.json",
+      "originalTalk": {
+        "actionId": 12,
+        "mapFlagId": "rom.map.171.flag.2",
+        "witnessFlagId": "rom.global.7c8.1",
+        "itemId": "rom.special.19",
+        "completionWitnessFlagId": "rom.global.7c7.128",
+        "messageDialogues": {
+          "0": "rom.dialogue.181.0",
+          "1": "rom.dialogue.181.1",
+          "2": "rom.dialogue.181.2",
+          "3": "rom.dialogue.181.3",
+          "7": "rom.dialogue.181.7"
+        },
+        "evidence": "game-data/provenance/world-teacher171-talk.json"
+      }
+    },
+    {
+      "id": "rom.npc.171.2",
+      "mapId": 171,
+      "cell": [
+        5,
+        8
+      ],
+      "spriteId": 178,
+      "sprite": "npc-disciple-178.png",
+      "firstDialogue": "rom.dialogue.181.4",
+      "repeatDialogue": "rom.dialogue.181.4",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285338,
+          "length": 14,
+          "sha256": "f0f7afa9f249f162b4e6995dc4939bf2725caf9441c63ee42b77c3846f012df7",
+          "module": 8,
+          "cpuAddress": 55946,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room171-resources.json"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "rom.special.19",
+      "category": "special",
+      "originalId": 19,
+      "maxCount": 1,
+      "name": "玉佩",
+      "description": "玉鼎真人的信物；面向楊戩的使用与入队流程正在接续。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "verifiedFields": [
+          "name",
+          "category",
+          "originalId",
+          "maxCount",
+          "teacherGift"
+        ],
+        "nameRange": {
+          "offset": 92282,
+          "length": 4,
+          "sha256": "92f4f13eeca2ada7f4b777eb0ee04ecaefaf650ad34138b7ce7b5956f13497bd",
+          "module": 2,
+          "cpuAddress": 59498,
+          "meaning": "Original special19 menu name"
+        },
+        "evidence": "game-data/provenance/world-teacher171-talk.json",
+        "nameEvidence": {
+          "captureSha256": "529f3af023a14cde470db87772646769bf056bccca7df080e56a3f62d0e77e66"
+        },
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "rowId": 213,
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN"
+        }
+      }
+    }
+  ],
+  "remainingUnknown": [
+    "Normal Android room/talk/gift/save/cold restart NOT_RUN",
+    "Disciple original walking animation not migrated; fixed initial poses retained",
+    "Item19 facing use/Yang join is separately controlled original evidence; pending runtime adaptation",
+    "Party4 message7 complete exact glyph transcription remains PROVISIONAL; no rule inferred from its text"
+  ],
+  "rules": {
+    "npcId": "rom.npc.171.1",
+    "mapId": 171,
+    "npcCell": [
+      7,
+      3
+    ],
+    "normalTalkCell": [
+      7,
+      5
+    ],
+    "normalTalkDirection": "UP"
+  },
+  "licenseStatus": "UNKNOWN"
+}
