@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "map67-category1-id12-menu-and-completed-step-protection",
+  "kind": "CONTROLLED_ORIGINAL_CPU_SELECTION_DISPATCH_AND_BOOKKEEPING_BOUNDARIES_NOT_NORMAL_ACQUISITION",
+  "cpuCaseCount": 50,
+  "cpuReportSha256": "63ee9935796e785339c39b05f5ba63062624cde336533fb3e91943e8d94bd23a",
+  "cpuExpectedPath": "android/app/src/test/resources/field67-item12-cpu.tsv",
+  "cpuExpectedSha256": "66f3c89b8626b5b76b4891163202d5320280875e2d1c3d4ab7c68aa0ac5837a4",
+  "item": {
+    "id": "rom.special.12",
+    "categoryId": 1,
+    "originalId": 12,
+    "name": "定神珠",
+    "nameGlyphHex": "02707478ff",
+    "maxCount": 1,
+    "consumption": 0,
+    "usedMarker": 128,
+    "targetMapId": 67,
+    "target": "scene-no-actor-no-object",
+    "price": "NOT_INFERRED"
+  },
+  "rules": {
+    "selectionOnly": true,
+    "onConfirmSetsPending6814": true,
+    "firstCompletedSourceStep67SetsActive686f": true,
+    "mapReconstructionClearsPendingOnly": true,
+    "activePersistsAcrossObserved67To23To67": true,
+    "poisonNotPrevented": true
+  },
+  "sources": [
+    {
+      "offset": 91450,
+      "length": 48,
+      "sha256": "efe2702b3309a318e0c83b753e65a96b90d5b87b1a0cba55ab447c8b265c4776",
+      "module": 2,
+      "cpuAddress": 58666,
+      "meaning": "Actual map67 item12 acceptance and no-target branch"
+    },
+    {
+      "offset": 72846,
+      "length": 41,
+      "sha256": "7a9fd56f42ca552cdce76ca19efdb7954197b2626978d03713067cd74a8d097e",
+      "module": 2,
+      "cpuAddress": 40062,
+      "meaning": "Success result controls original bookkeeping and return menu state"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Original category1 inventory used-bit and reusable bookkeeping"
+    },
+    {
+      "offset": 92142,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59358,
+      "meaning": "Original item12 reusable byte1"
+    },
+    {
+      "offset": 91680,
+      "length": 2,
+      "sha256": "bb3b788ba8552c6c7d1649e5f0cea02b3ca9789b75edea64aad59b01f7d54d20",
+      "module": 2,
+      "cpuAddress": 58896,
+      "meaning": "Special item name table root"
+    },
+    {
+      "offset": 92112,
+      "length": 2,
+      "sha256": "3fb61018572d1baa1f5bf4792ca5dadec5540d050400e2ab84b8bccea82c33ec",
+      "module": 2,
+      "cpuAddress": 59328,
+      "meaning": "Actual id12 name pointer"
+    },
+    {
+      "offset": 92247,
+      "length": 5,
+      "sha256": "f17209eff5a9ff65e8ca798828572dfa06bd1d12caf4dbb9e91a22ad20eb7102",
+      "module": 2,
+      "cpuAddress": 59463,
+      "meaning": "定神珠 original name glyph stream, controlled visible menu"
+    },
+    {
+      "offset": 1434,
+      "length": 7,
+      "sha256": "9fa4be74b77ee9715e17cde9f329832cdf96280e21a9f26715416103fab421d1",
+      "module": 0,
+      "cpuAddress": 34186,
+      "meaning": "Map reconstruction clears6814 but not686f"
+    },
+    {
+      "offset": 14991,
+      "length": 25,
+      "sha256": "bd2fbf818cdbf01785746002f78800ef2d9750807e73e012e3029fb9ad9ca825",
+      "module": 0,
+      "cpuAddress": 47743,
+      "meaning": "Original map67 pending promotion and active check"
+    },
+    {
+      "offset": 320,
+      "length": 30,
+      "sha256": "77b680793a6662283544cb7425e7cf8e0266aa67d824aecf008de561150d98fd",
+      "module": 0,
+      "cpuAddress": 33072,
+      "meaning": "Startup clears original RAM page6800 including protection"
+    },
+    {
+      "offset": 327835,
+      "length": 33,
+      "sha256": "38640a2b7647f379a0817218ab46c50829e58d71cc4613fcbcaf594dbe9b557e",
+      "module": 10,
+      "cpuAddress": 32907,
+      "meaning": "Original initialization clears RAM page6800"
+    }
+  ],
+  "controlledMenuBoundaries": [
+    {
+      "boundary": "00-before-menu",
+      "mapId": 67,
+      "cell": [
+        15,
+        29
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 1,
+      "pending6814": 0,
+      "active686f": 0,
+      "ramSha256": "106a5cd44e02f4ad918c9224c6e08c45991914a61ac65903ea332cafdbb376d1",
+      "sramSha256": "bc0c817f64d4574d46804d58e802b5f31a3febc0dfe58821cd31c24987e8ca9e",
+      "screenshotSha256": "49e52a7af45f1a10324383ea689dfc8f0d6c63328b7187e4c2d2282358847a88"
+    },
+    {
+      "boundary": "04-selection",
+      "mapId": 67,
+      "cell": [
+        15,
+        29
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 1,
+      "pending6814": 0,
+      "active686f": 0,
+      "ramSha256": "0cfe73218b28a28a58fbf0096c392f8e70e06c0a5f4855599bda939c6f00e3b2",
+      "sramSha256": "cdca8d31ce9e4509509d69793c8c41db99452b6ad4653424ea2c5d3a1d9b242a",
+      "screenshotSha256": "4a4e9e5a04c1df79f8a8e323df376bad369f1b3359c1d421d79305a94993ac9f"
+    },
+    {
+      "boundary": "05-confirm",
+      "mapId": 67,
+      "cell": [
+        15,
+        29
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 129,
+      "pending6814": 1,
+      "active686f": 0,
+      "ramSha256": "a32940313b84990cd8dc89f87a71326b9879762c66ac01ef00acba81094ba6e1",
+      "sramSha256": "edeab7e699c9555a3d7a3c5bb7e4aba2f9b4572266a4661307a154e5b711c44e",
+      "screenshotSha256": "49e52a7af45f1a10324383ea689dfc8f0d6c63328b7187e4c2d2282358847a88"
+    },
+    {
+      "boundary": "07-one-protected-step67",
+      "mapId": 67,
+      "cell": [
+        15,
+        28
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 129,
+      "pending6814": 1,
+      "active686f": 1,
+      "ramSha256": "030fb998bb94a7092ce38067cee9889cb2994006026e8a6f9ec3d6399bd20b86",
+      "sramSha256": "345eb690db21a3c2f880b88eea3d02da6b92343f57e3d37b9cee78d0f21fdb19",
+      "screenshotSha256": "9015970d86d1027434e8cf719041e9e077202fbc849469a5d7836a856fbfce33"
+    },
+    {
+      "boundary": "07-return-to23-after-protected-step",
+      "mapId": 23,
+      "cell": [
+        44,
+        3
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 129,
+      "pending6814": 0,
+      "active686f": 1,
+      "ramSha256": "2ee1533c61e10ab75751d29fff7f175fd5e6ced54416b741cd902ed58f5fc333",
+      "sramSha256": "984d60e590ae55860c81d7471e7d0735623396b1d343d8f69be0a2ffc88e5657",
+      "screenshotSha256": "cdc93b010d7bd4771ac1a55f7e731231a53dd12583fe070e2d6d3d5e01c90e3e"
+    },
+    {
+      "boundary": "08-leave-doorway23",
+      "mapId": 23,
+      "cell": [
+        44,
+        4
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 129,
+      "pending6814": 0,
+      "active686f": 1,
+      "ramSha256": "660e2558d16ff5c1fdbd36ee8f05894b98b94934fb8b93c3d88cc6c3b335d156",
+      "sramSha256": "6d48f9d44b97ccf591cc263ed1d8a442f2ed7b3a731235c21ace16bef9682830",
+      "screenshotSha256": "f5a9ec2b9d53c8ca079a4c54a3a0b0e0e5199f15e5e82be3400ef1c47007b134"
+    },
+    {
+      "boundary": "09-reenter67-after-protection",
+      "mapId": 67,
+      "cell": [
+        15,
+        29
+      ],
+      "partyHp": [
+        35,
+        29
+      ],
+      "quantityRaw": 129,
+      "pending6814": 0,
+      "active686f": 1,
+      "ramSha256": "559e945b37cfb3b127ec89dc503cbb9c47c941b1ed1254ca400c2142c27a2585",
+      "sramSha256": "fafa2940d6e94237257a60ee772e2d201742d876d4503b9b81832c4a77de4797",
+      "screenshotSha256": "49e52a7af45f1a10324383ea689dfc8f0d6c63328b7187e4c2d2282358847a88"
+    }
+  ],
+  "limitations": [
+    "Owned item12 injected into a free category1 slot; not normal acquisition or normal Android route.",
+    "Earlier menu attempt selected existing item11, rejected; a later menu-open attempt did not move, not lifetime evidence.",
+    "Actual original keys and unmodified instructions verified use and movement; no sound output verified.",
+    "Protection lifetime verified across listed original transitions; cartridge manual save/load and other reset/transport branches remain separately unverified.",
+    "Android state flags preserve interruption continuity; no second inventory or HP state."
+  ],
+  "remainingUnknown": [
+    "Normal Android chest acquisition, use, map transition and cold-start App validation.",
+    "Original cartridge manual-save/load protection equivalence.",
+    "Source sprite field flash and short sound playback."
+  ]
+}

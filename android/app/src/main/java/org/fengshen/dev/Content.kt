@@ -37,7 +37,10 @@ data class CharacterDefinition(val id:String,val name:String,val portraitAsset:S
 data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
     val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
     val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null,val antidoteUse:AntidoteUseDefinition?=null,
-    val worldUse:WorldItemUseDefinition?=null)
+    val worldUse:WorldItemUseDefinition?=null) {
+    // Body property preserves the published cross-APK constructor signature.
+    var fieldProtectionUse:WorldFieldProtectionDefinition?=null;internal set
+}
 data class AntidoteUseDefinition(val evidence:String)
 data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
@@ -266,6 +269,13 @@ object ContentLoader {
                         use.getBoolean("reusable")&&use.getString("evidence").isNotBlank())
                     WorldItemUseDefinition(use.getInt("targetSpriteId"),use.getString("usedFlagId"))
                 })
+            o.optJSONObject("fieldProtectionUse")?.let{use->
+                require(item.id==WorldItems.FIELD_PROTECTION_ID&&item.category=="special"&&item.originalId==12&&
+                    item.maxCount==1&&item.buyPrice==null&&item.sellPrice==null&&item.worldUse==null&&
+                    item.herbUse==null&&item.antidoteUse==null&&use.getInt("mapId")==67&&
+                    use.getBoolean("reusable")&&use.getString("evidence")=="game-data/provenance/world-field67-item12.json")
+                item.fieldProtectionUse=WorldFieldProtectionDefinition(use.getString("evidence"))
+            }
             item.id to item
         }
         require(npcs.filter{it.treasure!=null}.all{npc->

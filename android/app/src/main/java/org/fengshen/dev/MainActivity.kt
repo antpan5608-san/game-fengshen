@@ -296,8 +296,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedStepSeq==world.completedStepSeq)return
         processedStepSeq=world.completedStepSeq
         val step=world.lastCompletedStep?:return
-        // No map67 protection item is enabled until its activation/lifetime is evidenced.
-        characters=OriginalStatus.step(characters,step.mapId)
+        flags=WorldItems.fieldFlagsAfterStep(flags,step)
+        characters=OriginalStatus.step(characters,step.mapId,flags[WorldItems.FIELD_ACTIVE_FLAG]==true)
         if(OriginalStatus.allDisabled(characters)){
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
@@ -890,6 +890,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 result==null->"当前装备条件不满足";else->""}
             return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
+        item.fieldProtectionUse?.let{
+            val reason=WorldItems.fieldProtectionUnavailable(currentSnapshot(),item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+            return ItemAction("field-use","使用${item.name}",reason==null,reason?:"","field-map-67")
+        }
         item.worldUse?.let{rule->
             val snapshot=currentSnapshot();val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
             val target=content.mapObjects.asSequence().mapNotNull{it.itemTarget}
@@ -952,6 +956,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
             "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
             "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
+            "field-use"->{
+                val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return
+                val current=itemAction()
+                if(selectedItemId!=id||current.kind!="field-use"||!current.enabled||cmd.targetId!=current.target)return
+                val before=currentSnapshot()
+                val result=WorldItems.useFieldProtection(before,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                inventory=result.inventory;flags=result.flags;commitModal(before,"已使用${item.name}")
+            }
             "world-use"->{
                 val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return;val rule=item.worldUse?:return
                 val current=itemAction()
@@ -1176,7 +1189,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         if(l.wide||!modalDetailsOpen){
             val rows=if(panelTab==CharacterTab.ITEMS)panelItems().map{e->val item=content.itemDefinitions[e.key]
-                val status=when{item?.worldUse!=null->"地图对象使用";item?.let(MapItemUse::supported)==true->if(characters.isEmpty()||(item.antidoteUse==null&&characters.none{it.hp>0}))"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
+                val status=when{item?.fieldProtectionUse!=null->"场景使用";item?.worldUse!=null->"地图对象使用";item?.let(MapItemUse::supported)==true->if(characters.isEmpty()||(item.antidoteUse==null&&characters.none{it.hp>0}))"无合法目标" else "地图使用";content.equipmentDefinitions[e.key]?.let{OpeningEquipment.replace(hero,inventory,it,content.equipmentDefinitions.values)!=null}==true->"可装备";content.equipmentDefinitions[e.key]?.operationEnabled==true->"查看装备条件";else->"操作待接入"}
                 Triple(e.key,"${item?.name?:"未知物品"}\n×${e.value} · $status",item?.preview)}
             else listOf("rightHand","leftHand","body","feet").map{slot->
                 val e=hero.equipment;val id=when(slot){"rightHand"->e?.rightHand;"leftHand"->e?.leftHand;"body"->e?.body;else->e?.feet}

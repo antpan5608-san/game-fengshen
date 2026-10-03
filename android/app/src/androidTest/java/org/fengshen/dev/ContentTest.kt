@@ -13,6 +13,21 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Version admission never bypasses the actual scene or state validation. */
+    fun testControlledLegacyContentVersionsKeepStateAndRejectInvalidPosition(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val s=SaveSnapshot(c.scene.version,114,c.scene.spawnX*16+8,c.scene.spawnY*16+8,Key.DOWN,
+            listOf(c.initialPlayer),flags=mapOf("opening.intro.seen" to true),money=c.initialMoney)
+        assertTrue(s.validate(c))
+        for(i in 18..25){
+            val old=s.copy(contentVersion="opening-segment-001-c$i")
+            assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+            assertFalse(old.copy(x=-8).validate(c))
+            assertFalse(old.copy(mapId=255).validate(c))
+            assertFalse(old.copy(money=-1).validate(c))
+        }
+        assertFalse(s.copy(contentVersion="opening-segment-001-c99").validate(c))
+    }
     /** Actual candidate loader and isolated proposals; not a normal Hell route. */
     fun testControlledHallBatchGroundChestsAndIndependentRewards(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

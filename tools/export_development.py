@@ -540,6 +540,33 @@ def validate_world_hall_batch_terrain(reader,map_id):
             raise ValueError('Original terrain/gate CPU expectations differ')
     return rule
 
+def validate_world_field_protection_item(reader,item):
+    path='game-data/provenance/world-field67-item12.json'
+    proof=load(ROOT/path)
+    identity={'id':'rom.special.12','categoryId':1,'originalId':12,'name':'定神珠',
+        'nameGlyphHex':'02707478ff','maxCount':1,'consumption':0,'usedMarker':128,
+        'targetMapId':67,'target':'scene-no-actor-no-object','price':'NOT_INFERRED'}
+    required={(2,0xe52a,0x30),(2,0x9c7e,0x29),(2,0xa22c,0x6c),(2,0xe7de,1),
+        (2,0xe610,2),(2,0xe7c0,2),(2,0xe847,5),(0,0x858a,7),(0,0xba7f,0x19),
+        (0,0x8130,0x1e),(10,0x808b,0x21)}
+    rules={'selectionOnly':True,'onConfirmSetsPending6814':True,
+        'firstCompletedSourceStep67SetsActive686f':True,'mapReconstructionClearsPendingOnly':True,
+        'activePersistsAcrossObserved67To23To67':True,'poisonNotPrevented':True}
+    if proof['romSha256']!=SHA256 or proof['item']!=identity or proof['rules']!=rules or \
+            proof['cpuCaseCount']!=50 or {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Unverified map67 protection rule or identity')
+    for span in proof['sources']:checked_span(reader,span)
+    if digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
+        raise ValueError('Original item12 CPU expectations differ')
+    if (item['id'],item['category'],item['originalId'],item['maxCount'],item['name'])!=('rom.special.12','special',12,1,'定神珠') or \
+            any(k in item for k in ['buyPrice','sellPrice','worldUse','herbUse','antidoteUse','equipment']) or \
+            item.get('fieldProtectionUse')!={'mapId':67,'reusable':True,'evidence':path}:
+        raise ValueError('Map67 item definition differs from original scoped use')
+    pointer=reader.word(2,reader.word(2,0xe610)+24)
+    source=item['source']['nameRange']
+    if source['module']!=2 or source['cpuAddress']!=pointer or checked_span(reader,source)!=bytes.fromhex(identity['nameGlyphHex']):
+        raise ValueError('Item12 name source differs from original pointer')
+
 def validate_world_hall_batch_npc_graphic(reader,sprite_id):
     """One genuinely visible original actor pose, including independent companion records."""
     from forensics.fengshen246 import extract_npcs
@@ -1042,6 +1069,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if 'fieldProtectionUse'in item:
+                    validate_world_field_protection_item(reader,item)
+                    continue
                 proof=load(ROOT/item['worldUse']['evidence'])
                 for span in proof['spans']:checked_span(reader,span)
                 if proof['romSha256']!=SHA256 or (item['id'],item['originalId'],item['maxCount'])!=('rom.special.11',11,1) or \
