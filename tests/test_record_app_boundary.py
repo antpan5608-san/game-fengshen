@@ -2,9 +2,15 @@
 import json,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable
+from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget
 
 class RecordingBoundaryTests(unittest.TestCase):
+    def test_only_the_scoped_hall_batch_has_a_longer_bounded_budget(self):
+        for prefix,budget in [('world-hall-batch',7200),('world-west',3600),('town02',60)]:
+            self.assertIsNone(validate_recording_budget(prefix,budget))
+        for prefix,budget in [('world-west',7200),('town02',3601),('world-hall-batch',7201),('world-hall-batch',59)]:
+            with self.assertRaises(ValueError):validate_recording_budget(prefix,budget)
+
     def test_atomic_replacement_returns_only_the_actual_complete_save(self):
         state={'mapId':96,'x':248,'characters':[{'id':'nezha','hp':51}],'flags':{'won':True}}
         xml=('<map><string name="saveJson">'+json.dumps(state)+'</string></map>').encode()

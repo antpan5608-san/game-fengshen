@@ -1146,6 +1146,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if obj['interaction']=='NOT_IMPLEMENTED':
             if mid not in known or obj['cell']!=cell or any(o['id']==obj['id'] for o in scene.get('mapObjects',[])):
                 raise ValueError('Unimplemented actor must preserve its original record and cell')
+            if obj.get('initialHiddenEvidence'):
+                path='game-data/provenance/world-hell-hall-batch-resources.json'
+                proof=load(ROOT/path);initial=proof['initialHiddenObjects']['198']
+                if obj['initialHiddenEvidence']!=path or (mid,raw[0])!=(64,198) or \
+                        initial['source']!=obj['recordSource'] or initial['confidence']!='VERIFIED_INITIAL_ZERO_ALPHA_ONLY' or \
+                        initial['recipe']['completeGraphic'] is not False or initial['recipe']['opaquePixelCount']!=0 or \
+                        evidence['graphics'].get(obj['sprite'])!=initial['recipe']:
+                    raise ValueError('Hidden object only justifies its original initial transparent pose')
+            elif obj.get('spriteEvidence')=='game-data/provenance/world-hell-hall-batch-resources.json':
+                recipe=validate_world_hall_batch_npc_graphic(reader,obj['spriteId'])
+                if raw[0]!=obj['spriteId'] or raw[1]!=255 or evidence['graphics'].get(obj['sprite'])!=recipe:
+                    raise ValueError('Non-dialogue actor must retain its original independent pose')
             scene.setdefault('mapObjects',[]).append(obj)
             continue
         target=obj['itemTarget']

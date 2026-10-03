@@ -22850,5 +22850,119 @@
     "Eight done markers and full ROM-pixel reconstructions; one process terminated after marker exitCode -15, preserved",
     "No normal encounter/App/win/name observation claimed",
     "Initial slot2 horizontal crop was partial16px; rejected after actual screenshot review, complete48x72 source rectangle reconstructed"
-  ]
+  ],
+  "initialHiddenObjects": {
+    "198": {
+      "spriteId": 198,
+      "mapId": 64,
+      "npcIndex": 9,
+      "source": {
+        "offset": 280545,
+        "length": 14,
+        "sha256": "cf7ebc5dbf122a78c052e44eaf45a5ae7f764cbb708091d1e4b526c23a43dc62",
+        "module": 8,
+        "cpuAddress": 51153,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "confidence": "VERIFIED_INITIAL_ZERO_ALPHA_ONLY",
+      "recipe": {
+        "width": 16,
+        "height": 16,
+        "observedRect": [
+          80,
+          137,
+          16,
+          16
+        ],
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            0,
+            0,
+            0
+          ],
+          "3": [
+            0,
+            0,
+            0
+          ]
+        },
+        "unusedPaletteIndices": [
+          1,
+          2,
+          3
+        ],
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "spriteTile": 127,
+            "attribute": 0,
+            "oamRamAddress": 548
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "spriteTile": 127,
+            "attribute": 0,
+            "oamRamAddress": 552
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "spriteTile": 127,
+            "attribute": 0,
+            "oamRamAddress": 556
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "spriteTile": 127,
+            "attribute": 0,
+            "oamRamAddress": 560
+          }
+        ],
+        "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "captureKind": "CONTROLLED_ORIGINAL_INITIAL_HIDDEN_OBJECT_POSE_ONLY",
+        "normalPlayEvidence": false,
+        "captureSha256": "8e9fa7197d5ce1d58b48caf481d581348c4ea649e429b79761eb60f519166fee",
+        "opaquePixelCount": 0,
+        "completeGraphic": false,
+        "limits": [
+          "Actual initial hidden pose only; alternate visible pose, investigation, grant and return conditions NOT_IMPLEMENTED.",
+          "Never classify as complete original NPC graphic or use this to assert full map completion."
+        ]
+      }
+    }
+  }
 }

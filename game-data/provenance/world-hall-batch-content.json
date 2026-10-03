@@ -956,6 +956,41 @@
         }
       },
       {
+        "hp": 1540,
+        "attack": 90,
+        "defense": 63,
+        "experienceReward": 460,
+        "moneyReward": 550,
+        "id": 147,
+        "name": "卞城",
+        "nameConfidence": "ORIGINAL_CONTROLLED_SCREEN",
+        "behaviorByte": 2,
+        "hitByte": 243,
+        "source": {
+          "offset": 62714,
+          "length": 16,
+          "sha256": "64b62e51a6f6054c3bd1120b1a7a4a8a7acc4061f70c4626b6493c97f11bd9c5",
+          "module": 1,
+          "cpuAddress": 62698,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+        },
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.6",
+          "threshold": 50
+        },
+        "specialBaseDamage": 42,
+        "specialSource": {
+          "offset": 305450,
+          "length": 2,
+          "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0",
+          "module": 9,
+          "cpuAddress": 43290,
+          "meaning": "Original behavior2/4 fixed boss damage"
+        },
+        "specialDamageEvidence": "game-data/provenance/world-enemy-single-special.json"
+      },
+      {
         "hp": 1860,
         "attack": 100,
         "defense": 70,
@@ -1090,6 +1125,7 @@
       "146": 41,
       "26": 18,
       "27": 22,
+      "147": 38,
       "148": 43,
       "31": 24,
       "32": 25,
@@ -1738,6 +1774,17 @@
         "origin": [
           112,
           72
+        ],
+        "evidence": "game-data/provenance/world-hell-hall-batch-resources.json"
+      },
+      {
+        "enemyId": 147,
+        "asset": "enemy-147.png",
+        "width": 104,
+        "height": 64,
+        "origin": [
+          64,
+          56
         ],
         "evidence": "game-data/provenance/world-hell-hall-batch-resources.json"
       },
@@ -7960,6 +8007,394 @@
         }
       },
       {
+        "id": 12,
+        "mapId": 64,
+        "groups": [
+          {
+            "id": 0,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 77,
+                "enemyId": 27
+              }
+            ],
+            "rawHex": "044d00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44193,
+              "length": 2,
+              "sha256": "d95a6fe931db9399f40fbe77c96657db0f5613b6f9d07a7ce0fb7f2bb3f56c6d",
+              "module": 1,
+              "cpuAddress": 44177,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46237,
+              "length": 3,
+              "sha256": "b6041591781def8fc985bdb196451ba1619ec5ec153bf900534a2d84bb4c6b84",
+              "module": 1,
+              "cpuAddress": 46221,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 1,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "041800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44195,
+              "length": 2,
+              "sha256": "09abf264f940a00eb53310bd7b35dd05b88dca61646d2a4f025d8a46e4607020",
+              "module": 1,
+              "cpuAddress": 44179,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46240,
+              "length": 3,
+              "sha256": "9c8562050dbf1a9c1ee944aa6989a6aa96b26c1b7f2d6e3e0f05d2ad6b301e32",
+              "module": 1,
+              "cpuAddress": 46224,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 2,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 4,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "034d051800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44197,
+              "length": 2,
+              "sha256": "1363d75896bc7a9c751e2d1bb6473e00bead6ce852db20269f6528f42af86da2",
+              "module": 1,
+              "cpuAddress": 44181,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46243,
+              "length": 5,
+              "sha256": "786611c03675392ea455e993e789cb9543e03a28a1aad1cc5c4a83493c8fda13",
+              "module": 1,
+              "cpuAddress": 46227,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 3,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 5,
+                "sourceType": 77,
+                "enemyId": 27
+              }
+            ],
+            "rawHex": "024d064d00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44199,
+              "length": 2,
+              "sha256": "82b3887845d5b6c119083994bb016b96326672e7ebf7a9aa75cc996f9902a4e9",
+              "module": 1,
+              "cpuAddress": 44183,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46248,
+              "length": 5,
+              "sha256": "ea7731173e0fd5171ae4144cdfc2b5d7fd3a47e1b0b0cc4e852194cc372aa898",
+              "module": 1,
+              "cpuAddress": 46232,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 4,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 77,
+                "enemyId": 27
+              }
+            ],
+            "rawHex": "044d00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44201,
+              "length": 2,
+              "sha256": "62e199296acd0350516c9b5065b476b6ab2cd9e1b7bcb2f7c8ce500073eda0a1",
+              "module": 1,
+              "cpuAddress": 44185,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46253,
+              "length": 3,
+              "sha256": "b6041591781def8fc985bdb196451ba1619ec5ec153bf900534a2d84bb4c6b84",
+              "module": 1,
+              "cpuAddress": 46237,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 5,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 3,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "024d041800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44203,
+              "length": 2,
+              "sha256": "9613b177d32bb89368c77ceab4fd36bba6e88ad877394d5408bf2274db56d569",
+              "module": 1,
+              "cpuAddress": 44187,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46256,
+              "length": 5,
+              "sha256": "0cd498587b2d9443c7eabe86238c6326227a20a7a89cd78a52a304587c5aa25b",
+              "module": 1,
+              "cpuAddress": 46240,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 6,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 4,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "034d051800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44205,
+              "length": 2,
+              "sha256": "f3598895600d072ce69af92b4d95e48f313a38504d647ada9c47a5aed8aaf33e",
+              "module": 1,
+              "cpuAddress": 44189,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46261,
+              "length": 5,
+              "sha256": "786611c03675392ea455e993e789cb9543e03a28a1aad1cc5c4a83493c8fda13",
+              "module": 1,
+              "cpuAddress": 46245,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 7,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 3,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 5,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "024d044d061800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44207,
+              "length": 2,
+              "sha256": "d482eb34c0b37ccc60dc38af74410d8038ea0a578396cde4ba80911cb40d7c24",
+              "module": 1,
+              "cpuAddress": 44191,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46266,
+              "length": 7,
+              "sha256": "c79b730965ae316e7d69edf99a072c2556b6823c8dda41f791eae481c50f1ed1",
+              "module": 1,
+              "cpuAddress": 46250,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 8,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 3,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 5,
+                "sourceType": 77,
+                "enemyId": 27
+              }
+            ],
+            "rawHex": "024d044d064d00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44209,
+              "length": 2,
+              "sha256": "cf80c6a1225188945584dfb57f1e0cbbeec081209b8c0d54635ab093ae0b2833",
+              "module": 1,
+              "cpuAddress": 44193,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46273,
+              "length": 7,
+              "sha256": "36f3434c98fc8b5b4a8edf1318a003a1a20f793ad67d7eb9f58efbcc0c232431",
+              "module": 1,
+              "cpuAddress": 46257,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 9,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 4,
+                "sourceType": 24,
+                "enemyId": 26
+              },
+              {
+                "slot": 6,
+                "sourceType": 77,
+                "enemyId": 27
+              }
+            ],
+            "rawHex": "024d0518074d00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44211,
+              "length": 2,
+              "sha256": "db1c114e14d70cb9d2cc2ae23976645cddc453d46e7c430bc42ccf5ea4722a6e",
+              "module": 1,
+              "cpuAddress": 44195,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46280,
+              "length": 7,
+              "sha256": "72161b037625e2235ccdd1895291c64f8c617701cd36ce0dc5ca3fcd160af47e",
+              "module": 1,
+              "cpuAddress": 46264,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 10,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 77,
+                "enemyId": 27
+              },
+              {
+                "slot": 3,
+                "sourceType": 24,
+                "enemyId": 26
+              }
+            ],
+            "rawHex": "024d041800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44213,
+              "length": 2,
+              "sha256": "b780cc50b2203b5fd2e7074ccf52f6be5d4f7d14062b2fdfa82c32f51bae6b7e",
+              "module": 1,
+              "cpuAddress": 44197,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 46287,
+              "length": 5,
+              "sha256": "0cd498587b2d9443c7eabe86238c6326227a20a7a89cd78a52a304587c5aa25b",
+              "module": 1,
+              "cpuAddress": 46271,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          }
+        ],
+        "rectangles": [],
+        "randomGate": "HIGH",
+        "randomThreshold": 245,
+        "defaultSource": {
+          "offset": 28311,
+          "length": 1,
+          "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977",
+          "module": 0,
+          "cpuAddress": 61063,
+          "meaning": "Actual default encounter region"
+        },
+        "mapTypeSource": {
+          "offset": 28119,
+          "length": 1,
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "module": 0,
+          "cpuAddress": 60871,
+          "meaning": "Actual original encounter gate type"
+        }
+      },
+      {
         "id": 14,
         "mapId": 65,
         "groups": [
@@ -10092,6 +10527,113 @@
         "source": "game-data/provenance/world-hell-hall-batch-script.json"
       },
       {
+        "id": "rom.boss.147",
+        "npcId": "rom.npc.64.2",
+        "mapId": 64,
+        "eventId": 26,
+        "eventArgument": 2,
+        "sourceType": 164,
+        "enemyId": 147,
+        "flagId": "rom.map.64.flag.2",
+        "group": {
+          "id": 164,
+          "entities": [
+            {
+              "slot": 3,
+              "enemyId": 147
+            }
+          ]
+        },
+        "victoryDialogue": "rom.dialogue.74.3",
+        "victoryFlags": [
+          "rom.map.64.flag.8"
+        ],
+        "victoryFlagEvidence": "game-data/provenance/world-hell-hall-batch-script.json",
+        "npcSource": {
+          "offset": 280447,
+          "length": 14,
+          "sha256": "a6d1a4d74939cbe32f7232b81000dec97568bb8f18a6db3ffec56d5514d9ad76",
+          "module": 8,
+          "cpuAddress": 51055,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "ruleSources": [
+          {
+            "offset": 349033,
+            "length": 37,
+            "sha256": "bd5d80df273ff23f475f2865c12c05fa8dfff20e646f3eed726df5a27c0f5aef",
+            "module": 10,
+            "cpuAddress": 54105,
+            "meaning": "Actual collision actor flag OR and remove246 target lookup"
+          },
+          {
+            "offset": 347961,
+            "length": 9,
+            "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+            "module": 10,
+            "cpuAddress": 53033,
+            "meaning": "Actual event arg OR a2 into map flags"
+          },
+          {
+            "offset": 349956,
+            "length": 61,
+            "sha256": "36f0a70a3acb02462e2446b4dcab1444ff7aca0886f31cedac309e0284d4b2ea",
+            "module": 10,
+            "cpuAddress": 55028,
+            "meaning": "Original actor scan with stride22 removes246 and sets6818 pointer"
+          },
+          {
+            "offset": 10627,
+            "length": 169,
+            "sha256": "4bda88807fb9b2bf43a0aafe3c8f426bd972c36217888ba228eeef7978db92d2",
+            "module": 0,
+            "cpuAddress": 43379,
+            "meaning": "Original load-time actor flag filter"
+          },
+          {
+            "offset": 349262,
+            "length": 6,
+            "sha256": "f6ec72e9cc4fbfe8dadd3effcfe80d021e02669bdef640eea6a32f18eaa4da53",
+            "module": 10,
+            "cpuAddress": 54334,
+            "meaning": "Actual sourceType enters unchanged common battle loader"
+          },
+          {
+            "offset": 349268,
+            "length": 21,
+            "sha256": "2c66d2b345ff3c4fb94b299f0856e468cfe7ac73984a29c2362ad740ee0fe7f8",
+            "module": 10,
+            "cpuAddress": 54340,
+            "meaning": "Actual success check/remove246/OR gate and event flag/message"
+          },
+          {
+            "offset": 348711,
+            "length": 2,
+            "sha256": "5539d0256eb7fc11cdb5fe3a04b71cd095886c3b1b76686ad919be7aa88e753d",
+            "module": 10,
+            "cpuAddress": 53783,
+            "meaning": "Original event pointer"
+          },
+          {
+            "offset": 349250,
+            "length": 12,
+            "sha256": "fe43ade0bd3d2b4364292c8a4cd44d75d3890f9a321172637e6184371ecc5d11",
+            "module": 10,
+            "cpuAddress": 54322,
+            "meaning": "Original stage dispatch with inline address table"
+          },
+          {
+            "offset": 21795,
+            "length": 2,
+            "sha256": "949925a1b12c20f45886ad313de257cc21c28990ea40a39f73a659cd2a7469c3",
+            "module": 0,
+            "cpuAddress": 54547,
+            "meaning": "Original per-map flag byte pointer"
+          }
+        ],
+        "source": "game-data/provenance/world-hell-hall-batch-script.json"
+      },
+      {
         "id": "rom.boss.148",
         "npcId": "rom.npc.65.1",
         "mapId": 65,
@@ -10371,6 +10913,13 @@
         "evidence": "game-data/provenance/world-hell-hall-batch-resources.json"
       },
       {
+        "mapId": 64,
+        "asset": "battle-horizon-23.png",
+        "width": 256,
+        "height": 32,
+        "evidence": "game-data/provenance/world-hell-hall-batch-resources.json"
+      },
+      {
         "mapId": 65,
         "asset": "battle-horizon-23.png",
         "width": 256,
@@ -10395,6 +10944,7 @@
       144,
       145,
       146,
+      147,
       148,
       149
     ],
@@ -13830,6 +14380,52 @@
       "ppuSha256": "e375fdd77b52e7ac0b60eefc82fb1f398fed425e3c68010e79b849fcfeeab98e",
       "matchesDefaultPalette32": true
     },
+    "unresolvedExitRows": [
+      {
+        "fromMapId": 23,
+        "toMapId": 64,
+        "trigger": [
+          12,
+          75
+        ],
+        "spawn": [
+          55,
+          91
+        ],
+        "source": {
+          "offset": 286780,
+          "length": 5,
+          "sha256": "5b945e7cc0db3ee5f550b0dcc3b373f1d86f0d39786099c0b3d10e8e95716933",
+          "module": 8,
+          "cpuAddress": 57388,
+          "meaning": "Original row outside current geometry; conditional/context semantics not yet recovered"
+        },
+        "status": "UNRESOLVED_OUTSIDE_CURRENT_GEOMETRY_NOT_ENABLED",
+        "reason": "Preserved for targeted dispatch investigation; never clamp, swap or fake teleport."
+      },
+      {
+        "fromMapId": 64,
+        "toMapId": 23,
+        "trigger": [
+          55,
+          91
+        ],
+        "spawn": [
+          12,
+          75
+        ],
+        "source": {
+          "offset": 287195,
+          "length": 5,
+          "sha256": "1310968e7c420bd566467bbad17f954d233ffbd2f3b43e6780d8f418abcfbd9a",
+          "module": 8,
+          "cpuAddress": 57803,
+          "meaning": "Original row outside current geometry; conditional/context semantics not yet recovered"
+        },
+        "status": "UNRESOLVED_OUTSIDE_CURRENT_GEOMETRY_NOT_ENABLED",
+        "reason": "Preserved for targeted dispatch investigation; never clamp, swap or fake teleport."
+      }
+    ],
     "hellHallBatch": {
       "resources": "game-data/provenance/world-hell-hall-batch-resources.json",
       "terrain": "game-data/provenance/world-hell-hall-batch-terrain.json",
@@ -13839,12 +14435,13 @@
         61,
         62,
         63,
+        64,
         65,
         66
       ],
       "normalAndroid": "NOT_RUN",
       "unopenedDependencies": {
-        "64": "event25/transparent198 companion pose and optional chain rule unresolved",
+        "64-optional-chain": "Initial hidden pose known; investigation/grant/return remains unresolved, main king route enabled",
         "67": "field class19 damage timing not yet verified",
         "68": "post-win map86/next state not yet recovered"
       },
@@ -15268,6 +15865,40 @@
     },
     {
       "fromMapId": 23,
+      "toMapId": 64,
+      "trigger": [
+        17,
+        46
+      ],
+      "spawn": [
+        30,
+        24
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 286750,
+        "length": 5,
+        "sha256": "de28e3697d6be5f478a7783f4d19fda7801249e6d79776d7b5898944387b79e4",
+        "module": 8,
+        "cpuAddress": 57358,
+        "meaning": "Original independent directed Hell hall exit"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction preserves current direction"
+      },
+      "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "fromMapId": 23,
       "toMapId": 65,
       "trigger": [
         42,
@@ -15386,6 +16017,40 @@
         "sha256": "9fb7134b27f84bae211e4b35eff08aa42853837826b70656e82178c1db092bad",
         "module": 8,
         "cpuAddress": 57408,
+        "meaning": "Original independent directed Hell hall exit"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction preserves current direction"
+      },
+      "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "fromMapId": 23,
+      "toMapId": 64,
+      "trigger": [
+        18,
+        35
+      ],
+      "spawn": [
+        3,
+        1
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 286805,
+        "length": 5,
+        "sha256": "fafffa92c5e4b7f2820d2a8b3308863025e4b7e0e8d49cc718a937c6927bf08d",
+        "module": 8,
+        "cpuAddress": 57413,
         "meaning": "Original independent directed Hell hall exit"
       },
       "confidence": "VERIFIED",
@@ -15692,6 +16357,74 @@
         "sha256": "b20d27069f6e8224ead474f614aaba46ae4db24614c6bcff77b23f85c420dfd9",
         "module": 8,
         "cpuAddress": 57787,
+        "meaning": "Original independent directed Hell hall exit"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction preserves current direction"
+      },
+      "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "fromMapId": 64,
+      "toMapId": 23,
+      "trigger": [
+        3,
+        1
+      ],
+      "spawn": [
+        18,
+        35
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287185,
+        "length": 5,
+        "sha256": "31fecf66ca125ea44c3af2f900d7643bb51d349e03b02ac24d733ff27d86d97f",
+        "module": 8,
+        "cpuAddress": 57793,
+        "meaning": "Original independent directed Hell hall exit"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction preserves current direction"
+      },
+      "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "fromMapId": 64,
+      "toMapId": 23,
+      "trigger": [
+        30,
+        24
+      ],
+      "spawn": [
+        17,
+        46
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287190,
+        "length": 5,
+        "sha256": "0cc645220797951032e013d92c6f4568ce66393f5f8081ce1015954c78fd03ca",
+        "module": 8,
+        "cpuAddress": 57798,
         "meaning": "Original independent directed Hell hall exit"
       },
       "confidence": "VERIFIED",
@@ -43363,6 +44096,1265 @@
       "opaquePixelCount": 218,
       "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
     },
+    "enemy-147.png": {
+      "width": 104,
+      "height": 64,
+      "observedRect": [
+        64,
+        56,
+        104,
+        64
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "1": [
+          130,
+          211,
+          16
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 905248,
+          "length": 16,
+          "sha256": "969f7a502062a04fd4a62848b5ebca0be5497e9746aa78368a57f79cd8dc84f9"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 806128,
+          "length": 16,
+          "sha256": "a44f869b720be79dafbfd94382036b7bd2406e1c162d632f74cb4a67a081b37e"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            48,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            56,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            64,
+            0
+          ],
+          "offset": 905280,
+          "length": 16,
+          "sha256": "40eb9fe2631c7eb3c4ec81642225bd3faadbb86a222a54fa79a9ce3d6e0f5d4a"
+        },
+        {
+          "xy": [
+            72,
+            0
+          ],
+          "offset": 905296,
+          "length": 16,
+          "sha256": "39136a9d16cef21d27b06fced066d45ae2bcbc4eaf544c77597b5580295d9322"
+        },
+        {
+          "xy": [
+            80,
+            0
+          ],
+          "offset": 905312,
+          "length": 16,
+          "sha256": "db97b4a3997bc8f03bb61205153d8c4a64e4fb65eb6dde1da73e04b97030be24"
+        },
+        {
+          "xy": [
+            88,
+            0
+          ],
+          "offset": 905328,
+          "length": 16,
+          "sha256": "898a59a3416fddcf390fa8fb4384657c9f6ef8a6d88a03c65c9309164df94bf8"
+        },
+        {
+          "xy": [
+            96,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 905344,
+          "length": 16,
+          "sha256": "715bfdab9c8cf8eacb0a6fc9644c94063c5cbede251022e6e63205276aab53cd"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 905360,
+          "length": 16,
+          "sha256": "9d73384b57918d096d74594b04cff8a4c73d8c348358275727857eb687c0c6c1"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 905376,
+          "length": 16,
+          "sha256": "c5e9ac3c841fe9bb88432134af43111ab7d5d68608c87c84db8c07a4424abbea"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 905392,
+          "length": 16,
+          "sha256": "ef7174ce363a638a0907ec5560bcf185c32d04ad3673b4786ae9cca9b5ff542b"
+        },
+        {
+          "xy": [
+            48,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            56,
+            8
+          ],
+          "offset": 905408,
+          "length": 16,
+          "sha256": "27aae148dc3cce4c514d202f1212e2599e85cdce1f860b81bfcf1d0e99c28061"
+        },
+        {
+          "xy": [
+            64,
+            8
+          ],
+          "offset": 905424,
+          "length": 16,
+          "sha256": "1b4ba2207bab2f8d875cf6b2916e7c552001ec3eb3593657374be39ce41af986"
+        },
+        {
+          "xy": [
+            72,
+            8
+          ],
+          "offset": 905440,
+          "length": 16,
+          "sha256": "9324ff256f176a8f9de12f548163922239e8dd9280075cbab9e6bce08a2ef353"
+        },
+        {
+          "xy": [
+            80,
+            8
+          ],
+          "offset": 905456,
+          "length": 16,
+          "sha256": "d8f87102383cb024ebbcb2cf7f9eaa4352e7111ef866e4f70f27df599f7e5660"
+        },
+        {
+          "xy": [
+            88,
+            8
+          ],
+          "offset": 905472,
+          "length": 16,
+          "sha256": "85b065d7fe938b699d7a153e48b02860f05fdd9da848b5c8a297917e31c981a6"
+        },
+        {
+          "xy": [
+            96,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 905488,
+          "length": 16,
+          "sha256": "01a71b6f5f8add8af333e39732510126d4025a32402116d360c6340ff560187d"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 905504,
+          "length": 16,
+          "sha256": "5c0e32175f694db85c270c6321c8cb038b8dacc661b3396ba781f5608bfa0c3b"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 905520,
+          "length": 16,
+          "sha256": "dd2a3b29971d3aad9fc0c45ac2b2402c7db1172f9ec8a3754284c38cbb9b25d4"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 905536,
+          "length": 16,
+          "sha256": "3d2635de8f7ac8e92084e725947fa13e928ade471c223c6695d0270838bd17c0"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 905552,
+          "length": 16,
+          "sha256": "9aea05aa5448aab442c7892d09290a57ce82521764acd03d8c223aa31ade252b"
+        },
+        {
+          "xy": [
+            48,
+            16
+          ],
+          "offset": 905568,
+          "length": 16,
+          "sha256": "4675d621c879f1082aff0bcc662c812cc2083ea258f8613946cb77df79d2da8c"
+        },
+        {
+          "xy": [
+            56,
+            16
+          ],
+          "offset": 905584,
+          "length": 16,
+          "sha256": "378c17e2cfdc0b6fded40307edb199f4312339a8697fe35d946f83d8144c0605"
+        },
+        {
+          "xy": [
+            64,
+            16
+          ],
+          "offset": 905600,
+          "length": 16,
+          "sha256": "6a6bb2581641e85becc2a8a755b41c629798cc091cda7b99118f2b206920d85c"
+        },
+        {
+          "xy": [
+            72,
+            16
+          ],
+          "offset": 905616,
+          "length": 16,
+          "sha256": "48b604141ed76e0c955f44d3dc7c9568e232a984f2d69fd7df1adb5c5a990118"
+        },
+        {
+          "xy": [
+            80,
+            16
+          ],
+          "offset": 905632,
+          "length": 16,
+          "sha256": "e5b23f10a579bdff198c8cf8482a2972a2ce690a6f7c8245e42e0dac0e00cab2"
+        },
+        {
+          "xy": [
+            88,
+            16
+          ],
+          "offset": 905648,
+          "length": 16,
+          "sha256": "69bf7f64fdb4c450bd554f7241536bea8a8321aa582f774ef48162ac76ad66bd"
+        },
+        {
+          "xy": [
+            96,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 570273,
+          "length": 16,
+          "sha256": "7c3ccd10bb7ec37b46d37926ae6274267f007a34aeaf15c882a715a7f3300529"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 905680,
+          "length": 16,
+          "sha256": "67ef2af93c90be19271d438661be22571b1b032c663fabf75aaee6b8e70450a0"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 905696,
+          "length": 16,
+          "sha256": "f9a5d78f66f63991aa04156b0a7edb4e00d7e4ea946263e8fa4fde56425041b2"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 905712,
+          "length": 16,
+          "sha256": "3d445ec343f1495d539d9736fefd0f97e4632d1d844feaf3e677fe646af52496"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 905728,
+          "length": 16,
+          "sha256": "780e0e60acc9f98b41b689ef05a62300a2e4cf8fbb1d84a640156985661b3f27"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 905744,
+          "length": 16,
+          "sha256": "5933171ddbba21ebef8cb1fc1dc215fcfbe0073293edae163535a4883547bdc2"
+        },
+        {
+          "xy": [
+            48,
+            24
+          ],
+          "offset": 905760,
+          "length": 16,
+          "sha256": "6724cc3631002f5a564d68f31308642c6a0578df8ea7b5478f7575d928a4413f"
+        },
+        {
+          "xy": [
+            56,
+            24
+          ],
+          "offset": 905776,
+          "length": 16,
+          "sha256": "64ecbef9861d6051e4018167f056d8cf11e3320dd87ff5038099ed6cc74986a0"
+        },
+        {
+          "xy": [
+            64,
+            24
+          ],
+          "offset": 905792,
+          "length": 16,
+          "sha256": "0a01578ce1d948b4b10416072b9489cb24289938ce0b05232dbc9fd961fd0057"
+        },
+        {
+          "xy": [
+            72,
+            24
+          ],
+          "offset": 905808,
+          "length": 16,
+          "sha256": "2acf98d177e559c780cba6e66cd26be43e8b57f8a04f5e50c4ac24a8bd565839"
+        },
+        {
+          "xy": [
+            80,
+            24
+          ],
+          "offset": 905824,
+          "length": 16,
+          "sha256": "ce22b59b4251395ec38a208827745b7447886a6d8eed775afd91a6c8b0996b3c"
+        },
+        {
+          "xy": [
+            88,
+            24
+          ],
+          "offset": 905840,
+          "length": 16,
+          "sha256": "31b211f83f44f0c844124777d5910c8b92f5b3794eeacec97d6b78953b0a4acc"
+        },
+        {
+          "xy": [
+            96,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 905856,
+          "length": 16,
+          "sha256": "db26f79dc31abb3ddd5e85109259b16ca0f77410ce263e7cc0c744519056a54c"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 905872,
+          "length": 16,
+          "sha256": "8faeca57c7ae8e11f938e33282d957b01935a2107c78131b6181e9a2daba8444"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 905888,
+          "length": 16,
+          "sha256": "a4eba36d11c6642c283e16c4483441ae0e7e1dcdb95b5a56c3ae25fa56093285"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 905904,
+          "length": 16,
+          "sha256": "50fdc8c17522ffb1d2d08a08368133048eaaccf0222765d0e9c83752e88949f1"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 905920,
+          "length": 16,
+          "sha256": "666eb85765032b8ef03556f20077df33ab5243e86799fb19ccba4ba6f66805d0"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 905936,
+          "length": 16,
+          "sha256": "3ba89bcc8674cc9703462c14324fd45f44d96e2575aa74758317f5468ce192f2"
+        },
+        {
+          "xy": [
+            48,
+            32
+          ],
+          "offset": 905952,
+          "length": 16,
+          "sha256": "627e374462ec4c32302c1f967bb1cbd27f3be66c25328b4e5588089058dc9237"
+        },
+        {
+          "xy": [
+            56,
+            32
+          ],
+          "offset": 905968,
+          "length": 16,
+          "sha256": "178d5fe27f69ae03d9c4198d9aff82aafeca5670488feccb5dce19897d61bef8"
+        },
+        {
+          "xy": [
+            64,
+            32
+          ],
+          "offset": 905984,
+          "length": 16,
+          "sha256": "246cb54778c692874bdbca78bd8fdf1658c0d6dbc54db5a9ef229d674e8807fd"
+        },
+        {
+          "xy": [
+            72,
+            32
+          ],
+          "offset": 906000,
+          "length": 16,
+          "sha256": "2540a30fc2c26637976e701b0278fca956d54bfad79bb94de167375b869c2523"
+        },
+        {
+          "xy": [
+            80,
+            32
+          ],
+          "offset": 906016,
+          "length": 16,
+          "sha256": "1144894cf1f5b1de5de0d3501e92d1b170881552d3584b82d28ffae2478e978e"
+        },
+        {
+          "xy": [
+            88,
+            32
+          ],
+          "offset": 906032,
+          "length": 16,
+          "sha256": "ad4319d00cf9048907e4eed033c4d776b4f110c873129d4883c64a42762d13e1"
+        },
+        {
+          "xy": [
+            96,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 906048,
+          "length": 16,
+          "sha256": "e7eaf2353015ae211e3840be6698f7db7860a3eae49556e06d75311bffa99f46"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 906064,
+          "length": 16,
+          "sha256": "46d74fced7c5fa1d1a76274c620baaa59133ef189d89b696cf55ca72b4b0307a"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 906080,
+          "length": 16,
+          "sha256": "2e9fd83f1d09b0dd1e9dce9f543f6781c24952cd454e4872d572699706b4bea7"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 906096,
+          "length": 16,
+          "sha256": "f7e9969c12bcf44cf36a95676ecdb64b515fc20502ce6740dbc61e268d606f2a"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 906112,
+          "length": 16,
+          "sha256": "a1acf3f7617502bdda3138c21d87b89febf01e663902f911284fec9fe3f542f9"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 906128,
+          "length": 16,
+          "sha256": "296ae9b8b51d885be1ccb734051ce61522ad21a33b8218152e01c8cd5496a622"
+        },
+        {
+          "xy": [
+            48,
+            40
+          ],
+          "offset": 906144,
+          "length": 16,
+          "sha256": "47380ca0c133411ae3c5df50d0647f2d177befc64a4aa45d31d3463e7da67041"
+        },
+        {
+          "xy": [
+            56,
+            40
+          ],
+          "offset": 906160,
+          "length": 16,
+          "sha256": "49e25b989472ab1ed68072531435d47e6046fe11aa72cc1deab900ca18e1245e"
+        },
+        {
+          "xy": [
+            64,
+            40
+          ],
+          "offset": 906176,
+          "length": 16,
+          "sha256": "1d1cb0474c8fd04dfff54ad8bab2d823dd9f721516975e45da382dbd7e9f52e8"
+        },
+        {
+          "xy": [
+            72,
+            40
+          ],
+          "offset": 906192,
+          "length": 16,
+          "sha256": "d52f6af745d218fa2399b6b140b234f472932a112240ba5eef9557f6a9d30a64"
+        },
+        {
+          "xy": [
+            80,
+            40
+          ],
+          "offset": 906208,
+          "length": 16,
+          "sha256": "36c8b73b87d825964d7c125f607f0ce572172d5f94bec0bd255035273c66c8a8"
+        },
+        {
+          "xy": [
+            88,
+            40
+          ],
+          "offset": 906224,
+          "length": 16,
+          "sha256": "534eba3c29b45fed3d53e5ff527f4c31fb9b7eb3d1a1e887ab2431c67cbbfa7c"
+        },
+        {
+          "xy": [
+            96,
+            40
+          ],
+          "offset": 745671,
+          "length": 16,
+          "sha256": "5317c0ee96a66519f55eebca8a1d4101bd6b3358fd8bea3cfd812cfb5d242df6"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 906256,
+          "length": 16,
+          "sha256": "81ddfec7e977a1ed752cc32d0b69720967f836b9f68d359782db9b273198b3f6"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 906272,
+          "length": 16,
+          "sha256": "3c6ca95d8f2489165b5824a9508a5c82276d4de9732d9d8ebe23e6879d094ae2"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 906288,
+          "length": 16,
+          "sha256": "0fddd855230c52ce8365084dea7838e718b4bb353e3050ea034fee152dcd831a"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 906304,
+          "length": 16,
+          "sha256": "8b49125191363d0847665c8fa0ca2b154b5889cb947785051307f8ab25e891f5"
+        },
+        {
+          "xy": [
+            32,
+            48
+          ],
+          "offset": 906320,
+          "length": 16,
+          "sha256": "03a576afc0207712fdb9fcc2db7eae0f625e44cd3f06f53e15a42b3cd9db6ba7"
+        },
+        {
+          "xy": [
+            40,
+            48
+          ],
+          "offset": 906336,
+          "length": 16,
+          "sha256": "02d297170a51fc450cb6c3008ae88c2a435ec32cc4eb02ecdc5e27d89b374ca4"
+        },
+        {
+          "xy": [
+            48,
+            48
+          ],
+          "offset": 906352,
+          "length": 16,
+          "sha256": "8cd0fda3231e0a5b3fdf07e2811116aa388619a500060e4bfb16b9b8d9849a87"
+        },
+        {
+          "xy": [
+            56,
+            48
+          ],
+          "offset": 906368,
+          "length": 16,
+          "sha256": "eaa79b8680e8818d34e8a30542f6667b29632fec1f1700bf530badbc6db3b3b4"
+        },
+        {
+          "xy": [
+            64,
+            48
+          ],
+          "offset": 906384,
+          "length": 16,
+          "sha256": "f6ce7543d38c4208518fa5841f628a798ad554a9f0e55f6486d65bcecd990e6d"
+        },
+        {
+          "xy": [
+            72,
+            48
+          ],
+          "offset": 906400,
+          "length": 16,
+          "sha256": "689ac3604d194a86e51ad63a92d87304aebdac30f55a705074a91e8dd7e9f9a1"
+        },
+        {
+          "xy": [
+            80,
+            48
+          ],
+          "offset": 906416,
+          "length": 16,
+          "sha256": "78c7759392f1b81b2c4b37f46557335df14a985689460e7adbd2e21901c6c961"
+        },
+        {
+          "xy": [
+            88,
+            48
+          ],
+          "offset": 906432,
+          "length": 16,
+          "sha256": "fba5697ae0435a7c8aba4804a8e50630de59e7629e85662a0130cc74e66640c2"
+        },
+        {
+          "xy": [
+            96,
+            48
+          ],
+          "offset": 906448,
+          "length": 16,
+          "sha256": "3d0e6cac63619b357dc5917330108375cc57ae85aa1d1749cea330cc30c8f713"
+        },
+        {
+          "xy": [
+            0,
+            56
+          ],
+          "offset": 906464,
+          "length": 16,
+          "sha256": "71904ea4e1fac4e68524da2c9e2d8e47cea5c85051f315e76da857a888634a64"
+        },
+        {
+          "xy": [
+            8,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            56
+          ],
+          "offset": 906480,
+          "length": 16,
+          "sha256": "29993d87dda7a171dd22317959cb75adcf56ddfda904afbe2688c0414adae65c"
+        },
+        {
+          "xy": [
+            24,
+            56
+          ],
+          "offset": 906496,
+          "length": 16,
+          "sha256": "7d00723a90e922e2cab13fcc6f55f1d077a60bb1b68627aea1a9722d6e72a42a"
+        },
+        {
+          "xy": [
+            32,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            56
+          ],
+          "offset": 906512,
+          "length": 16,
+          "sha256": "a50aaf92672123d06a3d881b90c50e827458fa792aba7d386aa92cbd11635e53"
+        },
+        {
+          "xy": [
+            48,
+            56
+          ],
+          "offset": 906528,
+          "length": 16,
+          "sha256": "78d521506a564c8e5dc34a091d45b091bdf57ef138c032d27ce27ae2db4e1bdb"
+        },
+        {
+          "xy": [
+            56,
+            56
+          ],
+          "offset": 906544,
+          "length": 16,
+          "sha256": "cc8a115f02b73c5206c7d0fe054fed3e48506cda0471ac116ca248002356e90b"
+        },
+        {
+          "xy": [
+            64,
+            56
+          ],
+          "offset": 906560,
+          "length": 16,
+          "sha256": "b3b71e2061bdc31c26e0d52d375e2d037b0f2d0883883615bc7c49fb525dbe40"
+        },
+        {
+          "xy": [
+            72,
+            56
+          ],
+          "offset": 906576,
+          "length": 16,
+          "sha256": "1d94fa7c90ed2785889509e0edfeb3bd1997748ae5ff181e47014bf468dc4800"
+        },
+        {
+          "xy": [
+            80,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            88,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            96,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        }
+      ],
+      "rgbaSha256": "52ba47996aa59e26434ddc47e0fc56ba22ba5b6dea2627e5af79e791b4b14c63",
+      "captureSha256": "cd4790cea9dfe8bd21c84c98e085425189c020eeb4f224fed1d03128551dd743",
+      "captureKind": "CONTROLLED_COORDINATE_THEN_ACTUAL_ORIGINAL_EVENT_AND_FULL_GROUP_LOADER",
+      "normalPlayEvidence": false
+    },
+    "npc-195-hell-batch.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1028304,
+          "length": 16,
+          "sha256": "b49949c761b7ea0f89b246f7a50f4c1a0f44a4190409c493e1e5952254c4c2b7",
+          "spriteTile": 44,
+          "attribute": 1,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1028320,
+          "length": 16,
+          "sha256": "c9e1c313cd1ade15b71526d2c3ce06d64e48217c7bf7b2e37e6877eeb54467f3",
+          "spriteTile": 45,
+          "attribute": 1,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1029072,
+          "length": 16,
+          "sha256": "e51d4403acd1cca14289d675601ad10778e2e3833b58dd8fcba7ed7c0f617eea",
+          "spriteTile": 60,
+          "attribute": 1,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1029088,
+          "length": 16,
+          "sha256": "c2fc738a9f25bc1576ffd6d53167dc906be36188923d903e95e184c5dd6e5153",
+          "spriteTile": 61,
+          "attribute": 1,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "5ce6376a853491e1414d889f930054d52ab558361ef163236a95f8dc0f40e46f",
+      "observedRect": [
+        80,
+        137,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_WORLD_POSITION_AND_COMPANION_ONLY",
+      "normalPlayEvidence": false,
+      "captureSha256": "1ee8bf25d93f307bcd32b7487c4fb436028bec2b9b00b26c2df2bc08bfeea5f6",
+      "ppuSha256": "d9bfdef3b12096a4682dea485076e98b1daed2e128afd3f2a31e402c27822a32",
+      "ramSha256": "30cbb24ddaf50fc862732a8b39e0bd5ac4a5be0e6365ff5c71b8827022145545",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 194,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    },
+    "npc-208-hell-batch.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1028848,
+          "length": 16,
+          "sha256": "9f740991f34f72a83e4c7352ac36c0efc49537a9a13699f2aa9d553a47f503a0",
+          "spriteTile": 46,
+          "attribute": 0,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1028864,
+          "length": 16,
+          "sha256": "548e1a11bbc63da17b14733f76344b12e4ac4df0855f793eeb447d7e84b4a927",
+          "spriteTile": 47,
+          "attribute": 0,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1029104,
+          "length": 16,
+          "sha256": "051251210a970f3fde40fcb4790997b72b536b7f37d9eeb7d4a61098adb728f2",
+          "spriteTile": 62,
+          "attribute": 0,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1029120,
+          "length": 16,
+          "sha256": "9e04245fabb61ee64aa72f20b129b0f41bbc23e946d54edcf19a4ce32a1f484a",
+          "spriteTile": 63,
+          "attribute": 0,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "06f623cc27d90c3ec7f7daf6747eb35b703973914639530357c8fa7d32fecbf9",
+      "observedRect": [
+        80,
+        137,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_WORLD_POSITION_AND_COMPANION_ONLY",
+      "normalPlayEvidence": false,
+      "captureSha256": "edb81378ab6b647e0497363190af42b0208b29c642b83115ed6a341f0844e7cf",
+      "ppuSha256": "d9bfdef3b12096a4682dea485076e98b1daed2e128afd3f2a31e402c27822a32",
+      "ramSha256": "4ec055eac6def852f2ce38546e9ffbc19e392decc41e83dc2e3124cf4a0d40a0",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 186,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    },
+    "initial-hidden-198.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        80,
+        137,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          0,
+          0,
+          0
+        ]
+      },
+      "unusedPaletteIndices": [
+        1,
+        2,
+        3
+      ],
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "spriteTile": 127,
+          "attribute": 0,
+          "oamRamAddress": 548
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "spriteTile": 127,
+          "attribute": 0,
+          "oamRamAddress": 552
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "spriteTile": 127,
+          "attribute": 0,
+          "oamRamAddress": 556
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "spriteTile": 127,
+          "attribute": 0,
+          "oamRamAddress": 560
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "captureKind": "CONTROLLED_ORIGINAL_INITIAL_HIDDEN_OBJECT_POSE_ONLY",
+      "normalPlayEvidence": false,
+      "captureSha256": "8e9fa7197d5ce1d58b48caf481d581348c4ea649e429b79761eb60f519166fee",
+      "opaquePixelCount": 0,
+      "completeGraphic": false,
+      "limits": [
+        "Actual initial hidden pose only; alternate visible pose, investigation, grant and return conditions NOT_IMPLEMENTED.",
+        "Never classify as complete original NPC graphic or use this to assert full map completion."
+      ]
+    },
     "enemy-148.png": {
       "width": 104,
       "height": 64,
@@ -47145,6 +49137,75 @@
       ]
     },
     {
+      "mapId": 64,
+      "gridSha256": "9abf5a8e4afd67364b8f7290aa099b9563754b8b2dafe1546bbe7be3090de335",
+      "palette": [
+        14,
+        17,
+        24,
+        56,
+        25,
+        8,
+        24,
+        17,
+        25,
+        8,
+        24,
+        56,
+        25,
+        14,
+        14,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        30,
+        24
+      ],
+      "walkableClasses": [
+        0,
+        4,
+        8,
+        13
+      ],
+      "npcCells": [
+        35,
+        490,
+        99,
+        376,
+        805,
+        806,
+        892,
+        486,
+        487,
+        485
+      ],
+      "terrain": {
+        "tileset": 3,
+        "evidence": "game-data/provenance/world-hell-hall-batch-terrain.json"
+      },
+      "limitations": [
+        "Original geometry, separately directed exits, full encounter tables, king and ordinary chests restored from scoped evidence.",
+        "Normal Android traversal, battle, restart NOT_RUN; moving guards and optional event poses remain incomplete.",
+        "Sprite behind-background/lower-half original occlusion not yet rendered; collision mode0/1 is separately CPU-verified."
+      ]
+    },
+    {
       "mapId": 65,
       "gridSha256": "207bfbc5b41244469b80c962b6790a0d55ec93b1fda3b4f39386705bf507dfec",
       "palette": [
@@ -49678,6 +51739,166 @@
       "meaning": "Original per-map flag byte pointer"
     },
     {
+      "offset": 24915,
+      "length": 2,
+      "sha256": "6c54b558756aa9f6402748c0b8f1f3d7b83aa502e00c50c3d8ff587ab86f89d0",
+      "module": 0,
+      "cpuAddress": 57667,
+      "meaning": "Map background/sprite palette selector pair"
+    },
+    {
+      "offset": 25588,
+      "length": 2,
+      "sha256": "e18eff3f2ec1783006db319cbf9259201014cbaf75a3c4e52a38bebc54f42971",
+      "module": 0,
+      "cpuAddress": 58340,
+      "meaning": "Background palette pointer"
+    },
+    {
+      "offset": 25672,
+      "length": 2,
+      "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+      "module": 0,
+      "cpuAddress": 58424,
+      "meaning": "Sprite palette pointer"
+    },
+    {
+      "offset": 26122,
+      "length": 16,
+      "sha256": "f05c6b04f53456d7208f3c10862e07e1d353e2470951f6f96d09b9a9fd23ee0d",
+      "module": 0,
+      "cpuAddress": 58874,
+      "meaning": "Original default background colors"
+    },
+    {
+      "offset": 25882,
+      "length": 16,
+      "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+      "module": 0,
+      "cpuAddress": 58634,
+      "meaning": "Original sprite colors"
+    },
+    {
+      "offset": 24487,
+      "length": 5,
+      "sha256": "2bda3a57f33eace74364799ba2d52c5d20ac5614d6cc649095868935e971ff5e",
+      "module": 0,
+      "cpuAddress": 57239,
+      "meaning": "Tileset and maximum pixel coordinates"
+    },
+    {
+      "offset": 23948,
+      "length": 2,
+      "sha256": "781931ba746d26ffea68441abb7cb7733c37e397d9623f96a8ae74786bef46cf",
+      "module": 0,
+      "cpuAddress": 56700,
+      "meaning": "Map header pointer"
+    },
+    {
+      "offset": 25211,
+      "length": 1,
+      "sha256": "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6",
+      "module": 0,
+      "cpuAddress": 57963,
+      "meaning": "PRG module used by renderer"
+    },
+    {
+      "offset": 280419,
+      "length": 141,
+      "sha256": "a5845d0dd1350d346c6e9c3b5fcdea7c6d11c57ae8bcef3454209a561ae6142e",
+      "module": 8,
+      "cpuAddress": 51027,
+      "meaning": "14-byte records terminated by FF"
+    },
+    {
+      "offset": 60302,
+      "length": 2,
+      "sha256": "3dcac295b8d15611d0a6353a5f3cd92f72c752f1aec74100fd0041ceba2c07ae",
+      "module": 1,
+      "cpuAddress": 60286,
+      "meaning": "Enemy stat pointer"
+    },
+    {
+      "offset": 62714,
+      "length": 16,
+      "sha256": "64b62e51a6f6054c3bd1120b1a7a4a8a7acc4061f70c4626b6493c97f11bd9c5",
+      "module": 1,
+      "cpuAddress": 62698,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+    },
+    {
+      "offset": 349033,
+      "length": 37,
+      "sha256": "bd5d80df273ff23f475f2865c12c05fa8dfff20e646f3eed726df5a27c0f5aef",
+      "module": 10,
+      "cpuAddress": 54105,
+      "meaning": "Actual collision actor flag OR and remove246 target lookup"
+    },
+    {
+      "offset": 347961,
+      "length": 9,
+      "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Actual event arg OR a2 into map flags"
+    },
+    {
+      "offset": 349956,
+      "length": 61,
+      "sha256": "36f0a70a3acb02462e2446b4dcab1444ff7aca0886f31cedac309e0284d4b2ea",
+      "module": 10,
+      "cpuAddress": 55028,
+      "meaning": "Original actor scan with stride22 removes246 and sets6818 pointer"
+    },
+    {
+      "offset": 10627,
+      "length": 169,
+      "sha256": "4bda88807fb9b2bf43a0aafe3c8f426bd972c36217888ba228eeef7978db92d2",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original load-time actor flag filter"
+    },
+    {
+      "offset": 349262,
+      "length": 6,
+      "sha256": "f6ec72e9cc4fbfe8dadd3effcfe80d021e02669bdef640eea6a32f18eaa4da53",
+      "module": 10,
+      "cpuAddress": 54334,
+      "meaning": "Actual sourceType enters unchanged common battle loader"
+    },
+    {
+      "offset": 349268,
+      "length": 21,
+      "sha256": "2c66d2b345ff3c4fb94b299f0856e468cfe7ac73984a29c2362ad740ee0fe7f8",
+      "module": 10,
+      "cpuAddress": 54340,
+      "meaning": "Actual success check/remove246/OR gate and event flag/message"
+    },
+    {
+      "offset": 348711,
+      "length": 2,
+      "sha256": "5539d0256eb7fc11cdb5fe3a04b71cd095886c3b1b76686ad919be7aa88e753d",
+      "module": 10,
+      "cpuAddress": 53783,
+      "meaning": "Original event pointer"
+    },
+    {
+      "offset": 349250,
+      "length": 12,
+      "sha256": "fe43ade0bd3d2b4364292c8a4cd44d75d3890f9a321172637e6184371ecc5d11",
+      "module": 10,
+      "cpuAddress": 54322,
+      "meaning": "Original stage dispatch with inline address table"
+    },
+    {
+      "offset": 21795,
+      "length": 2,
+      "sha256": "949925a1b12c20f45886ad313de257cc21c28990ea40a39f73a659cd2a7469c3",
+      "module": 0,
+      "cpuAddress": 54547,
+      "meaning": "Original per-map flag byte pointer"
+    },
+    {
       "offset": 24917,
       "length": 2,
       "sha256": "6c54b558756aa9f6402748c0b8f1f3d7b83aa502e00c50c3d8ff587ab86f89d0",
@@ -50042,7 +52263,7 @@
     }
   ],
   "schemaVersion": 1,
-  "scopeRevision": "hell-hall-batch-61-62-63-65-66-ground-npc-boss-chest",
+  "scopeRevision": "hell-hall-batch-61-through66-ground-npc-boss-chest",
   "taskId": "WORLD-FULL-01",
   "growthExtension": {
     "actorIndex": 0,
@@ -51171,6 +53392,170 @@
         "categoryGrant": 2,
         "evidence": "game-data/provenance/world-hell-chest-grants.json"
       }
+    },
+    {
+      "id": "rom.npc.64.1",
+      "mapId": 64,
+      "cell": [
+        10,
+        15
+      ],
+      "spriteId": 190,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280433,
+          "length": 14,
+          "sha256": "7e93da3fefa61fbfae249be732063bbb22116870597c731503bcc399d0237a01",
+          "module": 8,
+          "cpuAddress": 51041,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json",
+        "remainingUnknown": [
+          "Optional chain return condition/grant not yet implemented; do not emit post-return message merely from first talk."
+        ]
+      },
+      "sprite": "npc-190-first-hall.png",
+      "firstDialogue": "rom.dialogue.74.5",
+      "repeatDialogue": "rom.dialogue.74.5"
+    },
+    {
+      "id": "rom.npc.64.2",
+      "mapId": 64,
+      "cell": [
+        3,
+        3
+      ],
+      "spriteId": 189,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280447,
+          "length": 14,
+          "sha256": "a6d1a4d74939cbe32f7232b81000dec97568bb8f18a6db3ffec56d5514d9ad76",
+          "module": 8,
+          "cpuAddress": 51055,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      },
+      "sprite": "npc-189-first-hall.png",
+      "firstDialogue": "rom.dialogue.74.2",
+      "repeatDialogue": "rom.dialogue.74.3",
+      "interactionCell": [
+        3,
+        5
+      ],
+      "interactionDirection": "UP",
+      "interactionEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "id": "rom.npc.64.3",
+      "mapId": 64,
+      "cell": [
+        24,
+        11
+      ],
+      "spriteId": 190,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280461,
+          "length": 14,
+          "sha256": "322c0ef821af0c2c4ef4a38caf7aba622e1807df432eff7418f4a2a353b26446",
+          "module": 8,
+          "cpuAddress": 51069,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json",
+        "remainingUnknown": [
+          "Original movement timing/path not restored; static original initial coordinate."
+        ]
+      },
+      "sprite": "npc-190-first-hall.png",
+      "firstDialogue": "rom.dialogue.74.0",
+      "repeatDialogue": "rom.dialogue.74.0"
+    },
+    {
+      "id": "rom.npc.64.5",
+      "mapId": 64,
+      "cell": [
+        6,
+        25
+      ],
+      "spriteId": 208,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280489,
+          "length": 14,
+          "sha256": "6e4b3b999c660bd08b1f062b321163bc5e1be13520ff3efc45837d0d0e129062",
+          "module": 8,
+          "cpuAddress": 51097,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      },
+      "sprite": "npc-208-hell-batch.png",
+      "spriteEvidence": "game-data/provenance/world-hell-hall-batch-resources.json",
+      "firstDialogue": "rom.dialogue.74.8",
+      "repeatDialogue": "rom.dialogue.74.8"
+    },
+    {
+      "id": "rom.npc.64.6",
+      "mapId": 64,
+      "cell": [
+        28,
+        27
+      ],
+      "spriteId": 190,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280503,
+          "length": 14,
+          "sha256": "ec3435471e5b5190d4ee0a9e4cea272dbeb07151e11e521ae6cb87fdef475496",
+          "module": 8,
+          "cpuAddress": 51111,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      },
+      "sprite": "npc-190-first-hall.png",
+      "firstDialogue": "rom.dialogue.74.4",
+      "repeatDialogue": "rom.dialogue.74.4"
+    },
+    {
+      "id": "rom.npc.64.8",
+      "mapId": 64,
+      "cell": [
+        7,
+        15
+      ],
+      "spriteId": 208,
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 280531,
+          "length": 14,
+          "sha256": "5a1f60533168e7c3f0b14dd19707c12dad844c89afd12f6e3626f5feec4d32b4",
+          "module": 8,
+          "cpuAddress": 51139,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      },
+      "sprite": "npc-208-hell-batch.png",
+      "spriteEvidence": "game-data/provenance/world-hell-hall-batch-resources.json",
+      "firstDialogue": "rom.dialogue.74.7",
+      "repeatDialogue": "rom.dialogue.74.7"
     },
     {
       "id": "rom.npc.65.1",
@@ -53658,6 +56043,358 @@
           "licenseStatus": "UNKNOWN",
           "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
           "rowId": 117
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.0",
+      "text": "这是第六殿车训小地狱。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105318,
+          "length": 25,
+          "sha256": "41e4c37087be79645d359921b1bc945acfb634837ddd5f5def8deb6441c92535",
+          "module": 3,
+          "cpuAddress": 39766,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101632,
+            "length": 2,
+            "sha256": "8ada467517b31508a9b96d10aee63d89fb9f669113ec61d51ce60fa02d2b2b11",
+            "module": 3,
+            "cpuAddress": 36080,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 131
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.2",
+      "text": "请接受卞城王的考验。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105354,
+          "length": 13,
+          "sha256": "b1627bc5c5288effc5f690e1dcbeb739c28017f866a8148ad7cd35846631ea33",
+          "module": 3,
+          "cpuAddress": 39802,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101636,
+            "length": 2,
+            "sha256": "36a2d9b73af65b6d7af7c409a452d0443e744e091a0a5e252e08111d42dfb509",
+            "module": 3,
+            "cpuAddress": 36084,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 132
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.3",
+      "text": "请走吧！",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105367,
+          "length": 7,
+          "sha256": "31d06e078d60a968c88dda1ad6091377869d69db7c85125f989d90b4581098d8",
+          "module": 3,
+          "cpuAddress": 39815,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101638,
+            "length": 2,
+            "sha256": "d74822f3b29e19d7e43e40f40f2726beb1cce2b414142f1d94359d1a01a1e585",
+            "module": 3,
+            "cpuAddress": 36086,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 133
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.4",
+      "text": "不要烦我！",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105374,
+          "length": 14,
+          "sha256": "10430118b83dd50e131d5e1d706254584a5d83e2e0c119db076ee4835d07c1ac",
+          "module": 3,
+          "cpuAddress": 39822,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101640,
+            "length": 2,
+            "sha256": "fc483df1121eece033977c780fc896f193afa772ab1501cce51f613584aab3e9",
+            "module": 3,
+            "cpuAddress": 36088,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 125
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.5",
+      "text": "我的一付铁链不知道丢哪里去了！如果你找到，请拿来还我。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105388,
+          "length": 28,
+          "sha256": "c9d4e605b2db3f2cc8349098ea16ea000f22c021a99f066eec4740c28d3f979c",
+          "module": 3,
+          "cpuAddress": 39836,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101642,
+            "length": 2,
+            "sha256": "08c4090f47fd3efa64c18d099231fcb3c9c4d28c61a529e436707970bd8b7a8b",
+            "module": 3,
+            "cpuAddress": 36090,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 127
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.6",
+      "text": "太感谢你了！本殿旁有一条神秘河，背对着河等待吧！",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105416,
+          "length": 27,
+          "sha256": "69189349b4fb8cc76e09d31be8722cd280cb5e56123cc99214a8deaade5812b4",
+          "module": 3,
+          "cpuAddress": 39864,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101644,
+            "length": 2,
+            "sha256": "5e069e23f82f55c5ac77eecfad274faea4a049b5d9da59f31bc4eebac7c38ea3",
+            "module": 3,
+            "cpuAddress": 36092,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 128
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.7",
+      "text": "凡驾车故意肇事者或肇事逃避者，均要来此受罚。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105443,
+          "length": 9,
+          "sha256": "b7dbd2346ad557c6094c3fa16d999a3090ab13534bef1aad8aafb04ff4fdcdb5",
+          "module": 3,
+          "cpuAddress": 39891,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101646,
+            "length": 2,
+            "sha256": "4b94091807efff96fe259a7ccd23379208bf395d2937fd9ff127ef81f20d5d86",
+            "module": 3,
+            "cpuAddress": 36094,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 130
+        },
+        "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+      }
+    },
+    {
+      "id": "rom.dialogue.74.8",
+      "text": "这拖车好重。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "record": {
+          "offset": 105452,
+          "length": 8,
+          "sha256": "d1f1755c0a77eaa3769870735adca25b6c357b9b3d1a3fdb296395b68127bebc",
+          "module": 3,
+          "cpuAddress": 39900,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101126,
+            "length": 2,
+            "sha256": "32c5a42c9a763e788071e3c4a819990c8cfc7e66e52cc04266c3cdb355738319",
+            "module": 3,
+            "cpuAddress": 35574,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101648,
+            "length": 2,
+            "sha256": "e02460012ffbb2bd7eaddaeb898194a485596875868387f318431bd942448d51",
+            "module": 3,
+            "cpuAddress": 36096,
+            "meaning": "Message pointer"
+          }
+        ],
+        "reference": {
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "validation": "Bound message IDs/records; full text remains PROVISIONAL_REFERENCE unless a specific original screen is reviewed.",
+          "rowId": 126
         },
         "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
       }
@@ -57027,6 +59764,71 @@
         "meaning": "Original NPC record"
       },
       "limitation": "Real observed sprite pose reused at original load cell; patrol/interception movement and optional dialogue not implemented."
+    },
+    {
+      "id": "rom.npc.64.4",
+      "mapId": 64,
+      "cell": [
+        5,
+        25
+      ],
+      "sprite": "npc-195-hell-batch.png",
+      "interaction": "NOT_IMPLEMENTED",
+      "source": "game-data/provenance/world-hell-hall-batch-resources.json",
+      "recordSource": {
+        "offset": 280475,
+        "length": 14,
+        "sha256": "88f134a465d0afb5f48b9c99ba734dd074685d203459e82ad1fda7c13e7591e0",
+        "module": 8,
+        "cpuAddress": 51083,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "limitation": "Initial original pose only; optional investigation/event not implemented, does not block main king route.",
+      "spriteId": 195,
+      "spriteEvidence": "game-data/provenance/world-hell-hall-batch-resources.json"
+    },
+    {
+      "id": "rom.npc.64.7",
+      "mapId": 64,
+      "cell": [
+        6,
+        15
+      ],
+      "sprite": "npc-195-hell-batch.png",
+      "interaction": "NOT_IMPLEMENTED",
+      "source": "game-data/provenance/world-hell-hall-batch-resources.json",
+      "recordSource": {
+        "offset": 280517,
+        "length": 14,
+        "sha256": "c847e36ed9f8d1974ab113fead7cf2d87410986fc341dabb21ea969599ca39dc",
+        "module": 8,
+        "cpuAddress": 51125,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "limitation": "Initial original pose only; optional investigation/event not implemented, does not block main king route.",
+      "spriteId": 195,
+      "spriteEvidence": "game-data/provenance/world-hell-hall-batch-resources.json"
+    },
+    {
+      "id": "rom.npc.64.9",
+      "mapId": 64,
+      "cell": [
+        5,
+        15
+      ],
+      "sprite": "initial-hidden-198.png",
+      "interaction": "NOT_IMPLEMENTED",
+      "source": "game-data/provenance/world-hell-hall-batch-resources.json",
+      "recordSource": {
+        "offset": 280545,
+        "length": 14,
+        "sha256": "cf7ebc5dbf122a78c052e44eaf45a5ae7f764cbb708091d1e4b526c23a43dc62",
+        "module": 8,
+        "cpuAddress": 51153,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "limitation": "Initial original pose only; optional investigation/event not implemented, does not block main king route.",
+      "initialHiddenEvidence": "game-data/provenance/world-hell-hall-batch-resources.json"
     }
   ],
   "mechanisms": [
@@ -57229,6 +60031,24 @@
         "sha256": "0839e3e2777dfdd173933fde023a06c38952afc5749f71bc7ce936567a716e1f",
         "module": 8,
         "cpuAddress": 50487,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-hell-hall-batch-script.json"
+    },
+    {
+      "id": "rom.barrier.64.0",
+      "mapId": 64,
+      "cell": [
+        3,
+        1
+      ],
+      "removedFlagId": "rom.map.64.flag.8",
+      "recordSource": {
+        "offset": 280419,
+        "length": 14,
+        "sha256": "be4d7a12d83843fa1de62e14177e06c7e67eeaeaa2fc865c8c498fb977c2c3b8",
+        "module": 8,
+        "cpuAddress": 51027,
         "meaning": "Fixed 14-byte NPC source record"
       },
       "evidence": "game-data/provenance/world-hell-hall-batch-script.json"

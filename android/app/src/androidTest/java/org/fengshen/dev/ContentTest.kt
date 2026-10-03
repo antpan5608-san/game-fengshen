@@ -17,7 +17,7 @@ class ContentTest:IsolatedGameTestCase(){
     fun testControlledHallBatchGroundChestsAndIndependentRewards(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val battle=c.battle!!
-        for(mid in listOf(61,62,63,65,66)){
+        for(mid in listOf(61,62,63,64,65,66)){
             val barrier=c.sceneBarriers.single{it.mapId==mid}
             assertEquals(MovementBlock.PHYSICAL,c.sceneForState(mid,emptyMap())!!.blockType(barrier.x,barrier.y))
             val boss=battle.storyBattles.getValue("rom.npc.$mid.1")

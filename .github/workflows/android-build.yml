@@ -469,3 +469,17 @@ jobs:
             artifacts/world-second-hall-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain scoped Hell hall batch normal battle and restart checkpoints
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-hall-batch-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-hall-batch-*.png
+            artifacts/checkpoint-ui/touch-ux-world-hall-batch-*.json
+            artifacts/checkpoint-ui/world-hall-batch-*.json
+            artifacts/checkpoint-ui/world-hall-batch-*-test.txt
+            artifacts/world-hall-batch-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14

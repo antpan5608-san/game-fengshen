@@ -17,6 +17,15 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
+## 当前有效状态（2026-10-03T08:01:55.796635+00:00）
+
+- WORLD-FULL-01持续F3/F4；正式v27/c14，原v43/run37104551493来源f38b4fa8/c24构建成功，正常runtime仍执行中，未覆盖main来源。
+- 独立树/workspace/game-fengshen-world-hell-batch已安全合并该冻结提交，新增c25/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6。后续六殿61–66真实几何/完整敌群/6Boss/6普通箱；初始隐藏对象仅已知透明姿态，调查/归还仍未开放，不据此封整个64。
+- 两全新restore目录162文件一致、113世界Python方法通过125.917秒、235 JVM及instrument编译通过；原取证边界/限定多殿预算4测试PASS。新正常触控续跑/按原规则练级补给/实际所得装备/6Boss复谈及外部冷启入口已编译，App仍NOT_RUN。
+- inspect37107749426实际07:52:07.994UTC（15:52:07.994北京）查27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；同一旧v26 ProtocolException阻塞严格生产上传。
+- 下一动作：检查v43最终真实结果并保留失败现场；冻结后续同提交c25候选验证，等待时继续67地图每步伤害/保护和68胜后86去向。64两条原坐标超出几何出口保留待核，不截断/改传送。
+- 有效分母UNKNOWN，ALL_MAPS_USABLE=NO；十类累计欠账不关闭，声音/一加13T NOT_RUN。
+
 ## 历史检查点（以下由最近的“当前有效检查点”接续）
 
 - 开工inspect 36991887234成功：2026-10-02 17:48:55北京时间，可信v26/v25，445/4117事件，正常真机2/模拟器0、测试0、错误0、清理失败0。没有发现上传错误不等于所有过程正常，真机历史样本不算本轮验收。
