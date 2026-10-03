@@ -563,6 +563,42 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
     if not opaque or opaque!=recipe['opaquePixelCount']:raise ValueError('Transparent or incomplete NPC pose')
     return recipe
 
+def validate_world_chest_grant(reader,npc):
+    """Grant only from the actual chest record; item effect or price is not inferred."""
+    path='game-data/provenance/world-hell-chest-grants.json';proof=load(ROOT/path)
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-actual-ordinary-chest-grant' or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['testCount']!=72 or proof['failures']!=0:
+        raise ValueError('Chest grant lacks original scoped evidence')
+    from forensics.fengshen246 import extract_npcs
+    matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
+    if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
+    rule=matches[0];original=extract_npcs(reader,rule['mapId'])['records'][rule['npcIndex']]
+    raw=checked_span(reader,npc['source']['record']);category=rule['categoryId'];item_id=rule['originalId']
+    categories={0:'medicine',1:'special',2:'weapon',3:'armor'}
+    stable='rom.item.0' if (category,item_id)==(2,0) else f'rom.{categories[category]}.{item_id}'
+    treasure=npc['treasure'];expected={'itemId':stable,'flagId':f'rom.map.{rule["mapId"]}.flag.{rule["flagMask"]}',
+        'amount':1,'categoryGrant':category,'evidence':path}
+    if npc['mapId']!=rule['mapId'] or original['range']!=npc['source']['record'] or rule['source']!=original['range'] or \
+            list(raw[:3])!=[144,category,item_id] or raw[12]!=0 or raw[13]!=rule['flagMask'] or \
+            rule['flagMask'] not in [1,2,4,8,16,32,64,128] or treasure!=expected or \
+            rule['maxCount']!=reader.read(2,0xa190+category)[0] or not npc.get('openedSprite'):
+        raise ValueError('Chest category, count, flag or original record differs')
+    if proof['rules']!={'grantAmount':1,'categoryLimits':[10,1,10,10],'categorySlotCount':16,
+            'fullExistingStackCanIncrease':True,'failureDoesNotSetOpenedFlag':True,'repeatDoesNotGrant':True,
+            'quantityMask':127,'worldUseRuleInferred':False}:
+        raise ValueError('Chest inventory rules differ')
+    required={(10,0xa740,92),(2,0x9ec0,249),(2,0xa0df,12),(2,0xa0eb,173),(2,0xa190,12)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Chest lacks grant, flag or capacity source')
+    for span in proof['sources']:checked_span(reader,span)
+    animation=rule['animationSource']
+    if animation['cpuAddress']!=int.from_bytes(raw[8:10],'little') or animation['cpuAddress']!=0x8e3d:
+        raise ValueError('Chest opened graphic cannot reuse a different original animation')
+    checked_span(reader,animation)
+    if digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
+        raise ValueError('Original chest CPU expectations differ')
+    return rule
+
 def validate_world_hall_batch_script(reader,map_id):
     """Same original finalization, independently checked per event/gate, never a universal flag4."""
     from forensics.fengshen246 import extract_npcs
@@ -1071,6 +1107,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('spriteEvidence')=='game-data/provenance/world-hell-hall-batch-resources.json':
+            recipe=validate_world_hall_batch_npc_graphic(reader,npc['spriteId'])
+            if evidence['graphics'].get(npc['sprite'])!=recipe:
+                raise ValueError('NPC sprite differs from reviewed original actor pose')
         if npc.get('interactionDirection'):
             proof=load(ROOT/npc['interactionEvidence']);rule=proof['rules']
             if proof['romSha256']!=SHA256 or (npc['id'],npc['mapId'],npc['cell'],npc['interactionCell'],npc['interactionDirection'])!= \
@@ -1087,6 +1127,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
         if not npc.get('treasure'):continue
+        if npc['treasure'].get('categoryGrant') is not None:
+            validate_world_chest_grant(reader,npc)
+            continue
         raw=checked_span(reader,npc['source']['record']);t=npc['treasure']
         if list(raw[:3])!=[144,1,11] or raw[13]!=2 or t['itemId']!='rom.special.11' or t['amount']!=1 or \
                 t['flagId']!=f'rom.map.{npc["mapId"]}.flag.2' or not npc.get('openedSprite'):

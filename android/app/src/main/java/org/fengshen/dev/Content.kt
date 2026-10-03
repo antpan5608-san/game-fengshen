@@ -209,7 +209,12 @@ object ContentLoader {
                 n.optString("innId").takeIf{it.isNotEmpty()},
                 n.optJSONObject("treasure")?.let{t->
                     require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
-                    TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount"))
+                    TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount")).also{treasure->
+                        if(t.has("categoryGrant")){
+                            require(t.getString("evidence")=="game-data/provenance/world-hell-chest-grants.json")
+                            treasure.categoryGrant=t.getInt("categoryGrant").also{require(it in 0..3)}
+                        }
+                    }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->

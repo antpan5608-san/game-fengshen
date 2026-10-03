@@ -193,3 +193,6 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 同类殿事件按原NPC末4字节及原inline stage表批次绑定：world-hell-hall-batch-script.json/4096原CPU期望已用于3项Python与纯旗标JVM测试，复用StoryBattleDefinition/SceneBarrier而非复制运行引擎。NPC246 gate原mask随地图不同，失败分支和加载过滤也需核；CPU及受控坐标图形不等于正常路线。后段八Boss原全组104块各全匹配配方成功；读取高地址battleHP须从SRAM6800起始dump取offset186，不读取短RAM空slice。原NPCcamera/screen定位尝试失败并保留；后续按真实+4/+6 world坐标取10种可见单帧，198透明不能提升为完整图。不宣称自动隐式skill匹配。
 
 - 世界NPC坐标与对白字段先对原14字节及22字节actor记录核对：+2/+3不是屏幕坐标；以原+4/+6 world坐标/OAM、PPU每个16字节CHR和opaque像素重建既有recipe，组合部件分别留ID。静态RGB表与FCEUX实录RGB可有差异，沿用实际每个PPU值一致的可见像素，未用颜色不冒称验证；透明全块拒绝为完整图。10个recipe复建/错身份/错像素/透明拒绝3方法已实跑。原9B在874C是遮挡，不能直接转bool免遇敌；6840原碰撞+480原遇敌预期、233JVM及106世界Python实际通过。原私有CPU存档依赖和Android NOT_RUN限制保留。
+
+
+- 普通宝箱沿用WorldItems与InventoryCapacity，原14字节记录需独立验证类别/ID/flag及grant/容量/开箱动画span；受控CPU数量含已使用位，不能把原字节129当129份。test_world_chest_grants.py与HallChestGrantTest已在本地验证72原CPU预期、失败不落flag、满栏已有栈可增、重复不结算。新地图正常App/冷启另验；箱子取物不证明其物品使用效果。
