@@ -59,14 +59,18 @@ object WorldItems {
      * encounter/dialogue dispatch; map 139's chest is guarded by a story battle.
      * This transaction does not establish that walking up to a chest permits its reward.
      */
-    fun openTreasure(snapshot:SaveSnapshot,treasure:TreasureDefinition,item:ItemDefinition):Result {
+    /** Loader and transaction share one scoped identity/capacity policy. */
+    fun supportsTreasure(treasure:TreasureDefinition,item:ItemDefinition):Boolean {
         val category=treasure.categoryGrant
         val categories=listOf("medicine","special","weapon","armor")
         val expectedId=if(category==2&&item.originalId==0)OpeningEquipment.KNIFE_ID else "rom.${item.category}.${item.originalId}"
         val ordinary=category!=null&&category in categories.indices&&item.category==categories[category]&&
             item.originalId in 0..255&&item.id==expectedId&&item.maxCount==(if(category==1)1 else 10)
-        if(!(if(category==null)supported(item)else ordinary)||treasure.itemId!=item.id||treasure.amount!=1||!validId(treasure.flagId))
-            return reject(snapshot,"宝箱物品规则尚未核验")
+        return (if(category==null)supported(item)else ordinary)&&treasure.itemId==item.id&&
+            treasure.amount==1&&validId(treasure.flagId)
+    }
+    fun openTreasure(snapshot:SaveSnapshot,treasure:TreasureDefinition,item:ItemDefinition):Result {
+        if(!supportsTreasure(treasure,item))return reject(snapshot,"宝箱物品规则尚未核验")
         if(snapshot.flags[treasure.flagId]==true)return reject(snapshot,"已经取过了")
         val count=snapshot.inventory[item.id]?:0
         if(count<0)return reject(snapshot,"物品数量异常")

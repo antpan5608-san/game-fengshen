@@ -207,3 +207,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原正常流程准备耗尽时先查实际成长阈值、训练敌群奖励与保存索引。北海前开局弱敌区3000步未达到12级，保留失败，不注入EXP/更改等级目标；改走已支持海域正常训练的驱动已编译，App复测未执行。进度每64步保留实际快照有助诊断，不能只增大预算无限重试。
 
 - 原CPU派生TSV的字节hash不能依赖宿主Git默认换行；Windows core.autocrlf曾使严格恢复拒绝。仓库*.tsv固定text eol=lf，test_world_evidence_checkout.py在隔离Git仓库启用autocrlf真实checkout后逐字节比原表及blob已成功；保持所有SHA门禁，不通过读取时静默忽略差异来放宽。修复后的Windows runner仍须实际执行。
+
+- 新普通箱接入时，Loader能力检查与WorldItems原交易复用同一supportsTreasure；不继续沿用旧“所有宝箱都是special11”的样本假设，也不删除amount/稳定ID/maxCount/flag和categoryGrant来源门禁。旧定海珠无categoryGrant仍走原专用规则；72原CPU grant边界和238全JVM本地通过，仪器编译通过。真实App加载修复需原候选ContentTest及正常开箱另验。

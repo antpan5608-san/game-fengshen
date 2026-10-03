@@ -280,8 +280,8 @@ object ContentLoader {
         }
         require(npcs.filter{it.treasure!=null}.all{npc->
             val t=npc.treasure!!;val item=itemDefinitions[t.itemId]
-            npc.openedSprite!=null&&t.flagId.isNotBlank()&&item?.category=="special"&&item.originalId==11&&item.maxCount==1
-        })
+            npc.openedSprite!=null&&item!=null&&WorldItems.supportsTreasure(t,item)
+        }){"宝箱物品定义不符合已接入的原版类别规则"}
         val extraCharacters=data.optJSONArray("additionalCharacters")?.let{a->(0 until a.length()).map{i->
             val c=a.getJSONObject(i);val state=CharacterState.parse(c.getJSONObject("initialState"))
             require(state.id!=initialPlayer.id&&c.getString("evidence").isNotBlank())
