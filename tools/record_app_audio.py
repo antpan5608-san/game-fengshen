@@ -7,6 +7,30 @@ from PIL import Image
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'artifacts/checkpoint-ui'
+
+class SavedBoundaryUnavailable(RuntimeError):
+    pass
+
+def read_saved_boundary(read_pref,pause=time.sleep,attempts=20):
+    """Read the actual persisted boundary across atomic preference-file replacement.
+
+    Never return an older cached save or turn a missing boundary into a PASS.
+    Error text contains the failure type, not the player's XML/JSON payload.
+    """
+    last=None
+    for attempt in range(attempts):
+        try:
+            raw=read_pref('opening-local-save')
+            if not raw:raise ValueError('MissingPreferenceBytes')
+            xml=ET.fromstring(raw)
+            state=json.loads(next(n.text for n in xml if n.attrib.get('name')=='saveJson'))
+            if not isinstance(state,dict):raise ValueError('SaveMustBeObject')
+            return state
+        except (ET.ParseError,StopIteration,TypeError,ValueError) as error:
+            last=type(error).__name__
+            if attempt+1<attempts:pause(.1)
+    raise SavedBoundaryUnavailable(f'Actual persisted save unavailable after {attempts} reads ({last})')
+
 def record_silent():
     """Portable branch of the existing recorder; video only, no audio claim."""
     cold_method='testHerbColdStartMatchesNormalSave';budget=1200
@@ -34,8 +58,7 @@ def record_silent():
         r=subprocess.run(['adb','-s','emulator-5554',*cmd],capture_output=True,timeout=60)
         return r.stdout if r.returncode==0 else None
     def saved():
-        xml=ET.fromstring(read_pref('opening-local-save'))
-        return json.loads(next(n.text for n in xml if n.attrib.get('name')=='saveJson'))
+        return read_saved_boundary(read_pref)
     names=['opening-local-save','operation-a-ui','cloud-session']
     backups={name:read_pref(name) for name in names}
     OUT.mkdir(parents=True,exist_ok=True)
@@ -49,7 +72,7 @@ def record_silent():
             while test.poll() is None:
                 if time.monotonic()-started>budget:raise TimeoutError('Normal App route exceeded isolated runtime budget')
                 try: boundary_before=saved()
-                except (ET.ParseError,StopIteration,TypeError):
+                except SavedBoundaryUnavailable:
                     if videos:raise
                     boundary_before=None # First new-game launch can precede its first automatic save.
                 remote=f'/sdcard/{prefix}-normal-{len(videos):02d}.mp4'
@@ -111,6 +134,13 @@ def record_silent():
             'segments':segments,'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result))
+    except Exception:
+        # Preserve the instrument outcome even when recording or save-boundary
+        # collection failed first; incomplete tests remain NOT_RUN, never PASS.
+        if test_log.is_file():
+            print('ISOLATED_APP_TEST_AT_RECORDING_FAILURE: '+str(test_log.relative_to(ROOT)))
+            print(test_log.read_text(encoding='utf-8',errors='replace')[-12000:])
+        raise
     finally:
         if video and video.poll() is None:
             pid=adb('shell','pidof','screenrecord').decode().strip()

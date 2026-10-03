@@ -38,6 +38,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'World north/status content gates failed'}
     & python -m unittest discover -s tests -p test_world_inventory.py
     if($LASTEXITCODE -ne 0){throw 'Original world inventory gates failed'}
+    & python -m unittest discover -s tests -p test_record_app_boundary.py
+    if($LASTEXITCODE -ne 0){throw 'Strict App recording save-boundary gates failed'}
     & python -m unittest discover -s tests -p test_world_growth_export.py
     if($LASTEXITCODE -ne 0){throw 'Original owner growth gates failed'}
     & python -m unittest discover -s tests -p test_world_west_services_export.py
