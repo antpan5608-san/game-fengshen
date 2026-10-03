@@ -140,6 +140,15 @@ object ContentLoader {
         val initialName=initial.optString("name").ifBlank{initial.getString("id")}
         require(initialName.isNotBlank() && initialName.length<=32)
         val initialPlayer=CharacterState.parse(initial)
+        val sceneBarriers=data.optJSONArray("sceneBarriers")?.let{a->(0 until a.length()).map{i->
+            val b=a.getJSONObject(i);require(b.getString("evidence").isNotBlank())
+            val cell=ints(b,"cell");require(cell.size==2)
+            SceneBarrier(b.getString("id"),b.getInt("mapId"),cell[0],cell[1],b.getString("removedFlagId")).also{rule->
+                val base=scenes.getValue(rule.mapId)
+                require(rule.x<base.width&&rule.y<base.height&&rule.y*base.width+rule.x in base.dynamicObjectCells)
+            }
+        }}?:emptyList()
+        require(sceneBarriers.map{it.id}.distinct().size==sceneBarriers.size)
         val exits=data.getJSONArray("exits").let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val trigger=ints(o,"trigger");val spawn=ints(o,"spawn")
             require(trigger.size==2&&spawn.size==2&&o.getString("confidence")=="VERIFIED")
@@ -154,8 +163,9 @@ object ContentLoader {
         }}
         require(exits.all{exit->
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
-            from!=null && to!=null && from.check(exit.triggerX,exit.triggerY)==null && to.check(exit.spawnX,exit.spawnY)==null
-        })
+            from!=null && to!=null && validExitPlacement(from,exit.triggerX,exit.triggerY,sceneBarriers) &&
+                validExitPlacement(to,exit.spawnX,exit.spawnY,sceneBarriers)
+        }) {"Invalid exit geometry after applying reviewed removable objects"}
         fun bitmap(name: String,w: Int,h: Int): Bitmap {
             val b=read(name);val bitmapStart=SystemClock.elapsedRealtime();val opts=BitmapFactory.Options().apply{inScaled=false}
             val image=BitmapFactory.decodeByteArray(b,0,b.size,opts)?:error("Invalid image")
@@ -532,17 +542,7 @@ object ContentLoader {
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
-                data.optJSONArray("sceneBarriers")?.let{a->
-                    content.sceneBarriers=(0 until a.length()).map{i->
-                        val b=a.getJSONObject(i);require(b.getString("evidence").isNotBlank())
-                        val cell=ints(b,"cell");require(cell.size==2)
-                        SceneBarrier(b.getString("id"),b.getInt("mapId"),cell[0],cell[1],b.getString("removedFlagId")).also{rule->
-                            val base=scenes.getValue(rule.mapId)
-                            require(rule.x<base.width&&rule.y<base.height&&rule.y*base.width+rule.x in base.dynamicObjectCells)
-                        }
-                    }
-                    require(content.sceneBarriers.map{it.id}.distinct().size==content.sceneBarriers.size)
-                }
+                content.sceneBarriers=sceneBarriers
                 data.optJSONArray("mechanisms")?.let{a->
                     content.mechanisms=(0 until a.length()).map{i->
                         val o=a.getJSONObject(i);val cells=o.getJSONArray("changes")

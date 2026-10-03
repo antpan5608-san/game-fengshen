@@ -38,7 +38,7 @@ class Village2ExportTests(unittest.TestCase):
         self.assertEqual((15,7),(current['buyPrice'],current['sellPrice']))
         copy_current.pop('buyPrice');copy_current.pop('sellPrice');copy_current['source'].pop('merchantPriceEvidence');copy_current['source'].pop('merchantPriceRange')
         self.assertEqual(old,copy_current)
-        legacy=json.loads((ci.ROOT/'game-data/provenance/world-hell-encounters-content.json').read_text())
+        legacy=json.loads((ci.ROOT/'game-data/provenance/world-hell-encounters-content.json').read_text(encoding='utf-8'))
         verified=next(i for i in legacy['items']if i['id']=='rom.medicine.12')
         self.assertEqual(verified,next(i for i in self.scene['items']if i['id']=='rom.medicine.12'))
         self.assertEqual(len(self.scene['items']),len({i['id']for i in self.scene['items']}))
