@@ -2196,7 +2196,12 @@ class TouchTest:IsolatedGameTestCase(){
                     state("boss-physical-action");capturedBossAttack=true
                 }
                 if(boss&&!capturedBattleHerb&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.HEAL){
-                    assertEquals(minOf(fight.hero.maxHp,displayedAction.beforeHeroHp+50),displayedAction.heroHp)
+                    val healedId=displayedAction.targetId?:fight.hero.id
+                    val healed=fight.party.single{it.id==healedId}
+                    val shown=displayedAction.partyHp.getValue(healedId)
+                    val prior=shown-displayedAction.hpDelta
+                    assertEquals(minOf(healed.maxHp,prior+50),shown)
+                    if(healedId==fight.hero.id)assertEquals(minOf(fight.hero.maxHp,displayedAction.beforeHeroHp+50),displayedAction.heroHp)
                     state("boss-herb-action");capturedBattleHerb=true
                 }
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
