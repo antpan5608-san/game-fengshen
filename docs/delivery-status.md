@@ -1279,3 +1279,12 @@ c33桥提交e8eff171保留；c34/195文件/33地图，manifest 713ad24349dbb4c77
 143独立世界Python单次PASS（299.364秒）、258 JVM/48 suites/0失败错误跳过、instrument编译、autocrlf checkout和空目录严格恢复与本地字节一致。首轮新局部3方法2PASS/1ERROR为旧scene未写空dynamicObjectCells，修读取默认而不削六对象断言；全量通过。新增Android正常路径/旗标/升级冷启仍NOT_RUN。原controlled森林101入口/144碰撞组合和敌区17只取得输入，尚未打包。
 
 v53不可变签名artifact11276415922已实际取回并独立核包名/签名/c32/192文件、APK SHA a7b8b371a1d26f13c79c38157edd75ba501c96827fa1274db7797072b3f8208c、源c552900a/run37128387307；runtime仍执行，生产v27不变。运行中日志实际Forbidden/BlobNotFound，不把无法读取解释为PASS。十类清单和UNKNOWN分母保留，ALL_MAPS_USABLE=NO。
+
+
+## WORLD-FULL-01 独立森林检查点（2026-10-03T16:12Z，未发布）
+
+- c34基础之上接原forest101和完整zone17：c35/199文件/34地图，manifest 0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991；审核v27固定基底，原地图/音频/图集字节复用。新增敌38/39原HP250/262、13完整组和HIGH245，不修改碰撞、概率、伤害或掉落。北端房间171条件未完，不宣称全森林剧情闭环。
+- 实际原真实按键确认16(213,155)→101(8,51)、UP8,50/树不可走/返回大陆213,155；仅源进入使用受控位置/相机，不是正常新游戏。原RTS入口差一解释了先前不完整CPU调用，按真实入口CDC0/D197的144矩阵匹配现有Scene源边机制，保留树墙和source3横向限制。class7视觉遮挡仍欠账。
+- 147世界Python一次PASS（351.756秒）、森林局部4PASS、全259 JVM/49 suites/0失败错误跳过、instrument编译、实际LF checkout和空目录restore199精确PASS。首轮墙spawn fixture和restore后路径比较错误分别修正，失败不计PASS；新正常森林路线、保存冷启与手机/声音NOT_RUN，驱动已编译且原CI门禁增同产物结果，不新增workflow。
+- 原171移动NPC178已真实邻接交谈，固定坐标失败保留；玉鼎真人只核当前杨戬不在对白，未宣布教学/入队完成。原资料继续受控，公开仅最小源span/recipe/hash。十类累计权威清单继续保留，未关闭全世界/全服务/全剧情门槛。
+- v53/run37128387307/c32来源冻结、build成功/runtime仍执行，正式v27不变。inspect37133145108实际15:25UTC/两版3622事件/真机5会话/测试0/清理0，旧v26下载ProtocolException仍UNCONFIRMED且保护不绕；ALL_MAPS_USABLE=NO、有效分母UNKNOWN。继续171及实际候选首错，不主动收尾。

@@ -17,13 +17,24 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T15:20Z）
+## 当前有效状态（2026-10-03T16:12Z）
+
+- WORLD-FULL-01持续F3/F4；正式v27/c14、分母UNKNOWN、ALL_MAPS_USABLE=NO不变。冻结main/c552900a的v53/c32/run37128387307仍runtime执行；原签名APK独立核验已通过，不把构建/本地验包当App或发布通过，不推main改变来源。
+- work/world-after-medical在359da95/c34之后实际接入forest101：c35、199文件、34地图，manifest 0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991。仍用审核v27固定APK递归恢复，旧媒体字节不变；新2张敌人图逐块CHR/实际RGBA匹配。原森林名称UNKNOWN、没有假捷径或改monster数值。
+- 纠正先前不完整CPU入口：原RTS表是地址减一，真实CDC0/D197而非CDBF/D196。完整144组合与实际UP空地/DOWN树阻挡相符：allowed0/3/7/8/9、source3阻LEFT/RIGHT、target1墙；原class7仅遮挡显示仍欠账，交通模式不启用。原16(213,155)→101(8,51)，再8,50→8,51→16(213,155)真实按键已复核；入口表实际DEDD，最初误写DEBD被严格导出拒绝后修正来源，不绕校验。
+- 完整zone17默认mapType10/HIGH245、13组、敌38/39真实HP250/262和behavior0/6；behavior6复用原已核status16。原组4全loader实捕获，不靠只改敌ID取图。正常App驱动用实际村3买草/付40住宿，再原大陆/176步原合法森林路径到32,13、保存与外部冷启返回，已编译NOT_RUN；171房间事件仍定向核实，不把北端入口写已完成。
+- 本地一次147世界Python PASS（351.756秒）、4森林局部PASS（52.665秒）、259 JVM/49 suites/0失败错误跳过及instrument编译PASS；真实autocrlf checkout与严格空assets目录restore199文件逐字节PASS。首轮JVM fixture把角色spawn放墙，被校验拒绝；改为合法spawn、独立probe144源格后全259通过，不改原墙。首轮restore后的比较误附android路径，原restore已成功；按实际destination直接对比全通过。工具/原版取证不算新App通过。
+- 实际最新inspect37133145108在15:25:14.358UTC查可信27/26=1333/2289事件、普通真机5会话/模拟器0/测试0、清理0；仍旧v26下载ProtocolException1根因UNCONFIRMED，发布保护不绕。声音/一加13T NOT_RUN。
+- 原171已实际进入并沿普通室内路径交谈：175玉鼎真人181.0说明杨戬当前不在；移动NPC178实际追踪邻接后取得181.5“告訴你，楊戩最喜歡爬樹了！”；固定初始坐标尝试失败保留。没有证明入队、教学或奖品；相关条件/复谈/素材/返回仍继续核实。
+- 下一可执行动作：保存c35本地可复现检查点，继续171原事件/返回与可见素材；读取v53最终结果，失败查首错，不重复同来源CI。总目标不以34图或检查点结束。
+
+## 历史有效状态（2026-10-03T15:20Z）
 
 - WORLD-FULL-01持续F3/F4，正式仍v27/c14，分母UNKNOWN、ALL_MAPS_USABLE=NO。main/c552900a/v53/run37128387307来源冻结；Windows build SUCCESS，runtime仍执行。已从不可变artifact11276415922取回原签名APK：SHA a7b8b371a1d26f13c79c38157edd75ba501c96827fa1274db7797072b3f8208c、20947718字节、原签名/包名/c32/192文件独立verify PASS；首个CLI漏--output失败不算验签失败，正确调用成功。运行中日志经本地代理Forbidden、连接器BlobNotFound，未读到实时阶段，不编造后段PASS。
 - c33桥/完整区16已保存本地e8eff1717a15d139b16eaba7d11237226383f801，不推main或发布。继续原89入口取证发现不是静态树林墙：原map16六个实际collision actor，241/242/243分别在222,150/151/152，旗标0时阻断北向路径。原交谈仅显示“那個方向沒有人”，未核解除条件，不把它们删掉或设flag制造路线。
 - 最小修复复用SceneBarrier：六个原record、0:A973加载过滤器、16旗标指针0x710、1536独立原CPU输出；对应1/2/4/8/16/32只移除本对象。244位于桥类别16，不能把它强限普通0/2；已按当前已核foot0/2/15/16保持原地形，未开交通能力。受控初始HP500/60000尝试与原位置来源分别保留；战斗阶段辅助脚本错误已查，受控来源从不称正常新游戏。
 - c34/195文件/33地图，manifest 713ad24349dbb4c772a100fd7f857a4368f1fe0d3a037295781d8b190ec3724e，固定c33父配方、同审核v27基底。一次全世界143方法PASS（299.364秒）、258 JVM/48 suites/0失败错误跳过、instrument编译、真实autocrlf checkout、严格空目录restore逐字节一致。首轮阻挡导出测试1 ERROR是旧scene省略空dynamicObjectCells，改按合法空默认后保留六对象完整断言，全量通过。新App过桥/条件阻挡/冷启仍NOT_RUN。
-- 原另一入口16(213,155)→101(8,51)用受控位置/相机、真实UP实际触发，图为森林山地区域，原名尚未核。101原tileset5的source CDBF和target D196均RTS，已核144现有类别组合不阻挡；不能套普通“树是墙”。真实遇敌区17完整13组、敌38/39及下一入口101(32,12)→171(7,14)仍待接入，不称洞窟捷径或已可玩。
+- 原另一入口16(213,155)→101(8,51)用受控位置/相机、真实UP实际触发，图为森林山地区域，原名尚未核。101原tileset5分派采用RTS地址减一；原CDBF/D196直接调用仅RTS，现已按实际入口CDC0/D197重核完整144组合，原树类别1阻挡、source3横向阻挡，保留实际树木墙。真实遇敌区17完整13组、敌38/39及下一入口101(32,12)→171(7,14)仍待接入，不称洞窟捷径或已可玩。
 - 实际最新巡检仍37129885660/14:31:58UTC：27/26共3622事件，普通真机5会话，旧v26 ProtocolException1根因UNCONFIRMED、上传保护不绕。声音/一加13T NOT_RUN。
 - 下一动作：提交原大陆对象条件本地检查点，继续101/171的局部资源、碰撞/遭遇/服务；读取v53结束结果并立即处理实际首错，不重复开同来源CI，不以33图停工。
 

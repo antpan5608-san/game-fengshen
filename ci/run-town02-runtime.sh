@@ -31,7 +31,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -185,6 +185,7 @@ python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebir
 python tools/record_app_audio.py world-village3 testNormalWorldVillageThreeServicesFromVerifiedRebirthSave --silent --cold-test testWorldVillageThreeColdRestartAndRealReentry --budget-seconds 1800
 python tools/record_app_audio.py world-medical testNormalMedicalServicesFromVerifiedVillageThreeSave --silent --cold-test testMedicalServicesColdRestartAndReentry --budget-seconds 1800
 python tools/record_app_audio.py world-continent-bridge testNormalContinentBridgeAndZone16FromVerifiedMedicalSave --silent --cold-test testContinentBridgeColdRestartAndRealReturn --budget-seconds 1800
+python tools/record_app_audio.py world-forest101 testNormalForest101FromVerifiedContinentBridgeSave --silent --cold-test testForest101ColdRestartAndRealContinentReturn --budget-seconds 2400
 # Clinical sub-results are App-written evidence; pull before constructing receipt.
 pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
@@ -196,6 +197,7 @@ r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'],runtime='PASS',upgrade='PASS',normalHerbSupply='PASS',controlledBoundaries='PASS',shopEquipmentInputRegression='PASS',touchUx='PASS',phoneSizedLayout='PASS',baselineComparison='PRESERVED_NOT_RERUN',nanhaiNormalRoute='PASS',nanhaiBossVictory='PASS',nanhaiOnceAndColdRestart='PASS',mobileGrowth='PASS',mobileEnemyInformation='PASS',mobileDirectTouch='PASS',mobileActionSnapshots='PASS',battleHerb='PASS',worldCurrentServices='PASS',worldSeaNorth='PASS',worldStatusAndAntidote='PASS',worldSaveProtection='PASS',worldWestPalace='PASS',worldSharedVillageServices='PASS',worldTerrainRestore='PASS',worldNorthPalace='PASS',worldPearlUseAndColdRestart='PASS',worldCave85Normal='PASS',worldCave85OnceAndColdRestart='PASS',worldEastPalaceNormal='PASS',worldEastPartyAndColdRestart='PASS',worldHellVillageNormal='PASS',worldHellVillageColdRestart='PASS',worldWholly08Controller='PASS',worldFirstHallNormal='PASS',worldFirstHallColdRestart='PASS',worldSecondHallNormal='PASS',worldSecondHallColdRestart='PASS',worldHallBatchNormal='PASS',worldHallBatchColdRestart='PASS',audio='NOT_RUN',onePlus13T='NOT_RUN')
 r.update(worldFinalHallsNormal='PASS',worldRebirthDialogueAndColdRestart='PASS')
 r.update(worldContinentBridgeAndZone16Normal='PASS',worldContinentBridgeColdRestart='PASS',worldVillageThreeServicesAndColdRestart='PASS',worldMedicalControlledCommands='PASS',worldMedicalNormalEntryAndColdRestart='PASS')
+r.update(worldForest101Normal='PASS',worldForest101ColdRestart='PASS')
 medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
 for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

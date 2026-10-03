@@ -247,3 +247,9 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 - 静态可走格不能替代原actor条件：map16六record的0:A973加载过滤1536原CPU向量已用于ContinentBarrierTest和局部导出；复用SceneBarrier，不设旗标/移除原挡路对象。某对象位于桥类别16，须保留已核foot规则而非只认0/2。test_world_continent_barrier_export首轮旧scene省略空dynamicObjectCells导致读取错误，改合法空默认并保留六对象完整断言；143全世界Python/258 JVM/真实LF checkout/空目录恢复已成功。App条件路线仍待同产物runner。
 - 原ci_apk.py verify需显式--output路径；只漏该参数时在写receipt失败，不能称签名不符。实际取回同源不可变签名artifact后，核receipt来源/run/完整SHA，再在对应冻结内容pin树verify成功；不把签名构建或字节验包当正常运行/发布。
+
+
+## 已验证的森林分派校正
+
+- 原PHA/PHA/RTS分派表存目标地址减一，不能在表值处直接模拟后就宣布所有类别可走。forest101实际树格按键被阻挡，完整源/目标分派144矩阵验证后复用Scene.sourceEdges；world-forest101-terrain保留原跨度、实际键序列和失败入口解释。树墙、source3横向约束与sprite遮挡分别处理，不将遮挡值当遇敌控制。
+- 原完整zone/group loader和observed_graphic_recipe已取得两种森林敌人全部图块/实际RGBA；区域/组数按目标ROM验证后才扩probe-world-enemy的有限计数。局部导出4方法、完整世界回归、JVM/仪器编译、真实autocrlf checkout与ci_apk.restore空assets目录逐字节已运行。restore的destination就是assets目录，不能再附android路径；normalApp/外部冷启须等同候选runner实际结果，不能由编译宣称成功。

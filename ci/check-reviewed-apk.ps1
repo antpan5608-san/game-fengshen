@@ -39,4 +39,5 @@ if($runtime.worldHallBatchNormal -ne 'PASS' -or $runtime.worldHallBatchColdResta
 if($runtime.worldFinalHallsNormal -ne 'PASS' -or $runtime.worldRebirthDialogueAndColdRestart -ne 'PASS'){throw 'Final halls, protection, side rooms, actual rebirth dialogue and cold continuation must verify this exact APK'}
 if($runtime.worldVillageThreeServicesAndColdRestart -ne 'PASS'){throw 'Village3 normal trades, equipment, lodging, original dialogue and cold reentry must verify this exact APK'}
 if($runtime.worldContinentBridgeAndZone16Normal -ne 'PASS' -or $runtime.worldContinentBridgeColdRestart -ne 'PASS'){throw 'Original bridges, complete zone16 encounters and actual cold return must verify this exact APK'}
+if($runtime.worldForest101Normal -ne 'PASS' -or $runtime.worldForest101ColdRestart -ne 'PASS'){throw 'Original forest101 route, full zone17 and actual cold return must verify this exact APK'}
 if($runtime.worldMedicalControlledCommands -ne 'PASS' -or $runtime.worldMedicalNormalEntryAndColdRestart -ne 'PASS'){throw 'Medical real entry/cold restart and separately controlled commands must verify this exact APK'}

@@ -13,6 +13,22 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    fun testForest101OriginalFootEdgesCompleteRegionAndRealReturn(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val s=c.scenes.getValue(101)
+        assertEquals(setOf(0,3,7,8,9),s.walkableClasses)
+        assertEquals(MovementBlock.PHYSICAL,s.probeFrom(8,51,Key.DOWN))
+        assertEquals(MovementBlock.NONE,s.probeFrom(8,51,Key.UP))
+        val enter=c.exits.single{it.fromMapId==16&&it.triggerX==213&&it.triggerY==155}
+        assertEquals(101,enter.toMapId);assertEquals(8,enter.spawnX);assertEquals(51,enter.spawnY)
+        val back=c.exits.single{it.fromMapId==101&&it.toMapId==16}
+        assertEquals(8,back.triggerX);assertEquals(51,back.triggerY);assertEquals(213,back.spawnX);assertEquals(155,back.spawnY)
+        val zone=c.battle!!.zones.single{it.mapId==101}
+        assertEquals(17,zone.groups.first().zoneId);assertEquals(13,zone.groups.size);assertTrue(zone.highGate);assertEquals(245,zone.randomThreshold)
+        assertEquals(setOf(38,39),zone.groups.flatMap{it.members}.map{it.enemyId}.toSet())
+        assertEquals(250,c.battle!!.enemies.getValue(38).hp);assertEquals(262,c.battle!!.enemies.getValue(39).hp)
+        val old=SaveSnapshot("opening-segment-001-c34",16,238*16+8,160*16+8,Key.UP,listOf(c.initialPlayer),emptyMap(),emptyMap(),93)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
     /** Bundled original ground bridges; normal App traversal is separately verified. */
     fun testContinentFootBridgesOriginalDirectionsEncountersAndLegacySave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(16)

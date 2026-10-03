@@ -2244,11 +2244,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testMedicalServicesColdRestartAndReentry(){normalWorldStoryContinuation(true,true,medical=true)}
     fun testNormalContinentBridgeAndZone16FromVerifiedMedicalSave(){normalWorldStoryContinuation(false,true,continentBridge=true)}
     fun testContinentBridgeColdRestartAndRealReturn(){normalWorldStoryContinuation(true,true,continentBridge=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false){
+    fun testNormalForest101FromVerifiedContinentBridgeSave(){normalWorldStoryContinuation(false,true,forest101=true)}
+    fun testForest101ColdRestartAndRealContinentReturn(){normalWorldStoryContinuation(true,true,forest101=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2303,7 +2305,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2490,6 +2492,39 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(forest101){
+            assertEquals(true,source.flags["rom.map.86.flag.128"])
+            state(if(cold)"cold-exact-normal-owned-save"else"verified-bridge-source-no-state-grants")
+            if(!cold){
+                assertEquals(16,v.world.mapId);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+                // Restock only via the existing actual village shop and paid inn.
+                walkTo(239,160);assertEquals(3,v.world.mapId)
+                val service=enterService(3,19)
+                val herb=v.content.itemDefinitions.getValue(HerbUse.ID)
+                val available=minOf(herb.maxCount-(v.currentSnapshot().inventory[HerbUse.ID]?:0),v.currentSnapshot().money/herb.buyPrice!!)
+                if(available>0)trade(HerbUse.ID,true,available)
+                leaveService(service);inn(3)
+                val villageReturn=v.content.exits.first{it.fromMapId==3&&it.toMapId==16}
+                walkTo(villageReturn.triggerX,villageReturn.triggerY);assertEquals(16,v.world.mapId)
+                walkTo(235,159);walkTo(231,159);walkTo(213,155)
+                assertEquals(101,v.world.mapId);assertEquals(8 to 51,v.world.x/16 to v.world.y/16)
+                state("real-continent-door-and-original-forest")
+                walkTo(32,13);assertEquals(101,v.world.mapId)
+                state("normal-forest-full-path-to-next-room-approach")
+                assertTrue("Original natural encounters must remain enabled",fights>0)
+                checkSourceUnchanged();persistChecked()
+                File(root,"world-forest101-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-forest-save-at-original-next-door-approach")
+            }else{
+                assertEquals(101,v.world.mapId);assertEquals(32 to 13,v.world.x/16 to v.world.y/16)
+                walkTo(8,51);assertEquals(16,v.world.mapId)
+                assertEquals(213 to 155,v.world.x/16 to v.world.y/16)
+                state("cold-forest-original-return-to-continent")
+                walkTo(238,160);for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+                checkSourceUnchanged();persistChecked();state("cold-return-and-owned-save")
+            }
+            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
         if(continentBridge){
             assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])

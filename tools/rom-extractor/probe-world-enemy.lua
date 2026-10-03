@@ -1,6 +1,6 @@
 -- CONTROLLED BOSS FIXTURE; encounter zone/group injected, not normal play.
 local root=assert(os.getenv('FENGSHEN_ROOT'));local zone=tonumber(assert(os.getenv('WORLD_ENEMY_ZONE')));local group=tonumber(assert(os.getenv('WORLD_ENEMY_GROUP')))
-local verifiedCounts={[4]=14,[16]=19}
+local verifiedCounts={[4]=14,[16]=19,[17]=13}
 assert(verifiedCounts[zone] and group>=0 and group<verifiedCounts[zone])
 local out=root..'/private-derived/world-enemy-zone-'..zone..'-group-'..group..'/'
 local frame=0;local banks={63,63,63,63};local injected=false;local lastphase=-1;local ticks=0

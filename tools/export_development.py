@@ -916,6 +916,23 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        forest=recipe.get('forestCollisionEvidence')
+        if forest:
+            proof=load(ROOT/forest)
+            required={(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
+            if forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+                    proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
+                    proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
+                    proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
+                    proof['sourceEntry']!=0xcdc0 or proof['targetEntry']!=0xd197 or \
+                    set(collision)!={0,1,3,7,8,9} or allowed!=[0,3,7,8,9] or \
+                    proof['sourceEdges']!={'3':['LEFT','RIGHT']} or proof['targetEdges']!={} or \
+                    {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+                raise ValueError('Forest foot movement lacks its complete original RTS-dispatch scope')
+            for span in proof['sources']:checked_span(reader,span)
+            if proof['activeCpuSha256']!=digest(reader.read(0,0x8000,0x8000)) or \
+                    digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
+                raise ValueError('Forest original CPU expectations or active bank differ')
         data={'schemaVersion':1,'version':target_pin['contentVersion'],'channel':'development',
             'originalMapId':mid,'width':original['width'],'height':original['height'],
             'tileSize':16,'logicalWidth':256,'logicalHeight':240,'grid':grid,'collision':collision,
@@ -924,6 +941,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if forest:
+            data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
         if recipe.get('unavailableRegions'):
             proof=load(ROOT/recipe['unavailableRegionEvidence'])
             if proof['romSha256']!=SHA256 or proof['zone8']['mapId']!=mid:
