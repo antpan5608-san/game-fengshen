@@ -94,6 +94,10 @@ fun validEncounterGroup(group:EncounterGroup,enemies:Map<Int,EnemyDefinition>):B
         group.members.all{it.slot in 0..6&&enemies[it.enemyId]?.let(OriginalStatus::enemySupported)==true}
 data class GrowthRow(val level:Int,val threshold:Int,val hp:Int,val mp:Int,val strength:Int,
     val stamina:Int,val agility:Int,val spirit:Int,val runtimeVerified:Boolean)
+/** Seven-byte original growth row: HP is uint16, the remaining deltas uint8. */
+fun validGrowthRow(row:GrowthRow):Boolean = row.level in 2..99 && row.threshold in 1..0xffffff &&
+    row.hp in 0..65535 && listOf(row.mp,row.strength,row.stamina,row.agility,row.spirit).all{it in 0..255}
+
 data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val groups:List<EncounterGroup>,
     val enemies:Map<Int,EnemyDefinition>,val growth:List<GrowthRow>,val armorContribution:Int,
     val minimumSteps:Int,val forcedSteps:Int,val hitThreshold:Int,

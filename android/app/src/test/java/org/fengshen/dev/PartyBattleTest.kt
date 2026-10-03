@@ -5,6 +5,16 @@ import org.junit.Test
 
 /** Isolated boundary inputs; normal cartridge play remains separately indexed in world-two-party.json. */
 class PartyBattleTest {
+    @Test fun growthValidationUsesOriginalFieldWidthsForEveryActor(){
+        // Target ROM actor1 level59 row DD6A83... contains HP bytes 00 01.
+        val actual=GrowthRow(59,992795,256,8,28,15,9,5,false)
+        assertTrue(validGrowthRow(actual))
+        assertTrue(validGrowthRow(actual.copy(hp=65535)))
+        assertFalse(validGrowthRow(actual.copy(hp=65536)))
+        assertFalse(validGrowthRow(actual.copy(hp=-1)))
+        for(bad in listOf(actual.copy(mp=256),actual.copy(strength=256),actual.copy(stamina=256),
+            actual.copy(agility=256),actual.copy(spirit=256),actual.copy(threshold=0)))assertFalse(validGrowthRow(bad))
+    }
     private val hero=CharacterState("nezha",12,2000,50,100,0,20,10,20,10,0,EquipmentState(0,-1,0,28))
     private val girl=CharacterState("xiaolongnv",12,2000,92,92,44,22,14,26,43,maxMp=44,equipment=EquipmentState(19,-1,11,38),statusMask=0)
     private val item=ItemDefinition(HerbUse.ID,"藥草",null,"verified herb rules",category="medicine",originalId=0,
