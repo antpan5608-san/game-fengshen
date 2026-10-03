@@ -30,7 +30,7 @@ class Village2ExportTests(unittest.TestCase):
             self.assertEqual([f'rom.{cat}.{i}'for i in source['originalIds']],shop['items']);self.assertEqual(shop['items'],shop['sellItems'])
             for iid in shop['items']:
                 original=next(i for i in catalog['items']if i['id']==iid);self.assertEqual((original['buyPrice'],original['sellPrice']),(items[iid]['buyPrice'],items[iid]['sellPrice']))
-        for iid in ['rom.medicine.4','rom.medicine.7','rom.medicine.12']:
+        for iid in ['rom.medicine.4','rom.medicine.7']:
             for key in ['herbUse','antidoteUse','worldUse']:self.assertNotIn(key,items[iid])
     def test_old_loot_identity_and_unknown_use_preserved_while_absent_prices_are_completed(self):
         old=next(i for i in json.loads(self.base['scene.json'])['items']if i['id']=='rom.medicine.7')
@@ -38,6 +38,10 @@ class Village2ExportTests(unittest.TestCase):
         self.assertEqual((15,7),(current['buyPrice'],current['sellPrice']))
         copy_current.pop('buyPrice');copy_current.pop('sellPrice');copy_current['source'].pop('merchantPriceEvidence');copy_current['source'].pop('merchantPriceRange')
         self.assertEqual(old,copy_current)
+        legacy=json.loads((ci.ROOT/'game-data/provenance/world-hell-encounters-content.json').read_text())
+        verified=next(i for i in legacy['items']if i['id']=='rom.medicine.12')
+        self.assertEqual(verified,next(i for i in self.scene['items']if i['id']=='rom.medicine.12'))
+        self.assertEqual(len(self.scene['items']),len({i['id']for i in self.scene['items']}))
     def test_optional_inn_and_actor_specific_equipment_do_not_modify_initial_party_or_quest(self):
         inn=next(i for i in self.scene['inns']if i['id']=='rom.inn.2');self.assertEqual((20,114),(inn['price'],inn['blockedStatusMask']))
         items={i['id']:i for i in self.scene['items']}
@@ -55,13 +59,14 @@ class Village2ExportTests(unittest.TestCase):
         self.assertTrue(village['sourceEdges']);self.assertTrue(any('clinic' in s for s in village['limitations']))
         self.assertEqual(self.pin['manifestSha256'],ci.sha(self.result['manifest.json']))
     def test_wrong_price_pointer_hash_stock_cost_or_owner_is_rejected(self):
-        for kind in ['price','price-source','old-hash','stock','inn-price','owner','slot']:
+        for kind in ['price','price-source','old-hash','stock','inn-price','owner','slot','duplicate-item']:
             evidence=copy.deepcopy(self.evidence);update=evidence['existingItemPriceUpdates'][0]
             if kind=='price':update['buyPrice']+=1
             elif kind=='price-source':update['priceSource']=next(i for i in evidence['items']if i['id']=='rom.medicine.4')['source']['priceRange']
             elif kind=='old-hash':update['baseDefinitionSha256']='0'*64
             elif kind=='stock':next(s for s in evidence['shops']if s['id']=='rom.shop.2.19')['items'].pop()
             elif kind=='inn-price':next(i for i in evidence['inns']if i['id']=='rom.inn.2')['price']=0
+            elif kind=='duplicate-item':evidence['items'].append(copy.deepcopy(evidence['items'][0]))
             elif kind=='owner':next(i for i in evidence['items']if i['id']=='rom.weapon.18')['equipment']['allowedCharacters']=['nezha']
             else:next(i for i in evidence['items']if i['id']=='rom.armor.10')['equipment']['slot']='feet'
             def read(path):return evidence if Path(path).resolve()==(ci.ROOT/self.proof).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
@@ -71,7 +76,7 @@ class Village2ExportTests(unittest.TestCase):
         # The previous candidate had valid bytes but invented a composite label
         # rejected by ContentLoader. Keep the existing vocabulary and facts.
         for item in self.scene['items']:
-            if item.get('equipment'):self.assertIn(item['source']['confidence'],['GAMEPLAY_VERIFIED','PROVISIONAL_REFERENCE'])
+            self.assertIn(item['source']['confidence'],['GAMEPLAY_VERIFIED','PROVISIONAL_REFERENCE'],item['id'])
         for shop in self.scene['shops']:self.assertIn(shop['source']['confidence'],['GAMEPLAY_VERIFIED','ORIGINAL_ROM_STATIC'])
         for inn in self.scene['inns']:self.assertIn(inn['confidence'],['GAMEPLAY_VERIFIED','VERIFIED','ORIGINAL_ROM_STATIC'])
         for iid in ['rom.armor.11','rom.armor.38','rom.armor.10','rom.weapon.18']:

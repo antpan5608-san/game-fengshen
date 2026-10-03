@@ -774,6 +774,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     if evidence.get('shops') or evidence.get('items') or evidence.get('existingItemPriceUpdates'):
         from forensics.fengshen246 import extract_world_service_catalog
         catalog=extract_world_service_catalog(reader)
+        new_item_ids=[i['id'] for i in evidence.get('items',[])]
+        if len(set(new_item_ids))!=len(new_item_ids) or set(new_item_ids)&{i['id'] for i in scene['items']}:
+            raise ValueError('Duplicate stable item ID; use existing definition rather than silently replacing it')
         items={i['id']:i for i in catalog['items']}
         stocks={(s['category'],s['contextIndex']):s for s in catalog['stocks']}
         for item in evidence.get('items',[])+evidence.get('existingItemReuse',[]):
