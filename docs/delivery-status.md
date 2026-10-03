@@ -1193,3 +1193,10 @@ v44/run37109855129来源73cc1b90在Windows恢复阶段因取证TSV被Git CRLF转
 v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真实runner通过；runtime实际16项加载错误同指Content.kt271旧定海珠限定，20项Content测试整体失败而不是正常AppPASS。原内容/类别grant取证未被否定，加载器改调用WorldItems.supportsTreasure与交易共用既有类别、稳定ID、maxCount、amount和flag规则，未知grant能力仍拒绝。238本地JVM全过、instrument编译成功；新App复测仍待原CI，不发布失败候选。
 
 后续定神珠代码和兼容性已保留独立cf5abea，242本地JVM通过，不混入本次被冻结c25加载修复候选。地图67/69/158/159真实受控入口和map68受控胜后→86自动对话的私有证据已取得，正常Android及正常末殿胜后仍NOT_RUN；不得以受控flag/坐标实验替主线可玩。全世界与十类欠账均未关闭。
+
+## WORLD-FULL-01 独立后续检查点 2026-10-03T09:20:14.347790+00:00
+
+- 本树基于4811b21保留第七殿67：c26/167文件/26图，manifest110d2191c7423efb74b7631dc2100a4f7af1b129c268425ef1e952e86fd54f68；基底仍可信v27/c14。敌150 HP2500/原冰40、完整zone15、真实三箱与定神珠场景使用。weapon20只恢复取得定义，未核角色槽位则不开放装备，不猜效果。
+- 新导出3方法、旧六殿4方法及含item12的LF实际checkout1方法PASS；本地242 JVM零失败与仪器编译通过。第七殿实际Android加载/正常买药探索取得/使用/开箱/胜后/冷启仍NOT_RUN，不发布。已受控编译测试不能关闭正常路线欠账。
+- main独立c25绑定修复82eb31d9/v47/run37112506233已冻结，保留真实map64王npcIndex2，不将旧idx1测试错误当游戏数据错误。此树不混入其审核APK。
+- 三侧室真实入口、864原CPU地形参数、191可见图形已取证未打包；会移动NPC一条交谈失败保留NOT_OBSERVED。末殿68→86自动对白及16(238,160)受控边界正在查实际调度，不使用Reference错误落点243,151。当前下一动作：侧室有来源定义与末殿分阶段flags/对白接入；全世界仍PARTIAL/ALL_MAPS_USABLE=NO。

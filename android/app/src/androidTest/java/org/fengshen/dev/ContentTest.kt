@@ -13,6 +13,38 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual candidate loader plus isolated original proposals, NOT normal route evidence. */
+    fun testControlledSeventhHallSceneDamageProtectionAndSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(67)
+        val enemy=c.battle!!.enemies.getValue(150)
+        assertEquals(2500,enemy.hp);assertEquals(3,enemy.behaviorByte);assertEquals(40,enemy.iceBaseDamage)
+        val item=c.itemDefinitions.getValue(WorldItems.FIELD_PROTECTION_ID)
+        assertNotNull(item.fieldProtectionUse)
+        val before=SaveSnapshot(c.scene.version,67,scene.spawnX*16+8,scene.spawnY*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),emptyMap(),emptyMap(),400)
+        assertTrue(before.validate(c))
+        val chest=c.npcs.single{it.id=="rom.npc.67.2"}.treasure!!
+        val acquired=WorldItems.openTreasure(before,chest,item)
+        assertTrue(acquired.applied)
+        val owned=before.copy(inventory=acquired.inventory,flags=acquired.flags)
+        assertFalse(WorldItems.useFieldProtection(owned.copy(mapId=23),item,true).applied)
+        assertFalse(WorldItems.useFieldProtection(owned,item,false).applied)
+        val used=WorldItems.useFieldProtection(owned,item,true)
+        assertTrue(used.applied);assertEquals(owned.inventory,used.inventory)
+        assertTrue(used.flags[WorldItems.FIELD_PENDING_FLAG]==true)
+        assertTrue(used.flags[WorldItems.FIELD_ACTIVE_FLAG]!=true)
+        val flags=WorldItems.fieldFlagsAfterStep(used.flags,CompletedStep(67,15,28,false))
+        assertTrue(flags[WorldItems.FIELD_ACTIVE_FLAG]==true)
+        assertEquals(before.characters,OriginalStatus.step(before.characters,67,true))
+        val departed=WorldItems.fieldFlagsAfterStep(flags,CompletedStep(67,15,29,true))
+        assertTrue(departed[WorldItems.FIELD_ACTIVE_FLAG]==true)
+        assertTrue(departed[WorldItems.FIELD_PENDING_FLAG]!=true)
+        val save=owned.copy(flags=departed)
+        assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
+        assertFalse(WorldItems.openTreasure(save,chest,item).applied)
+        assertEquals(400,save.money);assertEquals(before.characters,save.characters)
+    }
     /** Version admission never bypasses the actual scene or state validation. */
     fun testControlledLegacyContentVersionsKeepStateAndRejectInvalidPosition(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -35,7 +67,7 @@ class ContentTest:IsolatedGameTestCase(){
         for(mid in listOf(61,62,63,64,65,66)){
             val barrier=c.sceneBarriers.single{it.mapId==mid}
             assertEquals(MovementBlock.PHYSICAL,c.sceneForState(mid,emptyMap())!!.blockType(barrier.x,barrier.y))
-            val boss=battle.storyBattles.getValue("rom.npc.$mid.1")
+            val boss=c.npcs.filter{it.mapId==mid}.mapNotNull{battle.storyBattles[it.id]}.single()
             val won=boss.rewardFlags(mapOf("unrelated" to true))
             assertTrue(won[barrier.removedFlagId]==true)
             assertNull(c.sceneForState(mid,won)!!.check(barrier.x,barrier.y))
