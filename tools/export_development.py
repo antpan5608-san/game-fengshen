@@ -485,6 +485,53 @@ def validate_world_behavior1(reader,enemy):
         raise ValueError('Behavior1 damage differs from original dispatch')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_single_special(reader,enemy):
+    """Only the evidenced behavior2/4 single-target path, never an ice alias."""
+    from forensics.fengshen246 import extract_enemy_single_special_base,extract_enemy
+    path='game-data/provenance/world-enemy-single-special.json'
+    if enemy.get('specialDamageEvidence')!=path or 'iceBaseDamage' in enemy:
+        raise ValueError('Single special attack requires its independent original evidence')
+    proof=load(ROOT/path);rules=proof['rules'];behavior=enemy['behaviorByte']
+    identities={'2':[67,121,128,147,159,164],'4':[33,46,115,163,165]}
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='behavior2-and4-single-target-original-damage' or \
+            proof['verifiedEnemyIds']!=identities or behavior not in (2,4) or enemy['id'] not in identities[str(behavior)] or \
+            extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=behavior:
+        raise ValueError('Single special attack identity or scope differs')
+    if rules['specialChoice']!='(random &127)<41' or rules['secondaryThresholds']!={'2':64,'4':57} or \
+            rules['specialHit']!='((random>>1)&63)<threshold, always true in actual choice branch' or \
+            rules['allTarget'] is not False or rules['baseDamageIgnoresArmorAndStamina'] is not True or \
+            rules['rawDamageDispatchCapturesDeathFlag'] is not False:
+        raise ValueError('Single special attack choice, target or damage rule differs')
+    required={(9,0x8dc4,12),(9,0x8de9,0xc9),(9,0xa956,0x12c),(9,0xab6d,0x29),(9,0xab0a,0x4f)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Single special attack lacks target or damage source')
+    for span in proof['sources']:checked_span(reader,span)
+    actual=extract_enemy_single_special_base(reader,enemy['id'])
+    if proof['identityBases'][str(enemy['id'])]!=actual or any(enemy.get(k)!=v for k,v in actual.items()):
+        raise ValueError('Single special attack base differs from original CPU scope')
+    checked_span(reader,enemy['specialSource'])
+
+def validate_world_status16(reader,enemy):
+    """Original behavior6's hit/miss and priority, with no guessed cure/effect name."""
+    from forensics.fengshen246 import extract_enemy
+    path='game-data/provenance/world-enemy-status16.json'
+    if enemy.get('behaviorEvidence')!=path or any(k in enemy for k in ('iceBaseDamage','specialBaseDamage')):
+        raise ValueError('Behavior6 requires its status10 evidence, not damage data')
+    p=load(ROOT/path);r=p['rules'];ids=[39,51,63,78,80,95,104,129,168,174]
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='behavior6-state10-hit-miss-priority-and-no-input' or \
+            p['behavior']!=6 or p['verifiedEnemyIds']!=ids or enemy['id'] not in ids or enemy['behaviorByte']!=6 or \
+            extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=6:
+        raise ValueError('Behavior6 status10 scope or identity differs')
+    if r['specialChoice']!='(random &127)<41' or r['secondaryHit']!='((random>>1)&63)<10' or \
+            r['singleTarget'] is not True or r['selectedSpecialMissIsNotPhysical'] is not True or r['statusMask']!=16 or \
+            r['legalReplaceMasks']!=[0,2,4,8,16] or r['hpChangedByStatus'] is not False or r['rawDamage']!=0 or \
+            r['inputSkipMasks']!=[8,16,32] or r['defeatCondition']!='all present HP zero OR all present status bit10; dead+10 is not all bit10':
+        raise ValueError('Behavior6 status10 choice, priority or command rule differs')
+    required={(9,0x8dc4,12),(9,0x8de9,0xc9),(9,0xa956,0x2e),(9,0xa0d2,0x58),(9,0xa63a,0x65),(9,0xb68e,0x77)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Behavior6 lacks hit/miss/priority/defeat/no-input sources')
+    for span in p['sources']:checked_span(reader,span)
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -638,8 +685,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
-            if enemy['behaviorByte']!=1 and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
-                raise ValueError('Behavior1 damage cannot be assigned to another behavior')
+            if enemy['behaviorByte'] not in (1,2,4) and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
+                raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
             if enemy['behaviorByte']==3:
                 from forensics.fengshen246 import extract_enemy_ice_base
                 original_ice=extract_enemy_ice_base(reader,enemy['id'])
@@ -654,6 +701,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 checked_span(reader,enemy['iceSource'])
             elif enemy['behaviorByte']==1:
                 validate_world_behavior1(reader,enemy)
+            elif enemy['behaviorByte'] in (2,4):
+                validate_world_single_special(reader,enemy)
+            elif enemy['behaviorByte']==6:
+                validate_world_status16(reader,enemy)
             elif enemy['behaviorByte']==8:
                 if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
                     raise ValueError('Behavior8 requires its scoped status evidence')

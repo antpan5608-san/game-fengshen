@@ -185,3 +185,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 出口静态校验必须与当前剧情门碰撞分开：原门对象占出口曾使整包在ContentLoader拒绝。先严格解析已核SceneBarrier，用仅移除此类对象的几何视图校验出口；运行sceneForState仍须真实flag，普通NPC和墙不能因此通过。validExitPlacement的合法门/墙/其他对象/越界/不改变原状态JVM测试及仪器编译已实际运行；新App验收以当前CI为准。
 
 - 新行为先独立核实际CPU分派、同字节随机、目标范围与基础伤害，再扩原OpeningBattle与extractor。world-enemy-behavior1.json及444行独立CPU预期已用于5专项JVM/3导出证据方法；直接A956扣血捕获在死亡flag分派前，不能混作整回合状态。私有CPU实验仍依赖隔离原版存档/mapper，不能声称公开干净环境可复现所有原实验；正常Android另验。
+
+- 后续敌人能力使用原behavior分派批次核证：world-enemy-single-special.json/3148原CPU结果验证2/4单目标、与原8EB2相同字节选择及伤害；world-enemy-status16.json/2575原CPU结果验证6的阈值10、特殊miss不落物理、状态优先级与原全队10败判。对应7个Python证据方法与229全JVM方法、仪器编译实际通过。原始CPU实验需要隔离原版mapper/存档，公开派生TSV不是原始资源；此树正常App/新地图尚未执行，不写可玩PASS。

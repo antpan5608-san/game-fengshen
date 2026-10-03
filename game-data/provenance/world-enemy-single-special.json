@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "behavior2-and4-single-target-original-damage",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "verifiedEnemyIds": {
+    "2": [
+      67,
+      121,
+      128,
+      147,
+      159,
+      164
+    ],
+    "4": [
+      33,
+      46,
+      115,
+      163,
+      165
+    ]
+  },
+  "rules": {
+    "specialChoice": "(random &127)<41",
+    "secondaryThresholds": {
+      "2": 64,
+      "4": 57
+    },
+    "specialHit": "((random>>1)&63)<threshold, always true in actual choice branch",
+    "allTarget": false,
+    "target": "Existing 8EB2 living-target selection using same byte; full 256 inputs and alive subsets checked",
+    "baseDamageIgnoresArmorAndStamina": true,
+    "rawDamageDispatchCapturesDeathFlag": false,
+    "displayedAttackNames": "NOT_YET_TRANSCRIBED"
+  },
+  "sources": [
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Per-behavior original secondary hit thresholds"
+    },
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Same AI byte, physical/special hit, all-target only1/3 and living single-target selection"
+    },
+    {
+      "offset": 305510,
+      "length": 300,
+      "sha256": "eda2b88b9354fb444442c9f2c32c3b750c6effbe6fbd4652b58c64111a4fd7d3",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Damage dispatch and original behavior2/4 base formulas"
+    },
+    {
+      "offset": 306045,
+      "length": 41,
+      "sha256": "6d6f34af16fc267f2a2847a4eeaaaa873334c28e792acadb2112bb295055fd84",
+      "module": 9,
+      "cpuAddress": 43885,
+      "meaning": "Status04 damage doubling without armor/stamina"
+    },
+    {
+      "offset": 305946,
+      "length": 79,
+      "sha256": "995c930c2ccd021e237ddb2cc1f443bf3aa2ea427d2004280fe1f799b6f9bea8",
+      "module": 9,
+      "cpuAddress": 43786,
+      "meaning": "Original HP truncation before later death flag phase"
+    }
+  ],
+  "identityBases": {
+    "67": {
+      "specialBaseDamage": 280,
+      "specialSource": {
+        "offset": 305655,
+        "length": 27,
+        "sha256": "cc280a02358ab3926405f130fbd9e09ab1d6501f40fca2d35b9d4dfaf806fac5",
+        "module": 9,
+        "cpuAddress": 43495,
+        "meaning": "Original ordinary behavior2: (enemyID-32)*8"
+      }
+    },
+    "121": {
+      "specialBaseDamage": 712,
+      "specialSource": {
+        "offset": 305655,
+        "length": 27,
+        "sha256": "cc280a02358ab3926405f130fbd9e09ab1d6501f40fca2d35b9d4dfaf806fac5",
+        "module": 9,
+        "cpuAddress": 43495,
+        "meaning": "Original ordinary behavior2: (enemyID-32)*8"
+      }
+    },
+    "128": {
+      "specialBaseDamage": 768,
+      "specialSource": {
+        "offset": 305655,
+        "length": 27,
+        "sha256": "cc280a02358ab3926405f130fbd9e09ab1d6501f40fca2d35b9d4dfaf806fac5",
+        "module": 9,
+        "cpuAddress": 43495,
+        "meaning": "Original ordinary behavior2: (enemyID-32)*8"
+      }
+    },
+    "147": {
+      "specialBaseDamage": 42,
+      "specialSource": {
+        "offset": 305450,
+        "length": 2,
+        "sha256": "17d5f5a33ab5f6aed0395d2bc0a4e5df61d92441ea8d77b0952c01bc8aa8bde0",
+        "module": 9,
+        "cpuAddress": 43290,
+        "meaning": "Original behavior2/4 fixed boss damage"
+      }
+    },
+    "159": {
+      "specialBaseDamage": 380,
+      "specialSource": {
+        "offset": 305474,
+        "length": 2,
+        "sha256": "981ffee900fa2002b126342be55b499ad2037b04ff1a500c6f3a6f75036bdbfa",
+        "module": 9,
+        "cpuAddress": 43314,
+        "meaning": "Original behavior2/4 fixed boss damage"
+      }
+    },
+    "164": {
+      "specialBaseDamage": 700,
+      "specialSource": {
+        "offset": 305484,
+        "length": 2,
+        "sha256": "8d60ef9eaf025bc437515679057491fa806dd99123deda157720c6e29ec53951",
+        "module": 9,
+        "cpuAddress": 43324,
+        "meaning": "Original behavior2/4 fixed boss damage"
+      }
+    },
+    "33": {
+      "specialBaseDamage": 39,
+      "specialSource": {
+        "offset": 305777,
+        "length": 27,
+        "sha256": "bb094f28e91deedeb1a31a0b76fa04e1e52a804dfd9a004ba13ba4af6117035a",
+        "module": 9,
+        "cpuAddress": 43617,
+        "meaning": "Original ordinary behavior4: (enemyID-32)*9+30"
+      }
+    },
+    "46": {
+      "specialBaseDamage": 156,
+      "specialSource": {
+        "offset": 305777,
+        "length": 27,
+        "sha256": "bb094f28e91deedeb1a31a0b76fa04e1e52a804dfd9a004ba13ba4af6117035a",
+        "module": 9,
+        "cpuAddress": 43617,
+        "meaning": "Original ordinary behavior4: (enemyID-32)*9+30"
+      }
+    },
+    "115": {
+      "specialBaseDamage": 777,
+      "specialSource": {
+        "offset": 305777,
+        "length": 27,
+        "sha256": "bb094f28e91deedeb1a31a0b76fa04e1e52a804dfd9a004ba13ba4af6117035a",
+        "module": 9,
+        "cpuAddress": 43617,
+        "meaning": "Original ordinary behavior4: (enemyID-32)*9+30"
+      }
+    },
+    "163": {
+      "specialBaseDamage": 720,
+      "specialSource": {
+        "offset": 305482,
+        "length": 2,
+        "sha256": "8036a6a4a3f8d254541f63bccc51a52f58926061e897784950eed5fe15967d93",
+        "module": 9,
+        "cpuAddress": 43322,
+        "meaning": "Original behavior2/4 fixed boss damage"
+      }
+    },
+    "165": {
+      "specialBaseDamage": 745,
+      "specialSource": {
+        "offset": 305486,
+        "length": 2,
+        "sha256": "a993c990f7a8ede960b9bbdcb499f635e1da75de7bdaf0fd88b6a6bbf2a34e92",
+        "module": 9,
+        "cpuAddress": 43326,
+        "meaning": "Original behavior2/4 fixed boss damage"
+      }
+    }
+  },
+  "cpuReportSha256": "7819070c75deb6050f506d0e2849d20f1663c62ab6beab6ea60c203dbe914a25",
+  "cpuCases": 3148,
+  "cpuExpectedPath": "android/app/src/test/resources/enemy-single-special-cpu.tsv",
+  "limits": [
+    "Direct A956 output is before later death-flag dispatch",
+    "HP-positive status32 is CPU arithmetic fixture, not a legal living App actor",
+    "Not normal route/Boss/App proof",
+    "No behavior5/6/10/11 inference"
+  ]
+}

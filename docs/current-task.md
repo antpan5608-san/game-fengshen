@@ -283,3 +283,10 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 本地世界Python87方法/0失败、222 JVM方法/0失败/错误/跳过、instrument APK编译、原runtime Bash语法与原workflow YAML解析通过。新增正常二殿测试复用现有真实触控/BFS/药草/战斗驱动，来源必须为同候选正常第一殿存档；冷启动不导入fixture，正常路径不发物品、不改HP或等级。原CI增加二殿正常/冷启门禁与有界证据artifact，没有新workflow；App/PowerShell门禁实际执行仍NOT_RUN。原自动审批22隔离API案例仍PASS。
 - 冻结v40/run37096513996签名build SUCCESS、runtime仍执行中。实际不可变artifact11264188671中v40 APK独立verify PASS，来源ccefece6、SHA1d3e3bff1632dd8b96834323dacb85c90fdb2a2f35144bb5255e0de1a692b9e5、16533893字节、既有包名/签名/c23 manifest一致。首次本地verify缺--output产生工具AttributeError，补该原参数后通过；不是App故障。二殿本树不推main覆盖当前来源。
 - 下一条实际动作：读取v40完成结果；失败立即定位并保留证据，成功后将本树合法c24/门禁冻结为下一原CI候选。在运行等待期间继续原目标其他地图/服务的定向证据，不以19张图或第二殿作为WORLD-FULL-01结束。生产仍v27；旧v26 ProtocolException严格preflight阻塞仍保留，真机/声音NOT_RUN。
+
+
+## 后续敌人能力隔离检查点（2026-10-03 13:56 北京时间，非发布）
+
+- 本树work/world-hell-batch-next独立实现behavior2/4单目标与behavior6状态10，3148/2575实际原CPU定向样本。2/4沿同随机字节原合法目标，伤害采用原公式/固定boss表；6实际secondary阈值10、特殊miss不物理、原状态优先级、全队bit10败判。行为名称仍未转录，不猜现代技能名/疗法。
+- 本地7项Python证据、229全JVM方法0失败/错误/跳过、仪器编译通过；原build-ci增相同证据门禁，无新workflow。状态16证据初次Pythonbool期望误写16、旧负例仍拒6，均改测试期望而非原规则，失败不计通过。正常新敌群App/第三殿未运行，c24 pin和已冻结候选不变。
+- 主候选断言修正版在另一工作树准备v42；此分支保存可恢复局部逻辑，不将局部CPU/单元结果当候选或生产验收。冰系所有17身份1700定向CPU已完成，下一动作补原提取器后续boss范围及相同证据门禁，再恢复后续有效地图。

@@ -348,7 +348,7 @@ object ContentLoader {
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
                             itemDefinitions.getValue(it.itemId).category==it.category)}}).also{enemy->
                     if(e.has("specialBaseDamage")){
-                        require(enemy.behaviorByte==1&&enemy.iceBaseDamage==null&&
+                        require(enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&
                             e.getInt("specialBaseDamage") in 0..65535&&e.getString("specialDamageEvidence").isNotBlank())
                         enemy.specialBaseDamage=e.getInt("specialBaseDamage")
                     }

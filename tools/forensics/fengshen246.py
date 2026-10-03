@@ -483,6 +483,28 @@ def extract_enemy_special_base(reader,enemy_id):
     else:raise ValueError('Behavior1 identity outside verified original dispatch domain')
     return {'specialBaseDamage':value,'specialSource':source}
 
+def extract_enemy_single_special_base(reader,enemy_id):
+    """Behavior2/4 only; all eleven identities checked with original CPU damage.
+
+    These are single-target damage branches, not behavior1's all-target action.
+    The numerical behavior does not establish a displayed spell name.
+    """
+    if digest(reader.data)!=SHA256:raise ValueError('Special damage requires target ROM fingerprint')
+    behavior=extract_enemy(reader,enemy_id)['remainingBytes'][1]
+    if behavior not in (2,4):raise ValueError('Enemy does not use original behavior2/4')
+    if 32<=enemy_id<137:
+        if behavior==2:
+            value=(enemy_id-32)*8
+            source=reader.span(9,0xa9e7,0x1b,'Original ordinary behavior2: (enemyID-32)*8')
+        else:
+            value=(enemy_id-32)*9+30
+            source=reader.span(9,0xaa61,0x1b,'Original ordinary behavior4: (enemyID-32)*9+30')
+    elif 137<=enemy_id<177:
+        address=0xa906+2*(enemy_id-137);value=reader.word(9,address)
+        source=reader.span(9,address,2,'Original behavior2/4 fixed boss damage')
+    else:raise ValueError('Behavior2/4 identity outside verified original dispatch domain')
+    return {'specialBaseDamage':value,'specialSource':source}
+
 def extract_encounter_groups(reader,zone_id):
     """Bounded original zone group table; no inferred enemy behavior or map conditions."""
     if digest(reader.data)!=SHA256 or not 0<=zone_id<=255:

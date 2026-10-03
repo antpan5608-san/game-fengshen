@@ -75,7 +75,8 @@ class OriginalStatusBit4Test {
         val enemy=EnemyDefinition(16,"原版敌人 16",44,29,15,36,12,217,9)
         assertTrue(OriginalStatus.enemySupported(enemy))
         assertTrue(OriginalStatus.enemySupported(enemy.copy(behaviorByte=8))) // Separate state08 CPU evidence.
-        for(unsupported in listOf(1,2,4,5,6,10,255))
+        assertTrue(OriginalStatus.enemySupported(enemy.copy(behaviorByte=6))) // Separate original threshold10/status10 CPU evidence.
+        for(unsupported in listOf(1,2,4,5,10,255))
             assertFalse("behavior=$unsupported",OriginalStatus.enemySupported(enemy.copy(behaviorByte=unsupported)))
         // Existing ice still needs its verified numerical input.
         assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=3,iceBaseDamage=null)))
