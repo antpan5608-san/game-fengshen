@@ -39,6 +39,12 @@ class FirstHallTest {
         assertEquals(MovementBlock.PHYSICAL,base.blockType(23,2))
         assertNotNull(barrier.apply(base,emptyMap()).check(23,2))
     }
+    @Test fun rawExitTransitionDoesNotOverrideOriginalCavePhysicalWall(){
+        val base=scene().copy(terrainProfile=OriginalTerrain.CAVE_GROUND,walkableClasses=setOf(0,1),
+            collision=IntArray(480).also{it[23+2*32]=1},transitionCells=setOf(23+2*32))
+        assertFalse(validExitPlacement(base,23,2,listOf(barrier)))
+        assertEquals(MovementBlock.PHYSICAL,barrier.apply(base,mapOf(barrier.removedFlagId to true)).blockType(23,2))
+    }
     @Test fun battleCommitKeepsVictoryDoorFlagAndDurableDialogueThroughReload(){
         val boss=StoryBattleDefinition("rom.boss.142","rom.npc.70.1","rom.map.70.flag.2",
             EncounterGroup(159,listOf(EncounterMember(3,142))),"rom.dialogue.80.2").also{it.victoryFlags=setOf("rom.map.70.flag.4")}

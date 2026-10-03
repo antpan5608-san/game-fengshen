@@ -166,11 +166,12 @@ object ContentLoader {
                 it.preserveArrivalDirection=o.optBoolean("preserveArrivalDirection",false)
             }
         }}
-        require(exits.all{exit->
+        for(exit in exits){
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
-            from!=null && to!=null && validExitPlacement(from,exit.triggerX,exit.triggerY,sceneBarriers) &&
+            require(from!=null && to!=null && validExitPlacement(from,exit.triggerX,exit.triggerY,sceneBarriers) &&
                 validExitPlacement(to,exit.spawnX,exit.spawnY,sceneBarriers)
-        }) {"Invalid exit geometry after applying reviewed removable objects"}
+            ) {"Invalid exit geometry ${exit.fromMapId}(${exit.triggerX},${exit.triggerY}) -> ${exit.toMapId}(${exit.spawnX},${exit.spawnY}) after reviewed removable objects"}
+        }
         fun bitmap(name: String,w: Int,h: Int): Bitmap {
             val b=read(name);val bitmapStart=SystemClock.elapsedRealtime();val opts=BitmapFactory.Options().apply{inScaled=false}
             val image=BitmapFactory.decodeByteArray(b,0,b.size,opts)?:error("Invalid image")

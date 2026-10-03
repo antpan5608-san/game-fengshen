@@ -792,6 +792,29 @@ def validate_world_status16(reader,enemy):
         raise ValueError('Behavior6 lacks hit/miss/priority/defeat/no-input sources')
     for span in p['sources']:checked_span(reader,span)
 
+def validate_world_exit_geometry(scene,result):
+    """Match the existing loader's gate-open placement check before signing.
+
+    A ROM exit-table row is not permission to stand on a physical wall. Only
+    independently reviewed removable actors are cleared for this static check.
+    """
+    maps={m['id']:(scene if m['scene']=='scene.json' else json.loads(result[m['scene']]))for m in scene['maps']}
+    cleared={mid:{b['cell'][1]*maps[mid]['width']+b['cell'][0]for b in scene.get('sceneBarriers',[])if b['mapId']==mid}for mid in maps}
+    def valid(mid,cell):
+        if mid not in maps:return False
+        m=maps[mid];x,y=cell
+        if not(0<=x<m['width']and 0<=y<m['height']):return False
+        i=y*m['width']+x;c=m['collision'][i];profile=m.get('terrain',{}).get('tileset')
+        if profile==3 and c not in {0,2,3,4,5,6,7,8,9,10,11,13,17,18,19,20,21,23}:return False
+        if profile==4 and c not in {0,2,4,5,6,7,8}:return False
+        if c not in m['walkableClasses']and i not in m.get('transitionCells',[]):return False
+        if i not in m['enabledCells']or i in set(m.get('dynamicObjectCells',[]))-cleared[mid]:return False
+        if any(a<x<=c and b<y<=d for a,b,c,d in m.get('unavailableRegions',[])):return False
+        return True
+    for row in scene['exits']:
+        if not valid(row['fromMapId'],row['trigger'])or not valid(row['toMapId'],row['spawn']):
+            raise ValueError(f"Invalid exit geometry {row['fromMapId']}:{row['trigger']} -> {row['toMapId']}:{row['spawn']}; original state evidence is required")
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -1339,6 +1362,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if loot and item_categories.get(loot['itemId'])!=loot['category']:
                 raise ValueError('Encounter loot has no matching item definition')
     scene['limitations']=scene.get('limitations',[])+evidence.get('limitations',[])
+    validate_world_exit_geometry(scene,result)
     result['scene.json']=encoded(scene)
     return result
 

@@ -31,6 +31,11 @@ class FinalHallExportTests(unittest.TestCase):
         rows=[e for e in self.scene['exits']if e['fromMapId']==68 and e['toMapId']==86]
         self.assertEqual(1,len(rows));self.assertEqual([12,1],rows[0]['trigger']);self.assertEqual([12,5],rows[0]['spawn'])
         self.assertFalse(any(e['fromMapId']==86 and e['trigger']==[19,13]for e in self.scene['exits']))
+        self.assertFalse(any(e['fromMapId']==86 and e['trigger']==[8,13]for e in self.scene['exits']))
+        self.assertFalse(any(e['fromMapId']==23 and e['trigger']==[12,5]and e['toMapId']==68 for e in self.scene['exits']))
+        walls=[r for r in self.p['evidence']['unresolvedExitRows']if r['status']=='UNRESOLVED_SOURCE_PHYSICAL_WALL_NOT_ENABLED']
+        self.assertEqual(2,len(walls));self.assertTrue(all(r['originalCollisionClass']==1 for r in walls))
+        ex.validate_world_exit_geometry(self.scene,self.result)
         ex.validate_world_hall_batch_terrain(self.r,86,'game-data/provenance/world-rebirth-terrain.json')
     def test_repeatable_export_preserves_all_previous_media_and_strict_target_pin(self):
         pin=json.loads((ci.ROOT/'ci/golden-world-seventh-side-content.json').read_text(encoding='utf-8'))
@@ -50,5 +55,25 @@ class FinalHallExportTests(unittest.TestCase):
             else:next(e for e in p['combatOverlay']['enemies']if e['id']==151)['hp']=1
             def load(path):return p if Path(path).resolve()==(ci.ROOT/self.path).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
             with patch.object(ex,'load',side_effect=load),self.assertRaises(ValueError,msg=case):ex.export_from_base(self.base,self.path,self.pin,verify_target=False)
+    def test_real_exit_record_on_physical_wall_is_rejected_before_signing(self):
+        for mid in [23,86]:
+            p=copy.deepcopy(self.p)
+            row=next(r for r in p['evidence']['unresolvedExitRows']if r['fromMapId']==mid and r['status']=='UNRESOLVED_SOURCE_PHYSICAL_WALL_NOT_ENABLED')
+            p['exits'].append(row)
+            def load(path):return p if Path(path).resolve()==(ci.ROOT/self.path).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
+            with patch.object(ex,'load',side_effect=load),self.assertRaisesRegex(ValueError,'Invalid exit geometry'):
+                ex.export_from_base(self.base,self.path,self.pin,verify_target=False)
+    def test_export_geometry_uses_existing_left_top_exclusive_region_boundaries(self):
+        data={'width':3,'height':3,'collision':[0]*9,'walkableClasses':[0],
+              'enabledCells':list(range(9)),'unavailableRegions':[[0,0,2,2]]}
+        scene={'maps':[{'id':1,'scene':'scene1.json'}],'exits':[]}
+        result={'scene1.json':json.dumps(data).encode()}
+        for cell in [[0,1],[1,0]]:
+            scene['exits']=[{'fromMapId':1,'trigger':cell,'toMapId':1,'spawn':cell}]
+            ex.validate_world_exit_geometry(scene,result)
+        for cell in [[1,1],[2,2]]:
+            scene['exits']=[{'fromMapId':1,'trigger':cell,'toMapId':1,'spawn':cell}]
+            with self.assertRaisesRegex(ValueError,'Invalid exit geometry'):
+                ex.validate_world_exit_geometry(scene,result)
 
 if __name__=='__main__':unittest.main()
