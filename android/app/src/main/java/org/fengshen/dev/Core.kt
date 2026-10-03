@@ -239,6 +239,8 @@ data class InteriorContext(val callerMapId:Int,val returnX:Int,val returnY:Int) 
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
     val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false) {
     var preserveArrivalDirection:Boolean=false;internal set
+    /** Original foot actor contact, before a completed step; not a cell exit. */
+    var contactActorId:Int?=null;internal set
 }
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean,val suppressEncounter:Boolean=false)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
@@ -266,6 +268,8 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     private var stepOriginY=y
     var completedStepSeq=0L;private set
     var lastCompletedStep:CompletedStep?=null;private set
+    var contactTransitionSeq=0L;private set
+    var lastContactExit:MapExit?=null;private set
     fun destinationCell():Pair<Int,Int> {
         val dx=when(direction){Key.LEFT->-remaining;Key.RIGHT->remaining;else->0}
         val dy=when(direction){Key.UP->-remaining;Key.DOWN->remaining;else->0}
@@ -314,8 +318,19 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}
     private fun edgeExit(key:Key)=exits.firstOrNull{it.fromMapId==mapId && it.triggerX==x/16 &&
         it.triggerY==y/16 && it.edgeDirection==key}
+    private fun contactExit(key:Key):MapExit? {
+        if(terrainMode!=0)return null // No unimplemented boat/flying actor.
+        val(dx,dy)=delta(key);val nx=x/16+dx;val ny=y/16+dy;val s=scene
+        val exit=exits.firstOrNull{it.fromMapId==mapId&&it.contactActorId!=null&&it.triggerX==nx&&it.triggerY==ny}?:return null
+        val cell=ny*s.width+nx
+        if(cell !in s.dynamicObjectCells)return null // Original actor removed by its flag.
+        // Only the reviewed contact actor is exempted. Walls, direction rules,
+        // unavailable regions and all other NPCs remain active.
+        return exit.takeIf{s.copy(dynamicObjectCells=s.dynamicObjectCells-cell)
+            .probeFrom(x/16,y/16,key,terrainMode)==MovementBlock.NONE}
+    }
     private fun probe(key:Key):MovementBlock {
-        if(edgeExit(key)!=null)return MovementBlock.NONE
+        if(edgeExit(key)!=null||contactExit(key)!=null)return MovementBlock.NONE
         val (dx,dy)=delta(key)
         return scene.probeFrom(x/16,y/16,key,terrainMode)
     }
@@ -351,6 +366,11 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
             direction=chosen.first
             val edge=edgeExit(direction)
             if(edge!=null){enter(edge);return}
+            val contact=contactExit(direction)
+            if(contact!=null){
+                if(enter(contact)){lastContactExit=contact;contactTransitionSeq++}
+                return // No poison/field cost, encounter RNG or completed-step credit.
+            }
             val (dx,dy)=delta(direction)
             val decision=scene.terrainDecision(x/16,y/16,direction,terrainMode)
             val blocked=scene.check(x/16+dx,y/16+dy,decision.nextMode)
@@ -373,7 +393,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         remaining-=step
         if(remaining==0){
             stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y
-            val exit=exits.firstOrNull{it.fromMapId==mapId&&it.triggerX==x/16&&it.triggerY==y/16&&it.edgeDirection==null}
+            val exit=exits.firstOrNull{it.fromMapId==mapId&&it.triggerX==x/16&&it.triggerY==y/16&&it.edgeDirection==null&&it.contactActorId==null}
             completedStepSeq++
             val from=mapId;val cellX=x/16;val cellY=y/16
             val transitioned=exit?.let{enter(it)}==true

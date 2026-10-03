@@ -1,0 +1,396 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "scopeRevision": "forest101-requested-direction-correction",
+  "baseManifestSha256": "0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991",
+  "baseExport": {
+    "pinPath": "ci/golden-world-forest101-content.json",
+    "pinSha256": "b8a35673c59e402f58cac9a3aa5c915f1efff61261fce4d6c7c97102c1570fdc",
+    "provenanceSha256": "725ca27e99a4fbd12de4520390f9d418c328e9fa4a77b257b8cdbee460d4e088",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "maps": [],
+  "exits": [],
+  "npcs": [],
+  "dialogues": [],
+  "shops": [],
+  "inns": [],
+  "items": [],
+  "serviceBindings": [],
+  "sceneCapabilityUpdates": [
+    {
+      "kind": "FOREST_REQUEST_DIRECTION",
+      "mapId": 101,
+      "evidence": "game-data/provenance/world-forest101-direction.json"
+    }
+  ],
+  "limits": [
+    "No new maps or arbitrary openings; correct actual target-class direction restrictions."
+  ],
+  "ruleRanges": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Source tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source-class dispatch and occlusion"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Target tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target-class and source3 horizontal blocking"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Existing terrain mode conditions"
+    }
+  ],
+  "graphics": {}
+}

@@ -16,6 +16,8 @@ class ContentTest:IsolatedGameTestCase(){
     fun testForest101OriginalFootEdgesCompleteRegionAndRealReturn(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val s=c.scenes.getValue(101)
         assertEquals(setOf(0,3,7,8,9),s.walkableClasses)
+        assertEquals(mapOf(3 to setOf(Key.LEFT,Key.RIGHT),7 to setOf(Key.LEFT,Key.RIGHT)),s.targetEdges)
+        assertEquals(MovementBlock.PHYSICAL,s.probeFrom(26,19,Key.RIGHT))
         assertEquals(MovementBlock.PHYSICAL,s.probeFrom(8,51,Key.DOWN))
         assertEquals(MovementBlock.NONE,s.probeFrom(8,51,Key.UP))
         val enter=c.exits.single{it.fromMapId==16&&it.triggerX==213&&it.triggerY==155}

@@ -1235,6 +1235,27 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         extend_world_characters(reader,scene,combat,evidence.get('additionalCharacters',[]),overlay)
         result['combat.json']=encoded(combat)
     for patch in evidence.get('sceneCapabilityUpdates',[]):
+        if patch.get('kind')=='FOREST_REQUEST_DIRECTION':
+            proof=load(ROOT/patch['evidence']);required={(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
+            if patch['evidence']!='game-data/provenance/world-forest101-direction.json' or patch['mapId']!=101 or \
+                    proof['romSha256']!=SHA256 or proof['mapId']!=101 or \
+                    proof['scopeRevision']!='forest101-actual-requested-direction-97' or \
+                    proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or \
+                    proof['sourceEdges']!={'3':['LEFT','RIGHT']} or \
+                    proof['targetEdges']!={'3':['LEFT','RIGHT'],'7':['LEFT','RIGHT']} or \
+                    {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+                raise ValueError('Forest request direction requires its scoped original CPU evidence')
+            for span in proof['sources']:checked_span(reader,span)
+            raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+            if digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=145 or \
+                    proof['activeCpuSha256']!=digest(reader.read(0,0x8000,32768)):
+                raise ValueError('Forest direction CPU expectations differ')
+            name=next(m['scene']for m in scene['maps']if m['id']==101);data=json.loads(result[name])
+            if data['source']['mapGridSha256']!=proof['gridSha256'] or data['walkableClasses']!=[0,3,7,8,9] or \
+                    data['sourceEdges']!=proof['sourceEdges'] or data['targetEdges']!={}:
+                raise ValueError('Forest correction parent differs from fixed original grid/edges')
+            data['targetEdges']=proof['targetEdges'];data['source']['directionEvidence']=patch['evidence']
+            result[name]=encoded(data);continue
         if patch.get('kind')=='CONTINENT_FOOT_BRIDGES':
             proof=validate_continent_foot_bridges(reader,patch['evidence'])
             if patch['mapId']!=16 or patch['implementedCapabilities']!=['FOOT_BRIDGE15','FOOT_BRIDGE16','ORIGINAL_ZONE16'] or \

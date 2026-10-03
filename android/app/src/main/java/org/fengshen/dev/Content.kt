@@ -166,13 +166,22 @@ object ContentLoader {
         val exits=data.getJSONArray("exits").let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val trigger=ints(o,"trigger");val spawn=ints(o,"spawn")
             require(trigger.size==2&&spawn.size==2&&o.getString("confidence")=="VERIFIED")
-            val mode=o.optString("triggerMode","CELL");require(mode in setOf("CELL","EDGE"))
+            val mode=o.optString("triggerMode","CELL");require(mode in setOf("CELL","EDGE","ACTOR_CONTACT"))
             val direction=if(mode=="EDGE")Key.valueOf(o.getString("direction")) else null
             require(direction==null || direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             val arrival=Key.valueOf(o.optString("arrivalDirection","DOWN"))
             require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false),o.optBoolean("captureCaller",false),o.optBoolean("returnToCaller",false)).also{
                 it.preserveArrivalDirection=o.optBoolean("preserveArrivalDirection",false)
+                if(mode=="ACTOR_CONTACT"){
+                    val actor=o.getInt("contactActorId")
+                    require(o.getString("evidence")=="game-data/provenance/world-tree-contact.json"&&
+                        it.fromMapId==16&&it.toMapId==107&&actor in setOf(231,232)&&
+                        it.triggerX==170&&it.triggerY==if(actor==231)148 else 149)
+                    require(it.spawnX==7&&it.spawnY==14&&it.preserveArrivalDirection)
+                    require(sceneBarriers.any{b->b.id=="rom.barrier.16.$actor"&&b.x==it.triggerX&&b.y==it.triggerY})
+                    it.contactActorId=actor
+                }
             }
         }}
         for(exit in exits){

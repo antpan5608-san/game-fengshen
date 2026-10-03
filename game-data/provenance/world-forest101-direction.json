@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "mapId": 101,
+  "gridSha256": "b3a3a01ef51e64b4ec7ed0e5907d570d2829f408709261f444ec537c4328013e",
+  "activeCpuSha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853",
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Source tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source-class dispatch and occlusion"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Target tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target-class and source3 horizontal blocking"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Existing terrain mode conditions"
+    }
+  ],
+  "sourceEdges": {
+    "3": [
+      "LEFT",
+      "RIGHT"
+    ]
+  },
+  "scopeRevision": "forest101-actual-requested-direction-97",
+  "cpuCaseCount": 144,
+  "cpuFailures": 0,
+  "targetEdges": {
+    "3": [
+      "LEFT",
+      "RIGHT"
+    ],
+    "7": [
+      "LEFT",
+      "RIGHT"
+    ]
+  },
+  "cpuExpectedPath": "android/app/src/test/resources/forest101-direction-original-cpu.tsv",
+  "originalEvidenceKind": "CONTROLLED_SOURCE_NORMAL_KEYS_AND_ACTIVE_CPU_CALL_ARGUMENT_NOT_ANDROID",
+  "callArgument": "97 receives requested direction 1/2/3/4; idle zero is not movement or transport proof",
+  "actualCallTrace": {
+    "path": "private-derived/world-forest101-direction-trace/writes.tsv",
+    "sha256": "5963bbc7867975232e10e487fc2c1f4e2f483ad4781235812a481663d1bcd154",
+    "examples": [
+      [
+        1,
+        1,
+        0,
+        0
+      ],
+      [
+        2,
+        2,
+        0,
+        0
+      ]
+    ]
+  },
+  "correction": "20 of 144 original blocked decisions differ from the earlier argument97=0 fixture; retain source3 constraints, add target3/7 horizontal constraints.",
+  "limits": [
+    "Sprite occlusion remains separate; no new transport or random gate.",
+    "New normal Android route still NOT_RUN."
+  ],
+  "cpuExpectedSha256": "7c26390e0c4891e906635b6988e364d4c8b155cb7c014dce0568c93c2cae318a",
+  "controllerBoundary": {
+    "kind": "CONTROLLED_POSITION_CAMERA_NORMAL_KEYS_NOT_NORMAL_ROUTE",
+    "from": [
+      101,
+      26,
+      19
+    ],
+    "direction": "RIGHT",
+    "target": [
+      27,
+      19
+    ],
+    "targetClass": 3,
+    "after": [
+      101,
+      26,
+      19
+    ],
+    "ramSha256": "91eef7bfd0460bc613a710df2c236acd1934d5b341334ff4554bffdb16842d26"
+  }
+}

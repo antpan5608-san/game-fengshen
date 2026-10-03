@@ -10,7 +10,7 @@
 - 不reset、clean、覆盖用户修改或清空用户存档。新增效果一次有效提交，渲染不结算；失败、取消、重复输入和重启须按证据验证。Local First，云恢复与冲突处理不损坏已有进度。
 - 业务修改前执行原 `check-runtime.ps1`，优先当前环境，缺能力时用原受保护workflow的inspect模式。发布后实际postflight。无数据/不可用/历史真机样本均不是本轮健康或手机验收。实际崩溃、丢档、重复结算和路线阻断优先修复；历史旧故障只保留脱敏分析，不另存完整旧日志。
 - ROM、原始私有素材/回放、密钥不进公开Git、公开artifact或下载目录。仅恢复当前功能必要输入；Actions Secrets不等于当前任务凭据。保留平台代理、TLS、生产环境和reviewer；缺资源/权限精确报告，不绕过、不输出Secret。
-- 验证按实际风险选择已有测试。正常App流程、原版对照、边界fixture、云构建与设备验收分别记录；未执行为NOT_RUN。没有实际App流程验收时只保留候选，不覆盖正式APK。
+- 验证按实际风险选择已有测试。正常App流程、原版对照、边界fixture、云构建与设备验收分别记录；未执行为NOT_RUN。没有实际App流程验收时只保留候选，不覆盖正式APK。有明显可玩增量且实际运行不崩溃、存档与原发布门槛通过时阶段发布；已记录非阻断问题可按docs/history/world-full01-stage-publication.md单独评估，不抹去巡检错误，未知或阻断故障仍拒绝。
 - 发布沿用 `docs/android-ci.md` 的原Actions和脚本。用户已授权已验证Fengshen迭代的自动审批，无需重复同一授权；必须保持main/同源提交/同审核APK hash、既有包名/签名、递增版本和内容校验。代码/规则/skill先提交，构建后不推无关改动改变发布来源。纯文档/skill变化不发布游戏。
 - 只写 `oss://kubernetes-fleetpilot/artifacts/fengshen-remake/app/fengshen-remake.apk.bin` 和同目录 `version.json`；不修改Language及其对象/服务/数据库。公网完整字节校验后才登记版本，沿用最近两版日志规则。
 - 交付正文按用户本轮固定DELIVERY_REPORT；明确基线、实际修改、证据、巡检、测试、产物/发布和欠账变化。十类清单保持在权威文档，不重复复制全部历史，只有实际完成才关闭。内部检查点按当前授权连续推进；当前总任务达标后停止，不自动展开未授权玩法。

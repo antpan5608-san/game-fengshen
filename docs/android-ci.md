@@ -136,3 +136,8 @@ v24/0.8.4-touch-ux-01已发布，来源ef29edb9192bb299ed493b767c52b23c450b2094�
 ## MOBILE-PLAY-01 已验收接续
 
 实际正式v26/0.8.6-mobile-play-01，APK来源f9d9ba888e078cc32334bf64ad57ae1822b9402b；构建/runtime36971336254、审批/发布36974490907成功，独立公网完整APK/签名/内容复核通过。c13无素材或定义变化；content-source的iteration.base继续原c12确定性导出，runtimeBaseline发布后固定不可变v26供下轮覆盖，并已对最终APK执行原PYBASE校验块。完整C1—C8、原片、计数及发布后v26零样本限制见delivery-status最后报告。后续文档提交不改变实际APK来源；不因文档/skill变化再发布游戏。
+
+
+## 当前阶段发布规则修订（2026-10-04 北京时间）
+
+有显著可玩增量、实际运行不崩溃及既有审核门槛通过时阶段发布，不以全部非阻断缺陷清零为前提。原安全投影与ISSUES_FOUND/ERROR不改；原runtime-summary模块新增独立release decision，ci/runtime-nonblocking-issues.json只接受已经精确核对并有用户恢复反馈的旧版本下载中断。新时间/计数/类别、当前版本故障、崩溃/丢档/未知错误、不可用巡检或不可信版本保留均阻断。publish前与直接publisher均调用同一评估，postflight再执行；同源提交、签名、审核APK、reviewer和两对象不变。详见docs/history/world-full01-stage-publication.md。本地真实Node/安全摘要及隔离API已测，PowerShell新增入口仍需原Windows runner实际运行，不冒称生产上传完成。

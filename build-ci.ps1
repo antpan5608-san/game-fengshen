@@ -38,6 +38,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'World north/status content gates failed'}
     & python -m unittest discover -s tests -p test_world_inventory.py
     if($LASTEXITCODE -ne 0){throw 'Original world inventory gates failed'}
+    & python -m unittest discover -s tests -p 'test_runtime*py'
+    if($LASTEXITCODE -ne 0){throw 'Runtime summary and independent release decision gates failed'}
     & python -m unittest discover -s tests -p test_record_app_boundary.py
     if($LASTEXITCODE -ne 0){throw 'Strict App recording save-boundary gates failed'}
     & python -m unittest discover -s tests -p test_world_growth_export.py
@@ -58,11 +60,15 @@ try {
     if($LASTEXITCODE -ne 0){throw 'East content export and critical state gates failed'}
     & python -m unittest discover -s tests -p test_world_hell_encounters_export.py
     if($LASTEXITCODE -ne 0){throw 'Hell encounter and status gates failed'}
+    & python -m unittest discover -s tests -p test_world_hell_route_driver.py
+    if($LASTEXITCODE -ne 0){throw 'Original hell forward route guards failed'}
     & python -m unittest discover -s tests -p test_world_village2_export.py
     if($LASTEXITCODE -ne 0){throw 'Village2 original services and definitions gates failed'}
     & python -m unittest discover -s tests -p test_world_village3_export.py
     if($LASTEXITCODE -ne 0){throw 'Village3 pinned checkpoint, service, sprite and directed-return gates failed'}
     & python -m unittest discover -s tests -p test_world_forest101_export.py
+    if ($LASTEXITCODE -ne 0) { throw 'Forest base regression failed' }
+    & python -m unittest discover -s tests -p test_world_forest_direction_export.py
     if($LASTEXITCODE -ne 0){throw 'Forest101 original movement, complete region and restore gates failed'}
     & python -m unittest discover -s tests -p test_world_continent_barrier_export.py
     if ($LASTEXITCODE -ne 0) { throw 'Original world actor conditions gates failed' }
