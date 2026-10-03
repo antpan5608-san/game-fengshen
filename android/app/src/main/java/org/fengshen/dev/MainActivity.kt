@@ -623,7 +623,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor &&
+        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor && content.npcVisible(it,flags) &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
@@ -632,7 +632,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val (x,y)=world.destinationCell()
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
         if(originalPoint!=null)return originalPoint
-        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor}.map{NpcCell(it.id,it.x,it.y)})?.id
+        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
         return content.npcs.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
@@ -724,6 +724,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return true
     }
     fun startOpeningIfNeeded(){
+        content.yangJoin()?.let{rule->
+            if(flags[rule.pendingFlag]==true){
+                val stage=rule.continuation.stage(rule.id,flags)
+                if(stage!=null&&rule.validPending(currentSnapshot())){
+                    openDialogue(content.dialogues.getValue(rule.continuation.dialogueIds[stage]),content.npcs.single{it.id==rule.npcId});return
+                }
+            }
+        }
+
         val scenePending=content.sceneStories.values.firstOrNull{flags[it.pendingFlag]==true}
         if(scenePending!=null){
             if(OriginalStatus.allDisabled(characters)){
@@ -776,6 +785,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
+        content.yangJoin()?.let{rule->
+            if(npc?.id==rule.npcId&&flags[rule.pendingFlag]==true){
+                if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+                val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.advance(before,rule,dialogueText?.id?:""),npc);return
+            }
+        }
         val sceneStory=npc?.let{content.sceneStories[it.id]}
         if(sceneStory!=null&&npc!=null){
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
@@ -963,9 +978,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         item.worldUse?.let{rule->
             val snapshot=currentSnapshot();val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
-            val target=content.mapObjects.asSequence().mapNotNull{it.itemTarget}
+            val target=content.worldItemTargets().asSequence()
                 .firstOrNull{WorldItems.available(snapshot,item,rule,it,mapMenu)}
-            val reason=when{!mapMenu->"仅支持地图/菜单使用";(inventory[id]?:0)<=0->"已无该物品";
+            val reason=if(rule.yangJoin!=null){
+                val original=content.worldItemTargets().firstOrNull{it.id==rule.yangJoin!!.npcId}
+                if(original==null)"原版目标尚未接入" else OriginalYangJoin.unavailable(snapshot,item,original,mapMenu)?:""
+            }else when{!mapMenu->"仅支持地图/菜单使用";(inventory[id]?:0)<=0->"已无该物品";
                 target==null->"请面向可使用的原版对象";else->""}
             return ItemAction("world-use","使用${item.name}",target!=null,reason,target?.id)
         }
@@ -1036,8 +1054,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return;val rule=item.worldUse?:return
                 val current=itemAction()
                 if(selectedItemId!=id||current.kind!="world-use"||!current.enabled||current.target!=cmd.targetId)return
-                val target=content.mapObjects.firstOrNull{it.id==cmd.targetId}?.itemTarget?:return
-                val before=currentSnapshot();val result=WorldItems.use(before,item,rule,target,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                val target=content.worldItemTargets().firstOrNull{it.id==cmd.targetId}?:return
+                val before=currentSnapshot()
+                if(rule.yangJoin!=null){
+                    val result=OriginalYangJoin.begin(before,item,target,content.joinCharacters["yangjian"],panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                    if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                    closePanel();commitStoryFollowup(before,result,content.npcs.single{it.id==target.id});return
+                }
+                val result=WorldItems.use(before,item,rule,target,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
                 if(!result.applied){feedback(result.error?:"当前不可使用");return}
                 inventory=result.inventory;flags=result.flags
                 commitModal(before,"已使用${item.name}")
@@ -1365,7 +1389,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 };touchDetail(c,lines,item?.preview)
                 if(a.kind!=null)touchButton(c,l.primary,a.text,a.enabled)
             }else{val d=equippedDefinition();val item=d?.let{content.itemDefinitions[it.itemId]};val removable=d!=null&&OpeningEquipment.unequip(hero,inventory,d)!=null
-                touchDetail(c,listOf("${slotName(equipmentSlot)} · ${item?.name?:"空或尚未核验"}","角色 ${heroName(hero.id)}", "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")}","总防御 ${hero.stamina+equipmentBonus(hero,"body")}",if(d==null)"当前槽位无可卸下的已实现装备" else if(!removable)"当前背包条件不允许回包" else "卸下后回到真实背包"),item?.preview)
+                touchDetail(c,listOf("${slotName(equipmentSlot)} · ${item?.name?:"空或尚未核验"}","角色 ${heroName(hero.id)}", "总攻击 ${hero.strength+equipmentBonus(hero,"rightHand")}","总防御 ${hero.stamina+equipmentBonus(hero,"body")}",if(d==null)"当前槽位无可卸下的已实现装备" else if(!d.operationEnabled)"此件装备的卸下规则尚未接入" else if(!removable)"当前背包条件不允许回包" else "卸下后回到真实背包"),item?.preview)
                 if(d!=null)touchButton(c,l.primary,"卸下 ${item?.name?:"装备"}",removable)
                 touchButton(c,l.secondary,if(hasEquipmentCandidate())"选择候选" else "无合法候选",hasEquipmentCandidate())}
         }
@@ -1535,6 +1559,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         paint.color=Color.WHITE;paint.alpha=255
         val actors=content.npcs.filter{it.mapId==world.mapId&&
+            (content.npcVisible(it,flags)||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))&&
             (!it.scriptedActor||it.id in content.sceneStories||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
@@ -1623,6 +1648,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     private fun equipmentBonus(hero:CharacterState,slot:String):Int {
+        if(slot=="rightHand")OriginalYangJoin.initialHandContribution(currentSnapshot(),hero)?.let{return it}
         val e=hero.equipment?:return 0
         val id=when(slot){"rightHand"->e.rightHand;"body"->e.body;"feet"->e.feet;else->-1}
         val d=content.equipmentDefinitions.values.firstOrNull{it.slot==slot&&it.originalId==id}?:return 0

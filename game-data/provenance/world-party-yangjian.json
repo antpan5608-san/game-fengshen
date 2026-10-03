@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "tree110-item19-event29-yang-init",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "initialCharacter": {
+    "id": "yangjian",
+    "name": "楊戩",
+    "actorIndex": 2,
+    "originalActiveActorId": 3,
+    "partySlot": 2,
+    "level": 24,
+    "experience": 26000,
+    "hp": 495,
+    "maxHp": 495,
+    "mp": 54,
+    "maxMp": 54,
+    "strength": 96,
+    "stamina": 60,
+    "agility": 28,
+    "spirit": 69,
+    "statusMask": 0,
+    "equipment": {
+      "rightHand": 33,
+      "leftHand": 33,
+      "body": 18,
+      "feet": 29
+    },
+    "confidence": "CONTROLLED_ORIGINAL_ITEM_USE_AND_SCOPED_CPU_INIT",
+    "inheritedEmptySlotFields": [
+      "status546 remains prior0; no learned spell list initialized"
+    ],
+    "spells": "NOT_VERIFIED_NO_CAPABILITY_INFERRED",
+    "originalFieldMapping": {
+      "strength": "SRAM6968/6969",
+      "agility": "RAM0536",
+      "equipmentAttackContribution": "RAM054C/054D=58 is initial equipment contribution, not total attack; physical uses96+58",
+      "bodyContribution": "RAM0554/0555=50",
+      "evasion": "RAM055C/055D=5"
+    },
+    "equipmentInitializationCaution": "Original item33 catalog contribution70 conflicts with hardcoded initial cache58. Preserve the initialization evidence; paired equipment/battle integration requires explicit treatment, not silently replacing58 with70."
+  },
+  "initializationSources": [
+    {
+      "offset": 115696,
+      "length": 19,
+      "sha256": "82c7b63772c542ba0fe1e49718b74112e5909fa421ea493657a16ca5d4bc40cb",
+      "module": 3,
+      "cpuAddress": 50144,
+      "meaning": "Actual map110 message2 initializer selector"
+    },
+    {
+      "offset": 115715,
+      "length": 141,
+      "sha256": "84b2a36776bc885985ef1a02ced85bcdaaf4b30a622785222f647d9b5c431fb8",
+      "module": 3,
+      "cpuAddress": 50163,
+      "meaning": "Actual actor2 initializer; joins before first event29 message"
+    }
+  ],
+  "initialCpuVerification": {
+    "steps": 57,
+    "changedFieldCount": 21,
+    "mismatchesAgainstActualFirstDialogueRam": 0,
+    "kind": "CONTROLLED_ORIGINAL_CPU_FROM_REAL_TREE_ROUTE_PRIOR_RAM"
+  },
+  "growthExtension": {
+    "owner": "yangjian",
+    "actorIndex": 2,
+    "confidence": "ORIGINAL_ROM_STATIC",
+    "levels": [
+      2,
+      80
+    ],
+    "maxLevel": 80,
+    "growthRange": {
+      "offset": 374736,
+      "length": 560,
+      "sha256": "a9ab48a9a082ba257bbf2f2ae06c0718df5fdd7134cb8a8c771b710ba80ada16",
+      "cpuAddress": 55232,
+      "prg8kBank": 45,
+      "meaning": "80 contiguous seven-byte growth rows"
+    },
+    "thresholdRange": {
+      "offset": 376336,
+      "length": 240,
+      "sha256": "446bb920d0d87bdcf4d190cd3c13e3a9801b697f73b60fa718c300e825d063e2",
+      "cpuAddress": 56832,
+      "prg8kBank": 45,
+      "meaning": "80 contiguous uint24le experience values"
+    },
+    "levelCapSource": {
+      "offset": 306903,
+      "length": 7,
+      "sha256": "22d4c0bd8b32da763a0890325a44b61cce90d5d3b8d8de69d89e1f7f2fc06a1f",
+      "module": 9,
+      "cpuAddress": 44743,
+      "meaning": "Original storedlevel79 cap"
+    },
+    "comparisonSources": [
+      {
+        "offset": 373272,
+        "length": 142,
+        "sha256": "f9f7b7f82b87f2a320d2f0ff4c199c9ffb1e1c666f1f18e381c834833d4ceba2",
+        "cpuAddress": 53768,
+        "prg8kBank": 45,
+        "meaning": "Experience comparison and level index increment"
+      },
+      {
+        "offset": 373422,
+        "length": 194,
+        "sha256": "388fb2ce24e7746861b7cb6eae2c7f27e51b9d828e6394a808f27023bc2e0d81",
+        "cpuAddress": 53918,
+        "prg8kBank": 45,
+        "meaning": "Apply seven-byte growth deltas"
+      }
+    ],
+    "pointerSources": [
+      {
+        "offset": 373414,
+        "length": 8,
+        "sha256": "1f4714b3aa49dc2162460b9f3cfd8864631fe7e9f2f3b5db38933f36af8c1bdb",
+        "cpuAddress": 53910,
+        "prg8kBank": 45,
+        "meaning": "Four growth table pointers"
+      },
+      {
+        "offset": 373264,
+        "length": 8,
+        "sha256": "a854ffe4f404bea262eca1fdfed16bda4f48c4b7f22d40408a1575a0fbcbc37b",
+        "cpuAddress": 53760,
+        "prg8kBank": 45,
+        "meaning": "Four experience table pointers"
+      }
+    ],
+    "initialInterval": {
+      "level": 24,
+      "totalExperience": 26000,
+      "currentThreshold": 25870,
+      "nextLevel": 25,
+      "nextThreshold": 29899
+    },
+    "normalCharacterLevelUp": "NOT_RUN"
+  },
+  "remainingUnknown": [
+    "Original learned spells",
+    "Normal Android item19 acquisition to use",
+    "Paired-hand33 atomic equipment operations; not enabled by portrait/init evidence",
+    "Original item33 paired equipment transactions; initial contribution58 vs catalog70 must remain separately evidenced"
+  ],
+  "equipmentSources": [
+    {
+      "offset": 94068,
+      "length": 2,
+      "sha256": "9f6d6e893830ee03b649daf6f15a9063c5bb876360bfb32a628da6bb441b0ab9",
+      "module": 2,
+      "cpuAddress": 61284,
+      "meaning": "Actor2 equipment slot pointer root"
+    },
+    {
+      "offset": 94088,
+      "length": 8,
+      "sha256": "357dfeb35861a735d9d5fe4742b3c21edf5719d028406d878f19ebb14f667726",
+      "module": 2,
+      "cpuAddress": 61304,
+      "meaning": "Actor2 right/left/body/feet pointers"
+    },
+    {
+      "offset": 94174,
+      "length": 13,
+      "sha256": "a4eb34b0c454e5ef6e1cfda5f58d0ee6786c3b28ada2a58ab61c8c63150fba23",
+      "module": 2,
+      "cpuAddress": 61390,
+      "meaning": "Actual actor2 rightHand terminated list"
+    },
+    {
+      "offset": 94187,
+      "length": 7,
+      "sha256": "13b92931fee4ac3c88bb64c46da538e42d40aad06bd0421d3e6acc9c9448c716",
+      "module": 2,
+      "cpuAddress": 61403,
+      "meaning": "Actual actor2 body terminated list"
+    },
+    {
+      "offset": 94194,
+      "length": 10,
+      "sha256": "03cb43d163fe892161a934687127474291a92081529fb552aef718f693819393",
+      "module": 2,
+      "cpuAddress": 61410,
+      "meaning": "Actual actor2 feet terminated list"
+    },
+    {
+      "offset": 76426,
+      "length": 17,
+      "sha256": "d9d39b16b9cfec57112e2ff1c3bef6dbbd676218f123f8dc7779118ac432b0a5",
+      "module": 2,
+      "cpuAddress": 43642,
+      "meaning": "Original paired-hand classification"
+    }
+  ],
+  "items": [
+    {
+      "id": "rom.armor.18",
+      "category": "armor",
+      "originalId": 18,
+      "buyPrice": 1800,
+      "sellPrice": 900,
+      "maxCount": 10,
+      "name": "竹片甲",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "originalVerified": false,
+        "evidence": "game-data/provenance/world-party-yangjian.json",
+        "priceRange": {
+          "offset": 93105,
+          "length": 2,
+          "sha256": "c3aefc14ee1131201d705d4da641e4729e40fcd15a0d80015a9deba1164959f9",
+          "module": 2,
+          "cpuAddress": 60321,
+          "meaning": "Original unsigned purchase price"
+        },
+        "nameRange": {
+          "offset": 93433,
+          "length": 5,
+          "sha256": "069bdd9232092d96053587eecf501fdb85d23c4e7a673610e1a8d4526fc0015f",
+          "module": 2,
+          "cpuAddress": 60649,
+          "meaning": "Original terminated menu text"
+        },
+        "nameEvidence": {
+          "kind": "PROVISIONAL_REFERENCE",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "path": "Resources/res/MainData",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "row": {
+            "id": 62,
+            "name": "竹片甲",
+            "description": "采用竹片树藤缝制而成，是最常见的轻甲，但韧性不足。防御力加50",
+            "type": 3,
+            "number1": 50,
+            "res": "Icon_091",
+            "buy_price": 1800,
+            "sell_price": 900,
+            "mini_type": 3,
+            "isTwoHand": 0,
+            "role01": 0,
+            "role02": 0,
+            "role03": 1,
+            "role04": 0,
+            "isdisappear": 0,
+            "sell_storyId": 0
+          },
+          "licenseStatus": "UNKNOWN",
+          "targetOriginalGlyphOrNormalName": "NOT_VERIFIED"
+        }
+      },
+      "equipment": {
+        "originalId": 18,
+        "slot": "body",
+        "allowedCharacters": [
+          "yangjian"
+        ],
+        "originalActorIndexes": [
+          2
+        ],
+        "originalPermittedSlots": [
+          "body"
+        ],
+        "attackBonus": 0,
+        "defenseBonus": 50,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "evidence": "game-data/provenance/world-party-yangjian.json",
+        "ruleSources": [
+          {
+            "offset": 93193,
+            "length": 2,
+            "sha256": "913da1f8df6f8fd47593840d533ba0458cc9873996bf310460abb495b34c232a",
+            "module": 2,
+            "cpuAddress": 60409,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94187,
+            "length": 7,
+            "sha256": "13b92931fee4ac3c88bb64c46da538e42d40aad06bd0421d3e6acc9c9448c716",
+            "module": 2,
+            "cpuAddress": 61403,
+            "meaning": "Actual actor2 body terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    }
+  ],
+  "itemCapabilityUpdates": [
+    {
+      "id": "rom.weapon.33",
+      "baseDefinitionSha256": "60149b077bbb5ff23e1e044157795f4e8a39721e2a88e2383c75f1225a1dd806",
+      "fields": {
+        "equipment": {
+          "originalId": 33,
+          "slot": "rightHand",
+          "allowedCharacters": [
+            "yangjian"
+          ],
+          "originalActorIndexes": [
+            2
+          ],
+          "originalPermittedSlots": [
+            "rightHand",
+            "leftHand"
+          ],
+          "attackBonus": 70,
+          "defenseBonus": 0,
+          "evasionValue": 0,
+          "operationEnabled": false,
+          "evidence": "game-data/provenance/world-party-yangjian.json",
+          "ruleSources": [
+            {
+              "offset": 92596,
+              "length": 2,
+              "sha256": "b88d3bf2366367bc11900a0183ff040bb3a26d46e5bd80b336b92d6c033e9eec",
+              "module": 2,
+              "cpuAddress": 59812,
+              "meaning": "Original equipment contribution"
+            },
+            {
+              "offset": 94174,
+              "length": 13,
+              "sha256": "a4eb34b0c454e5ef6e1cfda5f58d0ee6786c3b28ada2a58ab61c8c63150fba23",
+              "module": 2,
+              "cpuAddress": 61390,
+              "meaning": "Actual actor2 rightHand terminated list"
+            }
+          ],
+          "crossHandOccupancy": true,
+          "limit": "Original paired33 initialized contribution58 differs from catalog70; operations remain unavailable, no single-hand removal."
+        }
+      }
+    },
+    {
+      "id": "rom.armor.29",
+      "baseDefinitionSha256": "e7151bd0f2b75918eb10efe724d65cdc74fa5b8b6e2819c3b64ac9c9da3eb40d",
+      "fields": {
+        "equipment": {
+          "allowedCharacters": [
+            "nezha",
+            "yangjian"
+          ],
+          "attackBonus": 0,
+          "defenseBonus": 0,
+          "evasionValue": 5,
+          "evidence": "game-data/provenance/world-west-services01.json",
+          "operationEnabled": true,
+          "originalId": 29,
+          "ruleSources": [
+            {
+              "cpuAddress": 61280,
+              "length": 8,
+              "meaning": "Character ID to four-slot pointer table",
+              "module": 2,
+              "offset": 94064,
+              "sha256": "e9dc9f8fd9f421fc76934efcb0930374b2ce8af36d52d7c016e90487ab3e6c58"
+            },
+            {
+              "cpuAddress": 61288,
+              "length": 8,
+              "meaning": "Nezha right/left/body/feet pointers",
+              "module": 2,
+              "offset": 94072,
+              "sha256": "bff018c6f026ecd4a9daffa9b5656302136ec2e9bf11ddbec7358e54d2c961a1"
+            },
+            {
+              "cpuAddress": 61320,
+              "length": 19,
+              "meaning": "Nezha weapon IDs 0..17 and FF terminator",
+              "module": 2,
+              "offset": 94104,
+              "sha256": "6de6df8d975bb967a03e02a41eb4f95d36e94a88f90c81d69391c734ab217b89"
+            },
+            {
+              "cpuAddress": 61339,
+              "length": 11,
+              "meaning": "Nezha body IDs0..9 and FF",
+              "module": 2,
+              "offset": 94123,
+              "sha256": "de94d3ac8f954529520c3540014ca298611a389e74dd98f0c5333bc64482539c"
+            },
+            {
+              "cpuAddress": 61350,
+              "length": 10,
+              "meaning": "Nezha feet IDs28..34,42,43 and FF",
+              "module": 2,
+              "offset": 94134,
+              "sha256": "afd6bca4e910e918d8846eb67c8e3fb140ce1712dcad964523e6028ed4f39845"
+            },
+            {
+              "cpuAddress": 43659,
+              "length": 124,
+              "meaning": "Actual character/slot/inventory candidate filter",
+              "module": 2,
+              "offset": 76443,
+              "sha256": "0db6a38459abf7d78076c2dd68c550aba4b8ef72e8165129139ccdb318dc0af0"
+            },
+            {
+              "cpuAddress": 43617,
+              "length": 25,
+              "meaning": "Cross-hand list membership routine",
+              "module": 2,
+              "offset": 76401,
+              "sha256": "2e25af89a7e3a770b45e74bbbdb1a75bdc94b4937ff74873db5499e90b113447"
+            },
+            {
+              "cpuAddress": 43642,
+              "length": 17,
+              "meaning": "Cross-hand occupying weapon IDs and FF terminator",
+              "module": 2,
+              "offset": 76426,
+              "sha256": "d9d39b16b9cfec57112e2ff1c3bef6dbbd676218f123f8dc7779118ac432b0a5"
+            },
+            {
+              "cpuAddress": 43077,
+              "length": 58,
+              "meaning": "Current/opposite hand lookup",
+              "module": 2,
+              "offset": 75861,
+              "sha256": "1c858c7bf4460df72e62139b189a5b3abb0263646bb160be69a5e47ee6a72071"
+            },
+            {
+              "cpuAddress": 43206,
+              "length": 87,
+              "meaning": "Equip menu rejects occupied slot and opposite cross-hand weapon",
+              "module": 2,
+              "offset": 75990,
+              "sha256": "cecc271fb7f50ca380e440807631d14fbc2e28aeee7a8fe9cc3af838fc98c243"
+            },
+            {
+              "cpuAddress": 44134,
+              "length": 90,
+              "meaning": "Confirmation rechecks candidate cross-hand class and opposite hand",
+              "module": 2,
+              "offset": 76918,
+              "sha256": "7ef7d6b99221ae9a0872f395b1522f291c4061481114e0ebf447c45716575874"
+            },
+            {
+              "cpuAddress": 42762,
+              "length": 102,
+              "meaning": "Cross-hand occupancy check and paired ID commit",
+              "module": 2,
+              "offset": 75546,
+              "sha256": "d9682c7c3d3e8bfd8cc2e23b58c77697be79f5108a0c9c6c566c7aa6c32430b8"
+            },
+            {
+              "cpuAddress": 42906,
+              "length": 105,
+              "meaning": "Selected slot ID and attack/defense/evasion contribution commit",
+              "module": 2,
+              "offset": 75690,
+              "sha256": "b20a875e48bc612b152df73b5185a3c8316f080f943da6501c8a116b1ed2d4b8"
+            },
+            {
+              "cpuAddress": 44224,
+              "length": 75,
+              "meaning": "Contribution lookup and existing inventory removal call",
+              "module": 2,
+              "offset": 77008,
+              "sha256": "9f3bf5a350df952f9c2948822cd36dd9dbcfc1ccab9cd415cc20fc0da4f549a8"
+            },
+            {
+              "cpuAddress": 41372,
+              "length": 82,
+              "meaning": "Existing category inventory decrement",
+              "module": 2,
+              "offset": 74156,
+              "sha256": "4eb9d5c6785461cdbf6a46288cd4746b27a345179ff54e3d26f8d80213209b41"
+            },
+            {
+              "cpuAddress": 59742,
+              "length": 4,
+              "meaning": "Weapon and armor contribution root pointers",
+              "module": 2,
+              "offset": 92526,
+              "sha256": "e72f4adc70f5fce7ba49bb1d5955b208d308579fe08d422b8152d2bfb16746b7"
+            },
+            {
+              "cpuAddress": 59752,
+              "length": 2,
+              "meaning": "weapon3 contribution=16",
+              "module": 2,
+              "offset": 92536,
+              "sha256": "707bf0b938f307b5c222e670598b865d5e1f8a8003df82c7abbf7c9f8fa4d720"
+            },
+            {
+              "cpuAddress": 60377,
+              "length": 2,
+              "meaning": "armor2 contribution=12",
+              "module": 2,
+              "offset": 93161,
+              "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839"
+            },
+            {
+              "cpuAddress": 60431,
+              "length": 2,
+              "meaning": "armor29 contribution=5",
+              "module": 2,
+              "offset": 93215,
+              "sha256": "2921a11f25dadaa24aa79a548e4e81508c2e5e56af2d833d65e2bcce448ce2f5"
+            },
+            {
+              "offset": 94068,
+              "length": 2,
+              "sha256": "9f6d6e893830ee03b649daf6f15a9063c5bb876360bfb32a628da6bb441b0ab9",
+              "module": 2,
+              "cpuAddress": 61284,
+              "meaning": "Actor2 equipment slot pointer root"
+            },
+            {
+              "offset": 94088,
+              "length": 8,
+              "sha256": "357dfeb35861a735d9d5fe4742b3c21edf5719d028406d878f19ebb14f667726",
+              "module": 2,
+              "cpuAddress": 61304,
+              "meaning": "Actor2 right/left/body/feet pointers"
+            },
+            {
+              "offset": 94194,
+              "length": 10,
+              "sha256": "03cb43d163fe892161a934687127474291a92081529fb552aef718f693819393",
+              "module": 2,
+              "cpuAddress": 61410,
+              "meaning": "Actual actor2 feet terminated list"
+            }
+          ],
+          "slot": "feet",
+          "originalActorIndexes": [
+            0,
+            2
+          ],
+          "ownerExtensionEvidence": "game-data/provenance/world-party-yangjian.json"
+        }
+      }
+    },
+    {
+      "id": "rom.special.19",
+      "baseDefinitionSha256": "1a182093710bb502d686ab982ebb66ce2344fe9b4362db34b2cad0c065f20b5d",
+      "fields": {
+        "description": "玉鼎真人的信物；面向神木上的楊戩使用。",
+        "worldUse": {
+          "targetSpriteId": 130,
+          "reusable": true,
+          "usedFlagId": "rom.inventory.special.19.used",
+          "evidence": "game-data/provenance/world-yang-join.json"
+        }
+      }
+    }
+  ],
+  "initialEquipmentContributions": {
+    "rightHand": 58,
+    "body": 50,
+    "feet": 5,
+    "catalogWeapon33": 70,
+    "totalInitialAttack": 154,
+    "scope": "ACTUAL_HARDCODED_INIT_AND_ORIGINAL_PHYSICAL_BASE_FIELDS_NOT_GENERAL_ITEM33_OVERRIDE"
+  }
+}

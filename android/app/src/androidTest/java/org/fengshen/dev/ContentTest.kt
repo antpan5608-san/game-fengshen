@@ -13,6 +13,35 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    fun testOriginalYangSignalPendingSaveCollisionAndOwnBattleContent(){
+        // Isolated definition/save fixture; never a normal-route claim.
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val item=c.itemDefinitions.getValue(OriginalYangJoin.ITEM_ID);val rule=c.yangJoin()!!
+        val target=c.worldItemTargets().single{it.id==rule.npcId}
+        val old=SaveSnapshot(c.scene.version,110,7*16+8,6*16+8,Key.LEFT,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(item.id to 1),
+            mapOf("rom.global.7c8.1" to true),money=83,encounterSteps=17)
+        assertTrue(old.validate(c));assertNotNull(c.sceneForState(110,old.flags)!!.check(6,6))
+        val result=OriginalYangJoin.begin(old,item,target,c.joinCharacters["yangjian"],true)
+        assertTrue(result.applied);assertTrue(result.snapshot.validate(c))
+        val restored=SaveSnapshot.parse(result.snapshot.json().toString())
+        assertEquals(result.snapshot,restored);assertTrue(rule.validPending(restored))
+        assertFalse(c.npcVisible(c.npcs.single{it.id==rule.npcId},restored.flags))
+        assertNull(c.sceneForState(110,restored.flags)!!.check(6,6))
+        val page=StoryFollowup.advance(restored,rule,"rom.dialogue.120.2")
+        val savedPage=SaveSnapshot.parse(page.snapshot.json().toString());assertTrue(savedPage.validate(c))
+        val finished=StoryFollowup.advance(savedPage,rule,"rom.dialogue.120.3")
+        assertTrue(finished.applied);assertTrue(finished.snapshot.validate(c));assertEquals(17,finished.snapshot.encounterSteps)
+        assertEquals(1,finished.snapshot.inventory[item.id]);assertEquals(3,finished.snapshot.characters.size)
+        val actor=c.joinCharacters.getValue("yangjian")
+        assertEquals(96,actor.strength);assertEquals(28,actor.agility);assertEquals(58,OriginalYangJoin.initialHandContribution(finished.snapshot,actor))
+        assertEquals(79,c.battle!!.growthFor(actor.id).size);assertNotNull(c.battle!!.physicalFor(actor.id))
+        assertEquals(setOf("nezha","yangjian"),c.equipmentDefinitions.getValue("rom.armor.29").allowedCharacters)
+        assertFalse(c.equipmentDefinitions.getValue("rom.weapon.33").operationEnabled)
+        assertNull(OpeningEquipment.unequip(actor,emptyMap(),c.equipmentDefinitions.getValue("rom.weapon.33")))
+        assertFalse(OriginalYangJoin.begin(finished.snapshot,item,target,actor,true).applied)
+    }
+
     fun testRoom171OriginalCounterAndTeacherSignalDefinition(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(171)
         assertEquals(16,scene.width);assertEquals(15,scene.height);assertEquals(setOf(0,2),scene.walkableClasses)

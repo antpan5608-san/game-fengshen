@@ -9,7 +9,7 @@ import export_development as ex
 class Room171ExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-room171-content.json').read_text(encoding='utf-8'))
         cls.path='game-data/provenance/world-room171-content.json'
         cls.p=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'))
         cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text(encoding='utf-8'))

@@ -525,5 +525,10 @@ jobs:
             artifacts/checkpoint-ui/world-room171-*.json
             artifacts/checkpoint-ui/world-room171-*-test.txt
             artifacts/world-room171-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-yang-join-*.png
+            artifacts/checkpoint-ui/touch-ux-world-yang-join-*.json
+            artifacts/checkpoint-ui/world-yang-join-*.json
+            artifacts/checkpoint-ui/world-yang-join-*-test.txt
+            artifacts/world-yang-join-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

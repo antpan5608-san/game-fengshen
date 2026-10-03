@@ -1,4 +1,17 @@
-## 当前有效玉泉山检查点（2026-10-03T20:29:55.768873+00:00，本地未发布）
+## 当前有效杨戬入队检查点（2026-10-03T21:30Z，本地未发布）
+
+- 当前总任务唯一为WORLD-FULL-01，继续F3/F4。正式仍v27/c14；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户已授权显著可玩增量在实际App不崩溃、存档与原签名/审核门禁通过后阶段发布，非阻断问题如实保留。
+- 原发布来源main冻结263e7dbce24a3baa26abfb0c267783dfe0ad3a9e；v55/0.8.8-world-full01-f3/c36、run37149570155签名build SUCCESS，原KVM正常runtime仍执行。独立本树work/world-after-tree接续，不推main改变候选。v54原地府驱动无合法返回已修，旧失败保留，不发布失败产物。
+- 本树c39：215文件/39地图，manifest e2696bab7b1f792bad8d2c160b7c46949d496180dc04037285f9fbc5cfd97e33；固定c38父pin与审核v27同一不可变基底APK，不变图集/音频逐字节复用。师父取得玉佩、神木四层、真实独立出口均保留。
+- 已实现玉佩rom.special.19在map110站7,6面向杨戬6,6的明确菜单使用。原event29先入队后对白1202/1203，信物数量仍1；持久pending与复谈/重入不重复提交。原context207为空NPC表，运行NPC与碰撞一同移除，非伪造通道或新出发前置。
+- 杨戬原初始24级/EXP26000/HP495/MP54、strength96/agility28、stamina60/spirit69；装备33/33/18/29、自己的79条成长/36倍伤表。原初始化手部贡献cache58与武器33表70不同，按已核初始双手占用派生58，未添加第二份持久属性。双手换装/卸下规则未接入，明确禁用，不在UI强串两次副作用。
+- 原物品/完成/overlay及三人敌方目标/自身倍伤5926 CPU案例零差异；controlled真实按键核入队两段文本与重入NPC消失，initializer21字段一致。CPU/受控原版不是正常Android；三人行动顺序/经验以复用调度的JVM fixture验证，尚未宣称全原版等价。
+- 本地世界回归一次166方法PASS（528.673秒）；277 JVM/54 suites/0失败错误跳过，instrument APK编译PASS。4局部导出测试、真实LF checkout、原ci_apk.restore全新空资源目录215文件严格字节一致均PASS。新正常师父存档→返回神木→明确使用→三人自然战斗→保存/外部冷启/离树再入驱动已编译并接原workflow/同产物审核；实际App仍NOT_RUN，不能由编译关闭可玩验收。
+- 实际inspect37149229309在2026-10-03T19:48:56.3907953Z查询可信27/26=1398/2289，共3687事件；普通真机7会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED；独立release-assessment实际ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES，生产新PowerShell路径待实际发布执行。声音/一加13T NOT_RUN。
+- 本地入队/三人源码与证据恢复已实施，正常App、全地图/服务/条件/全部技能、NPC移动及原卡带手动失败分支欠账不关闭；累计十类权威清单仍在docs/delivery-status.md已有完整段，不另立平台或重复复制。
+- 下一实际动作：保存本地可复现c39提交；v55完成立即读首错或沿原同提交/同产物自动审批发布；继续由现有缓存与已核神木出口定向核九龙岛下一真实连接，不以39图或资源找到结案。
+
+## 历史玉泉山检查点（2026-10-03T20:29:55.768873+00:00，本地未发布）
 
 - WORLD-FULL-01持续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效分母UNKNOWN。用户已授权有大幅可玩进展且App实际运行不崩溃、存档及原保护通过时阶段发布，不等待所有非阻断欠账清零。
 - 发布来源main冻结263e7dbce24a3baa26abfb0c267783dfe0ad3a9e，v55/0.8.8-world-full01-f3/run37149570155：签名build SUCCESS，原KVM正常runtime仍执行。v54/run37138936199完成FAILURE：地府服务驱动过早从23步行去55,70无合法路径；已按实际单向地形把10/13区自然遇敌检查移到原殿间路线，并将正常25级补给训练移到首殿前，未改地形/敌人/玩家状态或制造返程。不能发布未通过完整门禁的v54。
@@ -7,6 +20,7 @@
 - 原8192师父selector、6gift、1024道童、36碰撞CPU案例已运行零差异。修正旧师父已完成flag的repeat选择：实际raw selector直接message3且跳过action12，旧研究message2错误不作运行依据；保留correctionHistory。两段文字明确PROVISIONAL，其余对照实际原版受控画面，均不冒称本轮正常Android。
 - 本地4房间导出方法PASS（45.604秒）、271 JVM/53 suites/0失败错误跳过、仪器APK编译PASS；原ci_apk.restore全新空目录215文件逐字节一致。新增正常神木存档→真实返回→森林→房171counter→取得/重复→外部冷启/离店式原出口返回驱动已编译并接原workflow/同产物审核，实际Android仍NOT_RUN。
 - 实际inspect37149229309于2026-10-03T19:48:56.3907953Z查询可信27/26=1398/2289，共3687事件，普通真机7会话/模拟器0/测试0/清理0。仍精确旧v26下载ProtocolException1、root UNCONFIRMED；保留ISSUES_FOUND。原safe preflight对象实际release-assessment ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES（最初误传外层wrapper失败已修），新生产PowerShell评估尚未运行。一加13T/声音NOT_RUN。
+- 完整本地世界Python一次159方法PASS（461.298秒），新增3地府驱动另跑PASS，不重复统计为162同一次；原CPU玉佩使用dispatch/bookkeeping/完成/overlay294案例零差异。杨戬strength是SRAM6968=96，agility是RAM0536=28，不能按初始化写入顺序误换字段；初始武器贡献cache58与表33贡献70存在原版差异，未解决前不把取得玉佩写成使用/入队/三人战斗已验收。
 - c38已保存本地7722bb2；随后从独立v55检查点b5e5288仅合入六个运行驱动/测试文件，未改变c38内容hash或冻结main。3地府真实拓扑方法/4录屏边界方法PASS、271 JVM/仪器编译PASS；新驱动Android仍待原门禁。
 - 下一动作：保存可复现本地c38提交；v55完成立即读取实际首错或沿原同产物自动审批发布；继续核玉佩event29、杨戬初始化/装备/成长及重入NPC移除，按原事务接实际使用，不以39地图或取得资源结案。
 

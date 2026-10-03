@@ -15,16 +15,17 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json'):
+        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json'):
             p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
             pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
             self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
             pin=json.loads(raw);proof_path=pin['iteration']['provenance'];raw=(ROOT/proof_path).read_bytes()
             self.assertEqual(p['baseExport']['provenanceSha256'],hashlib.sha256(raw).hexdigest());tables[proof_path]=raw
-        for name in ('world-room171-resources.json','world-teacher171-talk.json'):
+        for name in ('world-room171-resources.json','world-teacher171-talk.json','world-yang-join.json'):
             p=json.loads((ROOT/'game-data/provenance'/name).read_text(encoding='utf-8'))
             groups=p['cpuExpected'] if isinstance(p['cpuExpected'],list) else [p['cpuExpected']]
             if 'discipleCpuExpected' in p:groups=groups+[p['discipleCpuExpected']]
+            if 'multiplierExpected' in p:groups=groups+[p['multiplierExpected']]
             for group in groups:
                 raw=(ROOT/group['path']).read_bytes()
                 self.assertEqual(group['sha256'],hashlib.sha256(raw).hexdigest())

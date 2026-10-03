@@ -281,3 +281,9 @@ NPC首谈action与一次性seen分开；原action17在对白前写见面旗标�
 ## 已验证的地府正常路线驱动修正
 
 只用原单向地形和独立出口规划后续十殿，不交换出口猜返程。`test_world_hell_route_driver.py`已实际验证十条下一腿、10/13区自然遇敌邻格及旧服务点不可达反例；正常补给训练放在首个不可返回步行节点前，仍通过原买卖/付费客栈和自然战斗，不添加玩法门槛。首次殿前录屏可用原record_app_audio.py的限定7200秒预算（边界4方法通过）；本次修正实际App仍待原KVM运行，不将拓扑测试当正常通关。
+
+## 已验证的信物入队局部接续（正常App另验）
+
+先核物品dispatch、可复用数量标记、event/script阶段与独立NPC context；完成mapflag不等于NPC移除条件。`probe-world-yang-join.py`已在匹配缓存运行5926 CPU案例；原受控真实按键与初始化字段逐址校对发现strength/敏捷不能按写入顺序猜，初始手部贡献也不能直接套商品表。维持明确差异，不新增第二份存档属性或未核双手事务。
+
+原export_from_base的限定existingItemCapabilityUpdates/既存NPC目标只允许公开provenance所列稳定ID/字段，固定父配方和旧定义hash，未变媒体保持逐字节相同。局部4测试、完整世界166方法、LF实际checkout及ci_apk.restore空目录215文件严格校验已运行。入队复用StoryFollowup/统一commit/save rollback，UI仍选物品后明确执行；三人自然遇敌与冷启正常驱动仅编译，须同候选实际运行才能记PASS，不能拿CPU或导出替代。

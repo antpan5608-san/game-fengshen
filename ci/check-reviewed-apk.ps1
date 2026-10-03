@@ -45,3 +45,5 @@ if($runtime.worldMedicalControlledCommands -ne 'PASS' -or $runtime.worldMedicalN
 if($runtime.worldTree107Normal -ne 'PASS' -or $runtime.worldTree107ColdRestart -ne 'PASS'){throw 'Actual tree actor contact, four floors, original chests, Yang talk and cold return must verify this exact APK'}
 
 if($runtime.worldRoom171Normal -ne 'PASS' -or $runtime.worldRoom171GiftColdRestart -ne 'PASS'){throw 'Original room171 route, teacher gift before dialogue, repeat and cold return must verify this exact APK'}
+
+if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndColdRestart -ne 'PASS'){throw 'Actual teacher signal, Yang use/dialogues, original third-actor battle and cold restart must verify this exact APK'}

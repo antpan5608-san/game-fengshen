@@ -234,6 +234,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(!compatibleContentVersion(contentVersion,content.scene.version) || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         if(content.sceneStories.values.any{!it.validPending(this)})return false
+        if(content.yangJoin()?.validPending(this)==false)return false
         val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
         if(resolved==null&&content.exits.any{it.returnToCaller&&it.fromMapId==mapId})return false
@@ -250,7 +251,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved in (1..37).map{"opening-segment-001-c$it"}
+            saved in (1..38).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

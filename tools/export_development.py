@@ -970,6 +970,61 @@ def validate_world_tree_contact(reader,path):
             raise ValueError('Original actor contact presence or cell differs')
     return proof
 
+def validate_world_yang_join(reader,evidence):
+    """Only event29 deltas on the pinned room171 parent, not a generic updater."""
+    path='game-data/provenance/world-yang-join.json';party_path='game-data/provenance/world-party-yangjian.json'
+    proof=load(ROOT/path);party=load(ROOT/party_path)
+    rules=dict(mapId=110,npcId='rom.npc.110.0',npcCell=[6,6],targetSpriteId=130,itemId='rom.special.19',category=1,
+        originalId=19,eventId=29,scriptId=34,quantityRetained=True,usedFlagId='rom.inventory.special.19.used',
+        witnessFlagId='rom.global.7c8.1',npcTalkFlagId='rom.map.110.flag.2',completionFlagId='rom.map.110.flag.128',
+        contextFlagId='rom.npccontext.110.207',overlayPointer=0x7df,overlayValue=207,
+        dialogueIds=['rom.dialogue.120.2','rom.dialogue.120.3'],joinCharacterId='yangjian',joinBeforeFirstDialogue=True,
+        noPositionMove=True,noFreeReward=True,encounterStepsReset='NOT_PROVEN_PRESERVE')
+    if proof['romSha256']!=SHA256 or party['romSha256']!=SHA256 or proof['rules']!=rules or \
+            proof['scopeRevision']!='item19-facing-yang-event29-before-dialogue-join-and-context207':
+        raise ValueError('Original Yang item/event/timing differs')
+    for span in proof['sources']+party['initializationSources']+party['equipmentSources']:checked_span(reader,span)
+    required={(2,0xe28c,26),(2,0xa22c,108),(2,0xe7e5,1),(11,0xd79a,20),(11,0xc863,26),
+        (11,0xcd9a,85),(0,0xd740,2),(0,0xa777,49),(9,0x8eb2,91),(9,0x8528,79),(9,0xacec,218)}
+    if not required.issubset({(x.get('module'),x['cpuAddress'],x['length'])for x in proof['sources']}):
+        raise ValueError('Missing original item19/third-actor branch')
+    cpu=proof['cpuExpected'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['caseCount']!=5926 or cpu['failures']!=0 or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=5927:
+        raise ValueError('Original item19 CPU expectations differ')
+    m=proof['multiplierExpected'];raw=(ROOT/m['path']).read_bytes()
+    if digest(raw)!=m['sha256'] or list(map(int,raw.decode('ascii').strip().split('\t')))!=list(reader.read(9,reader.word(9,0x857b),36)):
+        raise ValueError('Actor2 multiplier expectations differ')
+    expected=dict(id='yangjian',level=24,experience=26000,hp=495,maxHp=495,mp=54,maxMp=54,strength=96,
+        stamina=60,agility=28,spirit=69,statusMask=0,equipment=dict(rightHand=33,leftHand=33,body=18,feet=29))
+    if {k:party['initialCharacter'][k]for k in expected}!=expected or \
+            {(x['module'],x['cpuAddress'],x['length'])for x in party['initializationSources']}!={(3,0xc3e0,19),(3,0xc3f3,141)}:
+        raise ValueError('Yang initialization must preserve actual strength/agility, not swapped fields')
+    contribution=party['initialEquipmentContributions']
+    if {k:contribution[k]for k in ('rightHand','body','feet','catalogWeapon33','totalInitialAttack')}!=dict(
+            rightHand=58,body=50,feet=5,catalogWeapon33=70,totalInitialAttack=154):
+        raise ValueError('Original initial contribution and catalog must remain distinct')
+    if evidence['existingItemCapabilityUpdates']!=party['itemCapabilityUpdates'] or \
+            {x['id']for x in evidence['existingItemCapabilityUpdates']}!={'rom.special.19','rom.weapon.33','rom.armor.29'}:
+        raise ValueError('Unreviewed stable-item capability delta')
+    by_id={x['id']:x['fields']for x in evidence['existingItemCapabilityUpdates']}
+    if by_id['rom.special.19']!={'description':'玉鼎真人的信物；面向神木上的楊戩使用。','worldUse':dict(
+            targetSpriteId=130,reusable=True,usedFlagId=rules['usedFlagId'],evidence=path)}:
+        raise ValueError('Item19 use cannot add money, consume quantity or skip dialogue')
+    weapon=by_id['rom.weapon.33']['equipment']
+    if set(by_id['rom.weapon.33'])!={'equipment'} or any(weapon[k]!=v for k,v in dict(originalId=33,
+            slot='rightHand',allowedCharacters=['yangjian'],originalActorIndexes=[2],attackBonus=70,
+            defenseBonus=0,evasionValue=0,operationEnabled=False,crossHandOccupancy=True,evidence=party_path).items()):
+        raise ValueError('Paired original33 cannot silently enable single-hand transactions')
+    feet=by_id['rom.armor.29']['equipment']
+    if set(by_id['rom.armor.29'])!={'equipment'} or feet['allowedCharacters']!=['nezha','yangjian'] or \
+            feet['originalActorIndexes']!=[0,2] or feet['ownerExtensionEvidence']!=party_path:
+        raise ValueError('Foot equipment must preserve old owner and original actor2 list')
+    if evidence['items']!=party['items'] or [i['id']for i in evidence['items']]!=['rom.armor.18'] or \
+            evidence['dialogues']!=proof['dialogues'] or [d['id']for d in evidence['dialogues']]!=rules['dialogueIds']:
+        raise ValueError('Unreviewed Yang equipment/dialogue additions')
+    return proof
+
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -1514,6 +1569,29 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
+    if evidence.get('existingItemCapabilityUpdates') or evidence.get('existingNpcCapabilityUpdates'):
+        proof=validate_world_yang_join(reader,evidence)
+        for update in evidence['existingItemCapabilityUpdates']:
+            old=next((i for i in scene['items']if i['id']==update['id']),None)
+            if old is None or digest(encoded(old))!=update['baseDefinitionSha256']:
+                raise ValueError('Item capability parent definition differs')
+            if update['id']=='rom.armor.29':
+                new=update['fields']['equipment'];prior=old['equipment']
+                if any(new[k]!=v for k,v in prior.items()if k not in ('allowedCharacters','ruleSources')):
+                    raise ValueError('Existing feet contribution/rules must remain unchanged')
+                if new['ruleSources'][:len(prior['ruleSources'])]!=prior['ruleSources']:
+                    raise ValueError('Existing equipment evidence was replaced')
+            for span in update['fields'].get('equipment',{}).get('ruleSources',[]):checked_span(reader,span)
+            old.update(update['fields'])
+        updates=evidence.get('existingNpcCapabilityUpdates',[])
+        if len(updates)!=1 or updates[0]['id']!=proof['rules']['npcId'] or updates[0]['fields']!={
+                'worldItemTarget':dict(spriteId=130,removedFlagId='rom.npccontext.110.207',
+                    completionFlagId='rom.map.110.flag.128',evidence='game-data/provenance/world-yang-join.json')}:
+            raise ValueError('Unreviewed original NPC context change')
+        update=updates[0];old=next(n for n in scene['npcs']if n['id']==update['id'])
+        if digest(encoded(old))!=update['baseDefinitionSha256'] or old['mapId']!=110 or old['cell']!=[6,6]:
+            raise ValueError('NPC capability parent differs')
+        old.update(update['fields'])
     for definition in evidence.get('sceneStories',[]):
         validate_world_rebirth_script(reader,definition)
         if any(s['id']==definition['id']or s['npcId']==definition['npcId']for s in scene.get('sceneStories',[])):
