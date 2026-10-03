@@ -243,3 +243,7 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 - 大陆桥不能套村庄方向profile：原foot source15限制左右、16限制上下，target通行另核。world-continent-bridges固定真实按键与144原CPU输出，ContinentBridgeTest和test_world_continent_bridge_export已实际验证；同批保留完整原区16十九组和三个原整组图形，不仅开放路而漏遇敌。现有probe-world-enemy只增已核zone/count参数与显式退出，旧路径不变。原actor0406/0408已经是世界坐标，重复加camera曾失败；旧长按回村源实际165而非160，需核源RAM，失败不能提升为路线证据。
 - 新局部配方的旧测试读固定父golden，原ci_apk.restore空目录逐字节核195文件成功；140全世界Python/257 JVM/真实autocrlf checkout已执行。新增正常桥/自然遇敌驱动仅编译，App和声音待原同产物runner，不把新内容静态校验写成正常可玩。
+
+
+- 静态可走格不能替代原actor条件：map16六record的0:A973加载过滤1536原CPU向量已用于ContinentBarrierTest和局部导出；复用SceneBarrier，不设旗标/移除原挡路对象。某对象位于桥类别16，须保留已核foot规则而非只认0/2。test_world_continent_barrier_export首轮旧scene省略空dynamicObjectCells导致读取错误，改合法空默认并保留六对象完整断言；143全世界Python/258 JVM/真实LF checkout/空目录恢复已成功。App条件路线仍待同产物runner。
+- 原ci_apk.py verify需显式--output路径；只漏该参数时在写receipt失败，不能称签名不符。实际取回同源不可变签名artifact后，核receipt来源/run/完整SHA，再在对应冻结内容pin树verify成功；不把签名构建或字节验包当正常运行/发布。

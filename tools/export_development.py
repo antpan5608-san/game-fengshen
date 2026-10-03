@@ -1439,6 +1439,35 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
     for barrier in evidence.get('sceneBarriers',[]):
+        if barrier.get('kind')=='CONTINENT_ACTOR_FILTER':
+            from forensics.fengshen246 import extract_npcs
+            proof=load(ROOT/barrier['evidence']);original=extract_npcs(reader,16)['records']
+            if barrier['evidence']!='game-data/provenance/world-continent-actor-barriers.json' or \
+                    (proof['romSha256'],proof['scopeRevision'],proof['mapId'],proof['flagAddress'],proof['cpuCaseCount'],proof['cpuFailures'])!= \
+                    (SHA256,'continent16-six-original-flag-filtered-collision-actors',16,0x710,1536,0) or \
+                    reader.word(0,0xd493+32)!=0x710 or len(original)!=6:
+                raise ValueError('World collision actor filter lacks original scoped evidence')
+            if {(v['module'],v['cpuAddress'],v['length'])for v in proof['sources']}!={(0,0xa973,75)}:
+                raise ValueError('Original actor-filter routine differs')
+            for span in proof['sources']+[proof['flagPointer'],proof['npcListSource']]:checked_span(reader,span)
+            table=(ROOT/proof['cpuExpectedPath']).read_bytes()
+            if digest(table)!=proof['cpuExpectedSha256'] or len(table.splitlines())!=1537:
+                raise ValueError('Original world collision-actor CPU table differs')
+            index=next((n['index']for n in original if n['range']==barrier['recordSource']),None)
+            if index is None:raise ValueError('World blocker is not an original map16 actor')
+            raw=checked_span(reader,barrier['recordSource']);cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
+            if (barrier['mapId'],barrier['cell'],raw[0],raw[13],barrier['removedFlagId'])!= \
+                    (16,cell,[244,231,232,241,242,243][index],1<<index,f'rom.map.16.flag.{1<<index}') or \
+                    barrier['id']!=f'rom.barrier.16.{raw[0]}' or raw[1:3]!=b'\xff\xff':
+                raise ValueError('World blocker identity/cell/flag differs')
+            name=next(m['scene']for m in scene['maps']if m['id']==16);data=json.loads(result[name])
+            i=cell[1]*data['width']+cell[0]
+            if not(0<=cell[0]<data['width'] and 0<=cell[1]<data['height']) or data['collision'][i]not in (0,2,15,16):
+                raise ValueError('Original world blocker has invalid foot geometry')
+            data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{i});result[name]=encoded(data)
+            if any(b['id']==barrier['id']for b in scene.get('sceneBarriers',[])):raise ValueError('Duplicate original world blocker')
+            scene.setdefault('sceneBarriers',[]).append(barrier)
+            continue
         batch=barrier['evidence']=='game-data/provenance/world-hell-hall-batch-script.json'
         proof=load(ROOT/barrier['evidence'])
         rule=validate_world_hall_batch_script(reader,barrier['mapId']) if batch else proof['rules']

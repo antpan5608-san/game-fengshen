@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "continent16-six-original-flag-filtered-collision-actors",
+  "kind": "ORIGINAL_ROM_CPU_AND_BLOCKED_CONTROLLER_FROM_CONTROLLED_HP_SOURCE_NOT_NORMAL_ANDROID",
+  "mapId": 16,
+  "flagPointer": {
+    "offset": 21699,
+    "length": 2,
+    "sha256": "f54b6bd467e5893e66a69e5e937ffde3f454f2397957c48d37f9212946e3d44b",
+    "module": 0,
+    "cpuAddress": 54451,
+    "meaning": "Original map16 flag pointer"
+  },
+  "flagAddress": 1808,
+  "npcListSource": {
+    "offset": 280050,
+    "length": 85,
+    "sha256": "1b21b23ba76c39d79a9c506cba7356579a96cd81173483f6953b2e017253d9f0",
+    "module": 8,
+    "cpuAddress": 50658,
+    "meaning": "14-byte records terminated by FF"
+  },
+  "sources": [
+    {
+      "offset": 10627,
+      "length": 75,
+      "sha256": "a5b60f47e7ecabd49d4c12713923d3f6db80cc3d15902164f49632c9243b9611",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original load-time flag filter for sprites BB or >=CC"
+    }
+  ],
+  "actors": [
+    {
+      "npcIndex": 0,
+      "spriteId": 244,
+      "mask": 1,
+      "cell": [
+        145,
+        156
+      ],
+      "recordSource": {
+        "offset": 280050,
+        "length": 14,
+        "sha256": "a73c855726fc0f79d1c6be006d3ed01b0657794a7ca4f18b5fcb8f09be917ebf",
+        "module": 8,
+        "cpuAddress": 50658,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "npcIndex": 1,
+      "spriteId": 231,
+      "mask": 2,
+      "cell": [
+        170,
+        148
+      ],
+      "recordSource": {
+        "offset": 280064,
+        "length": 14,
+        "sha256": "03ee839ef260658818ba169079e73514906c40158605b2786863b74060bda1d5",
+        "module": 8,
+        "cpuAddress": 50672,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "npcIndex": 2,
+      "spriteId": 232,
+      "mask": 4,
+      "cell": [
+        170,
+        149
+      ],
+      "recordSource": {
+        "offset": 280078,
+        "length": 14,
+        "sha256": "76be2be1f5eba2bd5b1af732e55cead466773104ca412f16367e39c4f73d3dbd",
+        "module": 8,
+        "cpuAddress": 50686,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "npcIndex": 3,
+      "spriteId": 241,
+      "mask": 8,
+      "cell": [
+        222,
+        150
+      ],
+      "recordSource": {
+        "offset": 280092,
+        "length": 14,
+        "sha256": "46bfa5092eaf88eaf769c95c33a70309c0ebcfed2c389c14869291e5dd9c69eb",
+        "module": 8,
+        "cpuAddress": 50700,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "npcIndex": 4,
+      "spriteId": 242,
+      "mask": 16,
+      "cell": [
+        222,
+        151
+      ],
+      "recordSource": {
+        "offset": 280106,
+        "length": 14,
+        "sha256": "4ca737c9718dac50042d560f4a442e574f55250dc01640bd608ed36252e2a844",
+        "module": 8,
+        "cpuAddress": 50714,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    },
+    {
+      "npcIndex": 5,
+      "spriteId": 243,
+      "mask": 32,
+      "cell": [
+        222,
+        152
+      ],
+      "recordSource": {
+        "offset": 280120,
+        "length": 14,
+        "sha256": "0bd8020461b49e4f2c6f65ff687924eb5898c16d43ef040c3667ff32547b0f2b",
+        "module": 8,
+        "cpuAddress": 50728,
+        "meaning": "Fixed 14-byte NPC source record"
+      }
+    }
+  ],
+  "cpuCaseCount": 1536,
+  "cpuFailures": 0,
+  "cpuExpectedPath": "android/app/src/test/resources/continent-actor-filter-original-cpu.tsv",
+  "cpuExpectedSha256": "c342e6e288eaf7d88d04b07d39a5ca9af44bb626ead5201163d953cae9a4e5ba",
+  "controllerEvidence": {
+    "sourceRamSha256": "df8e5807f83ed477c4d49b8da14d04ef071d848dc2dcafa13ee682fcb691cf6c",
+    "blockedFrom": [
+      222,
+      153
+    ],
+    "direction": "UP",
+    "originalBlocker": [
+      222,
+      152
+    ],
+    "flagByte": 0,
+    "control": "Only initial HP500 fixture; original collision actors/flags/positions unchanged; natural battle escaped via normal menu",
+    "normalPlay": false
+  },
+  "limits": [
+    "Original conditions that set each world flag are unresolved; do not auto-set or remove these objects.",
+    "All six static records and load-time presence verified; controlled blocked approach is not normal new-game evidence."
+  ]
+}

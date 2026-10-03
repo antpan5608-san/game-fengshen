@@ -17,7 +17,17 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T14:42Z）
+## 当前有效状态（2026-10-03T15:20Z）
+
+- WORLD-FULL-01持续F3/F4，正式仍v27/c14，分母UNKNOWN、ALL_MAPS_USABLE=NO。main/c552900a/v53/run37128387307来源冻结；Windows build SUCCESS，runtime仍执行。已从不可变artifact11276415922取回原签名APK：SHA a7b8b371a1d26f13c79c38157edd75ba501c96827fa1274db7797072b3f8208c、20947718字节、原签名/包名/c32/192文件独立verify PASS；首个CLI漏--output失败不算验签失败，正确调用成功。运行中日志经本地代理Forbidden、连接器BlobNotFound，未读到实时阶段，不编造后段PASS。
+- c33桥/完整区16已保存本地e8eff1717a15d139b16eaba7d11237226383f801，不推main或发布。继续原89入口取证发现不是静态树林墙：原map16六个实际collision actor，241/242/243分别在222,150/151/152，旗标0时阻断北向路径。原交谈仅显示“那個方向沒有人”，未核解除条件，不把它们删掉或设flag制造路线。
+- 最小修复复用SceneBarrier：六个原record、0:A973加载过滤器、16旗标指针0x710、1536独立原CPU输出；对应1/2/4/8/16/32只移除本对象。244位于桥类别16，不能把它强限普通0/2；已按当前已核foot0/2/15/16保持原地形，未开交通能力。受控初始HP500/60000尝试与原位置来源分别保留；战斗阶段辅助脚本错误已查，受控来源从不称正常新游戏。
+- c34/195文件/33地图，manifest 713ad24349dbb4c772a100fd7f857a4368f1fe0d3a037295781d8b190ec3724e，固定c33父配方、同审核v27基底。一次全世界143方法PASS（299.364秒）、258 JVM/48 suites/0失败错误跳过、instrument编译、真实autocrlf checkout、严格空目录restore逐字节一致。首轮阻挡导出测试1 ERROR是旧scene省略空dynamicObjectCells，改按合法空默认后保留六对象完整断言，全量通过。新App过桥/条件阻挡/冷启仍NOT_RUN。
+- 原另一入口16(213,155)→101(8,51)用受控位置/相机、真实UP实际触发，图为森林山地区域，原名尚未核。101原tileset5的source CDBF和target D196均RTS，已核144现有类别组合不阻挡；不能套普通“树是墙”。真实遇敌区17完整13组、敌38/39及下一入口101(32,12)→171(7,14)仍待接入，不称洞窟捷径或已可玩。
+- 实际最新巡检仍37129885660/14:31:58UTC：27/26共3622事件，普通真机5会话，旧v26 ProtocolException1根因UNCONFIRMED、上传保护不绕。声音/一加13T NOT_RUN。
+- 下一动作：提交原大陆对象条件本地检查点，继续101/171的局部资源、碰撞/遭遇/服务；读取v53结束结果并立即处理实际首错，不重复开同来源CI，不以33图停工。
+
+## 历史有效状态（2026-10-03T14:42Z）
 
 - 总任务持续F3/F4，正式v27/c14不变，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。冻结main/c552900a的v53/c32/run37128387307 Windows构建成功，Android runtime仍执行；未取得新正常流程结果前不发布或推main改变来源。
 - 隔离work/world-after-medical新增大陆map16步行桥类别15/16，只按原source方向限制通行；真实按键从受控胜后源235,159横穿两格类别16至231,159，原CPU独立144组合0不符。原坐标已是world坐标，最初重复加camera及误用长按回村源的失败保存，不作为成功证据。没有开放船/飞行/未知格，旧墙/区域/地图不变。

@@ -17,6 +17,10 @@ class ContentTest:IsolatedGameTestCase(){
     fun testContinentFootBridgesOriginalDirectionsEncountersAndLegacySave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(16)
         assertEquals(setOf(0,2,15,16),scene.walkableClasses)
+        assertEquals(MovementBlock.PHYSICAL,scene.probeFrom(222,153,Key.UP))
+        val opened=c.sceneForState(16,mapOf("rom.map.16.flag.32" to true))!!
+        assertEquals(MovementBlock.NONE,opened.probeFrom(222,153,Key.UP))
+        assertEquals(MovementBlock.PHYSICAL,opened.probeFrom(222,152,Key.UP))
         for(x in listOf(235,234,233))assertEquals(MovementBlock.NONE,scene.probeFrom(x,159,Key.LEFT))
         assertEquals(MovementBlock.NONE,scene.probeFrom(233,159,Key.RIGHT))
         assertEquals(MovementBlock.PHYSICAL,scene.probeFrom(234,159,Key.UP))
