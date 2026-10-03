@@ -30,6 +30,12 @@ object OriginalPartyRules {
     // 9:B68E / 81EF: input eligibility and action-time HP recheck are distinct.
     fun collectsCommand(actor:Actor):Boolean = actor.status and 0x38==0
     fun canAct(actor:Actor):Boolean = actor.hp>0 && collectsCommand(actor)
+    /** 9:A63A/A66A: all HP-zero OR every present party slot carries bit10.
+     * A mixed dead/bit10 party does not satisfy the latter original branch. */
+    fun defeated(actors:List<Actor>):Boolean {
+        checkActors(actors)
+        return actors.all{it.hp==0}||actors.all{it.status and OriginalStatus.STATUS_BIT16!=0}
+    }
 
     /** Original scheduler encoding: actorIndex or (0x80 | enemySlot).
      * Stable descending agility; numeric command 3 precedes ordinary actions.

@@ -1,0 +1,765 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "hell-halls61-through68-original-finalization-and-gate-filter",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_BOSS_ANDROID",
+  "maps": {
+    "61": {
+      "mapId": 61,
+      "eventId": 22,
+      "eventArgument": 1,
+      "sourceType": 161,
+      "enemyId": 144,
+      "gateMask": 4,
+      "repeatMessage": 4,
+      "npcIndex": 1,
+      "npcId": "rom.npc.61.1",
+      "bossVictoryFlag": "rom.map.61.flag.1",
+      "victoryFlags": [
+        "rom.map.61.flag.4"
+      ],
+      "barrierRemovedFlag": "rom.map.61.flag.4",
+      "barrierCell": [
+        24,
+        3
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        24,
+        5
+      ],
+      "firstMessage": 3,
+      "npcSource": {
+        "offset": 279639,
+        "length": 14,
+        "sha256": "34814384b32c38397137f65b47f46759d609201b3d40a24c6ec775c4035f1961",
+        "module": 8,
+        "cpuAddress": 50247,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 279625,
+        "length": 14,
+        "sha256": "e59504c224592b79a7a91e9c5d9eda3e8e94933435e6b896dce26fff90a1b487",
+        "module": 8,
+        "cpuAddress": 50233,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349145,
+        "length": 6,
+        "sha256": "6465896a42ea50045b666c817df2cf13beb77cbc13743ccf45675685c29665e0",
+        "module": 10,
+        "cpuAddress": 54217,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349151,
+        "length": 21,
+        "sha256": "cb8440d5ee76edc5ad6610ee606a37302e26af922a0eb4f884187e2d7279b4eb",
+        "module": 10,
+        "cpuAddress": 54223,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348703,
+        "length": 2,
+        "sha256": "7fcc8584720867c9db7c188e0818c06f942628b71ec564120b6c34e3b2080d67",
+        "module": 10,
+        "cpuAddress": 53775,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349133,
+        "length": 12,
+        "sha256": "1718ab9a8e464e0eb54c14d923739835f93fc21e6602124ca784a2a08ee72bed",
+        "module": 10,
+        "cpuAddress": 54205,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21789,
+        "length": 2,
+        "sha256": "d3dbb66b3819715e232ef430009860791b482d527381ef14b8edfbb5b1bd7701",
+        "module": 0,
+        "cpuAddress": 54541,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        24,
+        7
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "1e14c4f25f6be3459b8d4176abec26286b22e8236f2ac319059479556ca53348"
+    },
+    "62": {
+      "mapId": 62,
+      "eventId": 23,
+      "eventArgument": 1,
+      "sourceType": 162,
+      "enemyId": 145,
+      "gateMask": 8,
+      "repeatMessage": 2,
+      "npcIndex": 1,
+      "npcId": "rom.npc.62.1",
+      "bossVictoryFlag": "rom.map.62.flag.1",
+      "victoryFlags": [
+        "rom.map.62.flag.8"
+      ],
+      "barrierRemovedFlag": "rom.map.62.flag.8",
+      "barrierCell": [
+        17,
+        1
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        17,
+        3
+      ],
+      "firstMessage": 1,
+      "npcSource": {
+        "offset": 279766,
+        "length": 14,
+        "sha256": "fe5abb98a68acf19e01e91ec29d97cd82a51fef74fa4969b0460c7682f999971",
+        "module": 8,
+        "cpuAddress": 50374,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 279752,
+        "length": 14,
+        "sha256": "9a63dab8a04ad6e2c3ca02d15cffd0862b9f2f90d2c8a36c7e8f69f8e86cda0a",
+        "module": 8,
+        "cpuAddress": 50360,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349184,
+        "length": 6,
+        "sha256": "8d94582a528de3e48db507f600626c64d1d366cccb8eb6c11114525690a4b3b3",
+        "module": 10,
+        "cpuAddress": 54256,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349190,
+        "length": 21,
+        "sha256": "a17a36f65270a694baeefecb422a7d03305ccc8b555d0cc1ca27b1e163487899",
+        "module": 10,
+        "cpuAddress": 54262,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348705,
+        "length": 2,
+        "sha256": "27744eb5674681749e95c847c4cd1809749039078baab73673a03f2e74875ae2",
+        "module": 10,
+        "cpuAddress": 53777,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349172,
+        "length": 12,
+        "sha256": "aa6dafbf8ce591e791a4328f0c6d48e03c20587c90ff67f74772cd7d99838c08",
+        "module": 10,
+        "cpuAddress": 54244,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21791,
+        "length": 2,
+        "sha256": "43f2f21e7682161f80119895471e6bef6b4cc09522de71bfbc6a313ee3b7ac79",
+        "module": 0,
+        "cpuAddress": 54543,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        17,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "6eeb676840312844fb6d83bd9c10db0f5d93413a4d9acd0aff61887284bf1aa3"
+    },
+    "63": {
+      "mapId": 63,
+      "eventId": 24,
+      "eventArgument": 1,
+      "sourceType": 163,
+      "enemyId": 146,
+      "gateMask": 8,
+      "repeatMessage": 4,
+      "npcIndex": 1,
+      "npcId": "rom.npc.63.1",
+      "bossVictoryFlag": "rom.map.63.flag.1",
+      "victoryFlags": [
+        "rom.map.63.flag.8"
+      ],
+      "barrierRemovedFlag": "rom.map.63.flag.8",
+      "barrierCell": [
+        30,
+        3
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        23,
+        5
+      ],
+      "firstMessage": 3,
+      "npcSource": {
+        "offset": 279893,
+        "length": 14,
+        "sha256": "85f91178844379ee65995a1f25a22f065ce410d5fbbb245f821d0086b8ae6570",
+        "module": 8,
+        "cpuAddress": 50501,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 279879,
+        "length": 14,
+        "sha256": "0839e3e2777dfdd173933fde023a06c38952afc5749f71bc7ce936567a716e1f",
+        "module": 8,
+        "cpuAddress": 50487,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349223,
+        "length": 6,
+        "sha256": "7b86150a2feb601826eb9fbaf329df55677fb55ad835a79c4738aa779cfa8807",
+        "module": 10,
+        "cpuAddress": 54295,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349229,
+        "length": 21,
+        "sha256": "cb8440d5ee76edc5ad6610ee606a37302e26af922a0eb4f884187e2d7279b4eb",
+        "module": 10,
+        "cpuAddress": 54301,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348707,
+        "length": 2,
+        "sha256": "ec000f52ae5ab461c6391266d539b07d582904fef69b2e4f40c68186388446b2",
+        "module": 10,
+        "cpuAddress": 53779,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349211,
+        "length": 12,
+        "sha256": "9a7325d87549c153d85465798d7b1b49e4ab8ef8a38685fbdf4ebfdfa483dd8b",
+        "module": 10,
+        "cpuAddress": 54283,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21793,
+        "length": 2,
+        "sha256": "0ccc1ca29e3e1289999a9d8dbdb4564f151e2253da3725006322f26c12baa36a",
+        "module": 0,
+        "cpuAddress": 54545,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        23,
+        7
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "db4db03865bcf910e9ecb313ff53c21c7457f0dae12c0d684730b7184e38dd20"
+    },
+    "64": {
+      "mapId": 64,
+      "eventId": 26,
+      "eventArgument": 2,
+      "sourceType": 164,
+      "enemyId": 147,
+      "gateMask": 8,
+      "repeatMessage": 3,
+      "npcIndex": 2,
+      "npcId": "rom.npc.64.2",
+      "bossVictoryFlag": "rom.map.64.flag.2",
+      "victoryFlags": [
+        "rom.map.64.flag.8"
+      ],
+      "barrierRemovedFlag": "rom.map.64.flag.8",
+      "barrierCell": [
+        3,
+        1
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        3,
+        3
+      ],
+      "firstMessage": 2,
+      "npcSource": {
+        "offset": 280447,
+        "length": 14,
+        "sha256": "a6d1a4d74939cbe32f7232b81000dec97568bb8f18a6db3ffec56d5514d9ad76",
+        "module": 8,
+        "cpuAddress": 51055,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 280419,
+        "length": 14,
+        "sha256": "be4d7a12d83843fa1de62e14177e06c7e67eeaeaa2fc865c8c498fb977c2c3b8",
+        "module": 8,
+        "cpuAddress": 51027,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349262,
+        "length": 6,
+        "sha256": "f6ec72e9cc4fbfe8dadd3effcfe80d021e02669bdef640eea6a32f18eaa4da53",
+        "module": 10,
+        "cpuAddress": 54334,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349268,
+        "length": 21,
+        "sha256": "2c66d2b345ff3c4fb94b299f0856e468cfe7ac73984a29c2362ad740ee0fe7f8",
+        "module": 10,
+        "cpuAddress": 54340,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348711,
+        "length": 2,
+        "sha256": "5539d0256eb7fc11cdb5fe3a04b71cd095886c3b1b76686ad919be7aa88e753d",
+        "module": 10,
+        "cpuAddress": 53783,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349250,
+        "length": 12,
+        "sha256": "fe43ade0bd3d2b4364292c8a4cd44d75d3890f9a321172637e6184371ecc5d11",
+        "module": 10,
+        "cpuAddress": 54322,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21795,
+        "length": 2,
+        "sha256": "949925a1b12c20f45886ad313de257cc21c28990ea40a39f73a659cd2a7469c3",
+        "module": 0,
+        "cpuAddress": 54547,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        3,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "49c16e871da7b281daedec671004cc919521a2e5290db961c19152ae464d424b"
+    },
+    "65": {
+      "mapId": 65,
+      "eventId": 27,
+      "eventArgument": 1,
+      "sourceType": 165,
+      "enemyId": 148,
+      "gateMask": 8,
+      "repeatMessage": 4,
+      "npcIndex": 1,
+      "npcId": "rom.npc.65.1",
+      "bossVictoryFlag": "rom.map.65.flag.1",
+      "victoryFlags": [
+        "rom.map.65.flag.8"
+      ],
+      "barrierRemovedFlag": "rom.map.65.flag.8",
+      "barrierCell": [
+        2,
+        2
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        4,
+        3
+      ],
+      "firstMessage": 3,
+      "npcSource": {
+        "offset": 280574,
+        "length": 14,
+        "sha256": "b26d93879fdc890d1ce1c2d94be780fa59240ba74dc134d1d4602bedb54b8286",
+        "module": 8,
+        "cpuAddress": 51182,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 280560,
+        "length": 14,
+        "sha256": "86d715b4e4fc23bd53b096f05ddc5779c95f1f6a940f74c0d602205021287b9f",
+        "module": 8,
+        "cpuAddress": 51168,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349301,
+        "length": 6,
+        "sha256": "0cfecb07db6f1b37932257cf12d825c65a01ce8ea90350b2b1a59dc7e1db3e1d",
+        "module": 10,
+        "cpuAddress": 54373,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349307,
+        "length": 21,
+        "sha256": "cb8440d5ee76edc5ad6610ee606a37302e26af922a0eb4f884187e2d7279b4eb",
+        "module": 10,
+        "cpuAddress": 54379,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348713,
+        "length": 2,
+        "sha256": "ad35d2eb6cf1a0f3382db3e031dc83b7e21e464c8cd929281e2689d7b19e2619",
+        "module": 10,
+        "cpuAddress": 53785,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349289,
+        "length": 12,
+        "sha256": "774c6f0d0e78c755821079ab3bfd7050e605f2aeb4c075ce18c4ecd6483a4ada",
+        "module": 10,
+        "cpuAddress": 54361,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21797,
+        "length": 2,
+        "sha256": "523a83f475726ef50988d8b3be39b93e5dd2a0de30a3d69e1778400b8ed0092f",
+        "module": 0,
+        "cpuAddress": 54549,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        4,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "d0fa8f4cd12e771fda284012cc3de3c88bfda0c2e04fb607357ce6a0793686a7"
+    },
+    "66": {
+      "mapId": 66,
+      "eventId": 28,
+      "eventArgument": 1,
+      "sourceType": 166,
+      "enemyId": 149,
+      "gateMask": 16,
+      "repeatMessage": 2,
+      "npcIndex": 1,
+      "npcId": "rom.npc.66.1",
+      "bossVictoryFlag": "rom.map.66.flag.1",
+      "victoryFlags": [
+        "rom.map.66.flag.16"
+      ],
+      "barrierRemovedFlag": "rom.map.66.flag.16",
+      "barrierCell": [
+        15,
+        4
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        12,
+        7
+      ],
+      "firstMessage": 1,
+      "npcSource": {
+        "offset": 280715,
+        "length": 14,
+        "sha256": "54eea47956c3f96ee7b2413079c52e3ab8df1683db36176dc0179d698b92857c",
+        "module": 8,
+        "cpuAddress": 51323,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 280701,
+        "length": 14,
+        "sha256": "b0f44bf768f3ced187ed2be042ca9e227e547c45c28450601f88573ad5c2b933",
+        "module": 8,
+        "cpuAddress": 51309,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349340,
+        "length": 6,
+        "sha256": "612c8005e0c4401d762eb1eea7db7bfa941bf8a0b41cb0f81864e2cf17e55ff7",
+        "module": 10,
+        "cpuAddress": 54412,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349346,
+        "length": 21,
+        "sha256": "a17a36f65270a694baeefecb422a7d03305ccc8b555d0cc1ca27b1e163487899",
+        "module": 10,
+        "cpuAddress": 54418,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348715,
+        "length": 2,
+        "sha256": "ffd3ef1f80b6e74673e8bd3d15cdd4d2df9eaa2b318cb96ce5dbdc2452f8dd0a",
+        "module": 10,
+        "cpuAddress": 53787,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349328,
+        "length": 12,
+        "sha256": "d7908591e61ba93aba63094cf66ae544ab35b48059f08897203f14f2a2924139",
+        "module": 10,
+        "cpuAddress": 54400,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21799,
+        "length": 2,
+        "sha256": "718468bc9070e7c449284cfc9eb02a76e07af725717be651e57119974ea89d92",
+        "module": 0,
+        "cpuAddress": 54551,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        12,
+        9
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "a2c1519e0f833daad553436fcf59621931628f47bd64ce5916ce726aaedaf56f"
+    },
+    "67": {
+      "mapId": 67,
+      "eventId": 29,
+      "eventArgument": 1,
+      "sourceType": 167,
+      "enemyId": 150,
+      "gateMask": 16,
+      "repeatMessage": 8,
+      "npcIndex": 1,
+      "npcId": "rom.npc.67.1",
+      "bossVictoryFlag": "rom.map.67.flag.1",
+      "victoryFlags": [
+        "rom.map.67.flag.16"
+      ],
+      "barrierRemovedFlag": "rom.map.67.flag.16",
+      "barrierCell": [
+        11,
+        10
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        10,
+        1
+      ],
+      "firstMessage": 7,
+      "npcSource": {
+        "offset": 280856,
+        "length": 14,
+        "sha256": "07116627d9cea9e30c60589755cca0a701286c56ada100c0f2270b4d01cd97a7",
+        "module": 8,
+        "cpuAddress": 51464,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 280842,
+        "length": 14,
+        "sha256": "b3eb33c2c3fd2dd88bbbed0412fe162deb3dd753d99a6497fd0bc6224eebcc56",
+        "module": 8,
+        "cpuAddress": 51450,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349379,
+        "length": 6,
+        "sha256": "5cb91956ee69922397ac8b8ba4c94ad902fa5414ecb1c67346a9c14bf6bf0f14",
+        "module": 10,
+        "cpuAddress": 54451,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349385,
+        "length": 21,
+        "sha256": "b2978306f3775d32622f8df54370be295d68dcc4d915e28fbbfdeb374eb9a0c8",
+        "module": 10,
+        "cpuAddress": 54457,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348717,
+        "length": 2,
+        "sha256": "073a9081a63cd90a3ebd2ce7c364df30a8d3c448c9344b3ca0fa0b50a48cc891",
+        "module": 10,
+        "cpuAddress": 53789,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349367,
+        "length": 12,
+        "sha256": "c095b0d0863bab67538a3cd658e9aa013443a00536267ae8b70c4a7d0301b840",
+        "module": 10,
+        "cpuAddress": 54439,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21801,
+        "length": 2,
+        "sha256": "c955b20752cca453842463f2cf8fa6b0565cd2d0e7e90d5298d2ecacc2073605",
+        "module": 0,
+        "cpuAddress": 54553,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        10,
+        3
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "d5bf0c3ea9f255b2017f4217a909098f5bcae446d17f6c29f3bd1b1255668efc"
+    },
+    "68": {
+      "mapId": 68,
+      "eventId": 30,
+      "eventArgument": 1,
+      "sourceType": 168,
+      "enemyId": 151,
+      "gateMask": 2,
+      "repeatMessage": 1,
+      "npcIndex": 1,
+      "npcId": "rom.npc.68.1",
+      "bossVictoryFlag": "rom.map.68.flag.1",
+      "victoryFlags": [
+        "rom.map.68.flag.2"
+      ],
+      "barrierRemovedFlag": "rom.map.68.flag.2",
+      "barrierCell": [
+        12,
+        1
+      ],
+      "barrierSpriteId": 246,
+      "npcCell": [
+        7,
+        3
+      ],
+      "firstMessage": 0,
+      "npcSource": {
+        "offset": 280927,
+        "length": 14,
+        "sha256": "c509b6d5aaa8af936d0a29e4df7f8a1b08ec29729f42f7fe9afae326d7dfcb4e",
+        "module": 8,
+        "cpuAddress": 51535,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "barrierSource": {
+        "offset": 280913,
+        "length": 14,
+        "sha256": "a7d2d557bd7a9081dbeb6491a66988ce9ff2bdcd9e003346bd942ca77f27c4e1",
+        "module": 8,
+        "cpuAddress": 51521,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "sourceTypeInstruction": {
+        "offset": 349418,
+        "length": 6,
+        "sha256": "26f0a0604173afc4f26aaea2a01f7b0446010c53378d675b54adb3fded4c58b2",
+        "module": 10,
+        "cpuAddress": 54490,
+        "meaning": "Actual sourceType enters unchanged common battle loader"
+      },
+      "winInstruction": {
+        "offset": 349424,
+        "length": 21,
+        "sha256": "e3d442920af1578bd34cdde867d03a2e2b2102426aa99d3732924dc45b4082d3",
+        "module": 10,
+        "cpuAddress": 54496,
+        "meaning": "Actual success check/remove246/OR gate and event flag/message"
+      },
+      "eventPointer": {
+        "offset": 348719,
+        "length": 2,
+        "sha256": "43223c7ac7d212fce8f97d5f551662bad08298e97ec00737a698363ad084654c",
+        "module": 10,
+        "cpuAddress": 53791,
+        "meaning": "Original event pointer"
+      },
+      "eventStages": {
+        "offset": 349406,
+        "length": 12,
+        "sha256": "550a447d7e7eef3b05658580d41ed087822e82aa3b6de0dfb76af953490a9200",
+        "module": 10,
+        "cpuAddress": 54478,
+        "meaning": "Original stage dispatch with inline address table"
+      },
+      "mapFlagPointer": {
+        "offset": 21803,
+        "length": 2,
+        "sha256": "8d759e146ed97c85d50f3675787de4f0c9a333e27f1b172dcba8519c14173add",
+        "module": 0,
+        "cpuAddress": 54555,
+        "meaning": "Original per-map flag byte pointer"
+      },
+      "normalTalkCell": [
+        7,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "439fea023a19b61f7d6add0735f0140161d5f6ecaf4a515a0e2772ce96e402da"
+    }
+  },
+  "sources": [
+    {
+      "offset": 349033,
+      "length": 37,
+      "sha256": "bd5d80df273ff23f475f2865c12c05fa8dfff20e646f3eed726df5a27c0f5aef",
+      "module": 10,
+      "cpuAddress": 54105,
+      "meaning": "Actual collision actor flag OR and remove246 target lookup"
+    },
+    {
+      "offset": 347961,
+      "length": 9,
+      "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Actual event arg OR a2 into map flags"
+    },
+    {
+      "offset": 349956,
+      "length": 61,
+      "sha256": "36f0a70a3acb02462e2446b4dcab1444ff7aca0886f31cedac309e0284d4b2ea",
+      "module": 10,
+      "cpuAddress": 55028,
+      "meaning": "Original actor scan with stride22 removes246 and sets6818 pointer"
+    },
+    {
+      "offset": 10627,
+      "length": 169,
+      "sha256": "4bda88807fb9b2bf43a0aafe3c8f426bd972c36217888ba228eeef7978db92d2",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original load-time actor flag filter"
+    }
+  ],
+  "cpuReportSha256": "739196de8711180f0888272a87e02839e8f94e9ebee7d2a0a324834ae551b97f",
+  "cpuExpectedPath": "android/app/src/test/resources/hell-hall-flags-cpu.tsv",
+  "cpuExpectedSha256": "5f360e63b4bc850ad8b31637f45fbf621f86c21998869583597edba7b8e04960",
+  "cpuCases": 4096,
+  "normalAndroid": "NOT_RUN",
+  "limits": [
+    "This finalization does not prove defeat of full-HP Boss or normal route",
+    "Original finalization has no extra item/grant instructions; common battle money/EXP/drop must still use each actual enemy",
+    "Repeat dialogue entry is separately governed by raw first/repeat flag; not repeated invocation of win function"
+  ]
+}

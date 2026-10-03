@@ -64,8 +64,24 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original first hall content and state gates failed'}
     & python -m unittest discover -s tests -p test_world_behavior1.py
     if($LASTEXITCODE -ne 0){throw 'Original behavior1 special attack evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_hall_batch_script.py
+    if($LASTEXITCODE -ne 0){throw 'Original per-hall finalization and gate filter evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_hall_batch_terrain.py
+    if($LASTEXITCODE -ne 0){throw 'Original hall terrain and actual encounter gates failed'}
+    & python -m unittest discover -s tests -p test_world_hall_batch_npc.py
+    if($LASTEXITCODE -ne 0){throw 'Original hall NPC identity and visible pose gates failed'}
+    & python -m unittest discover -s tests -p test_world_chest_grants.py
+    if($LASTEXITCODE -ne 0){throw 'Original chest reward and inventory boundary evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_ice_identities.py
+    if($LASTEXITCODE -ne 0){throw 'Original all-identity ice damage evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_single_special.py
+    if($LASTEXITCODE -ne 0){throw 'Original single-target special attack evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_status16.py
+    if($LASTEXITCODE -ne 0){throw 'Original status10 hit priority and defeat evidence gates failed'}
     & python -m unittest discover -s tests -p test_world_second_hall_export.py
     if($LASTEXITCODE -ne 0){throw 'Original second hall content and independent state gates failed'}
+    & python -m unittest discover -s tests -p test_world_hall_batch_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original Hell batch content, chest and independent state gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

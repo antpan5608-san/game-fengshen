@@ -209,7 +209,12 @@ object ContentLoader {
                 n.optString("innId").takeIf{it.isNotEmpty()},
                 n.optJSONObject("treasure")?.let{t->
                     require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
-                    TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount"))
+                    TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount")).also{treasure->
+                        if(t.has("categoryGrant")){
+                            require(t.getString("evidence")=="game-data/provenance/world-hell-chest-grants.json")
+                            treasure.categoryGrant=t.getInt("categoryGrant").also{require(it in 0..3)}
+                        }
+                    }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->
@@ -348,7 +353,7 @@ object ContentLoader {
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
                             itemDefinitions.getValue(it.itemId).category==it.category)}}).also{enemy->
                     if(e.has("specialBaseDamage")){
-                        require(enemy.behaviorByte==1&&enemy.iceBaseDamage==null&&
+                        require(enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&
                             e.getInt("specialBaseDamage") in 0..65535&&e.getString("specialDamageEvidence").isNotBlank())
                         enemy.specialBaseDamage=e.getInt("specialBaseDamage")
                     }

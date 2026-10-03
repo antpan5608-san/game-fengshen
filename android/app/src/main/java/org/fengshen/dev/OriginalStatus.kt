@@ -6,12 +6,13 @@ object OriginalStatus {
     // Original behavior9 writes this exact state; its Chinese name is not yet verified.
     const val STATUS_BIT4=4
     const val STATUS_BIT8=8 // Original behavior8; displayed name remains unverified.
+    const val STATUS_BIT16=16 // Original behavior6; displayed name remains unverified.
     const val DEAD=32
     fun label(mask:Int)=when(mask){0->"正常";POISON->"中毒";DEAD->"死亡";else->"异常 %02X".format(mask)}
     fun enemySupported(enemy:EnemyDefinition)=enemy.behaviorByte==0 ||
         (enemy.behaviorByte==3&&enemy.iceBaseDamage!=null&&enemy.iceBaseDamage in 0..65535) ||
-        (enemy.behaviorByte==1&&enemy.iceBaseDamage==null&&enemy.specialBaseDamage!=null&&enemy.specialBaseDamage!! in 0..65535) ||
-        enemy.behaviorByte in setOf(7,8,9) // Original shared AI dispatch is keyed by behavior, not enemy ID.
+        (enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&enemy.specialBaseDamage!=null&&enemy.specialBaseDamage!! in 0..65535) ||
+        enemy.behaviorByte in setOf(6,7,8,9) // Original shared AI dispatch is keyed by behavior, not enemy ID.
     /** Original behavior1's secondary threshold57 always passes this choice branch. */
     fun choosesSpecial1(random:Int):Boolean {
         require(random in 0..255)
@@ -34,6 +35,14 @@ object OriginalStatus {
      * permits state08 to replace state04, never poison/death/unknown masks. */
     fun applyStatus8(hero:CharacterState):CharacterState =
         if(hero.hp>0&&hero.statusMask in setOf(0,STATUS_BIT4,STATUS_BIT8))hero.copy(statusMask=STATUS_BIT8) else hero
+    /** Original behavior6 has threshold10, unlike poison/08/04's threshold25.
+     * A selected but missed special action must not become a physical hit. */
+    fun status16Hits(random:Int):Boolean {
+        require(random in 0..255)
+        return (random and 127)<41&&((random ushr 1) and 63)<10
+    }
+    fun applyStatus16(hero:CharacterState):CharacterState =
+        if(hero.hp>0&&hero.statusMask in setOf(0,POISON,STATUS_BIT4,STATUS_BIT8,STATUS_BIT16))hero.copy(statusMask=STATUS_BIT16) else hero
     /** 9:AA08/AA82..AB52: physical and enemy ice share the nonzero status gate.
      * Pass computed damage BEFORE its minimum-one floor, not already-clamped damage.
      * This only computes the amount; the existing action applies HP/death once. */
@@ -63,6 +72,19 @@ object OriginalStatus {
     fun step(characters:List<CharacterState>):List<CharacterState> = characters.map{hero->
         if(hero.statusMask and POISON==0 || hero.hp==0)hero else {
             val hp=hero.hp-1;hero.copy(hp=hp,statusMask=if(hp==0)DEAD else hero.statusMask)
+        }
+    }
+    /** Original 0:BA30..BAFA: poison precedes map67 damage. Use the completed
+     * step's SOURCE map, even when World already transitioned. Protection here
+     * is an evidenced RAM-boundary input, not an inferred item-use capability. */
+    fun step(characters:List<CharacterState>,sourceMapId:Int,fieldProtected:Boolean=false):List<CharacterState> {
+        val poisoned=step(characters)
+        if(sourceMapId!=67 || fieldProtected)return poisoned
+        return poisoned.map{hero->
+            if(hero.hp==0 || hero.statusMask and 0x40!=0)hero else {
+                val hp=maxOf(0,hero.hp-10)
+                hero.copy(hp=hp,statusMask=if(hp==0)DEAD else hero.statusMask)
+            }
         }
     }
     fun allDisabled(characters:List<CharacterState>)=characters.isNotEmpty()&&characters.all{it.statusMask and 0x60!=0}

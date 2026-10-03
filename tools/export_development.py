@@ -485,6 +485,201 @@ def validate_world_behavior1(reader,enemy):
         raise ValueError('Behavior1 damage differs from original dispatch')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_single_special(reader,enemy):
+    """Only the evidenced behavior2/4 single-target path, never an ice alias."""
+    from forensics.fengshen246 import extract_enemy_single_special_base,extract_enemy
+    path='game-data/provenance/world-enemy-single-special.json'
+    if enemy.get('specialDamageEvidence')!=path or 'iceBaseDamage' in enemy:
+        raise ValueError('Single special attack requires its independent original evidence')
+    proof=load(ROOT/path);rules=proof['rules'];behavior=enemy['behaviorByte']
+    identities={'2':[67,121,128,147,159,164],'4':[33,46,115,163,165]}
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='behavior2-and4-single-target-original-damage' or \
+            proof['verifiedEnemyIds']!=identities or behavior not in (2,4) or enemy['id'] not in identities[str(behavior)] or \
+            extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=behavior:
+        raise ValueError('Single special attack identity or scope differs')
+    if rules['specialChoice']!='(random &127)<41' or rules['secondaryThresholds']!={'2':64,'4':57} or \
+            rules['specialHit']!='((random>>1)&63)<threshold, always true in actual choice branch' or \
+            rules['allTarget'] is not False or rules['baseDamageIgnoresArmorAndStamina'] is not True or \
+            rules['rawDamageDispatchCapturesDeathFlag'] is not False:
+        raise ValueError('Single special attack choice, target or damage rule differs')
+    required={(9,0x8dc4,12),(9,0x8de9,0xc9),(9,0xa956,0x12c),(9,0xab6d,0x29),(9,0xab0a,0x4f)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Single special attack lacks target or damage source')
+    for span in proof['sources']:checked_span(reader,span)
+    actual=extract_enemy_single_special_base(reader,enemy['id'])
+    if proof['identityBases'][str(enemy['id'])]!=actual or any(enemy.get(k)!=v for k,v in actual.items()):
+        raise ValueError('Single special attack base differs from original CPU scope')
+    checked_span(reader,enemy['specialSource'])
+
+def validate_world_hall_batch_terrain(reader,map_id):
+    """Actual two-plane matrices for this batch; never a transport or field-damage rule."""
+    proof=load(ROOT/'game-data/provenance/world-hell-hall-batch-terrain.json')
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-ground-and-upper-plane-bridge-zero' or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or str(map_id) not in proof['maps'] or \
+            proof['inputModes']!=[0,1] or proof['initialBridgeState']!=0 or proof['testCount']!=6840 or proof['failures']!=0:
+        raise ValueError('Hell terrain batch outside original CPU scope')
+    rule=proof['maps'][str(map_id)];original=extract_map(reader,map_id)
+    cc=original['collisionCandidate'];lookup=reader.read(cc['module'],cc['cpuAddress'],256)
+    import collections
+    counts=dict(collections.Counter(str(lookup[t])for row in original['grid']for t in row))
+    if original['tilesetId']!=3 or rule['mapId']!=map_id or rule['gridSha256']!=original['gridSha256'] or \
+            rule['classCounts']!=counts or rule['testCount']!=len(counts)**2*8:
+        raise ValueError('Hell terrain class matrix or grid differs')
+    expected={'source23VerticalSelectsUpperOnlyForTarget14':True,'upperStandingClasses':[10,11,13,14,17,18,23],
+        'upperBridge20Through22':'NOT_IMPLEMENTED','9b':'ORIGINAL_SPRITE_OCCLUSION_NOT_ENCOUNTER_CONTROL'}
+    if proof['rules']!=expected or proof['encounterGate']['suppressesOn9b'] is not False or \
+            proof['encounterGate']['testCount']!=480 or proof['encounterGate']['failures']!=0:
+        raise ValueError('Terrain/encounter semantics differ from original CPU scope')
+    required={(0,0xca98,29),(0,0xcc87,215),(0,0xce35,29),(0,0xd099,153),(0,0xd214,115),
+        (0,0x874c,34),(11,0xc0b3,100),(11,0xed87+23,46)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Hell terrain lacks original plane, direction, occlusion or encounter code')
+    for span in proof['sources']:checked_span(reader,span)
+    for data in [proof,proof['encounterGate']]:
+        if digest((ROOT/data['cpuExpectedPath']).read_bytes())!=data['cpuExpectedSha256']:
+            raise ValueError('Original terrain/gate CPU expectations differ')
+    return rule
+
+def validate_world_hall_batch_npc_graphic(reader,sprite_id):
+    """One genuinely visible original actor pose, including independent companion records."""
+    from forensics.fengshen246 import extract_npcs
+    proof=load(ROOT/'game-data/provenance/world-hell-hall-batch-resources.json')
+    if proof['romSha256']!=SHA256 or sprite_id not in [192,193,194,195,196,197,208,209,210,254]:
+        raise ValueError('NPC graphic outside completed original pose scope')
+    entry=proof['npcSprites'][str(sprite_id)];recipe=entry['recipe']
+    if entry['spriteId']!=sprite_id or entry['confidence']!='VERIFIED_ONE_CONTROLLED_ORIGINAL_POSE' or \
+            recipe['captureKind']!='CONTROLLED_ORIGINAL_NPC_WORLD_POSITION_AND_COMPANION_ONLY' or \
+            recipe['normalPlayEvidence'] is not False or recipe['opaquePixelMatch'] is not True or \
+            recipe['width']!=16 or recipe['height']!=16 or recipe['transparentZero'] is not True:
+        raise ValueError('NPC pose evidence does not justify this bounded graphic')
+    if not entry['bindings']:raise ValueError('NPC pose has no original record identity')
+    for binding in entry['bindings']:
+        if binding['mapId'] not in range(61,69):raise ValueError('NPC binding outside scoped original maps')
+        npc=extract_npcs(reader,binding['mapId'])['records'][binding['npcIndex']]
+        if npc['range']!=binding['source'] or checked_span(reader,binding['source'])[0]!=sprite_id:
+            raise ValueError('NPC graphic binding differs from actual original record')
+    raw=scoped_observed_graphic(reader,recipe)
+    image=Image.open(io.BytesIO(raw)).convert('RGBA');opaque=sum(p[3]!=0 for p in image.getdata())
+    if not opaque or opaque!=recipe['opaquePixelCount']:raise ValueError('Transparent or incomplete NPC pose')
+    return recipe
+
+def validate_world_chest_grant(reader,npc):
+    """Grant only from the actual chest record; item effect or price is not inferred."""
+    path='game-data/provenance/world-hell-chest-grants.json';proof=load(ROOT/path)
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-actual-ordinary-chest-grant' or \
+            proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['testCount']!=72 or proof['failures']!=0:
+        raise ValueError('Chest grant lacks original scoped evidence')
+    from forensics.fengshen246 import extract_npcs
+    matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
+    if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
+    rule=matches[0];original=extract_npcs(reader,rule['mapId'])['records'][rule['npcIndex']]
+    raw=checked_span(reader,npc['source']['record']);category=rule['categoryId'];item_id=rule['originalId']
+    categories={0:'medicine',1:'special',2:'weapon',3:'armor'}
+    stable='rom.item.0' if (category,item_id)==(2,0) else f'rom.{categories[category]}.{item_id}'
+    treasure=npc['treasure'];expected={'itemId':stable,'flagId':f'rom.map.{rule["mapId"]}.flag.{rule["flagMask"]}',
+        'amount':1,'categoryGrant':category,'evidence':path}
+    if npc['mapId']!=rule['mapId'] or original['range']!=npc['source']['record'] or rule['source']!=original['range'] or \
+            list(raw[:3])!=[144,category,item_id] or raw[12]!=0 or raw[13]!=rule['flagMask'] or \
+            rule['flagMask'] not in [1,2,4,8,16,32,64,128] or treasure!=expected or \
+            rule['maxCount']!=reader.read(2,0xa190+category)[0] or not npc.get('openedSprite'):
+        raise ValueError('Chest category, count, flag or original record differs')
+    if proof['rules']!={'grantAmount':1,'categoryLimits':[10,1,10,10],'categorySlotCount':16,
+            'fullExistingStackCanIncrease':True,'failureDoesNotSetOpenedFlag':True,'repeatDoesNotGrant':True,
+            'quantityMask':127,'worldUseRuleInferred':False}:
+        raise ValueError('Chest inventory rules differ')
+    required={(10,0xa740,92),(2,0x9ec0,249),(2,0xa0df,12),(2,0xa0eb,173),(2,0xa190,12)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Chest lacks grant, flag or capacity source')
+    for span in proof['sources']:checked_span(reader,span)
+    animation=rule['animationSource']
+    if animation['cpuAddress']!=int.from_bytes(raw[8:10],'little') or animation['cpuAddress']!=0x8e3d:
+        raise ValueError('Chest opened graphic cannot reuse a different original animation')
+    checked_span(reader,animation)
+    if digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
+        raise ValueError('Original chest CPU expectations differ')
+    return rule
+
+def validate_world_hall_batch_script(reader,map_id):
+    """Same original finalization, independently checked per event/gate, never a universal flag4."""
+    from forensics.fengshen246 import extract_npcs
+    p=load(ROOT/'game-data/provenance/world-hell-hall-batch-script.json')
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='hell-halls61-through68-original-finalization-and-gate-filter' or \
+            str(map_id) not in p['maps'] or p['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_BOSS_ANDROID':
+        raise ValueError('Hell batch script outside its actual original scope')
+    rule=p['maps'][str(map_id)];records=extract_npcs(reader,map_id)['records']
+    king=records[rule['npcIndex']];gate=records[0];raw=checked_span(reader,rule['npcSource']);graw=checked_span(reader,rule['barrierSource'])
+    if king['range']!=rule['npcSource'] or gate['range']!=rule['barrierSource'] or raw[0]!=189 or \
+            list(raw[10:14])!=[1,2,rule['eventId'],rule['eventArgument']] or graw[0]!=246 or graw[13]!=rule['gateMask'] or \
+            rule['mapId']!=map_id or rule['npcId']!=f'rom.npc.{map_id}.{king["index"]}' or \
+            rule['bossVictoryFlag']!=f'rom.map.{map_id}.flag.{raw[13]}' or \
+            rule['barrierRemovedFlag']!=f'rom.map.{map_id}.flag.{graw[13]}' or rule['victoryFlags']!=[rule['barrierRemovedFlag']]:
+        raise ValueError('Hell batch NPC, gate or independent map flags differ')
+    if rule['barrierCell']!=[(gate['xCandidate']-120)//16,(gate['yCandidate']-120)//16] or \
+            rule['npcCell']!=[(king['xCandidate']-120)//16,(king['yCandidate']-120)//16] or rule['firstMessage']!=raw[1] or rule['repeatMessage']!=raw[2]:
+        raise ValueError('Hell batch cell or message differs from original record')
+    if rule.get('normalTalkCell')!=[rule['npcCell'][0],rule['npcCell'][1]+2] or rule.get('normalTalkDirection')!='UP' or \
+            rule.get('interactionEvidenceKind')!='CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE' or len(rule.get('interactionRamSha256',''))!=64:
+        raise ValueError('Hell batch lacks its controlled original interaction boundary')
+    event=reader.word(10,0xd1e3+2*rule['eventId']);start=reader.word(10,event+6);win=reader.word(10,event+8)
+    expected_source=bytes([0xa9,rule['sourceType']])+bytes.fromhex('2030d360')
+    expected_win=bytes.fromhex('adc107d00420cfd1602072d32059d3a9')+bytes([rule['repeatMessage']])+bytes.fromhex('2078d360')
+    if rule['sourceTypeInstruction']['cpuAddress']!=start or checked_span(reader,rule['sourceTypeInstruction'])!=expected_source or \
+            rule['winInstruction']['cpuAddress']!=win or checked_span(reader,rule['winInstruction'])!=expected_win or \
+            reader.read(1,0x9ea3+rule['sourceType'])[0]!=rule['enemyId']:
+        raise ValueError('Hell batch source or success/failure finalization differs')
+    for key in ('eventPointer','eventStages','mapFlagPointer'):checked_span(reader,rule[key])
+    required={(10,0xd359,37),(10,0xcf29,9),(10,0xd6f4,0x3d),(0,0xa973,169)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Hell batch lacks gate/event/reload sources')
+    for span in p['sources']:checked_span(reader,span)
+    return rule
+
+def validate_world_ice_identities(reader,enemy):
+    """Later ice identities require the actual all-identity CPU proof, not a dragon assumption."""
+    from forensics.fengshen246 import extract_enemy_ice_base,extract_enemy
+    path='game-data/provenance/world-enemy-ice-identities.json'
+    if enemy.get('iceDamageEvidence')!=path or any(k in enemy for k in ('specialBaseDamage','specialSource')):
+        raise ValueError('Later ice requires its all-identity damage evidence')
+    p=load(ROOT/path);rules=p['rules'];ids=[12,93,99,110,117,120,132,136,137,138,139,141,150,155,161,169,175]
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='behavior3-all-decoded-identities-original-damage' or \
+            p['behavior']!=3 or p['verifiedEnemyIds']!=ids or enemy['id'] not in ids or \
+            enemy['behaviorByte']!=3 or extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=3:
+        raise ValueError('Ice identity or CPU scope differs')
+    if rules['ordinaryFormula']!='(enemyId-12)*3+13' or \
+            rules['bossTable']!='A906+2*(enemyId-137), original decoded domain0..176' or \
+            rules['baseDamageIgnoresArmorAndStamina'] is not True or \
+            rules['status04DoublesBeforeUint16Truncation'] is not True or rules['hpFloor']!=0 or \
+            rules['directDamageBeforeDeathFlag'] is not True:
+        raise ValueError('Ice formula, HP or modifier rule differs')
+    required={(9,0xaa08,0x3a),(9,0xa906,80),(9,0xab0a,0x4f),(9,0xab6d,0x29)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Ice lacks dispatch/table/status/HP sources')
+    for span in p['sources']:checked_span(reader,span)
+    actual=extract_enemy_ice_base(reader,enemy['id'])
+    if p['identityBases'][str(enemy['id'])]!=actual or any(enemy.get(k)!=v for k,v in actual.items()):
+        raise ValueError('Ice base differs from original CPU scope')
+
+def validate_world_status16(reader,enemy):
+    """Original behavior6's hit/miss and priority, with no guessed cure/effect name."""
+    from forensics.fengshen246 import extract_enemy
+    path='game-data/provenance/world-enemy-status16.json'
+    if enemy.get('behaviorEvidence')!=path or any(k in enemy for k in ('iceBaseDamage','specialBaseDamage')):
+        raise ValueError('Behavior6 requires its status10 evidence, not damage data')
+    p=load(ROOT/path);r=p['rules'];ids=[39,51,63,78,80,95,104,129,168,174]
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='behavior6-state10-hit-miss-priority-and-no-input' or \
+            p['behavior']!=6 or p['verifiedEnemyIds']!=ids or enemy['id'] not in ids or enemy['behaviorByte']!=6 or \
+            extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=6:
+        raise ValueError('Behavior6 status10 scope or identity differs')
+    if r['specialChoice']!='(random &127)<41' or r['secondaryHit']!='((random>>1)&63)<10' or \
+            r['singleTarget'] is not True or r['selectedSpecialMissIsNotPhysical'] is not True or r['statusMask']!=16 or \
+            r['legalReplaceMasks']!=[0,2,4,8,16] or r['hpChangedByStatus'] is not False or r['rawDamage']!=0 or \
+            r['inputSkipMasks']!=[8,16,32] or r['defeatCondition']!='all present HP zero OR all present status bit10; dead+10 is not all bit10':
+        raise ValueError('Behavior6 status10 choice, priority or command rule differs')
+    required={(9,0x8dc4,12),(9,0x8de9,0xc9),(9,0xa956,0x2e),(9,0xa0d2,0x58),(9,0xa63a,0x65),(9,0xb68e,0x77)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Behavior6 lacks hit/miss/priority/defeat/no-input sources')
+    for span in p['sources']:checked_span(reader,span)
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -553,6 +748,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
+            elif terrain['tileset']==3 and proof.get('scopeRevision')=='hell-halls61-through68-ground-and-upper-plane-bridge-zero':
+                validate_world_hall_batch_terrain(reader,mid)
+                if set(allowed)!=set(collision)-{1}:
+                    raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
             else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
@@ -638,10 +837,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
-            if enemy['behaviorByte']!=1 and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
-                raise ValueError('Behavior1 damage cannot be assigned to another behavior')
+            if enemy['behaviorByte'] not in (1,2,4) and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
+                raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
             if enemy['behaviorByte']==3:
                 from forensics.fengshen246 import extract_enemy_ice_base
+                if enemy['id']>144 or 'iceDamageEvidence' in enemy:
+                    validate_world_ice_identities(reader,enemy)
                 original_ice=extract_enemy_ice_base(reader,enemy['id'])
                 if enemy.get('iceBaseDamage')!=original_ice['iceBaseDamage']:
                     raise ValueError('Ice damage differs from original behavior dispatch')
@@ -654,6 +855,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 checked_span(reader,enemy['iceSource'])
             elif enemy['behaviorByte']==1:
                 validate_world_behavior1(reader,enemy)
+            elif enemy['behaviorByte'] in (2,4):
+                validate_world_single_special(reader,enemy)
+            elif enemy['behaviorByte']==6:
+                validate_world_status16(reader,enemy)
             elif enemy['behaviorByte']==8:
                 if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
                     raise ValueError('Behavior8 requires its scoped status evidence')
@@ -768,6 +973,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     expected['evidence']=boss['continuation']['evidence']
                     if boss['continuation']!=expected or boss.get('commitAfterDialogue',False):
                         raise ValueError('Story continuation order or state differs')
+                elif boss.get('victoryFlags') and boss.get('victoryFlagEvidence')=='game-data/provenance/world-hell-hall-batch-script.json':
+                    rule=validate_world_hall_batch_script(reader,boss['mapId'])
+                    if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
+                            boss['flagId']!=rule['bossVictoryFlag'] or boss['victoryFlags']!=rule['victoryFlags'] or \
+                            boss.get('commitAfterDialogue',False):
+                        raise ValueError('Hell batch finalization fields differ from original event')
                 elif boss.get('victoryFlags'):
                     proof=load(ROOT/boss['victoryFlagEvidence']);rule=proof['rules']
                     if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246'):
@@ -899,8 +1110,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('spriteEvidence')=='game-data/provenance/world-hell-hall-batch-resources.json':
+            recipe=validate_world_hall_batch_npc_graphic(reader,npc['spriteId'])
+            if evidence['graphics'].get(npc['sprite'])!=recipe:
+                raise ValueError('NPC sprite differs from reviewed original actor pose')
         if npc.get('interactionDirection'):
-            proof=load(ROOT/npc['interactionEvidence']);rule=proof['rules']
+            proof=load(ROOT/npc['interactionEvidence'])
+            rule=validate_world_hall_batch_script(reader,npc['mapId']) if npc['interactionEvidence']=='game-data/provenance/world-hell-hall-batch-script.json' else proof['rules']
             if proof['romSha256']!=SHA256 or (npc['id'],npc['mapId'],npc['cell'],npc['interactionCell'],npc['interactionDirection'])!= \
                     (rule['npcId'],rule['mapId'],rule['npcCell'],rule['normalTalkCell'],rule['normalTalkDirection']):
                 raise ValueError('Original nonadjacent interaction point differs')
@@ -915,6 +1131,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
         if not npc.get('treasure'):continue
+        if npc['treasure'].get('categoryGrant') is not None:
+            validate_world_chest_grant(reader,npc)
+            continue
         raw=checked_span(reader,npc['source']['record']);t=npc['treasure']
         if list(raw[:3])!=[144,1,11] or raw[13]!=2 or t['itemId']!='rom.special.11' or t['amount']!=1 or \
                 t['flagId']!=f'rom.map.{npc["mapId"]}.flag.2' or not npc.get('openedSprite'):
@@ -927,6 +1146,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if obj['interaction']=='NOT_IMPLEMENTED':
             if mid not in known or obj['cell']!=cell or any(o['id']==obj['id'] for o in scene.get('mapObjects',[])):
                 raise ValueError('Unimplemented actor must preserve its original record and cell')
+            if obj.get('initialHiddenEvidence'):
+                path='game-data/provenance/world-hell-hall-batch-resources.json'
+                proof=load(ROOT/path);initial=proof['initialHiddenObjects']['198']
+                if obj['initialHiddenEvidence']!=path or (mid,raw[0])!=(64,198) or \
+                        initial['source']!=obj['recordSource'] or initial['confidence']!='VERIFIED_INITIAL_ZERO_ALPHA_ONLY' or \
+                        initial['recipe']['completeGraphic'] is not False or initial['recipe']['opaquePixelCount']!=0 or \
+                        evidence['graphics'].get(obj['sprite'])!=initial['recipe']:
+                    raise ValueError('Hidden object only justifies its original initial transparent pose')
+            elif obj.get('spriteEvidence')=='game-data/provenance/world-hell-hall-batch-resources.json':
+                recipe=validate_world_hall_batch_npc_graphic(reader,obj['spriteId'])
+                if raw[0]!=obj['spriteId'] or raw[1]!=255 or evidence['graphics'].get(obj['sprite'])!=recipe:
+                    raise ValueError('Non-dialogue actor must retain its original independent pose')
             scene.setdefault('mapObjects',[]).append(obj)
             continue
         target=obj['itemTarget']
@@ -943,10 +1174,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
     for barrier in evidence.get('sceneBarriers',[]):
-        proof=load(ROOT/barrier['evidence']);rule=proof['rules'];raw=checked_span(reader,barrier['recordSource'])
+        batch=barrier['evidence']=='game-data/provenance/world-hell-hall-batch-script.json'
+        proof=load(ROOT/barrier['evidence'])
+        rule=validate_world_hall_batch_script(reader,barrier['mapId']) if batch else proof['rules']
+        raw=checked_span(reader,barrier['recordSource'])
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
-        if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246') or \
-                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
+        if proof['romSha256']!=SHA256 or not(batch or proof['scopeRevision'] in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246')) or \
+                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=(rule['gateMask'] if batch else 4) or \
                 barrier['removedFlagId']!=rule['barrierRemovedFlag'] or barrier['cell']!=rule['barrierCell']:
             raise ValueError('Original hell hall collision actor differs')
         for span in proof['sources']:checked_span(reader,span)

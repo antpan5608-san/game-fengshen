@@ -187,3 +187,21 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 新行为先独立核实际CPU分派、同字节随机、目标范围与基础伤害，再扩原OpeningBattle与extractor。world-enemy-behavior1.json及444行独立CPU预期已用于5专项JVM/3导出证据方法；直接A956扣血捕获在死亡flag分派前，不能混作整回合状态。私有CPU实验仍依赖隔离原版存档/mapper，不能声称公开干净环境可复现所有原实验；正常Android另验。
 
 - 原StoryBattleDefinition.pendingDialogue返回当前对白ID，不是待执行状态查询；完成胜后检查真实pendingFlag，保留重复完成无副作用及门/存档断言。错误null期望曾使实际ContentTest加载后失败；修正已本地编译，新的正常App结果须另验。
+
+- 后续敌人能力使用原behavior分派批次核证：world-enemy-single-special.json/3148原CPU结果验证2/4单目标、与原8EB2相同字节选择及伤害；world-enemy-status16.json/2575原CPU结果验证6的阈值10、特殊miss不落物理、状态优先级与原全队10败判。对应7个Python证据方法与229全JVM方法、仪器编译实际通过。原始CPU实验需要隔离原版mapper/存档，公开派生TSV不是原始资源；此树正常App/新地图尚未执行，不写可玩PASS。
+
+- 原冰行为普通公式与boss表是两域：用world-enemy-ice-identities.json/1700原CPU派生预期核17身份，再允许后段177表内身份进入原提取器。3个证据测试、230全JVM方法与仪器编译实际通过；来源span可保留旧recipe描述但地址/hash必须相同。正常App/新图需另验，HP-positive死亡mask仅算术fixture不当合法目标。
+
+- 同类殿事件按原NPC末4字节及原inline stage表批次绑定：world-hell-hall-batch-script.json/4096原CPU期望已用于3项Python与纯旗标JVM测试，复用StoryBattleDefinition/SceneBarrier而非复制运行引擎。NPC246 gate原mask随地图不同，失败分支和加载过滤也需核；CPU及受控坐标图形不等于正常路线。后段八Boss原全组104块各全匹配配方成功；读取高地址battleHP须从SRAM6800起始dump取offset186，不读取短RAM空slice。原NPCcamera/screen定位尝试失败并保留；后续按真实+4/+6 world坐标取10种可见单帧，198透明不能提升为完整图。不宣称自动隐式skill匹配。
+
+- 世界NPC坐标与对白字段先对原14字节及22字节actor记录核对：+2/+3不是屏幕坐标；以原+4/+6 world坐标/OAM、PPU每个16字节CHR和opaque像素重建既有recipe，组合部件分别留ID。静态RGB表与FCEUX实录RGB可有差异，沿用实际每个PPU值一致的可见像素，未用颜色不冒称验证；透明全块拒绝为完整图。10个recipe复建/错身份/错像素/透明拒绝3方法已实跑。原9B在874C是遮挡，不能直接转bool免遇敌；6840原碰撞+480原遇敌预期、233JVM及106世界Python实际通过。原私有CPU存档依赖和Android NOT_RUN限制保留。
+
+
+- 普通宝箱沿用WorldItems与InventoryCapacity，原14字节记录需独立验证类别/ID/flag及grant/容量/开箱动画span；受控CPU数量含已使用位，不能把原字节129当129份。test_world_chest_grants.py与HallChestGrantTest已在本地验证72原CPU预期、失败不落flag、满栏已有栈可增、重复不结算。新地图正常App/冷启另验；箱子取物不证明其物品使用效果。
+
+
+- 多地图批次复用原export_from_base，地图/独立出口/NPC/完整遇敌组/门flag分别核来源；旧目标pin留golden，基底和目标hash不混用。test_world_hall_batch_export.py、本地113世界方法及两全新ci_apk.restore目录已运行：旧媒体字节不变、错数量/物品/门/交谈/姿态/少组拒绝。受控Original/仪器编译不等于正常Android路线或冷启；必要App门禁另外执行。原ROM当场对白阶段6E1可能已变为UI actor，不能拿它替代进入战斗/原NPC记录身份。
+
+
+- 原完成步状态先毒后特定地图效果：world-hell-field67-step.json与3840完整CPU输出（含原BE1A请求队列）已用于Field67StepTest/原Status测试，保持step(List) ABI，GameView传CompletedStep.mapId而不是换图后的world.mapId。仅保护RAM边界核实不授权物品用法；正常路线/音频/Android另验。新1 Python及定向10 JVM、全238 JVM与仪器编译实际成功，不据此写新图已可玩。
+- 原正常流程准备耗尽时先查实际成长阈值、训练敌群奖励与保存索引。北海前开局弱敌区3000步未达到12级，保留失败，不注入EXP/更改等级目标；改走已支持海域正常训练的驱动已编译，App复测未执行。进度每64步保留实际快照有助诊断，不能只增大预算无限重试。

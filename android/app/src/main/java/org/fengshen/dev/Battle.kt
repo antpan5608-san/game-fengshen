@@ -163,7 +163,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
         val definition=content.enemies[m.enemyId]?:error("Missing enemy ${m.enemyId}")
-        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(1,7,8,9)||content.physicalRules!=null))
+        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(1,2,4,6,7,8,9)||content.physicalRules!=null))
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
@@ -203,11 +203,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     }
     var phase=BattlePhase.TARGET;private set
     /** Original B68E→BA18 advances directly to stage5 when every living actor
-     * is state08. Called by the controller only at a ready input boundary. */
+     * has a no-input state08/10. Called only at a ready input boundary. */
     fun continueSkippedCommands(nextByte:()->Int):BattleTurn? {
         if(phase!=BattlePhase.TARGET||content.physicalRules==null||commands.isNotEmpty()||inputHero!=null)return null
         val living=partyStates.filter{it.hp>0}
-        if(living.isEmpty()||living.any{it.statusMask and OriginalStatus.STATUS_BIT8==0})return null
+        if(living.isEmpty()||living.any{it.statusMask and (OriginalStatus.STATUS_BIT8 or OriginalStatus.STATUS_BIT16)==0})return null
         return originalRound(nextByte)
     }
     private var settled=false
@@ -278,6 +278,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         val steps=mutableListOf<BattleActionStep>();val defeated=mutableListOf<Int>()
         var dealt=0;var received=0;var misses=0;var lastActionByte:Int?=null
         fun roll()=nextByte().also{require(it in 0..255);lastActionByte=it}
+        fun finishEnemyAction(){if(OriginalPartyRules.defeated(originalActors()))phase=BattlePhase.DEFEAT}
         val actors=OriginalPartyRules.actionOrder(originalActors(),originalEnemies())
         for(actor in actors){
             if(phase!=BattlePhase.TARGET)break
@@ -341,27 +342,36 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(targetIndex==null){phase=BattlePhase.DEFEAT;break}
                 val target=partyStates.first{originalIndices.getValue(it.id)==targetIndex}
                 val slot=enemy.slot
+                if(enemy.definition.behaviorByte==6&&(random and 127)<41){
+                    steps.add(frame("${enemy.definition.name} 异常10攻击（原名未核）",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
+                    if(OriginalStatus.status16Hits(random)){
+                        val updated=OriginalStatus.applyStatus16(target);setCharacter(target.id,updated)
+                        steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 10" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id))
+                    }else{misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id))}
+                    finishEnemyAction()
+                    continue
+                }
                 if(enemy.definition.behaviorByte==7&&OriginalStatus.choosesPoison(random)){
                     steps.add(frame("${enemy.definition.name} 毒系攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
                     val updated=OriginalStatus.poison(target);setCharacter(target.id,updated)
-                    steps.add(frame(if(updated.statusMask!=target.statusMask)"中毒" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"中毒" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));finishEnemyAction();continue
                 }
                 if(enemy.definition.behaviorByte==9&&OriginalStatus.choosesStatus4(random)){
                     steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
                     val updated=OriginalStatus.applyStatus4(target);setCharacter(target.id,updated)
-                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 04" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 04" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));finishEnemyAction();continue
                 }
                 if(enemy.definition.behaviorByte==8&&OriginalStatus.choosesStatus4(random)){
                     steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
                     val updated=OriginalStatus.applyStatus8(target);setCharacter(target.id,updated)
-                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 08" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 08" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));finishEnemyAction();continue
                 }
                 val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
-                val special=enemy.definition.behaviorByte==1&&enemy.definition.specialBaseDamage!=null&&OriginalStatus.choosesSpecial1(random)
-                val targets=if(ice||special)partyStates.filter{it.hp>0} else listOf(target)
-                steps.add(frame(when{ice->"${enemy.definition.name} 冰系攻击";special->"${enemy.definition.name} 特殊攻击1（原名未核）";else->"${enemy.definition.name} 攻击"},actor=slot,
+                val special=enemy.definition.behaviorByte in setOf(1,2,4)&&enemy.definition.specialBaseDamage!=null&&OriginalStatus.choosesSpecial1(random)
+                val targets=if(ice||special&&enemy.definition.behaviorByte==1)partyStates.filter{it.hp>0} else listOf(target)
+                steps.add(frame(when{ice->"${enemy.definition.name} 冰系攻击";special->"${enemy.definition.name} 特殊攻击${enemy.definition.behaviorByte}（原名未核）";else->"${enemy.definition.name} 攻击"},actor=slot,
                     kind=when{ice->BattleActionKind.ICE;special->BattleActionKind.SPECIAL;else->BattleActionKind.ATTACK},targetId=if(targets.size==1)target.id else null))
-                if(!ice&&!special&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id));continue}
+                if(!ice&&!special&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id));finishEnemyAction();continue}
                 // Original behavior1/3 iterates present living party slots using this one AI byte.
                 // A fallen first target does not skip the second; defeat is checked after the whole action.
                 for(victim in targets){
@@ -372,7 +382,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     steps.add(frame("受到 $actual 点伤害",actor=slot,kind=BattleActionKind.DAMAGE,delta=-actual,
                         beforeHero=if(victim.id==hero.id)victim.hp else hero.hp,targetId=victim.id))
                 }
-                if(partyStates.all{it.hp==0})phase=BattlePhase.DEFEAT
+                finishEnemyAction()
             }
         }
         if(phase==BattlePhase.TARGET&&lastActionByte!=null){

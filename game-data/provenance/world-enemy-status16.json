@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "behavior6-state10-hit-miss-priority-and-no-input",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "behavior": 6,
+  "verifiedEnemyIds": [
+    39,
+    51,
+    63,
+    78,
+    80,
+    95,
+    104,
+    129,
+    168,
+    174
+  ],
+  "rules": {
+    "specialChoice": "(random &127)<41",
+    "secondaryHit": "((random>>1)&63)<10",
+    "singleTarget": true,
+    "selectedSpecialMissIsNotPhysical": true,
+    "statusMask": 16,
+    "legalReplaceMasks": [
+      0,
+      2,
+      4,
+      8,
+      16
+    ],
+    "hpChangedByStatus": false,
+    "rawDamage": 0,
+    "inputSkipMasks": [
+      8,
+      16,
+      32
+    ],
+    "defeatCondition": "all present HP zero OR all present status bit10; dead+10 is not all bit10",
+    "originalName": "NOT_YET_TRANSCRIBED",
+    "mapCureRule": "NOT_INFERRED"
+  },
+  "sources": [
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Actual secondary behavior6 threshold10, not poison25"
+    },
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Original choice, hit/miss and single living target"
+    },
+    {
+      "offset": 305510,
+      "length": 46,
+      "sha256": "e6375c861e9ad124de79018112414385a2ba36e8b97e0476cc90da4aa564e4a4",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Original damage early return behavior>=5"
+    },
+    {
+      "offset": 303330,
+      "length": 88,
+      "sha256": "879ee97c1fa5b95ce41911bbe8fca90ce2b36614dfa92068eebd6592232d0d3c",
+      "module": 9,
+      "cpuAddress": 41170,
+      "meaning": "Actual status priority, write bit10 without HP change"
+    },
+    {
+      "offset": 304714,
+      "length": 101,
+      "sha256": "a5f64b4f143c9026c2c520cb22c3560dfe7eab6decb697f211c96bea56f7c4bb",
+      "module": 9,
+      "cpuAddress": 42554,
+      "meaning": "AllHPzero and allparty bit10 defeat branches"
+    },
+    {
+      "offset": 308894,
+      "length": 119,
+      "sha256": "09780984adf321cddbf4c39a83f76ed377d8e9c7572974a6edbb8291840c1f8a",
+      "module": 9,
+      "cpuAddress": 46734,
+      "meaning": "Original no-input collection for08/10/20 to BA18"
+    }
+  ],
+  "cpuReportSha256": "77ec21e7a5311bca3e37338def8c22155d7518106facc347305d242a55afc511",
+  "cpuCases": 2575,
+  "cpuExpectedPath": "android/app/src/test/resources/enemy-status16-cpu.tsv",
+  "failedAssumption": "Initial fixture reused threshold25 from poison; actualAI atbyte20 misses, original8DCA is10. Corrected expectation, never original ROM.",
+  "limits": [
+    "HP0 with non-dead masks are arithmetic dispatch fixtures, not legal living targets",
+    "No cure item or map-use rule inferred",
+    "Normal Android/App/Boss NOT_RUN"
+  ]
+}

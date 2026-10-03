@@ -1,6 +1,10 @@
 package org.fengshen.dev
 
-data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int=1)
+data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int=1) {
+    // Keep the cross-APK constructor ABI; the loader accepts this only with the
+    // original scoped category-grant evidence, not a name-based item effect.
+    var categoryGrant:Int?=null;internal set
+}
 data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val spriteId:Int,
     val removedFlagId:String,val completionFlagId:String)
 data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String)
@@ -25,15 +29,20 @@ object WorldItems {
      * This transaction does not establish that walking up to a chest permits its reward.
      */
     fun openTreasure(snapshot:SaveSnapshot,treasure:TreasureDefinition,item:ItemDefinition):Result {
-        if(!supported(item)||treasure.itemId!=item.id||treasure.amount!=1||!validId(treasure.flagId))
+        val category=treasure.categoryGrant
+        val categories=listOf("medicine","special","weapon","armor")
+        val expectedId=if(category==2&&item.originalId==0)OpeningEquipment.KNIFE_ID else "rom.${item.category}.${item.originalId}"
+        val ordinary=category!=null&&category in categories.indices&&item.category==categories[category]&&
+            item.originalId in 0..255&&item.id==expectedId&&item.maxCount==(if(category==1)1 else 10)
+        if(!(if(category==null)supported(item)else ordinary)||treasure.itemId!=item.id||treasure.amount!=1||!validId(treasure.flagId))
             return reject(snapshot,"宝箱物品规则尚未核验")
         if(snapshot.flags[treasure.flagId]==true)return reject(snapshot,"已经取过了")
         val count=snapshot.inventory[item.id]?:0
         if(count<0)return reject(snapshot,"物品数量异常")
-        if(count>=item.maxCount)return reject(snapshot,"已持有此物")
+        if(count>=item.maxCount)return reject(snapshot,"物品数量已满")
         if(!InventoryCapacity.hasCategorySlot(snapshot.inventory,item.id,item.category))
-            return reject(snapshot,"特殊物品栏已满")
-        return Result(snapshot.inventory+(item.id to 1),snapshot.flags+(treasure.flagId to true),true)
+            return reject(snapshot,"此类物品栏已满")
+        return Result(snapshot.inventory+(item.id to count+1),snapshot.flags+(treasure.flagId to true),true)
     }
 
     private fun unavailable(snapshot:SaveSnapshot,item:ItemDefinition,rule:WorldItemUseDefinition,

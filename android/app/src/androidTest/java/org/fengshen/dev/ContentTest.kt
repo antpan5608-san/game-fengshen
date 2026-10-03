@@ -13,6 +13,38 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual candidate loader and isolated proposals; not a normal Hell route. */
+    fun testControlledHallBatchGroundChestsAndIndependentRewards(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val battle=c.battle!!
+        for(mid in listOf(61,62,63,64,65,66)){
+            val barrier=c.sceneBarriers.single{it.mapId==mid}
+            assertEquals(MovementBlock.PHYSICAL,c.sceneForState(mid,emptyMap())!!.blockType(barrier.x,barrier.y))
+            val boss=battle.storyBattles.getValue("rom.npc.$mid.1")
+            val won=boss.rewardFlags(mapOf("unrelated" to true))
+            assertTrue(won[barrier.removedFlagId]==true)
+            assertNull(c.sceneForState(mid,won)!!.check(barrier.x,barrier.y))
+            assertEquals(won,boss.rewardFlags(won))
+            val finished=boss.completeDialogue(won)
+            assertFalse(finished[boss.pendingFlag]==true)
+            assertEquals(finished,boss.completeDialogue(finished))
+        }
+        for(id in listOf("rom.npc.61.8","rom.npc.62.7","rom.npc.62.8","rom.npc.63.8","rom.npc.63.9","rom.npc.66.9")){
+            val npc=c.npcs.single{it.id==id};val treasure=npc.treasure!!;val item=c.itemDefinitions.getValue(treasure.itemId)
+            val scene=c.scenes.getValue(npc.mapId)
+            val save=SaveSnapshot(c.scene.version,npc.mapId,scene.spawnX*16+8,scene.spawnY*16+8,Key.UP,
+                listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),emptyMap(),emptyMap(),400)
+            assertTrue(save.validate(c))
+            val grant=WorldItems.openTreasure(save,treasure,item)
+            assertTrue(grant.applied);assertEquals(1,grant.inventory[item.id]);assertTrue(grant.flags[treasure.flagId]==true)
+            val after=save.copy(inventory=grant.inventory,flags=grant.flags)
+            assertTrue(after.validate(c));assertEquals(after,SaveSnapshot.parse(after.json().toString()))
+            val repeated=WorldItems.openTreasure(after,treasure,item)
+            assertFalse(repeated.applied);assertEquals(after.inventory,repeated.inventory);assertEquals(after.flags,repeated.flags)
+            assertEquals(400,after.money);assertEquals(save.characters,after.characters)
+        }
+    }
+
     /** Candidate definitions and durable flags only; not a normal second hall victory. */
     fun testControlledSecondHallSpecialAndIndependentMapFlags(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

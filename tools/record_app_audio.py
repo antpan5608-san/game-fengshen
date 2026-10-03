@@ -11,6 +11,13 @@ OUT=ROOT/'artifacts/checkpoint-ui'
 class SavedBoundaryUnavailable(RuntimeError):
     pass
 
+def validate_recording_budget(prefix,budget):
+    # Only this explicitly scoped multi-hall continuation has a larger normal
+    # budget. The old single-flow limits and all failure/restore checks stay.
+    maximum=7200 if prefix=='world-hall-batch' else 3600
+    if not 60<=budget<=maximum:
+        raise ValueError('Isolated recording budget outside the scoped bound')
+
 def read_saved_boundary(read_pref,pause=time.sleep,attempts=20):
     """Read the actual persisted boundary across atomic preference-file replacement.
 
@@ -38,10 +45,11 @@ def record_silent():
         i=sys.argv.index('--cold-test');cold_method=sys.argv[i+1];del sys.argv[i:i+2]
     if '--budget-seconds' in sys.argv:
         i=sys.argv.index('--budget-seconds');budget=int(sys.argv[i+1]);del sys.argv[i:i+2]
-    assert 60<=budget<=3600 and cold_method.isidentifier()
+    assert cold_method.isidentifier()
     comparison='--comparison' in sys.argv
     if comparison:sys.argv.remove('--comparison')
     prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
+    validate_recording_budget(prefix,budget)
     method=sys.argv[2] if len(sys.argv)>2 else 'testNormalHerbSupplyLoop'
     def adb(*args,**kwargs):
         return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,timeout=90,**kwargs).stdout
