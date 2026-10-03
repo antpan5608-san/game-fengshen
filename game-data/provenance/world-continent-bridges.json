@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "continent16-foot-bridges-no-transport-state",
+  "mapId": 16,
+  "tilesetId": 1,
+  "mapGridSha256": "4a482d209cca015198806a5da5d5c697a905fe710e846b9ce26222882e2406c4",
+  "kind": "CONTROLLER_CONTINUATION_FROM_CONTROLLED_POST_WIN_SOURCE_AND_SCOPED_CPU",
+  "licenseStatus": "UNKNOWN_NOT_GRANTED_BY_HASH",
+  "sourceClasses": [
+    0,
+    2,
+    15,
+    16
+  ],
+  "standingClasses": [
+    0,
+    2,
+    15,
+    16
+  ],
+  "sourceEdges": {
+    "15": [
+      "LEFT",
+      "RIGHT"
+    ],
+    "16": [
+      "UP",
+      "DOWN"
+    ]
+  },
+  "targetEdges": {},
+  "blockedTargetClasses": [
+    1,
+    3,
+    4,
+    5,
+    7
+  ],
+  "transportFlags": {
+    "6812": 0,
+    "6813": 0,
+    "6815": 0
+  },
+  "cpuExpectedPath": "android/app/src/test/resources/continent-bridge-original-cpu.tsv",
+  "cpuExpectedSha256": "38aa5a0cb3ff825d5a6e1865ca1398e11e312bbbbb44d062888d4a709bb7e3c7",
+  "cpuCaseCount": 144,
+  "cpuFailures": 0,
+  "activeCpuSha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853",
+  "sources": [
+    {
+      "offset": 19141,
+      "length": 117,
+      "sha256": "efddae73c5f36147c07f8b468a13afc57d05e59feb378fec987d7394ac1fe383",
+      "module": 0,
+      "cpuAddress": 51893,
+      "meaning": "Continent foot source dispatch and class15/16 handlers"
+    },
+    {
+      "offset": 20308,
+      "length": 22,
+      "sha256": "79543616b571dcb06ceecb31c9cf92d340365e9359ef0e7e6cd2fc2cc5e5c4a4",
+      "module": 0,
+      "cpuAddress": 53060,
+      "meaning": "Continent target transport/ground dispatch"
+    },
+    {
+      "offset": 20545,
+      "length": 71,
+      "sha256": "8a065e0c774cf3e1943c780754bd1cefd009914c4f4617c4a3112d0a70ee20a0",
+      "module": 0,
+      "cpuAddress": 53297,
+      "meaning": "Continent foot target dispatch and blocked target list"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Class15 vertical departure / class16 horizontal departure"
+    },
+    {
+      "offset": 19125,
+      "length": 16,
+      "sha256": "1ad6dd00aed13915aa9f03eb04288c8c4757d973497ec1975b12f335e0c8394c",
+      "module": 0,
+      "cpuAddress": 51877,
+      "meaning": "Source dispatch per tileset"
+    },
+    {
+      "offset": 20050,
+      "length": 16,
+      "sha256": "3da7cdc44ef3e328702330ecb95d91d988e154f87110d25e254d6138d80f9a7c",
+      "module": 0,
+      "cpuAddress": 52802,
+      "meaning": "Target dispatch per tileset"
+    }
+  ],
+  "controllerEvidence": {
+    "source": "private-derived/world-after-rebirth-route/bridge-00-source.fc8",
+    "sourceSha256": "aa2d039c9a6474f08f4730d130bff5a93a7f14c03299321754f7476a487c0980",
+    "timelineSha256": "56369d72941f123d59b7a6ef8b4cc30bc26e0f239899b15f7d69aa722d17a7e5",
+    "realKeysNoNewRamWrites": true,
+    "before": [
+      16,
+      235,
+      159
+    ],
+    "afterFirstLeft": [
+      16,
+      231,
+      159
+    ],
+    "crossedClass16Cells": [
+      [
+        234,
+        159
+      ],
+      [
+        233,
+        159
+      ]
+    ],
+    "failedAttempts": [
+      "Initially added camera twice to global actor coordinates; invalid path retained privately.",
+      "Long-held old return source was actually239,165 and crossed village door on approach; retained, not used as successful bridge proof."
+    ]
+  },
+  "limits": [
+    "Only ground/foot flags0. No flying/boat or unknown world classes enabled.",
+    "Controlled original source, not normal new-game proof. Android new bridge/zone16 not yet run."
+  ]
+}

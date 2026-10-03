@@ -505,5 +505,10 @@ jobs:
             artifacts/checkpoint-ui/world-medical-*.json
             artifacts/checkpoint-ui/world-medical-*-test.txt
             artifacts/world-medical-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-continent-bridge-*.png
+            artifacts/checkpoint-ui/touch-ux-world-continent-bridge-*.json
+            artifacts/checkpoint-ui/world-continent-bridge-*.json
+            artifacts/checkpoint-ui/world-continent-bridge-*-test.txt
+            artifacts/world-continent-bridge-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

@@ -13,6 +13,23 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Bundled original ground bridges; normal App traversal is separately verified. */
+    fun testContinentFootBridgesOriginalDirectionsEncountersAndLegacySave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val scene=c.scenes.getValue(16)
+        assertEquals(setOf(0,2,15,16),scene.walkableClasses)
+        for(x in listOf(235,234,233))assertEquals(MovementBlock.NONE,scene.probeFrom(x,159,Key.LEFT))
+        assertEquals(MovementBlock.NONE,scene.probeFrom(233,159,Key.RIGHT))
+        assertEquals(MovementBlock.PHYSICAL,scene.probeFrom(234,159,Key.UP))
+        assertEquals(MovementBlock.PHYSICAL,scene.probeFrom(233,159,Key.DOWN))
+        val zone=c.battle!!.zones.single{it.mapId==16&&it.contains(16,234,159)}
+        assertEquals(19,zone.groups.size);assertEquals((0..18).toList(),zone.groups.map{it.id})
+        assertEquals(setOf(35,36,37),zone.groups.flatMap{it.members}.map{it.enemyId}.toSet())
+        assertEquals(16,zone.randomThreshold);assertFalse(zone.highGate)
+        for((id,hp)in mapOf(35 to 184,36 to 173,37 to 221))assertEquals(hp,c.battle!!.enemies.getValue(id).hp)
+        val old=SaveSnapshot("opening-segment-001-c32",16,238*16+8,160*16+8,Key.UP,
+            listOf(c.initialPlayer),emptyMap(),emptyMap(),87)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
     /** Check actual candidate geometry before a long normal east-palace recording. */
     fun testEastPreparationAndIndependentSeaEntryHaveLegalGeometry(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

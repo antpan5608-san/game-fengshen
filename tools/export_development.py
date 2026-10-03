@@ -828,6 +828,28 @@ def validate_world_clinic_definition(reader,clinic):
         raise ValueError('Medical definition, actor or available operations differ')
     return p
 
+def validate_continent_foot_bridges(reader,proof_path):
+    proof=load(ROOT/proof_path)
+    original=extract_map(reader,16)
+    required={(0,0xcab5,117),(0,0xcf44,22),(0,0xd031,71),(0,0xd257,18),
+              (0,0xcaa5,16),(0,0xce42,16)}
+    if proof_path!='game-data/provenance/world-continent-bridges.json' or \
+            (proof['romSha256'],proof['mapId'],proof['tilesetId'],proof['scopeRevision'])!= \
+            (SHA256,16,1,'continent16-foot-bridges-no-transport-state') or \
+            original['tilesetId']!=1 or proof['mapGridSha256']!=original['gridSha256'] or \
+            proof['activeCpuSha256']!=digest(reader.read(0,0x8000,32768)) or \
+            proof['standingClasses']!=[0,2,15,16] or \
+            proof['sourceEdges']!={'15':['LEFT','RIGHT'],'16':['UP','DOWN']} or proof['targetEdges'] or \
+            proof['transportFlags']!={'6812':0,'6813':0,'6815':0} or \
+            proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Continent bridges lack original foot/direction evidence')
+    for span in proof['sources']:checked_span(reader,span)
+    raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+    if digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=145:
+        raise ValueError('Continent bridge CPU expectations differ')
+    return proof
+
 def validate_world_exit_geometry(scene,result):
     """Match the existing loader's gate-open placement check before signing.
 
@@ -1194,6 +1216,20 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         extend_world_characters(reader,scene,combat,evidence.get('additionalCharacters',[]),overlay)
         result['combat.json']=encoded(combat)
     for patch in evidence.get('sceneCapabilityUpdates',[]):
+        if patch.get('kind')=='CONTINENT_FOOT_BRIDGES':
+            proof=validate_continent_foot_bridges(reader,patch['evidence'])
+            if patch['mapId']!=16 or patch['implementedCapabilities']!=['FOOT_BRIDGE15','FOOT_BRIDGE16','ORIGINAL_ZONE16'] or \
+                    not overlay or not any(z['mapId']==16 and z['id']==16 for z in overlay['zones']):
+                raise ValueError('Continent bridge change must retain its actual full encounter zone')
+            name=next(m['scene']for m in scene['maps']if m['id']==16);data=json.loads(result[name])
+            if data['walkableClasses']!=[0,2] or data.get('sourceEdges') or data.get('targetEdges') or data.get('terrain'):
+                raise ValueError('Continent bridge parent differs from reviewed foot state')
+            data['walkableClasses']=proof['standingClasses']
+            data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
+            data['enabledCells']=sorted(set(data['enabledCells'])|{i for i,c in enumerate(data['collision'])if c in (15,16)})
+            data.setdefault('source',{})['footBridgeEvidence']=patch['evidence']
+            result[name]=encoded(data)
+            continue
         if patch['mapId']!=25 or not overlay:raise ValueError('Scene capability update lacks implemented encounters')
         zone=next(z for z in overlay['zones'] if z['id']==4)
         name=next(m['scene'] for m in scene['maps'] if m['id']==patch['mapId']);data=json.loads(result[name])

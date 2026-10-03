@@ -17,7 +17,17 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T13:49:42Z）
+## 当前有效状态（2026-10-03T14:42Z）
+
+- 总任务持续F3/F4，正式v27/c14不变，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。冻结main/c552900a的v53/c32/run37128387307 Windows构建成功，Android runtime仍执行；未取得新正常流程结果前不发布或推main改变来源。
+- 隔离work/world-after-medical新增大陆map16步行桥类别15/16，只按原source方向限制通行；真实按键从受控胜后源235,159横穿两格类别16至231,159，原CPU独立144组合0不符。原坐标已是world坐标，最初重复加camera及误用长按回村源的失败保存，不作为成功证据。没有开放船/飞行/未知格，旧墙/区域/地图不变。
+- 同时接完整原大陆遇敌区16（193,152,245,169、19组），敌35/36/37原数值/行为0/8/9/掉落不变。原整组3实际可见图形经原recipe每块CHR/RGBA匹配；三个名称UNKNOWN。新出口219,144是原类别9入口，通往89而非86，尚未加入c33或开放该端点。
+- c33/195文件/33地图，manifest b2ec777036fb67044649673fa14f19ba5c022387e28a78fc4bbeff6bb7a29095；固定c32父配方，仍用审核v27同一APK恢复。全新空目录严格restore与本地195文件逐字节一致；一次全世界140独立Python PASS（264.124秒），桥局部4方法、医馆固定golden4方法、真实autocrlf checkout1方法PASS；全257 JVM、0失败/错误/跳过、47 suites及instrument编译PASS。
+- 新原Content桥/19敌群/旧c32档断言与正常医馆源→按键双向过桥→自然遇敌→保存→外部冷启驱动已编译，实际App仍NOT_RUN。原工作流/同审核APK门禁只增对应必需结果和既有有界证据artifact，未建新workflow。旧档兼容增加c32版本标记，位置/角色/物品/旗标保护不放宽。
+- inspect37129885660实际14:31:58.249UTC查27/26=1333/2289事件、普通真机5会话/模拟器0/测试0、清理0；仍旧v26下载ProtocolException根因UNCONFIRMED，不绕上传保护。声音/一加13T NOT_RUN。
+- 下一动作：保存本地桥/遇敌可复现提交，继续原89入口/NPC/事件取证；读取v53实际结果，失败立即读首错并修，成功则审核同产物。不以33图或候选为总任务终点。
+
+## 历史有效状态（2026-10-03T13:49:42Z）
 
 - WORLD-FULL-01持续F3/F4，生产仍v27/c14，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。冻结v51/c30/run37120741716已结束：build SUCCESS，Content 24/24、南海/海底北区/西海/村1/北海/洞85正常流程及相应冷启PASS；东海驱动到原珊瑚墙25(27,14)时失败，后续殿堂/转世未执行，不发布。
 - 实际失败原片索引表明正常购买魚骨劍/魚皮衣并付8两住宿后进入练级准备；未改等级/HP/金钱。只修驱动：练级改走已支持25(39,41)区域；东海独立组件经原大陆214,110→25(54,22)→95。新增实际Content几何断言和instrument编译通过；修后App复跑待候选，旧局部PASS不替代新产物门禁。

@@ -239,3 +239,7 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 递归父配方新增可选schema只在非空时写入，避免空clinics改变已审核历史manifest。真实autocrlf checkout已扩验父链JSON/医馆TSV，严格空目录ci_apk.restore与本地目标逐字节一致。正常临床UI和患者分项尚待原runner；无真实患者记NOT_RUN，不为验收制造病症。
 
 - 新增父配方测试也必须逐处显式UTF-8读取；真实Windows村3setUp曾遗漏导致0方法执行。四处修复后，在隔离Path.open缺省cp1252下实际执行村3/医馆八方法成功，保留原hash/反向断言。Linux全量通过不能代替Windows默认编码检查。
+
+
+- 大陆桥不能套村庄方向profile：原foot source15限制左右、16限制上下，target通行另核。world-continent-bridges固定真实按键与144原CPU输出，ContinentBridgeTest和test_world_continent_bridge_export已实际验证；同批保留完整原区16十九组和三个原整组图形，不仅开放路而漏遇敌。现有probe-world-enemy只增已核zone/count参数与显式退出，旧路径不变。原actor0406/0408已经是世界坐标，重复加camera曾失败；旧长按回村源实际165而非160，需核源RAM，失败不能提升为路线证据。
+- 新局部配方的旧测试读固定父golden，原ci_apk.restore空目录逐字节核195文件成功；140全世界Python/257 JVM/真实autocrlf checkout已执行。新增正常桥/自然遇敌驱动仅编译，App和声音待原同产物runner，不把新内容静态校验写成正常可玩。

@@ -1263,3 +1263,10 @@ v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真
 ## WORLD-FULL-01 Windows读取修正（2026-10-03T14:01:53Z）
 
 - v52/run37127826230 build失败于村3测试默认cp1252读取中文JSON；无APK、runtime未执行，生产v27不变。四处改为显式UTF-8，相关村3/医馆8项在隔离Path.open默认cp1252条件实际通过，60.207秒；不改内容pin、定义或测试断言，保持失败记录。重新构建修后同提交候选。
+
+
+## WORLD-FULL-01 增量：大陆桥与原遇敌区16（2026-10-03T14:42Z，本地，不发布）
+
+c33/195内容文件/33地图，manifest b2ec777036fb67044649673fa14f19ba5c022387e28a78fc4bbeff6bb7a29095。桥类别15纵向、16横向的source离开限制来自实际原CPU144组合和受控胜后源真实按键；不泛化交通状态。原区16完整19组、敌35/36/37原属性/行为/掉落及三张真实图形接原export_from_base；名字仍UNKNOWN。旧媒体字节复用、空目录restore一致，140全世界Python单次PASS（264.124秒）、257 JVM/0失败/错误/跳过和instrument编译PASS。正常过桥/自然遇敌/外部冷启仅编译，App NOT_RUN，不把受控原版当正常Android。
+
+c32固定父golden及其负例保持；旧c32档版本兼容但所有位置/队员/物品/事件检查不放宽。main/c552900a来源v53/run37128387307 Windows build SUCCESS，runtime仍执行，来源冻结；正式仍v27。最新inspect37129885660查27/26共3622事件、普通真机5会话、旧v26 ProtocolException一条未解；无新错误不等于候选健康。有效分母UNKNOWN、ALL_MAPS_USABLE=NO，累计十类清单不关闭。
