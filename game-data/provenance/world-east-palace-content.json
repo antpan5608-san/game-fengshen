@@ -30624,59 +30624,6 @@
         "limit": "Runtime right-hand/body/feet only; original left-hand list membership does not implement left-hand combat.",
         "evidence": "game-data/provenance/world-party-xiaolongnv.json"
       }
-    },
-    {
-      "id": "rom.medicine.7",
-      "category": "medicine",
-      "originalId": 7,
-      "buyPrice": 15,
-      "sellPrice": 7,
-      "maxCount": 10,
-      "name": "六神丸",
-      "description": "原版掉落物品；名稱暫依固定Reference，使用效果尚未接入。",
-      "source": {
-        "confidence": "PROVISIONAL_REFERENCE",
-        "verifiedFields": [
-          "originalId",
-          "category",
-          "buyPrice",
-          "sellPrice",
-          "maxCount"
-        ],
-        "remainingUnknown": [
-          "Original displayed name",
-          "Map and battle use effects"
-        ],
-        "priceRange": {
-          "offset": 92072,
-          "length": 2,
-          "sha256": "46e04d129d7b45d054469ce34e24069a1426b3e34f1b68a3d1bff1e070aee192",
-          "module": 2,
-          "cpuAddress": 59288,
-          "meaning": "Original unsigned purchase price"
-        },
-        "nameRange": {
-          "offset": 92021,
-          "length": 5,
-          "sha256": "1e686f25e4b8857d12ee0f6f9a3217ba8a95b582ff0a1f4b047af2ac008e98f1",
-          "module": 2,
-          "cpuAddress": 59237,
-          "meaning": "Original terminated menu text"
-        },
-        "nameEvidence": {
-          "source": "https://github.com/v5100v5100/FengShenBang/blob/d636453f14f86a096f9d293bf3facfd96cfcb614/Resources/res/MainData",
-          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
-          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
-          "table": "object",
-          "referenceId": 104,
-          "usedFields": [
-            "name"
-          ],
-          "licenseStatus": "UNKNOWN"
-        },
-        "referenceDifference": "Reference sell_price8 is not used; original sell calculation gives7. No effect inferred.",
-        "evidence": "game-data/provenance/world-east-palace-content.json"
-      }
     }
   ],
   "serviceBindings": [
@@ -30854,6 +30801,63 @@
       "evidence": "game-data/provenance/world-party-xiaolongnv.json",
       "confidence": "GAMEPLAY_VERIFIED",
       "portraitScope": "Original actor129 sprite reused as mobile portrait, not a claim the NES had this independent portrait UI."
+    }
+  ],
+  "existingItemReuse": [
+    {
+      "id": "rom.medicine.7",
+      "category": "medicine",
+      "originalId": 7,
+      "buyPrice": 15,
+      "sellPrice": 7,
+      "maxCount": 10,
+      "name": "六神丸",
+      "description": "原版掉落物品；名稱暫依固定Reference，使用效果尚未接入。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "buyPrice",
+          "sellPrice",
+          "maxCount"
+        ],
+        "remainingUnknown": [
+          "Original displayed name",
+          "Map and battle use effects"
+        ],
+        "priceRange": {
+          "offset": 92072,
+          "length": 2,
+          "sha256": "46e04d129d7b45d054469ce34e24069a1426b3e34f1b68a3d1bff1e070aee192",
+          "module": 2,
+          "cpuAddress": 59288,
+          "meaning": "Original unsigned purchase price"
+        },
+        "nameRange": {
+          "offset": 92021,
+          "length": 5,
+          "sha256": "1e686f25e4b8857d12ee0f6f9a3217ba8a95b582ff0a1f4b047af2ac008e98f1",
+          "module": 2,
+          "cpuAddress": 59237,
+          "meaning": "Original terminated menu text"
+        },
+        "nameEvidence": {
+          "source": "https://github.com/v5100v5100/FengShenBang/blob/d636453f14f86a096f9d293bf3facfd96cfcb614/Resources/res/MainData",
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "table": "object",
+          "referenceId": 104,
+          "usedFields": [
+            "name"
+          ],
+          "licenseStatus": "UNKNOWN"
+        },
+        "referenceDifference": "Reference sell_price8 is not used; original sell calculation gives7. No effect inferred.",
+        "evidence": "game-data/provenance/world-east-palace-content.json"
+      },
+      "baseDefinitionSha256": "229e3b90313fb885d4fa28ab9c3a46c9f0aef2de3f801e114f2abdbc82efce11",
+      "reuseReason": "Existing c14 definition keeps its original name/unsupported effect; no new current shop stocks this drop. Catalog facts are audited without overwriting the reviewed base."
     }
   ]
 }

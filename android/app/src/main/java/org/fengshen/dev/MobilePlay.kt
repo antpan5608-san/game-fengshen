@@ -31,10 +31,13 @@ fun experienceProgress(hero:CharacterState,growth:List<GrowthRow>,ownerId:String
 /** Scoped Canvas geometry, shared by drawing and hit testing. No map button dependency. */
 data class BattleTouchLayout(val frame:Box,val arena:Box,val status:Box,val commands:List<Box>,
     val enemies:List<Box>,val info:Box,val closeInfo:Box,val result:Box,val fontSize:Float)
-fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int):BattleTouchLayout {
+fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int):BattleTouchLayout =
+    battleTouchLayout(safe,dp,fontScale,count,1)
+fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int,partyCount:Int):BattleTouchLayout {
+    require(partyCount in 1..2)
     val pad=8*dp;val f=Box(safe.x+pad,safe.y+pad,safe.w-2*pad,safe.h-2*pad)
     val commandH=max(48f,18f*fontScale+20)*dp
-    val statusH=max(64f,32f*fontScale+18)*dp
+    val statusH=max(64f,16f*(partyCount+1)*fontScale+18)*dp
     val commands=(0..4).map{Box(f.x+it*(f.w+pad)/5,f.y+f.h-commandH,(f.w-4*pad)/5,commandH)}
     val status=Box(f.x,commands.first().y-pad-statusH,f.w,statusH)
     val enemyH=max(48f,20f*fontScale+16)*dp

@@ -219,7 +219,9 @@ data class InteriorContext(val callerMapId:Int,val returnX:Int,val returnY:Int) 
     init {require(callerMapId in 0..255&&returnX in 0..255&&returnY in 0..255)}
 }
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
-    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false)
+    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false) {
+    var preserveArrivalDirection:Boolean=false;internal set
+}
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean,val suppressEncounter:Boolean=false)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
@@ -288,7 +290,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         }
         val nextContext=when {exit.captureCaller->InteriorContext(mapId,exit.triggerX,exit.triggerY)
             exit.returnToCaller->null;else->interiorContext}
-        interiorContext=nextContext;mapId=destination;x=landingX*16+8;y=landingY*16+8;direction=exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
+        interiorContext=nextContext;mapId=destination;x=landingX*16+8;y=landingY*16+8;direction=if(exit.preserveArrivalDirection)direction else exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
         return true
     }
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}

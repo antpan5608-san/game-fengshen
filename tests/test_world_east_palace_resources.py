@@ -104,9 +104,11 @@ class EastPalaceResourcesTest(unittest.TestCase):
         self.assertEqual('CONTROLLED_ORIGINAL_FULL_GROUP_LOADER',controlled['captureKind'])
         self.assertEqual((8,2,80,19),(controlled['sourceZone'],controlled['sourceGroup'],controlled['sourceType'],controlled['enemyId']))
         self.assertEqual('UNKNOWN',next(e for e in enemies if e['id']==19)['nameEvidence']['kind'])
-        defined={i['id']for i in self.batch['items']}|{'rom.medicine.0'}
+        defined={i['id']for i in self.batch['items']+self.batch.get('existingItemReuse',[])}|{'rom.medicine.0'}
         self.assertTrue({e['loot']['itemId']for e in enemies}<=defined)
-        item=next(i for i in self.batch['items']if i['id']=='rom.medicine.7')
+        item=next(i for i in self.batch['existingItemReuse']if i['id']=='rom.medicine.7')
+        self.assertNotIn(item['id'],{i['id']for i in self.batch['items']})
+        self.assertEqual(64,len(item['baseDefinitionSha256']))
         self.assertEqual((15,7),(item['buyPrice'],item['sellPrice']))
         self.assertFalse(any(k in item for k in ['herbUse','antidoteUse','worldUse']))
 

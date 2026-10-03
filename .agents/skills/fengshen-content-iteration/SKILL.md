@@ -141,3 +141,10 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原遇敌区条目是4字节（组表指针与图形上下文）；按原count完整批次读，不能用2字节步长。`extract_encounter_groups`保留全部raw行；原某组重复同一slot/source时，实际loader只初始化两实例、调度/奖励也按两slot处理。只有已核的完全相同重复行可生成唯一运行实例；原三条`sourceEntities`及计数仍保留。冲突source重复不能推断后写覆盖。原CPU与`test_world_north_palace_export.py`已验证，正常Android另验。
 - 宝箱grant子程序不证明之前没有剧情：应核坐标触发、实际映射bank、战斗返回与对白完成分别写哪些flag。原主循环切8K bank46的事件路径和module10同号helper不能混为同一现场；已有分阶段CPU与正常输入证据分别保留。原独立宝箱/可复用道具由`WorldItems`在统一状态提出一次事务，保存失败回滚；相关JVM和仪器编译已执行，App新流程未执行时不能宣称冷启通过。
 - 旧内容golden另存原pin；新目标只修已确认差异，未变媒体逐字节复用。名称依正常原屏修正时不顺带改价格、贡献或物品效果；原Reference名称只能保持PROVISIONAL。相关世界导出方法已实际执行；旧基底环境变量须分别指定，不能因缺历史输入删golden。
+
+
+## 已验证的加入角色与局部内容恢复
+
+原export_world_from_base按独立initialization/owner成长/倍率指针及装备列表span校验additionalCharacters；事件最终页用原StoryFollowup一次提案加入、换图和落flag。world-east-palace-script.json、world-party-xiaolongnv.json及world-two-party.json分别保存证据范围。不同遇敌矩形不扩成整图默认区；未恢复区域仍按原矩形明确标记。既有物品重复时用固定baseDefinitionSha256复用，不能重复追加或静默覆盖。
+
+原ci_apk.restore的两个干净临时destination已实际生成相同109文件；test_world_east_export.py覆盖原媒体字节、目标manifest和错入队/成长/倍率/剧情/库存定义拒绝。以上是本地内容与纯规则结果，新角色正常App/覆盖升级/冷启必须另运行，不把编译写PASS。

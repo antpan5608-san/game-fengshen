@@ -377,6 +377,58 @@ def extend_world_growth(reader, combat, proof, provenance_path):
     combat['growthLimit']={'owner':'nezha','level':proof['maxLevel'],'confidence':proof['confidence'],
         'evidence':provenance_path,'source':cap}
 
+def extend_world_characters(reader, scene, combat, additions, overlay):
+    """Validate a joined actor against its scoped initialization, own growth and ROM pointers."""
+    from forensics.fengshen246 import extract_growth_candidates
+    known={scene['initialPlayer']['id']}|{x['initialState']['id'] for x in scene.get('additionalCharacters',[])}
+    for actor in additions:
+        proof=load(ROOT/actor['evidence']);state=actor['initialState'];original=proof['initialCharacter']
+        if proof['romSha256']!=SHA256 or state['id'] in known or actor['originalActorIndex']!=original['actorIndex']:
+            raise ValueError('Joined actor identity or original initialization differs')
+        if state!={k:original[k] for k in ('id','level','experience','hp','maxHp','mp','maxMp','strength','stamina','agility','spirit','statusMask','equipment')}:
+            raise ValueError('Joined actor stats or equipment differ from scoped original initialization')
+        for span in proof['initializationSources']:checked_span(reader,span)
+        if actor['name']!=original['name'] or actor.get('skillRefs'):
+            raise ValueError('Joined actor cannot borrow names or unverified learned spells')
+        known.add(state['id'])
+    growth=overlay.get('characterGrowth',[])
+    if {x['owner'] for x in growth}!={x['initialState']['id'] for x in additions}:
+        raise ValueError('Each joined actor requires its own complete growth table')
+    original_groups=extract_growth_candidates(reader)['groups'] if growth else []
+    for table in growth:
+        actor=next(a for a in additions if a['initialState']['id']==table['owner'])
+        proof=load(ROOT/actor['evidence'])['growthExtension'];index=actor['originalActorIndex']
+        original=original_groups[index]
+        if table['originalActorIndex']!=index or proof['actorIndex']!=index or table['knownMaxLevel']!=proof['maxLevel']:
+            raise ValueError('Growth owner or max level differs')
+        for field in ('growthRange','thresholdRange'):
+            if proof[field]!=original[field]:raise ValueError('Joined growth range differs')
+            checked_span(reader,proof[field])
+        if checked_span(reader,proof['levelCapSource'])!=bytes.fromhex('bd0405c94fb036'):
+            raise ValueError('Joined growth cap branch differs')
+        if len(table['rows'])!=79:raise ValueError('Incomplete joined growth table')
+        for row,raw in zip(table['rows'],original['rows'][1:]):
+            expected=dict(level=raw['index']+1,threshold=raw['cumulativeExpCandidate'],hp=raw['hpDeltaCandidate'],
+                mp=raw['mpDeltaCandidate'],strength=raw['strengthDeltaCandidate'],stamina=raw['staminaDeltaCandidate'],
+                agility=raw['agilityDeltaCandidate'],spirit=raw['spiritDeltaCandidate'])
+            if any(row[k]!=v for k,v in expected.items()):raise ValueError('Joined growth row differs from ROM')
+            checked_span(reader,row['source']);checked_span(reader,row['thresholdSource'])
+    multipliers=overlay.get('characterMultiplierThresholds',{})
+    if set(multipliers)!={x['initialState']['id'] for x in additions}:
+        raise ValueError('Joined physical multiplier table is missing')
+    for owner,values in multipliers.items():
+        actor=next(a for a in additions if a['initialState']['id']==owner)
+        source=overlay['characterMultiplierSources'][owner]
+        pointer=checked_span(reader,source['pointer'])
+        if source['pointer']['cpuAddress']!=0x8577+2*actor['originalActorIndex'] or \
+                int.from_bytes(pointer,'little')!=source['source']['cpuAddress'] or \
+                list(checked_span(reader,source['source']))!=values or len(values)!=36:
+            raise ValueError('Joined physical multiplier pointer or table differs')
+    if additions:scene['additionalCharacters']=scene.get('additionalCharacters',[])+additions
+    if growth:combat['characterGrowth']=combat.get('characterGrowth',[])+growth
+    if multipliers:combat['physicalRules'].setdefault('characterMultiplierThresholds',{}).update(multipliers)
+
+
 def extend_world_mechanisms(reader, scene, mechanisms, provenance_path):
     """Compile only evidenced dynamic chunks through the existing scene exporter."""
     for definition in mechanisms:
@@ -444,6 +496,14 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if recipe.get('unavailableRegions'):
+            proof=load(ROOT/recipe['unavailableRegionEvidence'])
+            if proof['romSha256']!=SHA256 or proof['zone8']['mapId']!=mid:
+                raise ValueError('Unavailable encounter regions lack original map evidence')
+            for span in proof['zone8']['sources']:checked_span(reader,span)
+            if recipe['unavailableRegions']!=proof['zone8']['unavailableRegions']:
+                raise ValueError('Unavailable regions must retain original unimplemented partitions')
+            data['unavailableRegions']=recipe['unavailableRegions']
         if recipe.get('directionalCollision'):
             # Shared tileset-0 town edges have one original dispatch, not one
             # new collision implementation per village.
@@ -494,7 +554,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         else:raise ValueError('Unsupported transition kind needs original evidence')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
             {'source':exit['source'],'evidence':provenance_path}|
-            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction') if k in exit})
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection') if k in exit})
+        if exit.get('preserveArrivalDirection'):
+            source=exit['arrivalDirectionSource']
+            checked_span(reader,source)
+            if source.get('module')!=0 or source.get('cpuAddress')!=0xaa1f or source.get('length',0)<41:
+                raise ValueError('Preserved facing requires the original map reconstruction path')
         for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
             mid=exit[idfield]
             if mid==114:raise ValueError('Opening scene overlay requires explicit review')
@@ -555,7 +620,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         if enemy['iceSource'].get(key)!=original_ice['iceSource'][key]:
                             raise ValueError('Ice evidence span differs from original dispatch')
                 checked_span(reader,enemy['iceSource'])
-            elif enemy['behaviorByte'] not in (0,7) or 'iceBaseDamage' in enemy:
+            elif enemy['behaviorByte'] not in (0,7,9) or 'iceBaseDamage' in enemy:
                 raise ValueError('Enemy behavior requires implementation and evidence')
         for zone in overlay.get('zones',[]):
             from forensics.fengshen246 import extract_encounter_groups
@@ -587,7 +652,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if mid not in known or reader.read(0,0xee47+mid)[0]!=zone['id'] or zone['id']==255:
                     raise ValueError('Default encounter region differs from original map table')
                 checked_span(reader,zone['defaultSource']);checked_span(reader,zone['mapTypeSource'])
-                if reader.read(0,0xed87+mid)[0]!=10 or zone['randomThreshold']!=245 or zone['randomGate']!='HIGH':
+                map_type=reader.read(0,0xed87+mid)[0]
+                expected_gate={10:(245,'HIGH'),16:(16,'LOW')}.get(map_type)
+                if expected_gate!=(zone['randomThreshold'],zone['randomGate']):
                     raise ValueError('Unreviewed default encounter probability branch')
             expected_count=reader.read(1,0xb12d+zone['id'])[0]
             if len(zone['groups'])!=expected_count or [g['id'] for g in zone['groups']]!=list(range(expected_count)):
@@ -640,7 +707,18 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raw=checked_span(reader,boss['npcSource'])
                 if list(raw[10:14])!=[1,2,boss['eventId'],boss['eventArgument']]:
                     raise ValueError('Original story battle dispatch differs')
-                if boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
+                if boss.get('continuation'):
+                    proof=load(ROOT/boss['continuation']['evidence']);rule=proof['rules']
+                    if proof['romSha256']!=SHA256:raise ValueError('Story continuation ROM differs')
+                    for span in proof['sources']:checked_span(reader,span)
+                    if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
+                            boss['flagId']!=rule['bossVictoryFlag']:
+                        raise ValueError('Story continuation event identity differs')
+                    expected={k:rule[k] for k in ('dialogueIds','joinCharacterId','destination','completionFlags')}
+                    expected['evidence']=boss['continuation']['evidence']
+                    if boss['continuation']!=expected or boss.get('commitAfterDialogue',False):
+                        raise ValueError('Story continuation order or state differs')
+                elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
             if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
                 raise ValueError('Original story enemy source differs')
@@ -652,6 +730,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if checked_span(reader,hit['source'])[0]!=hit['threshold'] or reader.read(9,0x9b41+hit['originalId'])[0]!=hit['threshold']:
                 raise ValueError('Original weapon hit threshold differs')
             combat['physicalRules']['weaponHitThreshold'][str(hit['originalId'])]=hit['threshold']
+        extend_world_characters(reader,scene,combat,evidence.get('additionalCharacters',[]),overlay)
         result['combat.json']=encoded(combat)
     for patch in evidence.get('sceneCapabilityUpdates',[]):
         if patch['mapId']!=25 or not overlay:raise ValueError('Scene capability update lacks implemented encounters')
@@ -681,7 +760,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         catalog=extract_world_service_catalog(reader)
         items={i['id']:i for i in catalog['items']}
         stocks={(s['category'],s['contextIndex']):s for s in catalog['stocks']}
-        for item in evidence.get('items',[]):
+        for item in evidence.get('items',[])+evidence.get('existingItemReuse',[]):
+            if 'baseDefinitionSha256' in item:
+                matches=[i for i in scene['items']if i['id']==item['id']]
+                if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
+                    raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
                 proof=load(ROOT/item['worldUse']['evidence'])
                 for span in proof['spans']:checked_span(reader,span)
@@ -704,8 +787,15 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             equipment=item.get('equipment')
             if equipment:
                 slot=equipment['slot'];bonus=original['contribution']
-                if slot not in original['listMembershipCandidates'] or equipment['allowedCharacters']!=['nezha']:
-                    raise ValueError('Equipment owner or category list differs')
+                if equipment['allowedCharacters']==['nezha']:
+                    if slot not in original['listMembershipCandidates']:
+                        raise ValueError('Equipment category list differs')
+                else:
+                    proof=load(ROOT/equipment['evidence'])
+                    expected=next((x for x in proof['items'] if x['id']==item['id']),None)
+                    if proof['romSha256']!=SHA256 or expected is None or equipment!=(expected['equipment']|{'evidence':equipment['evidence']}) or \
+                            not set(equipment['allowedCharacters']).issubset({x['initialState']['id'] for x in evidence.get('additionalCharacters',[])}):
+                        raise ValueError('Equipment owner or original slot evidence differs')
                 if original['crossHandOccupancy'] and equipment.get('operationEnabled',True):
                     raise ValueError('Cross-hand equipment requires its original paired transaction')
                 expected=(bonus if slot=='rightHand' else 0,bonus if slot=='body' else 0,bonus if slot=='feet' else 0)

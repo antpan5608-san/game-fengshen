@@ -30,7 +30,9 @@ data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:
     val itemTarget:WorldObjectTarget?=null)
 data class StoryText(val id:String,val text:String,val source:String)
 data class CharacterDefinition(val id:String,val name:String,val portraitAsset:String,val portrait:Bitmap,
-    val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null)
+    val source:String,val equipmentSlots:List<String>?=null,val skillRefs:List<String>?=null) {
+    var originalActorIndex:Int=0;internal set
+}
 data class ItemDefinition(val id:String,val name:String,val description:String?,val source:String,
     val category:String="weapon",val originalId:Int=0,val buyPrice:Int?=null,val sellPrice:Int?=null,
     val maxCount:Int=10,val preview:Bitmap?=null,val herbUse:HerbUseDefinition?=null,val antidoteUse:AntidoteUseDefinition?=null,
@@ -142,7 +144,9 @@ object ContentLoader {
             require(direction==null || direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             val arrival=Key.valueOf(o.optString("arrivalDirection","DOWN"))
             require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
-            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false),o.optBoolean("captureCaller",false),o.optBoolean("returnToCaller",false))
+            MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false),o.optBoolean("captureCaller",false),o.optBoolean("returnToCaller",false)).also{
+                it.preserveArrivalDirection=o.optBoolean("preserveArrivalDirection",false)
+            }
         }}
         require(exits.all{exit->
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
@@ -245,13 +249,16 @@ object ContentLoader {
         val extraCharacters=data.optJSONArray("additionalCharacters")?.let{a->(0 until a.length()).map{i->
             val c=a.getJSONObject(i);val state=CharacterState.parse(c.getJSONObject("initialState"))
             require(state.id!=initialPlayer.id&&c.getString("evidence").isNotBlank())
-            require(c.getInt("originalActorIndex") in 0..3)
+            require(c.getInt("originalActorIndex") in 1..3)
             val name=c.getString("name");require(name.isNotBlank()&&name.length<=32)
             val asset=checkedName(c.getString("portraitAsset"))
             state to CharacterDefinition(state.id,name,asset,bitmap(asset,16,16),c.getString("confidence"),
-                if(state.equipment!=null)listOf("rightHand","leftHand","body","feet") else null)
+                if(state.equipment!=null)listOf("rightHand","leftHand","body","feet") else null).also{
+                    it.originalActorIndex=c.getInt("originalActorIndex")
+                }
         }}?:emptyList()
-        require(extraCharacters.map{it.first.id}.distinct().size==extraCharacters.size&&extraCharacters.size<=3)
+        require(extraCharacters.map{it.first.id}.distinct().size==extraCharacters.size&&extraCharacters.size<=3&&
+            extraCharacters.map{it.second.originalActorIndex}.distinct().size==extraCharacters.size)
         val knownCharacters=extraCharacters.map{it.first.id}.toSet()+initialPlayer.id
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->
             val o=itemArray.getJSONObject(i);val e=o.optJSONObject("equipment")?:return@mapNotNull null
@@ -406,6 +413,13 @@ object ContentLoader {
                         limit.getString("evidence").isNotBlank())
                     limit.getInt("level").also{level->require(level in 2..99&&growth.lastOrNull()?.level==level)}
                 }).also{rules->
+                    o.optJSONObject("physicalRules")?.optJSONObject("characterMultiplierThresholds")?.let{tables->
+                        val base=rules.physicalRules?:error("Missing common physical rules")
+                        rules.characterPhysicalRules=tables.keys().asSequence().associate{owner->
+                            require(owner in knownCharacters&&owner!=initialPlayer.id)
+                            owner to PhysicalRules(base.weaponHitThreshold,ints(tables,owner).toList())
+                        }
+                    }
                     o.optJSONArray("characterGrowth")?.let{a->
                         val seen=mutableSetOf<String>();val rows=mutableMapOf<String,List<GrowthRow>>();val limits=mutableMapOf<String,Int>()
                         for(i in 0 until a.length()){
