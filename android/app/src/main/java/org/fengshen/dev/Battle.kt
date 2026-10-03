@@ -29,12 +29,57 @@ data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThres
         if(attack<defense)1 else ((attack-defense)*multiplier(level,roll)) and 65535
 }
 data class StoryEntryTrigger(val mapId:Int,val x:Int,val y:Int)
+data class StoryDestination(val mapId:Int,val x:Int,val y:Int,val direction:Key?,val terrainMode:Int?,
+    val encounterSteps:Int?)
+data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:String?,
+    val destination:StoryDestination?,val completionFlags:Set<String>) {
+    init {
+        require(dialogueIds.isNotEmpty()&&dialogueIds.size<=64&&dialogueIds.all{it.isNotBlank()})
+        require(dialogueIds.distinct().size==dialogueIds.size)
+        require(completionFlags.all{it.isNotBlank()&&it.length<=96})
+        destination?.let{require(it.mapId in 0..255&&it.x>=0&&it.y>=0&&(it.terrainMode==null||it.terrainMode in 0..255)&&
+            (it.direction==null||it.direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))&&(it.encounterSteps==null||it.encounterSteps in 0..255))}
+    }
+    fun stageKey(storyId:String,index:Int)="runtime.story.$storyId.continuation.$index"
+    fun stage(storyId:String,flags:Map<String,Boolean>)=dialogueIds.indices.firstOrNull{flags[stageKey(storyId,it)]!=true}
+}
+
+/** One durable dialogue-step proposal; rendering never moves the party or grants actors. */
+object StoryFollowup {
+    data class Result(val snapshot:SaveSnapshot,val nextDialogue:String?,val applied:Boolean,val error:String?=null)
+    fun advance(before:SaveSnapshot,story:StoryBattleDefinition,currentDialogue:String,
+        templates:Map<String,CharacterState>):Result {
+        fun reject(reason:String)=Result(before,null,false,reason)
+        val chain=story.continuation?:return reject("当前剧情没有后续阶段")
+        if(before.flags[story.pendingFlag]!=true)return reject("剧情状态已变化")
+        val index=chain.stage(story.id,before.flags)?:return reject("后续剧情已经完成")
+        if(chain.dialogueIds[index]!=currentDialogue)return reject("对话阶段已变化")
+        val progressed=before.flags+(chain.stageKey(story.id,index) to true)
+        if(index+1<chain.dialogueIds.size)
+            return Result(before.copy(flags=progressed),chain.dialogueIds[index+1],true)
+        val characters=before.characters.toMutableList()
+        chain.joinCharacterId?.let{id->
+            val actor=templates[id]?:return reject("入队角色数据未接入")
+            if(characters.any{it.id==id}||characters.size>=4)return reject("当前队伍与入队剧情不一致")
+            characters.add(actor)
+        }
+        val completed=story.completeDialogue(progressed)+chain.completionFlags.associateWith{true}
+        val next=before.copy(characters=characters,flags=completed)
+        val destination=chain.destination?:return Result(next,null,true)
+        return Result(next.copy(mapId=destination.mapId,x=destination.x*16+8,y=destination.y*16+8,
+            direction=destination.direction?:before.direction,terrainMode=destination.terrainMode?:before.terrainMode,interiorContext=null,
+            encounterSteps=destination.encounterSteps?:before.encounterSteps),null,true)
+    }
+}
+
 data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:String,val group:EncounterGroup,
     val victoryDialogue:String) {
     // Keep the existing constructor ABI for cross-APK instrumentation. Set only by ContentLoader.
     var entryTrigger:StoryEntryTrigger?=null;internal set
     var commitAfterDialogue:Boolean=false;internal set
+    var continuation:StoryContinuation?=null;internal set
     val pendingFlag get()=flagId+".dialogue.pending"
+    fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
         entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
@@ -54,7 +99,16 @@ data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val
     val minimumSteps:Int,val forcedSteps:Int,val hitThreshold:Int,
     val enemyAgility:Map<Int,Int> = emptyMap(),val escapeEnabled:Boolean=false,val defeatResetEnabled:Boolean=false,
     val zones:List<EncounterZone> = emptyList(),val physicalRules:PhysicalRules?=null,
-    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap(),val knownMaxLevel:Int?=null)
+    val storyBattles:Map<String,StoryBattleDefinition> = emptyMap(),val knownMaxLevel:Int?=null) {
+    // Constructor remains ABI-compatible with published APK instrumentation.
+    var characterPhysicalRules:Map<String,PhysicalRules> = emptyMap();internal set
+    fun physicalFor(owner:String)=if(owner=="nezha")physicalRules else characterPhysicalRules[owner]
+    var characterGrowth:Map<String,List<GrowthRow>> = emptyMap();internal set
+    var characterLevelLimits:Map<String,Int> = emptyMap();internal set
+    fun growthFor(owner:String)=if(owner=="nezha")growth else characterGrowth[owner]?:emptyList()
+    fun maxLevelFor(owner:String)=if(owner=="nezha")knownMaxLevel else characterLevelLimits[owner]
+}
+
 
 /** The ROM increments $5B on a completed metatile movement and tests $43 at a tile-aligned checkpoint.
  * Android samples an independent byte, so the random sequence is explicitly not NES-equivalent. */
@@ -82,10 +136,19 @@ enum class BattlePhase { TARGET, VICTORY, DEFEAT, ESCAPED }
 enum class BattleActionKind { TEXT, ATTACK, ICE, DAMAGE, MISS, DEATH, ESCAPE, ESCAPED, ESCAPE_FAILED, HEAL, STATUS }
 data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,Int>,
     val actorSlot:Int?=null,val targetSlot:Int?=null,val kind:BattleActionKind=BattleActionKind.TEXT,
-    val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null,val heroStatusMask:Int=0)
+    val hpDelta:Int=0,val beforeHeroHp:Int=heroHp,val beforeEnemyHp:Int?=null,val heroStatusMask:Int=0) {
+    var actorId:String?=null;internal set
+    var targetId:String?=null;internal set
+    var partyHp:Map<String,Int> = emptyMap();internal set
+    var partyStatus:Map<String,Int> = emptyMap();internal set
+}
 data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:Int,val defeatedEnemyIds:List<Int>,
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
-data class BattleSettlement(val character:CharacterState,val money:Int,val experience:Int,val levels:List<Int>)
+data class BattleSettlement(val character:CharacterState,val money:Int,val experience:Int,val levels:List<Int>) {
+    var characters:List<CharacterState> = listOf(character);internal set
+    var levelsByCharacter:Map<String,List<Int>> = mapOf(character.id to levels);internal set
+    var experienceByCharacter:Map<String,Int> = mapOf(character.id to experience);internal set
+}
 
 /** Existing physical/escape branch plus the fingerprint-verified single-character herb action. */
 class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,hero:CharacterState,
@@ -96,20 +159,53 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
-    var hero=hero;private set
+    private var partyStates=listOf(hero)
+    var hero:CharacterState
+        get()=partyStates.first()
+        private set(value){partyStates=partyStates.toMutableList().also{it[0]=value}}
+    val party:List<CharacterState> get()=partyStates
+    private var originalIndices=mapOf(hero.id to 0)
+    private var weaponBonuses=mapOf(hero.id to weaponBonus)
+    private var armorBonuses:Map<String,Int> = equippedArmorBonus?.let{mapOf(hero.id to it)}?:emptyMap()
+    private var configured=false
+    private enum class CommandKind { ATTACK, HERB, ESCAPE, ESCAPED }
+    private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null)
+    private val commands=linkedMapOf<String,QueuedCommand>()
+    var inputRevision=0;private set
+    private fun originalActors()=partyStates.mapIndexed{slot,p->OriginalPartyRules.Actor(originalIndices.getValue(p.id),slot,p.hp,p.statusMask,p.agility)}
+    private fun originalEnemies()=enemies.map{OriginalPartyRules.Enemy(it.slot,it.hp,content.enemyAgility.getValue(it.definition.id))}
+    val inputHero:CharacterState? get()=partyStates.firstOrNull{p->p.id !in commands&&
+        OriginalPartyRules.collectsCommand(originalActors().first{it.originalActorIndex==originalIndices.getValue(p.id)})}
+    fun configureParty(characters:List<CharacterState>,indices:Map<String,Int>,weapons:Map<String,Int>,armors:Map<String,Int>){
+        require(!configured&&phase==BattlePhase.TARGET&&commands.isEmpty()&&characters.size in 1..2&&characters.first()==hero)
+        require(characters.map{it.id}.distinct().size==characters.size&&characters.all{it.id in indices&&it.id in weapons&&it.id in armors})
+        require(characters.map{indices.getValue(it.id)}.toSet().size==characters.size&&characters.all{indices.getValue(it.id) in 0..1})
+        require(characters.size==1||characters.all{content.physicalFor(it.id)!=null&&content.growthFor(it.id).isNotEmpty()})
+        partyStates=characters.toList();originalIndices=indices.toMap();weaponBonuses=weapons.toMap();armorBonuses=armors.toMap();configured=true
+    }
+    private fun setCharacter(id:String,character:CharacterState){
+        val index=partyStates.indexOfFirst{it.id==id};check(index>=0&&character.id==id)
+        partyStates=partyStates.toMutableList().also{it[index]=character}
+    }
+    private fun submit(command:QueuedCommand,nextByte:()->Int):BattleTurn? {
+        val actor=inputHero?:return null
+        commands[actor.id]=command;inputRevision++
+        if(inputHero!=null)return null // Collect every real actor before resolving the round.
+        return originalRound(nextByte)
+    }
     var phase=BattlePhase.TARGET;private set
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
     fun herbAvailable(targetId:String,count:Int,item:ItemDefinition):Boolean =
-        phase==BattlePhase.TARGET && content.physicalRules!=null && targetId==hero.id &&
-        hero.hp>0 && hero.hp<=hero.maxHp && hero.maxHp>0 && count>herbsConsumed &&
+        phase==BattlePhase.TARGET && content.physicalRules!=null && (inputHero?.hp?:0)>0 &&
+        partyStates.any{it.id==targetId&&it.hp>=0&&it.hp<=it.maxHp&&it.maxHp>0} && count>herbsConsumed &&
         item.id==HerbUse.ID && item.herbUse?.healHp==50 && item.herbUse.consumeAtFullHp
     fun useHerb(targetId:String,count:Int,item:ItemDefinition,nextByte:()->Int):BattleTurn? {
         if(!herbAvailable(targetId,count,item))return null
         // 9:BB9F..BBC9 consumes at confirmation, BEFORE ordered actions. Faster lethal enemies do not refund.
         herbsConsumed++
-        return originalRound(null,nextByte,herbHp=item.herbUse!!.healHp)
+        return submit(QueuedCommand(CommandKind.HERB,targetId=targetId),nextByte)
     }
     fun inventoryAfterBattle(inventory:Map<String,Int>):Map<String,Int> {
         if(herbsConsumed==0)return inventory
@@ -117,13 +213,15 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         return inventory.toMutableMap().also{if(count==herbsConsumed)it.remove(HerbUse.ID) else it[HerbUse.ID]=count-herbsConsumed}
     }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
-        delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null)=
-        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy,hero.statusMask)
+        delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null)=
+        BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy,hero.statusMask).also{
+            it.actorId=actorId;it.targetId=targetId;it.partyHp=partyStates.associate{p->p.id to p.hp};it.partyStatus=partyStates.associate{p->p.id to p.statusMask}
+        }
     /** Byte-exact 9:8A49..8AAF for the enabled normal enemies. Carry at entry is 1.
      * Random sequence remains independent of NES $43; no fixed success probability. */
     fun escape(nextByte:()->Int):BattleTurn? {
         if(phase!=BattlePhase.TARGET || !content.escapeEnabled)return null
-        if(content.physicalRules!=null)return originalRound(null,nextByte)
+        if(content.physicalRules!=null)return submit(QueuedCommand(CommandKind.ESCAPE),nextByte)
         val opponent=enemies.filter{it.hp>0}.sortedWith(compareByDescending<BattleEnemy>{
             content.enemyAgility.getValue(it.definition.id)}.thenBy{it.slot}).firstOrNull()?:return null
         val random=nextByte().also{require(it in 0..255)}
@@ -139,7 +237,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     fun attack(slot:Int,nextByte:()->Int):BattleTurn? {
         if(phase!=BattlePhase.TARGET)return null
         val target=enemies.firstOrNull{it.slot==slot && it.hp>0}?:return null
-        if(content.physicalRules!=null)return originalRound(target.slot,nextByte)
+        if(content.physicalRules!=null)return submit(QueuedCommand(CommandKind.ATTACK,target.slot),nextByte)
         val steps=mutableListOf(frame("攻击 ${target.definition.name}",target=slot,kind=BattleActionKind.ATTACK))
         val damage=max(1,hero.strength+weaponBonus-target.definition.defense)
         val actualDamage=minOf(damage,target.hp);target.hp-=actualDamage
@@ -153,83 +251,110 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         val (total,misses)=retaliate(nextByte,steps)
         return BattleTurn(actualDamage,total,misses,defeated,phase,steps)
     }
-    /** The restored physical path shares the observed accuracy/multiplier byte.
-     * Stable descending agility retains the player before enemies on ties. */
-    private fun originalRound(targetSlot:Int?,nextByte:()->Int,herbHp:Int?=null):BattleTurn {
-        val rules=content.physicalRules!!;val steps=mutableListOf<BattleActionStep>()
-        val defeated=mutableListOf<Int>();var dealt=0;var received=0;var misses=0
-        var lastActionByte:Int?=null
+    /** One original ordered scheduler; both old single-actor and joined-party input use it. */
+    private fun originalRound(nextByte:()->Int):BattleTurn {
+        val steps=mutableListOf<BattleActionStep>();val defeated=mutableListOf<Int>()
+        var dealt=0;var received=0;var misses=0;var lastActionByte:Int?=null
         fun roll()=nextByte().also{require(it in 0..255);lastActionByte=it}
-        val actors=(listOf(-1)+enemies.filter{it.hp>0}.map{it.slot}).sortedByDescending{slot->
-            if(slot==-1)hero.agility else content.enemyAgility.getValue(enemies.first{it.slot==slot}.definition.id)}
+        val actors=OriginalPartyRules.actionOrder(originalActors(),originalEnemies())
         for(actor in actors){
             if(phase!=BattlePhase.TARGET)break
-            if(actor==-1){
-                if(herbHp!=null){
-                    // 9:9384/9394 -> A026: living target, +50, cap, no medicine RNG read.
-                    val before=hero.hp;hero=hero.copy(hp=minOf(hero.maxHp.toLong(),before.toLong()+herbHp).toInt())
-                    steps.add(frame("药草 · 恢复 ${hero.hp-before} HP",kind=BattleActionKind.HEAL,delta=hero.hp-before,beforeHero=before))
-                    continue
-                }
-                if(targetSlot==null){
-                    steps.add(frame("尝试逃跑",kind=BattleActionKind.ESCAPE))
-                    val opponent=enemies.filter{it.hp>0}.maxByOrNull{content.enemyAgility.getValue(it.definition.id)}!!
-                    // 9:8A69: original enemy IDs >=136 always fail; the action is consumed.
-                    val random=roll() // Original 8A49 reads the byte before the Boss-ID rejection.
-                    val succeeds=if(opponent.definition.id>=136)false else {
-                        val transformed=(((random shl 2)+2+(random ushr 7))+random+((random ushr 6) and 1)) and 255
-                        transformed<((127+hero.agility-content.enemyAgility.getValue(opponent.definition.id)) and 255)
+            if(actor<0x80){
+                val player=partyStates.first{originalIndices.getValue(it.id)==actor}
+                if(!OriginalPartyRules.canAct(originalActors().first{it.originalActorIndex==actor}))continue
+                val command=commands[player.id]?:continue
+                if(command.kind==CommandKind.ESCAPED)continue
+                if(command.kind==CommandKind.HERB){
+                    val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
+                    if(target.statusMask and OriginalStatus.DEAD!=0){
+                        steps.add(frame("药草不能复活目标 · 已消耗1份",kind=BattleActionKind.TEXT,actorId=player.id,targetId=target.id));continue
                     }
-                    if(succeeds){phase=BattlePhase.ESCAPED;steps.add(frame("逃跑成功",kind=BattleActionKind.ESCAPED))}
-                    else steps.add(frame("逃跑失败",kind=BattleActionKind.ESCAPE_FAILED))
+                    val before=target.hp
+                    val updated=target.copy(hp=minOf(target.maxHp.toLong(),before.toLong()+50).toInt())
+                    setCharacter(target.id,updated)
+                    steps.add(frame("药草 · 恢复 ${updated.hp-before} HP",kind=BattleActionKind.HEAL,
+                        delta=updated.hp-before,beforeHero=if(target.id==hero.id)before else hero.hp,actorId=player.id,targetId=target.id))
                     continue
                 }
-                val target=enemies.first{it.slot==targetSlot};if(target.hp<=0)continue
-                steps.add(frame("攻击 ${target.definition.name}",target=target.slot,kind=BattleActionKind.ATTACK))
-                val random=roll()
-                if(!rules.hits(hero.equipment?.rightHand?:-1,random)){
-                    steps.add(frame("攻击未命中",target=target.slot,kind=BattleActionKind.MISS));continue
+                if(command.kind==CommandKind.ESCAPE){
+                    var escaper=player
+                    while(true){
+                        steps.add(frame("尝试逃跑",kind=BattleActionKind.ESCAPE,actorId=escaper.id))
+                        val opponent=enemies.filter{it.hp>0}.maxByOrNull{content.enemyAgility.getValue(it.definition.id)}!!
+                        val random=roll()
+                        val succeeds=if(opponent.definition.id>=136)false else {
+                            val transformed=(((random shl 2)+2+(random ushr 7))+random+((random ushr 6) and 1)) and 255
+                            transformed<((127+escaper.agility-content.enemyAgility.getValue(opponent.definition.id)) and 255)
+                        }
+                        if(!succeeds){steps.add(frame("逃跑失败",kind=BattleActionKind.ESCAPE_FAILED,actorId=escaper.id));break}
+                        commands[escaper.id]=QueuedCommand(CommandKind.ESCAPED)
+                        steps.add(frame("逃跑成功",kind=BattleActionKind.ESCAPED,actorId=escaper.id))
+                        val next=partyStates.firstOrNull{commands[it.id]?.kind!=CommandKind.ESCAPED&&it.statusMask<0x10}
+                        if(next==null){phase=BattlePhase.ESCAPED;break}
+                        // 9:8B14 rewrites THIS scheduler slot, not the later slot of the forced actor.
+                        // A failure can therefore be retried at that actor's existing later slot.
+                        // Already confirmed items stay spent; the original chain does not refund them.
+                        commands[next.id]=QueuedCommand(CommandKind.ESCAPE);escaper=next
+                    }
+                    continue
                 }
-                val computed=rules.damage(hero.strength+weaponBonus,target.definition.defense,hero.level,random)
-                val damage=OriginalStatus.outgoingPhysicalDamage(computed,hero.statusMask)
+                val slot=OriginalPartyRules.retargetEnemy(command.targetSlot!!,originalEnemies(),actors)?:continue
+                val target=enemies.first{it.slot==slot};val rules=content.physicalFor(player.id)?:error("Missing actor physical rules")
+                steps.add(frame("攻击 ${target.definition.name}",target=slot,kind=BattleActionKind.ATTACK,actorId=player.id))
+                val random=roll()
+                if(!rules.hits(player.equipment?.rightHand?:-1,random)){
+                    steps.add(frame("攻击未命中",target=slot,kind=BattleActionKind.MISS,actorId=player.id));continue
+                }
+                val computed=rules.damage(player.strength+weaponBonuses.getValue(player.id),target.definition.defense,player.level,random)
+                val damage=OriginalStatus.outgoingPhysicalDamage(computed,player.statusMask)
                 val actual=minOf(damage,target.hp);target.hp-=actual;dealt+=actual
-                steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=target.slot,kind=BattleActionKind.DAMAGE,delta=-actual,beforeEnemy=target.hp+actual))
-                if(target.hp==0){defeated.add(target.definition.id);steps.add(frame("${target.definition.name} 被击倒",target=target.slot,kind=BattleActionKind.DEATH))}
+                steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=slot,kind=BattleActionKind.DAMAGE,
+                    delta=-actual,beforeEnemy=target.hp+actual,actorId=player.id))
+                if(target.hp==0){defeated.add(target.definition.id);steps.add(frame("${target.definition.name} 被击倒",target=slot,kind=BattleActionKind.DEATH,actorId=player.id))}
                 if(enemies.all{it.hp==0})phase=BattlePhase.VICTORY
             }else{
-                val enemy=enemies.first{it.slot==actor};if(enemy.hp<=0)continue
+                val enemy=enemies.first{it.slot==(actor and 7)};if(enemy.hp<=0)continue
                 val random=roll()
+                val targetIndex=OriginalPartyRules.enemyTarget(originalActors(),random)
+                if(targetIndex==null){phase=BattlePhase.DEFEAT;break}
+                val target=partyStates.first{originalIndices.getValue(it.id)==targetIndex}
+                val slot=enemy.slot
                 if(enemy.definition.behaviorByte==7&&OriginalStatus.choosesPoison(random)){
-                    steps.add(frame("${enemy.definition.name} 毒系攻击",actor=actor,kind=BattleActionKind.ATTACK))
-                    val before=hero.statusMask;hero=OriginalStatus.poison(hero)
-                    steps.add(frame(if(hero.statusMask!=before)"中毒" else "异常状态保持",actor=actor,kind=BattleActionKind.STATUS))
-                    continue // Original status branch applies no physical damage or extra RNG draw.
+                    steps.add(frame("${enemy.definition.name} 毒系攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
+                    val updated=OriginalStatus.poison(target);setCharacter(target.id,updated)
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"中毒" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
                 }
                 if(enemy.definition.behaviorByte==9&&OriginalStatus.choosesStatus4(random)){
-                    steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=actor,kind=BattleActionKind.ATTACK))
-                    val before=hero.statusMask;hero=OriginalStatus.applyStatus4(hero)
-                    steps.add(frame(if(hero.statusMask!=before)"异常 04" else "异常状态保持",actor=actor,kind=BattleActionKind.STATUS))
-                    continue // 9:A0D2: no HP damage; share the action byte, do not draw again.
+                    steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
+                    val updated=OriginalStatus.applyStatus4(target);setCharacter(target.id,updated)
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 04" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
                 }
                 val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
-                steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=actor,kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK))
-                if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=actor,kind=BattleActionKind.MISS));continue}
-                val armor=equippedArmorBonus ?: if(hero.equipment?.body==0)content.armorContribution else 0
-                val computed=if(ice)enemy.definition.iceBaseDamage!! else enemy.definition.attack-armor-hero.stamina
-                val damage=OriginalStatus.incomingDamage(computed,hero.statusMask)
-                val actual=minOf(damage,hero.hp);received+=actual;hero=hero.copy(hp=hero.hp-actual,statusMask=if(hero.hp==actual)OriginalStatus.DEAD else hero.statusMask)
-                steps.add(frame("受到 $actual 点伤害",actor=actor,kind=BattleActionKind.DAMAGE,delta=-actual,beforeHero=hero.hp+actual))
-                if(hero.hp==0)phase=BattlePhase.DEFEAT
+                val targets=if(ice)partyStates.filter{it.hp>0} else listOf(target)
+                steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=slot,
+                    kind=if(ice)BattleActionKind.ICE else BattleActionKind.ATTACK,targetId=if(targets.size==1)target.id else null))
+                if(!ice&&random>=enemy.definition.hitByte){misses++;steps.add(frame("攻击未命中",actor=slot,kind=BattleActionKind.MISS,targetId=target.id));continue}
+                // The original all-target ice iterates present living party slots using this one AI byte.
+                // A fallen first target does not skip the second; defeat is checked after the whole action.
+                for(victim in targets){
+                    val armor=armorBonuses[victim.id]?:if(victim.equipment?.body==0)content.armorContribution else 0
+                    val computed=if(ice)enemy.definition.iceBaseDamage!! else enemy.definition.attack-armor-victim.stamina
+                    val damage=OriginalStatus.incomingDamage(computed,victim.statusMask);val actual=minOf(damage,victim.hp)
+                    received+=actual;setCharacter(victim.id,victim.copy(hp=victim.hp-actual,statusMask=if(victim.hp==actual)OriginalStatus.DEAD else victim.statusMask))
+                    steps.add(frame("受到 $actual 点伤害",actor=slot,kind=BattleActionKind.DAMAGE,delta=-actual,
+                        beforeHero=if(victim.id==hero.id)victim.hp else hero.hp,targetId=victim.id))
+                }
+                if(partyStates.all{it.hp==0})phase=BattlePhase.DEFEAT
             }
         }
-        // 9:A63D/A67B return immediately on defeat/victory. Only a completed, ongoing
-        // round reaches A69F..A6F0. Recovery rotates the last shared action byte once;
-        // it does not sample a new random value and is not an animation callback.
-        if(phase==BattlePhase.TARGET && lastActionByte!=null){
-            val before=hero.statusMask
-            hero=OriginalStatus.recoverStatus4AtRoundEnd(hero,lastActionByte!!).character
-            if(hero.statusMask!=before)steps.add(frame("异常 04 解除",kind=BattleActionKind.STATUS))
+        if(phase==BattlePhase.TARGET&&lastActionByte!=null){
+            val recovery=OriginalPartyRules.recoverStatuses(originalActors(),lastActionByte!!)
+            for(player in partyStates){
+                val status=recovery.statusByActorIndex.getValue(originalIndices.getValue(player.id))
+                if(status!=player.statusMask){setCharacter(player.id,player.copy(statusMask=status));steps.add(frame("异常状态解除",kind=BattleActionKind.STATUS,targetId=player.id))}
+            }
         }
+        commands.clear();inputRevision++
         return BattleTurn(dealt,received,misses,defeated,phase,steps)
     }
     private fun retaliate(nextByte:()->Int,steps:MutableList<BattleActionStep>):Pair<Int,Int>{
@@ -250,19 +375,27 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         if(phase!=BattlePhase.VICTORY || settled)return null
         val exp=enemies.sumOf{it.definition.experienceReward}
         val money=enemies.sumOf{it.definition.moneyReward}
-        var grown=hero.copy(experience=(hero.experience+exp).coerceAtMost(0xffffff))
-        val levels=mutableListOf<Int>()
-        while(true){
-            val row=content.growth.firstOrNull{it.level==grown.level+1 && grown.experience>=it.threshold}?:break
-            grown=grown.copy(level=row.level,hp=(grown.hp+row.hp).coerceAtMost(grown.maxHp+row.hp),
-                maxHp=grown.maxHp+row.hp,mp=grown.mp+row.mp,
-                maxMp=grown.maxMp?.plus(row.mp),strength=grown.strength+row.strength,
-                stamina=grown.stamina+row.stamina,agility=grown.agility+row.agility,spirit=grown.spirit+row.spirit)
-            levels.add(row.level)
+        val shares=OriginalPartyRules.experienceShares(enemies.map{it.definition.experienceReward},originalActors())
+        val levels=mutableMapOf<String,List<Int>>();val gained=mutableMapOf<String,Int>()
+        partyStates=partyStates.map{player->
+            val amount=shares[originalIndices.getValue(player.id)]?:0;gained[player.id]=amount
+            var grown=player.copy(experience=(player.experience+amount).coerceAtMost(0xffffff))
+            val actorLevels=mutableListOf<Int>()
+            if(player.hp>0)while(true){
+                val row=content.growthFor(player.id).firstOrNull{it.level==grown.level+1&&grown.experience>=it.threshold}?:break
+                grown=grown.copy(level=row.level,hp=(grown.hp+row.hp).coerceAtMost(grown.maxHp+row.hp),maxHp=grown.maxHp+row.hp,
+                    mp=grown.mp+row.mp,maxMp=grown.maxMp?.plus(row.mp),strength=grown.strength+row.strength,
+                    stamina=grown.stamina+row.stamina,agility=grown.agility+row.agility,spirit=grown.spirit+row.spirit)
+                actorLevels.add(row.level)
+            }
+            levels[player.id]=actorLevels;grown
         }
-        settled=true;hero=grown
-        return BattleSettlement(grown,(currentMoney+money).coerceAtMost(9999999),exp,levels)
+        settled=true
+        return BattleSettlement(hero,(currentMoney+money).coerceAtMost(9999999),exp,levels.getValue(hero.id)).also{
+            it.characters=partyStates;it.levelsByCharacter=levels;it.experienceByCharacter=gained
+        }
     }
+
 }
 
 /** Original acquisition is best-effort after victory: no deletion when quantity/category is full. */

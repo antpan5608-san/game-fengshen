@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "east95-dynamic-chunk",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "confidence": "ORIGINAL_CPU_AND_NORMAL_INPUT_SCOPED",
+  "sources": [
+    {
+      "offset": 21463,
+      "length": 16,
+      "sha256": "26e0d48c842b03d8a2b9ac3d4605d2a8f41c9c87b2de7f7aa54930ac315bccd0",
+      "module": 0,
+      "cpuAddress": 54215,
+      "meaning": "Main non-overworld map dispatcher invokes module8 command5"
+    },
+    {
+      "offset": 262231,
+      "length": 2,
+      "sha256": "3f9b5ea0f34ff8904f2783420c41e6ece10a30ccf286819540c32f951df43358",
+      "module": 8,
+      "cpuAddress": 32839,
+      "meaning": "Command5 return-address table routes to DB29"
+    },
+    {
+      "offset": 285497,
+      "length": 49,
+      "sha256": "30e03a9c5fe919d47009f24cb916bbb1d0daa138a0c6e82824bda3bd35130af3",
+      "module": 8,
+      "cpuAddress": 56105,
+      "meaning": "Dynamic mechanisms evaluated before exits; scene16 early return"
+    },
+    {
+      "offset": 288901,
+      "length": 182,
+      "sha256": "bd0b770a43b03ba78e4b98f2a16589134511efb043169d24744dad255d136cf5",
+      "module": 8,
+      "cpuAddress": 59509,
+      "meaning": "At-rest, map, flag-zero and cell gate; pointer change; scene16 and flag16 commit"
+    },
+    {
+      "offset": 289268,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 8,
+      "cpuAddress": 59876,
+      "meaning": "Map95 dynamic enabled selector"
+    },
+    {
+      "offset": 289348,
+      "length": 2,
+      "sha256": "7ee4c7c48f9145c0de9a7c3e3dd6ec2af343e101b4b148607f78522b5355b132",
+      "module": 8,
+      "cpuAddress": 59956,
+      "meaning": "Map95 dynamic-record pointer"
+    },
+    {
+      "offset": 290083,
+      "length": 16,
+      "sha256": "04cb2fe8997aacc3ad14271299801a9b0c5710df99675b6e1113601470107504",
+      "module": 8,
+      "cpuAddress": 60691,
+      "meaning": "Map95 one mechanism and terminating null record"
+    },
+    {
+      "offset": 289083,
+      "length": 66,
+      "sha256": "289e72bf847e2a19d48e8c05885c3c0e75f3e6538ba7da5a1373a18700fc29ac",
+      "module": 8,
+      "cpuAddress": 59691,
+      "meaning": "Animation target visible/offscreen calculation"
+    },
+    {
+      "offset": 10333,
+      "length": 28,
+      "sha256": "56861c1fb0a36f86b1903a6f3dcdae263567a534a51a41f0e4af1338b79e6302",
+      "module": 0,
+      "cpuAddress": 43085,
+      "meaning": "Map load copies base chunk pointers then invokes original dynamic restore"
+    },
+    {
+      "offset": 262237,
+      "length": 2,
+      "sha256": "369f42ce9ab84fc94be96a5ca77892f40176e3b757378181bbd4eacd42ad6bd9",
+      "module": 8,
+      "cpuAddress": 32845,
+      "meaning": "Command8 return-address table routes E96D"
+    },
+    {
+      "offset": 289149,
+      "length": 119,
+      "sha256": "9a5960635dde344e4151c6ed136113df4373a78f911a1f928966ffd221567ab6",
+      "module": 8,
+      "cpuAddress": 59757,
+      "meaning": "Nonzero mechanism byte reapplies chunk replacement on map load"
+    },
+    {
+      "offset": 2014,
+      "length": 16,
+      "sha256": "48a99b194724da94b0bd206ac9c9b81a5f3f5ab3477ad156d5cbc3786680a007",
+      "module": 0,
+      "cpuAddress": 34766,
+      "meaning": "Main scene16 animation wrapper"
+    },
+    {
+      "offset": 262235,
+      "length": 2,
+      "sha256": "f003c997f3345512fc08ac451b0615bb34c952b0cd13dccfd899e84368c2201e",
+      "module": 8,
+      "cpuAddress": 32843,
+      "meaning": "Command7 return-address table routes EAD4"
+    },
+    {
+      "offset": 289508,
+      "length": 269,
+      "sha256": "28000929c02dc4171cbb2fd6233467436e9e9bf9741f5807b4fc85395f1c7957",
+      "module": 8,
+      "cpuAddress": 60116,
+      "meaning": "Four 30-tick animation stages; tile command buffer and original sound; no player movement"
+    },
+    {
+      "offset": 289873,
+      "length": 210,
+      "sha256": "72bdc080d4e6f9ed260b0b3c280975febce37c1f7fea7de2da208d8d52e56c0f",
+      "module": 8,
+      "cpuAddress": 60481,
+      "meaning": "Original animation direction/style/frame pointer and tile data"
+    },
+    {
+      "offset": 27335,
+      "length": 2,
+      "sha256": "ac0d9b237792dc3ff009f1226146a5e0225ff30a18b6e69ab8994e7887f31fff",
+      "module": 0,
+      "cpuAddress": 60087,
+      "meaning": "Map95 slot2 base pointer"
+    },
+    {
+      "offset": 236704,
+      "length": 240,
+      "sha256": "fbf217f197aad39efb6dd2fe9affe14bd01ba06d15f1351363c8d60813221411",
+      "module": 7,
+      "cpuAddress": 40080,
+      "meaning": "Original inactive bottom-left 16x15 chunk"
+    },
+    {
+      "offset": 249664,
+      "length": 240,
+      "sha256": "cdbca158acd0cc935a7efdb1c83a9631440ee71a3a60f84deacb2bdbc7e7e210",
+      "module": 7,
+      "cpuAddress": 53040,
+      "meaning": "Original replacement bottom-left 16x15 chunk"
+    },
+    {
+      "offset": 230928,
+      "length": 256,
+      "sha256": "e7812988ec6ef25d804142e1c14e6615729acb04d76a8c2b1bfd1ceb223df8f1",
+      "module": 7,
+      "cpuAddress": 34304,
+      "meaning": "Tileset4 original collision class table"
+    },
+    {
+      "offset": 13595,
+      "length": 147,
+      "sha256": "178f65f82e8d8f36efc8fe71738e07e5d28aa7fdd7bd71023f0937749c840554",
+      "module": 0,
+      "cpuAddress": 46347,
+      "meaning": "Original chunk-cell pointer selection"
+    },
+    {
+      "offset": 19042,
+      "length": 70,
+      "sha256": "185fc28ecfee87bc7d44c5cef89121777c0eae83cb648ba23675b12ed09e5745",
+      "module": 0,
+      "cpuAddress": 51794,
+      "meaning": "Actual current-cell metatile and collision lookup through original data bank"
+    },
+    {
+      "offset": 30873,
+      "length": 102,
+      "sha256": "06358e0fbbf10704be501b62d9a2323fd356945e70a6b021a795e65cd2cd8a34",
+      "module": 0,
+      "cpuAddress": 63625,
+      "meaning": "Manual save descriptor ranges omit68A1; include68A5..A9 separately"
+    },
+    {
+      "offset": 30493,
+      "length": 380,
+      "sha256": "a628472baaba1b09ef8b712e72287703f37735e0bb706616dee28aaca62fb406",
+      "module": 0,
+      "cpuAddress": 63245,
+      "meaning": "Original slot signature/load/save loops"
+    },
+    {
+      "offset": 317,
+      "length": 42,
+      "sha256": "743cbe06e07554a1d00f88bcfc9370944c9e82119776498a6c28b2c20bbeed04",
+      "module": 0,
+      "cpuAddress": 33069,
+      "meaning": "Reset clears volatile6800 page; manual save slot SRAM is not cleared"
+    }
+  ],
+  "mechanism": {
+    "mapId": 95,
+    "triggerCell": [
+      12,
+      21
+    ],
+    "onceWhileByteNonzero": 26785,
+    "writtenValue": 16,
+    "requiresMovingState97": 0,
+    "requiresFacing": false,
+    "recordDirectionMeaning": "Animation style1, not player-facing gate",
+    "animationTarget": [
+      12,
+      17
+    ],
+    "chunkSlot": 2,
+    "basePointer": 40080,
+    "replacementPointer": 53040,
+    "dataModule": 7,
+    "commitOrder": [
+      "write replacement pointer6834/6835",
+      "derive target viewport visibility",
+      "set scene16",
+      "write68A1=16",
+      "reset animation phase/cursor and counter30"
+    ],
+    "playerState": "Position/facing/terrain unchanged; no inventory, money, EXP or map-event-byte changes",
+    "animation": "4 scheduler stages at30 calls each; original tile buffer updates and sound43 enqueue. Actual display/audio frames NOT_RUN in this CPU fixture.",
+    "reentry": "Same live session flag68A1 nonzero reappliesCF30 through original map loader",
+    "manualSave": "68A1 omitted from both save-range lists. Warm F70D leaves current68A1 unchanged; real reset812D then loadF70D restores saved map/player but mechanism0/base9C90. Do not call it a permanent story flag.",
+    "androidResume": "Preserving same-session transient geometry across Android process death is a product resume policy; distinguish from original manual-slot serialization. No policy change implemented here."
+  },
+  "changedCells": [
+    {
+      "cell": [
+        12,
+        17
+      ],
+      "metatileBefore": 112,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        13,
+        17
+      ],
+      "metatileBefore": 112,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        14,
+        17
+      ],
+      "metatileBefore": 112,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        12,
+        18
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        13,
+        18
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        14,
+        18
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        12,
+        19
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        13,
+        19
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    },
+    {
+      "cell": [
+        14,
+        19
+      ],
+      "metatileBefore": 113,
+      "metatileAfter": 102,
+      "collisionBefore": 1,
+      "collisionAfter": 0
+    }
+  ],
+  "tests": {
+    "triggerCases": 720,
+    "terrainBranchCases": 4,
+    "collisionLookupCases": 18,
+    "animationSchedulerCalls": 120,
+    "animationCheckpoints": 4,
+    "repeatCases": 1,
+    "mapReentries": 3,
+    "manualSaveResetCases": 2,
+    "failures": 0
+  },
+  "evidence": {
+    "controlledReportSha256": "93f4c51de84e3d47e4cb5fc602e6fc12a7b5094dd713f118bd58bab83177fb84",
+    "normalIndexSha256": "72205bc43435bdc29a0075ef5659cc57e3a3122a2f70b37feddef10452333d56",
+    "normalScope": "Original normal controller route reaches95(12,21), 68A1 changes0→16 and chunk9C90→CF30 before Boss. See private normal index; not Android evidence."
+  },
+  "androidResumePolicy": "runtime.session.map95.mechanism0 persists the live session through Android process death in SaveSnapshot.flags; original cartridge cold reset/manual-slot load resets68A1. It is not a permanent original story bit.",
+  "limitations": [
+    "Original four-stage visible tile animation/sound43 not yet implemented in Android; real final tiles/collision are derived from original chunks.",
+    "Does not establish Boss/event28 or party2 runtime readiness."
+  ]
+}

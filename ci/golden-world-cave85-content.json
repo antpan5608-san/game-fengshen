@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c19",
-  "manifestSha256": "359b3a28edbd49b21f4dc4b98ee348d3a14897e17cd7c849f446e6a790e4bd60",
+  "contentVersion": "opening-segment-001-c18",
+  "manifestSha256": "7656a1d96984f2bab88fbbfe235bf74aad65db6baa1b334dd159900d23943cd4",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-east-palace-content.json"
+    "provenance": "game-data/provenance/world-cave85-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

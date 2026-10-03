@@ -123,13 +123,41 @@ fun layout(w:Int,h:Int,density:Float,insets:SafeInsets,mode:DisplayMode,c:Contro
         Key.MENU to control(c.menuX,c.menuY,min(safe.h*.07f,58*density)*c.menuSize))
     return ScreenLayout(game,safe,stick,buttons,scale,game.w/scale,game.h/scale,mode)
 }
+/** Original scene-local mechanism. The flag denotes Android session continuation,
+ * not an original cartridge manual-save event byte (see world-east-mechanism.json). */
+data class SceneCellChange(val x:Int,val y:Int,val fromTile:Int,val toTile:Int,
+    val fromCollision:Int,val toCollision:Int)
+data class SceneMechanism(val id:String,val mapId:Int,val x:Int,val y:Int,
+    val sessionFlag:String,val changes:List<SceneCellChange>) {
+    init {
+        require(id.isNotBlank()&&mapId in 0..255&&x>=0&&y>=0)
+        require(sessionFlag.startsWith("runtime.session.")&&sessionFlag.length<=96)
+        require(changes.isNotEmpty()&&changes.map{it.x to it.y}.distinct().size==changes.size)
+        require(changes.all{it.x>=0&&it.y>=0&&listOf(it.fromTile,it.toTile,it.fromCollision,it.toCollision).all{v->v in 0..255}})
+    }
+    fun triggered(map:Int,cellX:Int,cellY:Int,standing:Boolean,flags:Map<String,Boolean>)=
+        standing&&map==mapId&&cellX==x&&cellY==y&&flags[sessionFlag]!=true
+    fun apply(scene:Scene,flags:Map<String,Boolean>):Scene {
+        if(scene.mapId!=mapId||flags[sessionFlag]!=true)return scene
+        val grid=scene.grid.copyOf();val collision=scene.collision.copyOf();val enabled=scene.enabled.toMutableSet()
+        for(change in changes){
+            require(change.x<scene.width&&change.y<scene.height)
+            val index=change.y*scene.width+change.x
+            require(grid[index]==change.fromTile&&collision[index]==change.fromCollision){"Scene mechanism source differs"}
+            grid[index]=change.toTile;collision[index]=change.toCollision
+            if(change.toCollision in scene.walkableClasses||index in scene.transitionCells)enabled.add(index) else enabled.remove(index)
+        }
+        return scene.copy(grid=grid,collision=collision,enabled=enabled)
+    }
+}
+
 data class Scene(val version: String,val width: Int,val height: Int,val grid: IntArray,val collision: IntArray,
     val enabled: Set<Int>,val spawnX: Int,val spawnY: Int,val mapId:Int=114,
     val walkableClasses:Set<Int> = setOf(0),val dynamicObjectCells:Set<Int> = emptySet(),
     val transitionCells:Set<Int> = emptySet(),val sourceEdges:Map<Int,Set<Key>> = emptyMap(),
     val targetEdges:Map<Int,Set<Key>> = emptyMap(),val unavailableRegions:List<EncounterRect> = emptyList(),val terrainProfile:Int?=null) {
     init {
-        require(terrainProfile==null||terrainProfile==OriginalTerrain.PALACE)
+        require(terrainProfile==null||terrainProfile in setOf(OriginalTerrain.PALACE,OriginalTerrain.CAVE_GROUND))
         require(width in 1..256 && height in 1..256 && grid.size==width*height && collision.size==grid.size)
         require(grid.all { it in 0..255 } && collision.all { it in 0..255 })
         require(transitionCells.all {it in grid.indices})
@@ -191,7 +219,9 @@ data class InteriorContext(val callerMapId:Int,val returnX:Int,val returnY:Int) 
     init {require(callerMapId in 0..255&&returnX in 0..255&&returnY in 0..255)}
 }
 data class MapExit(val fromMapId:Int,val triggerX:Int,val triggerY:Int,val toMapId:Int,val spawnX:Int,val spawnY:Int,
-    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false)
+    val edgeDirection:Key?=null,val arrivalDirection:Key=Key.DOWN,val resetEncounterSteps:Boolean=false,val captureCaller:Boolean=false,val returnToCaller:Boolean=false) {
+    var preserveArrivalDirection:Boolean=false;internal set
+}
 data class CompletedStep(val mapId:Int,val x:Int,val y:Int,val transitioned:Boolean,val suppressEncounter:Boolean=false)
 class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,private val initialMapId:Int) {
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
@@ -260,7 +290,7 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         }
         val nextContext=when {exit.captureCaller->InteriorContext(mapId,exit.triggerX,exit.triggerY)
             exit.returnToCaller->null;else->interiorContext}
-        interiorContext=nextContext;mapId=destination;x=landingX*16+8;y=landingY*16+8;direction=exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
+        interiorContext=nextContext;mapId=destination;x=landingX*16+8;y=landingY*16+8;direction=if(exit.preserveArrivalDirection)direction else exit.arrivalDirection;remaining=0;stepScale=1f;movementCredit=0f;stepOriginX=x;stepOriginY=y;message=""
         return true
     }
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}

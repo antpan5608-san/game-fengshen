@@ -51,6 +51,29 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(world.tryRestore(25,47*16+8,40*16+8,0,Key.UP))
         assertEquals(25,world.mapId);assertEquals(40*16+8,world.y)
     }
+    /** Isolated mechanism snapshot, not normal East route evidence. */
+    fun testControlledSceneMechanismSessionSerialization(){
+        val base=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val cells=(17..19).flatMap{y->(12..14).map{x->SceneCellChange(x,y,if(y==17)112 else 113,102,1,0)}}
+        val mechanism=SceneMechanism("rom.mechanism.95.0",95,12,21,"runtime.session.map95.mechanism0",cells)
+        val grid=IntArray(32*30);val collision=IntArray(grid.size)
+        for(c in cells){grid[c.y*32+c.x]=c.fromTile;collision[c.y*32+c.x]=1}
+        val fixture=Scene(base.scene.version,32,30,grid,collision,collision.indices.filter{collision[it]==0}.toSet(),12,21,95)
+        val content=base.copy(scenes=base.scenes+(95 to fixture)).also{it.mechanisms=listOf(mechanism)}
+        val before=SaveSnapshot(base.scene.version,95,12*16+8,21*16+8,Key.DOWN,listOf(base.initialPlayer),
+            mapOf("rom.medicine.0" to 2),mapOf("original" to true),30)
+        assertTrue(before.validate(content))
+        val after=before.copy(flags=before.flags+(mechanism.sessionFlag to true))
+        val parsed=SaveSnapshot.parse(after.json().toString())
+        assertEquals(after,parsed);assertEquals(before,parsed.copy(flags=before.flags))
+        assertFalse(before.copy(x=12*16+8,y=17*16+8).validate(content))
+        assertTrue(parsed.copy(x=12*16+8,y=17*16+8).validate(content))
+        assertFalse(mechanism.triggered(95,12,21,true,parsed.flags))
+        assertEquals(112,content.scenes.getValue(95).grid[17*32+12])
+        assertEquals(102,content.sceneForState(95,parsed.flags)!!.grid[17*32+12])
+        assertEquals(112,content.sceneForState(95,before.flags)!!.grid[17*32+12])
+        assertEquals(setOf("original",mechanism.sessionFlag),parsed.flags.keys)
+    }
     fun testOpeningCombatPackageExecutesEveryRomGroup(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val rules=c.battle!!
@@ -95,7 +118,7 @@ class ContentTest:IsolatedGameTestCase(){
         scene.getJSONObject("initialPlayer").remove("portraitAsset")
         scene.getJSONObject("initialPlayer").remove("portraitSource")
         // c1 has neither scoped combat nor later automatic combat actors. Keep
-        // the fixture coherent instead of removing combat under a c18 actor.
+        // the fixture coherent instead of removing combat under a current actor.
         val oldNpcs=scene.getJSONArray("npcs");val c1Npcs=org.json.JSONArray()
         for(i in 0 until oldNpcs.length())if(!oldNpcs.getJSONObject(i).optBoolean("scriptedActor",false))
             c1Npcs.put(oldNpcs.getJSONObject(i))
@@ -125,6 +148,35 @@ class ContentTest:IsolatedGameTestCase(){
         assertFalse(content.npcs.any{it.scriptedActor})
     }
     private fun contentMapIds(scene:JSONObject)=scene.getJSONArray("maps").let{a->(0 until a.length()).map{a.getJSONObject(it).getInt("id")}}
+    fun testScopedEastPartyAndContinuationLoadAndSerialize(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val actor=c.joinCharacters.getValue("xiaolongnv")
+        assertEquals(1,c.characterDefinitions.getValue(actor.id).originalActorIndex)
+        assertEquals(12,actor.level);assertEquals(2000,actor.experience);assertEquals(92,actor.hp);assertEquals(44,actor.mp)
+        val rules=c.battle!!
+        assertEquals(1972,rules.growthFor(actor.id).single{it.level==12}.threshold)
+        assertEquals(2525,rules.growthFor(actor.id).single{it.level==13}.threshold)
+        val story=rules.storyBattles.getValue("rom.npc.95.0");val continuation=story.continuation!!
+        assertEquals(12,continuation.dialogueIds.size);assertEquals("rom.dialogue.105.3",continuation.dialogueIds.first())
+        assertEquals("rom.dialogue.105.14",continuation.dialogueIds.last())
+        val mechanism=c.mechanisms.single{it.mapId==95}
+        val flags=mapOf(story.flagId to true,story.pendingFlag to true,mechanism.sessionFlag to true)
+        var save=SaveSnapshot(c.scene.version,95,13*16+8,4*16+8,Key.UP,listOf(c.initialPlayer),emptyMap(),flags,100)
+        for(id in continuation.dialogueIds){
+            assertTrue(save.validate(c));val before=save
+            val result=StoryFollowup.advance(save,story,id,c.joinCharacters);assertTrue(result.applied)
+            save=SaveSnapshot.parse(result.snapshot.json().toString())
+            assertEquals(before.characters.first(),save.characters.first());assertEquals(100,save.money)
+            assertEquals(before.inventory,save.inventory)
+            if(result.nextDialogue!=null){assertEquals(95,save.mapId);assertEquals(1,save.characters.size)}
+        }
+        assertTrue(save.validate(c));assertEquals(listOf("nezha","xiaolongnv"),save.characters.map{it.id})
+        assertEquals(actor,save.characters[1]);assertEquals(23,save.mapId)
+        assertEquals(54*16+8,save.x);assertEquals(92*16+8,save.y);assertEquals(Key.UP,save.direction)
+        assertEquals(true,save.flags["rom.map.95.flag.128"]);assertTrue(save.flags[story.pendingFlag]!=true)
+        assertFalse(StoryFollowup.advance(save,story,continuation.dialogueIds.last(),c.joinCharacters).applied)
+        // JSON/loader/state fixture only; normal touch playback is a separate gate.
+    }
     fun testOriginalOpeningExitAndCollision(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val w=World(c.scenes,c.exits,114)
