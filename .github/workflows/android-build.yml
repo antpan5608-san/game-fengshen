@@ -348,6 +348,8 @@ jobs:
         with:
           name: fengshen-world-checkpoints
           path: |
+            artifacts/checkpoint-ui/touch-ux-world-touch-step-failure.png
+            artifacts/checkpoint-ui/touch-ux-world-touch-step-failure.json
             artifacts/world-review-clips/*
             artifacts/checkpoint-ui/touch-ux-world-north-*.png
             artifacts/checkpoint-ui/touch-ux-world-north-*.json
@@ -446,9 +448,10 @@ jobs:
         with:
           name: fengshen-world-first-hall-checkpoints
           path: |
-            artifacts/checkpoint-ui/world-first-hall-*.png
+            artifacts/checkpoint-ui/touch-ux-world-first-hall-*.png
             artifacts/checkpoint-ui/touch-ux-world-first-hall-*.json
             artifacts/checkpoint-ui/world-first-hall-recording.json
+            artifacts/checkpoint-ui/world-first-hall-*-test.txt
             artifacts/world-first-hall-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

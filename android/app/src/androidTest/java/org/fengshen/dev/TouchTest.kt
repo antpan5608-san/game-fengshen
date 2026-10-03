@@ -35,13 +35,14 @@ class TouchTest:IsolatedGameTestCase(){
         return activity to view!!
     }
     private fun send(v:GameView,action:Int,points:List<Pair<Float,Float>>){
-        instrumentation.runOnMainSync{
+        instrumentation.runOnMainSync{dispatchTouchOnMain(v,action,points)}
+    }
+    private fun dispatchTouchOnMain(v:GameView,action:Int,points:List<Pair<Float,Float>>){
             val props=Array(points.size){i->MotionEvent.PointerProperties().apply{id=i;toolType=MotionEvent.TOOL_TYPE_FINGER}}
             val coords=Array(points.size){i->MotionEvent.PointerCoords().apply{x=points[i].first;y=points[i].second;pressure=1f;size=1f}}
             val time=SystemClock.uptimeMillis()
             val event=MotionEvent.obtain(time,time,action,points.size,props,coords,0,0,1f,1f,0,0,0,0)
             v.dispatchTouchEvent(event);event.recycle()
-        }
     }
     private fun tap(v:GameView,p:Pair<Float,Float>){send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p))}
     private fun layoutFor(v:GameView)=layout(v.width,v.height,v.resources.displayMetrics.density,v.safe,DisplayMode.FULL,ControlConfig())
@@ -61,20 +62,33 @@ class TouchTest:IsolatedGameTestCase(){
             Key.RIGHT->Pair(stick.x+stick.w-2f,middle.second)
             else->error("Direction required")
         }
-        var beforeMap=0;var beforeSeq=0L
-        instrumentation.runOnMainSync{beforeMap=v.world.mapId;beforeSeq=v.world.completedStepSeq}
+        var beforeMap=0;var beforeSeq=0L;var beforeX=0;var beforeY=0
+        instrumentation.runOnMainSync{beforeMap=v.world.mapId;beforeSeq=v.world.completedStepSeq;beforeX=v.world.x;beforeY=v.world.y}
         send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
         var started=false
         for(i in 0..100){
             // World completion sets remaining=0 before dispatching its exit, in the same UI callback.
             // Observe that callback atomically; a background read can see the doorway before the map changes.
-            instrumentation.runOnMainSync{started=v.world.remaining>0||v.world.mapId!=beforeMap||
-                v.world.completedStepSeq!=beforeSeq||v.layer==GameView.Layer.BATTLE}
+            instrumentation.runOnMainSync{
+                started=v.world.remaining>0||v.world.mapId!=beforeMap||v.world.completedStepSeq!=beforeSeq||v.layer==GameView.Layer.BATTLE
+                // Release in the observation callback. A second queued callback
+                // can otherwise leave a real held stick active for another frame.
+                if(started)dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point))
+            }
             if(started)break
             SystemClock.sleep(5)
         }
-        send(v,MotionEvent.ACTION_UP,listOf(point))
-        assertTrue("No step: map=$beforeMap x=${v.world.x} y=${v.world.y} message=${v.world.message}",started)
+        if(!started){
+            send(v,MotionEvent.ACTION_UP,listOf(point));screenshot(v,"world-touch-step-failure")
+            instrumentation.runOnMainSync{
+                File(instrumentation.targetContext.getExternalFilesDir(null),"world-touch-step-failure.json").writeText(org.json.JSONObject()
+                    .put("key",key.name).put("beforeMap",beforeMap).put("beforeX",beforeX).put("beforeY",beforeY)
+                    .put("beforeSeq",beforeSeq).put("snapshot",v.currentSnapshot().json()).put("layer",v.layer.name)
+                    .put("probe",v.world.scene.probeFrom(v.world.x/16,v.world.y/16,key,v.world.terrainMode).name)
+                    .put("message",v.world.message).toString())
+            }
+        }
+        assertTrue("No step: key=$key map=$beforeMap from=$beforeX,$beforeY x=${v.world.x} y=${v.world.y} message=${v.world.message}",started)
         var remaining=0
         for(i in 0..100){
             instrumentation.runOnMainSync{remaining=v.world.remaining}
@@ -1543,6 +1557,9 @@ class TouchTest:IsolatedGameTestCase(){
         // Read-only BFS includes the original terrain plane. Every chosen edge is
         // executed through real joystick gestures; no world.tick/restore/teleport.
         fun walkTo(tx:Int,ty:Int){
+            val routeMap=v.world.mapId;var replans=0
+            while(v.world.mapId==routeMap&&(v.world.x/16!=tx||v.world.y/16!=ty)){
+            assertTrue("Normal $label path did not converge; no position repair",replans++<4096)
             val scene=v.world.scene;val start=(v.world.y/16*scene.width+v.world.x/16) to v.world.terrainMode
             val target=ty*scene.width+tx;if(start.first==target)return
             val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(start)
@@ -1563,8 +1580,20 @@ class TouchTest:IsolatedGameTestCase(){
             val keys=mutableListOf<Key>();var cursor=goal!!
             while(cursor!=start){val parent=parents.getValue(cursor);keys.add(parent.second);cursor=parent.first}
             for((index,key)in keys.asReversed().withIndex()){
-                assertEquals("Unexpected map before route step",scene.mapId,v.world.mapId);step(key)
-                if(v.world.mapId!=scene.mapId)assertEquals("Exit may only occur at the requested goal",keys.lastIndex,index)
+                assertEquals("Unexpected map before route step",scene.mapId,v.world.mapId)
+                val beforeX=v.world.x/16;val beforeY=v.world.y/16;step(key)
+                if(v.world.mapId!=scene.mapId){
+                    val completed=v.world.lastCompletedStep!!
+                    assertEquals(scene.mapId,completed.mapId);assertTrue(completed.transitioned)
+                    assertEquals("Exit must be the requested original cell",tx to ty,completed.x to completed.y)
+                    return
+                }
+                val expectedX=beforeX+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                val expectedY=beforeY+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                // A held real joystick can travel farther under runner load.
+                // Replan from its observed legal location instead of replaying stale keys.
+                if(v.world.x/16!=expectedX||v.world.y/16!=expectedY)break
+            }
             }
         }
         fun dialogue(){repeat(24){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
@@ -2245,6 +2274,9 @@ class TouchTest:IsolatedGameTestCase(){
         // Read-only BFS includes the original terrain plane. Every chosen edge is
         // executed through real joystick gestures; no world.tick/restore/teleport.
         fun walkTo(tx:Int,ty:Int){
+            val routeMap=v.world.mapId;var replans=0
+            while(v.world.mapId==routeMap&&(v.world.x/16!=tx||v.world.y/16!=ty)){
+            assertTrue("Normal $label path did not converge; no position repair",replans++<4096)
             val scene=v.world.scene;val start=(v.world.y/16*scene.width+v.world.x/16) to v.world.terrainMode
             val target=ty*scene.width+tx;if(start.first==target)return
             val routeFlags=v.currentSnapshot().flags
@@ -2268,9 +2300,21 @@ class TouchTest:IsolatedGameTestCase(){
             val keys=mutableListOf<Key>();var cursor=goal!!
             while(cursor!=start){val parent=parents.getValue(cursor);keys.add(parent.second);cursor=parent.first}
             for((index,key)in keys.asReversed().withIndex()){
-                assertEquals("Unexpected map before route step",scene.mapId,v.world.mapId);step(key)
-                if(v.world.mapId!=scene.mapId)assertEquals("Exit may only occur at the requested goal",keys.lastIndex,index)
+                assertEquals("Unexpected map before route step",scene.mapId,v.world.mapId)
+                val beforeX=v.world.x/16;val beforeY=v.world.y/16;step(key)
+                if(v.world.mapId!=scene.mapId){
+                    val completed=v.world.lastCompletedStep!!
+                    assertEquals(scene.mapId,completed.mapId);assertTrue(completed.transitioned)
+                    assertEquals("Exit must be the requested original cell",tx to ty,completed.x to completed.y)
+                    return
+                }
                 if(v.layer==GameView.Layer.DIALOGUE)assertEquals("Original story may only trigger at requested route endpoint",keys.lastIndex,index)
+                val expectedX=beforeX+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                val expectedY=beforeY+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                // A held real joystick can travel farther under runner load.
+                // Replan from its observed legal location instead of replaying stale keys.
+                if(v.world.x/16!=expectedX||v.world.y/16!=expectedY)break
+            }
             }
         }
         fun dialogue(){repeat(24){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
