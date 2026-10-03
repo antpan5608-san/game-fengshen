@@ -158,3 +158,10 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 地图23各矩形必须按原区独立保留；新增状态行为需要同字节分派、状态优先级、无合法指令时推进及战后清理证据，不能只放宽enemySupported。world-status-bit8.json保留限定span与受控CPU索引；私有CPU样本依赖正常原版RAM，未声明公开干净环境可重建该实验。
 
 原export_from_base/ci_apk.restore已在两个干净目录重建本批114文件一致；test_world_hell_encounters_export.py实际验证完整原组、原媒体/库存定义、错状态/漏命令推进span/错掉落与价格拒绝。引用同类Reference数值匹配只确定暂名，多个同价候选保留未知，不据此推断药效。数据导出与JVM/仪器编译不等于新分区正常App通过。
+
+
+## 已验证的后续村庄批次与加载标签
+
+原商店catalog按caller批量取完整库存，已有掉落物品缺商价时用existingItemPriceUpdates固定原baseDefinitionSha256及真实priceSource，仅补原不存在的buy/sell字段；ID、名称、未知使用效果和既有数据保持。test_world_village2_export.py本地验证错价/错指针/错原定义hash/漏库存/错角色槽位拒绝、媒体不变与两次确定性导出；原ci_apk.restore两个干净目录重建一致。名字暂定使用原loader接受的PROVISIONAL_REFERENCE词汇，verifiedFields单独记录，不自造复合confidence或放宽loader。
+
+共享室内落点仍按具体caller正常场景观察，不能把其他村庄的12,12机械套为新村庄12,14。原版续跑服务取证与独立门口分支分开索引，不声称单段连续录像。新Android正常服务/地狱/双人冷启方法尚待runner，不列为成功方法。

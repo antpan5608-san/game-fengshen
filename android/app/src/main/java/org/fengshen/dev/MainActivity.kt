@@ -866,6 +866,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun panelListBounds()=modalLayout().list
     fun panelItemBounds(id:String)=modalLayout().visibleRow(panelItems().indexOfFirst{it.key==id},modalListScroll)
     fun panelSlotBounds(slot:String)=modalLayout().visibleRow(listOf("rightHand","leftHand","body","feet").indexOf(slot),modalListScroll)
+    fun panelCharacterBounds(id:String)=modalLayout().party.getOrNull(characters.indexOfFirst{it.id==id})?:Box(0f,0f,0f,0f)
     private fun heroName(id:String)=content.characterDefinitions[id]?.name?:id
     private fun slotName(slot:String)=mapOf("rightHand" to "右手","leftHand" to "左手","body" to "身体","feet" to "脚")[slot]?:slot
     private data class ItemAction(val kind:String?,val text:String,val enabled:Boolean,val reason:String,val target:String?)

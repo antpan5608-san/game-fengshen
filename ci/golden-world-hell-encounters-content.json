@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c21",
-  "manifestSha256": "dcddecb940cfce28b6e862dc0af792f0dc6a069a1e9fd010c3b2e04a24b269f0",
+  "contentVersion": "opening-segment-001-c20",
+  "manifestSha256": "675793d57caf191ff527f3fccb1ce64a383a13757c06f724f1473d09fc8b659b",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-village2-content.json"
+    "provenance": "game-data/provenance/world-hell-encounters-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

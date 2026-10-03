@@ -243,7 +243,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
     needs: build
     runs-on: ubuntu-24.04
-    timeout-minutes: 270
+    timeout-minutes: 300
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -423,5 +423,19 @@ jobs:
             artifacts/checkpoint-ui/touch-ux-world-east-palace-*.json
             artifacts/checkpoint-ui/world-east-palace-*.json
             artifacts/checkpoint-ui/world-east-palace-normal-test.txt
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain scoped Hell and village2 normal checkpoints
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fengshen-world-hell-village2-checkpoints
+          path: |
+            artifacts/world-hell-village2-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-hell-village2-*.png
+            artifacts/checkpoint-ui/touch-ux-world-hell-village2-*.json
+            artifacts/checkpoint-ui/world-hell-village2-*.json
+            artifacts/checkpoint-ui/world-hell-village2-normal-test.txt
           if-no-files-found: ignore
           retention-days: 14
