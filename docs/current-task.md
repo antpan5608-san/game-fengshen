@@ -266,3 +266,20 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 下一动作：冻结修正版来源，沿用原CI一次候选；其间继续第二殿正常原版/数据接续。WORLD-FULL-01未完成，不将候选当发布。
 
 - 本轮实际inspect37096352109成功，2026-10-03 12:23:25.988北京（04:23:25.988UTC）查询可信27/26=1281/2289，共3570；测试0、普通真机3会话/模拟器0。仍同一v26 download_or_verify ProtocolException，无新增样本；cleanupFailures0。原严格生产保护不变。
+
+
+## 独立第二殿能力检查点（2026-10-03 12:45 北京时间，非发布）
+
+- 正式仍v27/c14；第一殿修正版冻结main ccefece6/run37096513996/version40/c23，签名build SUCCESS、runtime执行中，本树不覆盖来源。v39原Content.kt:155加载失败和18方法/14错误保持记录。inspect37096352109实际两版3570事件/3真机普通会话/0测试，与前次同一旧v26 ProtocolException；生产保护不变。
+- 独立work/world-hell-rest-evidence已提交c7b30f5的原behavior1全活人特殊攻击薄实现，444原CPU边界/5专项JVM方法、221全JVM方法及仪器编译通过，3项导出证据方法通过。原七种behavior1身份均核原基础值；楚江王143固定15/同一AI字节/护甲体力不减免/04倍伤。攻击原名未转录，使用准确未核标签，不静默变普通攻击。直接扣血CPU子程序不等于之后的死亡flag阶段，测试已明确区分。
+- 实际原版从第一殿正常胜后经66步/2自然逃跑到60(1,28)，正常守卫对话70/0；原正常继续到王途中7遭遇战败，不修补原档。受控位置实验核真实event21/source160→enemy143/HP600；独立受控BossHP1核钱+380、两活人各EXP125、flag60 0→4→6，复谈70/4无重奖；离殿路径实验未通过，不当正常胜利或出口PASS。
+- map60正常入图palette32项匹配原默认提取；幽灵191正常OAM/PPU的208opaque像素匹配，Boss143受控战斗104图块全部匹配原ROM/RGBA。576原CPU地形用例加入map60现场，原地图接口/事件/导出仍接续中。两次正常控制器只读hook已核CE35的$99为源/$98为目标，14异类过格匹配；不是修改原版或放宽碰撞。
+- 下一动作：完成原二殿数据薄导出和既有内容门禁、真实正常接续与存档测试；等第一殿同候选runtime结果。全世界有效分母UNKNOWN、ALL_MAPS_USABLE=NO，Android第二殿/真机/声音NOT_RUN。
+
+
+## 第二殿局部内容与真实接续入口（2026-10-03 13:12:33 北京时间，非发布）
+
+- 独立树已合并冻结main ccefece6的门加载修复，生成c24/127文件/19张已打包地图，manifest f2d070811206520c933f845115f538ffed95aa5b0478eb48df747fb3f4a2d05c；可信基底仍v27/c14。原export_from_base及ci_apk.restore两个干净临时目录字节一致；旧地图/图集/音频媒体不变，未关闭hash校验。新增map60九个可见NPC、原zone9十组、楚江王143真实600HP/behavior1基础15、独立胜标及246门。多数全文PROVISIONAL，受控原位置/HP1证据不当正常胜利。
+- 本地世界Python87方法/0失败、222 JVM方法/0失败/错误/跳过、instrument APK编译、原runtime Bash语法与原workflow YAML解析通过。新增正常二殿测试复用现有真实触控/BFS/药草/战斗驱动，来源必须为同候选正常第一殿存档；冷启动不导入fixture，正常路径不发物品、不改HP或等级。原CI增加二殿正常/冷启门禁与有界证据artifact，没有新workflow；App/PowerShell门禁实际执行仍NOT_RUN。原自动审批22隔离API案例仍PASS。
+- 冻结v40/run37096513996签名build SUCCESS、runtime仍执行中。实际不可变artifact11264188671中v40 APK独立verify PASS，来源ccefece6、SHA1d3e3bff1632dd8b96834323dacb85c90fdb2a2f35144bb5255e0de1a692b9e5、16533893字节、既有包名/签名/c23 manifest一致。首次本地verify缺--output产生工具AttributeError，补该原参数后通过；不是App故障。二殿本树不推main覆盖当前来源。
+- 下一条实际动作：读取v40完成结果；失败立即定位并保留证据，成功后将本树合法c24/门禁冻结为下一原CI候选。在运行等待期间继续原目标其他地图/服务的定向证据，不以19张图或第二殿作为WORLD-FULL-01结束。生产仍v27；旧v26 ProtocolException严格preflight阻塞仍保留，真机/声音NOT_RUN。

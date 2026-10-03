@@ -547,12 +547,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1,14}:
                     raise ValueError('Ground profile classes differ from original map')
-            elif terrain['tileset']==3 and proof.get('scopeRevision')=='map70-first-hall-ground-mode':
-                if mid!=70 or original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0 or proof['testCount']!=576 or proof['failures']!=0:
-                    raise ValueError('First hall lacks original ground matrix')
+            elif terrain['tileset']==3 and proof.get('scopeRevision') in ('map70-first-hall-ground-mode','map60-second-hall-ground-mode'):
+                if mid!=proof['mapId'] or original['gridSha256']!=proof['gridSha256'] or proof['mode']!=0 or proof['bridgeState']!=0 or proof['testCount']!=576 or proof['failures']!=0:
+                    raise ValueError('Hell hall lacks its original ground matrix')
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
-                    raise ValueError('First hall ground classes differ')
+                    raise ValueError('Hell hall ground classes differ')
             else:raise ValueError('Terrain execution profile not implemented')
             data['terrain']=terrain
         result[f'scene{mid}.json']=encoded(data)
@@ -770,15 +770,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Story continuation order or state differs')
                 elif boss.get('victoryFlags'):
                     proof=load(ROOT/boss['victoryFlagEvidence']);rule=proof['rules']
-                    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246':
+                    if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246'):
                         raise ValueError('Unknown battle map flags')
                     for span in proof['sources']:checked_span(reader,span)
                     if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
                             boss['flagId']!=rule['bossVictoryFlag'] or boss['victoryFlags']!=rule['victoryFlags'] or boss.get('commitAfterDialogue',False):
-                        raise ValueError('First hall battle flags or timing differ')
-                    if checked_span(reader,rule['sourceTypeInstruction'])!=bytes.fromhex('a99f') or \
-                            checked_span(reader,rule['setDialogueAndEventFlag'])!=bytes.fromhex('a9022078d3'):
-                        raise ValueError('First hall source or event2 instruction differs')
+                        raise ValueError('Hell hall battle flags or timing differ')
+                    if rule['eventArgument']!=2 or checked_span(reader,rule['sourceTypeInstruction'])!=bytes([0xa9,rule['sourceType']]) or \
+                            rule['sourceTypeInstruction']['cpuAddress']!=reader.word(10,0xd1e3+2*rule['eventId'])+12 or \
+                            checked_span(reader,rule['setDialogueAndEventFlag'])!=bytes([0xa9,rule['repeatMessage'],0x20,0x78,0xd3]):
+                        raise ValueError('Hell hall source or message/event instruction differs')
                 elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
             if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
@@ -944,10 +945,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     for barrier in evidence.get('sceneBarriers',[]):
         proof=load(ROOT/barrier['evidence']);rule=proof['rules'];raw=checked_span(reader,barrier['recordSource'])
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
-        if proof['romSha256']!=SHA256 or proof['scopeRevision']!='first-hall-event20-qin-victory-removes-246' or \
-                barrier['mapId']!=70 or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
+        if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246') or \
+                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
                 barrier['removedFlagId']!=rule['barrierRemovedFlag'] or barrier['cell']!=rule['barrierCell']:
-            raise ValueError('Original first hall collision actor differs')
+            raise ValueError('Original hell hall collision actor differs')
         for span in proof['sources']:checked_span(reader,span)
         name=next(m['scene'] for m in scene['maps']if m['id']==barrier['mapId']);data=json.loads(result[name])
         if cell[1]*data['width']+cell[0] not in data['dynamicObjectCells']:

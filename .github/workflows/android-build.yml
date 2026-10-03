@@ -452,3 +452,17 @@ jobs:
             artifacts/world-first-hall-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain scoped second hall normal battle and restart checkpoints
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-second-hall-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-second-hall-*.png
+            artifacts/checkpoint-ui/touch-ux-world-second-hall-*.json
+            artifacts/checkpoint-ui/world-second-hall-*.json
+            artifacts/checkpoint-ui/world-second-hall-*-test.txt
+            artifacts/world-second-hall-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14

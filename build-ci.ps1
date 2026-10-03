@@ -60,6 +60,10 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Village2 original services and definitions gates failed'}
     & python -m unittest discover -s tests -p test_world_first_hall_export.py
     if($LASTEXITCODE -ne 0){throw 'Original first hall content and state gates failed'}
+    & python -m unittest discover -s tests -p test_world_behavior1.py
+    if($LASTEXITCODE -ne 0){throw 'Original behavior1 special attack evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_second_hall_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original second hall content and independent state gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

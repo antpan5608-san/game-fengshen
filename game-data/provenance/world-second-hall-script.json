@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "second-hall-event21-chu-victory-removes-246",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "mapId": 60,
+    "npcId": "rom.npc.60.1",
+    "npcCell": [
+      27,
+      24
+    ],
+    "normalTalkCell": [
+      27,
+      26
+    ],
+    "normalTalkDirection": "UP",
+    "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+    "eventId": 21,
+    "eventArgument": 2,
+    "sourceType": 160,
+    "enemyId": 143,
+    "bossVictoryFlag": "rom.map.60.flag.2",
+    "victoryFlags": [
+      "rom.map.60.flag.4"
+    ],
+    "barrierRemovedFlag": "rom.map.60.flag.4",
+    "barrierCell": [
+      28,
+      22
+    ],
+    "barrierSpriteId": 246,
+    "firstMessage": 3,
+    "repeatMessage": 4,
+    "textGroup": 70,
+    "sourceTypeInstruction": {
+      "offset": 349106,
+      "length": 2,
+      "sha256": "9986600357edd58dd6a493cbf43ca60a4c5cf40636f155919730474453dac983",
+      "module": 10,
+      "cpuAddress": 54178,
+      "meaning": "Actual event21 LDAA0 source160"
+    },
+    "setDialogueAndEventFlag": {
+      "offset": 349127,
+      "length": 5,
+      "sha256": "3c372d2abdbab6e4f0be934de26b7208ec60defb2016776d291fadc3a23b5600",
+      "module": 10,
+      "cpuAddress": 54199,
+      "meaning": "Actual repeat message4 and CF29 event argument2"
+    },
+    "rewardTiming": "Common battle rewards then original flag0->4->6 before message4; keep dialogue durable; no join or extra reward."
+  },
+  "sources": [
+    {
+      "offset": 348701,
+      "length": 2,
+      "sha256": "87e9058a786ccf05f7d49cdce8ee962f10348230e902d231a7b90d45dca662af",
+      "module": 10,
+      "cpuAddress": 53773,
+      "meaning": "Original event21 pointerD396"
+    },
+    {
+      "offset": 349094,
+      "length": 12,
+      "sha256": "d3d591c2570c25816a333e056076a33bcb79d935fff6b120d47217650bed258f",
+      "module": 10,
+      "cpuAddress": 54166,
+      "meaning": "Original event21 phase dispatch"
+    },
+    {
+      "offset": 349106,
+      "length": 6,
+      "sha256": "ff0966772a8dece3f373f6715af4cffad74dcae95e481a71890bcda122bde8e0",
+      "module": 10,
+      "cpuAddress": 54178,
+      "meaning": "Actual source160 enters original common battle loader"
+    },
+    {
+      "offset": 349112,
+      "length": 21,
+      "sha256": "cb8440d5ee76edc5ad6610ee606a37302e26af922a0eb4f884187e2d7279b4eb",
+      "module": 10,
+      "cpuAddress": 54184,
+      "meaning": "Original win branch removes246 and sets message4/event2"
+    },
+    {
+      "offset": 349033,
+      "length": 37,
+      "sha256": "bd5d80df273ff23f475f2865c12c05fa8dfff20e646f3eed726df5a27c0f5aef",
+      "module": 10,
+      "cpuAddress": 54105,
+      "meaning": "Shared remove246 and OR original collision actor flag4"
+    },
+    {
+      "offset": 347961,
+      "length": 9,
+      "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Map flag OR current event argument2"
+    },
+    {
+      "offset": 10627,
+      "length": 169,
+      "sha256": "4bda88807fb9b2bf43a0aafe3c8f426bd972c36217888ba228eeef7978db92d2",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original NPC load-time flag filter"
+    },
+    {
+      "offset": 21787,
+      "length": 2,
+      "sha256": "fd1d9a1b0611c005a5f10c3c2b7f7861676d7ada8b6ba493e0c71a2a10092684",
+      "module": 0,
+      "cpuAddress": 54539,
+      "meaning": "Map60 original flag pointer073C"
+    },
+    {
+      "offset": 40787,
+      "length": 1,
+      "sha256": "5e37305c587caf07e99a08e1efd0749fd3bbbb855752e4d568ac2dbfc2025464",
+      "module": 1,
+      "cpuAddress": 40771,
+      "meaning": "Original source160 loads enemy143"
+    },
+    {
+      "offset": 279484,
+      "length": 14,
+      "sha256": "539508aeca56ef9e6f0b37de070389893075e905dd9b4c764c0957ca72653cfa",
+      "module": 8,
+      "cpuAddress": 50092,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279498,
+      "length": 14,
+      "sha256": "d9e04b7bbafe08a859a3aa933b829cf583b4b7a89acd28b2d6d7d750ce9ed2de",
+      "module": 8,
+      "cpuAddress": 50106,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279512,
+      "length": 14,
+      "sha256": "ea221c2a28d455966ba10b455c4a52e5b8fed298d6b2eabed58742fd1f68b6d3",
+      "module": 8,
+      "cpuAddress": 50120,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279526,
+      "length": 14,
+      "sha256": "8c29781960183aff26c0ae6efb685267abf84a89b6125fe99587fa164426f50b",
+      "module": 8,
+      "cpuAddress": 50134,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279540,
+      "length": 14,
+      "sha256": "e76a5b4d72def3850ac67cca7e41645016c663067af7b4844eb297c396342788",
+      "module": 8,
+      "cpuAddress": 50148,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279554,
+      "length": 14,
+      "sha256": "9178ecdab997447097e85b959ef9cbab8435a7205d70a049c1d7684cdf1a2dbd",
+      "module": 8,
+      "cpuAddress": 50162,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279568,
+      "length": 14,
+      "sha256": "719817c26476a378d30fc063e14e22862afcad8f61e77e318cdba4cf80b10cbb",
+      "module": 8,
+      "cpuAddress": 50176,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279582,
+      "length": 14,
+      "sha256": "23e2be1749e7f361eb809be1b21ac034c5efa67ae57cbb370a6fdeb273adb79b",
+      "module": 8,
+      "cpuAddress": 50190,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279596,
+      "length": 14,
+      "sha256": "11ad6b336aac360309c7523557d57ce750f3569325e7aa8919ca838bce01bb86",
+      "module": 8,
+      "cpuAddress": 50204,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 279610,
+      "length": 14,
+      "sha256": "a82e60ee9f4b0979e55f2b9f568a78a73df270a32f4f98dd7dd14952a6cb668a",
+      "module": 8,
+      "cpuAddress": 50218,
+      "meaning": "Fixed 14-byte NPC source record"
+    }
+  ],
+  "normalEvidence": {
+    "kind": "CONTINUATION_FROM_VERIFIED_ORIGINAL_SAVE",
+    "ramWrites": false,
+    "entry": "First hall normal exit23(43,75), 66 real steps/two natural escapes ->60(1,28), then real guard70/0",
+    "entryCaptureSha256": "5e82180a8ee35ec493d35a3cba82c528bc15503aa2014b2367f985748104f858",
+    "kingRoute": "Seven natural encounters caused real defeat before king; normal original king reach/victory NOT_RUN."
+  },
+  "controlledVictory": {
+    "kind": "CONTROLLED_POSITION_AND_BOSS_HP1_NOT_NORMAL_PLAY",
+    "fixtureModification": "King position uses isolated coordinate fixture; active enemyHPslot3 then set1; no reward/flag changes",
+    "writeTraceSha256": "badc788e235e483f6028d168fb0fd12ef8a63975460144937a72b18acca1acbe",
+    "moneyDelta": 380,
+    "experienceDeltaLivingActors": [
+      125,
+      125
+    ],
+    "flagSequence": [
+      0,
+      4,
+      6
+    ],
+    "repeatNoReward": true,
+    "repeatCaptureSha256": "0fa2c7dc816e2e8f201a5d7ef853879f6f1e2fb1eaf5fa67fd19587eb1aa0e47",
+    "exitScanCases": 8,
+    "exitScanReportSha256": "348c8227b98aca7b5532367a47f803f20bcc34fe31494300e7ceff90a3deaf67",
+    "controllerExit": "NOT_PASSED: coordinate-only fixture did not reach gate; scanner CPU result is separate, not normal movement proof."
+  },
+  "limits": [
+    "Normal original full-HP victory and Android second hall NOT_RUN.",
+    "King interaction point matched isolated controlled dispatch; normal approach still needs actual validation.",
+    "NPC3 original movement range not restored; optional colored-skull wait/secret event not restored.",
+    "Text other than normally observed guard remains pinned PROVISIONAL_REFERENCE; no invented economy or prerequisites."
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_CPU",
+  "mapId": 60,
+  "gridSha256": "35bc05d5db8e2308adceb550e1c0ee62347ba318badd1289ce6986e73c1de56c",
+  "mode": 0,
+  "bridgeState": 0,
+  "classCounts": {
+    "0": 234,
+    "1": 708,
+    "2": 4,
+    "3": 4,
+    "4": 1,
+    "5": 1,
+    "6": 1,
+    "7": 3,
+    "8": 1,
+    "9": 1,
+    "13": 1,
+    "23": 1
+  },
+  "blockedTargetClasses": [
+    1
+  ],
+  "source23VerticalBypassesTarget": true,
+  "sourceBlockedDirections": {
+    "2": [
+      3
+    ],
+    "3": [
+      4
+    ],
+    "4": [
+      1,
+      3
+    ],
+    "5": [
+      2,
+      3
+    ],
+    "6": [
+      1
+    ],
+    "7": [
+      2
+    ],
+    "8": [
+      1,
+      4
+    ],
+    "9": [
+      2,
+      4
+    ],
+    "23": [
+      3,
+      4
+    ]
+  },
+  "suppressedEncounterSourceClasses": [],
+  "directions": {
+    "1": "UP",
+    "2": "DOWN",
+    "3": "LEFT",
+    "4": "RIGHT"
+  },
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Original source collision dispatcher"
+    },
+    {
+      "offset": 19618,
+      "length": 199,
+      "sha256": "c20a8af0734ad0ad1747b2e45a71cf3992ae62788af9cc345f944ff7089e1041",
+      "module": 0,
+      "cpuAddress": 52370,
+      "meaning": "Tileset3 source table and direction branches"
+    },
+    {
+      "offset": 21028,
+      "length": 115,
+      "sha256": "fc726076185b454cb84a59fc1d05d3899ed7ff15afde7b7c3301b872aefa9f83",
+      "module": 0,
+      "cpuAddress": 53780,
+      "meaning": "Original four-way movement direction blockers"
+    },
+    {
+      "offset": 20037,
+      "length": 13,
+      "sha256": "227d6a70383d5e2c0abbcbde24697af6e3f84c018954fef8c9a505366ccf1f1a",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Original target dispatcher"
+    },
+    {
+      "offset": 20649,
+      "length": 153,
+      "sha256": "028a66c214d87469fc1161db986e50c24087eae0a0fa441cd0346489bdf1b9bf",
+      "module": 0,
+      "cpuAddress": 53401,
+      "meaning": "Tileset3 original target-plane dispatch"
+    },
+    {
+      "offset": 427536,
+      "length": 256,
+      "sha256": "3c85f30dfa82720af76da017ee0c90fbc5be07b6d64fd129dd415581eb2dc0bc",
+      "module": 13,
+      "cpuAddress": 34304,
+      "meaning": "Map23 tileset3 collision class table"
+    }
+  ],
+  "testCount": 576,
+  "failures": 0,
+  "scopeRevision": "map60-second-hall-ground-mode",
+  "controlledReportSha256": "5cb210ab8b2c90dd140f565d52bd6944f5dbecf69833a465cb6b18e4e447fb2c",
+  "limits": [
+    "Original CPU full class-pair matrix; nonadjacent fixtures, not Android acceptance.",
+    "Ground mode0 only, no unknown transport/layer inferred."
+  ],
+  "cpuExpectedPath": "android/app/src/test/resources/first-hall-terrain-cpu.tsv"
+}

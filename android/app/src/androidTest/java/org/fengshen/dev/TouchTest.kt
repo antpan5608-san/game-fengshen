@@ -2098,11 +2098,13 @@ class TouchTest:IsolatedGameTestCase(){
     // verified source checkpoints and scenario assertions differ.
     fun testNormalWorldFirstHallFromVerifiedHellVillageSave(){normalWorldStoryContinuation(false,true,false,true)}
     fun testWorldFirstHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false){
+    fun testNormalWorldSecondHallFromVerifiedFirstHallSave(){normalWorldStoryContinuation(false,true,false,false,true)}
+    fun testWorldSecondHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,false,true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2120,7 +2122,7 @@ class TouchTest:IsolatedGameTestCase(){
         val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
         var fights=0;var battleHerbs=0;var bossHerbs=0;var bossEntries=0
         var capturedBossAttack=false;var capturedBattleHerb=false
-        var capturedBossIce=false;var twoActorBattles=0;var twoActorVictories=0
+        var capturedBossIce=false;var capturedBossSpecial=false;var twoActorBattles=0;var twoActorVictories=0
         var lastMovementKey=Key.DOWN
         var training=false
         val battleField=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
@@ -2135,7 +2137,7 @@ class TouchTest:IsolatedGameTestCase(){
                 .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("bossEntries",bossEntries).put("bossAttackObserved",capturedBossAttack).put("bossHerbObserved",capturedBattleHerb)
-                .put("bossIceObserved",capturedBossIce).put("twoActorBattles",twoActorBattles)
+                .put("bossIceObserved",capturedBossIce).put("bossSpecialObserved",capturedBossSpecial).put("twoActorBattles",twoActorBattles)
                 .put("twoActorVictories",twoActorVictories).toString())
         }
         fun medicine(id:String,owner:String?=null){
@@ -2157,7 +2159,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall){
+            if(firstHall||secondHall){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2171,12 +2173,12 @@ class TouchTest:IsolatedGameTestCase(){
             var entered:OpeningBattle?=null
             instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)entered=battleField.get(v) as OpeningBattle}
             val initial=entered?:return;val beforeFight=v.currentSnapshot()
-            val boss=initial.enemies.any{it.definition.id==if(firstHall)142 else if(east)141 else 140};fights++
+            val boss=initial.enemies.any{it.definition.id==if(secondHall)143 else if(firstHall)142 else if(east)141 else 140};fights++
             if(initial.party.size==2){twoActorBattles++;state("two-actor-natural-encounter")}
             if(boss){
-                assertFalse("A completed cave story must never start again after cold restart",cold)
+                assertFalse("A completed story must never start again after cold restart",cold)
                 assertEquals("Only the original one-shot encounter may start",1,++bossEntries)
-                assertEquals(if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
+                assertEquals(if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
             val deadline=SystemClock.elapsedRealtime()+240000
@@ -2188,6 +2190,9 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue("Normal $label encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
                 assertTrue("Normal $label defeat; no state repair or forced victory permitted",fight.phase!=BattlePhase.DEFEAT)
                 val displayedAction=presentation.action
+                if(boss&&!capturedBossSpecial&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL){
+                    capturedBossSpecial=true;state("boss-original-special-action")
+                }
                 if(boss&&!capturedBossIce&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.ICE){
                     state("boss-ice-action");capturedBossIce=true
                 }
@@ -2321,6 +2326,48 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(secondHall){
+            assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+            for(flag in listOf("rom.map.70.flag.2","rom.map.70.flag.4"))assertEquals(true,source.flags[flag])
+            assertTrue(source.flags["rom.map.70.flag.2.dialogue.pending"]!=true)
+            val story=v.content.battle!!.storyBattles.getValue("rom.npc.60.1")
+            assertEquals(143,story.group.members.single().enemyId)
+            assertEquals(23,v.world.mapId)
+            if(cold){
+                assertTrue(source.flags[story.flagId]==true);assertTrue(source.flags["rom.map.60.flag.4"]==true)
+                assertTrue(source.flags[story.pendingFlag]!=true);state("cold-complete-party-flags-and-open-gate")
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).first{v.world.scene.probeFrom(v.world.x/16,v.world.y/16,it,v.world.terrainMode)==MovementBlock.NONE}
+                step(departure);walkTo(5,70);assertEquals(60,v.world.mapId)
+                assertEquals(28,v.world.x/16);assertEquals(22,v.world.y/16);state("cold-original-upper-door-reentry")
+                walkTo(27,26);val before=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+                val after=v.currentSnapshot();assertEquals(before.money,after.money);assertEquals(before.inventory,after.inventory)
+                assertEquals(before.characters,after.characters);assertEquals(before.flags,after.flags);assertEquals(0,bossEntries)
+                state("cold-king-repeat-no-second-battle-or-reward")
+                walkTo(28,22);assertEquals(23,v.world.mapId);checkSourceUnchanged();persistChecked()
+                state("cold-original-open-gate-and-continue");instrumentation.runOnMainSync{activity.finish()};return
+            }
+            assertTrue(source.flags[story.flagId]!=true);state("verified-normal-first-hall-source-no-state-grants")
+            walkTo(6,80);assertEquals(60,v.world.mapId);assertEquals(1,v.world.x/16);assertEquals(28,v.world.y/16)
+            state("normal-original-second-hall-entry")
+            assertEquals(MovementBlock.PHYSICAL,v.world.scene.blockType(28,22))
+            walkTo(6,28);val beforeGuard=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(beforeGuard.money,v.currentSnapshot().money);assertEquals(beforeGuard.inventory,v.currentSnapshot().inventory)
+            state("normal-original-second-hall-guard-dialogue")
+            walkTo(27,26);val beforeBoss=v.currentSnapshot();talk();assertEquals(GameView.Layer.BATTLE,v.layer)
+            finishFight();assertEquals(GameView.Layer.DIALOGUE,v.layer);state("normal-chu-victory-dialogue")
+            val won=v.currentSnapshot();assertEquals(beforeBoss.money+380,won.money);assertTrue(won.characters.all{it.hp>0})
+            for(actor in beforeBoss.characters)assertEquals(actor.experience+125,won.characters.single{it.id==actor.id}.experience)
+            assertTrue(won.flags[story.flagId]==true);assertTrue(won.flags["rom.map.60.flag.4"]==true)
+            assertTrue(won.flags[story.pendingFlag]==true);dialogue();assertEquals(GameView.Layer.MAP,v.layer)
+            assertTrue(v.currentSnapshot().flags[story.pendingFlag]!=true);assertNull(v.world.scene.check(28,22))
+            val paid=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(paid.money,v.currentSnapshot().money);assertEquals(paid.inventory,v.currentSnapshot().inventory)
+            assertEquals(paid.characters,v.currentSnapshot().characters);assertEquals(paid.flags,v.currentSnapshot().flags)
+            assertEquals(1,bossEntries);state("normal-king-repeat-no-duplicate-reward")
+            walkTo(28,22);assertEquals(23,v.world.mapId);assertEquals(5,v.world.x/16);assertEquals(70,v.world.y/16)
+            checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-second-hall-exit-saved");instrumentation.runOnMainSync{activity.finish()};return
         }
         if(firstHall){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
