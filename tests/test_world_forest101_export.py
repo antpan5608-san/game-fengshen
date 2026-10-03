@@ -1,5 +1,5 @@
 """Scoped forest input, original complete encounters and existing export path."""
-import copy,json,os,sys,unittest
+import collections,copy,json,os,sys,unittest
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
@@ -55,5 +55,54 @@ class Forest101ExportTests(unittest.TestCase):
             old=proof[field];proof[field]=value
             with patch.object(ex,'load',side_effect=load),self.assertRaises(ValueError):ex.export_from_base(self.base,self.path,self.pin,verify_target=False)
             proof[field]=old
+
+    def test_east_supply_requires_real_sea_and_cave_exits(self):
+        """Static route guard for v53's real failure; not normal App evidence."""
+        world=json.loads(self.result['scene.json'])
+        maps={m['id']:json.loads(self.result[m['scene']])for m in world['maps']}
+        # These are prerequisites already asserted at the same-candidate cave
+        # continuation load, not flags granted by this route or the UI.
+        flags={'rom.map.25.flag.1':True,'rom.map.25.flag.128':True,
+               'rom.map.85.flag.128':True}
+        def reachable(mid,start,target):
+            scene=maps[mid];width=scene['width'];enabled=set(scene['enabledCells'])
+            transitions=set(scene['transitionCells']);blocked=set(scene.get('dynamicObjectCells',[]))
+            for obj in world['mapObjects']:
+                rule=obj.get('itemTarget')
+                if obj['mapId']==mid and rule and flags.get(rule['removedFlagId']):
+                    x,y=obj['cell'];blocked.discard(y*width+x)
+            for rule in world['sceneBarriers']:
+                if rule['mapId']==mid and flags.get(rule['removedFlagId']):
+                    x,y=rule['cell'];blocked.discard(y*width+x)
+            doors={tuple(e['trigger'])for e in world['exits']if e['fromMapId']==mid and not e.get('direction')}
+            queue=collections.deque([start]);seen={start}
+            while queue:
+                x,y=queue.popleft()
+                if (x,y)==target:return True
+                source=scene['collision'][y*width+x]
+                for key,dx,dy in [('UP',0,-1),('DOWN',0,1),('LEFT',-1,0),('RIGHT',1,0)]:
+                    point=(x+dx,y+dy);nx,ny=point;index=ny*width+nx
+                    if not(0<=nx<width and 0<=ny<scene['height'])or point in seen:continue
+                    category=scene['collision'][index]
+                    if index not in enabled or index in blocked:continue
+                    if category not in scene['walkableClasses']and index not in transitions:continue
+                    if key in scene.get('sourceEdges',{}).get(str(source),[])or key in scene.get('targetEdges',{}).get(str(category),[]):continue
+                    if point!=target and point in doors:continue
+                    seen.add(point);queue.append(point)
+            return False
+        self.assertFalse(reachable(16,(191,102),(214,110)))
+        legs=[(16,(191,102),(186,102),25,(26,14)),
+              (25,(26,14),(53,30),16,(213,118)),
+              (16,(213,118),(212,114),85,(30,29)),
+              (85,(30,29),(2,2),16,(215,106)),
+              (16,(215,106),(214,110),25,(54,22)),
+              (25,(54,22),(49,21),95,(13,29))]
+        for mid,start,target,next_map,spawn in legs:
+            self.assertTrue(reachable(mid,start,target),(mid,start,target))
+            matching=[e for e in world['exits']if e['fromMapId']==mid and tuple(e['trigger'])==target]
+            self.assertEqual(1,len(matching))
+            self.assertEqual((next_map,spawn),(matching[0]['toMapId'],tuple(matching[0]['spawn'])))
+        flags.pop('rom.map.25.flag.1')
+        self.assertFalse(reachable(25,(26,14),(53,30)))
 
 if __name__=='__main__':unittest.main()

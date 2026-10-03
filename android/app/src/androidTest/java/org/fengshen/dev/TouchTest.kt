@@ -3106,7 +3106,18 @@ class TouchTest:IsolatedGameTestCase(){
             leaveService(store);inn(1);state("normal-preparation-purchased-and-saved")
             // The east palace is on the separate eastern sea component.
             // Enter through its observed original mainland door, not across coral.
-            walkTo(15,29);step(Key.DOWN);walkTo(214,110);assertEquals(25,v.world.mapId)
+            walkTo(15,29);step(Key.DOWN)
+            // Village1 and the east doorway are separate mainland components.
+            // Retrace the already completed original sea/cave passage; a single
+            // same-map BFS cannot traverse these independent exits.
+            walkTo(186,102);assertEquals(25,v.world.mapId)
+            walkTo(53,30);assertEquals(16,v.world.mapId)
+            walkTo(212,114);assertEquals(85,v.world.mapId)
+            walkTo(2,2);assertEquals(16,v.world.mapId)
+            assertEquals(true,v.currentSnapshot().flags[caveFlag])
+            assertTrue(v.currentSnapshot().flags[caveFlag+".dialogue.pending"]!=true)
+            state("normal-supply-return-through-original-sea-and-completed-cave")
+            walkTo(214,110);assertEquals(25,v.world.mapId)
             assertEquals(54,v.world.x/16);assertEquals(22,v.world.y/16)
             walkTo(49,21);assertEquals(95,v.world.mapId)
             assertEquals(13,v.world.x/16);assertEquals(29,v.world.y/16);assertEquals(lastMovementKey,v.world.direction)

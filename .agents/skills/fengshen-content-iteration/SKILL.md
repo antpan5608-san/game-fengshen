@@ -253,3 +253,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 - 原PHA/PHA/RTS分派表存目标地址减一，不能在表值处直接模拟后就宣布所有类别可走。forest101实际树格按键被阻挡，完整源/目标分派144矩阵验证后复用Scene.sourceEdges；world-forest101-terrain保留原跨度、实际键序列和失败入口解释。树墙、source3横向约束与sprite遮挡分别处理，不将遮挡值当遇敌控制。
 - 原完整zone/group loader和observed_graphic_recipe已取得两种森林敌人全部图块/实际RGBA；区域/组数按目标ROM验证后才扩probe-world-enemy的有限计数。局部导出4方法、完整世界回归、JVM/仪器编译、真实autocrlf checkout与ci_apk.restore空assets目录逐字节已运行。restore的destination就是assets目录，不能再附android路径；normalApp/外部冷启须等同候选runner实际结果，不能由编译宣称成功。
+
+- 单个地图的静态寻路失败先核连通组件与原独立出口，不能放宽墙。test_world_forest101_export中的补给返回测试已实际验证海域/洞窟六腿及未消漩涡反例；Content.sceneForState按已有合法flag去除物品目标，离线几何测试必须同样应用它，不能将基底dynamicObjectCells的漩涡误认永久墙。正常多地图App驱动仍须原同产物runner执行，静态PASS不等于正常路线PASS。

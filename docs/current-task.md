@@ -17,7 +17,16 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T16:12Z）
+## 当前有效状态（2026-10-03T17:04Z）
+
+- 总任务WORLD-FULL-01继续F3/F4，生产仍v27/c14，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。本树已保存c35来源e0ed566：199文件/34地图、manifest 0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991；可信v27父链/旧媒体字节不变。本次仅修东海正常驱动，不改变内容hash。
+- v53/run37128387307来源c552900a签名构建通过，实际runtime在东海准备完后失败：map16无法同地图寻路至214,110。该村庄与东海门口原本不连通；已改为16(186,102)→25(26,14)，穿过已合法消除漩涡的海域→53,30→16(213,118)→洞85南口212,114→北口2,2→16(215,106)→东侧214,110，不开墙、不设flag、不传送。新增静态6腿/关闭漩涡反例测试PASS（8.618秒），全259 JVM/0失败错误跳过与仪器编译PASS；正常新App复测仍待原CI。
+- v53实际普通触控/F0、南海、海底北区、西海、村1、北海、洞85和各自外部冷启PASS；东海失败后地府/转世/村3/医馆未执行，不把早段PASS替代完整门禁。签名APK独立SHA a7b8b371a1d26f13c79c38157edd75ba501c96827fa1274db7797072b3f8208c；失败东海artifact11278903213已取回，真实正常准备到13级、购装/草/付费住宿可追溯，没有Boss胜利画面。
+- 森林101桥/actor条件/完整区16/17原数据保留，144原森林CPU与实际原按键、147世界Python/259 JVM/严格空目录恢复/实际LF checkout已通过；新增森林正常App与声音/一加13T仍NOT_RUN。房间171已受控原输入核实玉鼎真人181.0/1/2/5及返回；07C8条件后原授特殊物19玉佩，已有时不重复授物，当前尚未打包，关键容量/用法/杨戬入队继续核定。
+- 实际inspect37138652158于16:56:21.218UTC查询可信27/26=1377/2289事件、普通真机6会话/模拟器0/测试0/清理0；仍旧v26下载ProtocolException一条，根因UNCONFIRMED、原发布门槛不绕。后续候选沿原build/runtime/审核同产物；正式无新发布。
+- 下一实际动作：冻结本次修正与c35原CI候选；独立继续原神木四层107–110实际入口/完整区19/杨戬NPC条件，尚未取得的正常运行不写PASS。原107入口表是16(170,149)，返回169,149不同，受控169,149误尝试失败保留；入口对象条件不得删除或设flag绕过。
+
+## 历史有效状态（2026-10-03T16:12Z）
 
 - WORLD-FULL-01持续F3/F4；正式v27/c14、分母UNKNOWN、ALL_MAPS_USABLE=NO不变。冻结main/c552900a的v53/c32/run37128387307仍runtime执行；原签名APK独立核验已通过，不把构建/本地验包当App或发布通过，不推main改变来源。
 - work/world-after-medical在359da95/c34之后实际接入forest101：c35、199文件、34地图，manifest 0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991。仍用审核v27固定APK递归恢复，旧媒体字节不变；新2张敌人图逐块CHR/实际RGBA匹配。原森林名称UNKNOWN、没有假捷径或改monster数值。
