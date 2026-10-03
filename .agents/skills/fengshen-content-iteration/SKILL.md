@@ -237,3 +237,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 同名室内不保证同碰撞profile/palette；真实医馆控制按键证明床边class5可以横移，套村庄方向规则曾被原导出guard拒绝。只核当前地图实际tileset/移动/墙/NPC，再形成局部定义；不能移除guard或泛化未知场景。默认palette须逐32项核实际淡入完成结果，不强制所有零色相同。
 - 菜单必须执行到真实收费/状态写入阶段；只到价格提示未治疗，第三项实际退出。独立原向量用效果确认时RAM，不能把后续通用菜单清理混作药效。活跃CPU逐bank与匹配ROM比较，不能用对白后的切回bank。world-clinic-rules记录受控范围/原向量SHA，ClinicRevivalTest/ClinicCareTest与test_world_clinic_export已实际通过；不宣称正常死队友复活已运行。
 - 递归父配方新增可选schema只在非空时写入，避免空clinics改变已审核历史manifest。真实autocrlf checkout已扩验父链JSON/医馆TSV，严格空目录ci_apk.restore与本地目标逐字节一致。正常临床UI和患者分项尚待原runner；无真实患者记NOT_RUN，不为验收制造病症。
+
+- 新增父配方测试也必须逐处显式UTF-8读取；真实Windows村3setUp曾遗漏导致0方法执行。四处修复后，在隔离Path.open缺省cp1252下实际执行村3/医馆八方法成功，保留原hash/反向断言。Linux全量通过不能代替Windows默认编码检查。
