@@ -20,7 +20,7 @@ class ContentTest:IsolatedGameTestCase(){
         for(mid in listOf(61,62,63,64,65,66)){
             val barrier=c.sceneBarriers.single{it.mapId==mid}
             assertEquals(MovementBlock.PHYSICAL,c.sceneForState(mid,emptyMap())!!.blockType(barrier.x,barrier.y))
-            val boss=battle.storyBattles.getValue("rom.npc.$mid.1")
+            val boss=c.npcs.filter{it.mapId==mid}.mapNotNull{battle.storyBattles[it.id]}.single()
             val won=boss.rewardFlags(mapOf("unrelated" to true))
             assertTrue(won[barrier.removedFlagId]==true)
             assertNull(c.sceneForState(mid,won)!!.check(barrier.x,barrier.y))

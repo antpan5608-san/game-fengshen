@@ -209,3 +209,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原CPU派生TSV的字节hash不能依赖宿主Git默认换行；Windows core.autocrlf曾使严格恢复拒绝。仓库*.tsv固定text eol=lf，test_world_evidence_checkout.py在隔离Git仓库启用autocrlf真实checkout后逐字节比原表及blob已成功；保持所有SHA门禁，不通过读取时静默忽略差异来放宽。修复后的Windows runner仍须实际执行。
 
 - 新普通箱接入时，Loader能力检查与WorldItems原交易复用同一supportsTreasure；不继续沿用旧“所有宝箱都是special11”的样本假设，也不删除amount/稳定ID/maxCount/flag和categoryGrant来源门禁。旧定海珠无categoryGrant仍走原专用规则；72原CPU grant边界和238全JVM本地通过，仪器编译通过。真实App加载修复需原候选ContentTest及正常开箱另验。
+
+- 同类剧情NPC索引不保证相同：某殿首条是守卫而王在idx2。测试及正常驱动应按当前地图NPC和storyBattles的稳定npcId唯一绑定，不硬编码idx1；原记录、奖励和门旗标断言保留。实际Content失败说明需查绑定，不能改ROM数据迁就测试；新驱动编译/实际runner结果分开记录。
