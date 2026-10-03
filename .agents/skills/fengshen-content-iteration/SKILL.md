@@ -239,3 +239,19 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 递归父配方新增可选schema只在非空时写入，避免空clinics改变已审核历史manifest。真实autocrlf checkout已扩验父链JSON/医馆TSV，严格空目录ci_apk.restore与本地目标逐字节一致。正常临床UI和患者分项尚待原runner；无真实患者记NOT_RUN，不为验收制造病症。
 
 - 新增父配方测试也必须逐处显式UTF-8读取；真实Windows村3setUp曾遗漏导致0方法执行。四处修复后，在隔离Path.open缺省cp1252下实际执行村3/医馆八方法成功，保留原hash/反向断言。Linux全量通过不能代替Windows默认编码检查。
+
+
+- 大陆桥不能套村庄方向profile：原foot source15限制左右、16限制上下，target通行另核。world-continent-bridges固定真实按键与144原CPU输出，ContinentBridgeTest和test_world_continent_bridge_export已实际验证；同批保留完整原区16十九组和三个原整组图形，不仅开放路而漏遇敌。现有probe-world-enemy只增已核zone/count参数与显式退出，旧路径不变。原actor0406/0408已经是世界坐标，重复加camera曾失败；旧长按回村源实际165而非160，需核源RAM，失败不能提升为路线证据。
+- 新局部配方的旧测试读固定父golden，原ci_apk.restore空目录逐字节核195文件成功；140全世界Python/257 JVM/真实autocrlf checkout已执行。新增正常桥/自然遇敌驱动仅编译，App和声音待原同产物runner，不把新内容静态校验写成正常可玩。
+
+
+- 静态可走格不能替代原actor条件：map16六record的0:A973加载过滤1536原CPU向量已用于ContinentBarrierTest和局部导出；复用SceneBarrier，不设旗标/移除原挡路对象。某对象位于桥类别16，须保留已核foot规则而非只认0/2。test_world_continent_barrier_export首轮旧scene省略空dynamicObjectCells导致读取错误，改合法空默认并保留六对象完整断言；143全世界Python/258 JVM/真实LF checkout/空目录恢复已成功。App条件路线仍待同产物runner。
+- 原ci_apk.py verify需显式--output路径；只漏该参数时在写receipt失败，不能称签名不符。实际取回同源不可变签名artifact后，核receipt来源/run/完整SHA，再在对应冻结内容pin树verify成功；不把签名构建或字节验包当正常运行/发布。
+
+
+## 已验证的森林分派校正
+
+- 原PHA/PHA/RTS分派表存目标地址减一，不能在表值处直接模拟后就宣布所有类别可走。forest101实际树格按键被阻挡，完整源/目标分派144矩阵验证后复用Scene.sourceEdges；world-forest101-terrain保留原跨度、实际键序列和失败入口解释。树墙、source3横向约束与sprite遮挡分别处理，不将遮挡值当遇敌控制。
+- 原完整zone/group loader和observed_graphic_recipe已取得两种森林敌人全部图块/实际RGBA；区域/组数按目标ROM验证后才扩probe-world-enemy的有限计数。局部导出4方法、完整世界回归、JVM/仪器编译、真实autocrlf checkout与ci_apk.restore空assets目录逐字节已运行。restore的destination就是assets目录，不能再附android路径；normalApp/外部冷启须等同候选runner实际结果，不能由编译宣称成功。
+
+- 单个地图的静态寻路失败先核连通组件与原独立出口，不能放宽墙。test_world_forest101_export中的补给返回测试已实际验证海域/洞窟六腿及未消漩涡反例；Content.sceneForState按已有合法flag去除物品目标，离线几何测试必须同样应用它，不能将基底dynamicObjectCells的漩涡误认永久墙。正常多地图App驱动仍须原同产物runner执行，静态PASS不等于正常路线PASS。

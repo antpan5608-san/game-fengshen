@@ -505,5 +505,15 @@ jobs:
             artifacts/checkpoint-ui/world-medical-*.json
             artifacts/checkpoint-ui/world-medical-*-test.txt
             artifacts/world-medical-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-continent-bridge-*.png
+            artifacts/checkpoint-ui/touch-ux-world-continent-bridge-*.json
+            artifacts/checkpoint-ui/world-continent-bridge-*.json
+            artifacts/checkpoint-ui/world-continent-bridge-*-test.txt
+            artifacts/world-continent-bridge-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-forest101-*.png
+            artifacts/checkpoint-ui/touch-ux-world-forest101-*.json
+            artifacts/checkpoint-ui/world-forest101-*.json
+            artifacts/checkpoint-ui/world-forest101-*-test.txt
+            artifacts/world-forest101-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

@@ -1,0 +1,465 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "scopeRevision": "preserve-six-original-continent-collision-actors",
+  "baseManifestSha256": "b2ec777036fb67044649673fa14f19ba5c022387e28a78fc4bbeff6bb7a29095",
+  "baseExport": {
+    "pinPath": "ci/golden-world-continent-bridge-content.json",
+    "pinSha256": "9b262dc9b0926feb4b9b0267d3971a3a741bad2c9173ec99236d3077cbb4b9ee",
+    "provenanceSha256": "8a468de8543d589dd1440714e6eb55f3e9190bf6687b5922b3b9b9c54489ae7b",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "ruleRanges": [],
+  "maps": [],
+  "exits": [],
+  "npcs": [],
+  "dialogues": [],
+  "shops": [],
+  "inns": [],
+  "items": [],
+  "serviceBindings": [],
+  "sceneBarriers": [
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.244",
+      "mapId": 16,
+      "cell": [
+        145,
+        156
+      ],
+      "removedFlagId": "rom.map.16.flag.1",
+      "recordSource": {
+        "offset": 280050,
+        "length": 14,
+        "sha256": "a73c855726fc0f79d1c6be006d3ed01b0657794a7ca4f18b5fcb8f09be917ebf",
+        "module": 8,
+        "cpuAddress": 50658,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    },
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.231",
+      "mapId": 16,
+      "cell": [
+        170,
+        148
+      ],
+      "removedFlagId": "rom.map.16.flag.2",
+      "recordSource": {
+        "offset": 280064,
+        "length": 14,
+        "sha256": "03ee839ef260658818ba169079e73514906c40158605b2786863b74060bda1d5",
+        "module": 8,
+        "cpuAddress": 50672,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    },
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.232",
+      "mapId": 16,
+      "cell": [
+        170,
+        149
+      ],
+      "removedFlagId": "rom.map.16.flag.4",
+      "recordSource": {
+        "offset": 280078,
+        "length": 14,
+        "sha256": "76be2be1f5eba2bd5b1af732e55cead466773104ca412f16367e39c4f73d3dbd",
+        "module": 8,
+        "cpuAddress": 50686,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    },
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.241",
+      "mapId": 16,
+      "cell": [
+        222,
+        150
+      ],
+      "removedFlagId": "rom.map.16.flag.8",
+      "recordSource": {
+        "offset": 280092,
+        "length": 14,
+        "sha256": "46bfa5092eaf88eaf769c95c33a70309c0ebcfed2c389c14869291e5dd9c69eb",
+        "module": 8,
+        "cpuAddress": 50700,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    },
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.242",
+      "mapId": 16,
+      "cell": [
+        222,
+        151
+      ],
+      "removedFlagId": "rom.map.16.flag.16",
+      "recordSource": {
+        "offset": 280106,
+        "length": 14,
+        "sha256": "4ca737c9718dac50042d560f4a442e574f55250dc01640bd608ed36252e2a844",
+        "module": 8,
+        "cpuAddress": 50714,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    },
+    {
+      "kind": "CONTINENT_ACTOR_FILTER",
+      "id": "rom.barrier.16.243",
+      "mapId": 16,
+      "cell": [
+        222,
+        152
+      ],
+      "removedFlagId": "rom.map.16.flag.32",
+      "recordSource": {
+        "offset": 280120,
+        "length": 14,
+        "sha256": "0bd8020461b49e4f2c6f65ff687924eb5898c16d43ef040c3667ff32547b0f2b",
+        "module": 8,
+        "cpuAddress": 50728,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-continent-actor-barriers.json"
+    }
+  ],
+  "limits": [
+    "Original six world actors remain until actual map16 flags; unlock events not inferred.",
+    "Original physical blockers distinguish original condition from development boundary.",
+    "Normal Android current checkpoint not yet run."
+  ]
+}

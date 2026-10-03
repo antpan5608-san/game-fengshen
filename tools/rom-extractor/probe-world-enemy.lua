@@ -1,6 +1,7 @@
 -- CONTROLLED BOSS FIXTURE; encounter zone/group injected, not normal play.
 local root=assert(os.getenv('FENGSHEN_ROOT'));local zone=tonumber(assert(os.getenv('WORLD_ENEMY_ZONE')));local group=tonumber(assert(os.getenv('WORLD_ENEMY_GROUP')))
-assert(zone==4 and group>=0 and group<14)
+local verifiedCounts={[4]=14,[16]=19,[17]=13}
+assert(verifiedCounts[zone] and group>=0 and group<verifiedCounts[zone])
 local out=root..'/private-derived/world-enemy-zone-'..zone..'-group-'..group..'/'
 local frame=0;local banks={63,63,63,63};local injected=false;local lastphase=-1;local ticks=0
 local function word(a)return memory.readbyte(a)+256*memory.readbyte(a+1)end
@@ -43,4 +44,5 @@ for t=1,3000 do
  if t==2400 or t==2700 then snap('frame-'..t)end
  if ticks>=14 then break end
 end
-snap('final');log:close();mapper:close();local f=assert(io.open(out..'done.txt','w'));f:write('CONTROLLED zone/group fixture, original full-group loader; no normal-play claim');f:close();emu.pause()
+snap('final');log:close();mapper:close();local f=assert(io.open(out..'done.txt','w'));f:write('CONTROLLED zone/group fixture, original full-group loader; no normal-play claim');f:close()
+if os.getenv('WORLD_ENEMY_EXIT')=='1' then emu.exit() else emu.pause() end

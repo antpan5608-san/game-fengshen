@@ -828,6 +828,28 @@ def validate_world_clinic_definition(reader,clinic):
         raise ValueError('Medical definition, actor or available operations differ')
     return p
 
+def validate_continent_foot_bridges(reader,proof_path):
+    proof=load(ROOT/proof_path)
+    original=extract_map(reader,16)
+    required={(0,0xcab5,117),(0,0xcf44,22),(0,0xd031,71),(0,0xd257,18),
+              (0,0xcaa5,16),(0,0xce42,16)}
+    if proof_path!='game-data/provenance/world-continent-bridges.json' or \
+            (proof['romSha256'],proof['mapId'],proof['tilesetId'],proof['scopeRevision'])!= \
+            (SHA256,16,1,'continent16-foot-bridges-no-transport-state') or \
+            original['tilesetId']!=1 or proof['mapGridSha256']!=original['gridSha256'] or \
+            proof['activeCpuSha256']!=digest(reader.read(0,0x8000,32768)) or \
+            proof['standingClasses']!=[0,2,15,16] or \
+            proof['sourceEdges']!={'15':['LEFT','RIGHT'],'16':['UP','DOWN']} or proof['targetEdges'] or \
+            proof['transportFlags']!={'6812':0,'6813':0,'6815':0} or \
+            proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+        raise ValueError('Continent bridges lack original foot/direction evidence')
+    for span in proof['sources']:checked_span(reader,span)
+    raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+    if digest(raw)!=proof['cpuExpectedSha256'] or len(raw.splitlines())!=145:
+        raise ValueError('Continent bridge CPU expectations differ')
+    return proof
+
 def validate_world_exit_geometry(scene,result):
     """Match the existing loader's gate-open placement check before signing.
 
@@ -894,6 +916,23 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        forest=recipe.get('forestCollisionEvidence')
+        if forest:
+            proof=load(ROOT/forest)
+            required={(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
+            if forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+                    proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
+                    proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
+                    proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
+                    proof['sourceEntry']!=0xcdc0 or proof['targetEntry']!=0xd197 or \
+                    set(collision)!={0,1,3,7,8,9} or allowed!=[0,3,7,8,9] or \
+                    proof['sourceEdges']!={'3':['LEFT','RIGHT']} or proof['targetEdges']!={} or \
+                    {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
+                raise ValueError('Forest foot movement lacks its complete original RTS-dispatch scope')
+            for span in proof['sources']:checked_span(reader,span)
+            if proof['activeCpuSha256']!=digest(reader.read(0,0x8000,0x8000)) or \
+                    digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
+                raise ValueError('Forest original CPU expectations or active bank differ')
         data={'schemaVersion':1,'version':target_pin['contentVersion'],'channel':'development',
             'originalMapId':mid,'width':original['width'],'height':original['height'],
             'tileSize':16,'logicalWidth':256,'logicalHeight':240,'grid':grid,'collision':collision,
@@ -902,6 +941,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if forest:
+            data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
         if recipe.get('unavailableRegions'):
             proof=load(ROOT/recipe['unavailableRegionEvidence'])
             if proof['romSha256']!=SHA256 or proof['zone8']['mapId']!=mid:
@@ -1194,6 +1235,20 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         extend_world_characters(reader,scene,combat,evidence.get('additionalCharacters',[]),overlay)
         result['combat.json']=encoded(combat)
     for patch in evidence.get('sceneCapabilityUpdates',[]):
+        if patch.get('kind')=='CONTINENT_FOOT_BRIDGES':
+            proof=validate_continent_foot_bridges(reader,patch['evidence'])
+            if patch['mapId']!=16 or patch['implementedCapabilities']!=['FOOT_BRIDGE15','FOOT_BRIDGE16','ORIGINAL_ZONE16'] or \
+                    not overlay or not any(z['mapId']==16 and z['id']==16 for z in overlay['zones']):
+                raise ValueError('Continent bridge change must retain its actual full encounter zone')
+            name=next(m['scene']for m in scene['maps']if m['id']==16);data=json.loads(result[name])
+            if data['walkableClasses']!=[0,2] or data.get('sourceEdges') or data.get('targetEdges') or data.get('terrain'):
+                raise ValueError('Continent bridge parent differs from reviewed foot state')
+            data['walkableClasses']=proof['standingClasses']
+            data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
+            data['enabledCells']=sorted(set(data['enabledCells'])|{i for i,c in enumerate(data['collision'])if c in (15,16)})
+            data.setdefault('source',{})['footBridgeEvidence']=patch['evidence']
+            result[name]=encoded(data)
+            continue
         if patch['mapId']!=25 or not overlay:raise ValueError('Scene capability update lacks implemented encounters')
         zone=next(z for z in overlay['zones'] if z['id']==4)
         name=next(m['scene'] for m in scene['maps'] if m['id']==patch['mapId']);data=json.loads(result[name])
@@ -1403,6 +1458,35 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
     for barrier in evidence.get('sceneBarriers',[]):
+        if barrier.get('kind')=='CONTINENT_ACTOR_FILTER':
+            from forensics.fengshen246 import extract_npcs
+            proof=load(ROOT/barrier['evidence']);original=extract_npcs(reader,16)['records']
+            if barrier['evidence']!='game-data/provenance/world-continent-actor-barriers.json' or \
+                    (proof['romSha256'],proof['scopeRevision'],proof['mapId'],proof['flagAddress'],proof['cpuCaseCount'],proof['cpuFailures'])!= \
+                    (SHA256,'continent16-six-original-flag-filtered-collision-actors',16,0x710,1536,0) or \
+                    reader.word(0,0xd493+32)!=0x710 or len(original)!=6:
+                raise ValueError('World collision actor filter lacks original scoped evidence')
+            if {(v['module'],v['cpuAddress'],v['length'])for v in proof['sources']}!={(0,0xa973,75)}:
+                raise ValueError('Original actor-filter routine differs')
+            for span in proof['sources']+[proof['flagPointer'],proof['npcListSource']]:checked_span(reader,span)
+            table=(ROOT/proof['cpuExpectedPath']).read_bytes()
+            if digest(table)!=proof['cpuExpectedSha256'] or len(table.splitlines())!=1537:
+                raise ValueError('Original world collision-actor CPU table differs')
+            index=next((n['index']for n in original if n['range']==barrier['recordSource']),None)
+            if index is None:raise ValueError('World blocker is not an original map16 actor')
+            raw=checked_span(reader,barrier['recordSource']);cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
+            if (barrier['mapId'],barrier['cell'],raw[0],raw[13],barrier['removedFlagId'])!= \
+                    (16,cell,[244,231,232,241,242,243][index],1<<index,f'rom.map.16.flag.{1<<index}') or \
+                    barrier['id']!=f'rom.barrier.16.{raw[0]}' or raw[1:3]!=b'\xff\xff':
+                raise ValueError('World blocker identity/cell/flag differs')
+            name=next(m['scene']for m in scene['maps']if m['id']==16);data=json.loads(result[name])
+            i=cell[1]*data['width']+cell[0]
+            if not(0<=cell[0]<data['width'] and 0<=cell[1]<data['height']) or data['collision'][i]not in (0,2,15,16):
+                raise ValueError('Original world blocker has invalid foot geometry')
+            data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{i});result[name]=encoded(data)
+            if any(b['id']==barrier['id']for b in scene.get('sceneBarriers',[])):raise ValueError('Duplicate original world blocker')
+            scene.setdefault('sceneBarriers',[]).append(barrier)
+            continue
         batch=barrier['evidence']=='game-data/provenance/world-hell-hall-batch-script.json'
         proof=load(ROOT/barrier['evidence'])
         rule=validate_world_hall_batch_script(reader,barrier['mapId']) if batch else proof['rules']

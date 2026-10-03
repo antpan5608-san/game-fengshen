@@ -1,0 +1,945 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER_NOT_NORMAL_PLAY",
+  "zoneId": 16,
+  "selectedGroup": 3,
+  "licenseStatus": "UNKNOWN",
+  "groupSource": {
+    "id": 3,
+    "entities": [
+      {
+        "slot": 1,
+        "sourceType": 59,
+        "enemyId": 36
+      },
+      {
+        "slot": 3,
+        "sourceType": 58,
+        "enemyId": 35
+      },
+      {
+        "slot": 4,
+        "sourceType": 57,
+        "enemyId": 37
+      }
+    ],
+    "rawHex": "023b043a053900",
+    "duplicateSlots": [],
+    "pointer": {
+      "offset": 44291,
+      "length": 2,
+      "sha256": "d1075128c61162e2c84ddb85701fda406682258a50eb1936754aa27ee3c7b0d1",
+      "module": 1,
+      "cpuAddress": 44275,
+      "meaning": "Original encounter group pointer"
+    },
+    "range": {
+      "offset": 46526,
+      "length": 7,
+      "sha256": "5ea97c2278ba70bfdfeacaefa351f8af6e0d846bb0b3e094066477426850c0f8",
+      "module": 1,
+      "cpuAddress": 46510,
+      "meaning": "Original slot/source pairs, 00 terminated"
+    }
+  },
+  "actualEnemyInstances": [
+    {
+      "slot": 1,
+      "enemyId": 36,
+      "hp": 173
+    },
+    {
+      "slot": 3,
+      "enemyId": 35,
+      "hp": 184
+    },
+    {
+      "slot": 4,
+      "enemyId": 37,
+      "hp": 221
+    }
+  ],
+  "captureRamSha256": "07f4c98a0b46edd1691425afeb6a991f205485b7b151435f6a8e29b9c28d45c6",
+  "captureSramSha256": "2feeee426df78d5ff5199ffdde4c5e3497fbc28c45422ee2fe33fe9da8e6d840",
+  "graphics": {
+    "36": {
+      "width": 32,
+      "height": 48,
+      "observedRect": [
+        48,
+        72,
+        32,
+        48
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          170,
+          0
+        ],
+        "3": [
+          130,
+          0,
+          243
+        ],
+        "2": [
+          243,
+          190,
+          60
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 841984,
+          "length": 16,
+          "sha256": "cd1be7e1470fb38eaddc0f06702a63d59b48a51093311d8aac78582e9cdd2bd2"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 842000,
+          "length": 16,
+          "sha256": "4d017fa9db91006e2ac3539e74ace631ca5acb27c2245185f7f009e493be5d78"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 842016,
+          "length": 16,
+          "sha256": "40a019fd7b2d1eb43fcfd44cf26f70e4fdab0f8c958442f12dcd680312376a2d"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 842128,
+          "length": 16,
+          "sha256": "884818d6b84b71e2665a3279648c806d73053f8951e1e98162953aac721fb211"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 842144,
+          "length": 16,
+          "sha256": "040cdc39f89579277b54c31755bae39eef6bd40cdcb8342af745898e701135db"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 842160,
+          "length": 16,
+          "sha256": "d2d82f9553d0afcf4fc9452b574561e5550c6438dd27cf5b951f863952f7e5da"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 842176,
+          "length": 16,
+          "sha256": "7f0589581916ca623cca1c811a0e2e3ac8d6b4977074b09d4cc951ebdfaa78f5"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 842272,
+          "length": 16,
+          "sha256": "2ef4eaf85c815f8288f1bbebf6eb76ad89406c300a603875b7b7399ec1695fa3"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 842288,
+          "length": 16,
+          "sha256": "4e63656f97df439354a1ee8e56b5f26bf44ac998c0fe1ee501ea1a91366e42ab"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 842304,
+          "length": 16,
+          "sha256": "6a274b2c665d5bda681e98879d27b1cbe34cd51fbc1fcc2b3df56cfe76949955"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 842320,
+          "length": 16,
+          "sha256": "9905f1b6e8be192e72b5f5b25f7f88a1abffe507baa14aefecacc9023d5bc067"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 842368,
+          "length": 16,
+          "sha256": "93f93a7f3dc8a8ee67c0394181114bba3fd02d25944480c79e3f9fbf5eb14168"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 842384,
+          "length": 16,
+          "sha256": "777f300b4780677b759b919cb3112feae727c5a80c703d83a1021eac4575e398"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 842400,
+          "length": 16,
+          "sha256": "e42c50e4e29eaa6e587403fbead0a359d9016185b9c97056a09c9ab617b29414"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 842416,
+          "length": 16,
+          "sha256": "56126da0238cf0400958bd2fe09c48280f89e1bd0b1cc2893c99757d0ac12f0f"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 842480,
+          "length": 16,
+          "sha256": "7406378194c8209d98f99997d4d4e1fa783f95d430ab28ad5a0be79d893be3fb"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 842496,
+          "length": 16,
+          "sha256": "a8b9ef29d0acee6b2582f4e64bbcb4c58c8cb6313f64557f45c826d1b8b83449"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 842512,
+          "length": 16,
+          "sha256": "a80bd92564eda53ad3a8c968a7abf1a2f3c718bb5ef633c8980d1a7b03d78bca"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 842528,
+          "length": 16,
+          "sha256": "4e33676f6199e65d62f5b91f4828b14ad0a599d5cd63721805bac97ba416462b"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 783045,
+          "length": 16,
+          "sha256": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 842608,
+          "length": 16,
+          "sha256": "49ea01af34572af04c694bed16af80e8dce430321395fcf496e35e980ff342b0"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 842624,
+          "length": 16,
+          "sha256": "9a47d35c3a73cfcd3cfe66fb2774d1e7ebe0fd11fda0fa2babff0c8b9343baaa"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 842640,
+          "length": 16,
+          "sha256": "09881c302d5f6a18d5808db8e30c202e33750f2c08a536d924c60ca8fb0a968c"
+        }
+      ],
+      "rgbaSha256": "56007cb941b84bbbfeb38e5568f1c62c0e718e659af1fa7bfb833fbbf6cb0464",
+      "captureSha256": "1e7bfb831cf3f89a0c50add227b9635f9a17edb5118ff80f1941fcaa0f3a76f7",
+      "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+      "normalPlayEvidence": false
+    },
+    "35": {
+      "width": 32,
+      "height": 48,
+      "observedRect": [
+        112,
+        72,
+        32,
+        48
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          170,
+          0
+        ],
+        "2": [
+          69,
+          0,
+          158
+        ],
+        "3": [
+          203,
+          77,
+          12
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 841760,
+          "length": 16,
+          "sha256": "43d87b16470a6df6bb6a0857fdfa9401309b4e553aa7fe704b549e7c7c258a36"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 841776,
+          "length": 16,
+          "sha256": "dec387310ddc9a1a2f0904b871d6cc4dda6b4edd3dc57726f4728e0d3b93662b"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 841792,
+          "length": 16,
+          "sha256": "240f209ffed9f203c33cb533f9f0d275d566901fa2a2ebd2c9035d80cbfcd5e9"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 841808,
+          "length": 16,
+          "sha256": "bf9244a0e7db94cd99ec23b74228fb3b4339e2f66835feb374b5e4e8be94daa0"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 841824,
+          "length": 16,
+          "sha256": "15e63ec4496202dd41aa3a950bf7cbc8466b2b845fedf18b2e6a7f5bbe4ddbe3"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 841840,
+          "length": 16,
+          "sha256": "4b16c38163a691cb183f21b1c30005152ffcbc6bd0763daf1eaaa5c8e15dc9ae"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 841856,
+          "length": 16,
+          "sha256": "c9f5f8f2732630f75bca4e2f6e1657d81cec40e7a145992eb259ed9051b37202"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 841872,
+          "length": 16,
+          "sha256": "049faf9b199c57d332628ee3a2924df74122c01eb662f5afc8b7f53c35b7dedd"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 841888,
+          "length": 16,
+          "sha256": "d7ba0fb7ab401ce0cdccbf8179867d0ce6b028896152944d14537d51ea078ae5"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 841904,
+          "length": 16,
+          "sha256": "23f982a5222e16f7088bab67135b402beed45b31c78e89280d4a7d8a88b568de"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 841920,
+          "length": 16,
+          "sha256": "ad03093e834ce08398451771f03a6fca013ca1f1edb028e3b6b6c4a3a91b1c45"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 841936,
+          "length": 16,
+          "sha256": "ee602d9cf76894e2a84c9893590aea3c3e9e605f3f5a03585dca3b65a2823a8c"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 841952,
+          "length": 16,
+          "sha256": "f29778bb3b6794cf277ff4eef25800bf106b193827b41e92af7b00560cacb771"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 841968,
+          "length": 16,
+          "sha256": "68f370d3c63e332952e7dd54d9f891c6460686af744f1181c1cbe82463efcf30"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 842064,
+          "length": 16,
+          "sha256": "c91599197bc1599bd0f5f021abd50d1b25fd3c8270a9f0773d4bbf455f2a6c70"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 842080,
+          "length": 16,
+          "sha256": "6c85824bb802544f33344fece499b9ad3594ed0f59b53e2dbe3821aff3982ab6"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 842096,
+          "length": 16,
+          "sha256": "feb9a2fa6516c94f7368ff3c4ec07ee1266f0b338d314c8ee5d3501868a27625"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 842112,
+          "length": 16,
+          "sha256": "5a6c6a3042e814c2cf26b766247d7788e94cf32939744fd95f6af33287edc5a3"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 842224,
+          "length": 16,
+          "sha256": "e5c876160ab4cbd17c8b539251c5bdc3a1aa51190f5bec756ccf60feae2e7859"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 842240,
+          "length": 16,
+          "sha256": "7525d1c9375138d3d1ad24b28a61ac5d323b1514f13391bf1d75850e7bfcc196"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 842256,
+          "length": 16,
+          "sha256": "a0cc71450b6fa64058e9e14b393f2c7b6eeb93ad72ad7fdfec97c53660e5cb97"
+        }
+      ],
+      "rgbaSha256": "37013a6c25a6d725984a6b7ede65ca80911c06a9f831061d1db68b4db8031b28",
+      "captureSha256": "1e7bfb831cf3f89a0c50add227b9635f9a17edb5118ff80f1941fcaa0f3a76f7",
+      "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+      "normalPlayEvidence": false
+    },
+    "37": {
+      "width": 48,
+      "height": 48,
+      "observedRect": [
+        144,
+        72,
+        48,
+        48
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          0,
+          130,
+          138
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "1": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 819385,
+          "length": 16,
+          "sha256": "d530e0cef330a642a2d707b5c7e21870e84f031b190939db83313115cfc388c2"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 842848,
+          "length": 16,
+          "sha256": "6ef7dbe8b812e686d7cec2c106128787ecccfc8943dd53e3955a0fc2dcce5d79"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 842864,
+          "length": 16,
+          "sha256": "48f78aa3c94e5ff9a88e4b376ea9b77deaa51bbae90e7340dc92a1513c721b42"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 842880,
+          "length": 16,
+          "sha256": "6d769e05f5c12b6f20684aaa2181a4fa0fe20889e87e0d488d1648ee3af46272"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 842896,
+          "length": 16,
+          "sha256": "e14f1c004d8047fd7f37ca7d24fedbaebd2eadb7b6196b1c4e61f769a706a8ee"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 842912,
+          "length": 16,
+          "sha256": "9673911658f2f5dd6d747580ebcf7724e41819336a30f28a3cfec3a20d4a0c22"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 843024,
+          "length": 16,
+          "sha256": "5a57b521222345c2a93a05d5a1f747d323a3cce2a4149d3ddffbbc6e6c24d23d"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 843040,
+          "length": 16,
+          "sha256": "c4c26acf52b15e24c92268c8b307f96989353f6e71940b7b9720ac6c6925edcf"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 843056,
+          "length": 16,
+          "sha256": "573f11a87cd024ba70a954981eac41218ee9b449457c45a1293d5c652d49525c"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 843072,
+          "length": 16,
+          "sha256": "7be5f4a2393def3694218a2e692ed5ef9b41099466c70d4aeee6521a670b1c83"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 843088,
+          "length": 16,
+          "sha256": "f9bea6e2387a105003a876dd811777a8af2873fbd801cfcc7a49f93cc6e961ca"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 843200,
+          "length": 16,
+          "sha256": "836b2666fb1e32a89c4ad1b8dbff993515cb26f6f3c74bd6e12a120b58800a9d"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 843216,
+          "length": 16,
+          "sha256": "338e6c1c91f200e139fd8732271b34b22f190949f8a8f0a2807a3d6e1b9d708b"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 843232,
+          "length": 16,
+          "sha256": "663b201f614d0431374dcc68cbb6878e10e1fe8f1ec056930459bb9e18158702"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 843248,
+          "length": 16,
+          "sha256": "0f4b4739606fb461e51aac36852fe4af3abd57b611ccf3e47d6819377867ea7b"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 843264,
+          "length": 16,
+          "sha256": "65c82398bb73a08ec5bdbb7b0e7264e46355a99ccdf99c3070bdb824863a886d"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 843280,
+          "length": 16,
+          "sha256": "a45070bf082835b2a6584cc3c8427a137e78584e80e31f12664e683f6fb5f8a6"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 843328,
+          "length": 16,
+          "sha256": "33da2830aad7e317f434710ee3e1532481f161111d3f658ced50b31388409b14"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 843344,
+          "length": 16,
+          "sha256": "1968b280bc3ff6bcf7fb705c717520859158a9709e640b1441aa365644e3f00c"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 843360,
+          "length": 16,
+          "sha256": "aa34232462f8c58ae63b7b22872ce1cbaf6887504175a6459c38e6ca14ad6640"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 843376,
+          "length": 16,
+          "sha256": "172d67a847485a89e27cf29aa46a5556ddd8b52d1a85c8194fbeb2f1ae961cce"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 843392,
+          "length": 16,
+          "sha256": "b8f8c99baf423b5c7808d57323c7a119280af7bafb70f056dbe9403e56463049"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 843408,
+          "length": 16,
+          "sha256": "4648ae410e224e77f64910e5db20aa597ca2986b6810eb77a7d6f9520926e7dd"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 843424,
+          "length": 16,
+          "sha256": "c7abd850e76925d9120cb9798e8870b3d2dce82c72a5d3fc4a016522447e0ef1"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 843440,
+          "length": 16,
+          "sha256": "b4b08699b721caaeeed3d299a9d7bd8b96b8d9c4fb02837692167e4bf16a1bbb"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 843456,
+          "length": 16,
+          "sha256": "73b94df44f5a4417281b3f6feaf34d20828761d595655ff52c1916be2a49ca6b"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        }
+      ],
+      "rgbaSha256": "9dbeb7f303af4ffd32197fbe0ed45c8cd1055963391877ca93ce36e6b1aa266f",
+      "captureSha256": "1e7bfb831cf3f89a0c50add227b9635f9a17edb5118ff80f1941fcaa0f3a76f7",
+      "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+      "normalPlayEvidence": false
+    }
+  },
+  "limits": [
+    "Actual full group graphics context; static ready pose only. Names remain UNKNOWN.",
+    "Group field43 contains later RNG byte217; actual slots identify group3, not reading overwritten RNG as group ID."
+  ]
+}

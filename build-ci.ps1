@@ -62,6 +62,12 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Village2 original services and definitions gates failed'}
     & python -m unittest discover -s tests -p test_world_village3_export.py
     if($LASTEXITCODE -ne 0){throw 'Village3 pinned checkpoint, service, sprite and directed-return gates failed'}
+    & python -m unittest discover -s tests -p test_world_forest101_export.py
+    if($LASTEXITCODE -ne 0){throw 'Forest101 original movement, complete region and restore gates failed'}
+    & python -m unittest discover -s tests -p test_world_continent_barrier_export.py
+    if ($LASTEXITCODE -ne 0) { throw 'Original world actor conditions gates failed' }
+    & python -m unittest discover -s tests -p test_world_continent_bridge_export.py
+    if ($LASTEXITCODE -ne 0) { throw 'Original continent bridges and full-zone gates failed' }
     & python -m unittest discover -s tests -p test_world_clinic_export.py
     if ($LASTEXITCODE -ne 0) { throw 'Scoped medical-room export gates failed' }
     & python -m unittest discover -s tests -p test_world_first_hall_export.py

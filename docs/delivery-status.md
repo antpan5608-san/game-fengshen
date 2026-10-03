@@ -1263,3 +1263,35 @@ v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真
 ## WORLD-FULL-01 Windows读取修正（2026-10-03T14:01:53Z）
 
 - v52/run37127826230 build失败于村3测试默认cp1252读取中文JSON；无APK、runtime未执行，生产v27不变。四处改为显式UTF-8，相关村3/医馆8项在隔离Path.open默认cp1252条件实际通过，60.207秒；不改内容pin、定义或测试断言，保持失败记录。重新构建修后同提交候选。
+
+
+## WORLD-FULL-01 增量：大陆桥与原遇敌区16（2026-10-03T14:42Z，本地，不发布）
+
+c33/195内容文件/33地图，manifest b2ec777036fb67044649673fa14f19ba5c022387e28a78fc4bbeff6bb7a29095。桥类别15纵向、16横向的source离开限制来自实际原CPU144组合和受控胜后源真实按键；不泛化交通状态。原区16完整19组、敌35/36/37原属性/行为/掉落及三张真实图形接原export_from_base；名字仍UNKNOWN。旧媒体字节复用、空目录restore一致，140全世界Python单次PASS（264.124秒）、257 JVM/0失败/错误/跳过和instrument编译PASS。正常过桥/自然遇敌/外部冷启仅编译，App NOT_RUN，不把受控原版当正常Android。
+
+c32固定父golden及其负例保持；旧c32档版本兼容但所有位置/队员/物品/事件检查不放宽。main/c552900a来源v53/run37128387307 Windows build SUCCESS，runtime仍执行，来源冻结；正式仍v27。最新inspect37129885660查27/26共3622事件、普通真机5会话、旧v26 ProtocolException一条未解；无新错误不等于候选健康。有效分母UNKNOWN、ALL_MAPS_USABLE=NO，累计十类清单不关闭。
+
+
+## WORLD-FULL-01 增量：真实大陆对象条件（2026-10-03T15:20Z，本地c34）
+
+c33桥提交e8eff171保留；c34/195文件/33地图，manifest 713ad24349dbb4c772a100fd7f857a4368f1fe0d3a037295781d8b190ec3724e。原六个大陆actor加载过滤1536 CPU向量/0失败，借原SceneBarrier接对应16旗标1/2/4/8/16/32；不删除222,150～152真实阻断，不猜解锁事件。244原在桥类16，首次纯0/2 guard拒绝后按已核foot类别修正，不开放未知地形。
+
+143独立世界Python单次PASS（299.364秒）、258 JVM/48 suites/0失败错误跳过、instrument编译、autocrlf checkout和空目录严格恢复与本地字节一致。首轮新局部3方法2PASS/1ERROR为旧scene未写空dynamicObjectCells，修读取默认而不削六对象断言；全量通过。新增Android正常路径/旗标/升级冷启仍NOT_RUN。原controlled森林101入口/144碰撞组合和敌区17只取得输入，尚未打包。
+
+v53不可变签名artifact11276415922已实际取回并独立核包名/签名/c32/192文件、APK SHA a7b8b371a1d26f13c79c38157edd75ba501c96827fa1274db7797072b3f8208c、源c552900a/run37128387307；runtime仍执行，生产v27不变。运行中日志实际Forbidden/BlobNotFound，不把无法读取解释为PASS。十类清单和UNKNOWN分母保留，ALL_MAPS_USABLE=NO。
+
+
+## WORLD-FULL-01 独立森林检查点（2026-10-03T16:12Z，未发布）
+
+- c34基础之上接原forest101和完整zone17：c35/199文件/34地图，manifest 0a0faccda5ce5ff7e20f27b1c4247ef229e70ff2d90f82c7f89227b6eb65d991；审核v27固定基底，原地图/音频/图集字节复用。新增敌38/39原HP250/262、13完整组和HIGH245，不修改碰撞、概率、伤害或掉落。北端房间171条件未完，不宣称全森林剧情闭环。
+- 实际原真实按键确认16(213,155)→101(8,51)、UP8,50/树不可走/返回大陆213,155；仅源进入使用受控位置/相机，不是正常新游戏。原RTS入口差一解释了先前不完整CPU调用，按真实入口CDC0/D197的144矩阵匹配现有Scene源边机制，保留树墙和source3横向限制。class7视觉遮挡仍欠账。
+- 147世界Python一次PASS（351.756秒）、森林局部4PASS、全259 JVM/49 suites/0失败错误跳过、instrument编译、实际LF checkout和空目录restore199精确PASS。首轮墙spawn fixture和restore后路径比较错误分别修正，失败不计PASS；新正常森林路线、保存冷启与手机/声音NOT_RUN，驱动已编译且原CI门禁增同产物结果，不新增workflow。
+- 原171移动NPC178已真实邻接交谈，固定坐标失败保留；玉鼎真人只核当前杨戬不在对白，未宣布教学/入队完成。原资料继续受控，公开仅最小源span/recipe/hash。十类累计权威清单继续保留，未关闭全世界/全服务/全剧情门槛。
+- v53/run37128387307/c32来源冻结、build成功/runtime仍执行，正式v27不变。inspect37133145108实际15:25UTC/两版3622事件/真机5会话/测试0/清理0，旧v26下载ProtocolException仍UNCONFIRMED且保护不绕；ALL_MAPS_USABLE=NO、有效分母UNKNOWN。继续171及实际候选首错，不主动收尾。
+
+
+## WORLD-FULL-01 v53实际失败与原连续路径修复（2026-10-03T17:04Z）
+
+- run37128387307/c552900a/c32 build通过，Android普通触控/F0、南海、海底北区、西海、村1、北海、洞85及各自冷启真实PASS。东海正常准备67场至13级/真实购装购药住宿后失败于从村1大陆组件直接寻路214,110；后续地府/转世/村3/医馆NOT_RUN，候选未发布。
+- 实际东海artifact11278903213取回，原断言/原正常索引/截图保留。修驱动按原海域、已完成洞85的南北独立出口逆向穿行，不修改业务、碰撞、怪物、价格或剧情flag；静态6腿/未消漩涡反例1方法PASS（8.618秒）、259 JVM/49 suites/0失败错误跳过及instrument编译PASS。c35内容hash不变，新App待重新冻结同源候选；不用v53旧测试结果给新APK完整背书。
+- inspect37138652158实际16:56:21.218UTC/27与26总3666事件/普通真机6会话/模拟器0/测试0/清理0；旧v26下载ProtocolException仍1，生产v27与严格发布保护保持。原171局部授玉佩/复谈只为受控原证据，杨戬及入口对象仍未实现，不关闭欠账。十类清单位置不变、分母UNKNOWN、ALL_MAPS_USABLE=NO，继续总任务。
