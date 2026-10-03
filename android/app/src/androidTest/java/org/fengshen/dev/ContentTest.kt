@@ -374,8 +374,9 @@ class ContentTest:IsolatedGameTestCase(){
         scene.getJSONObject("initialPlayer").remove("name")
         scene.getJSONObject("initialPlayer").remove("portraitAsset")
         scene.getJSONObject("initialPlayer").remove("portraitSource")
-        // c1 has neither scoped combat nor later automatic combat actors. Keep
-        // the fixture coherent instead of removing combat under a current actor.
+        // c1 has neither scoped combat nor later automatic scene scripts/actors.
+        // Keep the fixture coherent instead of retaining a script without its actor.
+        scene.remove("sceneStories")
         val oldNpcs=scene.getJSONArray("npcs");val c1Npcs=org.json.JSONArray()
         for(i in 0 until oldNpcs.length())if(!oldNpcs.getJSONObject(i).optBoolean("scriptedActor",false))
             c1Npcs.put(oldNpcs.getJSONObject(i))
@@ -402,6 +403,7 @@ class ContentTest:IsolatedGameTestCase(){
         val content=ContentLoader.load(older)
         assertEquals("nezha",content.playerNames["nezha"])
         assertNull(content.battle)
+        assertTrue(content.sceneStories.isEmpty())
         assertFalse(content.npcs.any{it.scriptedActor})
     }
     private fun contentMapIds(scene:JSONObject)=scene.getJSONArray("maps").let{a->(0 until a.length()).map{a.getJSONObject(it).getInt("id")}}
