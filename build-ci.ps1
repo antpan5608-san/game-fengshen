@@ -60,6 +60,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'East content export and critical state gates failed'}
     & python -m unittest discover -s tests -p test_world_hell_encounters_export.py
     if($LASTEXITCODE -ne 0){throw 'Hell encounter and status gates failed'}
+    & python -m unittest discover -s tests -p test_world_hell_route_driver.py
+    if($LASTEXITCODE -ne 0){throw 'Original hell forward route guards failed'}
     & python -m unittest discover -s tests -p test_world_village2_export.py
     if($LASTEXITCODE -ne 0){throw 'Village2 original services and definitions gates failed'}
     & python -m unittest discover -s tests -p test_world_village3_export.py

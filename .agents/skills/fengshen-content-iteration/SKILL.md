@@ -277,3 +277,7 @@ NPC首谈action与一次性seen分开；原action17在对白前写见面旗标�
 
 - 已提交raw NPC记录须先执行真实首谈/复谈selector再执行action后处理；已置NPC mask会跳过后处理，不能直接从action初值推复谈。`probe-world-teacher-talk.py`已实际校对师父8192、容量6及道童1024 CPU案例；碰撞probe另36案例，不将受控CPU当正常App路线。
 - 房间未定义遇敌时核原type/zone字节FF，不从邻接森林继承遇敌。counter交互cell/direction、独立返回、特殊物品16行容量沿原导出/统一状态事务；只取得物品时不要捏造worldUse或价格。局部export测试和原ci_apk.restore空目录215文件严格恢复已运行；新增正常Android房间路径已编译，实际运行仍待同候选门禁。
+
+## 已验证的地府正常路线驱动修正
+
+只用原单向地形和独立出口规划后续十殿，不交换出口猜返程。`test_world_hell_route_driver.py`已实际验证十条下一腿、10/13区自然遇敌邻格及旧服务点不可达反例；正常补给训练放在首个不可返回步行节点前，仍通过原买卖/付费客栈和自然战斗，不添加玩法门槛。首次殿前录屏可用原record_app_audio.py的限定7200秒预算（边界4方法通过）；本次修正实际App仍待原KVM运行，不将拓扑测试当正常通关。
