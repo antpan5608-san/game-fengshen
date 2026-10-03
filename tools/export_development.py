@@ -511,6 +511,38 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_hall_batch_script(reader,map_id):
+    """Same original finalization, independently checked per event/gate, never a universal flag4."""
+    from forensics.fengshen246 import extract_npcs
+    p=load(ROOT/'game-data/provenance/world-hell-hall-batch-script.json')
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='hell-halls61-through68-original-finalization-and-gate-filter' or \
+            str(map_id) not in p['maps'] or p['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_BOSS_ANDROID':
+        raise ValueError('Hell batch script outside its actual original scope')
+    rule=p['maps'][str(map_id)];records=extract_npcs(reader,map_id)['records']
+    king=records[rule['npcIndex']];gate=records[0];raw=checked_span(reader,rule['npcSource']);graw=checked_span(reader,rule['barrierSource'])
+    if king['range']!=rule['npcSource'] or gate['range']!=rule['barrierSource'] or raw[0]!=189 or \
+            list(raw[10:14])!=[1,2,rule['eventId'],rule['eventArgument']] or graw[0]!=246 or graw[13]!=rule['gateMask'] or \
+            rule['mapId']!=map_id or rule['npcId']!=f'rom.npc.{map_id}.{king["index"]}' or \
+            rule['bossVictoryFlag']!=f'rom.map.{map_id}.flag.{raw[13]}' or \
+            rule['barrierRemovedFlag']!=f'rom.map.{map_id}.flag.{graw[13]}' or rule['victoryFlags']!=[rule['barrierRemovedFlag']]:
+        raise ValueError('Hell batch NPC, gate or independent map flags differ')
+    if rule['barrierCell']!=[(gate['xCandidate']-120)//16,(gate['yCandidate']-120)//16] or \
+            rule['npcCell']!=[(king['xCandidate']-120)//16,(king['yCandidate']-120)//16] or rule['firstMessage']!=raw[1] or rule['repeatMessage']!=raw[2]:
+        raise ValueError('Hell batch cell or message differs from original record')
+    event=reader.word(10,0xd1e3+2*rule['eventId']);start=reader.word(10,event+6);win=reader.word(10,event+8)
+    expected_source=bytes([0xa9,rule['sourceType']])+bytes.fromhex('2030d360')
+    expected_win=bytes.fromhex('adc107d00420cfd1602072d32059d3a9')+bytes([rule['repeatMessage']])+bytes.fromhex('2078d360')
+    if rule['sourceTypeInstruction']['cpuAddress']!=start or checked_span(reader,rule['sourceTypeInstruction'])!=expected_source or \
+            rule['winInstruction']['cpuAddress']!=win or checked_span(reader,rule['winInstruction'])!=expected_win or \
+            reader.read(1,0x9ea3+rule['sourceType'])[0]!=rule['enemyId']:
+        raise ValueError('Hell batch source or success/failure finalization differs')
+    for key in ('eventPointer','eventStages','mapFlagPointer'):checked_span(reader,rule[key])
+    required={(10,0xd359,37),(10,0xcf29,9),(10,0xd6f4,0x3d),(0,0xa973,169)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Hell batch lacks gate/event/reload sources')
+    for span in p['sources']:checked_span(reader,span)
+    return rule
+
 def validate_world_ice_identities(reader,enemy):
     """Later ice identities require the actual all-identity CPU proof, not a dragon assumption."""
     from forensics.fengshen246 import extract_enemy_ice_base,extract_enemy
@@ -846,6 +878,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     expected['evidence']=boss['continuation']['evidence']
                     if boss['continuation']!=expected or boss.get('commitAfterDialogue',False):
                         raise ValueError('Story continuation order or state differs')
+                elif boss.get('victoryFlags') and boss.get('victoryFlagEvidence')=='game-data/provenance/world-hell-hall-batch-script.json':
+                    rule=validate_world_hall_batch_script(reader,boss['mapId'])
+                    if any(boss[k]!=rule[k] for k in ('mapId','npcId','eventId','eventArgument','sourceType','enemyId')) or \
+                            boss['flagId']!=rule['bossVictoryFlag'] or boss['victoryFlags']!=rule['victoryFlags'] or \
+                            boss.get('commitAfterDialogue',False):
+                        raise ValueError('Hell batch finalization fields differ from original event')
                 elif boss.get('victoryFlags'):
                     proof=load(ROOT/boss['victoryFlagEvidence']);rule=proof['rules']
                     if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246'):
@@ -1021,10 +1059,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
     for barrier in evidence.get('sceneBarriers',[]):
-        proof=load(ROOT/barrier['evidence']);rule=proof['rules'];raw=checked_span(reader,barrier['recordSource'])
+        batch=barrier['evidence']=='game-data/provenance/world-hell-hall-batch-script.json'
+        proof=load(ROOT/barrier['evidence'])
+        rule=validate_world_hall_batch_script(reader,barrier['mapId']) if batch else proof['rules']
+        raw=checked_span(reader,barrier['recordSource'])
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]
-        if proof['romSha256']!=SHA256 or proof['scopeRevision'] not in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246') or \
-                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=4 or \
+        if proof['romSha256']!=SHA256 or not(batch or proof['scopeRevision'] in ('first-hall-event20-qin-victory-removes-246','second-hall-event21-chu-victory-removes-246')) or \
+                barrier['mapId']!=rule['mapId'] or barrier['cell']!=cell or raw[0]!=246 or raw[13]!=(rule['gateMask'] if batch else 4) or \
                 barrier['removedFlagId']!=rule['barrierRemovedFlag'] or barrier['cell']!=rule['barrierCell']:
             raise ValueError('Original hell hall collision actor differs')
         for span in proof['sources']:checked_span(reader,span)

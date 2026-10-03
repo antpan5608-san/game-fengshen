@@ -189,3 +189,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 后续敌人能力使用原behavior分派批次核证：world-enemy-single-special.json/3148原CPU结果验证2/4单目标、与原8EB2相同字节选择及伤害；world-enemy-status16.json/2575原CPU结果验证6的阈值10、特殊miss不落物理、状态优先级与原全队10败判。对应7个Python证据方法与229全JVM方法、仪器编译实际通过。原始CPU实验需要隔离原版mapper/存档，公开派生TSV不是原始资源；此树正常App/新地图尚未执行，不写可玩PASS。
 
 - 原冰行为普通公式与boss表是两域：用world-enemy-ice-identities.json/1700原CPU派生预期核17身份，再允许后段177表内身份进入原提取器。3个证据测试、230全JVM方法与仪器编译实际通过；来源span可保留旧recipe描述但地址/hash必须相同。正常App/新图需另验，HP-positive死亡mask仅算术fixture不当合法目标。
+
+- 同类殿事件按原NPC末4字节及原inline stage表批次绑定：world-hell-hall-batch-script.json/4096原CPU期望已用于3项Python与纯旗标JVM测试，复用StoryBattleDefinition/SceneBarrier而非复制运行引擎。NPC246 gate原mask随地图不同，失败分支和加载过滤也需核；CPU及受控坐标图形不等于正常路线。后段八Boss原全组104块各全匹配配方成功；读取高地址battleHP须从SRAM6800起始dump取offset186，不读取短RAM空slice。原NPCcamera/screen定位尝试未成，保持待核；不宣称自动隐式skill匹配。

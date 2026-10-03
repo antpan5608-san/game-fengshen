@@ -294,3 +294,11 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 
 - 2026-10-03 14:04北京独立冰行为检查点：原17个behavior3身份共1700直接伤害CPU用例、3项Python证据/230全JVM方法0失败错误跳过与instrument编译通过；原extract_enemy_ice_base扩实际177表范围且核目标指纹，后续boss须world-enemy-ice-identities证据而非龙王范围猜测。初轮新增测试错写enemy150=48/缺双人成长fixture被拒，按实际CPU40与现有configureParty契约修测试，不改原值/保护。当前c24未包含后段敌人，正常App NOT_RUN。
 - 已完成原后续八殿61..68胜后分支4096 CPU用例：实际gate mask4/8/16/2、各事件arg1/2与repeatMessage分别从原表/指令读取；成功移除246/OR门mask和事件arg，失败不改flag，原重载过滤匹配全部256旗标。正常Boss/路线/截图和新内容尚在恢复，不能由CPU结果声明全殿可玩。
+
+
+## 后续殿批次规则与资源检查点（2026-10-03 14:26 北京时间，非发布）
+
+- 独立work/world-hell-batch-next保存map61..68的原胜后/门规则薄接续。原4096 CPU期望用于3个Python源数据/旗标测试及1个JVM方法；本树100世界Python方法、231全JVM方法0失败错误跳过、仪器编译实际通过。原exporter根据每图NPC原event/arg/gate mask、脚本三阶段指针及原完整成功/失败指令校验，复用StoryBattleDefinition/SceneBarrier；没有把所有门套成flag4或所有事件套arg2。
+- 八殿实际原版资源分别经隔离坐标/camera夹具→真实出口/原NPC/原全组Boss加载取得，HP850/1150/1300/1540/1860/2100/2500/3500与原表一致；八张104×64图各104块ROM/RGBA全部匹配、原palette32项一致。world-hell-hall-batch-resources.json保存最小配方/hash/原屏名字，正文严格标CONTROLLED而非正常路线/胜利/Android。原始RAM/SRAM/PPU/回放保持忽略目录；SRAM6986需要从6800起始dump读取，不能错读2KiB RAM文件。
+- 原3420地形CPU用例发现map63楼梯23垂直进入14切mode1；新类17/18向UP抑制遇敌，其它方向不同。地形另一模式、原field伤害/必要事件/NPC原图仍在定向恢复，未将未核格全部设可走或宣称八殿已打包/可玩。两次NPC受控camera/screen尝试均未取得原opaque图，保留失败；改用只读投影定位/已有公开参考，不反复盲重试。
+- 主树冻结c0e06c64的v42/run37101234611签名build SUCCESS、runtime执行中；c24/19地图仍目标，不由本树新规则/100方法给其背书。正式v27/c14，旧v26下载ProtocolException原生产保护保持；一加13T/声音NOT_RUN。下一动作继续NPC资源/新地形模式与同批后续内容、读取原候选实际结果，总任务不结束。
