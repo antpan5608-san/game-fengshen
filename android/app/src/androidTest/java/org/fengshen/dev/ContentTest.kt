@@ -50,7 +50,8 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(12,rule.actionId);assertEquals(7 to 5,npc.interactionCell);assertEquals(Key.UP,npc.interactionDirection)
         val item=c.itemDefinitions.getValue("rom.special.19")
         assertEquals(19,item.originalId);assertEquals("special",item.category);assertEquals(1,item.maxCount)
-        assertNull(item.worldUse);assertNull(item.buyPrice);assertNull(item.sellPrice)
+        assertNotNull(item.worldUse);assertEquals(130,item.worldUse!!.targetSpriteId)
+        assertNotNull(item.worldUse!!.yangJoin);assertNull(item.buyPrice);assertNull(item.sellPrice)
         val old=SaveSnapshot("opening-segment-001-c37",171,7*16+8,5*16+8,Key.UP,
             listOf(c.initialPlayer),emptyMap(),mapOf("rom.global.7c8.1" to true),0)
         assertTrue(old.validate(c));val grant=OriginalNpcTalk.begin(old,rule,item)
@@ -388,7 +389,10 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
         assertTrue(save.copy(contentVersion="opening-segment-001-c30").validate(c))
         assertFalse(save.copy(x=32*16+8).validate(c))
-        assertFalse(c.equipmentDefinitions.containsKey("rom.weapon.33"))
+        val paired=c.equipmentDefinitions.getValue("rom.weapon.33")
+        assertEquals(setOf("yangjian"),paired.allowedCharacters)
+        assertFalse(paired.operationEnabled)
+        assertNull(OpeningEquipment.replace(girl,mapOf("rom.weapon.33" to 1),paired,c.equipmentDefinitions.values))
         for(id in listOf("rom.medicine.10","rom.medicine.14")){
             assertNull(c.itemDefinitions.getValue(id).herbUse);assertNull(c.itemDefinitions.getValue(id).antidoteUse)
         }

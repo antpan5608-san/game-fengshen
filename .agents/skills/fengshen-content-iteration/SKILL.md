@@ -289,3 +289,5 @@ NPC首谈action与一次性seen分开；原action17在对白前写见面旗标�
 原export_from_base的限定existingItemCapabilityUpdates/既存NPC目标只允许公开provenance所列稳定ID/字段，固定父配方和旧定义hash，未变媒体保持逐字节相同。局部4测试、完整世界166方法、LF实际checkout及ci_apk.restore空目录215文件严格校验已运行。入队复用StoryFollowup/统一commit/save rollback，UI仍选物品后明确执行；三人自然遇敌与冷启正常驱动仅编译，须同候选实际运行才能记PASS，不能拿CPU或导出替代。
 
 - 独立出口落点不是可任意离开的空地：真实runtime曾在23(55,91)固定向下撞55,92墙，原拓扑也核55,93墙。test_world_hell_route_driver新增实际落点西侧离开/返门与54,93↔54,94自然zone8邻格反例，4方法已运行；保留失败run，新正常App须重新审核，不放宽地形。
+
+- 新角色成长配方必须输出ContentLoader实际要求的limitEvidence，不能只有原ROM levelCapSource。签名候选曾在真实Content仪器门禁报JSONException；原extend_world_characters增加来源路径早期拒绝，局部导出测试缺字段反例及原restore已运行。更新旧仪器断言时仍核真实目标/只读双手能力，不吞加载错误；修后实际App须新候选重跑。

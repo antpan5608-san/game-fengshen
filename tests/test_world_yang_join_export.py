@@ -8,7 +8,8 @@ import export_development as ex
 class YangJoinExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        pin=ci.ROOT/'ci/golden-world-yang-join-content.json'
+        cls.pin=json.loads((pin if pin.exists()else ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
         cls.path='game-data/provenance/world-yang-join-content.json';cls.p=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'))
         cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text(encoding='utf-8'))
         cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])
@@ -40,6 +41,7 @@ class YangJoinExportTests(unittest.TestCase):
     def test_own_growth_and_multiplier_are_complete_not_borrowed_and_export_repeats(self):
         c=json.loads(self.result['combat.json']);table=next(t for t in c['characterGrowth']if t['owner']=='yangjian')
         self.assertEqual((2,80,79),(table['originalActorIndex'],table['knownMaxLevel'],len(table['rows'])))
+        self.assertEqual('game-data/provenance/world-party-yangjian.json',table['limitEvidence'])
         rows={r['level']:r for r in table['rows']};self.assertEqual(25870,rows[24]['threshold']);self.assertEqual(29899,rows[25]['threshold'])
         self.assertEqual(36,len(c['physicalRules']['characterMultiplierThresholds']['yangjian']))
         self.assertEqual(self.result,ex.export_from_base(self.base,self.path,self.pin))
@@ -49,7 +51,7 @@ class YangJoinExportTests(unittest.TestCase):
         del new['physicalRules']['characterMultiplierThresholds']['yangjian'];new['physicalRules']['weaponHitThreshold'].pop('33',None)
         self.assertEqual(old,new)
     def test_wrong_actor_stats_old_owner_loss_consumption_and_wrong_context_are_rejected(self):
-        for kind in ('strength','spells','count','context','paired','owner','parent'):
+        for kind in ('strength','spells','count','context','paired','owner','parent','cap'):
             p=copy.deepcopy(self.p)
             if kind=='strength':p['additionalCharacters'][0]['initialState']['strength']=28
             elif kind=='spells':p['additionalCharacters'][0]['skillRefs']=['invented']
@@ -57,6 +59,7 @@ class YangJoinExportTests(unittest.TestCase):
             elif kind=='context':p['existingNpcCapabilityUpdates'][0]['fields']['worldItemTarget']['removedFlagId']='rom.map.110.flag.2'
             elif kind=='paired':next(u for u in p['existingItemCapabilityUpdates']if u['id']=='rom.weapon.33')['fields']['equipment']['operationEnabled']=True
             elif kind=='owner':next(u for u in p['existingItemCapabilityUpdates']if u['id']=='rom.armor.29')['fields']['equipment']['allowedCharacters']=['yangjian']
+            elif kind=='cap':p['combatOverlay']['characterGrowth'][0].pop('limitEvidence')
             else:p['existingNpcCapabilityUpdates'][0]['baseDefinitionSha256']='0'*64
             def load(path):return p if Path(path).resolve()==(ci.ROOT/self.path).resolve()else json.loads(Path(path).read_text(encoding='utf-8'))
             with patch.object(ex,'load',side_effect=load),self.assertRaises(ValueError,msg=kind):ex.export_from_base(self.base,self.path,self.pin,verify_target=False)
