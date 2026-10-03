@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "TARGET_ROM_STATIC_AND_CONTROLLED_ORIGINAL_CPU_BOUNDARIES_NOT_NORMAL_APP",
+  "rules": {
+    "category3": "armor",
+    "idBase": 1440,
+    "quantityBase": 1504,
+    "distinctSlots": 16,
+    "maxCount": 10,
+    "acquisition": "Same A0DF/A0EB routine as medicine0 and weapon2, only category pointer/limit lookup differs",
+    "existingStackAtFullCategory": "Increment if below10; category fullness blocks only a new distinct positive item",
+    "overflow": "Set failure068E=1, no old inventory/equipment deletion; original ordinary money/EXP/flags handled separately",
+    "equipped": "Equipment lives0560..056F separately; acquisition never replaces/unequips it and generic backpack/sell listing never exposes an equipped-only item",
+    "lootGate": "Per existing enemy original random byte&127 < threshold; one original selected category/id; generic grant boundary executed separately",
+    "minimalCodeChange": "In existing BattleAcquisition.apply allow category armor alongside medicine/weapon. Keep all other capacity/RNG/result semantics unchanged.",
+    "notAnEquipPermission": "Acquiring armor11 does not make it equippable by Nezha"
+  },
+  "armor11": {
+    "stableId": "rom.armor.11",
+    "contribution": 20,
+    "contributionMeaning": "body-defense contribution when equipped by permitted actor; not damage or total defense",
+    "buyPrice": 750,
+    "sellPrice": 375,
+    "nameGlyphHex": "03009e80ff",
+    "name": "連衫裙",
+    "nameConfidence": "PROVISIONAL_REFERENCE_ONLY_NOT_TARGET_GLYPH_OR_NORMAL_SCREEN_VERIFIED",
+    "reference": {
+      "repository": "https://github.com/v5100v5100/FengShenBang",
+      "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+      "path": "Resources/res/MainData",
+      "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+      "row": {
+        "id": 44,
+        "name": "连衫裙",
+        "type": 3,
+        "number1": 20,
+        "buy_price": 750,
+        "sell_price": 375,
+        "role01": 0,
+        "role02": 1,
+        "role03": 0,
+        "role04": 0,
+        "res": "Icon_038"
+      },
+      "licenseStatus": "UNKNOWN"
+    },
+    "allowedOriginalActorIds": [
+      1
+    ],
+    "slot": "body",
+    "slotIndex": 2,
+    "nezhaAllowed": false,
+    "preview": {
+      "compositionPointer": 62338,
+      "sizePixels": [
+        24,
+        24
+      ],
+      "paletteIndex": 1,
+      "chrBank": 214,
+      "chrOffset": 962576,
+      "chrLength": 4096,
+      "chrSha256": "95d8b29a249d84b8c4940e325186af8a7def3ad87f32cfdca1acaa758d6c2b2b",
+      "status": "Original composition/CHR inputs available to existing exporter; target rendered palette/normal pose NOT_VERIFIED; no PNG emitted"
+    },
+    "notEnabled": "No actor1 joined party or equipment runtime enabled by this evidence task"
+  },
+  "sources": [
+    {
+      "offset": 299304,
+      "length": 44,
+      "sha256": "cc963ca4d813cf491a7943ad26cda2e76b2a91128f4af79f0de500e670a38623",
+      "module": 9,
+      "cpuAddress": 37144,
+      "meaning": "Original per-existing-enemy loot: byte&127 strictly below threshold, select original category/id"
+    },
+    {
+      "offset": 73967,
+      "length": 177,
+      "sha256": "2e56db28d8ab1e338fc6f0dd538c333de216969745ca580e28b3c06b975381d3",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Shared acquisition copies selected category/id, finds existing positive stack or free category slot, increments only on success"
+    },
+    {
+      "offset": 74144,
+      "length": 4,
+      "sha256": "d14fd30338539497eb1098f7d066f990bf7bd69f3bd0a6b94d9be46bc75585bc",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Category0/1/2/3 maxima10/1/10/10"
+    },
+    {
+      "offset": 74148,
+      "length": 8,
+      "sha256": "646efc65e7d2bfa105d67dfd5dc359335d35a699d7529ca8ac37792a499b4d9f",
+      "module": 2,
+      "cpuAddress": 41364,
+      "meaning": "Category inventory IDs0570/0580/0590/05A0; counts+40"
+    },
+    {
+      "offset": 79941,
+      "length": 69,
+      "sha256": "4b7ab99b1dd86cb83116add92c4e98737ed5a81fea1462dc10c2de3e65bb4441",
+      "module": 2,
+      "cpuAddress": 47157,
+      "meaning": "Original backpack listing reads 16 quantities from selected category, excludes equipped-only armor"
+    },
+    {
+      "offset": 76443,
+      "length": 124,
+      "sha256": "0db6a38459abf7d78076c2dd68c550aba4b8ef72e8165129139ccdb318dc0af0",
+      "module": 2,
+      "cpuAddress": 43659,
+      "meaning": "Actual actor/slot/per-category item filter"
+    },
+    {
+      "offset": 94064,
+      "length": 8,
+      "sha256": "e9dc9f8fd9f421fc76934efcb0930374b2ce8af36d52d7c016e90487ab3e6c58",
+      "module": 2,
+      "cpuAddress": 61280,
+      "meaning": "Actor originalID to equipment-slot lists"
+    },
+    {
+      "offset": 94080,
+      "length": 8,
+      "sha256": "ae0f63852f544bc1d5e71e5c75b60a720568fa5953f2e0e2bd51ef1564f852cf",
+      "module": 2,
+      "cpuAddress": 61296,
+      "meaning": "Original actor1 right/left/body/feet selector pointers"
+    },
+    {
+      "offset": 92526,
+      "length": 4,
+      "sha256": "e72f4adc70f5fce7ba49bb1d5955b208d308579fe08d422b8152d2bfb16746b7",
+      "module": 2,
+      "cpuAddress": 59742,
+      "meaning": "Weapon/armor numeric contribution root pointers"
+    },
+    {
+      "offset": 93179,
+      "length": 2,
+      "sha256": "5aeca385d8b781825b07bbec7c858b7170426c88088935850bc13dd6402368a5",
+      "module": 2,
+      "cpuAddress": 60395,
+      "meaning": "Armor11 contribution20"
+    },
+    {
+      "offset": 93091,
+      "length": 2,
+      "sha256": "15b09b6c5810b23c14e3f6584b53a4bd35192a675ec3fa6a57d7a21ca9155729",
+      "module": 2,
+      "cpuAddress": 60307,
+      "meaning": "Armor11 original buyPrice750"
+    },
+    {
+      "offset": 93398,
+      "length": 5,
+      "sha256": "7c392393cecbe617c19271143f4425821d3ba6991dd736f8b736be33d8b8021a",
+      "module": 2,
+      "cpuAddress": 60614,
+      "meaning": "Armor11 original menu name stream; first03 prefix, glyph bytes009E80,FF terminator"
+    },
+    {
+      "offset": 95122,
+      "length": 12,
+      "sha256": "3d5477c973d7b17ad27354fa02e9767af114cbecc91113beedbf639d192223dd",
+      "module": 2,
+      "cpuAddress": 62338,
+      "meaning": "Armor11 original preview composition"
+    },
+    {
+      "offset": 85881,
+      "length": 1,
+      "sha256": "0a2c6ea0370d1d49c411a6e2396695fcd4eab03d96e9e7a8a3ec1ec312d9ab38",
+      "module": 2,
+      "cpuAddress": 53097,
+      "meaning": "Armor11 preview CHR bank selection"
+    },
+    {
+      "offset": 81608,
+      "length": 50,
+      "sha256": "1093d32f4b83234f3282f42b2a7da37fcfe2c1e464841ea0d0cbf9a9b4c839e8",
+      "module": 2,
+      "cpuAddress": 48824,
+      "meaning": "Original sell quote unsigned divide by2 and minimum1"
+    },
+    {
+      "offset": 60634,
+      "length": 16,
+      "sha256": "746fa7f4305efec82047bf089ed3f6d16a8d9a4cecaf848814b21262fe39295e",
+      "module": 1,
+      "cpuAddress": 60618,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+    },
+    {
+      "offset": 62618,
+      "length": 16,
+      "sha256": "91af96c6c3de60ec80762b6a3f2405d1dec7c9504ce6974937e067452cf38cf6",
+      "module": 1,
+      "cpuAddress": 62602,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+    }
+  ],
+  "tests": {
+    "acquisitionBoundaryCases": 57,
+    "sequentialGrantCalls": 4,
+    "lootGateCases": 512,
+    "equippedOnlyListCases": 4,
+    "actorSlotCases": 16,
+    "failures": 0
+  },
+  "limits": [
+    "No full victory, normal drop probability distribution, shop sale UI, or Android acceptance was run here.",
+    "Loot gate stops at original presentation boundary; unchanged acquisition is then called with its selected category/id. This is controlled boundary execution, not a normal battle.",
+    "Generic list evidence does not newly expand every shop sell filter or waive original shop-specific availability.",
+    "Original name is PROVISIONAL; matching price/contribution/role alone is not glyph verification.",
+    "Preview source and CHR hash do not prove actual displayed palette/pose; retain existing cached materials and record missing confirmation.",
+    "Other actors/equipment, quantities beyond original legal10, and unknown special equipment effects are outside enabled scope."
+  ],
+  "focusedDrops": [
+    {
+      "enemyId": 17,
+      "source": {
+        "offset": 60634,
+        "length": 16,
+        "sha256": "746fa7f4305efec82047bf089ed3f6d16a8d9a4cecaf848814b21262fe39295e",
+        "module": 1,
+        "cpuAddress": 60618,
+        "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+      },
+      "category": "armor",
+      "originalCategory": 3,
+      "itemId": "rom.armor.2",
+      "threshold": 10
+    },
+    {
+      "enemyId": 141,
+      "source": {
+        "offset": 62618,
+        "length": 16,
+        "sha256": "91af96c6c3de60ec80762b6a3f2405d1dec7c9504ce6974937e067452cf38cf6",
+        "module": 1,
+        "cpuAddress": 62602,
+        "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+      },
+      "category": "armor",
+      "originalCategory": 3,
+      "itemId": "rom.armor.11",
+      "threshold": 50
+    }
+  ],
+  "evidence": {
+    "report": "private-derived/world-armor-acquisition/report.json",
+    "sha256": "c45ae30bec71447daaf73322d38428902272ed26e4f3924eeb937d710c723a32",
+    "command": "python private-derived/world-armor-acquisition/probe.py",
+    "environment": "Linux Python3 + py65 and existing ROM Reader",
+    "normalAndroidAcceptance": "NOT_RUN"
+  },
+  "implementation": {
+    "entry": "BattleAcquisition.apply",
+    "minimalChange": "Add armor to the existing medicine/weapon allowed categories; do not change random calls, threshold, maxCount10, per-category16-positive-kind capacity or best-effort result.",
+    "patchOwner": "Root owns Battle.kt; this independent commit includes tests/provenance only.",
+    "equipmentAndSelling": "No equipment or shop rules changed. Generic list CPU evidence excludes equipped-only item; no new sellability or Nezha equip permission for armor11."
+  },
+  "jvmValidation": {
+    "command": "bash android/gradlew -p android :app:testDebugUnitTest --tests org.fengshen.dev.ArmorBattleAcquisitionTest --tests org.fengshen.dev.NanhaiBattleTest --tests org.fengshen.dev.OriginalStatusOutgoingTest --offline",
+    "environment": "Linux JDK21, cached Gradle8.13 and Android SDK",
+    "baselineCheck": "The stack-capacity method fails on unchanged medicine/weapon-only allowlist (IllegalArgumentException), before any RNG/item grant.",
+    "testedAdaptation": "Exactly one local Battle.kt allowlist addition: armor. Not included in this tests/provenance commit because root owns Battle.kt.",
+    "result": [
+      {
+        "name": "org.fengshen.dev.ArmorBattleAcquisitionTest",
+        "tests": "6",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0"
+      },
+      {
+        "name": "org.fengshen.dev.NanhaiBattleTest",
+        "tests": "18",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0"
+      },
+      {
+        "name": "org.fengshen.dev.OriginalStatusOutgoingTest",
+        "tests": "5",
+        "failures": "0",
+        "errors": "0",
+        "skipped": "0"
+      }
+    ],
+    "androidRuntime": "NOT_RUN"
+  }
+}

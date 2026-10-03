@@ -1,0 +1,198 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_GAMEPLAY",
+  "correction": "Prior status04 helper covered enemy selection, incoming physical damage and recovery only; player outgoing physical gate was omitted from that scope, now explicitly verified.",
+  "rules": {
+    "stage": "After physical damage computation (defense, underflow floor, multiplier,16bit wrap), before enemy HP write; accuracy outside this helper.",
+    "effect": "If actor status has bit4 and ((damage.low+damage.high)&255)!=1, unsigned damage>>1; otherwise unchanged.",
+    "exceptions": "The original sum guard preserves1,256 and65282, not merely minimum1. Zero stays0. Carry from byte sum is ignored by CMP1.",
+    "notCoveredByRule": "Spell tail skips this gate; do not apply to magic, healing, or enemy incoming formula.",
+    "state": "No extra random read/advance; no status clearing, inventory mutation, or reward work."
+  },
+  "caseCounts": {
+    "damageBoundary": 150,
+    "physicalPipeline": 18,
+    "spellBypass": 2
+  },
+  "allAssertionsPassed": true,
+  "spans": [
+    {
+      "offset": 306428,
+      "length": 146,
+      "sha256": "345e861e6cd974f43a10df02d6074b9c2797476c93fd77ad01b18ab2987bd0e9",
+      "module": 9,
+      "cpuAddress": 44268,
+      "meaning": "Physical weapon/strength add, defense subtract, negative underflow minimum1, multiplier and16bit wrap; then AD7E"
+    },
+    {
+      "offset": 306574,
+      "length": 28,
+      "sha256": "13e5cc37846b5e5bfda29af6af2e28a64144ea1eecb19ab69e06bf9b74b6de2f",
+      "module": 9,
+      "cpuAddress": 44414,
+      "meaning": "Actor status04: low+high 8bit sum CMP1, otherwise logical16bit shift right"
+    },
+    {
+      "offset": 306602,
+      "length": 44,
+      "sha256": "dbfae2e798e4439207d166ea27b5b6960dc50fbc536afdc8cfdfd465110d5907",
+      "module": 9,
+      "cpuAddress": 44442,
+      "meaning": "Expose damage then subtract enemy HP with zero floor"
+    },
+    {
+      "offset": 306368,
+      "length": 18,
+      "sha256": "e928dc386dd2fd9c675cb064c79bf2358302f089147b4a752ade8f16eaec2115",
+      "module": 9,
+      "cpuAddress": 44208,
+      "meaning": "Spell damage tail bypasses physical status04 helper"
+    },
+    {
+      "offset": 307622,
+      "length": 25,
+      "sha256": "70202758133cd1bb208a456f707225d44591250b4066c4bdcb36ac58e956e1d2",
+      "module": 9,
+      "cpuAddress": 45462,
+      "meaning": "Current acting character index to scalar/word offset"
+    }
+  ],
+  "limits": [
+    "Controlled initialized RAM, unchanged ROM instructions.",
+    "Physical entry follows already-successful accuracy; miss scheduling is not retested.",
+    "Spell-tail bypass only; no full magic implementation or ice equivalence claim.",
+    "Android integration/normal App acceptance handled separately by root."
+  ],
+  "evidence": {
+    "report": "private-derived/world-enemy16-behavior9/outgoing-report.json",
+    "sha256": "5a48c491e9e3b16702339e6a15fd42788a020483a380f917921ed4166e86303a",
+    "command": "python private-derived/world-enemy16-behavior9/outgoing-probe.py",
+    "environment": "Linux Python3 + py65, original ROM Reader; no Android runtime"
+  },
+  "implementationScope": "Pure outgoingPhysicalDamage helper only; existing battle scheduler integration and final App acceptance are separate.",
+  "license": "Original resource license UNKNOWN; matching hash establishes technical identity only. Raw input is not committed.",
+  "incomingIceFollowup": {
+    "kind": "CONTROLLED_ORIGINAL_CPU",
+    "report": "private-derived/world-enemy16-behavior9/incoming-ice-report.json",
+    "sha256": "f845341382abe2f872309a729261e6aba5987c85d144252a709d102d82378a70",
+    "cases": [
+      {
+        "enemyId": 137,
+        "base": 8,
+        "status": 0,
+        "actualDamage": 8,
+        "hpAfter": 992,
+        "steps": 1111
+      },
+      {
+        "enemyId": 137,
+        "base": 8,
+        "status": 4,
+        "actualDamage": 16,
+        "hpAfter": 984,
+        "steps": 1252
+      },
+      {
+        "enemyId": 138,
+        "base": 10,
+        "status": 0,
+        "actualDamage": 10,
+        "hpAfter": 990,
+        "steps": 1249
+      },
+      {
+        "enemyId": 138,
+        "base": 10,
+        "status": 4,
+        "actualDamage": 20,
+        "hpAfter": 980,
+        "steps": 1252
+      },
+      {
+        "enemyId": 139,
+        "base": 13,
+        "status": 0,
+        "actualDamage": 13,
+        "hpAfter": 987,
+        "steps": 1249
+      },
+      {
+        "enemyId": 139,
+        "base": 13,
+        "status": 4,
+        "actualDamage": 26,
+        "hpAfter": 974,
+        "steps": 1252
+      },
+      {
+        "enemyId": 141,
+        "base": 18,
+        "status": 0,
+        "actualDamage": 18,
+        "hpAfter": 982,
+        "steps": 1249
+      },
+      {
+        "enemyId": 141,
+        "base": 18,
+        "status": 4,
+        "actualDamage": 36,
+        "hpAfter": 964,
+        "steps": 1254
+      }
+    ],
+    "spans": [
+      {
+        "offset": 305510,
+        "length": 46,
+        "sha256": "e6375c861e9ad124de79018112414385a2ba36e8b97e0476cc90da4aa564e4a4",
+        "module": 9,
+        "cpuAddress": 43350,
+        "meaning": "Actual enemy special3 dispatch"
+      },
+      {
+        "offset": 305688,
+        "length": 61,
+        "sha256": "8e61a22e9bafe76b7944f36bf01e36782789a76876db97160bf8a199afa702f0",
+        "module": 9,
+        "cpuAddress": 43528,
+        "meaning": "Original Boss ice base, shared defense modifier then AB0A"
+      },
+      {
+        "offset": 305946,
+        "length": 72,
+        "sha256": "6dfc5554b5ca2464b43e93c332fc5df93a7b4070c03a7da56291c221494fd114",
+        "module": 9,
+        "cpuAddress": 43786,
+        "meaning": "Nonzero incoming damage status04 double and HP subtraction"
+      },
+      {
+        "offset": 305430,
+        "length": 10,
+        "sha256": "5c995ed4006e588c915f350ea7b982547073b6bc9a3fce129f954c4b6a0cf280",
+        "module": 9,
+        "cpuAddress": 43270,
+        "meaning": "Boss137..141 base damage words"
+      }
+    ],
+    "conclusion": "Enemy Boss ice dispatch3 reaches AB19 status04 double, unlike player spell tail. Existing incomingDamage must also wrap the already computed nonzero ice damage. No physical armor subtraction added to ice.",
+    "limits": [
+      "Single living actor boundary fixture; normal source corroboration maintained separately by other agent.",
+      "AB6D defense command quarter damage exists; not enabling unsupported defense command in this task."
+    ]
+  },
+  "jvmValidation": {
+    "command": "bash android/gradlew -p android :app:testDebugUnitTest --tests org.fengshen.dev.OriginalStatusOutgoingTest --tests org.fengshen.dev.OriginalStatusBit4Test --offline",
+    "environment": "Linux JDK21, cached Gradle8.13 and Android SDK",
+    "firstAttempt": "12 methods: 11 passed, 1 test-fixture failure. Synthetic multiplier threshold roll0/roll1 were reversed; corrected fixture, production helper unchanged.",
+    "scope": "Pure damage/status boundary methods; no Android normal runtime claim.",
+    "finalResult": {
+      "independentMethods": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    }
+  }
+}

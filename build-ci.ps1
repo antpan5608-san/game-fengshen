@@ -44,6 +44,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Shared village services and West palace content gates failed'}
     & python -m unittest discover -s tests -p test_world_north_palace_export.py
     if($LASTEXITCODE -ne 0){throw 'North palace guarded key and original encounter gates failed'}
+    & python -m unittest discover -s tests -p test_world_cave85_export.py
+    if($LASTEXITCODE -ne 0){throw 'World cave85 content tests failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

@@ -565,14 +565,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcs.filter{it.mapId==world.mapId &&
+        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
         val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null}
         if(merchant!=null)return merchant
         val (x,y)=world.destinationCell()
-        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId}.map{NpcCell(it.id,it.x,it.y)})?.id
+        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor}.map{NpcCell(it.id,it.x,it.y)})?.id
         return content.npcs.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
@@ -1293,7 +1293,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
         paint.color=Color.WHITE;paint.alpha=255
-        val actors=content.npcs.filter{it.mapId==world.mapId}.sortedBy{it.y}
+        val actors=content.npcs.filter{it.mapId==world.mapId&&
+            (!it.scriptedActor||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
@@ -1495,7 +1496,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val message=if(battleNotice.isNotEmpty())battleNotice else when(screen){
             BattlePresentation.Screen.ENTRY->"敌人出现了！"
             BattlePresentation.Screen.ACTING->action?.text?:""
-            else->if(storyBattle!=null)"点击龙王攻击 · 逃跑必失败并耗行动" else "点击敌人或对应信息条攻击"}
+            else->if(storyBattle!=null)"点击敌人攻击 · 剧情战斗逃跑规则保持" else "点击敌人或对应信息条攻击"}
         val status=if(screen==BattlePresentation.Screen.ACTING)action?.heroStatusMask?:current.hero.statusMask else current.hero.statusMask
         val statusText=if(status==0)"" else " · ${OriginalStatus.label(status)}"
         touchText(c,"${heroName(current.hero.id)}$statusText HP $hp/${current.hero.maxHp} · MP ${current.hero.mp}/${current.hero.maxMp?:"?"}\n$message",

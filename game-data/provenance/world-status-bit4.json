@@ -704,5 +704,16 @@
     "failed": 0,
     "skipped": 0,
     "scope": "Eight new pure-helper methods and seven existing poison/antidote methods. Behavior9 not enabled until Battle scheduler integration. Android NOT_RUN."
+  },
+  "schedulerIntegration": {
+    "scope": "Single living Nezha originalRound only; behavior9 now supported by OpeningBattle. No new content enemy activated in this checkpoint.",
+    "damage": "Use the same pure incomingDamage for physical and known ice, before HP clamp.",
+    "recovery": "Only TARGET after all surviving actors; last actual action byte, no extra draw. A63D/A67B early outcome skips recovery.",
+    "command": "bash android/gradlew -p android :app:testDebugUnitTest --tests org.fengshen.dev.Status4RoundTest --tests org.fengshen.dev.OriginalStatusTest --tests org.fengshen.dev.NanhaiBattleTest --tests org.fengshen.dev.BattleHerbTest --offline",
+    "environment": "Existing Linux JDK21/SDK/Gradle wrapper, restored reviewed base through ci_apk",
+    "passed": 38,
+    "failed": 0,
+    "newIndependentMethods": 8,
+    "androidAcceptance": "NOT_RUN"
   }
 }

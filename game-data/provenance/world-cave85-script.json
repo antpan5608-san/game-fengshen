@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "evidenceKind": "ACTUAL_PRG46_MAPPER_ORIGINAL_CPU_SCRIPT_TICKS_WITH_EXPLICIT_MENU_AND_COMBAT_RETURN_BOUNDARIES",
+  "rules": {
+    "mapId": 85,
+    "triggerCell": [
+      2,
+      6
+    ],
+    "triggerCondition": "Current map byte bit80 clear; no pearl/level/inn/shop gate in this dispatcher",
+    "eventId": 5,
+    "sourceType": 158,
+    "enemyId": 140,
+    "dynamicActorId": 129,
+    "actorSpawnCell": [
+      2,
+      2
+    ],
+    "introTalkCell": [
+      2,
+      5
+    ],
+    "introMessage": {
+      "group": 95,
+      "index": 0,
+      "groupEvidence": "Existing normal original RAM, not inferred from actor name"
+    },
+    "postBattleMessage": {
+      "group": 95,
+      "index": 1
+    },
+    "postDialogue": "actor turns UP, moves3cells to2,2, is removed; then map85 flag80 is set and player resumes map85 at2,6",
+    "reward": "Common battle reward only: EXP142/money240; optional original loot record threshold10/category0/id9. No event5 inventory/money/EXP grant.",
+    "flag": {
+      "ramAddress": 1877,
+      "mask": 128
+    },
+    "repeat": "bit80 skips trigger; optional treasure bits2/4/8/16 preserved",
+    "failedBattle": "No victory return boundary was executed as normal; existing original defeat processing remains separate. Do not set flag on entry."
+  },
+  "sources": [
+    {
+      "offset": 30455,
+      "length": 14,
+      "sha256": "065e142a192bc72cd799776ff1498ccd3248901450d7523ffa0b62acd26890c6",
+      "module": 0,
+      "cpuAddress": 63207,
+      "meaning": "Main map-position dispatcher actually maps PRG8K46"
+    },
+    {
+      "offset": 30441,
+      "length": 14,
+      "sha256": "40cbccfca18daa6c56c3ff73001160f0ce6dd8c5e76e0ae2a014320aaab342ab",
+      "module": 0,
+      "cpuAddress": 63193,
+      "meaning": "Main event-phase dispatcher maps PRG8K46"
+    },
+    {
+      "offset": 383029,
+      "length": 26,
+      "sha256": "66069341793d51fd08d2756cbdbcabc05ad0d5c0347987e0d01fcaa2a7dd77b1",
+      "module": 11,
+      "cpuAddress": 55333,
+      "meaning": "Existing current-map bit80 skips completed position events"
+    },
+    {
+      "offset": 383151,
+      "length": 22,
+      "sha256": "eab676be19d64422b20813d2cbd0854d279151232fd43ac6b67ee2029be0b960",
+      "module": 11,
+      "cpuAddress": 55455,
+      "meaning": "Map85 position event5 dispatch"
+    },
+    {
+      "offset": 383642,
+      "length": 3,
+      "sha256": "d8de2d0a0e5f715db9c9217d3396c36487bbe2f5e9b24748647f3b3cddbbd0a7",
+      "module": 11,
+      "cpuAddress": 55946,
+      "meaning": "Exact cell2,6 trigger table"
+    },
+    {
+      "offset": 379768,
+      "length": 2,
+      "sha256": "c60eeb72d7a2dd4bd7a404a2f85cf223e2cb826145940a316d63963a0fb2ab68",
+      "module": 11,
+      "cpuAddress": 52072,
+      "meaning": "Actual event5 table points CE05"
+    },
+    {
+      "offset": 380437,
+      "length": 44,
+      "sha256": "edf7531adc16b068fe7041fe7812e14524d1a8a5df9baf5a16aa1e5040e3f056",
+      "module": 11,
+      "cpuAddress": 52741,
+      "meaning": "Script6 intro/source158; original battle entry and script15 setup"
+    },
+    {
+      "offset": 380926,
+      "length": 11,
+      "sha256": "23fda734f78e9d5f31f55e3fea6f957cb5ad33185b1ed33d59ccaa98f5359b61",
+      "module": 11,
+      "cpuAddress": 53230,
+      "meaning": "Wait for script15 complete, then CD9A"
+    },
+    {
+      "offset": 378054,
+      "length": 9,
+      "sha256": "8fe5e887fed744afb5399e08c57d955670f08ece3cf46e4cbd9d73b186398c3c",
+      "module": 11,
+      "cpuAddress": 50358,
+      "meaning": "Script6: dynamicactor129/spawn11, DOWN facing, DOWN3, message0"
+    },
+    {
+      "offset": 378063,
+      "length": 11,
+      "sha256": "ccc81cfa920072b4f474aa11dd6723ea9c31e7866cba651864c2ce6ffa2ea136",
+      "module": 11,
+      "cpuAddress": 50367,
+      "meaning": "Script15: message1, UP facing, UP3, remove129"
+    },
+    {
+      "offset": 29081,
+      "length": 14,
+      "sha256": "8d5091b8198047d5b475a89c84b207faa87b816f535697a61d23813d73ca3858",
+      "module": 0,
+      "cpuAddress": 61833,
+      "meaning": "Dynamic actor source11"
+    },
+    {
+      "offset": 28690,
+      "length": 69,
+      "sha256": "54d35f809427341528e9501f95a8670ecb0b14f280c1b3636e19c1558d6e087d",
+      "module": 0,
+      "cpuAddress": 61442,
+      "meaning": "Original free object-slot creation"
+    },
+    {
+      "offset": 377440,
+      "length": 82,
+      "sha256": "36eb4c817017b821ee2450299093b558e2c912966a6d2e0d86af8adfb230fd36",
+      "module": 11,
+      "cpuAddress": 49744,
+      "meaning": "Original script pair parser; message command count+1"
+    },
+    {
+      "offset": 383699,
+      "length": 133,
+      "sha256": "37555c47009934d089be6dec2f3792c66645b15143bf810aebd0e542a24ca57e",
+      "module": 11,
+      "cpuAddress": 56003,
+      "meaning": "Original actor script movement and step count"
+    },
+    {
+      "offset": 384066,
+      "length": 56,
+      "sha256": "12a05ae1ebf4b94d0b8a968006071a2a89e627b08dcb8b609cf1e3b6ef4ffc4d",
+      "module": 11,
+      "cpuAddress": 56370,
+      "meaning": "Dialogue command and actor removal"
+    },
+    {
+      "offset": 384122,
+      "length": 53,
+      "sha256": "89870407724e8841d186edf165aedf7995861f5e0773bdb62201056919de5508",
+      "module": 11,
+      "cpuAddress": 56426,
+      "meaning": "Actor facing operations"
+    },
+    {
+      "offset": 380330,
+      "length": 85,
+      "sha256": "c92c91ec7b7ce78ceac911b1c577921beb0088a666fdba34b79322e2829a9781",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Original completion clears script and OR80 while retaining current map"
+    },
+    {
+      "offset": 40785,
+      "length": 1,
+      "sha256": "9defb0a9e163278be0e05aa01b312ec78cfa3726869503385e76e3a4b7950648",
+      "module": 1,
+      "cpuAddress": 40769,
+      "meaning": "Battle source158 maps enemy140"
+    }
+  ],
+  "tests": {
+    "positionGuardCases": 50,
+    "scriptPhaseCheckpoints": 6,
+    "preserveFlagsCases": 1,
+    "failures": 0
+  },
+  "limits": [
+    "Normal original victory and Android acceptance are not produced by this CPU test.",
+    "Menu completion and successful-battle-return boundaries explicitly supplied; script movement, actor spawn/removal and flag writes execute original instructions unchanged.",
+    "Enemy140 record gives numeric battle reward; name, displayed dialogue transcription and ordinary victory footage must reference normal original evidence.",
+    "Other map85 treasures and their inventory effects are not opened by this event.",
+    "Geometry-only cave85 route cannot be used to bypass this automatic event."
+  ],
+  "scopeRevision": "cave85-script5-little-dragon",
+  "privateCpuReportSha256": "3221d9e0940ce9e86039d592bd456dc627ff257a2f8d2af1269408173e509385",
+  "normalOriginal": {
+    "path": "private-derived/world-east-followup/little-dragon-normal-evidence.json",
+    "sha256": "a8f9b1f7f0e9b66a2056e08e29589e5627a785199a731150282fa85f98f59c07",
+    "scope": "Controller-only trigger, physical boss/herb, victory dialogue and departure before flag, four true cave directed transitions"
+  },
+  "androidAcceptance": "NOT_RUN",
+  "implementationLimit": "Original intercept pose and separate dialogue completion/removal restored; full three-cell actor walk animation remains incomplete."
+}

@@ -21,7 +21,11 @@ data class StoryEffect(val type:String,val id:String?,val amount:Int,val source:
 data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firstDialogue:String,
     val repeatDialogue:String?,val firstEffects:List<StoryEffect>,val source:String,val mapId:Int=114,
     val shopId:String?=null,val interactionCell:Pair<Int,Int>?=null,val innId:String?=null,
-    val treasure:TreasureDefinition?=null,val openedSprite:Bitmap?=null)
+    val treasure:TreasureDefinition?=null,val openedSprite:Bitmap?=null) {
+    // Original script-spawned actors are only present in that story interaction.
+    // Keep the existing constructor for instrumentation against the reviewed APK.
+    var scriptedActor:Boolean=false;internal set
+}
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
 data class StoryText(val id:String,val text:String,val source:String)
@@ -183,7 +187,10 @@ object ContentLoader {
                 n.optJSONObject("treasure")?.let{t->
                     require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
                     TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount"))
-                },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)})
+                },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
+                npc.scriptedActor=n.optBoolean("scriptedActor",false)
+                require(!npc.scriptedActor||(npc.shopId==null&&npc.innId==null&&npc.treasure==null&&effects.isEmpty()))
+            }
         }
         val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val cell=ints(o,"cell");val mid=o.getInt("mapId")
@@ -369,6 +376,8 @@ object ContentLoader {
                     limit.getInt("level").also{level->require(level in 2..99&&growth.lastOrNull()?.level==level)}
                 })
         }else null
+        require(npcs.filter{it.scriptedActor}.all{npc->
+            battle?.storyBattles?.get(npc.id)?.entryTrigger?.mapId==npc.mapId})
         val battleHorizons=mutableMapOf<Int,Bitmap>();val blackBattleEnemyIds=mutableSetOf<Int>()
         val enemyGraphics=mutableMapOf<Int,Bitmap>();val enemyOrigins=mutableMapOf<Int,Pair<Int,Int>>()
         var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null

@@ -572,20 +572,31 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         combat['presentation']['graphics']+=overlay.get('graphics',[])
         for boss in overlay.get('bosses',[]):
             if boss['id'] in {b['id'] for b in combat.get('bosses',[])}:raise ValueError('Duplicate story battle')
-            raw=checked_span(reader,boss['npcSource'])
             if boss.get('entryTrigger'):
                 trigger=boss['entryTrigger'];proof=load(ROOT/trigger['evidence'])
                 if proof['romSha256']!=SHA256:raise ValueError('Coordinate story ROM differs')
-                for span in proof['spans']:checked_span(reader,span)
-                original=proof['guard']['trigger']
-                if (boss['mapId'],trigger['mapId'],trigger['x'],trigger['y'],boss['eventId'])!=(
-                        original['mapId'],original['mapId'],*original['cell'],original['eventId']):
-                    raise ValueError('Coordinate story trigger differs')
-                if not original['automatic'] or not boss.get('commitAfterDialogue') or \
-                        boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128' or boss['sourceType']!=154:
+                for span in proof.get('spans',proof.get('sources',[])):checked_span(reader,span)
+                if proof.get('guard'):
+                    original=proof['guard']['trigger']
+                    if (boss['mapId'],trigger['mapId'],trigger['x'],trigger['y'],boss['eventId'])!=(
+                            original['mapId'],original['mapId'],*original['cell'],original['eventId']):
+                        raise ValueError('Coordinate story trigger differs')
+                    if not original['automatic'] or boss['sourceType']!=154:
+                        raise ValueError('Guarded chest story source differs')
+                    raw=checked_span(reader,boss['npcSource'])
+                    if list(raw[0:3])!=[144,1,11]:raise ValueError('Guarded treasure record differs')
+                elif proof.get('scopeRevision')=='cave85-script5-little-dragon':
+                    rule=proof['rules']
+                    if (boss['mapId'],trigger['mapId'],trigger['x'],trigger['y'],boss['eventId'],boss['sourceType'],boss['enemyId'])!=(85,85,2,6,5,158,140) or \
+                            (rule['mapId'],rule['triggerCell'],rule['sourceType'],rule['dynamicActorId'])!=(85,[2,6],158,129):
+                        raise ValueError('Cave story source/trigger differs')
+                    raw=checked_span(reader,boss['actorScriptSource'])
+                    if raw!=reader.read(11,0xc4b6,9):raise ValueError('Original cave actor script differs')
+                else:raise ValueError('Coordinate story requires verified phase semantics')
+                if not boss.get('commitAfterDialogue') or boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128':
                     raise ValueError('Coordinate story phase or completion differs')
-                if list(raw[0:3])!=[144,1,11]:raise ValueError('Guarded treasure record differs')
             else:
+                raw=checked_span(reader,boss['npcSource'])
                 if list(raw[10:14])!=[1,2,boss['eventId'],boss['eventArgument']]:
                     raise ValueError('Original story battle dispatch differs')
                 if boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
@@ -672,6 +683,15 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
+        if npc.get('scriptedActor'):
+            story=next((b for b in overlay.get('bosses',[]) if b['npcId']==npc['id']),None) if overlay else None
+            if story is None or not story.get('actorScriptSource') or npc.get('firstEffects'):
+                raise ValueError('Scripted actor lacks its original event')
+            proof=load(ROOT/story['entryTrigger']['evidence']);rule=proof['rules']
+            if npc['mapId']!=rule['mapId'] or npc['cell']!=rule['introTalkCell']:
+                raise ValueError('Scripted actor pose differs from original interception')
+            if npc['source']['script']!=story['actorScriptSource']:
+                raise ValueError('Script actor and boss evidence differ')
         if not npc.get('treasure'):continue
         raw=checked_span(reader,npc['source']['record']);t=npc['treasure']
         if list(raw[:3])!=[144,1,11] or raw[13]!=2 or t['itemId']!='rom.special.11' or t['amount']!=1 or \
