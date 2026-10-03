@@ -1622,7 +1622,20 @@ class TouchTest:IsolatedGameTestCase(){
                     assertEquals(v.currentSnapshot().characters.first().maxHp,v.currentSnapshot().characters.first().hp)
                     leaveService(entry);walkTo(0,14);step(Key.LEFT);walkTo(200,130)
                 }
-                step(if(v.world.y/16==130)Key.DOWN else Key.UP)
+                var trainingDirection:Key?=null
+                instrumentation.runOnMainSync{
+                    val x=v.world.x/16;val y=v.world.y/16
+                    val preferred=if(y>130)Key.UP else Key.DOWN
+                    trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
+                        val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                        val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                        v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
+                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
+                    }
+                }
+                assertNotNull("No legal normal training step; no collision bypass",trainingDirection)
+                step(trainingDirection!!)
             }
             walkTo(202,130);assertEquals(0,v.world.mapId);state("normal-earned-supply-complete")
         }
@@ -1919,7 +1932,20 @@ class TouchTest:IsolatedGameTestCase(){
                     walkTo(202,130);assertEquals(0,v.world.mapId);inn()
                     walkTo(0,14);step(Key.LEFT);walkTo(200,130)
                 }
-                step(if(v.world.y/16==130)Key.DOWN else Key.UP)
+                var trainingDirection:Key?=null
+                instrumentation.runOnMainSync{
+                    val x=v.world.x/16;val y=v.world.y/16
+                    val preferred=if(y>130)Key.UP else Key.DOWN
+                    trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
+                        val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                        val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                        v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
+                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
+                    }
+                }
+                assertNotNull("No legal normal training step; no collision bypass",trainingDirection)
+                step(trainingDirection!!)
             }
             walkTo(202,130);assertEquals(0,v.world.mapId);training=false;state("normal-training-complete")
         }
@@ -2285,7 +2311,20 @@ class TouchTest:IsolatedGameTestCase(){
                     walkTo(202,130);assertEquals(0,v.world.mapId);inn()
                     walkTo(0,14);step(Key.LEFT);walkTo(200,130)
                 }
-                step(if(v.world.y/16==130)Key.DOWN else Key.UP)
+                var trainingDirection:Key?=null
+                instrumentation.runOnMainSync{
+                    val x=v.world.x/16;val y=v.world.y/16
+                    val preferred=if(y>130)Key.UP else Key.DOWN
+                    trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
+                        val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                        val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                        v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
+                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
+                    }
+                }
+                assertNotNull("No legal normal training step; no collision bypass",trainingDirection)
+                step(trainingDirection!!)
             }
             walkTo(202,130);assertEquals(0,v.world.mapId);training=false;state("normal-preparation-complete")
         }
