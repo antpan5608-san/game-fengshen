@@ -439,3 +439,16 @@ jobs:
             artifacts/checkpoint-ui/world-hell-village2-normal-test.txt
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain scoped first hall normal battle and restart checkpoints
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-first-hall-checkpoints
+          path: |
+            artifacts/checkpoint-ui/world-first-hall-*.png
+            artifacts/checkpoint-ui/touch-ux-world-first-hall-*.json
+            artifacts/checkpoint-ui/world-first-hall-recording.json
+            artifacts/world-first-hall-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14

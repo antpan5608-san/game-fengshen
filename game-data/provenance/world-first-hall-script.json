@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "first-hall-event20-qin-victory-removes-246",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "mapId": 70,
+    "npcId": "rom.npc.70.1",
+    "npcCell": [
+      28,
+      4
+    ],
+    "normalTalkCell": [
+      28,
+      6
+    ],
+    "normalTalkDirection": "UP",
+    "eventId": 20,
+    "eventArgument": 2,
+    "sourceType": 159,
+    "enemyId": 142,
+    "bossVictoryFlag": "rom.map.70.flag.2",
+    "victoryFlags": [
+      "rom.map.70.flag.4"
+    ],
+    "barrierRemovedFlag": "rom.map.70.flag.4",
+    "barrierCell": [
+      23,
+      2
+    ],
+    "barrierSpriteId": 246,
+    "firstMessage": 1,
+    "repeatMessage": 2,
+    "textGroup": 80,
+    "sourceTypeInstruction": {
+      "offset": 348990,
+      "length": 2,
+      "sha256": "374b25bccaae5245b3f6a8f615b114336fd3bf0d5369a2044edb48b14b4a19b6",
+      "module": 10,
+      "cpuAddress": 54062,
+      "meaning": "Actual event20 LDA9F source159, not exterior NPC189"
+    },
+    "setDialogueAndEventFlag": {
+      "offset": 349027,
+      "length": 5,
+      "sha256": "9040812babc89a1d4765d1fd18069a0a13ee53e4979b24fc9d10b2dce8a42c38",
+      "module": 10,
+      "cpuAddress": 54099,
+      "meaning": "Actual message2 and CF29 event argument2"
+    },
+    "rewardTiming": "Common battle rewards then actual flag0->4->6 before victory/repeat dialogue; keep pending dialogue durable; no destination/join/extra reward."
+  },
+  "sources": [
+    {
+      "offset": 348699,
+      "length": 2,
+      "sha256": "40cde98557c1b73e207e58e061d10fd7cefff39c2a0d91f719ef60f3bd9e8feb",
+      "module": 10,
+      "cpuAddress": 53771,
+      "meaning": "Event20 actual D322 pointer"
+    },
+    {
+      "offset": 348978,
+      "length": 12,
+      "sha256": "ee493fb107090716b951f8f78530c4d8039a6fa39ce2847a61d4f96ffccc2419",
+      "module": 10,
+      "cpuAddress": 54050,
+      "meaning": "Event20 stages D32E/D344/D1CF"
+    },
+    {
+      "offset": 348990,
+      "length": 22,
+      "sha256": "ab72024b731ed08cb5c3c9671503c7693e1eee144232c23551c3a9567dd1aad7",
+      "module": 10,
+      "cpuAddress": 54062,
+      "meaning": "Actual source159 enters existing battle loader"
+    },
+    {
+      "offset": 349012,
+      "length": 53,
+      "sha256": "9707732ce2ff14110c05a76a10af443f2d20089b751201613400c1273f02370a",
+      "module": 10,
+      "cpuAddress": 54084,
+      "meaning": "Win: remove246, OR removed NPC flag4, dialogue2/argument2"
+    },
+    {
+      "offset": 347961,
+      "length": 9,
+      "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Map flag OR current event argument2"
+    },
+    {
+      "offset": 10627,
+      "length": 169,
+      "sha256": "4bda88807fb9b2bf43a0aafe3c8f426bd972c36217888ba228eeef7978db92d2",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original NPC load-time flag filter; collision246 removed after bit4"
+    },
+    {
+      "offset": 21807,
+      "length": 2,
+      "sha256": "d74aabd9e28be8ff3f5bb8d61ca747f0d32d10d076550cfd1ba64a51ced1501d",
+      "module": 0,
+      "cpuAddress": 54559,
+      "meaning": "Map70 actual flag RAM pointer0746"
+    },
+    {
+      "offset": 40786,
+      "length": 1,
+      "sha256": "949f94d858ef6ad1333164d796a0d777fd82f9155ece7d6fad68c0b992f0e7af",
+      "module": 1,
+      "cpuAddress": 40770,
+      "meaning": "Original source159 loads actual enemy142"
+    },
+    {
+      "offset": 280999,
+      "length": 14,
+      "sha256": "03b8f87e47aeec6aa66f2659c5a4b71ee56b6fa9239d5dba49967581c6b041b7",
+      "module": 8,
+      "cpuAddress": 51607,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 281013,
+      "length": 14,
+      "sha256": "fca1c1518d2d6f5aecb3b5160781d622eb966cf301e17edc2587eca089412151",
+      "module": 8,
+      "cpuAddress": 51621,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 281027,
+      "length": 14,
+      "sha256": "e33c556d9f8d6c1d2549b355fde6c1fce11cc2609ee64250d64b433a642a5191",
+      "module": 8,
+      "cpuAddress": 51635,
+      "meaning": "Fixed 14-byte NPC source record"
+    }
+  ],
+  "normalEvidence": {
+    "entryAndTalk": "Controller-only continuation of normal village2 inn return, actualmap70(1,13)->stand28,6 dialogue80/1 -> enemy142 HP520; no RAM writes.",
+    "battleCaptureSha256": "d4933701a6f89c25357a44daee69aef83b164c5d64dc7e5fd21011e57a977ec9",
+    "normalDefeat": "Separate legitimately supplied ten-herb attempt defeated; state not repaired; not normal victory."
+  },
+  "controlledVictory": {
+    "kind": "CONTROLLED_ORIGINAL_BOSS_HP1_FIXTURE_NOT_NORMAL_PLAY",
+    "fixtureModification": "Only active enemy HPslot3 set1 before original commands; rewards/flags untouched",
+    "writeTraceSha256": "a2db238ff9386a8f02fc7916490f15eebaf6ad02db34d9ff960ee02612865478",
+    "moneyDelta": 350,
+    "experienceDeltaLivingActors": [
+      120,
+      120
+    ],
+    "flagSequence": [
+      0,
+      4,
+      6
+    ],
+    "collision246After": "Removed original source NPC at map70 cell23,2",
+    "exitScanner": "Eight controlled cases flags0/2/4/6 at two exits: unconditional transfers; barrier controls approach, not exit condition."
+  },
+  "limits": [
+    "Normal original full-HP victory and Android first hall NOT_RUN.",
+    "Text transcriptions use pinned Reference matched to actual original message IDs; full glyph/canonical remains provisional.",
+    "Original manual-save battle-defeat branch remains cumulative debt."
+  ]
+}

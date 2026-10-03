@@ -2096,11 +2096,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
     // Both routes share the same real touch/service/BFS driver. Only their
     // verified source checkpoints and scenario assertions differ.
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false){
+    fun testNormalWorldFirstHallFromVerifiedHellVillageSave(){normalWorldStoryContinuation(false,true,false,true)}
+    fun testWorldFirstHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2136,18 +2138,18 @@ class TouchTest:IsolatedGameTestCase(){
                 .put("bossIceObserved",capturedBossIce).put("twoActorBattles",twoActorBattles)
                 .put("twoActorVictories",twoActorVictories).toString())
         }
-        fun medicine(id:String){
-            assertEquals(GameView.Layer.MAP,v.layer);val before=v.currentSnapshot()
+        fun medicine(id:String,owner:String?=null){
+            assertEquals(GameView.Layer.MAP,v.layer);val before=v.currentSnapshot();val target=owner?:before.characters.first().id
             assertTrue("Normal supply exhausted: $id; never inject inventory",(before.inventory[id]?:0)>0)
-            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,id)
+            tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));if(before.characters.size>1)tap(v,center(v.panelCharacterBounds(target)));scrollToItem(v,id)
             tap(v,center(v.panelItemBounds(id)));assertEquals(before,v.currentSnapshot())
             tap(v,center(v.panelPrimaryBounds()));val after=v.currentSnapshot()
             if(id==HerbUse.ID){
-                assertEquals(minOf(before.characters.first().maxHp,before.characters.first().hp+50),after.characters.first().hp)
+                assertEquals(minOf(before.characters.single{it.id==target}.maxHp,before.characters.single{it.id==target}.hp+50),after.characters.single{it.id==target}.hp)
                 assertEquals((before.inventory[id]?:0)-1,after.inventory[id]?:0)
             }else{
-                assertEquals(0,after.characters.first().statusMask and OriginalStatus.POISON)
-                assertEquals(before.characters.first().hp,after.characters.first().hp)
+                assertEquals(0,after.characters.single{it.id==target}.statusMask and OriginalStatus.POISON)
+                assertEquals(before.characters.single{it.id==target}.hp,after.characters.single{it.id==target}.hp)
                 assertEquals(((before.inventory[id]?:0)-2).coerceAtLeast(0),after.inventory[id]?:0)
             }
             state(if(id==HerbUse.ID)"normal-map-herb" else "normal-map-antidote")
@@ -2155,6 +2157,12 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
+            if(firstHall){
+                for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
+                    if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
+                    if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
+                };return
+            }
             if(v.currentSnapshot().characters.first().statusMask and OriginalStatus.POISON!=0)medicine(AntidoteUse.ID)
             val s=v.currentSnapshot();val h=s.characters.first()
             if(!training&&h.hp<=h.maxHp/2&&(s.inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID)
@@ -2163,12 +2171,12 @@ class TouchTest:IsolatedGameTestCase(){
             var entered:OpeningBattle?=null
             instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)entered=battleField.get(v) as OpeningBattle}
             val initial=entered?:return;val beforeFight=v.currentSnapshot()
-            val boss=initial.enemies.any{it.definition.id==if(east)141 else 140};fights++
+            val boss=initial.enemies.any{it.definition.id==if(firstHall)142 else if(east)141 else 140};fights++
             if(initial.party.size==2){twoActorBattles++;state("two-actor-natural-encounter")}
             if(boss){
                 assertFalse("A completed cave story must never start again after cold restart",cold)
                 assertEquals("Only the original one-shot encounter may start",1,++bossEntries)
-                assertEquals(if(east)400 else 240,initial.enemies.single().definition.hp)
+                assertEquals(if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
             val deadline=SystemClock.elapsedRealtime()+240000
@@ -2308,6 +2316,81 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(firstHall){
+            assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+            val story=v.content.battle!!.storyBattles.getValue("rom.npc.70.1")
+            assertEquals(142,story.group.members.single().enemyId)
+            if(cold){
+                assertEquals(23,v.world.mapId);assertTrue(source.flags[story.flagId]==true)
+                assertTrue(source.flags["rom.map.70.flag.4"]==true);assertTrue(source.flags[story.pendingFlag]!=true)
+                state("cold-full-party-inventory-flags-and-open-gate")
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).first{v.world.scene.probeFrom(v.world.x/16,v.world.y/16,it,v.world.terrainMode)==MovementBlock.NONE}
+                step(departure);walkTo(43,75);assertEquals(70,v.world.mapId)
+                state("cold-original-upper-door-reentry")
+                walkTo(28,6);val before=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+                val after=v.currentSnapshot();assertEquals(before.money,after.money);assertEquals(before.inventory,after.inventory)
+                assertEquals(before.characters,after.characters);assertEquals(before.flags,after.flags);assertEquals(0,bossEntries)
+                state("cold-king-repeat-no-second-battle-or-reward")
+                walkTo(23,2);assertEquals(23,v.world.mapId);checkSourceUnchanged();persistChecked()
+                state("cold-original-open-gate-and-continue");instrumentation.runOnMainSync{activity.finish()};return
+            }
+            assertEquals(2,v.world.mapId);assertTrue(source.flags[story.flagId]!=true)
+            state("verified-normal-village2-source-no-state-grants")
+            val gear=listOf("rom.weapon.4","rom.armor.3")
+            fun equipped(id:String):Boolean{val d=v.content.equipmentDefinitions.getValue(id);val e=v.currentSnapshot().characters.first().equipment!!
+                return(if(d.slot=="rightHand")e.rightHand else e.body)==d.originalId}
+            fun buyAndEquip(){
+                for(id in gear)if(!equipped(id)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(id).buyPrice!!+200){
+                    if((v.currentSnapshot().inventory[id]?:0)==0){val entry=enterService(2,if(id==gear.first())17 else 18);trade(id,true);leaveService(entry)}
+                    tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));tap(v,center(v.panelCharacterBounds("nezha")));scrollToItem(v,id)
+                    val before=v.currentSnapshot();tap(v,center(v.panelItemBounds(id)));assertEquals(before,v.currentSnapshot())
+                    tap(v,center(v.panelPrimaryBounds()));assertTrue(equipped(id));instrumentation.runOnMainSync{v.handleBack()};state("normal-purchased-equipped-$id")
+                }
+            }
+            fun restock(){val entry=enterService(2,19)
+                for(id in listOf(HerbUse.ID,AntidoteUse.ID)){val qty=(10-(v.currentSnapshot().inventory[id]?:0)).coerceAtLeast(0)
+                    val affordable=(v.currentSnapshot().money/v.content.itemDefinitions.getValue(id).buyPrice!!).coerceAtMost(qty)
+                    if(affordable>0)trade(id,true,affordable)}
+                leaveService(entry);supply()
+            }
+            buyAndEquip();restock();inn(2);training=true
+            walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(55,93)
+            var steps=0
+            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<15}){
+                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<4000)
+                val low=v.currentSnapshot().characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}
+                val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
+                if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){
+                    walkTo(55,91);assertEquals(2,v.world.mapId);buyAndEquip();restock();inn(2)
+                    walkTo(30,19);walkTo(55,93)
+                }
+                step(if(v.world.y/16>93)Key.UP else Key.DOWN)
+            }
+            walkTo(55,91);assertEquals(2,v.world.mapId);training=false;restock();inn(2)
+            assertTrue(gear.all{equipped(it)});assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp})
+            state("normal-original-supply-gear-training-not-a-story-gate")
+            walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(28,80);assertEquals(70,v.world.mapId)
+            assertEquals(1,v.world.x/16);assertEquals(13,v.world.y/16);state("normal-first-hall-original-entry")
+            assertEquals(MovementBlock.PHYSICAL,v.world.scene.blockType(23,2))
+            walkTo(2,6);val beforeGuard=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(beforeGuard.money,v.currentSnapshot().money);assertEquals(beforeGuard.inventory,v.currentSnapshot().inventory)
+            state("normal-original-first-hall-guard-dialogue")
+            walkTo(28,6);val beforeBoss=v.currentSnapshot();talk();assertEquals(GameView.Layer.BATTLE,v.layer)
+            finishFight();assertEquals(GameView.Layer.DIALOGUE,v.layer);state("normal-qin-victory-dialogue")
+            val won=v.currentSnapshot();assertEquals(beforeBoss.money+350,won.money)
+            assertTrue(won.characters.all{it.hp>0})
+            for(actor in beforeBoss.characters)assertEquals(actor.experience+120,won.characters.single{it.id==actor.id}.experience)
+            assertTrue(won.flags[story.flagId]==true);assertTrue(won.flags["rom.map.70.flag.4"]==true)
+            assertTrue(won.flags[story.pendingFlag]==true);dialogue();assertEquals(GameView.Layer.MAP,v.layer)
+            assertTrue(v.currentSnapshot().flags[story.pendingFlag]!=true);assertNull(v.world.scene.check(23,2))
+            val paid=v.currentSnapshot();talk();assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(paid.money,v.currentSnapshot().money);assertEquals(paid.inventory,v.currentSnapshot().inventory)
+            assertEquals(paid.characters,v.currentSnapshot().characters);assertEquals(paid.flags,v.currentSnapshot().flags)
+            assertEquals(1,bossEntries);state("normal-king-repeat-no-duplicate-reward")
+            walkTo(23,2);assertEquals(23,v.world.mapId);assertEquals(43,v.world.x/16);assertEquals(75,v.world.y/16)
+            checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-first-hall-exit-saved");instrumentation.runOnMainSync{activity.finish()};return
         }
         if(hell){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})

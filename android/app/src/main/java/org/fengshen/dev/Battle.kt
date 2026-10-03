@@ -78,13 +78,14 @@ data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:Strin
     var entryTrigger:StoryEntryTrigger?=null;internal set
     var commitAfterDialogue:Boolean=false;internal set
     var continuation:StoryContinuation?=null;internal set
+    var victoryFlags:Set<String> = emptySet();internal set
     val pendingFlag get()=flagId+".dialogue.pending"
     fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
         entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
     fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> =
-        (if(commitAfterDialogue)flags else flags+(flagId to true))+(pendingFlag to true)
+        (if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+(pendingFlag to true)
     fun completeDialogue(flags:Map<String,Boolean>):Map<String,Boolean> =
         if(alreadyWon(flags))(flags+(flagId to true))-pendingFlag else flags
 }

@@ -13,6 +13,28 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Controlled actual c23 loader/state roundtrip; not a normal Boss victory. */
+    fun testControlledFirstHallBarrierBattleAndColdFlags(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(70);val rule=c.sceneBarriers.single{it.mapId==70}
+        assertEquals(MovementBlock.PHYSICAL,c.sceneForState(70,emptyMap())!!.blockType(23,2))
+        assertEquals(MovementBlock.PHYSICAL,c.sceneForState(70,mapOf("rom.map.70.flag.2" to true))!!.blockType(23,2))
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.70.1")
+        assertEquals(142,boss.group.members.single().enemyId);assertEquals(520,c.battle.enemies.getValue(142).hp)
+        val won=boss.rewardFlags(mapOf("unrelated" to true))
+        val save=SaveSnapshot(c.scene.version,70,1*16+8,13*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(HerbUse.ID to 3),won,50)
+        assertTrue(save.validate(c));val restored=SaveSnapshot.parse(save.json().toString())
+        assertEquals(save,restored);assertTrue(boss.alreadyWon(restored.flags));assertEquals("rom.dialogue.80.2",boss.pendingDialogue(restored.flags))
+        val current=c.sceneForState(70,restored.flags)!!;assertNull(current.check(23,2))
+        assertEquals(scene.dynamicObjectCells-setOf(rule.y*scene.width+rule.x),current.dynamicObjectCells)
+        val done=boss.completeDialogue(restored.flags)
+        assertTrue(done["rom.map.70.flag.2"]==true);assertTrue(done["rom.map.70.flag.4"]==true);assertTrue(done["unrelated"]==true)
+        assertTrue(done[boss.pendingFlag]!=true);assertEquals(done,boss.completeDialogue(done))
+        val npc=c.npcs.single{it.id==boss.npcId};assertEquals(28 to 6,npc.interactionCell);assertEquals(Key.UP,npc.interactionDirection)
+        assertEquals(10,c.battle.zones.single{it.mapId==70}.groups.size)
+    }
+
     /** Actual bundled definitions with isolated inventory; not a normal acquisition recording. */
     fun testControlledVillage2GirlEquipmentAndLegacyLootInventory(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

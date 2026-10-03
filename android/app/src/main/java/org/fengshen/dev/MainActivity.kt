@@ -608,6 +608,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null}
         if(merchant!=null)return merchant
         val (x,y)=world.destinationCell()
+        val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
+        if(originalPoint!=null)return originalPoint
         val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor}.map{NpcCell(it.id,it.x,it.y)})?.id
         return content.npcs.firstOrNull{it.id==id}
     }
@@ -642,7 +644,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(definition==null){showNotice("当前村庄的住宿数据未接入");return}
             world.face(Key.UP);openInn(definition);return
         }
-        val direction=facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
+        val direction=if(npc.interactionDirection!=null&&npc.interactionCell==(x to y))npc.interactionDirection!!
+            else facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
         val story=content.battle?.storyBattles?.get(npc.id)
         // A guarded chest enters its original story battle first. The acquisition

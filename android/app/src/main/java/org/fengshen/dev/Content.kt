@@ -25,6 +25,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     // Original script-spawned actors are only present in that story interaction.
     // Keep the existing constructor for instrumentation against the reviewed APK.
     var scriptedActor:Boolean=false;internal set
+    var interactionDirection:Key?=null;internal set
 }
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
@@ -68,6 +69,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     // bounded loader; this never holds every visited map alive.
     var joinCharacters:Map<String,CharacterState> = emptyMap()
         internal set
+    var sceneBarriers:List<SceneBarrier> = emptyList()
+        internal set
     var mechanisms:List<SceneMechanism> = emptyList()
         internal set
     private var stateScene:Scene?=null
@@ -78,6 +81,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         val removed=mapObjects.mapNotNull{it.itemTarget}.filter{it.mapId==mapId&&flags[it.removedFlagId]==true}
             .map{it.y*base.width+it.x}.toSet()
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
+        for(barrier in sceneBarriers)result=barrier.apply(result,flags)
         for(mechanism in mechanisms)result=mechanism.apply(result,flags)
         stateScene=result;stateFlags=flags;return result
     }
@@ -198,6 +202,12 @@ object ContentLoader {
                     TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount"))
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
+                n.optString("interactionDirection").takeIf{it.isNotEmpty()}?.let{dir->
+                    require(n.getString("interactionEvidence").isNotBlank())
+                    val point=npc.interactionCell?:error("Missing original interaction point")
+                    require(point.first in 0 until npcScene.width&&point.second in 0 until npcScene.height)
+                    npc.interactionDirection=Key.valueOf(dir).also{require(it in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))}
+                }
                 require(!npc.scriptedActor||(npc.shopId==null&&npc.innId==null&&npc.treasure==null&&effects.isEmpty()))
             }
         }
@@ -388,6 +398,12 @@ object ContentLoader {
                             require(mid in scenes&&x in 0 until scenes.getValue(mid).width&&y in 0 until scenes.getValue(mid).height)
                             StoryEntryTrigger(mid,x,y)
                         }
+                        b.optJSONArray("victoryFlags")?.let{fs->
+                            require(b.getString("victoryFlagEvidence").isNotBlank())
+                            boss.victoryFlags=(0 until fs.length()).map{fs.getString(it)}.toSet()
+                            require(boss.victoryFlags.size==fs.length()&&boss.victoryFlags.size in 1..16&&
+                                boss.victoryFlags.all{it.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+"))})
+                        }
                         boss.commitAfterDialogue=b.optBoolean("commitAfterDialogue",false)
                         boss.continuation=b.optJSONObject("continuation")?.let{c->
                             require(c.getString("evidence").isNotBlank())
@@ -510,6 +526,17 @@ object ContentLoader {
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
+                data.optJSONArray("sceneBarriers")?.let{a->
+                    content.sceneBarriers=(0 until a.length()).map{i->
+                        val b=a.getJSONObject(i);require(b.getString("evidence").isNotBlank())
+                        val cell=ints(b,"cell");require(cell.size==2)
+                        SceneBarrier(b.getString("id"),b.getInt("mapId"),cell[0],cell[1],b.getString("removedFlagId")).also{rule->
+                            val base=scenes.getValue(rule.mapId)
+                            require(rule.x<base.width&&rule.y<base.height&&rule.y*base.width+rule.x in base.dynamicObjectCells)
+                        }
+                    }
+                    require(content.sceneBarriers.map{it.id}.distinct().size==content.sceneBarriers.size)
+                }
                 data.optJSONArray("mechanisms")?.let{a->
                     content.mechanisms=(0 until a.length()).map{i->
                         val o=a.getJSONObject(i);val cells=o.getJSONArray("changes")

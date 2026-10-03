@@ -54,6 +54,12 @@ try {
     if($LASTEXITCODE -ne 0){throw 'East palace original resource and transition gates failed'}
     & python -m unittest discover -s tests -p test_world_east_export.py
     if($LASTEXITCODE -ne 0){throw 'East content export and critical state gates failed'}
+    & python -m unittest discover -s tests -p test_world_hell_encounters_export.py
+    if($LASTEXITCODE -ne 0){throw 'Hell encounter and status gates failed'}
+    & python -m unittest discover -s tests -p test_world_village2_export.py
+    if($LASTEXITCODE -ne 0){throw 'Village2 original services and definitions gates failed'}
+    & python -m unittest discover -s tests -p test_world_first_hall_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original first hall content and state gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}
