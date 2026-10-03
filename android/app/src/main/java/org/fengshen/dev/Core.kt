@@ -133,6 +133,14 @@ data class SceneBarrier(val id:String,val mapId:Int,val x:Int,val y:Int,val remo
     }
 }
 
+/** Validate exit geometry in a reachable gate-open state, without changing live state.
+ * A reviewed removable collision actor is valid at a doorway; other NPCs/walls remain blocked. */
+fun validExitPlacement(scene:Scene,x:Int,y:Int,barriers:List<SceneBarrier>):Boolean {
+    var geometry=scene
+    for(barrier in barriers)geometry=barrier.apply(geometry,mapOf(barrier.removedFlagId to true))
+    return geometry.check(x,y)==null
+}
+
 /** Original scene-local mechanism. The flag denotes Android session continuation,
  * not an original cartridge manual-save event byte (see world-east-mechanism.json). */
 data class SceneCellChange(val x:Int,val y:Int,val fromTile:Int,val toTile:Int,

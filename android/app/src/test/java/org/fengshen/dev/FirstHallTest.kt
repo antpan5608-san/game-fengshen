@@ -28,6 +28,17 @@ class FirstHallTest {
         assertEquals(MovementBlock.PHYSICAL,base.blockType(23,2));assertNull(after.check(23,2))
         assertEquals(setOf(2*32+23,4*32+28,5*32+2),base.dynamicObjectCells)
     }
+    @Test fun staticExitValidationAllowsOnlyReviewedGateAndNeverUnlocksRuntime(){
+        val base=scene()
+        assertFalse(validExitPlacement(base,23,2,emptyList()))
+        assertTrue(validExitPlacement(base,23,2,listOf(barrier)))
+        assertFalse(validExitPlacement(base,28,4,listOf(barrier)))
+        assertFalse(validExitPlacement(base,32,2,listOf(barrier)))
+        val wall=base.copy(collision=base.collision.copyOf().also{it[23+2*32]=1},enabled=base.enabled-setOf(23+2*32))
+        assertFalse(validExitPlacement(wall,23,2,listOf(barrier)))
+        assertEquals(MovementBlock.PHYSICAL,base.blockType(23,2))
+        assertNotNull(barrier.apply(base,emptyMap()).check(23,2))
+    }
     @Test fun battleCommitKeepsVictoryDoorFlagAndDurableDialogueThroughReload(){
         val boss=StoryBattleDefinition("rom.boss.142","rom.npc.70.1","rom.map.70.flag.2",
             EncounterGroup(159,listOf(EncounterMember(3,142))),"rom.dialogue.80.2").also{it.victoryFlags=setOf("rom.map.70.flag.4")}
