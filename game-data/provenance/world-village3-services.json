@@ -1,0 +1,1147 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "post-rebirth-village3-shared-services",
+  "kind": "REAL_CONTROLLER_CONTINUATION_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_NEW_GAME_OR_ANDROID",
+  "controllerOnly": true,
+  "newRamWrites": false,
+  "licenseStatus": "UNKNOWN",
+  "entry": {
+    "mapId": 3,
+    "cell": [
+      15,
+      29
+    ],
+    "directionByte": 0,
+    "partyCount": 2,
+    "money": 887,
+    "hp": [
+      35,
+      29
+    ],
+    "maxHp": [
+      128,
+      92
+    ],
+    "mp": [
+      0,
+      44
+    ],
+    "maxMp": [
+      0,
+      44
+    ],
+    "path": "private-derived/world-post-rebirth-village3-controlled/01-original-village3-arrival-ram.bin",
+    "sha256": "e1a53c233292efd4de7eed74268f116a8b00867ff10a4e99765fc2098445cd50"
+  },
+  "return": {
+    "mapId": 16,
+    "cell": [
+      239,
+      160
+    ],
+    "directionByte": 0,
+    "partyCount": 2,
+    "money": 887,
+    "hp": [
+      35,
+      29
+    ],
+    "maxHp": [
+      128,
+      92
+    ],
+    "mp": [
+      0,
+      44
+    ],
+    "maxMp": [
+      0,
+      44
+    ],
+    "path": "private-derived/world-village3-return-exact-controller/01-original-world-return-ram.bin",
+    "sha256": "94f18e2142d44e31c6e8a50e6e480af6fa25af9063d17c43744e7136663020bd"
+  },
+  "lodging": {
+    "states": {
+      "inn-before": {
+        "mapId": 22,
+        "cell": [
+          12,
+          14
+        ],
+        "directionByte": 0,
+        "partyCount": 2,
+        "money": 887,
+        "hp": [
+          35,
+          29
+        ],
+        "maxHp": [
+          128,
+          92
+        ],
+        "mp": [
+          0,
+          44
+        ],
+        "maxMp": [
+          0,
+          44
+        ]
+      },
+      "inn-A-3": {
+        "mapId": 22,
+        "cell": [
+          12,
+          7
+        ],
+        "directionByte": 0,
+        "partyCount": 2,
+        "money": 847,
+        "hp": [
+          35,
+          29
+        ],
+        "maxHp": [
+          128,
+          92
+        ],
+        "mp": [
+          0,
+          44
+        ],
+        "maxMp": [
+          0,
+          44
+        ]
+      },
+      "inn-A-4": {
+        "mapId": 22,
+        "cell": [
+          12,
+          7
+        ],
+        "directionByte": 0,
+        "partyCount": 2,
+        "money": 847,
+        "hp": [
+          128,
+          92
+        ],
+        "maxHp": [
+          128,
+          92
+        ],
+        "mp": [
+          0,
+          44
+        ],
+        "maxMp": [
+          0,
+          44
+        ]
+      },
+      "inn-return": {
+        "mapId": 3,
+        "cell": [
+          23,
+          17
+        ],
+        "directionByte": 0,
+        "partyCount": 2,
+        "money": 847,
+        "hp": [
+          128,
+          92
+        ],
+        "maxHp": [
+          128,
+          92
+        ],
+        "mp": [
+          0,
+          44
+        ],
+        "maxMp": [
+          0,
+          44
+        ]
+      }
+    },
+    "samples": {
+      "inn-before": {
+        "path": "private-derived/world-post-rebirth-village3-services/22/inn-before-ram.bin",
+        "sha256": "e533995e0c60fa6e935f0a645e692e718ced26f4a5a02b1463b6593c78f10f40"
+      },
+      "inn-A-3": {
+        "path": "private-derived/world-post-rebirth-village3-services/22/inn-A-3-ram.bin",
+        "sha256": "cb7ff7e45feb4469ea53e1e2274cbf64d2be879dd5371ad49a1a875039407645"
+      },
+      "inn-A-4": {
+        "path": "private-derived/world-post-rebirth-village3-services/22/inn-A-4-ram.bin",
+        "sha256": "7825b1d6c09bbe16a1ec00030fb8b571c904d8d46e9e4c9f6959d28e931ba9dc"
+      },
+      "inn-return": {
+        "path": "private-derived/world-post-rebirth-village3-services/22/inn-return-ram.bin",
+        "sha256": "92308ef868701cbcd6002ca2e209ccae5c242d6f0413b310b0ce181c029a3449"
+      }
+    }
+  },
+  "doors": [
+    {
+      "interiorMapId": 17,
+      "door": [
+        7,
+        13
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "sample": {
+        "path": "private-derived/world-post-rebirth-village3-services/17/normal-room-entry-ram.bin",
+        "sha256": "15382f3a1317f2650f9d23a2f4e55c74bcd576c36c03c502f78d42159b62431a"
+      },
+      "scope": "ACTUAL_KEYS_FROM_CONTROLLED_SOURCE_NO_NEW_STATE_WRITES"
+    },
+    {
+      "interiorMapId": 18,
+      "door": [
+        18,
+        8
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "sample": {
+        "path": "private-derived/world-post-rebirth-village3-services/18/normal-room-entry-ram.bin",
+        "sha256": "e051c3e0a78cac3a6239371d0956d3d3c3ed47b491a246cdfd8b2263e98da413"
+      },
+      "scope": "ACTUAL_KEYS_FROM_CONTROLLED_SOURCE_NO_NEW_STATE_WRITES"
+    },
+    {
+      "interiorMapId": 19,
+      "door": [
+        12,
+        8
+      ],
+      "spawn": [
+        6,
+        12
+      ],
+      "sample": {
+        "path": "private-derived/world-post-rebirth-village3-services/19/normal-room-entry-ram.bin",
+        "sha256": "3e57dee68556b008d90b2ec61e8bd2b2011fe7d1b5ac020ca2024f1af6357c61"
+      },
+      "scope": "ACTUAL_KEYS_FROM_CONTROLLED_SOURCE_NO_NEW_STATE_WRITES"
+    },
+    {
+      "interiorMapId": 22,
+      "door": [
+        23,
+        17
+      ],
+      "spawn": [
+        12,
+        14
+      ],
+      "sample": {
+        "path": "private-derived/world-post-rebirth-village3-services/22/normal-room-entry-ram.bin",
+        "sha256": "e533995e0c60fa6e935f0a645e692e718ced26f4a5a02b1463b6593c78f10f40"
+      },
+      "scope": "ACTUAL_KEYS_FROM_CONTROLLED_SOURCE_NO_NEW_STATE_WRITES"
+    }
+  ],
+  "npcGraphics": [
+    {
+      "spriteId": 140,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ],
+          "3": [
+            255,
+            255,
+            255
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 868976,
+            "length": 16,
+            "sha256": "c60097f6207bb68852c86121091275dad631d40158143a8419d846e2aa87f53f",
+            "spriteTile": 38,
+            "attribute": 3,
+            "oamRamAddress": 532
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 868992,
+            "length": 16,
+            "sha256": "f1ef1cefc0c34a8c75153bb70a465466e3e620ea2a65d4dd7d6b377adc7c75d3",
+            "spriteTile": 39,
+            "attribute": 3,
+            "oamRamAddress": 536
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 869232,
+            "length": 16,
+            "sha256": "bbb767b3998b043a293e3371a0fd60f784aba31fe8d3b173cc6490a4309ab0a7",
+            "spriteTile": 54,
+            "attribute": 3,
+            "oamRamAddress": 540
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 869248,
+            "length": 16,
+            "sha256": "5a77ba06fbdb45f69c49dff65640c0fed8b74419354453e19f4ae13946fde8ba",
+            "spriteTile": 55,
+            "attribute": 3,
+            "oamRamAddress": 544
+          }
+        ],
+        "rgbaSha256": "6452730620fc91f1252de1c608e022f44cd589ac33c88e92fab30bfa76ee0dde",
+        "observedRect": [
+          96,
+          105,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "4d636ba299573736104309aaf140b721e7a6259c45a851157197fc112e0facc0",
+        "ppuSha256": "2331bb86916e3b6835dd6be2596889ea86589d53600f78d6c670a160a2ae51d2",
+        "ramSha256": "5494263215e4abb7ed1cd479665bcfe86b643dbdbdf410290f394e45f4b6b80f",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 159,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    },
+    {
+      "spriteId": 143,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "3": [
+            93,
+            150,
+            255
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 869104,
+            "length": 16,
+            "sha256": "a8482e0de27bab38c5218d23918cd4cedfd3115f6982399513d2ab86a716b54d",
+            "spriteTile": 46,
+            "attribute": 2,
+            "oamRamAddress": 532
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 869120,
+            "length": 16,
+            "sha256": "55d4451b74c57745339a86a9ecfe1f0565530108207190452f3407f77a413d7c",
+            "spriteTile": 47,
+            "attribute": 2,
+            "oamRamAddress": 536
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 869360,
+            "length": 16,
+            "sha256": "3e1ff4097d37e2a90897e8423a2e30d7bd0df65538e5cbc38f1c21359576df39",
+            "spriteTile": 62,
+            "attribute": 2,
+            "oamRamAddress": 540
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 869376,
+            "length": 16,
+            "sha256": "d701e9fca57ca0c34b22d59cb12e776aff473f1d7b5c0012966e83716cf6ea6d",
+            "spriteTile": 63,
+            "attribute": 2,
+            "oamRamAddress": 544
+          }
+        ],
+        "rgbaSha256": "1927b723677ea02bccf387e276bb273f5df4aee9808c37d341f4fe5b844e3acd",
+        "observedRect": [
+          96,
+          105,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "b780bbcab350b4d9ee0140ef8160c580e941b7e8e6c3e265ff182ca362c0fbba",
+        "ppuSha256": "d1f880422f19f722480f181d478e71bbb8999a92b71cfdead6f37d4064a920bd",
+        "ramSha256": "51fc363a8f50b85c60a223c7f875e39d0b7f70dcc4439e5d34afb71a996a11d4",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 163,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    },
+    {
+      "spriteId": 163,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "3": [
+            255,
+            255,
+            255
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 871504,
+            "length": 16,
+            "sha256": "6cef8cb2c769b6be564d78c9774b056500fe329625c62f4904929dd4f332e9d3",
+            "spriteTile": 198,
+            "attribute": 3,
+            "oamRamAddress": 532
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 871520,
+            "length": 16,
+            "sha256": "6a6dd68bb201f9bac450c15d33a4a30578cdb436706b2396edeb192b774e3d3c",
+            "spriteTile": 199,
+            "attribute": 3,
+            "oamRamAddress": 536
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 871792,
+            "length": 16,
+            "sha256": "d1f58bf9d5fdb98205984f75ec3c6e4f8fb2bc785864ca16c187a4fb6631a0e1",
+            "spriteTile": 214,
+            "attribute": 3,
+            "oamRamAddress": 540
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 871808,
+            "length": 16,
+            "sha256": "a3e70ae335e6f21bcda71a07f392e5bbc858853fa0483978c6a0b66a0a2849ea",
+            "spriteTile": 215,
+            "attribute": 3,
+            "oamRamAddress": 544
+          }
+        ],
+        "rgbaSha256": "b5aba2f10a7384bb46abb5dd0398eebaa4936690a5ee9fcbf2bb2f6005fec98a",
+        "observedRect": [
+          128,
+          105,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "1bcebe7914225516cc2a70a3cec591979c8de8941d609ab5a9c22cb73667debd",
+        "ppuSha256": "b43f57faf3f5c453986f0d4f0ef2735ca3728ca7535d4327be135217173b6503",
+        "ramSha256": "3ce0d8e30ccae5de59e84e17d770925213b9f235bce81fe298d96f0ac0c2b512",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 188,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    },
+    {
+      "spriteId": 164,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ],
+          "3": [
+            93,
+            150,
+            255
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 872064,
+            "length": 16,
+            "sha256": "c4ee649bb722b6f906f41d9d174df931119633a84a374c6ac5236ab9603fff6d",
+            "spriteTile": 231,
+            "attribute": 66,
+            "oamRamAddress": 580,
+            "flipX": true,
+            "flipY": false
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 872048,
+            "length": 16,
+            "sha256": "48f28f4f325d15a4193fea685f48adccc024b8c61938d7919c0a1e5c4b7c2ad1",
+            "spriteTile": 230,
+            "attribute": 66,
+            "oamRamAddress": 584,
+            "flipX": true,
+            "flipY": false
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 872320,
+            "length": 16,
+            "sha256": "aa3efeb9fe5ab39ec757447e40f66c0f9d1547088b0db43b409e1ea04700b7a8",
+            "spriteTile": 247,
+            "attribute": 66,
+            "oamRamAddress": 588,
+            "flipX": true,
+            "flipY": false
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 872304,
+            "length": 16,
+            "sha256": "dd92d85ff22b2babe620369e5ca44e454fb76b9afc95a628e1268b59201f0fff",
+            "spriteTile": 246,
+            "attribute": 66,
+            "oamRamAddress": 592,
+            "flipX": true,
+            "flipY": false
+          }
+        ],
+        "rgbaSha256": "4f36028e2f9340394b46c184ebd8c990ca8b4b73ff58e1d54932adefce601fdb",
+        "observedRect": [
+          144,
+          89,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "821f3080551d6fd3a7ee973ed9c84c54126589cbce9db5f9c142de3b7f3e77e3",
+        "ppuSha256": "9dfb3dc9a990e91bcd323f1574f5dbddde976c8fc531f7cf9d8891620e33a1a2",
+        "ramSha256": "13fc4dc4ec72d2183da2a5dd731fc2831a2218200d5ba6c0429763e951234ca9",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 127,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    },
+    {
+      "spriteId": 165,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "3": [
+            93,
+            150,
+            255
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 870608,
+            "length": 16,
+            "sha256": "1f51835694e499073e16e772f4effd4e4c85696932107e0dc7d13efdaef0aaf8",
+            "spriteTile": 140,
+            "attribute": 2,
+            "oamRamAddress": 548
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 870624,
+            "length": 16,
+            "sha256": "8f8c84cb02b67247de408df6a6c7fbbbccf3096ef4c227e4ff6f158c872bc94d",
+            "spriteTile": 141,
+            "attribute": 2,
+            "oamRamAddress": 552
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 870864,
+            "length": 16,
+            "sha256": "7d2ff0133afa5d7fb3ce3afc2b45bdf9c975619fe650884a704911ceb654657d",
+            "spriteTile": 156,
+            "attribute": 2,
+            "oamRamAddress": 556
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 870880,
+            "length": 16,
+            "sha256": "fbcb794de86242442b0ba59389872512561564c72a4c6ec0fe791fca0f756a92",
+            "spriteTile": 157,
+            "attribute": 2,
+            "oamRamAddress": 560
+          }
+        ],
+        "rgbaSha256": "812050bb376e967a9b7aba1fd1a5829fdd9eedcd04879581e9f4ce96bff3ac28",
+        "observedRect": [
+          112,
+          89,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "49f14777d043708a9af80ff7af8d815337c4953782fcaadfad2325b1842ca934",
+        "ppuSha256": "05cfe5cc7ff51e677329bd7bd79f8d2113da4247a3fc631db0400625dc890b72",
+        "ramSha256": "884543b867b651199806b77dda953456aa6e42e83da4da7b87946570ad6aa21b",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 187,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    },
+    {
+      "spriteId": 166,
+      "recipe": {
+        "unusedPaletteIndices": [],
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "3": [
+            255,
+            255,
+            255
+          ],
+          "2": [
+            255,
+            117,
+            97
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 870928,
+            "length": 16,
+            "sha256": "a66780e315b35b538c94c323ba9006ed152f70af15e612e3949068b5b96f75cf",
+            "spriteTile": 160,
+            "attribute": 3,
+            "oamRamAddress": 564
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 870944,
+            "length": 16,
+            "sha256": "e4b800a1e285085fea2409e095355ac6232310a72558e9bf03ff54a1eff73412",
+            "spriteTile": 161,
+            "attribute": 3,
+            "oamRamAddress": 568
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 871184,
+            "length": 16,
+            "sha256": "37782d464d42f4f73f1d2ee9b7660a45103f0b8d8bd80608b9e5a651b1f27a0c",
+            "spriteTile": 176,
+            "attribute": 3,
+            "oamRamAddress": 572
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 871200,
+            "length": 16,
+            "sha256": "f3087d644b5da44217f6017f3ff2f98bb0874836294540de185dae0a65669623",
+            "spriteTile": 177,
+            "attribute": 3,
+            "oamRamAddress": 576
+          }
+        ],
+        "rgbaSha256": "d7570422d4cd6dedd536870ded4af1af3e87f013e9c99d877fb28a9851c4fefc",
+        "observedRect": [
+          128,
+          137,
+          16,
+          16
+        ],
+        "captureKind": "REAL_CONTROLLER_VISIBLE_ORIGINAL_FROM_CONTROLLED_POST_WIN_SOURCE",
+        "normalPlayEvidence": false,
+        "captureSha256": "ab8c9f149dc51d6a655a99a06a234018a45977db71a36890741f86c3a3fe6c28",
+        "ppuSha256": "ef7da8700f5fd20f2b4eeac4db6f8fb99995c5dfc946011f2bffac4e2455a659",
+        "ramSha256": "c64b7cd0e30fb2a4bd2e239feb21c898196090382f3732c4464bb7a829926f57",
+        "opaquePixelMatch": true,
+        "opaquePixelCount": 105,
+        "scope": "One nonempty original pose, no coordinate/CHR/PPU/palette/HP/inventory writes on the captured branch; animation remains debt."
+      },
+      "kind": "ORIGINAL_ACTUAL_VISIBLE_OAM_CHR_RGBA_MATCH"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.13.0",
+      "rawHex": "409d00271e9e804341c3",
+      "record": {
+        "offset": 106160,
+        "length": 10,
+        "sha256": "dd5e599e6733b4a566b59ab7b2296830b42f3c07c703b5eea2f9b79f505a0138",
+        "module": 3,
+        "cpuAddress": 40608,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "dcf5917719f88fe7db83b88290ed85b8c8de7873057ff2331eac93b283848bc1",
+      "ramSha256": "569e515e2afe250420ba7e45d8882f5931992e9ca87e4e398f29e97bf02a4d2b"
+    },
+    {
+      "id": "rom.dialogue.13.1",
+      "rawHex": "409d01811f02824341c3",
+      "record": {
+        "offset": 106170,
+        "length": 10,
+        "sha256": "4445899d99588178bc179ac5d7f11ad261a6bd8f13be6cbf699b1fd7be07da61",
+        "module": 3,
+        "cpuAddress": 40618,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "d2da12e7e89efd1e5ba6152632c5092754317ef15a0dedd297ce09268dba023f",
+      "ramSha256": "c3cfa8c258fae02a3504fe51d57836698dfac28275bcd6bf7a3b03572249dbb7"
+    },
+    {
+      "id": "rom.dialogue.13.4",
+      "rawHex": "4087088842210989a71fa10a8a0b2228a28b4341c3",
+      "record": {
+        "offset": 106209,
+        "length": 21,
+        "sha256": "e99a6cf5cc67175f2eef23e09c8855be0a79b778897da0338947dbe75be6d43b",
+        "module": 3,
+        "cpuAddress": 40657,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "81450bc760f2333cdd42b30e8080c7b6653ae57bb186af5b344a8b86e713b09b",
+      "ramSha256": "3333df5d14c259efc9d76d196dc6462cf8f0e23ecd5514cdacc70fa6e9c0b8f7"
+    },
+    {
+      "id": "rom.dialogue.13.5",
+      "rawHex": "40a10c8c0d258d2228a2270e268e284341c3",
+      "record": {
+        "offset": 106230,
+        "length": 18,
+        "sha256": "66980d59e813d59390585bbcd4b3ac3b4ff59a75557a6e7814464dd739f9c637",
+        "module": 3,
+        "cpuAddress": 40678,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "312ec645e99a59c3c926b3faa512a4d7d285cbae7a81f590fb2e5d794caa4684",
+      "ramSha256": "1cb8fa5907bf4e0d317ed9d7196907bb2c24b864489ada349c9e2ae2d782098f"
+    },
+    {
+      "id": "rom.dialogue.13.7",
+      "rawHex": "40a6169623a4281742a497211898284341c3",
+      "record": {
+        "offset": 106275,
+        "length": 18,
+        "sha256": "3a46b7144a08fa2f04a0f10cf330c8507e981322a0f75d4c4e5b4ecad035f915",
+        "module": 3,
+        "cpuAddress": 40723,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "b43f6c127a411e2846bb12cbb60f36db467214a6ab3ea320b51fac5070ab60b0",
+      "ramSha256": "db6e994b27cda18a1bb08dc236e39032257cfcfac060b42990034807eb7621d9"
+    },
+    {
+      "id": "rom.dialogue.13.8",
+      "rawHex": "40199f23c041c3",
+      "record": {
+        "offset": 106293,
+        "length": 7,
+        "sha256": "1ac67f85ee29b69f364ae7bcbcf67ad50ba4b4ae28fab1dc31bb1f63d0564ce5",
+        "module": 3,
+        "cpuAddress": 40741,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "58348a26f8a6a259862b3946630f042011e606b92003ed6e8b999bbb4fc0b090",
+      "ramSha256": "0b0eb90364291b28d046efa6a6b5abaa7e49321d8a50ce85372f8cc90b97f9dc"
+    },
+    {
+      "id": "rom.dialogue.13.9",
+      "rawHex": "409943434341c3",
+      "record": {
+        "offset": 106300,
+        "length": 7,
+        "sha256": "b803cad44a79d11c922e5db390ea8a69f0928ced511c92bd1d7a3f407af5fbad",
+        "module": 3,
+        "cpuAddress": 40748,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "0053bfa32996297a90eec0fc34ce3de2e6cf49671ddbb8f62cc7977d5aa34826",
+      "ramSha256": "11fbe09021b02be0a11fcc163f724de1fec6236330c047a32d1f713f77ced862"
+    },
+    {
+      "id": "rom.dialogue.13.10",
+      "rawHex": "40a3a342242443434341c3",
+      "record": {
+        "offset": 106307,
+        "length": 11,
+        "sha256": "ddccf90d1673688de3e80e94ca3e3e805becca0dae36547691e73dcdb7f6cc77",
+        "module": 3,
+        "cpuAddress": 40755,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "screenshotSha256": "c7050d2ef844d1b1501e7e8b0a637f18af0f8dde3054489b2b1246e3e01a5e41",
+      "ramSha256": "bf457133d72785ca1e76d8fe663131c9ce5e40abdc656f80d044c4eb621133c3"
+    }
+  ],
+  "rules": {
+    "callerMapId": 3,
+    "innPrice": 40,
+    "innBlockedMask": 114,
+    "optionalNotStoryGate": true
+  },
+  "sources": [
+    {
+      "offset": 19443,
+      "length": 79,
+      "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178",
+      "module": 0,
+      "cpuAddress": 52195,
+      "meaning": "Existing original shared caller/service dispatch"
+    },
+    {
+      "offset": 262348,
+      "length": 53,
+      "sha256": "a52af7768869adf8a7cdc20191a760386b3de1ef9c5a4ebe6790a69cd59734e2",
+      "module": 8,
+      "cpuAddress": 32956,
+      "meaning": "Return loader skips first two entry bytes and reads map,x,y from bytes2..4"
+    },
+    {
+      "offset": 83665,
+      "length": 2,
+      "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41",
+      "module": 2,
+      "cpuAddress": 50881,
+      "meaning": "Original caller3 lodging price40"
+    }
+  ],
+  "limits": [
+    "Original continuation starts from controlled post-win source; no normal final Boss victory/new-game claim.",
+    "Merchant original buy/sell not rerun here; stock/price comes from the existing exact catalog.",
+    "Original mobile NPC choreography, clinic and residential events remain unimplemented.",
+    "Short return/pose mutation experiments failed and are not input. Actual route/visible sprite snapshots are used.",
+    "Local parent content is a checksum-fixed recipe checkpoint, never a failed APK used as trusted media."
+  ],
+  "palette": {
+    "originalDefault": {
+      "mapId": 3,
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "backgroundSelector": 3,
+      "spriteSelector": 0,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "source": [
+        {
+          "offset": 24793,
+          "length": 2,
+          "sha256": "9b4fb24edd6d1d8830e272398263cdbf026b97392cc35387b991dc0248a628f9",
+          "module": 0,
+          "cpuAddress": 57545,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25532,
+          "length": 2,
+          "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293",
+          "module": 0,
+          "cpuAddress": 58284,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 25706,
+          "length": 16,
+          "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0",
+          "module": 0,
+          "cpuAddress": 58458,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ],
+      "routineEvidence": [
+        {
+          "offset": 10249,
+          "length": 44,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+          "module": 0,
+          "cpuAddress": 43001,
+          "meaning": "Signed map ID selector dispatch"
+        },
+        {
+          "offset": 9120,
+          "length": 110,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+          "module": 0,
+          "cpuAddress": 41872,
+          "meaning": "Original queued background then sprite palette writes"
+        }
+      ]
+    },
+    "actualObserved": [
+      14,
+      39,
+      55,
+      25,
+      14,
+      33,
+      50,
+      48,
+      14,
+      22,
+      9,
+      25,
+      14,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      14,
+      14,
+      54,
+      43,
+      14,
+      14,
+      38,
+      34,
+      14,
+      14,
+      38,
+      32
+    ],
+    "sample": {
+      "path": "private-derived/world-village3-npc-controller-only/original-npc-nearby-ppu.bin",
+      "sha256": "2331bb86916e3b6835dd6be2596889ea86589d53600f78d6c670a160a2ae51d2"
+    },
+    "scope": "Settled actual visible village3; universal-zero palette entries observed separately, no all-black/faded palette"
+  }
+}

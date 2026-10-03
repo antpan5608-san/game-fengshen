@@ -2190,11 +2190,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldHallBatchColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,hallBatch=true)}
     fun testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave(){normalWorldStoryContinuation(false,true,rebirth=true)}
     fun testWorldRebirthColdRestartAndContinueMatchesNormalSave(){normalWorldStoryContinuation(true,true,rebirth=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false){
+    fun testNormalWorldVillageThreeServicesFromVerifiedRebirthSave(){normalWorldStoryContinuation(false,true,village3=true)}
+    fun testWorldVillageThreeColdRestartAndRealReentry(){normalWorldStoryContinuation(true,true,village3=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2436,6 +2438,49 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(village3){
+            assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
+            assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+            state(if(cold)"cold-exact-owned-party-inventory-and-flags" else "verified-rebirth-source-no-state-grants")
+            walkTo(239,160);assertEquals(3,v.world.mapId)
+            assertEquals(15 to 29,v.world.x/16 to v.world.y/16);state("normal-world-to-village3-original-door")
+            if(!cold){
+                for((room,id)in listOf(17 to "rom.weapon.6",18 to "rom.armor.12",19 to "rom.medicine.10")){
+                    val entry=enterService(3,room);state("normal-shop-$room-open")
+                    trade(id,true);state("normal-shop-$room-bought")
+                    trade(id,false);state("normal-shop-$room-sold");leaveService(entry)
+                }
+                val entry=enterService(3,17);trade("rom.weapon.6",true);leaveService(entry)
+                val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+                tap(v,center(v.panelCharacterBounds("nezha")));scrollToItem(v,"rom.weapon.6")
+                tap(v,center(v.panelItemBounds("rom.weapon.6")));assertEquals(before,v.currentSnapshot())
+                tap(v,center(v.panelPrimaryBounds()));val expected=OpeningEquipment.replace(before.characters.single{it.id=="nezha"},before.inventory,
+                    v.content.equipmentDefinitions.getValue("rom.weapon.6"),v.content.equipmentDefinitions.values)!!
+                assertEquals(expected.first,v.currentSnapshot().characters.single{it.id=="nezha"})
+                assertEquals(expected.second,v.currentSnapshot().inventory)
+                instrumentation.runOnMainSync{v.handleBack()};state("normal-original-permitted-weapon6-atomic-replacement")
+                for(actor in v.currentSnapshot().characters.filter{it.statusMask and OriginalStatus.POISON!=0})medicine(AntidoteUse.ID,actor.id)
+                inn(3);assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
+                state("normal-original40-inn-all-actor-recovery-and-return")
+                walkTo(16,20);val beforeTalk=v.currentSnapshot()
+                tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                state("normal-original-village3-resident-dialogue");dialogue()
+                assertEquals(beforeTalk.money,v.currentSnapshot().money);assertEquals(beforeTalk.inventory,v.currentSnapshot().inventory)
+                assertEquals(beforeTalk.characters,v.currentSnapshot().characters)
+            }else{
+                val entry=enterService(3,22);val before=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
+                leaveService(entry);state("cold-real-service-reentry-cancel-no-charge")
+            }
+            walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(239 to 160,v.world.x/16 to v.world.y/16);state("normal-independent-original-world-return")
+            step(Key.LEFT);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+            assertEquals(0,bossEntries);checkSourceUnchanged();persistChecked()
+            if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state(if(cold)"cold-complete-real-route-and-service-continuation" else "normal-village3-trades-gear-lodging-dialogue-saved")
+            instrumentation.runOnMainSync{activity.finish()};return
         }
         if(hallBatch||rebirth){
             val maps=if(rebirth)listOf(67,68)else listOf(61,62,63,64,65,66)

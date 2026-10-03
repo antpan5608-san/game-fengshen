@@ -107,7 +107,7 @@ class ContentTest:IsolatedGameTestCase(){
         val s=SaveSnapshot(c.scene.version,114,c.scene.spawnX*16+8,c.scene.spawnY*16+8,Key.DOWN,
             listOf(c.initialPlayer),flags=mapOf("opening.intro.seen" to true),money=c.initialMoney)
         assertTrue(s.validate(c))
-        for(i in 18..29){
+        for(i in 18..30){
             val old=s.copy(contentVersion="opening-segment-001-c$i")
             assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
             assertFalse(old.copy(x=-8).validate(c))
@@ -191,6 +191,39 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(10,c.battle.zones.single{it.mapId==70}.groups.size)
     }
 
+    /** Actual bundled definitions with isolated inventory; not a normal acquisition recording. */
+    fun testControlledVillageThreeCallerStockPriceSlotReturnAndLegacySave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertTrue(c.scenes.containsKey(3));assertEquals(10,c.npcs.count{it.mapId==3})
+        assertTrue(c.npcs.filter{it.mapId==3}.all{n->n.sprite.width==16&&n.sprite.height==16&&
+            (0 until 256).any{i->android.graphics.Color.alpha(n.sprite.getPixel(i%16,i/16))>0}})
+        assertEquals(4,c.serviceBindings.count{it.callerMapId==3})
+        assertEquals(40,c.inns.getValue("rom.inn.3").price)
+        assertEquals(listOf("rom.weapon.6","rom.weapon.21","rom.weapon.33"),c.shops.getValue("rom.shop.3.17").items)
+        assertFalse(c.shops.getValue("rom.shop.3.19").items.contains(HerbUse.ID))
+        val edge=c.exits.single{it.fromMapId==3&&it.toMapId==16}
+        assertEquals(Key.DOWN,edge.edgeDirection);assertEquals(239 to 160,edge.spawnX to edge.spawnY)
+        val girl=c.joinCharacters.getValue("xiaolongnv")
+        val item=c.itemDefinitions.getValue("rom.weapon.21");val bag=mapOf(item.id to 1)
+        val equipment=c.equipmentDefinitions.getValue(item.id)
+        assertNull(OpeningEquipment.replace(c.initialPlayer,bag,equipment,c.equipmentDefinitions.values))
+        val result=OpeningEquipment.replace(girl,bag,equipment,c.equipmentDefinitions.values)!!
+        assertEquals(21,result.first.equipment!!.rightHand);assertFalse(result.second.containsKey(item.id))
+        assertEquals(1,result.second["rom.weapon.19"])
+        val purchased=TownTrade.buy(580,emptyMap(),c.shops.getValue("rom.shop.3.17"),item)
+        assertNull(purchased.error);assertEquals(0,purchased.money);assertEquals(1,purchased.inventory[item.id])
+        val failed=TownTrade.buy(purchased.money,purchased.inventory,c.shops.getValue("rom.shop.3.17"),item)
+        assertNotNull(failed.error);assertEquals(purchased.inventory,failed.inventory);assertEquals(0,failed.money)
+        val save=SaveSnapshot(c.scene.version,3,15*16+8,29*16+8,Key.UP,
+            listOf(c.initialPlayer,result.first),result.second,mapOf("unrelated" to true),100)
+        assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
+        assertTrue(save.copy(contentVersion="opening-segment-001-c30").validate(c))
+        assertFalse(save.copy(x=32*16+8).validate(c))
+        assertFalse(c.equipmentDefinitions.containsKey("rom.weapon.33"))
+        for(id in listOf("rom.medicine.10","rom.medicine.14")){
+            assertNull(c.itemDefinitions.getValue(id).herbUse);assertNull(c.itemDefinitions.getValue(id).antidoteUse)
+        }
+    }
     /** Actual bundled definitions with isolated inventory; not a normal acquisition recording. */
     fun testControlledVillage2GirlEquipmentAndLegacyLootInventory(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

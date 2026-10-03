@@ -14,6 +14,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / "ci/content-source.json").read_text())
 MAX_BYTES = 100 * 1024 * 1024
+MAX_CONTENT_ENTRIES = 4096 # Archive safety bound; 256 files cannot hold the original map domain.
 
 
 def sha(data):
@@ -65,7 +66,7 @@ def content(apk, pin=None):
     with zipfile.ZipFile(apk) as archive:
         entries = [x for x in archive.infolist() if x.filename.startswith(prefix) and not x.is_dir()]
         names = [x.filename[len(prefix):] for x in entries]
-        if len(names) != len(set(names)) or len(names) > 256:
+        if len(names) != len(set(names)) or len(names) > MAX_CONTENT_ENTRIES:
             raise ValueError("Duplicate or excessive content entries")
         if sum(x.file_size for x in entries) > MAX_BYTES:
             raise ValueError("Content size limit exceeded")

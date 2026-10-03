@@ -148,9 +148,15 @@ def scoped_observed_graphic(reader,recipe):
         if xx%8 or yy%8 or not 0<=xx<=width-8 or not 0<=yy<=height-8 or (xx,yy) in occupied:
             raise ValueError('Overlapping or escaped graphic tile')
         occupied.add((xx,yy))
+        for flag in ('flipX','flipY'):
+            if flag in tile and not isinstance(tile[flag],bool):raise ValueError('Graphic flip must be boolean')
+        if 'attribute' in tile and (bool(tile['attribute']&64)!=tile.get('flipX',False) or bool(tile['attribute']&128)!=tile.get('flipY',False)):
+            raise ValueError('Graphic OAM flip differs from the observed attribute')
         for y in range(8):
             for x in range(8):
-                value=((raw[y]>>(7-x))&1)+2*((raw[y+8]>>(7-x))&1)
+                sx=7-x if tile.get('flipX',False)else x
+                sy=7-y if tile.get('flipY',False)else y
+                value=((raw[sy]>>(7-sx))&1)+2*((raw[sy+8]>>(7-sx))&1)
                 color=tuple(colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
                 image.putpixel((xx+x,yy+y),color)
     if len(occupied)!=width*height//64:raise ValueError('Incomplete graphic recipe')
@@ -912,7 +918,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             original=extract_map(reader,exit['fromMapId']);x,y=exit['trigger'];direction=exit.get('direction')
             boundary=(direction=='LEFT' and x==0 or direction=='RIGHT' and x==original['width']-1 or
                 direction=='UP' and y==0 or direction=='DOWN' and y==original['height']-1)
-            if list(raw)!=[255,exit['spawn'][1],exit['toMapId']]+exit['spawn'] or not boundary:
+            if raw[0]!=255 or list(raw[2:])!=[exit['toMapId']]+exit['spawn'] or not boundary:
                 raise ValueError('Original edge return or observed boundary differs')
             if exit.get('triggerMode')!='EDGE' or not exit.get('runtimeEvidence'):
                 raise ValueError('Edge requires observed departure, not swapped coordinates')
@@ -1209,7 +1215,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     proof=load(ROOT/equipment['evidence'])
                     expected=next((x for x in proof['items'] if x['id']==item['id']),None)
                     if proof['romSha256']!=SHA256 or expected is None or equipment!=(expected['equipment']|{'evidence':equipment['evidence']}) or \
-                            not set(equipment['allowedCharacters']).issubset({x['initialState']['id'] for x in evidence.get('additionalCharacters',[])}):
+                            not set(equipment['allowedCharacters']).issubset({x['initialState']['id'] for x in scene.get('additionalCharacters',[])+evidence.get('additionalCharacters',[])}):
                         raise ValueError('Equipment owner or original slot evidence differs')
                 if original['crossHandOccupancy'] and equipment.get('operationEnabled',True):
                     raise ValueError('Cross-hand equipment requires its original paired transaction')
@@ -1366,14 +1372,28 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     result['scene.json']=encoded(scene)
     return result
 
-def export_from_base(payload, provenance_path, target_pin, verify_target=True):
+def export_from_base(payload, provenance_path, target_pin, verify_target=True, _visited=frozenset()):
     """Reuse checked base bytes; dispatch the current bounded, evidenced iteration."""
     evidence_path=(ROOT/provenance_path).resolve()
     if not evidence_path.is_relative_to(ROOT) or evidence_path.suffix!='.json':
         raise ValueError('Invalid iteration provenance path')
+    if evidence_path in _visited:raise ValueError('Cyclic scoped base export')
+    visited=_visited|{evidence_path}
     evidence=load(evidence_path)
     if evidence['romSha256']!=SHA256 or evidence['taskId'] not in ('TOWN-02','NANHAI-01','WORLD-FULL-01'):
         raise ValueError('Unexpected iteration evidence')
+    if evidence.get('baseExport'):
+        # Restore a pinned local checkpoint recipe from the same reviewed APK;
+        # no failed candidate APK, second importer or hand-edited assets are used.
+        base=evidence['baseExport'];pin_path=(ROOT/base['pinPath']).resolve()
+        if not pin_path.is_relative_to(ROOT) or pin_path.suffix!='.json' or digest(pin_path.read_bytes())!=base['pinSha256']:
+            raise ValueError('Scoped base pin differs')
+        parent=load(pin_path);proof_path=(ROOT/parent['iteration']['provenance']).resolve()
+        if not proof_path.is_relative_to(ROOT) or proof_path.suffix!='.json' or digest(proof_path.read_bytes())!=base['provenanceSha256']:
+            raise ValueError('Scoped base provenance differs')
+        if parent['iteration']['base']!=target_pin['iteration']['base'] or parent['manifestSha256']!=evidence['baseManifestSha256']:
+            raise ValueError('Scoped checkpoint must retain the same reviewed APK base')
+        payload=export_from_base(payload,parent['iteration']['provenance'],parent,_visited=visited)
     if evidence['taskId'] in ('NANHAI-01','WORLD-FULL-01'):
         result=(export_nanhai_from_base if evidence['taskId']=='NANHAI-01' else export_world_from_base)(payload,evidence,provenance_path,target_pin)
         encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
