@@ -1,0 +1,505 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "east-event46-script28-party-and-zone8",
+  "rules": {
+    "mapId": 95,
+    "npcId": "rom.npc.95.0",
+    "npcCell": [
+      13,
+      3
+    ],
+    "eventId": 46,
+    "eventArgument": 1,
+    "sourceType": 157,
+    "enemyId": 141,
+    "firstMessage": 2,
+    "repeatMessage": 16,
+    "textGroup": 105,
+    "bossVictoryFlag": "rom.map.95.flag.1",
+    "followupEvent": 28,
+    "followupScript": 33,
+    "dialogueIds": [
+      "rom.dialogue.105.3",
+      "rom.dialogue.105.4",
+      "rom.dialogue.105.5",
+      "rom.dialogue.105.6",
+      "rom.dialogue.105.7",
+      "rom.dialogue.105.8",
+      "rom.dialogue.105.9",
+      "rom.dialogue.105.11",
+      "rom.dialogue.105.12",
+      "rom.dialogue.105.15",
+      "rom.dialogue.105.13",
+      "rom.dialogue.105.14"
+    ],
+    "dialogueMapId": 95,
+    "destination": {
+      "mapId": 23,
+      "x": 54,
+      "y": 92,
+      "encounterSteps": 0
+    },
+    "preserveFields": [
+      "direction",
+      "terrainMode",
+      "Nezha HP/MP/EXP/equipment",
+      "inventory",
+      "money"
+    ],
+    "joinCharacterId": "xiaolongnv",
+    "completionFlags": [
+      "rom.map.95.flag.128"
+    ],
+    "completionOrder": "Common battle rewards plus map95 bit1 first; required dialogue script33; atomically initialize actor1, OR old map95 bit128, then load map23. No narrative-death HP zero, extra rewards, or inventory equipment copies.",
+    "mechanismEvidence": "game-data/provenance/world-east-mechanism.json"
+  },
+  "sources": [
+    {
+      "offset": 348751,
+      "length": 2,
+      "sha256": "713688d23708f2c369fa0657a10b6a2995950c4ed5c40705a9ed8caee4957a8f",
+      "module": 10,
+      "cpuAddress": 53823,
+      "meaning": "Event46 pointer D662"
+    },
+    {
+      "offset": 349810,
+      "length": 12,
+      "sha256": "0f9dc0fd11a867a689fdfb019fd010e68bce0ad4b18882fbdfdda8fe699ffad9",
+      "module": 10,
+      "cpuAddress": 54882,
+      "meaning": "Stage selector and D66E/D674/D1CF pointers"
+    },
+    {
+      "offset": 349822,
+      "length": 6,
+      "sha256": "79db912ea5bc8f634e075e9f9415ed9990235081da8eddcd718d3f1395987f63",
+      "module": 10,
+      "cpuAddress": 54894,
+      "meaning": "LDA9D; JSR D330: sourceType157, not enemy157"
+    },
+    {
+      "offset": 40784,
+      "length": 1,
+      "sha256": "075198bfe61765d35f990debe90959d438a943ceeb9d39440e7db5455d449086",
+      "module": 1,
+      "cpuAddress": 40768,
+      "meaning": "Source157 maps to enemy141"
+    },
+    {
+      "offset": 349828,
+      "length": 28,
+      "sha256": "66ff738dc639f4a147c3a357922bdb4607f160a68d86b845f3970896946d7a41",
+      "module": 10,
+      "cpuAddress": 54900,
+      "meaning": "Failure resets stage; success schedules A5=1C, OR flag, next stage"
+    },
+    {
+      "offset": 21857,
+      "length": 2,
+      "sha256": "d87acfe32b59a129a8ff78f1197a6c3eb55ff512a10deec92b3925e3256930b2",
+      "module": 0,
+      "cpuAddress": 54609,
+      "meaning": "Map95 flag base pointer075F"
+    },
+    {
+      "offset": 379814,
+      "length": 2,
+      "sha256": "380c456ab38350bd7c985a9d51fd3818dd56b340639eb3def3e75286cd972ffc",
+      "module": 11,
+      "cpuAddress": 52118,
+      "meaning": "Event28 actual pointer toD6E6"
+    },
+    {
+      "offset": 382710,
+      "length": 180,
+      "sha256": "305409d7f09de1a2bda1e10dccf99e92899a936b1994f566bc681ffdaa56810c",
+      "module": 11,
+      "cpuAddress": 55014,
+      "meaning": "Event28 stages: script33 then initialize actor1 and map23"
+    },
+    {
+      "offset": 382737,
+      "length": 153,
+      "sha256": "0a5d92aeb7682ed3119792168f2c41af24c883a8f11abd099fbd1e0733bc861f",
+      "module": 11,
+      "cpuAddress": 55041,
+      "meaning": "Actual actor1 initialization and original completion call"
+    },
+    {
+      "offset": 377592,
+      "length": 2,
+      "sha256": "5e0e9ff8bb2f453b8614834ed74783218cb130a32ecc47c8ac18ef2cb2c1b1da",
+      "module": 11,
+      "cpuAddress": 49896,
+      "meaning": "Script33 pointer"
+    },
+    {
+      "offset": 378918,
+      "length": 77,
+      "sha256": "b0f816e4b10bf7eb0eaaa13d934eb33b9a38120ab80e9783cbd2d3e2bbd5d968",
+      "module": 11,
+      "cpuAddress": 51222,
+      "meaning": "Script33 exact byte stream, FF terminator"
+    },
+    {
+      "offset": 380058,
+      "length": 117,
+      "sha256": "826c3fbc71a547f8f20e752b3a9e517f5d37f1da7d500ae1aa5956b529fe01de",
+      "module": 11,
+      "cpuAddress": 52362,
+      "meaning": "Original event completion OR80 to old-map flag before new map load"
+    },
+    {
+      "offset": 382737,
+      "length": 153,
+      "sha256": "0a5d92aeb7682ed3119792168f2c41af24c883a8f11abd099fbd1e0733bc861f",
+      "module": 11,
+      "cpuAddress": 55041,
+      "meaning": "Initactor1, assignmap23, callcompletion; nofacing/terrainreset"
+    },
+    {
+      "offset": 380138,
+      "length": 16,
+      "sha256": "30d58762777087f8d6027d18a37a20022537be46c395fc5f352f60a9f1ee62f5",
+      "module": 11,
+      "cpuAddress": 52442,
+      "meaning": "CompletionOR80 oldmapflag, clearscript beforemapload"
+    },
+    {
+      "offset": 10799,
+      "length": 41,
+      "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+      "module": 0,
+      "cpuAddress": 43551,
+      "meaning": "Preserveoriginalfacingacrossmapactorreconstruction"
+    },
+    {
+      "offset": 11155,
+      "length": 8,
+      "sha256": "0106319c200a8e106e9f7a84e6ca09a315c1cde7b96da65d579a114e5604d3f1",
+      "module": 0,
+      "cpuAddress": 43907,
+      "meaning": "Rendererend explicitlyzeroesencounterstep counter"
+    },
+    {
+      "offset": 103963,
+      "length": 5,
+      "sha256": "084ecb927883fb516b466b93581c68657b0725555fef751994590c72b4a85fb9",
+      "module": 3,
+      "cpuAddress": 38411,
+      "meaning": "C3-terminated text byte stream"
+    },
+    {
+      "offset": 101188,
+      "length": 2,
+      "sha256": "4ea03a1f47ebd82e621aad52c107779050c3d6c389c945e1393aece5111441d0",
+      "module": 3,
+      "cpuAddress": 35636,
+      "meaning": "Text group pointer"
+    },
+    {
+      "offset": 101496,
+      "length": 2,
+      "sha256": "3c04ed35e4ffcd9cf91132f2e302814df0439b53f5c5865d896be631a4612b81",
+      "module": 3,
+      "cpuAddress": 35944,
+      "meaning": "Message pointer"
+    }
+  ],
+  "normalEvidence": {
+    "path": "private-derived/world-east-followup/east-king-normal-evidence.json",
+    "sha256": "72205bc43435bdc29a0075ef5659cc57e3a3122a2f70b37feddef10452333d56"
+  },
+  "transitionEvidence": {
+    "path": "private-derived/world-east-followup/east-transition-trace/report.json",
+    "sha256": "680445263cc359be5c35dfb72ee4d848aa1dae7e768762f41fda179cce84f701"
+  },
+  "dialogueMapCheck": {
+    "sampleCount": 98,
+    "mapsObserved": [
+      23,
+      95
+    ],
+    "result": "All captured dialogue pages stay map95/party1; only final confirmation changes map23/party2.",
+    "indexedRAMFilesSha256": "108d44e1b71a750930d4a756e48d0b5384cd3b2571f94fb60396a6c672df6d7d",
+    "privateIndex": "private-derived/east-content/dialogue-map-index.json"
+  },
+  "multiplier": {
+    "pointer": {
+      "offset": 296329,
+      "length": 2,
+      "sha256": "145ecc31cfeaf4ca39df4a6d4ee5be4d88254a369aecd6336df9771770ec1997",
+      "module": 9,
+      "cpuAddress": 34169,
+      "meaning": "Original actor1 physical multiplier pointer"
+    },
+    "source": {
+      "offset": 296395,
+      "length": 36,
+      "sha256": "b4b2450023b1bd5755a353e185362f946fb31b39dc176090c5348c5764a44e63",
+      "module": 9,
+      "cpuAddress": 34235,
+      "meaning": "Original actor1 first three multiplier bands, 12 level groups each"
+    },
+    "evidence": "game-data/provenance/world-east-palace-script.json",
+    "cpuEvidence": {
+      "path": "private-derived/world-east-followup/two-party-provenance-minimal.json",
+      "sha256": "dfb86f857443bce078235e01ba226e153e2edd76b46683aaf0f934dcc833b863"
+    },
+    "values": [
+      242,
+      230,
+      206,
+      153,
+      102,
+      76,
+      51,
+      25,
+      12,
+      12,
+      9,
+      2,
+      255,
+      255,
+      255,
+      255,
+      242,
+      229,
+      179,
+      127,
+      63,
+      37,
+      24,
+      19,
+      0,
+      0,
+      0,
+      0,
+      255,
+      255,
+      255,
+      255,
+      216,
+      139,
+      75,
+      57
+    ],
+    "originalFullTableSource": {
+      "offset": 296395,
+      "length": 60,
+      "sha256": "3ec93051ca153ee0ae976922404e4177b6ba901ec24c8a2ac0946c754d6c7a71",
+      "module": 9,
+      "cpuAddress": 34235,
+      "meaning": "Actor1multiplierphysicaltable original60bytes"
+    },
+    "scope": "Existing character-specific original physical lookup, no new independent CPU run; upstream512 byte cases and24 actual actor damage cases."
+  },
+  "directionEvidence": {
+    "kind": "NORMAL_CONTROLLER_DIRECTION_READS_PLUS_CONTROLLED_ORIGINAL_MAP_ACTOR_REBUILD",
+    "source": "private-derived/world-east-followup/return-village/normal-near-village.fc8",
+    "noRAMWritesForDirectionProbe": true,
+    "directionRAM": 1036,
+    "mapping": {
+      "UP": 0,
+      "DOWN": 1,
+      "LEFT": 2,
+      "RIGHT": 3
+    },
+    "templateConstantRAM": 1028,
+    "probeSha256": "95e76dd484e9f1b83e1dbe8a94410375f56cb6a67d5a043edb9d4ef0fc64c4ba",
+    "fourDirectionReads": "All4 normal controller cases changed original world coordinates consistently and read matching040C;0404 remained1.",
+    "loaderCases": [
+      {
+        "directionIndex": 0,
+        "after": 0,
+        "animationPointer": 36028,
+        "steps": 123,
+        "pass": true
+      },
+      {
+        "directionIndex": 1,
+        "after": 1,
+        "animationPointer": 36014,
+        "steps": 123,
+        "pass": true
+      },
+      {
+        "directionIndex": 2,
+        "after": 2,
+        "animationPointer": 36021,
+        "steps": 123,
+        "pass": true
+      },
+      {
+        "directionIndex": 3,
+        "after": 3,
+        "animationPointer": 36035,
+        "steps": 123,
+        "pass": true
+      }
+    ],
+    "sources": [
+      {
+        "offset": 17603,
+        "length": 60,
+        "sha256": "dd71bba571bc2342965aed267876371ed7c4996a332231f24e84f059c203ad67",
+        "module": 0,
+        "cpuAddress": 50355,
+        "meaning": "Original movement direction update via indexed actor fields"
+      },
+      {
+        "offset": 7491,
+        "length": 29,
+        "sha256": "5d157b56a616cc530014e1a6b79039d469dcc2825f92979811c37d05390bf3c2",
+        "module": 0,
+        "cpuAddress": 40243,
+        "meaning": "Original actor field copier"
+      },
+      {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Preserve original direction040C and corresponding animation across map actor rebuild"
+      }
+    ],
+    "limit": "FCEUX emu.exit segfault after all4 TSV AFTER rows flushed and closed; original CPU loader four independent cases passed. No Android proof."
+  },
+  "zone8": {
+    "mapId": 23,
+    "id": 8,
+    "rectangles": [
+      [
+        1,
+        72,
+        56,
+        95
+      ]
+    ],
+    "randomGate": "LOW",
+    "randomThreshold": 16,
+    "unavailableRegions": [
+      [
+        1,
+        38,
+        63,
+        71
+      ],
+      [
+        1,
+        36,
+        12,
+        38
+      ],
+      [
+        16,
+        0,
+        63,
+        37
+      ],
+      [
+        1,
+        0,
+        16,
+        32
+      ]
+    ],
+    "sources": [
+      {
+        "offset": 376848,
+        "length": 279,
+        "sha256": "7b6e17a47784002f3c15efbd74a8228096a674b3660541b6566abebe4c346e39",
+        "module": 11,
+        "cpuAddress": 49152,
+        "meaning": "Existing original encounter rectangle dispatcher and probability gate"
+      },
+      {
+        "offset": 377131,
+        "length": 2,
+        "sha256": "1878204822144d00fd2a7807c2ef1fc67c98b623ce9c76679d0348d6802b6ac1",
+        "module": 11,
+        "cpuAddress": 49435,
+        "meaning": "Map23 root pointer"
+      },
+      {
+        "offset": 377171,
+        "length": 7,
+        "sha256": "0954f2474b844b2a1e1b10b10a75bbb69170ac0daa659d8a7968f5a47be1b604",
+        "module": 11,
+        "cpuAddress": 49475,
+        "meaning": "Map23 three region pointers and terminator"
+      },
+      {
+        "offset": 377434,
+        "length": 6,
+        "sha256": "0e532d0e0f3ffec8417d6909412a7d9c874b0af6d722608bf5b7971578ab3ee6",
+        "module": 11,
+        "cpuAddress": 49738,
+        "meaning": "Zone8 one rectangle"
+      },
+      {
+        "offset": 377424,
+        "length": 10,
+        "sha256": "6ce301e3eae0c51633bddf5194f5a9737dd3a193c27fc131d30a36f2dc0d3bd4",
+        "module": 11,
+        "cpuAddress": 49728,
+        "meaning": "Unrestored zone10 two rectangles"
+      },
+      {
+        "offset": 377414,
+        "length": 10,
+        "sha256": "065d0580fb07dbcf61ef2e3a52368fec447983e6e8944a42ff34489b05af0c55",
+        "module": 11,
+        "cpuAddress": 49718,
+        "meaning": "Unrestored zone13 two rectangles"
+      }
+    ],
+    "remainingRegions": [
+      {
+        "id": 10,
+        "rectangles": [
+          [
+            1,
+            38,
+            63,
+            71
+          ],
+          [
+            1,
+            36,
+            12,
+            38
+          ]
+        ]
+      },
+      {
+        "id": 13,
+        "rectangles": [
+          [
+            16,
+            0,
+            63,
+            37
+          ],
+          [
+            1,
+            0,
+            16,
+            32
+          ]
+        ]
+      }
+    ],
+    "semantics": "Strict left/top, inclusive right/bottom. No matched rectangle does not create a new fallback encounter. Do not distribute zone8 across the complete map."
+  },
+  "limits": [
+    "105/10 not observed and not inserted;105/16 raw source exact but text/normal repeat NOT_RUN.",
+    "NPC choreography and original narrative animation are not restored by dialogue ID sequencing.",
+    "Enemy19 full-loader controlled pixels, not normal gameplay/name proof; full zone8 retained without deleting its groups.",
+    "Android runtime, native cold-save equivalence, publication NOT_RUN; source-level evidence is not App acceptance."
+  ]
+}
