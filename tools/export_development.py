@@ -511,12 +511,18 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
-def validate_world_hall_batch_terrain(reader,map_id):
+def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/provenance/world-hell-hall-batch-terrain.json'):
     """Actual two-plane matrices for this batch; never a transport or field-damage rule."""
-    proof=load(ROOT/'game-data/provenance/world-hell-hall-batch-terrain.json')
-    if proof['romSha256']!=SHA256 or proof['scopeRevision']!='hell-halls61-through68-ground-and-upper-plane-bridge-zero' or \
+    scopes={'game-data/provenance/world-hell-hall-batch-terrain.json':
+        ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',6840,set(range(61,69))),
+        'game-data/provenance/world-seventh-side-terrain.json':
+        ('seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero',864,{69,158,159})}
+    if evidence_path not in scopes:raise ValueError('Unreviewed terrain evidence path')
+    scope,count,maps=scopes[evidence_path];proof=load(ROOT/evidence_path)
+    if proof['romSha256']!=SHA256 or proof['scopeRevision']!=scope or map_id not in maps or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or str(map_id) not in proof['maps'] or \
-            proof['inputModes']!=[0,1] or proof['initialBridgeState']!=0 or proof['testCount']!=6840 or proof['failures']!=0:
+            proof['inputModes']!=[0,1] or proof['initialBridgeState']!=0 or proof['testCount']!=count or proof['failures']!=0 or \
+            set(map(int,proof['maps']))!=maps:
         raise ValueError('Hell terrain batch outside original CPU scope')
     rule=proof['maps'][str(map_id)];original=extract_map(reader,map_id)
     cc=original['collisionCandidate'];lookup=reader.read(cc['module'],cc['cpuAddress'],256)
@@ -539,6 +545,26 @@ def validate_world_hall_batch_terrain(reader,map_id):
         if digest((ROOT/data['cpuExpectedPath']).read_bytes())!=data['cpuExpectedSha256']:
             raise ValueError('Original terrain/gate CPU expectations differ')
     return rule
+
+def validate_world_seventh_side_npc_graphic(reader,sprite_id):
+    """Only the genuinely visible sprite191 pose; no NPC movement rule inferred."""
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-seventh-side-rooms.json';p=load(ROOT/path)
+    recipe=p['sprite191']['recipe'];bindings=p['sprite191']['bindings']
+    if sprite_id!=191 or p['romSha256']!=SHA256 or p['scopeRevision']!='seventh-hall-three-side-rooms' or \
+            {(b['mapId'],b['npcIndex'])for b in bindings}!={(69,1),(158,1),(159,1)} or \
+            recipe['captureKind']!='CONTROLLED_POSITION_REAL_SIDE_ROOM_ENTRY_VISIBLE_ORIGINAL_OAM' or \
+            recipe['normalPlayEvidence'] is not False or recipe['opaquePixelMatch'] is not True or \
+            (recipe['width'],recipe['height'],recipe['transparentZero'],recipe['opaquePixelCount'])!=(16,16,True,198):
+        raise ValueError('Unreviewed side room sprite pose or identity')
+    for b in bindings:
+        n=extract_npcs(reader,b['mapId'])['records'][b['npcIndex']]
+        if b['record']!=n['range'] or checked_span(reader,b['record'])[0]!=191:
+            raise ValueError('Side room sprite does not bind the original NPC')
+    raw=scoped_observed_graphic(reader,recipe)
+    if sum(p[3]!=0 for p in Image.open(io.BytesIO(raw)).convert('RGBA').getdata())!=198:
+        raise ValueError('Side room pose is incomplete or transparent')
+    return recipe
 
 def validate_world_field_protection_item(reader,item):
     path='game-data/provenance/world-field67-item12.json'
@@ -775,8 +801,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
-            elif terrain['tileset']==3 and proof.get('scopeRevision')=='hell-halls61-through68-ground-and-upper-plane-bridge-zero':
-                validate_world_hall_batch_terrain(reader,mid)
+            elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
+                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero'):
+                validate_world_hall_batch_terrain(reader,mid,terrain['evidence'])
                 if set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
             else:raise ValueError('Terrain execution profile not implemented')
@@ -1144,6 +1171,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             recipe=validate_world_hall_batch_npc_graphic(reader,npc['spriteId'])
             if evidence['graphics'].get(npc['sprite'])!=recipe:
                 raise ValueError('NPC sprite differs from reviewed original actor pose')
+        elif npc.get('spriteEvidence')=='game-data/provenance/world-seventh-side-rooms.json':
+            recipe=validate_world_seventh_side_npc_graphic(reader,npc['spriteId'])
+            if evidence['graphics'].get(npc['sprite'])!=recipe:
+                raise ValueError('Side room sprite differs from its reviewed pose')
         if npc.get('interactionDirection'):
             proof=load(ROOT/npc['interactionEvidence'])
             rule=validate_world_hall_batch_script(reader,npc['mapId']) if npc['interactionEvidence']=='game-data/provenance/world-hell-hall-batch-script.json' else proof['rules']

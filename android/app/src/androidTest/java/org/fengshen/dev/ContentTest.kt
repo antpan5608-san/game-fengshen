@@ -13,6 +13,25 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Loaded candidate routes and isolated checkpoints; not normal input traversal. */
+    fun testControlledSeventhSideRoomLoadingReturnsEncountersAndSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for((mid,zone)in listOf(69 to 15,158 to 10,159 to 10)){
+            val s=c.scenes.getValue(mid)
+            assertEquals(16,s.width);assertEquals(15,s.height)
+            val actual=c.battle!!.zones.single{it.mapId==mid}
+            assertTrue(actual.groups.all{it.zoneId==zone});assertEquals(245,actual.randomThreshold)
+            assertTrue(actual.groups.isNotEmpty())
+            assertEquals(2,c.exits.count{it.fromMapId==mid&&it.toMapId==67})
+            val entry=c.exits.single{it.fromMapId==67&&it.toMapId==mid&&it.spawnX==7&&it.spawnY==13}
+            assertEquals(7,entry.spawnX);assertEquals(13,entry.spawnY)
+            val npc=c.npcs.single{it.id=="rom.npc.$mid.1"}
+            assertTrue(npc.firstDialogue.isNotBlank())
+            val save=SaveSnapshot(c.scene.version,mid,7*16+8,13*16+8,Key.UP,
+                listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),emptyMap(),emptyMap(),400)
+            assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
+        }
+    }
     /** Actual candidate loader plus isolated original proposals, NOT normal route evidence. */
     fun testControlledSeventhHallSceneDamageProtectionAndSave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

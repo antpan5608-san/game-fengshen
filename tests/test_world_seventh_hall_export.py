@@ -10,7 +10,7 @@ from forensics.fengshen246 import extract_encounter_groups
 class SeventhHallExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-seventh-hall-content.json').read_text(encoding='utf-8'))
         cls.path=cls.pin['iteration']['provenance'];cls.proof=json.loads((ci.ROOT/cls.path).read_text(encoding='utf-8'))
         cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])
         cls.result=ex.export_from_base(cls.base,cls.path,cls.pin);cls.scene=json.loads(cls.result['scene.json']);cls.combat=json.loads(cls.result['combat.json']);cls.r=ex.iteration_reader()

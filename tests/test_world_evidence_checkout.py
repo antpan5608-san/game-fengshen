@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class EvidenceCheckoutTests(unittest.TestCase):
     def test_cpu_tables_keep_their_reviewed_bytes_under_autocrlf_checkout(self):
-        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json']
+        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json','world-seventh-side-terrain.json']
         tables={}
         for name in proofs:
             p=json.loads((ROOT/'game-data/provenance'/name).read_text(encoding='utf-8'))
