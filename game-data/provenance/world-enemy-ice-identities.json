@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "behavior3-all-decoded-identities-original-damage",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "behavior": 3,
+  "verifiedEnemyIds": [
+    12,
+    93,
+    99,
+    110,
+    117,
+    120,
+    132,
+    136,
+    137,
+    138,
+    139,
+    141,
+    150,
+    155,
+    161,
+    169,
+    175
+  ],
+  "rules": {
+    "ordinaryFormula": "(enemyId-12)*3+13",
+    "bossTable": "A906+2*(enemyId-137), original decoded domain0..176",
+    "baseDamageIgnoresArmorAndStamina": true,
+    "status04DoublesBeforeUint16Truncation": true,
+    "hpFloor": 0,
+    "directDamageBeforeDeathFlag": true,
+    "allTarget": "Existing independently evidenced behavior3 AI and living-target path, unchanged"
+  },
+  "identityBases": {
+    "12": {
+      "iceBaseDamage": 13,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "93": {
+      "iceBaseDamage": 256,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "99": {
+      "iceBaseDamage": 274,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "110": {
+      "iceBaseDamage": 307,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "117": {
+      "iceBaseDamage": 328,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "120": {
+      "iceBaseDamage": 337,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "132": {
+      "iceBaseDamage": 373,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "136": {
+      "iceBaseDamage": 385,
+      "iceSource": {
+        "offset": 305716,
+        "length": 27,
+        "sha256": "b2695ffb54fb97b7d97f76cd6024aaac667c2f1ee14da7c762f76aaac9bbed9f",
+        "module": 9,
+        "cpuAddress": 43556,
+        "meaning": "Original ordinary ice: (enemyID-12)*3+13"
+      }
+    },
+    "137": {
+      "iceBaseDamage": 8,
+      "iceSource": {
+        "offset": 305430,
+        "length": 2,
+        "sha256": "e545d395bb3fd971f91bf9a2b6722831df704efae6c1aa9da0989ed0970b77bb",
+        "module": 9,
+        "cpuAddress": 43270,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "138": {
+      "iceBaseDamage": 10,
+      "iceSource": {
+        "offset": 305432,
+        "length": 2,
+        "sha256": "102b51b9765a56a3e899f7cf0ee38e5251f9c503b357b330a49183eb7b155604",
+        "module": 9,
+        "cpuAddress": 43272,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "139": {
+      "iceBaseDamage": 13,
+      "iceSource": {
+        "offset": 305434,
+        "length": 2,
+        "sha256": "f566cc6fccc657365c0197accf3a7d6f80f85209ff666ff774f4dcbc524aa842",
+        "module": 9,
+        "cpuAddress": 43274,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "141": {
+      "iceBaseDamage": 18,
+      "iceSource": {
+        "offset": 305438,
+        "length": 2,
+        "sha256": "08da7c45cb204377e7e42249cda5713fa865116ddbb4cb5a1949b2e5b438a6ab",
+        "module": 9,
+        "cpuAddress": 43278,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "150": {
+      "iceBaseDamage": 40,
+      "iceSource": {
+        "offset": 305456,
+        "length": 2,
+        "sha256": "e4ab5012eff32a5171b3672b59d29950fe8b3dcb4d2dadf971ebbcbc2fbb0d41",
+        "module": 9,
+        "cpuAddress": 43296,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "155": {
+      "iceBaseDamage": 57,
+      "iceSource": {
+        "offset": 305466,
+        "length": 2,
+        "sha256": "b58d15e89a953322b7ac8fc0d6e37710c1eacd25d8304efd002904cb18ef62c6",
+        "module": 9,
+        "cpuAddress": 43306,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "161": {
+      "iceBaseDamage": 152,
+      "iceSource": {
+        "offset": 305478,
+        "length": 2,
+        "sha256": "261dee5ca4377f70571e7ac8036cc64438420c660d9db3dd6cfe03db99e659d2",
+        "module": 9,
+        "cpuAddress": 43318,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "169": {
+      "iceBaseDamage": 368,
+      "iceSource": {
+        "offset": 305494,
+        "length": 2,
+        "sha256": "1f2e6d00279b4659b6d6f1ad57e12568e4a50f80908af50d1e861001b2be2a3b",
+        "module": 9,
+        "cpuAddress": 43334,
+        "meaning": "Original dragon ice table value"
+      }
+    },
+    "175": {
+      "iceBaseDamage": 1855,
+      "iceSource": {
+        "offset": 305506,
+        "length": 2,
+        "sha256": "0ccc1ca29e3e1289999a9d8dbdb4564f151e2253da3725006322f26c12baa36a",
+        "module": 9,
+        "cpuAddress": 43346,
+        "meaning": "Original dragon ice table value"
+      }
+    }
+  },
+  "sources": [
+    {
+      "offset": 305688,
+      "length": 58,
+      "sha256": "1fe02321b18a7dbe37662130e694205fef5323a4a4d0533a1c2e66cb322e7b7c",
+      "module": 9,
+      "cpuAddress": 43528,
+      "meaning": "Actual original behavior3 dispatch and ordinary/boss damage"
+    },
+    {
+      "offset": 305430,
+      "length": 80,
+      "sha256": "201c7599dea4b0420d7ba18839f8974e489470e2a44069b42f2de3d3004b654e",
+      "module": 9,
+      "cpuAddress": 43270,
+      "meaning": "Original 40 uint16 boss special-damage table words"
+    },
+    {
+      "offset": 305946,
+      "length": 79,
+      "sha256": "995c930c2ccd021e237ddb2cc1f443bf3aa2ea427d2004280fe1f799b6f9bea8",
+      "module": 9,
+      "cpuAddress": 43786,
+      "meaning": "Status04 doubling and HP subtraction before death flag"
+    },
+    {
+      "offset": 306045,
+      "length": 41,
+      "sha256": "6d6f34af16fc267f2a2847a4eeaaaa873334c28e792acadb2112bb295055fd84",
+      "module": 9,
+      "cpuAddress": 43885,
+      "meaning": "Original modifier for command defense; no defense command inferred"
+    }
+  ],
+  "cpuReportSha256": "f912482520d2484d151b75d2570d689cf8023ce17c99bb4409093854ed32c213",
+  "cpuCases": 1700,
+  "cpuExpectedPath": "android/app/src/test/resources/enemy-ice-identities-cpu.tsv",
+  "limits": [
+    "Direct original damage dispatch before later death flags",
+    "No new original route or normal App proof",
+    "All-target choice is the existing independently verified behavior3 path; no new input or spells",
+    "No new defense, spell, status cure or normal Android behavior claim"
+  ]
+}

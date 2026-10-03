@@ -511,6 +511,31 @@ def validate_world_single_special(reader,enemy):
         raise ValueError('Single special attack base differs from original CPU scope')
     checked_span(reader,enemy['specialSource'])
 
+def validate_world_ice_identities(reader,enemy):
+    """Later ice identities require the actual all-identity CPU proof, not a dragon assumption."""
+    from forensics.fengshen246 import extract_enemy_ice_base,extract_enemy
+    path='game-data/provenance/world-enemy-ice-identities.json'
+    if enemy.get('iceDamageEvidence')!=path or any(k in enemy for k in ('specialBaseDamage','specialSource')):
+        raise ValueError('Later ice requires its all-identity damage evidence')
+    p=load(ROOT/path);rules=p['rules'];ids=[12,93,99,110,117,120,132,136,137,138,139,141,150,155,161,169,175]
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='behavior3-all-decoded-identities-original-damage' or \
+            p['behavior']!=3 or p['verifiedEnemyIds']!=ids or enemy['id'] not in ids or \
+            enemy['behaviorByte']!=3 or extract_enemy(reader,enemy['id'])['remainingBytes'][1]!=3:
+        raise ValueError('Ice identity or CPU scope differs')
+    if rules['ordinaryFormula']!='(enemyId-12)*3+13' or \
+            rules['bossTable']!='A906+2*(enemyId-137), original decoded domain0..176' or \
+            rules['baseDamageIgnoresArmorAndStamina'] is not True or \
+            rules['status04DoublesBeforeUint16Truncation'] is not True or rules['hpFloor']!=0 or \
+            rules['directDamageBeforeDeathFlag'] is not True:
+        raise ValueError('Ice formula, HP or modifier rule differs')
+    required={(9,0xaa08,0x3a),(9,0xa906,80),(9,0xab0a,0x4f),(9,0xab6d,0x29)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Ice lacks dispatch/table/status/HP sources')
+    for span in p['sources']:checked_span(reader,span)
+    actual=extract_enemy_ice_base(reader,enemy['id'])
+    if p['identityBases'][str(enemy['id'])]!=actual or any(enemy.get(k)!=v for k,v in actual.items()):
+        raise ValueError('Ice base differs from original CPU scope')
+
 def validate_world_status16(reader,enemy):
     """Original behavior6's hit/miss and priority, with no guessed cure/effect name."""
     from forensics.fengshen246 import extract_enemy
@@ -689,6 +714,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
             if enemy['behaviorByte']==3:
                 from forensics.fengshen246 import extract_enemy_ice_base
+                if enemy['id']>144 or 'iceDamageEvidence' in enemy:
+                    validate_world_ice_identities(reader,enemy)
                 original_ice=extract_enemy_ice_base(reader,enemy['id'])
                 if enemy.get('iceBaseDamage')!=original_ice['iceBaseDamage']:
                     raise ValueError('Ice damage differs from original behavior dispatch')

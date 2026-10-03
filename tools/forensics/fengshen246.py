@@ -454,12 +454,13 @@ def extract_enemy(reader,enemy_id):
 
 def extract_enemy_ice_base(reader,enemy_id):
     """Original behavior3 dispatch; ordinary enemies do not use the dragon table."""
+    if digest(reader.data)!=SHA256:raise ValueError('Ice damage requires target ROM fingerprint')
     original=extract_enemy(reader,enemy_id)
     if original['remainingBytes'][1]!=3:raise ValueError('Enemy does not use the original ice behavior')
     if 12<=enemy_id<137:
         value=(enemy_id-12)*3+13
         source=reader.span(9,0xaa24,0xaa3f-0xaa24,'Original ordinary ice: (enemyID-12)*3+13')
-    elif 137<=enemy_id<=144:
+    elif 137<=enemy_id<177:
         value=reader.word(9,0xa906+2*(enemy_id-137))
         source=reader.span(9,0xa906+2*(enemy_id-137),2,'Original dragon ice table value')
     else:raise ValueError('Ice identity outside verified original dispatch domain')
