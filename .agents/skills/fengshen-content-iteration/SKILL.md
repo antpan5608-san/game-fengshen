@@ -205,3 +205,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 - 原完成步状态先毒后特定地图效果：world-hell-field67-step.json与3840完整CPU输出（含原BE1A请求队列）已用于Field67StepTest/原Status测试，保持step(List) ABI，GameView传CompletedStep.mapId而不是换图后的world.mapId。仅保护RAM边界核实不授权物品用法；正常路线/音频/Android另验。新1 Python及定向10 JVM、全238 JVM与仪器编译实际成功，不据此写新图已可玩。
 - 原正常流程准备耗尽时先查实际成长阈值、训练敌群奖励与保存索引。北海前开局弱敌区3000步未达到12级，保留失败，不注入EXP/更改等级目标；改走已支持海域正常训练的驱动已编译，App复测未执行。进度每64步保留实际快照有助诊断，不能只增大预算无限重试。
+
+- 原CPU派生TSV的字节hash不能依赖宿主Git默认换行；Windows core.autocrlf曾使严格恢复拒绝。仓库*.tsv固定text eol=lf，test_world_evidence_checkout.py在隔离Git仓库启用autocrlf真实checkout后逐字节比原表及blob已成功；保持所有SHA门禁，不通过读取时静默忽略差异来放宽。修复后的Windows runner仍须实际执行。
