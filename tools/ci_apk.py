@@ -88,6 +88,14 @@ def content(apk, pin=None):
         return payload
 
 
+def validate_item_sources(payload):
+    """Mirror ContentLoader's existing item confidence contract, without rewriting evidence."""
+    scene = json.loads(payload['scene.json'])
+    for item in scene['items']:
+        if item.get('source', {}).get('confidence') not in ('PROVISIONAL_REFERENCE', 'GAMEPLAY_VERIFIED'):
+            raise ValueError('Unsupported item source confidence: ' + item['id'])
+
+
 def fetch(url, target):
     if not url.startswith("https://"):
         raise ValueError("Content source requires HTTPS")
@@ -133,6 +141,7 @@ def restore(source=None, destination=None, next_code=None):
         else:
             payload = content(apk)
         # Verify the complete target BEFORE touching any existing assets.
+        validate_item_sources(payload)
         destination.mkdir(parents=True, exist_ok=True)
         existing = [p for p in destination.rglob("*") if p.is_file()]
         if any(p.relative_to(destination).as_posix() not in payload for p in existing):
@@ -149,6 +158,7 @@ def receipt(apk, output, code=None, name=None):
     if code is not None and (info["versionCode"] != code or info["versionName"] != name):
         raise ValueError("Built version differs from requested version")
     files = content(apk)
+    validate_item_sources(files)
     info.update(sha256=sha(apk.read_bytes()), sizeBytes=apk.stat().st_size,
                 contentVersion=CONFIG["contentVersion"], contentHash=CONFIG["manifestSha256"], contentFiles=len(files))
     output.write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")

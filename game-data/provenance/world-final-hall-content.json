@@ -68444,7 +68444,7 @@
         "evidence": "game-data/provenance/world-field67-item12.json"
       },
       "source": {
-        "confidence": "ORIGINAL_CONTROLLED_MENU_AND_CPU",
+        "confidence": "GAMEPLAY_VERIFIED",
         "originalVerified": true,
         "nameRange": {
           "offset": 92247,
@@ -68458,7 +68458,8 @@
           "kind": "ACTUAL_ORIGINAL_MENU_SCREEN",
           "evidence": "game-data/provenance/world-field67-item12.json"
         },
-        "evidence": "game-data/provenance/world-field67-item12.json"
+        "evidence": "game-data/provenance/world-field67-item12.json",
+        "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_CPU_NOT_NORMAL_ROUTE"
       }
     },
     {

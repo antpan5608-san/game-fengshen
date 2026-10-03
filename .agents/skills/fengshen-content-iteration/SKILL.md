@@ -221,3 +221,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 真实Windows checkout用*.tsv text eol=lf，test_world_evidence_checkout实际比较checkout和Git blob原字节；不归一化或关闭hash。新scene的阶段保存/取消/原正常路线方法仅编译，App未实跑前保持待核；详见当前任务，不把导出/JVM当正常游玩。
 
 - 原exit表一行不保证当前状态可站立：export_world_from_base在签名前调用validate_world_exit_geometry，镜像原loader地形/已核可移除actor/区域规则。真实实体墙行移至原provenance的unresolvedExitRows，保留hash和未知上下文，不放宽collision。test_world_final_hall_export实际验证拒绝两条墙行、仍能确定性生成；EncounterRect原语义为左/上排除、右/下包含。加载器仍独立复查，导出/本地编译不替代App门禁。
+
+- 具体原版证据类别不能代替项目source.confidence枚举。原ci_apk.restore和receipt现在实际提前核PROVISIONAL_REFERENCE/GAMEPLAY_VERIFIED；originalEvidenceKind保留受控菜单/CPU等验证范围，分类不等于正常游玩。test_ci_apk.py已实际验证错误分类虽hash正确也拒绝，旧assets不变，正确分类不改具体证据；历史golden只用于复现比较，不能作为通过App门禁的基底。

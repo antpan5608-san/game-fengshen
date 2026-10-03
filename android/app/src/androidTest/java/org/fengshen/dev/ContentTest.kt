@@ -107,7 +107,7 @@ class ContentTest:IsolatedGameTestCase(){
         val s=SaveSnapshot(c.scene.version,114,c.scene.spawnX*16+8,c.scene.spawnY*16+8,Key.DOWN,
             listOf(c.initialPlayer),flags=mapOf("opening.intro.seen" to true),money=c.initialMoney)
         assertTrue(s.validate(c))
-        for(i in 18..28){
+        for(i in 18..29){
             val old=s.copy(contentVersion="opening-segment-001-c$i")
             assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
             assertFalse(old.copy(x=-8).validate(c))
