@@ -1235,3 +1235,9 @@ v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真
 - v49/run37118715361实际Content4通过/20错误，前次出口校验已通过；本次拒绝rom.special.12来源枚举ORIGINAL_CONTROLLED_MENU_AND_CPU。正常App未执行，不发布、不冒称原剧情已验收。
 - 具体受控菜单/CPU证据从confidence移动到originalEvidenceKind，按已允许项目状态分类，原指纹/用途和受控非正常路线范围保留；原restore/receipt在写入/签名之前检查来源状态，错分类不覆盖旧assets，14方法实际通过。
 - c30/180文件/31地图，manifest fb058646af4817b777f7aa7829a3a953e69f69288c573c481957fcc6d2a006cb；严格restore、5末殿导出、249 JVM与仪器编译通过。候选正常新路线仍NOT_RUN，生产v27、旧v26下载故障阻塞不变。村3控制实验的失败图形/出村尝试保留，不伪造门；持续接续服务数据，不据此结束总任务。
+
+## WORLD-FULL-01 c1历史fixture修正 2026-10-03T11:45:00Z
+
+- v50/run37119767339签名成功、真实Content23通过/1错误，唯一失败是旧c1测试移除自动演员/战斗却保留后加sceneStories。修正仅删fixture的新脚本并断言无脚本/战斗；真实loader门槛与c30原hash不变，instrument编译PASS，正常新路线仍待跑。
+- inspect37119768728在11:29:05UTC成功：27/26=1319/2289，普通真机4/模拟器0/测试0，旧v26 ProtocolException1、清理0，生产仍v27，不擦除/绕过。
+- 独立村3原走路取得六NPC实际单帧、南向返回16(239,160)以及共享服务；受控源续跑不是正常新游戏/App。总体PARTIAL/ALL_MAPS_USABLE=NO继续。

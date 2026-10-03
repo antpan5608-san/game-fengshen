@@ -19,12 +19,12 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 
 ## 当前有效状态（2026-10-03T11:27:00Z）
 
-- WORLD-FULL-01持续F3/F4；正式v27/c14不变，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。v48/run37117190351实体墙出口失败已定向修正并保留未知原记录；v49/run37118715361来源b19de048/c29签名成功，原出口校验通过后，Content4 PASS/20 ERROR在物品来源状态失败，正常App NOT_RUN，不发布。
+- WORLD-FULL-01持续F3/F4；正式v27/c14不变，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。v48/run37117190351实体墙出口失败已定向修正并保留未知原记录；v49/run37118715361来源b19de048/c29原出口校验通过后，来源状态失败；v50/run37119767339来源0dda447e/c30签名成功，Content23 PASS/1 ERROR，唯一错误是旧c1 fixture保留了新sceneStories却移除其角色，实际新内容加载与23个断言通过，但正常路线仍NOT_RUN、不发布。
 - rom.special.12把具体证据类别误写入项目confidence字段。现按既有GAMEPLAY_VERIFIED分类，保留originalEvidenceKind=CONTROLLED_ORIGINAL_MENU_AND_CPU_NOT_NORMAL_ROUTE、原hash/局部菜单与CPU规则，不提升为正常主线。原ci_apk.restore/receipt增加同loader物品来源状态检查，错分类在写assets/签名前拒绝。
 - 修复候选c30/180文件/31图，manifest fb058646af4817b777f7aa7829a3a953e69f69288c573c481957fcc6d2a006cb。严格restore、5末殿定向导出、14原ci_apk方法、249 JVM零失败与instrument编译PASS；新正常67/侧室/68/转世以及中段UI保存再启仍需同产物实际runner验证。旧golden原字节不修改，不拿历史无效候选当构建输入。
-- 最新受保护inspect37116727543在2026-10-03T10:32:34.034UTC查询27/26=1319/2289，普通真机4会话/模拟器0/测试0、清理0；旧v26 ProtocolException仍生产上传阻塞，用户重试成功不是根因确认。不删、不改级别、不绕过门槛。
-- 独立树继续村3：原实际进入三店/40两住宿/回复两人/原门返回已留证，源为受控胜后存档。NPC姿态提取及村庄对外返回尚未通过，失败保留并改用独立正常存档源核对；不启用猜测出口/假图形。这些限制不阻塞共享服务数据转换。
-- 下一动作：冻结c30修复提交，原CI一次签名/runtime；独立接续村3服务与实际原门规则。总体持续PARTIAL、不以31图或候选结束。声音/一加13T NOT_RUN；累计清单仍以delivery-status为准。
+- 最新受保护inspect37119768728在2026-10-03T11:29:05.170UTC查询27/26=1319/2289，普通真机4会话/模拟器0/测试0、清理0；旧v26 ProtocolException仍生产上传阻塞，用户重试成功不是根因确认。不删、不改级别、不绕过门槛。
+- 独立树继续村3：原实际进入三店/40两住宿/回复两人/原门返回已留证，源为受控胜后存档。真实合法步行之后六种NPC可见单帧均已核OAM/CHR/RGBA，164原OAM水平翻转用原recipe薄适配。先正常走离入口再南下实际返回16(239,160)；失败的短输入/手改图形取证保留，不当新游戏/Android成功。共享服务与NPC定义正接续，不假设所有住宅/医馆已完成。
+- 已仅修正c1 fixture删除晚期sceneStories并断言没有剧情脚本/战斗，不放宽实际加载器或改变c30/hash；仪器编译PASS。下一动作：冻结该测试修复来源，原CI一次签名/runtime；独立接续村3服务与实际原门规则。总体持续PARTIAL、不以31图或候选结束。声音/一加13T NOT_RUN；累计清单仍以delivery-status为准。
 
 ## 历史检查点（以下由最近的“当前有效检查点”接续）
 
