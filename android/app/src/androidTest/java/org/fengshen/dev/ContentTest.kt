@@ -18,6 +18,8 @@ class ContentTest:IsolatedGameTestCase(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         val scene=c.scenes.getValue(70);val rule=c.sceneBarriers.single{it.mapId==70}
         assertEquals(MovementBlock.PHYSICAL,c.sceneForState(70,emptyMap())!!.blockType(23,2))
+        val exit=c.exits.single{it.fromMapId==70&&it.triggerX==23&&it.triggerY==2}
+        assertTrue(validExitPlacement(scene,exit.triggerX,exit.triggerY,c.sceneBarriers))
         assertEquals(MovementBlock.PHYSICAL,c.sceneForState(70,mapOf("rom.map.70.flag.2" to true))!!.blockType(23,2))
         val boss=c.battle!!.storyBattles.getValue("rom.npc.70.1")
         assertEquals(142,boss.group.members.single().enemyId);assertEquals(520,c.battle.enemies.getValue(142).hp)
