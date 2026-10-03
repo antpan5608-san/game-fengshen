@@ -36,3 +36,4 @@ if($runtime.worldFirstHallNormal -ne 'PASS' -or $runtime.worldFirstHallColdResta
 if($runtime.worldSecondHallNormal -ne 'PASS' -or $runtime.worldSecondHallColdRestart -ne 'PASS'){throw 'Second hall normal Chu battle/independent flags/open gate/cold restart must verify this exact APK'}
 
 if($runtime.worldHallBatchNormal -ne 'PASS' -or $runtime.worldHallBatchColdRestart -ne 'PASS'){throw 'Hell hall batch actual normal routes/chests/battles/independent flags/cold restart must verify this exact APK'}
+if($runtime.worldFinalHallsNormal -ne 'PASS' -or $runtime.worldRebirthDialogueAndColdRestart -ne 'PASS'){throw 'Final halls, protection, side rooms, actual rebirth dialogue and cold continuation must verify this exact APK'}

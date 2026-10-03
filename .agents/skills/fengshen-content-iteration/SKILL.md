@@ -213,3 +213,9 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 同类剧情NPC索引不保证相同：某殿首条是守卫而王在idx2。测试及正常驱动应按当前地图NPC和storyBattles的稳定npcId唯一绑定，不硬编码idx1；原记录、奖励和门旗标断言保留。实际Content失败说明需查绑定，不能改ROM数据迁就测试；新驱动编译/实际runner结果分开记录。
 
 - 新侧室入口/返回应逐条读取原表；一个spawn不等于只有一个入口。完整region/gate仍查EE47/ED87，室内不能推断免遇敌；图形/文本别名和动态NPC状态分别留证。test_world_seventh_side_export.py与864独立原CPU参数及真实LF checkout已本地成功，正常App进出/遭遇另验。
+
+
+## 已验证的末段局部导出与脚本边界
+
+- 原export_from_base/ci_apk.restore已实际恢复末殿与非战斗场景剧情；world-final-hall-content和world-rebirth-script只扩展原schema/StoryContinuation。新局部导出测试验证重复生成、不变媒体字节、原门/单向出口/对白及拒绝猜测落点、免费中毒步、额外奖励和错误图形。原CPU捕获的PRG映射必须逐8KiB核目标ROM，不能把当前逻辑module一次铺满CPU地址。
+- 真实Windows checkout用*.tsv text eol=lf，test_world_evidence_checkout实际比较checkout和Git blob原字节；不归一化或关闭hash。新scene的阶段保存/取消/原正常路线方法仅编译，App未实跑前保持待核；详见当前任务，不把导出/JVM当正常游玩。

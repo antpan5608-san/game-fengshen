@@ -17,15 +17,14 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T08:56:04.031732+00:00）
+## 当前有效状态（2026-10-03T10:37:50.168658+00:00）
 
-- WORLD-FULL-01持续F3/F4；正式v27/c14不变。后续c25六殿61–66/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6，仍是候选，不写正常全地图可玩。
-- v43/run37104551493来源f38b4fa8/c24：正常南海/海域北侧/西海/村庄1及冷启通过，北海前开局弱敌训练3000步未达12级；新驱动改真实海域正常练级/正常住宿，并每64步保存实际进度，无游戏EXP/敌群/条件改动。
-- v44/run37109855129来源73cc1b90：Windows Git CRLF改变TSV字节而被hash拒绝；修*.tsv text eol=lf并实际autocrlf=true隔离checkout验证，没有关闭hash。
-- v45/run37110358080来源a73241ad/c25：Windows signed build成功，runtime加载在Content.kt271旧“仅定海珠宝箱”校验失败，不能开始正常App。该限制不是原版规则；已最小改为调用原WorldItems同一类别/稳定ID/数量/flag校验，依然只接受原取证categoryGrant来源。238JVM0失败/错误/跳过及instrument编译PASS；App修复复测待原runner。
-- 独立后续/workspace/game-fengshen-world-rebirth已提交cf5abea：定神珠id12实际原版菜单/50CPU/出入殿保护边界、现有物品命令和统一flags薄接入；已知c18–25 schema1旧内容版本标记兼容，结构/位置校验保持。242JVM/仪器编译及2新Python通过；未合入当前候选、未生成c26、map67未打包，新App NOT_RUN。68胜后实际出口到86会自动师父对白、莲花转世后到16(238,160)，尚在定向核事实，不当普通无剧情换图。
-- 最近实际inspect37107749426为07:52:07.994UTC，27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；旧v26 ProtocolException继续阻塞严格生产上传。
-- 下一动作：提交本次c25宝箱加载修复并冻结同源候选；等待正常runner时继续67侧室69/158/159、保护和68/86真实连续事件。不以25图或CI小检查点主动结束。有效分母UNKNOWN、ALL_MAPS_USABLE=NO；十类累计欠账保留，声音/一加13T NOT_RUN。
+- WORLD-FULL-01持续F3/F4；正式v27/c14不变。当前独立树c28/180文件/31地图，manifest5199ee7fc4f8243a12dac3f6443676d98290903e072e3b5cccace8f9241fb1da；原可信v27基底不变。新增67、69/158/159、68/86的候选内容，不写全部地图或正常App已完成。
+- v47/run37112506233来源82eb31d9/c25签名构建和Content20 PASS；实际正常触控/三店客栈/南海/海域北侧/西海及冷启PASS。村庄1续跑真实战败，原片/失败断言保留；尚未进入北海/洞窟/东海/地府批次。取回有界服务artifact证实L8/57上限、仅两份药草的旧测试策略，现驱动正常按价买十份并提前用草；没有改敌数值、遇敌、战败或注入资源。
+- c28复用原StoryContinuation，薄接原末殿出口→86触发、11段对白、六步+一步中毒消耗、完成OR128、16(238,160)/UP/计步0。56原CPU用实际0/1/46/3映射；128地形参数和NPC132真实204像素姿态核验。无额外奖励/入队、不猜逆向出口；剧情行走动画和陪伴者世界姿态仍欠账。
+- 严格restore实际成功180文件；126项world Python/248 JVM零失败、仪器编译及bash语法PASS。新正常67/侧室/68/转世、实际中段保存再启与冷启仍NOT_RUN，已经接入原单一runtime/审核门禁和有界原片保留，下一次同源候选实际执行。
+- 最新受保护inspect37116727543：2026-10-03T10:32:34.034UTC，27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0。旧v26 ProtocolException仍ISSUES_FOUND/生产上传阻塞；用户重试v27成功不是错误根因已经确认。不擦除、不改级别、不绕过门槛。
+- 下一动作：提交本次实际功能/内容/门禁和检查点，冻结原CI一次同产物候选；等待时在隔离树继续转世后真实地图与服务依赖。总任务继续，不以31图或一小检查点结案。有效分母UNKNOWN、ALL_MAPS_USABLE=NO，十类欠账保留；声音/一加13T NOT_RUN。
 
 ## 历史检查点（以下由最近的“当前有效检查点”接续）
 

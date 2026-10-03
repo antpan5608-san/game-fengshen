@@ -76,6 +76,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         internal set
     var mechanisms:List<SceneMechanism> = emptyList()
         internal set
+    var sceneStories:Map<String,SceneStoryDefinition> = emptyMap()
+        internal set
     private var stateScene:Scene?=null
     private var stateFlags:Map<String,Boolean>?=null
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
@@ -491,8 +493,45 @@ object ContentLoader {
                     }
                 }
         }else null
+        val sceneStories=data.optJSONArray("sceneStories")?.let{a->
+            (0 until a.length()).map{i->
+                val o=a.getJSONObject(i)
+                require(o.getString("evidence")=="game-data/provenance/world-rebirth-script.json")
+                val entry=o.getJSONObject("entryTrigger")
+                val trigger=StoryEntryTrigger(entry.getInt("mapId"),entry.getInt("x"),entry.getInt("y"))
+                fun destination(t:JSONObject):StoryDestination {
+                    val d=StoryDestination(t.getInt("mapId"),t.getInt("x"),t.getInt("y"),
+                        if(t.has("direction"))Key.valueOf(t.getString("direction"))else null,
+                        if(t.has("terrainMode"))t.getInt("terrainMode")else null,
+                        if(t.has("encounterSteps"))t.getInt("encounterSteps")else null)
+                    require(scenes[d.mapId]?.check(d.x,d.y,d.terrainMode?:0)==null)
+                    require(d.direction==null||d.direction in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
+                    require(d.encounterSteps==null||d.encounterSteps in 0..255)
+                    return d
+                }
+                fun movement(m:JSONObject)=StoryMovement(destination(m.getJSONObject("destination")),m.getInt("completedSteps"))
+                val c=o.getJSONObject("continuation")
+                val ids=c.getJSONArray("dialogueIds").let{d->(0 until d.length()).map{d.getString(it)}}
+                require(!c.has("joinCharacterId")&&ids.all{it in dialogues})
+                val completion=c.getJSONArray("completionFlags").let{f->(0 until f.length()).map{f.getString(it)}.toSet()}
+                val chain=StoryContinuation(ids,null,destination(c.getJSONObject("destination")),completion)
+                val moves=o.getJSONArray("movementsBeforeDialogue").let{m->(0 until m.length()).map{j->
+                    val v=m.getJSONObject(j);v.getInt("dialogueIndex") to movement(v)}}
+                require(moves.map{it.first}.distinct().size==moves.size&&moves.all{it.first in 1 until ids.size&&it.second.destination.mapId==86})
+                val story=SceneStoryDefinition(o.getString("id"),o.getString("npcId"),o.getString("flagId"),trigger,chain,
+                    movement(o.getJSONObject("openingMovement")),moves.toMap())
+                require(story.id=="rom.scene-story.86.rebirth"&&story.npcId=="rom.npc.86.0"&&
+                    story.flagId=="rom.map.86.flag.128"&&trigger.mapId==86&&story.openingMovement.destination.mapId==86&&
+                    chain.destination?.mapId==16&&completion==setOf(story.flagId)&&
+                    scenes[86]?.check(trigger.x,trigger.y)==null&&
+                    npcs.any{it.id==story.npcId&&it.mapId==86&&it.scriptedActor&&it.firstEffects.isEmpty()})
+                story
+            }.also{s->require(s.map{it.id}.distinct().size==s.size&&s.map{it.npcId}.distinct().size==s.size)}
+                .associateBy{it.npcId}
+        }?:emptyMap()
         require(npcs.filter{it.scriptedActor}.all{npc->
-            battle?.storyBattles?.get(npc.id)?.entryTrigger?.mapId==npc.mapId})
+            battle?.storyBattles?.get(npc.id)?.entryTrigger?.mapId==npc.mapId||
+                sceneStories[npc.id]?.entryTrigger?.mapId==npc.mapId})
         val battleHorizons=mutableMapOf<Int,Bitmap>();val blackBattleEnemyIds=mutableSetOf<Int>()
         val enemyGraphics=mutableMapOf<Int,Bitmap>();val enemyOrigins=mutableMapOf<Int,Pair<Int,Int>>()
         var battleHorizon:Bitmap?=null;var battleHero:Bitmap?=null
@@ -557,6 +596,7 @@ object ContentLoader {
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
+                content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
                 data.optJSONArray("mechanisms")?.let{a->
                     content.mechanisms=(0 until a.length()).map{i->

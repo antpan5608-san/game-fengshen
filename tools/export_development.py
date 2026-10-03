@@ -516,7 +516,9 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
     scopes={'game-data/provenance/world-hell-hall-batch-terrain.json':
         ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',6840,set(range(61,69))),
         'game-data/provenance/world-seventh-side-terrain.json':
-        ('seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero',864,{69,158,159})}
+        ('seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero',864,{69,158,159}),
+        'game-data/provenance/world-rebirth-terrain.json':
+        ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86})}
     if evidence_path not in scopes:raise ValueError('Unreviewed terrain evidence path')
     scope,count,maps=scopes[evidence_path];proof=load(ROOT/evidence_path)
     if proof['romSha256']!=SHA256 or proof['scopeRevision']!=scope or map_id not in maps or \
@@ -565,6 +567,63 @@ def validate_world_seventh_side_npc_graphic(reader,sprite_id):
     if sum(p[3]!=0 for p in Image.open(io.BytesIO(raw)).convert('RGBA').getdata())!=198:
         raise ValueError('Side room pose is incomplete or transparent')
     return recipe
+
+def world_rebirth_definition(rule):
+    path='game-data/provenance/world-rebirth-script.json'
+    def movement(cell,direction,steps,encounter):
+        return {'completedSteps':steps,'destination':{'mapId':86,'x':cell[0],'y':cell[1],
+            'direction':direction,'terrainMode':0,'encounterSteps':encounter}}
+    return {'id':rule['id'],'npcId':rule['npcId'],'flagId':rule['flagId'],
+        'entryTrigger':{'mapId':86,'x':rule['trigger'][0],'y':rule['trigger'][1]},
+        'openingMovement':movement(rule['openingPosition'],rule['openingDirection'],rule['openingSteps'],rule['openingEncounterSteps']),
+        'movementsBeforeDialogue':[{'dialogueIndex':rule['laterMovementBeforeMessage']-2,
+            **movement(rule['laterPosition'],rule['laterDirection'],rule['laterSteps'],rule['laterEncounterSteps'])}],
+        'continuation':{'dialogueIds':rule['dialogueIds'],'destination':rule['destination'],
+            'completionFlags':[rule['flagId']]},'evidence':path}
+
+def validate_world_rebirth_script(reader,definition):
+    from forensics.fengshen246 import extract_npcs
+    p=load(ROOT/'game-data/provenance/world-rebirth-script.json');rule=p['rule']
+    required={(11,0xd825,0x4e),(11,0xda4a,0x2e),(11,0xda81,3),(11,0xcb42,0x27),
+        (11,0xccf9,10),(11,0xcd03,7),(11,0xcbee,11),(11,0xcbf9,10),(11,0xcd0a,0x19),
+        (11,0xcc8a,0x6f),(11,0xc2ac,2),(11,0xc348,59),(0,0xd493+86*2,2),(0,0xba30,0xcf),(11,0xc000,5)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='final-hall-exit-map86-rebirth-original-scene-script' or \
+            p['kind']!='CONTROLLED_ORIGINAL_CPU_AND_INPUT_NOT_NORMAL_ROUTE' or p['cpuCaseCount']!=56 or \
+            p['mappedBanks']!=[0,1,46,3] or {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Scene script lacks its original captured CPU scope')
+    for span in p['sources']:checked_span(reader,span)
+    if digest((ROOT/p['cpuExpectedPath']).read_bytes())!=p['cpuExpectedSha256']:
+        raise ValueError('Scene script CPU expectations differ')
+    expected={'id':'rom.scene-story.86.rebirth','npcId':'rom.npc.86.0','mapId':86,'trigger':[12,5],
+        'flagId':'rom.map.86.flag.128','eventId':2,'scriptId':3,'openingPosition':[7,4],
+        'openingDirection':'UP','openingSteps':6,'openingEncounterSteps':6,'laterMovementBeforeMessage':10,
+        'laterPosition':[7,5],'laterDirection':'LEFT','laterSteps':1,'laterEncounterSteps':7,
+        'dialogueIds':[f'rom.dialogue.96.{i}'for i in range(2,13)],
+        'destination':{'mapId':16,'x':238,'y':160,'direction':'UP','terrainMode':0,'encounterSteps':0},
+        'reward':'NO_ADDITIONAL_STATS_ITEMS_OR_MONEY','reentryCompleted':'NO_SCRIPT_RESTART',
+        'mapType':255,'defaultZone':255,'initialTerrainMode':0}
+    if rule!=expected or definition!=world_rebirth_definition(rule):
+        raise ValueError('Scene script movement, completion, text or destination differs')
+    if reader.read(11,0xda81,3)!=bytes([12,5,0]) or reader.word(11,0xcb62)!=0xccf9 or \
+            reader.word(11,0xc2ac)!=0xc348 or reader.word(0,0xd493+86*2)!=0x756 or \
+            reader.read(0,0xed87+86)[0]!=255 or reader.read(0,0xee47+86)[0]!=255 or \
+            reader.read(11,0xc000,5)!=bytes.fromhex('a55a100160'):
+        raise ValueError('Scene script trigger, map flag, stream or encounter identity differs')
+    npc=extract_npcs(reader,86)['records'][0]
+    if npc['range']!=p['npcSource'] or checked_span(reader,p['npcSource'])!=bytes.fromhex('84ffff00e800a8001e8d01020000'):
+        raise ValueError('Scene actor differs from original map86 record')
+    if [x['partyHp']for x in p['poisonBoundaries']]!=[[35,29],[28,22],[27,21],[27,21]] or \
+            any(x['status']!=[2,2]for x in p['poisonBoundaries']):
+        raise ValueError('Scene automatic movement must preserve original poison costs')
+    recipe=p['npcGraphic']
+    if recipe['captureKind']!='CONTROLLED_COMPLETED_REBIRTH_FLAG_REAL_EXIT_VISIBLE_POSE_NO_DIALOGUE_CHR' or \
+            recipe['normalPlayEvidence'] is not False or recipe['opaquePixelMatch'] is not True or \
+            (recipe['width'],recipe['height'],recipe['transparentZero'],recipe['opaquePixelCount'])!=(16,16,True,204):
+        raise ValueError('Scene actor has no complete visible original pose')
+    raw=scoped_observed_graphic(reader,recipe)
+    if sum(c[3]!=0 for c in Image.open(io.BytesIO(raw)).convert('RGBA').getdata())!=204:
+        raise ValueError('Scene actor pose is incomplete')
+    return p
 
 def validate_world_field_protection_item(reader,item):
     path='game-data/provenance/world-field67-item12.json'
@@ -802,7 +861,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
             elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
-                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero'):
+                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero'):
                 validate_world_hall_batch_terrain(reader,mid,terrain['evidence'])
                 if set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
@@ -1162,6 +1221,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
+    for definition in evidence.get('sceneStories',[]):
+        validate_world_rebirth_script(reader,definition)
+        if any(s['id']==definition['id']or s['npcId']==definition['npcId']for s in scene.get('sceneStories',[])):
+            raise ValueError('Duplicate scene script identity')
+        if definition['entryTrigger']['mapId'] not in known or definition['continuation']['destination']['mapId'] not in known:
+            raise ValueError('Scene story destination not packaged')
+        scene.setdefault('sceneStories',[]).append(definition)
     for name in ('npcs','dialogues','inns','shops','items'):
         old=scene.get(name,[]);added=evidence.get(name,[])
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
@@ -1183,6 +1249,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Original nonadjacent interaction point differs')
             checked_span(reader,npc['source']['record'])
         if npc.get('scriptedActor'):
+            if npc.get('sceneStoryActor'):
+                definition=next((s for s in evidence.get('sceneStories',[])if s['npcId']==npc['id']),None)
+                if definition is None:raise ValueError('Scene actor lacks its scoped script')
+                proof=validate_world_rebirth_script(reader,definition)
+                if npc['id']!='rom.npc.86.0' or npc['mapId']!=86 or npc['cell']!=[7,3] or \
+                        npc['source']['record']!=proof['npcSource'] or npc['firstEffects'] or \
+                        npc['firstDialogue']!='rom.dialogue.96.2' or npc.get('repeatDialogue') or \
+                        evidence['graphics'].get(npc['sprite'])!=proof['npcGraphic']:
+                    raise ValueError('Scene actor pose, interaction or side effects differ')
+                continue
             story=next((b for b in overlay.get('bosses',[]) if b['npcId']==npc['id']),None) if overlay else None
             if story is None or not story.get('actorScriptSource') or npc.get('firstEffects'):
                 raise ValueError('Scripted actor lacks its original event')

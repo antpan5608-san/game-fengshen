@@ -308,7 +308,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(exit?.resetEncounterSteps==true){
                 encounter?.restore(0)
                 // New-scene touch safety: a held old-scene gesture must not advance past the reviewed spawn.
-                input.clear();npcTouch.clear();hudTouch.clear();return
+                input.clear();npcTouch.clear();hudTouch.clear()
+                openSceneStoryIfNeeded();return
             }
         }
         if(openEntryStoryIfNeeded())return
@@ -682,6 +683,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun openEntryStoryIfNeeded():Boolean {
         if(layer!=Layer.MAP||world.remaining!=0)return false
+        if(openSceneStoryIfNeeded())return true
         val story=content.battle?.storyBattles?.values?.firstOrNull{
             it.triggersAt(world.mapId,world.x/16,world.y/16,flags)}?:return false
         val npc=content.npcs.first{it.id==story.npcId}
@@ -689,6 +691,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return true
     }
     fun startOpeningIfNeeded(){
+        val scenePending=content.sceneStories.values.firstOrNull{flags[it.pendingFlag]==true}
+        if(scenePending!=null){
+            if(OriginalStatus.allDisabled(characters)){
+                flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
+            }
+            scenePending.pendingDialogue(flags)?.let{id->
+                openDialogue(content.dialogues.getValue(id),content.npcs.first{it.id==scenePending.npcId});return
+            }
+        }
         val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
         if(pending!=null){
             val npc=content.npcs.first{it.id==pending.npcId}
@@ -697,6 +708,29 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(openEntryStoryIfNeeded())return
         if(world.mapId==114 && world.x==content.scene.spawnX*16+8 && world.y==content.scene.spawnY*16+8 &&
             flags["opening.intro.seen"]!=true)content.intro?.let{openDialogue(it,null)}
+    }
+    private fun openSceneStoryIfNeeded():Boolean {
+        if(layer!=Layer.MAP||world.remaining!=0)return false
+        val before=currentSnapshot()
+        val story=content.sceneStories.values.firstOrNull{it.triggersAt(before)}?:return false
+        if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
+        commitStoryFollowup(before,StoryFollowup.begin(before,story),content.npcs.first{it.id==story.npcId})
+        return true
+    }
+    private fun commitStoryFollowup(before:SaveSnapshot,result:StoryFollowup.Result,npc:StoryNpc) {
+        if(!result.applied){showNotice(result.error?:"剧情状态已变化");return}
+        if(!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+            showNotice("剧情落点或队伍不可恢复，原状态已保留");return
+        }
+        if(!persistStateResult()){
+            if(!applySnapshotState(before))localSaveProtected=true
+            showNotice("保存失败，请重试继续对话");return
+        }
+        if(npc.id in content.sceneStories&&OriginalStatus.allDisabled(characters)){
+            flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
+        }
+        if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
+        else{dismissDialogue();audio.scene(world.mapId)}
     }
     private fun openDialogue(text:StoryText,npc:StoryNpc?){
         if(finishPendingStep())return
@@ -709,23 +743,20 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
+        val sceneStory=npc?.let{content.sceneStories[it.id]}
+        if(sceneStory!=null&&npc!=null){
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot()
+            commitStoryFollowup(before,StoryFollowup.advance(before,sceneStory,dialogueText?.id?:""),npc)
+            return
+        }
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
             if(story.alreadyWon(flags)){
                 if(story.continuation!=null&&flags[story.pendingFlag]==true){
                     if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
                     val before=currentSnapshot()
-                    val result=StoryFollowup.advance(before,story,dialogueText?.id?:"",content.joinCharacters)
-                    if(!result.applied){showNotice(result.error?:"剧情状态已变化");return}
-                    if(!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
-                        showNotice("剧情落点或队伍不可恢复，原状态已保留");return
-                    }
-                    if(!persistStateResult()){
-                        if(!applySnapshotState(before))localSaveProtected=true
-                        showNotice("保存失败，请重试继续对话");return
-                    }
-                    if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
-                    else{dismissDialogue();audio.scene(world.mapId)}
+                    commitStoryFollowup(before,StoryFollowup.advance(before,story,dialogueText?.id?:"",content.joinCharacters),npc)
                     return
                 }
                 val before=flags
@@ -765,6 +796,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()
     }
     private fun canDismissDialogue():Boolean {
+        dialogueNpc?.let{content.sceneStories[it.id]}?.let{if(flags[it.pendingFlag]==true)return false}
         val story=dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)}?:return true
         return story.entryTrigger==null&&!(story.continuation!=null&&flags[story.pendingFlag]==true)
     }
@@ -1380,7 +1412,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         paint.color=Color.WHITE;paint.alpha=255
         val actors=content.npcs.filter{it.mapId==world.mapId&&
-            (!it.scriptedActor||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
+            (!it.scriptedActor||it.id in content.sceneStories||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})

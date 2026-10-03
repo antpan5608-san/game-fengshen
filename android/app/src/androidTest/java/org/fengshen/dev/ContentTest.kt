@@ -13,6 +13,43 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual loader and isolated durable proposals; not a normal final Boss victory. */
+    fun testControlledFinalHallAndRebirthDialogueSaveBoundaries(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.68.1")
+        val enemy=c.battle!!.enemies.getValue(151)
+        assertEquals(3500,enemy.hp);assertEquals(8,enemy.behaviorByte)
+        val barrier=c.sceneBarriers.single{it.mapId==68}
+        assertEquals(MovementBlock.PHYSICAL,c.sceneForState(68,emptyMap())!!.blockType(barrier.x,barrier.y))
+        val won=boss.completeDialogue(boss.rewardFlags(emptyMap()))
+        assertTrue(won["rom.map.68.flag.1"]==true);assertTrue(won["rom.map.68.flag.2"]==true)
+        assertNull(c.sceneForState(68,won)!!.check(barrier.x,barrier.y))
+        val exit=c.exits.single{it.fromMapId==68&&it.toMapId==86}
+        assertEquals(12,exit.triggerX);assertEquals(1,exit.triggerY)
+        assertEquals(12,exit.spawnX);assertEquals(5,exit.spawnY)
+        val story=c.sceneStories.getValue("rom.npc.86.0")
+        assertEquals((2..12).map{"rom.dialogue.96.$it"},story.continuation.dialogueIds)
+        assertFalse(c.battle!!.zones.any{it.mapId==86})
+        assertTrue(c.npcs.single{it.id==story.npcId}.scriptedActor)
+        val arrived=SaveSnapshot(c.scene.version,86,12*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv")),mapOf(HerbUse.ID to 2),won,887)
+        assertTrue(arrived.validate(c))
+        var saved=StoryFollowup.begin(arrived,story).snapshot
+        assertEquals(7,saved.x/16);assertEquals(4,saved.y/16)
+        for(id in story.continuation.dialogueIds){
+            assertTrue(saved.validate(c));assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+            assertFalse(saved.copy(mapId=16).validate(c))
+            val a=StoryFollowup.advance(saved,story,id);assertTrue(a.applied);saved=a.snapshot
+            assertFalse(StoryFollowup.advance(saved,story,id).applied)
+        }
+        assertTrue(saved.validate(c));assertEquals(16,saved.mapId)
+        assertEquals(238,saved.x/16);assertEquals(160,saved.y/16)
+        assertEquals(arrived.characters,saved.characters);assertEquals(arrived.inventory,saved.inventory)
+        assertEquals(arrived.money,saved.money);assertTrue(saved.flags[story.flagId]==true)
+        assertTrue(saved.flags[story.pendingFlag]!=true)
+        val reentered=saved.copy(mapId=86,x=12*16+8,y=5*16+8)
+        assertTrue(reentered.validate(c));assertFalse(StoryFollowup.begin(reentered,story).applied)
+    }
     /** Loaded candidate routes and isolated checkpoints; not normal input traversal. */
     fun testControlledSeventhSideRoomLoadingReturnsEncountersAndSave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -70,7 +107,7 @@ class ContentTest:IsolatedGameTestCase(){
         val s=SaveSnapshot(c.scene.version,114,c.scene.spawnX*16+8,c.scene.spawnY*16+8,Key.DOWN,
             listOf(c.initialPlayer),flags=mapOf("opening.intro.seen" to true),money=c.initialMoney)
         assertTrue(s.validate(c))
-        for(i in 18..25){
+        for(i in 18..27){
             val old=s.copy(contentVersion="opening-segment-001-c$i")
             assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
             assertFalse(old.copy(x=-8).validate(c))

@@ -82,6 +82,14 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original second hall content and independent state gates failed'}
     & python -m unittest discover -s tests -p test_world_hall_batch_export.py
     if($LASTEXITCODE -ne 0){throw 'Original Hell batch content, chest and independent state gates failed'}
+    & python -m unittest discover -s tests -p test_world_seventh_hall_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original seventh hall and field protection content gates failed'}
+    & python -m unittest discover -s tests -p test_world_seventh_side_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original side-room geometry, returns, groups and visible NPC gates failed'}
+    & python -m unittest discover -s tests -p test_world_final_hall_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original final hall and durable rebirth content gates failed'}
+    & python -m unittest discover -s tests -p test_world_evidence_checkout.py
+    if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c28",
-  "manifestSha256": "5199ee7fc4f8243a12dac3f6443676d98290903e072e3b5cccace8f9241fb1da",
+  "contentVersion": "opening-segment-001-c27",
+  "manifestSha256": "4a6f150eee41900285c6e4a89a6d9959532bc837eb3c1a81e37717a54316c691",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-final-hall-content.json"
+    "provenance": "game-data/provenance/world-seventh-side-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,
