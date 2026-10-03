@@ -262,3 +262,6 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 原移动分派$97为本次方向，空闲snapshot的0不证明实际调用参数；原代码钩子与正常按键先定位参数，再复用CPU矩阵。森林target3/7横向原阻挡已用144实际方向组合及按键反例核定，旧证据保留为历史，不替换旧parent hash。新增修正独立局部配方，151世界回归、真实LF checkout、空assets恢复均已运行；App仍需同候选验证。
 
 大陆actor不等于一律实体障碍：原A973过滤后C68A对E7/E8接触分派，D6步行进入，移除或其他walker不进入。probe-world-tree-contact.py已对匹配ROM运行2384案例，派生TSV不含ROM；WorldActorContactTest验证失败换图保留、旗标移除后普通走格与接触不扣完成步。未打包的新入口或四层不能写正常App成功。
+
+
+- 当前授权可接受明确非阻断历史故障时，诊断投影仍保留status/ERROR/计数；原runtime-summary.mjs的独立--release-assessment只核已经精确review的旧版本下载中断与可信两版hash。19 Node/投影方法、22原审批隔离场景和实际脱敏inspect输入评估已运行；新错误、崩溃、丢档或查询不可用仍拒绝。PowerShell/生产路径未实际执行前保持待核，不将ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES写NO_ISSUES_OBSERVED。动态例外存ci/runtime-nonblocking-issues.json，不复制进skill。

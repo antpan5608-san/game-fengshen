@@ -1,3 +1,7 @@
+## 最新有效发布修订（2026-10-04 北京时间）
+
+用户要求有大的可玩进展即沿既有生产流程阶段发布，不以所有非阻断BUG清零为前提；实际运行不崩溃、存档安全、签名/同提交/同审核产物/reviewer/公网hash仍必须通过。已恢复的精确旧v26下载中断单独评估，原ISSUES_FOUND/ERROR与UNCONFIRMED不改；新增/未知/阻断错误仍拒绝。授权与最小依据见docs/history/world-full01-stage-publication.md。当前仅19真实Node/摘要方法与22隔离审批场景通过，生产新评估/新App尚未运行，正式仍v27。候选通过后自动阶段发布并继续WORLD-FULL-01，不等待用户中间确认。
+
 ## 当前有效检查点（2026-10-03T17:45Z）
 
 - WORLD-FULL-01持续F3/F4；正式v27/c14不变，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。v54/run37138936199来源13e9d9e6/c35签名build成功，runtime仍执行；来源冻结，后续独立work/world-after-forest工作树，不用旧APK结果给新代码背书。

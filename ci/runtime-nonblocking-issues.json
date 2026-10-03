@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "authorization": "docs/history/world-full01-stage-publication.md",
+  "issues": [
+    {
+      "bucket": "apk_update/ProtocolException",
+      "versionCode": 26,
+      "releaseSha256": "54859450bea3b20ce8c684164b9e325fce832326baf7093686e27a89ad58deb4",
+      "latestAt": "2026-10-02T11:21:42.556469697Z",
+      "maxCount": 1,
+      "type": "apk_update",
+      "code": "ProtocolException",
+      "stage": "download_or_verify",
+      "recoveredVersionCode": 27,
+      "recoveredReleaseSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+      "classification": "NON_BLOCKING_PRIOR_VERSION_DOWNLOAD_INTERRUPTION",
+      "evidence": "docs/history/world-full01-stage-publication.md",
+      "rootCause": "UNCONFIRMED"
+    }
+  ]
+}
