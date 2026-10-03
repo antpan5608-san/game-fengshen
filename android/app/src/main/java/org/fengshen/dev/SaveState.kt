@@ -109,6 +109,55 @@ object InnStay {
     }
 }
 
+/** Original physician: dead-bit target, HP1/status1, unchanged MP, percentage donation.
+ * The zero-money underflow/cap is independently observed before dialogue entry;
+ * it is an original edge case, not a new reward or a guessed minimum-balance rule. */
+object ClinicRevival {
+    data class Result(val money:Int,val characters:List<CharacterState>,val applied:Boolean=false,
+        val fee:Int=0,val error:String?=null)
+    fun valid(rule:ClinicDefinition)=rule.kind=="REVIVAL"&&rule.treatments.isEmpty()&&rule.deadMask==32&&rule.recoveredHp==1&&rule.recoveredStatus==1&&
+        rule.feeDenominator==100&&rule.minimumFee==1&&rule.moneyLimit==999999&&rule.evidence.isNotBlank()
+    fun eligible(hero:CharacterState,rule:ClinicDefinition)=valid(rule)&&hero.statusMask and rule.deadMask!=0
+    fun fee(money:Int,rule:ClinicDefinition):Int {
+        require(money in 0..9999999&&valid(rule))
+        return maxOf(rule.minimumFee,minOf(money,rule.moneyLimit)/rule.feeDenominator)
+    }
+    fun apply(money:Int,characters:List<CharacterState>,targetId:String,rule:ClinicDefinition):Result {
+        if(money !in 0..9999999||!valid(rule)||characters.map{it.id}.distinct().size!=characters.size)
+            return Result(money,characters,error="医疗定义或队伍无效")
+        val index=characters.indexOfFirst{it.id==targetId}
+        if(index<0)return Result(money,characters,error="当前没有此队员")
+        val hero=characters[index]
+        if(!eligible(hero,rule))return Result(money,characters,error="这位队员还活着，无需复活")
+        val cost=fee(money,rule);val normalized=minOf(money,rule.moneyLimit)
+        val nextMoney=if(normalized<cost)rule.moneyLimit else normalized-cost
+        val next=characters.toMutableList().also{it[index]=hero.copy(hp=rule.recoveredHp,statusMask=rule.recoveredStatus)}
+        return Result(nextMoney,next,true,cost)
+    }
+}
+
+/** Original doctor's two treatments; the third original menu option cancels. */
+object ClinicCare {
+    private val original=listOf(ClinicTreatment("poison","中毒",2,2),ClinicTreatment("confusion","錯亂",4,3))
+    fun valid(rule:ClinicDefinition)=rule.kind=="TREATMENT"&&rule.treatments==original&&
+        rule.moneyLimit==999999&&rule.evidence.isNotBlank()
+    fun eligible(hero:CharacterState,treatment:ClinicTreatment)=hero.statusMask and treatment.statusMask!=0
+    fun apply(money:Int,characters:List<CharacterState>,targetId:String,rule:ClinicDefinition,
+        treatmentId:String):ClinicRevival.Result {
+        if(money !in 0..9999999||!valid(rule)||characters.map{it.id}.distinct().size!=characters.size)
+            return ClinicRevival.Result(money,characters,error="医疗定义或队伍无效")
+        val treatment=rule.treatments.singleOrNull{it.id==treatmentId}
+            ?:return ClinicRevival.Result(money,characters,error="没有此治疗项目")
+        val index=characters.indexOfFirst{it.id==targetId}
+        if(index<0)return ClinicRevival.Result(money,characters,error="当前没有此队员")
+        val hero=characters[index]
+        if(!eligible(hero,treatment))return ClinicRevival.Result(money,characters,error="这位队员没有${treatment.name}状态")
+        if(money<treatment.price)return ClinicRevival.Result(money,characters,error="银两不足")
+        val next=characters.toMutableList().also{it[index]=hero.copy(statusMask=hero.statusMask and treatment.statusMask.inv())}
+        return ClinicRevival.Result(minOf(money-treatment.price,rule.moneyLimit),next,true,treatment.price)
+    }
+}
+
 /** Scoped original map/menu herb command. Rendering never mutates these values. */
 object HerbUse {
     const val ID="rom.medicine.0"
@@ -201,7 +250,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved in (1..30).map{"opening-segment-001-c$it"}
+            saved in (1..31).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

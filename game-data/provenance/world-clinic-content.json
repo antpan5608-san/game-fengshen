@@ -1,0 +1,1126 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "shared-physician-and-revival-services-for-existing-villages",
+  "baseManifestSha256": "3fc9e7ee17d0202a4bc42931a24b5fd0c6053a1b288fc93bb98635d4fc5a3a52",
+  "baseExport": {
+    "pinPath": "ci/golden-world-village3-content.json",
+    "pinSha256": "24ceb834fafe3b82c178c1dcd634462ff38461dc04b4083aa4d5fe44a5d5db2e",
+    "provenanceSha256": "017c4188d2308b2af3b4ea0e4ae88134c583866d0053c27fb2e31e4134fb997f",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "ruleRanges": [
+    {
+      "offset": 24827,
+      "length": 2,
+      "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04",
+      "module": 0,
+      "cpuAddress": 57579,
+      "meaning": "Map background/sprite palette selector pair"
+    },
+    {
+      "offset": 25582,
+      "length": 2,
+      "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567",
+      "module": 0,
+      "cpuAddress": 58334,
+      "meaning": "Background palette pointer"
+    },
+    {
+      "offset": 25672,
+      "length": 2,
+      "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+      "module": 0,
+      "cpuAddress": 58424,
+      "meaning": "Sprite palette pointer"
+    },
+    {
+      "offset": 26074,
+      "length": 16,
+      "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9",
+      "module": 0,
+      "cpuAddress": 58826,
+      "meaning": "Original default background colors"
+    },
+    {
+      "offset": 25882,
+      "length": 16,
+      "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+      "module": 0,
+      "cpuAddress": 58634,
+      "meaning": "Original sprite colors"
+    },
+    {
+      "offset": 24272,
+      "length": 5,
+      "sha256": "3bc54775daa1900fafb07472a78eae7e20911e9b51c2f3593b34696565bbcc13",
+      "module": 0,
+      "cpuAddress": 57024,
+      "meaning": "Tileset and maximum pixel coordinates"
+    },
+    {
+      "offset": 23860,
+      "length": 2,
+      "sha256": "1b96011418a3675a82b529695daac30914827d65d2ff3e0bc6873526a1beefcf",
+      "module": 0,
+      "cpuAddress": 56612,
+      "meaning": "Map header pointer"
+    },
+    {
+      "offset": 25167,
+      "length": 1,
+      "sha256": "e77b9a9ae9e30b0dbdb6f510a264ef9de781501d7b6b92ae89eb059c5ab743db",
+      "module": 0,
+      "cpuAddress": 57919,
+      "meaning": "PRG module used by renderer"
+    },
+    {
+      "offset": 279384,
+      "length": 29,
+      "sha256": "3e7e46e947f00a9cb39bda1e71011ee142699c8b3382a4a0b19d6bb46646b5ca",
+      "module": 8,
+      "cpuAddress": 49992,
+      "meaning": "14-byte records terminated by FF"
+    }
+  ],
+  "maps": [
+    {
+      "mapId": 20,
+      "gridSha256": "dda697944b149d99620e76bc5551a27ba32055b85b9458488614db553ed1e0c9",
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        5
+      ],
+      "directionalCollision": false,
+      "npcCells": [
+        77,
+        99
+      ],
+      "limitations": [
+        "Two original medical services; NPC walking, original menu/font/timing and BGM remain separately pending."
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "fromMapId": 1,
+      "toMapId": 20,
+      "trigger": [
+        8,
+        10
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "offset": 19443,
+        "length": 24,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991",
+        "module": 0,
+        "cpuAddress": 52195,
+        "meaning": "Existing normal village indoor dispatch: class24 minus4 is medical20"
+      },
+      "dispatchSubtract": 4,
+      "collisionClass": 24,
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "captureCaller": true,
+      "runtimeEvidence": {
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "scope": "Caller3 actual entry/return; caller1/2 original static dispatch, Android NOT_RUN"
+      }
+    },
+    {
+      "fromMapId": 2,
+      "toMapId": 20,
+      "trigger": [
+        22,
+        26
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "offset": 19443,
+        "length": 24,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991",
+        "module": 0,
+        "cpuAddress": 52195,
+        "meaning": "Existing normal village indoor dispatch: class24 minus4 is medical20"
+      },
+      "dispatchSubtract": 4,
+      "collisionClass": 24,
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "captureCaller": true,
+      "runtimeEvidence": {
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "scope": "Caller3 actual entry/return; caller1/2 original static dispatch, Android NOT_RUN"
+      }
+    },
+    {
+      "fromMapId": 3,
+      "toMapId": 20,
+      "trigger": [
+        7,
+        18
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "offset": 19443,
+        "length": 24,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991",
+        "module": 0,
+        "cpuAddress": 52195,
+        "meaning": "Existing normal village indoor dispatch: class24 minus4 is medical20"
+      },
+      "dispatchSubtract": 4,
+      "collisionClass": 24,
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "captureCaller": true,
+      "runtimeEvidence": {
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "scope": "Caller3 actual entry/return; caller1/2 original static dispatch, Android NOT_RUN"
+      }
+    },
+    {
+      "fromMapId": 20,
+      "toMapId": 3,
+      "trigger": [
+        7,
+        12
+      ],
+      "spawn": [
+        7,
+        18
+      ],
+      "kind": "RETURN_TO_CALLER",
+      "source": {
+        "offset": 286696,
+        "length": 5,
+        "sha256": "a867e9cce44959b02c2b871719b9b9c5a5fd19cb55d364b559dad3e72d68a483",
+        "module": 8,
+        "cpuAddress": 57304,
+        "meaning": "Original shared FE return, actual saved caller/door determines destination"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "returnToCaller": true,
+      "runtimeEvidence": {
+        "path": "private-derived/world-village3-clinic-original/clinic-real-return-ram.bin",
+        "sha256": "139568811a622791e842ce4a23109e03a2e7d8f30404b1afcd0c8d1be69c52cf"
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.20.0",
+      "mapId": 20,
+      "cell": [
+        13,
+        4
+      ],
+      "spriteId": 157,
+      "sprite": "npc-157-clinic.png",
+      "firstDialogue": "rom.dialogue.5.0",
+      "repeatDialogue": "rom.dialogue.5.0",
+      "firstEffects": [],
+      "clinicId": "rom.clinic.3.care",
+      "interactionCell": [
+        13,
+        5
+      ],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 279384,
+          "length": 14,
+          "sha256": "6f021c93f8b40b3533a97695c77b40764d3b71148142bc37cc2e651728269487",
+          "module": 8,
+          "cpuAddress": 49992,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "limits": [
+          "Initial pose only; medical runtime separately recorded."
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.20.1",
+      "mapId": 20,
+      "cell": [
+        3,
+        6
+      ],
+      "spriteId": 156,
+      "sprite": "npc-156-clinic.png",
+      "firstDialogue": "rom.dialogue.5.9",
+      "repeatDialogue": "rom.dialogue.5.9",
+      "firstEffects": [],
+      "clinicId": "rom.clinic.3.revival",
+      "interactionCell": [
+        3,
+        7
+      ],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 279398,
+          "length": 14,
+          "sha256": "0d801c5cb65e283dda56589cc9778fadba242c7e46079919ccd1d9810eda0167",
+          "module": 8,
+          "cpuAddress": 50006,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "limits": [
+          "Initial pose only; medical runtime separately recorded."
+        ]
+      }
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.5.0",
+      "text": "我是大夫，要看什麼病呢？",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 114872,
+          "length": 15,
+          "sha256": "cc283a1dc7a5ca3019db59750a26c81ebc25de80c757fd84e20a46732188e685",
+          "module": 3,
+          "cpuAddress": 49320,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 100988,
+            "length": 2,
+            "sha256": "b711221acb9942f0d08228c956422e2648ed938ce70022562fb40f0f5f5ee651",
+            "module": 3,
+            "cpuAddress": 35436,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 102628,
+            "length": 2,
+            "sha256": "c1aa0695c8257225817a39e979217018679dd72df6109b7888e4b4e5e73f5811",
+            "module": 3,
+            "cpuAddress": 37076,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "captureSha256": "ebf1a2f4c6a90d64a5a61470fe3ff4e2015914463c61b6bb780b471521069094",
+        "originalEvidenceKind": "ACTUAL_ORIGINAL_DIALOGUE_FROM_CONTROLLED_SOURCE",
+        "textFormatting": "Mobile punctuation/line wrap, not original font equivalence"
+      }
+    },
+    {
+      "id": "rom.dialogue.5.9",
+      "text": "我是道士，你有朋友死掉嗎？",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 114972,
+          "length": 16,
+          "sha256": "3ea6d4ab8e4ef7f398e3383d763d7229b9fc241a10b058dd2de822c63279382c",
+          "module": 3,
+          "cpuAddress": 49420,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 100988,
+            "length": 2,
+            "sha256": "b711221acb9942f0d08228c956422e2648ed938ce70022562fb40f0f5f5ee651",
+            "module": 3,
+            "cpuAddress": 35436,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 102646,
+            "length": 2,
+            "sha256": "71d5b3cb62ca59fb4a891aaca68001fdea15922897c94e95a1ba09f964b728fc",
+            "module": 3,
+            "cpuAddress": 37094,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-clinic-resources.json",
+        "captureSha256": "55b2a006a7a9e5da359cd561f59daab7500128768b9682a52401820d6cce0d08",
+        "originalEvidenceKind": "ACTUAL_ORIGINAL_DIALOGUE_FROM_CONTROLLED_SOURCE",
+        "textFormatting": "Mobile punctuation/line wrap, not original font equivalence"
+      }
+    }
+  ],
+  "graphics": {
+    "npc-157-clinic.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866832,
+          "length": 16,
+          "sha256": "c26b251d3badca05ed6d05b829dc75c5793764e9501940c945c6cff18a786c82",
+          "spriteTile": 160,
+          "attribute": 3,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866848,
+          "length": 16,
+          "sha256": "37de680de31e70429d114514e6133d37c3aa6a0ba3c0a1b376a8b41d6f680533",
+          "spriteTile": 161,
+          "attribute": 3,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 867088,
+          "length": 16,
+          "sha256": "0f4c00d588a91e282b3c123aaeb6145020885f66e1150ebc07abeacbdc36fae8",
+          "spriteTile": 176,
+          "attribute": 3,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 867104,
+          "length": 16,
+          "sha256": "ec811607f51fa838eff704ea27afada50d25b07b238e37a279a8df8f2d2e79bf",
+          "spriteTile": 177,
+          "attribute": 3,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "9ec004b9fd25206313d50dd1327bc9d334ebb01ac97b0c30d46e3a1194f5c0f3",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLER_ONLY_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_NEW_GAME",
+      "normalPlayEvidence": false,
+      "captureSha256": "bdbcd89db73f2bb759b95129cf9557cdd8f6853069218b57acfb5dc6f81a52a1",
+      "ppuSha256": "28753148e01056c4c69d114788bb7dd8e50e53e0ce85e458465642aa8d9341c0",
+      "ramSha256": "f0faa77dbc9fc344963663d1983de893c2a735e1d23c83cbc969f0031cedeb26",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 196,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    },
+    "npc-156-clinic.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866320,
+          "length": 16,
+          "sha256": "127c22bae2a9bcd00ce1e8bcd7b73ff82b8cfb5baf362d79beb09f0bcbfe411c",
+          "spriteTile": 128,
+          "attribute": 0,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866336,
+          "length": 16,
+          "sha256": "f9c8b4b5568158dd26c51cea7ff0652eaa1776404b80c02e7e1b7b3d17554be4",
+          "spriteTile": 129,
+          "attribute": 0,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 866576,
+          "length": 16,
+          "sha256": "050228331085c59555565395774cc01507993b2cebbead871f5fa2509045879e",
+          "spriteTile": 144,
+          "attribute": 0,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 866592,
+          "length": 16,
+          "sha256": "ab483e0811b57460145fa921e4ab3e83a020247f5ea91facd124fee41e887469",
+          "spriteTile": 145,
+          "attribute": 0,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "bb7351b078a2be20416cb56aa838c22f57f5f9b908f297befac96d3cdfcce7d5",
+      "observedRect": [
+        48,
+        9,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLER_ONLY_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_NEW_GAME",
+      "normalPlayEvidence": false,
+      "captureSha256": "6947a89f8df7924016c682e0eb1c2370735a205279cd99603bf3ef0e13a21eaf",
+      "ppuSha256": "77dcede4cdaf4ff94ad67eb5409866b92d5492f76c17439b2dd3daf2bd58a4d0",
+      "ramSha256": "4d4193d92479c6188226b5a36b4ea23d631e74d877f2696e6bb418cb4c445ad4",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 208,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    }
+  },
+  "clinics": [
+    {
+      "id": "rom.clinic.1.revival",
+      "callerMapId": 1,
+      "mapId": 20,
+      "npcId": "rom.npc.20.1",
+      "name": "醫館 · 道士",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "REVIVAL",
+      "treatments": [],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    },
+    {
+      "id": "rom.clinic.1.care",
+      "callerMapId": 1,
+      "mapId": 20,
+      "npcId": "rom.npc.20.0",
+      "name": "醫館 · 大夫",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "TREATMENT",
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "statusMask": 2,
+          "price": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "statusMask": 4,
+          "price": 3
+        }
+      ],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    },
+    {
+      "id": "rom.clinic.2.revival",
+      "callerMapId": 2,
+      "mapId": 20,
+      "npcId": "rom.npc.20.1",
+      "name": "醫館 · 道士",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "REVIVAL",
+      "treatments": [],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    },
+    {
+      "id": "rom.clinic.2.care",
+      "callerMapId": 2,
+      "mapId": 20,
+      "npcId": "rom.npc.20.0",
+      "name": "醫館 · 大夫",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "TREATMENT",
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "statusMask": 2,
+          "price": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "statusMask": 4,
+          "price": 3
+        }
+      ],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    },
+    {
+      "id": "rom.clinic.3.revival",
+      "callerMapId": 3,
+      "mapId": 20,
+      "npcId": "rom.npc.20.1",
+      "name": "醫館 · 道士",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "REVIVAL",
+      "treatments": [],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    },
+    {
+      "id": "rom.clinic.3.care",
+      "callerMapId": 3,
+      "mapId": 20,
+      "npcId": "rom.npc.20.0",
+      "name": "醫館 · 大夫",
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "kind": "TREATMENT",
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "statusMask": 2,
+          "price": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "statusMask": 4,
+          "price": 3
+        }
+      ],
+      "confidence": "GAMEPLAY_VERIFIED",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID"
+    }
+  ],
+  "items": [],
+  "shops": [],
+  "inns": [],
+  "serviceBindings": [
+    {
+      "callerMapId": 1,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1",
+      "clinicId": "rom.clinic.1.revival"
+    },
+    {
+      "callerMapId": 1,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0",
+      "clinicId": "rom.clinic.1.care"
+    },
+    {
+      "callerMapId": 2,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1",
+      "clinicId": "rom.clinic.2.revival"
+    },
+    {
+      "callerMapId": 2,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0",
+      "clinicId": "rom.clinic.2.care"
+    },
+    {
+      "callerMapId": 3,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1",
+      "clinicId": "rom.clinic.3.revival"
+    },
+    {
+      "callerMapId": 3,
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0",
+      "clinicId": "rom.clinic.3.care"
+    }
+  ],
+  "limitations": [
+    "Medical original menu fixtures and pixel proofs do not prove normal Android play, save/upgrade or phone acceptance.",
+    "Original zero-money revival anomaly is retained and explicitly disclosed before commit, not a new reward.",
+    "Medical third option cancels; only poison and confusion treatment are restored.",
+    "Unchanged maps/media remain byte-identical; residential events/NPC movement/other village geometries stay pending."
+  ],
+  "evidence": {
+    "clinicResources": {
+      "path": "game-data/provenance/world-clinic-resources.json",
+      "sha256": "ddf91d173798d37f697a2f33abc9d7da95285b34ea328f4e4385fd183a640c1e"
+    },
+    "clinicRules": {
+      "path": "game-data/provenance/world-clinic-rules.json",
+      "sha256": "c570a5829f642fe2d4f6c2f98848101c68b2d30966c42e601890231a4fa1ef4e"
+    }
+  }
+}

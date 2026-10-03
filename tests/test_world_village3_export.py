@@ -10,7 +10,7 @@ from forensics.fengshen246 import extract_map,extract_world_service_catalog
 class Village3ExportTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pin=json.loads((ci.ROOT/'ci/content-source.json').read_text())
+        cls.pin=json.loads((ci.ROOT/'ci/golden-world-village3-content.json').read_text())
         cls.path='game-data/provenance/world-village3-content.json';cls.p=json.loads((ci.ROOT/cls.path).read_text())
         cls.parent=json.loads((ci.ROOT/cls.p['baseExport']['pinPath']).read_text())
         cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])

@@ -13,6 +13,34 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Check actual candidate geometry before a long normal east-palace recording. */
+    fun testEastPreparationAndIndependentSeaEntryHaveLegalGeometry(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(25)
+        assertEquals(MovementBlock.PHYSICAL,scene.blockType(27,14))
+        fun reachable(sx:Int,sy:Int,tx:Int,ty:Int):Boolean{
+            val start=(sy*scene.width+sx) to 0
+            val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(start)
+            val seen=mutableSetOf(start)
+            while(queue.isNotEmpty()){
+                val at=queue.removeFirst();val x=at.first%scene.width;val y=at.first/scene.width
+                if(x==tx&&y==ty)return true
+                for((key,d)in listOf(Key.UP to (0 to -1),Key.DOWN to (0 to 1),Key.LEFT to (-1 to 0),Key.RIGHT to (1 to 0))){
+                    if(scene.probeFrom(x,y,key,at.second)!=MovementBlock.NONE)continue
+                    val nx=x+d.first;val ny=y+d.second
+                    if((nx!=tx||ny!=ty)&&c.exits.any{it.fromMapId==25&&it.triggerX==nx&&it.triggerY==ny})continue
+                    val next=(ny*scene.width+nx) to scene.terrainDecision(x,y,key,at.second).nextMode
+                    if(seen.add(next))queue.add(next)
+                }
+            }
+            return false
+        }
+        assertTrue("Preparation must use connected ordinary sea",reachable(26,14,39,41))
+        val entry=c.exits.single{it.fromMapId==16&&it.triggerX==214&&it.triggerY==110}
+        assertEquals(25,entry.toMapId);assertEquals(54,entry.spawnX);assertEquals(22,entry.spawnY)
+        assertTrue("East door must reach real palace without coral bypass",reachable(entry.spawnX,entry.spawnY,49,21))
+        assertFalse("West door must not be treated as east component",reachable(26,14,49,21))
+    }
     /** Actual loader and isolated durable proposals; not a normal final Boss victory. */
     fun testControlledFinalHallAndRebirthDialogueSaveBoundaries(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -191,13 +219,46 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(10,c.battle.zones.single{it.mapId==70}.groups.size)
     }
 
+    /** Bundled room and isolated state; not normal Android medical acquisition. */
+    fun testControlledSharedMedicalRoomPolicyCallerAndSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val room=c.scenes.getValue(20)
+        assertEquals(16,room.width);assertEquals(15,room.height)
+        assertEquals(setOf(0,2,5),room.walkableClasses)
+        assertTrue(room.sourceEdges.isEmpty());assertTrue(room.targetEdges.isEmpty())
+        assertEquals(MovementBlock.NONE,room.probeFrom(12,5,Key.LEFT))
+        assertEquals(MovementBlock.NONE,room.probeFrom(11,5,Key.RIGHT))
+        assertEquals(MovementBlock.PHYSICAL,room.probeFrom(12,7,Key.UP))
+        assertEquals(MovementBlock.PHYSICAL,room.probeFrom(13,5,Key.UP))
+        assertEquals(2,c.npcs.count{it.mapId==20&&it.clinicId!=null})
+        assertEquals(6,c.clinics.size)
+        for(caller in listOf(1,2,3)){
+            val bindings=c.serviceBindings.filter{it.callerMapId==caller&&it.interiorMapId==20}
+            assertEquals(2,bindings.size);assertEquals(setOf("rom.clinic.$caller.revival","rom.clinic.$caller.care"),bindings.map{it.clinicId}.toSet())
+            assertTrue(ClinicRevival.valid(c.clinics.getValue("rom.clinic.$caller.revival")))
+            assertTrue(ClinicCare.valid(c.clinics.getValue("rom.clinic.$caller.care")))
+        }
+        val base=SaveSnapshot(c.scene.version,20,7*16+8,12*16+8,Key.DOWN,
+            listOf(c.initialPlayer.copy(hp=minOf(5,c.initialPlayer.maxHp)),c.joinCharacters.getValue("xiaolongnv").copy(hp=0,statusMask=32)),
+            mapOf(HerbUse.ID to 2),mapOf("unrelated" to true),887,
+            interiorContext=InteriorContext(3,7,18))
+        assertTrue(base.validate(c))
+        val revived=ClinicRevival.apply(base.money,base.characters,"xiaolongnv",c.clinics.getValue("rom.clinic.3.revival"))
+        assertTrue(revived.applied)
+        val saved=base.copy(money=revived.money,characters=revived.characters)
+        assertTrue(saved.validate(c));assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+        assertEquals(base.inventory,saved.inventory);assertEquals(base.flags,saved.flags)
+        assertTrue(saved.copy(contentVersion="opening-segment-001-c31",mapId=3,x=15*16+8,y=29*16+8,interiorContext=null).validate(c))
+    }
+
     /** Actual bundled definitions with isolated inventory; not a normal acquisition recording. */
     fun testControlledVillageThreeCallerStockPriceSlotReturnAndLegacySave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         assertTrue(c.scenes.containsKey(3));assertEquals(10,c.npcs.count{it.mapId==3})
         assertTrue(c.npcs.filter{it.mapId==3}.all{n->n.sprite.width==16&&n.sprite.height==16&&
             (0 until 256).any{i->android.graphics.Color.alpha(n.sprite.getPixel(i%16,i/16))>0}})
-        assertEquals(4,c.serviceBindings.count{it.callerMapId==3})
+        assertEquals(4,c.serviceBindings.count{it.callerMapId==3&&it.clinicId==null})
+        assertEquals(2,c.serviceBindings.count{it.callerMapId==3&&it.clinicId!=null})
         assertEquals(40,c.inns.getValue("rom.inn.3").price)
         assertEquals(listOf("rom.weapon.6","rom.weapon.21","rom.weapon.33"),c.shops.getValue("rom.shop.3.17").items)
         assertFalse(c.shops.getValue("rom.shop.3.19").items.contains(HerbUse.ID))

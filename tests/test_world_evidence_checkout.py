@@ -15,11 +15,16 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        p=json.loads((ROOT/'game-data/provenance/world-village3-content.json').read_text(encoding='utf-8'))
-        pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
-        self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
-        pin=json.loads(raw);proof_path=pin['iteration']['provenance'];raw=(ROOT/proof_path).read_bytes()
-        self.assertEqual(p['baseExport']['provenanceSha256'],hashlib.sha256(raw).hexdigest());tables[proof_path]=raw
+        for proof_name in ('world-village3-content.json','world-clinic-content.json'):
+            p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
+            pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
+            self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
+            pin=json.loads(raw);proof_path=pin['iteration']['provenance'];raw=(ROOT/proof_path).read_bytes()
+            self.assertEqual(p['baseExport']['provenanceSha256'],hashlib.sha256(raw).hexdigest());tables[proof_path]=raw
+        medical=json.loads((ROOT/'game-data/provenance/world-clinic-rules.json').read_text(encoding='utf-8'))
+        for prefix in ('revival','care'):
+            table_path=medical[prefix+'ExpectedPath'];raw=(ROOT/table_path).read_bytes()
+            self.assertEqual(medical[prefix+'ExpectedSha256'],hashlib.sha256(raw).hexdigest());tables[table_path]=raw
         with tempfile.TemporaryDirectory(prefix='fengshen-evidence-checkout-')as td:
             target=Path(td)
             def git(*args):

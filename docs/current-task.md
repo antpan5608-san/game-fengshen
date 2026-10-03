@@ -17,7 +17,18 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T12:25:48Z）
+## 当前有效状态（2026-10-03T13:49:42Z）
+
+- WORLD-FULL-01持续F3/F4，生产仍v27/c14，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。冻结v51/c30/run37120741716已结束：build SUCCESS，Content 24/24、南海/海底北区/西海/村1/北海/洞85正常流程及相应冷启PASS；东海驱动到原珊瑚墙25(27,14)时失败，后续殿堂/转世未执行，不发布。
+- 实际失败原片索引表明正常购买魚骨劍/魚皮衣并付8两住宿后进入练级准备；未改等级/HP/金钱。只修驱动：练级改走已支持25(39,41)区域；东海独立组件经原大陆214,110→25(54,22)→95。新增实际Content几何断言和instrument编译通过；修后App复跑待候选，旧局部PASS不替代新产物门禁。
+- 本地work/world-village3-clinic基于已保存b1ef6aa，已实现map20真实医馆、村1/2/3六个caller服务绑定。医馆tileset2、普通类别0/2/5，保留类别1墙与NPC；原14步无RAM写入复核显示不能套村庄方向规则。实际医馆palette等于原默认32色，两NPC156/157图形均非空；未迁整个历史目录。
+- 复活按原death位32、HP1/status1/MP不变，功德费先限钱包999999再除100最低1；零银两原下溢结果999999已两种受控菜单入口核对，UI明确说明。大夫仅中毒2两/錯亂3两，第三项退出；清对应位、HP/MP不变、不足银两或取消不扣款。15复活+27治疗原独立菜单向量和7段实际映射CPU来源固定；受控原版证据不称正常死亡/复活流程。
+- c32/192文件/33地图，manifest ef972b2c3dff3bb8367714e836a00f58c133760f7869ecc1cf912b66e3cfcc5d。旧c31固定为父配方，仍从审核v27 APK递归生成；一次全新空目录严格restore与本地192文件逐字节一致。全世界136独立Python方法PASS（229.666秒）、16ci_apk、255 JVM（0失败/错误/跳过）、真实autocrlf checkout及instrument编译PASS；自动审批22隔离案例/原录屏边界4项PASS。
+- 医馆使用原INN层/TouchUi、稳定队员/服务/治疗ID与revision、抬起提交、统一业务与原子保存；未增第二背包/引擎。正常续跑只治疗源存档已有合法患者，无病/冷启只取消；无自然死亡或病症时明确NOT_RUN，不制造病症冒充正常验收。受控医馆UI、正常入室/离店/保存冷启均已接原runtime但App尚NOT_RUN。
+- inspect37127332239实际2026-10-03T13:47:08.987UTC查27/26=1333/2289事件、普通真机5会话/模拟器0/测试0、清理0；仍一条旧v26下载ProtocolException，根因UNCONFIRMED、上传保护不绕过。声音/一加13T NOT_RUN。
+- 下一动作：保存本地完整检查点并沿原main/同源同产物工作流生成最完整候选，验证修正后的东海及后续殿堂/转世/村3/医馆；冻结候选时在隔离树继续真正后续节点/剩余服务。不以33张地图或候选结案。
+
+## 历史有效状态（2026-10-03T12:25:48Z）
 
 - WORLD-FULL-01持续F3/F4，正式v27/c14不变。有效分母UNKNOWN、ALL_MAPS_USABLE=NO；不把32张打包地图或局部候选当总任务完成。原工作流v51/run37120741716来源8aa3b6b9/c30签名构建成功、runtime仍执行；候选来源冻结，不推main影响同产物审核。
 - 隔离work/world-post-rebirth已实现平安村map3、两条原大陆入口、独立南向返回16(239,160)、三店caller3真实库存、40两客栈、十NPC初始姿态及八段原对白。原版控制按键从受控胜后源续跑；不冒称正常新游戏或Android验收。NPC运动、医馆、住宅事件及跨手装备继续欠账。

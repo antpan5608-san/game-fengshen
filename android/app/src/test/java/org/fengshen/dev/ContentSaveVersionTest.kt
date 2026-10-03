@@ -4,10 +4,10 @@ import org.junit.Test
 
 class ContentSaveVersionTest {
     @Test fun alreadyReviewedIterationsAreCompatibleWithoutAdmittingUnknownVersions(){
-        for(i in 1..30)assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c$i","opening-segment-001-c31"))
-        assertTrue(SaveSnapshot.compatibleContentVersion("opening-to-world-b1","opening-segment-001-c31"))
-        assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c31","opening-segment-001-c31"))
+        for(i in 1..31)assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c$i","opening-segment-001-c32"))
+        assertTrue(SaveSnapshot.compatibleContentVersion("opening-to-world-b1","opening-segment-001-c32"))
+        assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c32","opening-segment-001-c32"))
         for(id in listOf("opening-segment-001-c0","opening-segment-001-c99","opening-segment-001-c025","unknown"))
-            assertFalse(SaveSnapshot.compatibleContentVersion(id,"opening-segment-001-c31"))
+            assertFalse(SaveSnapshot.compatibleContentVersion(id,"opening-segment-001-c32"))
     }
 }

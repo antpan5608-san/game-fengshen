@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "REAL_KEYS_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_ANDROID",
+  "actualEntry": {
+    "path": "private-derived/world-village3-clinic-original/normal-room-entry-ram.bin",
+    "sha256": "4d4193d92479c6188226b5a36b4ea23d631e74d877f2696e6bb418cb4c445ad4",
+    "callerMapId": 3,
+    "mapId": 20,
+    "cell": [
+      7,
+      12
+    ]
+  },
+  "actualReturn": {
+    "path": "private-derived/world-village3-clinic-original/clinic-real-return-ram.bin",
+    "sha256": "139568811a622791e842ce4a23109e03a2e7d8f30404b1afcd0c8d1be69c52cf",
+    "mapId": 3,
+    "cell": [
+      7,
+      18
+    ]
+  },
+  "observedPalette": [
+    14,
+    7,
+    23,
+    55,
+    25,
+    7,
+    38,
+    22,
+    25,
+    33,
+    23,
+    22,
+    25,
+    0,
+    16,
+    48,
+    14,
+    14,
+    54,
+    22,
+    25,
+    14,
+    54,
+    43,
+    25,
+    14,
+    38,
+    34,
+    25,
+    14,
+    38,
+    32
+  ],
+  "paletteSource": {
+    "path": "private-derived/world-village3-clinic-original/normal-room-entry-ppu.bin",
+    "sha256": "77dcede4cdaf4ff94ad67eb5409866b92d5492f76c17439b2dd3daf2bd58a4d0"
+  },
+  "defaultPalette": {
+    "mapId": 20,
+    "palette": [
+      14,
+      7,
+      23,
+      55,
+      25,
+      7,
+      38,
+      22,
+      25,
+      33,
+      23,
+      22,
+      25,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      25,
+      14,
+      54,
+      43,
+      25,
+      14,
+      38,
+      34,
+      25,
+      14,
+      38,
+      32
+    ],
+    "backgroundSelector": 28,
+    "spriteSelector": 0,
+    "confidence": "STATIC_ROM_DEFAULT_ONLY",
+    "remainingUnknown": [
+      "Scripted palette/lighting transitions and non-default event states"
+    ],
+    "source": [
+      {
+        "offset": 24827,
+        "length": 2,
+        "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04",
+        "module": 0,
+        "cpuAddress": 57579,
+        "meaning": "Map background/sprite palette selector pair"
+      },
+      {
+        "offset": 25582,
+        "length": 2,
+        "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567",
+        "module": 0,
+        "cpuAddress": 58334,
+        "meaning": "Background palette pointer"
+      },
+      {
+        "offset": 25672,
+        "length": 2,
+        "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+        "module": 0,
+        "cpuAddress": 58424,
+        "meaning": "Sprite palette pointer"
+      },
+      {
+        "offset": 26074,
+        "length": 16,
+        "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9",
+        "module": 0,
+        "cpuAddress": 58826,
+        "meaning": "Original default background colors"
+      },
+      {
+        "offset": 25882,
+        "length": 16,
+        "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+        "module": 0,
+        "cpuAddress": 58634,
+        "meaning": "Original sprite colors"
+      }
+    ],
+    "routineEvidence": [
+      {
+        "offset": 10249,
+        "length": 44,
+        "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+        "module": 0,
+        "cpuAddress": 43001,
+        "meaning": "Signed map ID selector dispatch"
+      },
+      {
+        "offset": 9120,
+        "length": 110,
+        "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+        "module": 0,
+        "cpuAddress": 41872,
+        "meaning": "Original queued background then sprite palette writes"
+      }
+    ]
+  },
+  "collisionScope": {
+    "kind": "ORIGINAL_CONTROLLER_REAL_ROOM_EDGES_NOT_TOWN_DIRECTIONAL_PROFILE",
+    "actualMoves": "private-derived/world-village3-clinic-original/medical-edge-controller.tsv",
+    "actualMovesSha256": "2a7fa300c9a978aeb1bdea1fc4c2077b387cde1fea811af088d2c8e4d7cecadb",
+    "townProfilePrediction": "REJECTED_ACTUAL_CLASS5_LEFT_AND_RIGHT_ARE_PASSABLE",
+    "samples": [
+      {
+        "index": 1,
+        "key": "LEFT",
+        "before": [
+          13,
+          5
+        ],
+        "after": [
+          12,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-1-ram.bin",
+          "sha256": "250c36f842953a4db93d52ea805968eb564c14a570c0d6d440a2db8d8863b1af"
+        }
+      },
+      {
+        "index": 2,
+        "key": "LEFT",
+        "before": [
+          12,
+          5
+        ],
+        "after": [
+          11,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-2-ram.bin",
+          "sha256": "04cadc87011acb124c8dddb430c67edd3db4a16f0aa2250c33536721da7da2c4"
+        }
+      },
+      {
+        "index": 3,
+        "key": "UP",
+        "before": [
+          11,
+          5
+        ],
+        "after": [
+          11,
+          4
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-3-ram.bin",
+          "sha256": "dd0f9717a72ba874e74d7c10a210a17fca8d56530d3e245478820b31b6f0a16c"
+        }
+      },
+      {
+        "index": 4,
+        "key": "LEFT",
+        "before": [
+          11,
+          4
+        ],
+        "after": [
+          11,
+          4
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-4-ram.bin",
+          "sha256": "89f3d27562c4ac03c81a17a54d9556f542bcde85992ff94c07e6efb28d1dca3f"
+        }
+      },
+      {
+        "index": 5,
+        "key": "DOWN",
+        "before": [
+          11,
+          4
+        ],
+        "after": [
+          11,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-5-ram.bin",
+          "sha256": "a8cd888d81a5c95d47f6eee0b4205b8e39ba5a6a1e8105dc84136bf9e4e2fbbd"
+        }
+      },
+      {
+        "index": 6,
+        "key": "RIGHT",
+        "before": [
+          11,
+          5
+        ],
+        "after": [
+          12,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-6-ram.bin",
+          "sha256": "2db0ecd57629b871b1f7633fc27d5f8c881e6d3912f5a6932ca42e4cb92c72dc"
+        }
+      },
+      {
+        "index": 7,
+        "key": "UP",
+        "before": [
+          12,
+          5
+        ],
+        "after": [
+          12,
+          4
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-7-ram.bin",
+          "sha256": "5d172bc913ef772d4b6ae670bcbaae57d3ed8c21cfa41fc2909f75ea5228da43"
+        }
+      },
+      {
+        "index": 8,
+        "key": "RIGHT",
+        "before": [
+          12,
+          4
+        ],
+        "after": [
+          12,
+          4
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-8-ram.bin",
+          "sha256": "6df0b6994f4ecd9dd28612c830b50994016a01574d959b7f7fa0c6d5b2694784"
+        }
+      },
+      {
+        "index": 9,
+        "key": "DOWN",
+        "before": [
+          12,
+          4
+        ],
+        "after": [
+          12,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-9-ram.bin",
+          "sha256": "52e7e36213edb3f3f82e9fe9422dcf06204e3d610bdf756617f71dd8f4dc4c5f"
+        }
+      },
+      {
+        "index": 10,
+        "key": "RIGHT",
+        "before": [
+          12,
+          5
+        ],
+        "after": [
+          13,
+          5
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-10-ram.bin",
+          "sha256": "90b8be89d08521966cc824a2f1a96774ffba50e07594b830dfbe62547cffe4b2"
+        }
+      },
+      {
+        "index": 11,
+        "key": "DOWN",
+        "before": [
+          13,
+          5
+        ],
+        "after": [
+          13,
+          6
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-11-ram.bin",
+          "sha256": "5a75d636b7b79233621a5e703fa91913b5e228c3255c6a4ce5e5a9837a3b8447"
+        }
+      },
+      {
+        "index": 12,
+        "key": "DOWN",
+        "before": [
+          13,
+          6
+        ],
+        "after": [
+          13,
+          7
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-12-ram.bin",
+          "sha256": "11fdc8b662592793f3e25e41c59729f051748d1ae4a952d270bada6960424954"
+        }
+      },
+      {
+        "index": 13,
+        "key": "LEFT",
+        "before": [
+          13,
+          7
+        ],
+        "after": [
+          12,
+          7
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-13-ram.bin",
+          "sha256": "3445a8e8ead585cf008eac270476bad56adb60eb1ee85e9bf21b87fa78621931"
+        }
+      },
+      {
+        "index": 14,
+        "key": "UP",
+        "before": [
+          12,
+          7
+        ],
+        "after": [
+          12,
+          7
+        ],
+        "mapId": 20,
+        "sample": {
+          "path": "private-derived/world-village3-clinic-original/medical-edges-14-ram.bin",
+          "sha256": "284acf9296bf7047864a093acd63b7e25187e8149e0032f649db34e02648173d"
+        }
+      }
+    ],
+    "sampleCount": 14,
+    "wallClass": 1,
+    "walkableClasses": [
+      0,
+      2,
+      5
+    ],
+    "npcCells": [
+      [
+        13,
+        4
+      ],
+      [
+        3,
+        6
+      ]
+    ],
+    "scope": "Fourteen real controller moves plus actual entry corridors; not all tileset2 maps."
+  },
+  "graphics": {
+    "npc-157-clinic.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866832,
+          "length": 16,
+          "sha256": "c26b251d3badca05ed6d05b829dc75c5793764e9501940c945c6cff18a786c82",
+          "spriteTile": 160,
+          "attribute": 3,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866848,
+          "length": 16,
+          "sha256": "37de680de31e70429d114514e6133d37c3aa6a0ba3c0a1b376a8b41d6f680533",
+          "spriteTile": 161,
+          "attribute": 3,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 867088,
+          "length": 16,
+          "sha256": "0f4c00d588a91e282b3c123aaeb6145020885f66e1150ebc07abeacbdc36fae8",
+          "spriteTile": 176,
+          "attribute": 3,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 867104,
+          "length": 16,
+          "sha256": "ec811607f51fa838eff704ea27afada50d25b07b238e37a279a8df8f2d2e79bf",
+          "spriteTile": 177,
+          "attribute": 3,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "9ec004b9fd25206313d50dd1327bc9d334ebb01ac97b0c30d46e3a1194f5c0f3",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLER_ONLY_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_NEW_GAME",
+      "normalPlayEvidence": false,
+      "captureSha256": "bdbcd89db73f2bb759b95129cf9557cdd8f6853069218b57acfb5dc6f81a52a1",
+      "ppuSha256": "28753148e01056c4c69d114788bb7dd8e50e53e0ce85e458465642aa8d9341c0",
+      "ramSha256": "f0faa77dbc9fc344963663d1983de893c2a735e1d23c83cbc969f0031cedeb26",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 196,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    },
+    "npc-156-clinic.png": {
+      "unusedPaletteIndices": [],
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866320,
+          "length": 16,
+          "sha256": "127c22bae2a9bcd00ce1e8bcd7b73ff82b8cfb5baf362d79beb09f0bcbfe411c",
+          "spriteTile": 128,
+          "attribute": 0,
+          "oamRamAddress": 532
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866336,
+          "length": 16,
+          "sha256": "f9c8b4b5568158dd26c51cea7ff0652eaa1776404b80c02e7e1b7b3d17554be4",
+          "spriteTile": 129,
+          "attribute": 0,
+          "oamRamAddress": 536
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 866576,
+          "length": 16,
+          "sha256": "050228331085c59555565395774cc01507993b2cebbead871f5fa2509045879e",
+          "spriteTile": 144,
+          "attribute": 0,
+          "oamRamAddress": 540
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 866592,
+          "length": 16,
+          "sha256": "ab483e0811b57460145fa921e4ab3e83a020247f5ea91facd124fee41e887469",
+          "spriteTile": 145,
+          "attribute": 0,
+          "oamRamAddress": 544
+        }
+      ],
+      "rgbaSha256": "bb7351b078a2be20416cb56aa838c22f57f5f9b908f297befac96d3cdfcce7d5",
+      "observedRect": [
+        48,
+        9,
+        16,
+        16
+      ],
+      "captureKind": "CONTROLLER_ONLY_FROM_CONTROLLED_POST_WIN_SOURCE_NOT_NORMAL_NEW_GAME",
+      "normalPlayEvidence": false,
+      "captureSha256": "6947a89f8df7924016c682e0eb1c2370735a205279cd99603bf3ef0e13a21eaf",
+      "ppuSha256": "77dcede4cdaf4ff94ad67eb5409866b92d5492f76c17439b2dd3daf2bd58a4d0",
+      "ramSha256": "4d4193d92479c6188226b5a36b4ea23d631e74d877f2696e6bb418cb4c445ad4",
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 208,
+      "scope": "One original animation pose and corresponding 14-byte sprite identity; raw NPC companion is independent, no new movement/event inferred"
+    }
+  },
+  "limits": [
+    "Caller1/2 static doors checked from original grids/dispatch, not physically rerun in original or Android.",
+    "No medical debug source is treated as normal Android play."
+  ]
+}

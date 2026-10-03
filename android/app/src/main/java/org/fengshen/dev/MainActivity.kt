@@ -162,6 +162,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var equipmentSlot="rightHand"
     private var shop:ShopDefinition?=null
     private var inn:InnDefinition?=null
+    private var clinic:ClinicDefinition?=null
+    private var clinicTargetId:String?=null
+    private var clinicTreatmentId:String?=null
+    val activeClinicId get()=clinic?.id
     val activeInnId get()=inn?.id
     private var shopMode="ROOT"
     private var selectedShopItemId:String?=null
@@ -487,7 +491,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun menuCloseBox():Box {val b=menuBox();val d=min(42*resources.displayMetrics.density,b.h*.19f);return Box(b.x+b.w-d-8*resources.displayMetrics.density,b.y+6*resources.displayMetrics.density,d,d)}
     private fun battleInfoLayout():TouchModalLayout {
         val dp=resources.displayMetrics.density
-        val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,0,0,false)
+        val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,clinic?.treatments?.size?:0,0,false)
+            if(clinic!=null)return l
         val row=max(56f,20*resources.configuration.fontScale+16)*dp
         // Landscape uses the existing two-column geometry, including short safe windows.
         val listW=(l.frame.w-24*dp)*.38f
@@ -607,7 +612,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
-        val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null}
+        val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null||it.clinicId!=null}
         if(merchant!=null)return merchant
         val (x,y)=world.destinationCell()
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
@@ -637,6 +642,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val definition=id?.let{content.shops[it]}
             if(definition==null){showNotice("当前村庄的商店数据未接入");return}
             world.face(Key.UP);openShop(definition);return
+        }
+        if(npc.clinicId!=null){
+            if(npc !in nearbyNpcs())return
+            val bindings=content.serviceBindings.filter{it.npcId==npc.id&&it.interiorMapId==world.mapId}
+            val id=if(bindings.isEmpty())npc.clinicId else bindings.firstOrNull{it.callerMapId==world.interiorContext?.callerMapId}?.clinicId
+            val definition=id?.let{content.clinics[it]}
+            if(definition==null){showNotice("当前村庄的医疗数据未接入");return}
+            world.face(Key.UP);openClinic(definition);return
         }
         if(npc.innId!=null){
             if(npc !in nearbyNpcs())return
@@ -879,7 +892,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun modalLayout():TouchModalLayout {
         if(layer==Layer.INN){
             val dp=resources.displayMetrics.density
-            val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,0,0,false)
+            val l=touchModalLayout(ui.safe,dp,resources.configuration.fontScale,clinic?.treatments?.size?:0,0,false)
+            if(clinic!=null)return l
             val gap=max(48f,22*resources.configuration.fontScale+16)*dp
             return l.copy(list=Box(l.list.x,l.list.y-gap,l.list.w,l.list.h+gap),
                 detail=Box(l.detail.x,l.detail.y-gap,l.detail.w,l.detail.h+gap))
@@ -1037,19 +1051,21 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun openInn(definition:InnDefinition){
         if(layer!=Layer.MAP||finishPendingStep())return
-        inn=definition;resetModalSelection();uxFeedback="";input.clear();npcTouch.clear();clock.reset();layer=Layer.INN
+        clinic=null;clinicTargetId=null;clinicTreatmentId=null;inn=definition;resetModalSelection();uxFeedback="";input.clear();npcTouch.clear();clock.reset();layer=Layer.INN
     }
     private fun closeInn(){
-        inn=null;layer=Layer.MAP;input.clear();resetModalSelection();clock.reset()
+        inn=null;clinic=null;clinicTargetId=null;clinicTreatmentId=null;layer=Layer.MAP;input.clear();resetModalSelection();clock.reset()
     }
     fun innStayBounds()=modalLayout().primary
     private fun innHit(x:Float,y:Float):ModalCommand? {
+        if(clinic!=null)return clinicHit(x,y)
         val s=inn?:return null;val l=modalLayout()
         if(l.close.contains(x,y))return ModalCommand("inn-close",shopId=s.id)
         if(l.primary.contains(x,y))return ModalCommand("inn-stay",shopId=s.id)
         return null
     }
     private fun runInnCommand(cmd:ModalCommand){
+        if(clinic!=null){runClinicCommand(cmd);return}
         val s=inn?:return;if(layer!=Layer.INN||cmd.shopId!=s.id)return
         uxRevision++;clearUxGesture();input.clear()
         if(cmd.kind=="inn-close"){closeInn();return}
@@ -1065,6 +1081,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     private fun drawInn(c:Canvas){
+        if(clinic!=null){drawClinic(c);return}
         val s=inn?:return;val l=modalLayout();val dp=resources.displayMetrics.density
         touchFrame(c,s.name,"银两 $money",emptyList(),0)
         val rowText=characters.map{h->"${heroName(h.id)} HP ${h.hp}/${h.maxHp} MP ${h.mp}/${h.maxMp?:h.mp}\n"+
@@ -1078,6 +1095,91 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 Box(l.detail.x+8*dp,l.detail.y+8*dp-modalDetailScroll,l.detail.w-16*dp,l.detail.h),14f);c.restore()}
         touchButton(c,l.primary,"住宿 · ${s.price}两",money>=s.price)
         if(uxFeedback.isNotEmpty()&&!l.wide)touchText(c,uxFeedback,Box(l.frame.x+8*dp,l.frame.y+48*dp,l.close.x-l.frame.x-16*dp,1f),12f)
+    }
+    private fun openClinic(definition:ClinicDefinition){
+        if(layer!=Layer.MAP||finishPendingStep())return
+        inn=null;clinic=definition;clinicTargetId=null;clinicTreatmentId=definition.treatments.firstOrNull()?.id;resetModalSelection();uxFeedback=""
+        input.clear();npcTouch.clear();clock.reset();layer=Layer.INN
+    }
+    fun clinicTargetBounds(id:String)=modalLayout().visibleRow(characters.indexOfFirst{it.id==id},modalListScroll)
+    fun clinicReviveBounds()=modalLayout().primary
+    fun clinicTreatmentBounds(id:String)=modalLayout().tabs.getOrElse(clinic?.treatments?.indexOfFirst{it.id==id}?:-1){Box(0f,0f,0f,0f)}
+    private fun selectedClinicTreatment()=clinic?.treatments?.firstOrNull{it.id==clinicTreatmentId}
+    private fun clinicEligible(hero:CharacterState):Boolean {
+        val s=clinic?:return false
+        return if(s.kind=="REVIVAL")ClinicRevival.eligible(hero,s)else selectedClinicTreatment()?.let{ClinicCare.eligible(hero,it)}?:false
+    }
+    private fun clinicCost()=clinic?.let{if(it.kind=="REVIVAL")ClinicRevival.fee(money,it)else selectedClinicTreatment()?.price?:0}?:0
+
+    private fun clinicHit(x:Float,y:Float):ModalCommand? {
+        val s=clinic?:return null;val l=modalLayout()
+        if(l.close.contains(x,y))return ModalCommand("clinic-close",shopId=s.id)
+        for(t in s.treatments)if(clinicTreatmentBounds(t.id).contains(x,y))return ModalCommand("clinic-treatment",itemId=t.id,shopId=s.id)
+        if(!l.wide&&modalDetailsOpen&&l.back.contains(x,y))return ModalCommand("clinic-list",shopId=s.id)
+        if(l.wide||!modalDetailsOpen)for(h in characters){
+            if(clinicTargetBounds(h.id).contains(x,y))return ModalCommand("clinic-target",targetId=h.id,shopId=s.id)
+        }
+        if(l.primary.contains(x,y)&&(l.wide||modalDetailsOpen)){
+            val h=characters.firstOrNull{it.id==clinicTargetId}?:return null
+            if(clinicEligible(h)&&(s.kind=="REVIVAL"||money>=clinicCost()))return ModalCommand(if(s.kind=="REVIVAL")"clinic-revive"else"clinic-treat",targetId=h.id,itemId=clinicTreatmentId,shopId=s.id)
+        }
+        return null
+    }
+    private fun runClinicCommand(cmd:ModalCommand){
+        val s=clinic?:return;if(layer!=Layer.INN||cmd.shopId!=s.id)return
+        uxRevision++;clearUxGesture();input.clear()
+        when(cmd.kind){
+            "clinic-close"->closeInn()
+            "clinic-list"->{modalDetailsOpen=false;modalDetailScroll=0f}
+            "clinic-treatment"->{
+                if(s.treatments.none{it.id==cmd.itemId})return
+                clinicTreatmentId=cmd.itemId;modalDetailScroll=0f;uxFeedback=""
+            }
+            "clinic-target"->{
+                if(characters.none{it.id==cmd.targetId})return
+                clinicTargetId=cmd.targetId;modalDetailsOpen=true;modalDetailScroll=0f;uxFeedback=""
+            }
+            "clinic-revive","clinic-treat"->{
+                val target=cmd.targetId?:return;if(target!=clinicTargetId)return
+                val before=currentSnapshot()
+                if((cmd.kind=="clinic-revive")!=(s.kind=="REVIVAL"))return
+                if(s.kind=="TREATMENT"&&cmd.itemId!=clinicTreatmentId)return
+                val result=if(s.kind=="REVIVAL")ClinicRevival.apply(money,characters,target,s)
+                    else ClinicCare.apply(money,characters,target,s,cmd.itemId?:return)
+                if(!result.applied){feedback(result.error?:"当前不可复活");return}
+                money=result.money;characters=result.characters
+                if(persistStateResult()){
+                    closeInn();mapNotice=if(s.kind=="REVIVAL")"${heroName(target)}已复活 · HP 1"else"${heroName(target)}治疗完成 · ${result.fee}两";noticeUntil=SystemClock.uptimeMillis()+3000
+                    Diagnostics.record(if(s.kind=="REVIVAL")"clinic_revival"else"clinic_treatment",details=JSONObject().put("serviceID",s.id).put("targetID",target).put("fee",result.fee).put("success",true))
+                }else{money=before.money;characters=before.characters;feedback("保存失败，医疗未完成")}
+            }
+        }
+    }
+    private fun drawClinic(c:Canvas){
+        val s=clinic?:return;val l=modalLayout();val t=selectedClinicTreatment();val revive=s.kind=="REVIVAL"
+        touchFrame(c,s.name,"银两 $money",s.treatments.map{it.name},s.treatments.indexOfFirst{it.id==clinicTreatmentId})
+        val rows=characters.map{h->Triple(h.id,"${heroName(h.id)} · HP ${h.hp}/${h.maxHp}\n"+
+            if(clinicEligible(h)){if(revive)"可复活"else"可治${t?.name}"}else{if(revive)"还活着，无需复活"else"没有${t?.name}状态"},content.characterDefinitions[h.id]?.portrait)}
+        if(l.wide||!modalDetailsOpen)touchRows(c,rows,clinicTargetId)
+        val h=characters.firstOrNull{it.id==clinicTargetId};val cost=clinicCost()
+        if(l.wide||modalDetailsOpen){
+            val lines=mutableListOf(if(revive)"道士复活"else"大夫治疗${t?.name}","${h?.let{heroName(it.id)}?:"请选择队员"}")
+            if(revive){
+                lines+="复活后 HP 1；MP不变";lines+="功德费 ${cost}两（现有银两1%，最低1两）"
+                if(h!=null&&!clinicEligible(h))lines+="这位队员还活着，无需复活"
+                if(money==0)lines+="原版零银两特殊结果：复活后银两999999"
+                if(money>s.moneyLimit)lines+="原版先将银两限制到999999，再计算功德费"
+            }else{
+                lines+="只清除${t?.name}；HP、MP和其它状态不变";lines+="医疗费 ${cost}两"
+                if(h!=null&&!clinicEligible(h))lines+="这位队员没有${t?.name}状态"
+                if(money<cost)lines+="银两不足"
+                if(money>s.moneyLimit)lines+="原版治疗后银两上限999999"
+            }
+            if(uxFeedback.isNotEmpty())lines+=uxFeedback
+            touchDetail(c,lines,null)
+            val action=if(revive)"复活"else"治${t?.name}于"
+            touchButton(c,l.primary,if(h==null)"请选择队员"else"${action}${heroName(h.id)} · ${cost}两",h!=null&&clinicEligible(h)&&(revive||money>=cost))
+        }
     }
     private fun shopEntries():List<String> {
         val s=shop?:return emptyList()
@@ -1140,14 +1242,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val l=modalLayout();fun hit(x:Float,y:Float)=when(layer){Layer.SHOP->shopHit(x,y);Layer.INN->innHit(x,y);else->panelHit(x,y)}
         when(e.actionMasked){
             MotionEvent.ACTION_DOWN->{clearUxGesture();val x=e.x;val y=e.y
-                val area=when{layer==Layer.INN&&(l.list.contains(x,y)||l.detail.contains(x,y))->2;(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;(l.wide||modalDetailsOpen)&&l.detail.contains(x,y)->2;else->0}
+                val area=when{clinic!=null&&(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;layer==Layer.INN&&(l.list.contains(x,y)||l.detail.contains(x,y))->2;(l.wide||!modalDetailsOpen)&&l.list.contains(x,y)->1;(l.wide||modalDetailsOpen)&&l.detail.contains(x,y)->2;else->0}
                 uxGesture=ModalGesture(e.getPointerId(0),x,y,y,hit(x,y),uxRevision,modalState(),area)}
             MotionEvent.ACTION_POINTER_DOWN->{clearUxGesture();uxBlocked=true}
             MotionEvent.ACTION_MOVE->{val g=uxGesture
                 if(!uxBlocked&&g!=null){val i=e.findPointerIndex(g.pointer);if(i>=0){val x=e.getX(i);val y=e.getY(i)
                     if(hypot(x-g.x,y-g.y)>ViewConfiguration.get(context).scaledTouchSlop){g.dragged=true;g.command=null}
                     if(g.dragged){val delta=g.lastY-y
-                        if(g.scrollArea==1){val count=if(layer==Layer.SHOP)shopEntries().size else if(panelTab==CharacterTab.ITEMS)panelItems().size else 4
+                        if(g.scrollArea==1){val count=if(clinic!=null)characters.size else if(layer==Layer.SHOP)shopEntries().size else if(panelTab==CharacterTab.ITEMS)panelItems().size else 4
                             modalListScroll=(modalListScroll+delta).coerceIn(0f,l.maxScroll(count))}
                         if(g.scrollArea==2)modalDetailScroll=max(0f,modalDetailScroll+delta)
                     };g.lastY=y}}
@@ -1262,7 +1364,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     private fun activate(key:Key){
-        if(layer==Layer.INN){when(key){Key.A->inn?.let{runInnCommand(ModalCommand("inn-stay",shopId=it.id))};Key.B,Key.MENU->closeInn();else->Unit};return}
+        if(layer==Layer.INN){when(key){Key.A->if(clinic!=null)clinic?.let{runClinicCommand(ModalCommand(if(it.kind=="REVIVAL")"clinic-revive"else"clinic-treat",targetId=clinicTargetId,itemId=clinicTreatmentId,shopId=it.id))}else inn?.let{runInnCommand(ModalCommand("inn-stay",shopId=it.id))};Key.B,Key.MENU->closeInn();else->Unit};return}
         if(layer==Layer.SHOP){when(key){Key.A->runShopAction(4)
             Key.B,Key.MENU->shopBack();Key.UP->runShopAction(7);Key.DOWN->runShopAction(8);else->Unit};return}
         when(key){

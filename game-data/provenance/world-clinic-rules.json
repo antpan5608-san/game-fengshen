@@ -1,0 +1,324 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "activePrgBanks": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "activeCpuSha256": "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24",
+  "doctorActiveCpuSha256s": [
+    "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24",
+    "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24"
+  ],
+  "rules": {
+    "revival": {
+      "deadMask": 32,
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "feeDenominator": 100,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "mp": "UNCHANGED",
+      "moneyOrder": "CAP_THEN_FLOOR_PERCENT_MINIMUM_THEN_SUBTRACT_THEN_CAP_24BIT_UNDERFLOW",
+      "zeroMoney": "999999_AFTER_REAL_BEFORE_DIALOGUE_DEAD_SECOND_ACTOR_CASE"
+    },
+    "treatment": {
+      "options": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "statusMask": 2,
+          "price": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "statusMask": 4,
+          "price": 3
+        }
+      ],
+      "thirdMenuOption": "CANCEL_NOT_ANOTHER_CONDITION",
+      "hpMp": "UNCHANGED",
+      "clear": "ONLY_REQUESTED_BIT",
+      "insufficientMoney": "NO_CHARGE_NO_CURE",
+      "moneyOrder": "SUBTRACT_FIXED_PRICE_THEN_CAP_999999"
+    }
+  },
+  "revivalExpectedPath": "android/app/src/test/resources/clinic-revival-original-menu.tsv",
+  "revivalCaseCount": 15,
+  "careExpectedPath": "android/app/src/test/resources/clinic-care-original-menu.tsv",
+  "careCaseCount": 27,
+  "sources": [
+    {
+      "offset": 84095,
+      "length": 153,
+      "sha256": "02a467d8341d69816d9e46fb847e56ab45e0da8121e802d8329687608a1061e4",
+      "module": 2,
+      "cpuAddress": 51311,
+      "meaning": "Original selected death-bit and HP1/status1 plus percentage donation stages"
+    },
+    {
+      "offset": 67293,
+      "length": 41,
+      "sha256": "5d0d4804daf52767fda88570a3fdf0c9edd2b34b8e2e8a61c006bca5a656cddb",
+      "module": 2,
+      "cpuAddress": 34509,
+      "meaning": "Original unsigned money cap999999"
+    },
+    {
+      "offset": 83296,
+      "length": 32,
+      "sha256": "9a70c927d4fdda6e0bcc0ac270e005eb567309d3527027ec08f8d8aabea5b1eb",
+      "module": 2,
+      "cpuAddress": 50512,
+      "meaning": "Original 24-bit subtraction and following cap"
+    },
+    {
+      "offset": 84683,
+      "length": 230,
+      "sha256": "339735f3a50ae8b865c04d5a7bb6bfd809ff97d3925dbf08fa5ee0fbaa337c02",
+      "module": 2,
+      "cpuAddress": 51899,
+      "meaning": "Original target condition, poison2/confusion3 prices, funds test and single-bit cure"
+    },
+    {
+      "offset": 84593,
+      "length": 41,
+      "sha256": "53c8a148c33045dd54bdc85dae0e0d2a369855c02247af9df8973d96fb5088a2",
+      "module": 2,
+      "cpuAddress": 51809,
+      "meaning": "Original doctor third entry is cancellation"
+    },
+    {
+      "offset": 83926,
+      "length": 54,
+      "sha256": "47d60dc5efdbbf57b9a41376cc21918e498318b623708cb7df6ef2b19bba850e",
+      "module": 2,
+      "cpuAddress": 51142,
+      "meaning": "Original unsigned three-byte balance comparison"
+    },
+    {
+      "offset": 93851,
+      "length": 98,
+      "sha256": "4e3853cac9dd9c0aadfb7b9d1f8da4d184cde68890af493fd7326c0d3f2a388e",
+      "module": 2,
+      "cpuAddress": 61067,
+      "meaning": "Existing original unsigned division used for donation"
+    }
+  ],
+  "careSamples": [
+    {
+      "case": "doctor-0-flag-0",
+      "beforeSha256": "558741b349a0884a7acdef915995318ac4b5d5ad17a078dd86241db6c0d45b49",
+      "afterSha256": "60641d76fc6eebe0b8149c552eeccbeebddb03105ba7813b2590ed86babe3c1f",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-1",
+      "beforeSha256": "8b6c6db8d64950e0f43ed714a66f197e152855e052d1c8966fadbedee7264c52",
+      "afterSha256": "a68e1dc3c1a00ac1d256efcf2e75717a43e0e0529650c24202a84500e4be3039",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-2",
+      "beforeSha256": "4f113be6be82faade4cb0800c3436f5d7149492973700cc4b103924284bbb201",
+      "afterSha256": "6edbfe2d61a3d428697948614274baf409c54b0dc09171875e8d6d307394b771",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-4",
+      "beforeSha256": "dc4ae111567589d6a661630522f374efa177b3c68d663c8918c4d0d6d3aabca8",
+      "afterSha256": "dd88962d3a7c46402cdbb7d2d9d49565673b5e6086d44e3666a499adbdb8bd9a",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-8",
+      "beforeSha256": "3b527bdfc35288763af032533a82b20cda87d21dba2f9738c78428a6279ef14b",
+      "afterSha256": "8fbb08689d83e28976be5e148b346c16325c12ad028f4cc480905249eaedcb23",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-16",
+      "beforeSha256": "6b637220687d394f0ea8dd1aec31ac90d3bcc61ba33746fe695bd0777166a491",
+      "afterSha256": "64c5ec7ebb9c422b5dac23ca3fd0daea9133175a0a8a82f7d08080760b2a4df1",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-32",
+      "beforeSha256": "f7576b76459543d2ca883368093118e5eb7cf6fe532686e1885414dbcab64712",
+      "afterSha256": "e4d8677bacde8450339f6a3a5d73d8b39db8b7633171cdb075ae520c9530c39e",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-34",
+      "beforeSha256": "c5132ffb8c6ce3612ca1e1a2d0ce5e6eae72f0ea399f574057c2e5ecdb62fedc",
+      "afterSha256": "c18cdd00d7e5c9ff32e21b192366c5bdc597fb89a67d0342047108555d5357e2",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-0-flag-255",
+      "beforeSha256": "7f6b5092a70309e12f14fb724378f487b79443d302a831e75e5e4fdcc403be79",
+      "afterSha256": "09f40f8bb39d6eb9fd7f5ce3758c41e29737b2e521f0ae9b5bc9beafbb71fcf5",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-0",
+      "beforeSha256": "558741b349a0884a7acdef915995318ac4b5d5ad17a078dd86241db6c0d45b49",
+      "afterSha256": "e07edf7354f4a5fb9d22b3660714dd49c986c93f38fd5d35aaf2aa4f830371d3",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-1",
+      "beforeSha256": "8b6c6db8d64950e0f43ed714a66f197e152855e052d1c8966fadbedee7264c52",
+      "afterSha256": "fed30c36588e0ede172a177de3633d718cc7edc40121566d74a263ce24fcf477",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-2",
+      "beforeSha256": "4f113be6be82faade4cb0800c3436f5d7149492973700cc4b103924284bbb201",
+      "afterSha256": "edec9f6e9c3d3fdd8fb455fb127df5b63dfc51ca0d2f32cde6009286715d7bb3",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-4",
+      "beforeSha256": "dc4ae111567589d6a661630522f374efa177b3c68d663c8918c4d0d6d3aabca8",
+      "afterSha256": "6af3956aad0553e6df5c4672fa6fb72d1bc9773d07c6e8d1b0ebe7cd41313960",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-8",
+      "beforeSha256": "3b527bdfc35288763af032533a82b20cda87d21dba2f9738c78428a6279ef14b",
+      "afterSha256": "460e76331c7792e5f43e443276d9b1534cef825388c680d8383efd0395ba37f7",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-16",
+      "beforeSha256": "6b637220687d394f0ea8dd1aec31ac90d3bcc61ba33746fe695bd0777166a491",
+      "afterSha256": "64f0bdfc78950edd13219f1833f811294ff04254b677c5000461a7f001016116",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-32",
+      "beforeSha256": "f7576b76459543d2ca883368093118e5eb7cf6fe532686e1885414dbcab64712",
+      "afterSha256": "87b5de25e4889247584271adba6d87e02478219a5f990d4b02687b9adbc9b40c",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-34",
+      "beforeSha256": "c5132ffb8c6ce3612ca1e1a2d0ce5e6eae72f0ea399f574057c2e5ecdb62fedc",
+      "afterSha256": "743530e712764f9da30023c50914c776cc2d8cb80fa3a2a5b192f240e2a5c812",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-1-flag-255",
+      "beforeSha256": "7f6b5092a70309e12f14fb724378f487b79443d302a831e75e5e4fdcc403be79",
+      "afterSha256": "e686204961c0571b76235e0f84e4776a760ff39dc1e2068de46914b20519ed1a",
+      "phase": "confirm",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-0-money-0",
+      "beforeSha256": "ee9a3dfac5b2955280add6dd954e54a5cef0c8939ab910e2cb7123261d3daf49",
+      "afterSha256": "8edc2476b6706aadcbd4162ccbc70353493e246815b0d04d360d933033952e27",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-0-money-1",
+      "beforeSha256": "454ab1dd6bd8f387404c120389d06b40acdee394604987f72eb72283caf8de01",
+      "afterSha256": "306193003fa919006a390973061206c16c2051ef815090ed203343a0e64c3a3f",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-0-money-2",
+      "beforeSha256": "a5f1c6c08b2ce89ea55d8dc45ddbcdd669a4b3cee6a47e18959f2274c5c2e8a8",
+      "afterSha256": "11f908a5097f0356f99413dc925fa0d1721d407bc73d3f357ea40676dd6ea689",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-0-money-887-cancel",
+      "beforeSha256": "4f113be6be82faade4cb0800c3436f5d7149492973700cc4b103924284bbb201",
+      "afterSha256": "d014b0eb14f5669133b49305353c4c9c6303e83fd50b2d1b4eaf5a8c80faa4e2",
+      "phase": "commit",
+      "commit": false
+    },
+    {
+      "case": "doctor-boundary-1-money-2",
+      "beforeSha256": "fd3816d6712b1d0a7fb6632ae991db236c5491dc8d589edbc7fce492eb1a688d",
+      "afterSha256": "00fd5e77812b706a426819a8bd8fb1d0bbcd32ee97734981c5f5efdac1394f9e",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-1-money-3",
+      "beforeSha256": "962a06f2cb48c7ac1cb53ab113c4ab2658b53f326d22c1ae5cd62ec5336ee72b",
+      "afterSha256": "3e4e40bb305bbb1fdaddd7e2802f3b932ed782906f9c0983336b6d8655b0bf11",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-1-money-887-cancel",
+      "beforeSha256": "dc4ae111567589d6a661630522f374efa177b3c68d663c8918c4d0d6d3aabca8",
+      "afterSha256": "f7620fe8794718b1d8d00a0d16865827ee6ad0ed74d913036f4d8fb74a3faa62",
+      "phase": "commit",
+      "commit": false
+    },
+    {
+      "case": "doctor-boundary-0-money-1000000",
+      "beforeSha256": "200ad8639b205b85b08438695c98bb9ffb049c40d49e5962bde923bbf1bf837e",
+      "afterSha256": "b99493e59c552547a88001de6c5bdf4d23db451c2eb5fd8d52794a063e4f5dc5",
+      "phase": "commit",
+      "commit": true
+    },
+    {
+      "case": "doctor-boundary-1-money-9999999",
+      "beforeSha256": "53d77ba0933f84489f70c853c2b0c21a847e7e6321b62771811506cc119e298c",
+      "afterSha256": "c9db3bd47dbb85a036cd7e81bb46fd4a877d5240c5c6901500d6dd97244cc63f",
+      "phase": "commit",
+      "commit": true
+    }
+  ],
+  "limits": [
+    "Isolated HP/status/MP/money fixtures, not a normal Android route or original death/revival playthrough.",
+    "Zero-money second-actor experiment sets input before actual dialogue entry; confirms no entry balance guard.",
+    "Original zero-money underflow/cap is an anomaly, not an invented reward.",
+    "Commit snapshots precede unrelated generic menu cleanup; it is not treatment/cancellation side effect.",
+    "Doctor first two modes checked at actual price-confirm commit; third option exits, not a third illness.",
+    "Original font/timing, NPC animation, sound and phone acceptance remain unverified."
+  ],
+  "revivalExpectedSha256": "f087df02916ab9824924483c26c450612516c59f2c6e27c7898cd4ccfe5eb01c",
+  "careExpectedSha256": "0120533fd0d225c4afcedf00c3a72f5b208f4a2264b9db69cee1ca94b0e9530b",
+  "beforeDialogueZeroMoneySecondActor": {
+    "path": "private-derived/world-village3-clinic-original/pre-entry-zero-revival-result-ram.bin",
+    "sha256": "53bcf4acd245b24d157e3dbe8afc3830768c5bc6b1c19d6327dc436b4b1482ee",
+    "moneyAfter": 999999,
+    "targetIndex": 1,
+    "hpAfter": 1,
+    "statusAfter": 1,
+    "firstActorHpUnchanged": 35
+  }
+}
