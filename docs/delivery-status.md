@@ -1229,3 +1229,9 @@ v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真
 - 两个原exit表起点为实体墙：23(12,5)和86(8,13)。保留原记录、grid hash与状态未知，只从可执行出口移除，不修改碰撞或伪造入口；68→86→脚本16(238,160)真实前进路径保留。
 - c29/180文件/31地图，manifest a6efb1e9cf08585b39941a92cb7c96781bf33084a344fb4999e4fb2222caf564，严格restore成功；127 world Python、249 JVM零失败及instrument编译PASS。导出前镜像原几何检查，加载器失败消息指出具体原门坐标；区域左/上排除、右/下包含与既有EncounterRect一致，新增定向回归另记实际结果。
 - 村3原始续接和四共享室内入口、40两住宿已用真实按键取得，源为受控胜后存档，Android与正常全程NOT_RUN。整体PARTIAL、生产v27/旧v26下载错误阻塞、ALL_MAPS_USABLE=NO不变；继续独立内容实施。
+
+## WORLD-FULL-01 定神珠来源状态修复 2026-10-03T11:27:00Z
+
+- v49/run37118715361实际Content4通过/20错误，前次出口校验已通过；本次拒绝rom.special.12来源枚举ORIGINAL_CONTROLLED_MENU_AND_CPU。正常App未执行，不发布、不冒称原剧情已验收。
+- 具体受控菜单/CPU证据从confidence移动到originalEvidenceKind，按已允许项目状态分类，原指纹/用途和受控非正常路线范围保留；原restore/receipt在写入/签名之前检查来源状态，错分类不覆盖旧assets，14方法实际通过。
+- c30/180文件/31地图，manifest fb058646af4817b777f7aa7829a3a953e69f69288c573c481957fcc6d2a006cb；严格restore、5末殿导出、249 JVM与仪器编译通过。候选正常新路线仍NOT_RUN，生产v27、旧v26下载故障阻塞不变。村3控制实验的失败图形/出村尝试保留，不伪造门；持续接续服务数据，不据此结束总任务。

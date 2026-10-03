@@ -35,6 +35,25 @@ class ContentTransportTests(unittest.TestCase):
         self.write()
         self.assertEqual(ci.content(self.apk)['scene.json'], self.payload)
 
+    def test_invalid_item_source_preserves_existing_assets_after_valid_hashes(self):
+        payload=json.dumps({'items':[{'id':'rom.special.12','source':{'confidence':'ORIGINAL_CONTROLLED_MENU_AND_CPU'}}]}).encode()
+        manifest=json.dumps(dict(schemaVersion=1,version='fixture-c1',files={'scene.json':ci.sha(payload)})).encode()
+        self.pin['manifestSha256']=ci.sha(manifest)
+        self.write(payload=payload,manifest=manifest)
+        target=Path(self.temp.name)/'assets';target.mkdir()
+        (target/'scene.json').write_bytes(b'previous valid export')
+        with patch.object(ci,'verify_apk',return_value={'versionCode':27}):
+            with self.assertRaisesRegex(ValueError,'Unsupported item source confidence: rom.special.12'):
+                ci.restore(self.apk,target,next_code=28)
+        self.assertEqual(b'previous valid export',(target/'scene.json').read_bytes())
+
+    def test_existing_confidence_states_keep_specific_controlled_evidence(self):
+        for confidence in ['GAMEPLAY_VERIFIED','PROVISIONAL_REFERENCE']:
+            source={'confidence':confidence,'originalEvidenceKind':'CONTROLLED_ORIGINAL_MENU_AND_CPU_NOT_NORMAL_ROUTE'}
+            payload={'scene.json':json.dumps({'items':[{'id':'rom.special.12','source':source}]}).encode()}
+            ci.validate_item_sources(payload)
+            self.assertEqual(source,json.loads(payload['scene.json'])['items'][0]['source'])
+
     def test_corrupt_file_rejected(self):
         self.write(payload=b'changed')
         with self.assertRaisesRegex(ValueError, 'checksum'):
