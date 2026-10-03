@@ -17033,6 +17033,84 @@
         },
         "status": "UNRESOLVED_OUTSIDE_CURRENT_GEOMETRY_NOT_ENABLED",
         "reason": "Never clamp map86 width or create a guessed shortcut to map5."
+      },
+      {
+        "fromMapId": 23,
+        "toMapId": 68,
+        "trigger": [
+          12,
+          5
+        ],
+        "spawn": [
+          12,
+          1
+        ],
+        "kind": "EXIT_RECORD",
+        "source": {
+          "offset": 286825,
+          "length": 5,
+          "sha256": "48171051acb76227ffa144fbfec66a24ad35c9e037f69e65f3a10539cacacb9e",
+          "module": 8,
+          "cpuAddress": 57433,
+          "meaning": "Original independent directed Hell hall exit"
+        },
+        "confidence": "VERIFIED",
+        "resetEncounterSteps": true,
+        "arrivalDirection": "DOWN",
+        "preserveArrivalDirection": true,
+        "arrivalDirectionSource": {
+          "offset": 10799,
+          "length": 41,
+          "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+          "module": 0,
+          "cpuAddress": 43551,
+          "meaning": "Original reconstruction preserves current direction"
+        },
+        "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json",
+        "status": "UNRESOLVED_SOURCE_PHYSICAL_WALL_NOT_ENABLED",
+        "reason": "Original source is class1 blocked on both proven tileset3 planes. Raw record alone does not prove a reachable doorway; requires an actual original state change or context. Do not relax collision.",
+        "originalSourceTile": 2,
+        "originalCollisionClass": 1,
+        "originalGridSha256": "bf2a9c57884df7b7a128ca618f2a75e8538a9b42ac81debb04539fdb6874ed3c"
+      },
+      {
+        "fromMapId": 86,
+        "toMapId": 16,
+        "trigger": [
+          8,
+          13
+        ],
+        "spawn": [
+          219,
+          144
+        ],
+        "kind": "EXIT_RECORD",
+        "source": {
+          "offset": 287607,
+          "length": 5,
+          "sha256": "035da077ee24289145c5e598d67c01a3c83a951ff96f490d2890c251a5e88e2f",
+          "module": 8,
+          "cpuAddress": 58215,
+          "meaning": "Independent original post-scene-room exit; not the script completion destination"
+        },
+        "confidence": "VERIFIED",
+        "resetEncounterSteps": true,
+        "arrivalDirection": "DOWN",
+        "preserveArrivalDirection": true,
+        "arrivalDirectionSource": {
+          "offset": 10799,
+          "length": 41,
+          "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+          "module": 0,
+          "cpuAddress": 43551,
+          "meaning": "Original reconstruction preserves direction"
+        },
+        "runtimeEvidence": "game-data/provenance/world-rebirth-script.json",
+        "status": "UNRESOLVED_SOURCE_PHYSICAL_WALL_NOT_ENABLED",
+        "reason": "Original source is class1 blocked on both proven tileset3 planes. Raw record alone does not prove a reachable doorway; requires an actual original state change or context. Do not relax collision.",
+        "originalSourceTile": 55,
+        "originalCollisionClass": 1,
+        "originalGridSha256": "2d515b9f4d5515c0b03fb57f357f7279530610b335629efda90db9784c378f14"
       }
     ],
     "hellHallBatch": {
@@ -19849,40 +19927,6 @@
       "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
     },
     {
-      "fromMapId": 23,
-      "toMapId": 68,
-      "trigger": [
-        12,
-        5
-      ],
-      "spawn": [
-        12,
-        1
-      ],
-      "kind": "EXIT_RECORD",
-      "source": {
-        "offset": 286825,
-        "length": 5,
-        "sha256": "48171051acb76227ffa144fbfec66a24ad35c9e037f69e65f3a10539cacacb9e",
-        "module": 8,
-        "cpuAddress": 57433,
-        "meaning": "Original independent directed Hell hall exit"
-      },
-      "confidence": "VERIFIED",
-      "resetEncounterSteps": true,
-      "arrivalDirection": "DOWN",
-      "preserveArrivalDirection": true,
-      "arrivalDirectionSource": {
-        "offset": 10799,
-        "length": 41,
-        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
-        "module": 0,
-        "cpuAddress": 43551,
-        "meaning": "Original reconstruction preserves current direction"
-      },
-      "runtimeEvidence": "game-data/provenance/world-hell-hall-batch-script.json"
-    },
-    {
       "fromMapId": 68,
       "toMapId": 86,
       "trigger": [
@@ -19968,40 +20012,6 @@
         "sha256": "48171051acb76227ffa144fbfec66a24ad35c9e037f69e65f3a10539cacacb9e",
         "module": 8,
         "cpuAddress": 58210,
-        "meaning": "Independent original post-scene-room exit; not the script completion destination"
-      },
-      "confidence": "VERIFIED",
-      "resetEncounterSteps": true,
-      "arrivalDirection": "DOWN",
-      "preserveArrivalDirection": true,
-      "arrivalDirectionSource": {
-        "offset": 10799,
-        "length": 41,
-        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
-        "module": 0,
-        "cpuAddress": 43551,
-        "meaning": "Original reconstruction preserves direction"
-      },
-      "runtimeEvidence": "game-data/provenance/world-rebirth-script.json"
-    },
-    {
-      "fromMapId": 86,
-      "toMapId": 16,
-      "trigger": [
-        8,
-        13
-      ],
-      "spawn": [
-        219,
-        144
-      ],
-      "kind": "EXIT_RECORD",
-      "source": {
-        "offset": 287607,
-        "length": 5,
-        "sha256": "035da077ee24289145c5e598d67c01a3c83a951ff96f490d2890c251a5e88e2f",
-        "module": 8,
-        "cpuAddress": 58215,
         "meaning": "Independent original post-scene-room exit; not the script completion destination"
       },
       "confidence": "VERIFIED",

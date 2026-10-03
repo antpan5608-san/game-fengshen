@@ -219,3 +219,5 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 - 原export_from_base/ci_apk.restore已实际恢复末殿与非战斗场景剧情；world-final-hall-content和world-rebirth-script只扩展原schema/StoryContinuation。新局部导出测试验证重复生成、不变媒体字节、原门/单向出口/对白及拒绝猜测落点、免费中毒步、额外奖励和错误图形。原CPU捕获的PRG映射必须逐8KiB核目标ROM，不能把当前逻辑module一次铺满CPU地址。
 - 真实Windows checkout用*.tsv text eol=lf，test_world_evidence_checkout实际比较checkout和Git blob原字节；不归一化或关闭hash。新scene的阶段保存/取消/原正常路线方法仅编译，App未实跑前保持待核；详见当前任务，不把导出/JVM当正常游玩。
+
+- 原exit表一行不保证当前状态可站立：export_world_from_base在签名前调用validate_world_exit_geometry，镜像原loader地形/已核可移除actor/区域规则。真实实体墙行移至原provenance的unresolvedExitRows，保留hash和未知上下文，不放宽collision。test_world_final_hall_export实际验证拒绝两条墙行、仍能确定性生成；EncounterRect原语义为左/上排除、右/下包含。加载器仍独立复查，导出/本地编译不替代App门禁。
