@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "rules": {
+    "specialChoice": "(random &127)<41",
+    "specialHit": "((random>>1)&63)<57, always true in actual choice branch",
+    "allTarget": true,
+    "baseDamage": 15,
+    "physicalHitByte": 193,
+    "baseDamageIgnoresArmorAndStamina": true,
+    "originalDisplayedAttackName": "NOT_YET_TRANSCRIBED"
+  },
+  "sources": [
+    {
+      "offset": 298452,
+      "length": 12,
+      "sha256": "54689f7af520f42ed8fea37f968962ce6708f9611a67ef677af5c6589b89ec3a",
+      "module": 9,
+      "cpuAddress": 36292,
+      "meaning": "Per behavior secondary hit thresholds"
+    },
+    {
+      "offset": 298489,
+      "length": 201,
+      "sha256": "7a8bd46b8b54dbb5abd6d1b1b1ee95b587c88fd2638206919c41613f38385278",
+      "module": 9,
+      "cpuAddress": 36329,
+      "meaning": "Original AI same-byte choice and all-target1/3 branch"
+    },
+    {
+      "offset": 305510,
+      "length": 117,
+      "sha256": "142c568e860b5b42ec1231513219e8fe84f492c38db038a630b08e8d8c8e732c",
+      "module": 9,
+      "cpuAddress": 43350,
+      "meaning": "Original damage dispatch and behavior1 damage"
+    },
+    {
+      "offset": 305442,
+      "length": 2,
+      "sha256": "46e04d129d7b45d054469ce34e24069a1426b3e34f1b68a3d1bff1e070aee192",
+      "module": 9,
+      "cpuAddress": 43282,
+      "meaning": "Enemy143 original fixed special damage15"
+    },
+    {
+      "offset": 306045,
+      "length": 41,
+      "sha256": "6d6f34af16fc267f2a2847a4eeaaaa873334c28e792acadb2112bb295055fd84",
+      "module": 9,
+      "cpuAddress": 43885,
+      "meaning": "Original status04 special damage doubling"
+    },
+    {
+      "offset": 305946,
+      "length": 79,
+      "sha256": "995c930c2ccd021e237ddb2cc1f443bf3aa2ea427d2004280fe1f799b6f9bea8",
+      "module": 9,
+      "cpuAddress": 43786,
+      "meaning": "Original HP clamp/death damage application"
+    }
+  ],
+  "limits": [
+    "No normal second hall victory or Android acceptance.",
+    "No other enemy behavior, player spells or party beyond two verified.",
+    "Fixed CPU random byte does not replicate original per-frame sequence.",
+    "A956 direct damage fixtures record HP clamp before later death flag dispatch; statusAfter in H rows is not the final turn death state."
+  ],
+  "scopeRevision": "behavior1-all-living-targets-and-original-damage",
+  "behavior": 1,
+  "verifiedEnemyIds": [
+    24,
+    88,
+    143,
+    162,
+    166,
+    172,
+    176
+  ],
+  "cpuCases": {
+    "count": 444,
+    "failures": 0,
+    "privateReportSha256": "4b8db7852884d4dc091f320dbc9a5ea899995cc2dfd17048f14e4e2183b8a1a7",
+    "publicExpected": "android/app/src/test/resources/enemy-behavior1-cpu.tsv"
+  },
+  "confidence": "ORIGINAL_CPU_CONTROLLED",
+  "normalAndroid": "NOT_RUN",
+  "licenseStatus": "ROM and reference licenses UNKNOWN; hash proves byte identity only"
+}

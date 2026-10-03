@@ -336,7 +336,13 @@ object ContentLoader {
                     e.optInt("iceBaseDamage").takeIf{e.has("iceBaseDamage")},
                     e.optJSONObject("loot")?.let{l->BattleLoot(l.getString("itemId"),l.getInt("threshold"),l.getString("category"))
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
-                            itemDefinitions.getValue(it.itemId).category==it.category)}})
+                            itemDefinitions.getValue(it.itemId).category==it.category)}}).also{enemy->
+                    if(e.has("specialBaseDamage")){
+                        require(enemy.behaviorByte==1&&enemy.iceBaseDamage==null&&
+                            e.getInt("specialBaseDamage") in 0..65535&&e.getString("specialDamageEvidence").isNotBlank())
+                        enemy.specialBaseDamage=e.getInt("specialBaseDamage")
+                    }
+                }
             }}
             require(enemyRows.size in 1..256&&enemyRows.map{it.id}.distinct().size==enemyRows.size&&enemyRows.all{
                 it.id in 0..255&&it.name.isNotBlank()&&it.hp in 1..65535&&it.attack in 0..65535&&it.defense in 0..65535&&

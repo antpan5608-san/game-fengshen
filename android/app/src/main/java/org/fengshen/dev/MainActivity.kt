@@ -1534,7 +1534,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         for(enemy in current.enemies){
             val hp=battleVisibleHp(enemy.slot)?:0;val impact=action?.targetSlot==enemy.slot&&action.kind==BattleActionKind.DAMAGE
             if(screen!=BattlePresentation.Screen.RESULT&&(hp>0||impact)){
-                val box=battleEnemyBox(enemy);val moving=action?.actorSlot==enemy.slot&&action.kind in listOf(BattleActionKind.ATTACK,BattleActionKind.ICE)
+                val box=battleEnemyBox(enemy);val moving=action?.actorSlot==enemy.slot&&action.kind in listOf(BattleActionKind.ATTACK,BattleActionKind.ICE,BattleActionKind.SPECIAL)
                 val shift=if(moving)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
                 paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
                 content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(box.x+shift,box.y,box.x+box.w+shift,box.y+box.h),paint)};paint.alpha=255
@@ -1584,6 +1584,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             touchText(c,text,Box(target.x+target.w/2,target.y+target.h*.4f,120*dp,1f),18f,if(action?.kind==BattleActionKind.HEAL)0xff72d3c5.toInt() else 0xffffb3a7.toInt())
         }
         if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
+        if(action?.kind==BattleActionKind.SPECIAL){overlayPaint.color=0x33ffffff;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
         textPaint.color=Color.WHITE
     }
     fun battleHerbCount()=max(0,(inventory[HerbUse.ID]?:0)-(battle?.herbsConsumed?:0))
