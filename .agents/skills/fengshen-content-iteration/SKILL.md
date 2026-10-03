@@ -255,3 +255,10 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 - 原完整zone/group loader和observed_graphic_recipe已取得两种森林敌人全部图块/实际RGBA；区域/组数按目标ROM验证后才扩probe-world-enemy的有限计数。局部导出4方法、完整世界回归、JVM/仪器编译、真实autocrlf checkout与ci_apk.restore空assets目录逐字节已运行。restore的destination就是assets目录，不能再附android路径；normalApp/外部冷启须等同候选runner实际结果，不能由编译宣称成功。
 
 - 单个地图的静态寻路失败先核连通组件与原独立出口，不能放宽墙。test_world_forest101_export中的补给返回测试已实际验证海域/洞窟六腿及未消漩涡反例；Content.sceneForState按已有合法flag去除物品目标，离线几何测试必须同样应用它，不能将基底dynamicObjectCells的漩涡误认永久墙。正常多地图App驱动仍须原同产物runner执行，静态PASS不等于正常路线PASS。
+
+
+## 已验证的本次方向与接触核对
+
+原移动分派$97为本次方向，空闲snapshot的0不证明实际调用参数；原代码钩子与正常按键先定位参数，再复用CPU矩阵。森林target3/7横向原阻挡已用144实际方向组合及按键反例核定，旧证据保留为历史，不替换旧parent hash。新增修正独立局部配方，151世界回归、真实LF checkout、空assets恢复均已运行；App仍需同候选验证。
+
+大陆actor不等于一律实体障碍：原A973过滤后C68A对E7/E8接触分派，D6步行进入，移除或其他walker不进入。probe-world-tree-contact.py已对匹配ROM运行2384案例，派生TSV不含ROM；WorldActorContactTest验证失败换图保留、旗标移除后普通走格与接触不扣完成步。未打包的新入口或四层不能写正常App成功。

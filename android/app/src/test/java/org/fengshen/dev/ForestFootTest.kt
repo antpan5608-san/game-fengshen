@@ -5,7 +5,7 @@ import org.junit.Test
 
 class ForestFootTest {
     @Test fun completeOriginalForestFootDispatchMatchesExistingWorldEdges(){
-        val rows=javaClass.getResourceAsStream("/forest101-foot-original-cpu.tsv")!!.bufferedReader().use{it.readLines()}.drop(1)
+        val rows=javaClass.getResourceAsStream("/forest101-direction-original-cpu.tsv")!!.bufferedReader().use{it.readLines()}.drop(1)
         assertEquals(144,rows.size)
         val keys=listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)
         for(line in rows){
@@ -18,9 +18,10 @@ class ForestFootTest {
             // CPU matrix includes source-wall cases; the fixture spawn stays on
             // legal ground while probeFrom independently checks each source.
             val scene=Scene("fixture",3,3,IntArray(9),c,c.indices.filter{c[it]in allowed}.toSet(),0,0,
-                mapId=101,walkableClasses=allowed,sourceEdges=mapOf(3 to setOf(Key.LEFT,Key.RIGHT)))
+                mapId=101,walkableClasses=allowed,sourceEdges=mapOf(3 to setOf(Key.LEFT,Key.RIGHT)),
+                targetEdges=mapOf(3 to setOf(Key.LEFT,Key.RIGHT),7 to setOf(Key.LEFT,Key.RIGHT)))
             assertEquals(line,if(r[3]==0)MovementBlock.NONE else MovementBlock.PHYSICAL,scene.probeFrom(1,1,key))
-            assertEquals("No transport mode granted",0,r[5])
+            assertEquals("Original call argument97 is the requested direction",r[2],r[5])
             assertEquals("Original occlusion is separate from collision",if(r[0]==7)255 else 0,r[4])
         }
     }

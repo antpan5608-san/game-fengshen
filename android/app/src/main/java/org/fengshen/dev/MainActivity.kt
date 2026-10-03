@@ -83,6 +83,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val encounter=content.battle?.let{OpeningEncounter(it)}
     private val battleRandom=SecureRandom()
     private var processedStepSeq=0L
+    private var processedContactSeq=0L
     private var battle:OpeningBattle?=null
     private var battleCommitted=false
     private var storyBattle:StoryBattleDefinition?=null
@@ -210,7 +211,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             flags=priorFlags;return false
         }
         audio.scene(world.mapId)
-        encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq
+        encounter?.restore(snapshot.encounterSteps);processedStepSeq=world.completedStepSeq;processedContactSeq=world.contactTransitionSeq
         characters=snapshot.characters.map{hero->
             if(hero.id==content.initialPlayer.id && hero.equipment==null)
                 hero.copy(equipment=content.initialPlayer.equipment,maxMp=hero.maxMp?:content.initialPlayer.maxMp)
@@ -272,7 +273,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         posted=false
         if(!surface)return
         if(active&&focused&&layer==Layer.MAP)clock.advance(time){
-            if(layer==Layer.MAP){world.tickIntent(input.movementIntent());processCompletedStep()}
+            if(layer==Layer.MAP){world.tickIntent(input.movementIntent());processContactTransition();processCompletedStep()}
         } else if(active&&focused&&layer==Layer.BATTLE)clock.advance(time){
             if(!battleInfoOpen&&!battleItemsOpen){
                 if(battlePresentation.tick(16))finishBattlePresentation()
@@ -295,6 +296,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         var canvas:Canvas?=null
         try {canvas=holder.lockCanvas();if(canvas!=null)render(canvas)} finally {if(canvas!=null){holder.unlockCanvasAndPost(canvas);if(active&&focused)activity.firstInteractiveFrame()}}
         schedule()
+    }
+    private fun processContactTransition(){
+        if(processedContactSeq==world.contactTransitionSeq)return
+        processedContactSeq=world.contactTransitionSeq
+        val exit=world.lastContactExit?:return
+        input.clear();npcTouch.clear();hudTouch.clear();clock.reset()
+        Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",exit.fromMapId)
+            .put("mapId",world.mapId).put("contactActorId",exit.contactActorId).put("x",world.x/16).put("y",world.y/16))
+        audio.scene(world.mapId)
+        if(exit.resetEncounterSteps)encounter?.restore(0)
+        // Contact did not finish a world step: never apply poison, field damage,
+        // encounter RNG, or a second reward while presenting this transition.
+        openSceneStoryIfNeeded()
     }
     private fun processCompletedStep(){
         if(processedStepSeq==world.completedStepSeq)return
@@ -339,6 +353,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         flags=mapOf("opening.intro.seen" to true);encounter?.restore(0)
         world.restore(114,content.scene.spawnX*16+8,content.scene.spawnY*16+8,0,Key.DOWN)
         processedStepSeq=world.completedStepSeq
+        processedContactSeq=world.contactTransitionSeq
     }
     private fun showFieldFailure(){
         if(flags[FIELD_FAILURE_FLAG]!=true||modalDialog!=null)return

@@ -12,6 +12,7 @@
 *.7z
 /private-inputs/
 /private-derived/
+/private-derived
 /reference/
 /game-data/raw/
 /game-data/canonical-candidate/

@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class EvidenceCheckoutTests(unittest.TestCase):
     def test_cpu_tables_keep_their_reviewed_bytes_under_autocrlf_checkout(self):
-        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json','world-seventh-side-terrain.json','world-rebirth-terrain.json','world-rebirth-script.json','world-continent-bridges.json','world-continent-actor-barriers.json','world-forest101-terrain.json']
+        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json','world-seventh-side-terrain.json','world-rebirth-terrain.json','world-rebirth-script.json','world-continent-bridges.json','world-continent-actor-barriers.json','world-forest101-terrain.json','world-forest101-direction.json']
         tables={}
         for name in proofs:
             p=json.loads((ROOT/'game-data/provenance'/name).read_text(encoding='utf-8'))
@@ -15,7 +15,7 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json'):
+        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json'):
             p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
             pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
             self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
