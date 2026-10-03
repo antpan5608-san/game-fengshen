@@ -17,16 +17,15 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 十类欠账权威docs/delivery-status.md最新累计清单。历史前任务状态已归档docs/history/mobile-play01-completed-task.md；本次完整授权docs/history/world-full01-authorization.md。
 - 总判定均待核：MAP_DATA_COMPLETE / MAP_RUNTIME_COMPLETE / SERVICE_COMPLETE / NORMAL_ROUTE_COMPLETE / ALL_MAPS_USABLE。
 
-## 当前有效状态（2026-10-03T08:27:48.544804+00:00）
+## 当前有效状态（2026-10-03T08:56:04.031732+00:00）
 
-- WORLD-FULL-01持续F3/F4；正式v27/c14。v43/run37104551493来源f38b4fa8/c24构建与独立验包成功，但runtime于08:18UTC失败：北海前正常练级在开局低经验敌区耗尽3000步；不是获资源/游戏崩溃证据。南海/北侧海域/西海/村庄1及各冷启通过；北宫/Boss139及后续本次NOT_RUN。
-- 本树/workspace/game-fengshen-world-hell-batch保留已合并c25六殿61–66/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6。新六殿正常App仍NOT_RUN，不能以编译通过写全世界可玩。
-- 原版BA30完整CPU含BE1A音频请求队列3840边界完成；新增world-hell-field67-step派生预期。原移动完成入口使用来源step.mapId，毒先1HP再map67伤10HP，角色bit64/global保护边界分开，保持旧step(List) ABI。map67未打包、保护物品激活/生命周期未接入，原版受控菜单不冒充正常取得/Android。
-- 新定向10 JVM、1 Python通过；最终238全JVM0失败/错误/跳过及instrument编译成功。北海测试准备改用已可玩南海弱敌区，自然遇敌/原奖励/正常付费回村住宿，目标12不变，5000步有界且每64步留真实快照；新测试App待运行，不改游戏规则。
-- 最近实际inspect37107749426为07:52:07.994UTC，27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；同一旧v26 ProtocolException继续阻塞严格生产上传。
-- v44/run37109855129来源73cc1b90构建在Windows TSV字节hash门禁失败，未生成APK。已在独立树将*.tsv text eol=lf并实际隔离Git core.autocrlf=true checkout验证，8项相关Python通过；原hash、pin及门禁未放宽。
-- 下一动作：提交确定性checkout修复后按原CI构建c25新同提交候选；等待时继续67保护/侧室69/158/159、68胜后86实际场景，不停止在25图。64两条超几何原出口仍待核，不截断或伪造传送。
-- 有效分母UNKNOWN、ALL_MAPS_USABLE=NO，十类清单保留；声音/一加13T NOT_RUN。
+- WORLD-FULL-01持续F3/F4；正式v27/c14不变。后续c25六殿61–66/162文件/25图，manifest cdd1f7edc9a8b8e78fb38bbf211a1ee657585ee784a619cd46fce1ea92a746b6，仍是候选，不写正常全地图可玩。
+- v43/run37104551493来源f38b4fa8/c24：正常南海/海域北侧/西海/村庄1及冷启通过，北海前开局弱敌训练3000步未达12级；新驱动改真实海域正常练级/正常住宿，并每64步保存实际进度，无游戏EXP/敌群/条件改动。
+- v44/run37109855129来源73cc1b90：Windows Git CRLF改变TSV字节而被hash拒绝；修*.tsv text eol=lf并实际autocrlf=true隔离checkout验证，没有关闭hash。
+- v45/run37110358080来源a73241ad/c25：Windows signed build成功，runtime加载在Content.kt271旧“仅定海珠宝箱”校验失败，不能开始正常App。该限制不是原版规则；已最小改为调用原WorldItems同一类别/稳定ID/数量/flag校验，依然只接受原取证categoryGrant来源。238JVM0失败/错误/跳过及instrument编译PASS；App修复复测待原runner。
+- 独立后续/workspace/game-fengshen-world-rebirth已提交cf5abea：定神珠id12实际原版菜单/50CPU/出入殿保护边界、现有物品命令和统一flags薄接入；已知c18–25 schema1旧内容版本标记兼容，结构/位置校验保持。242JVM/仪器编译及2新Python通过；未合入当前候选、未生成c26、map67未打包，新App NOT_RUN。68胜后实际出口到86会自动师父对白、莲花转世后到16(238,160)，尚在定向核事实，不当普通无剧情换图。
+- 最近实际inspect37107749426为07:52:07.994UTC，27/26=1319/2289，共3608，普通真机4会话/模拟器0/测试0、清理0；旧v26 ProtocolException继续阻塞严格生产上传。
+- 下一动作：提交本次c25宝箱加载修复并冻结同源候选；等待正常runner时继续67侧室69/158/159、保护和68/86真实连续事件。不以25图或CI小检查点主动结束。有效分母UNKNOWN、ALL_MAPS_USABLE=NO；十类累计欠账保留，声音/一加13T NOT_RUN。
 
 ## 历史检查点（以下由最近的“当前有效检查点”接续）
 
