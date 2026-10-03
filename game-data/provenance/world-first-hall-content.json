@@ -33011,7 +33011,7 @@
     "Village2 route/three shops/inn are scoped ROM + original normal door/inn evidence; clinic and remaining NPC/story are explicitly unimplemented, Android NOT_RUN.",
     "Only absent medicine7 merchant prices filled from original catalog; old identity/name/use retained. No new medicine effect inferred.",
     "Canonical source confidence vocabulary applies to every item, including unresolved-name medicines; it does not promote unknown name/use/license fields.",
-    "First hell hall scoped original route/enemy/battle/flags; normal Android mainline and full original victory still NOT_RUN, other hell halls and exits remain cumulative debt."
+    "First hell hall scoped original route/enemy/battle/flags; normal Android mainline still NOT_RUN; original full-HP victory/repeat/exit observed from verified normal save, other hell halls and exits remain cumulative debt."
   ],
   "maps": [
     {

@@ -163,8 +163,51 @@
     "exitScanner": "Eight controlled cases flags0/2/4/6 at two exits: unconditional transfers; barrier controls approach, not exit condition."
   },
   "limits": [
-    "Normal original full-HP victory and Android first hall NOT_RUN.",
+    "Original full-HP victory/repeat/exit observed from verified normal save; Android first hall NOT_RUN.",
     "Text transcriptions use pinned Reference matched to actual original message IDs; full glyph/canonical remains provisional.",
     "Original manual-save battle-defeat branch remains cumulative debt."
-  ]
+  ],
+  "normalVictory": {
+    "kind": "CONTINUATION_FROM_VERIFIED_ORIGINAL_SAVE",
+    "controllerOnly": true,
+    "ramWrites": false,
+    "actualFullBossHp": 520,
+    "gearPreparation": "Actual original weapon4 and armor3 purchases/equip; 900 money spent, inn20 paid; optional preparation, not story gate.",
+    "bossStartRamSha256": "b3dd5121d265b118ee000b6094b4d3a36946cec7d6a6e9e97f89238288d003ff",
+    "bossResultRamSha256": "826059ebd5421688ebc9f540c5b35d3c985cb4bb2b431c493c911eeba7a03a6f",
+    "resultScreenshotSha256": "c23a8c1be0bfede65252398192064f32ea59261f19c7d364478800c7b7caa592",
+    "resultMarkerSha256": "b2573602d7f1998f94bac0801c14fdbb2ab6e804bdaa7e2a93f44e817f6bc411",
+    "moneyDelta": 350,
+    "experienceDeltaLivingActors": [
+      120,
+      120
+    ],
+    "finalActorHp": [
+      35,
+      29
+    ],
+    "finalFlag70": 6,
+    "herbCommands": 10,
+    "grassRemaining": 0,
+    "repeatNoReward": true,
+    "repeatRamSha256": "16d6b65fa78de18e36e3e82f9b007e25a6fc0875e4757dfee9a1636e520395cc",
+    "originalExit": {
+      "fromMapId": 70,
+      "cell": [
+        23,
+        2
+      ],
+      "toMapId": 23,
+      "spawn": [
+        43,
+        75
+      ],
+      "normalMarkerSha256": "66b0191cd5c6c2756ccd74c8ba7e8aff65f8acf83044ff926c91de19b6fc29ac",
+      "normalRamSha256": "dfbf4a964370a86629c6fbefaa11e19052cb7f1ae5ecb68dbba814377afc3b73"
+    },
+    "limits": [
+      "Original normal continuation, not Android acceptance or full original new-game recording.",
+      "Private RAM/state/captures remain ignored, only minimal derived result and hashes recorded."
+    ]
+  }
 }
