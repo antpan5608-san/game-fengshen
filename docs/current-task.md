@@ -293,3 +293,11 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 原只读inspect37100102914已启动且自动approve SUCCESS，查询结果待取得。下一动作：提交并冻结c24/驱动修正，原Actions生成一次新候选；期间继续原世界规则/地图，不重新轮询已失败v40、不放宽任何发布门槛。
 
 - inspect37100102914于2026-10-03 13:32:10.251北京时间实际成功：可信27/26=1305/2289、3594事件，普通真机3会话/模拟器0/测试0，cleanupFailures0。旧v26 download_or_verify ProtocolException仍1条；新增24条v27上传没有把旧错消除，也不是本轮真机验收。生产门槛保持。
+
+
+## v41前置断言修正（2026-10-03 13:53 北京时间，非发布）
+
+- 原run37100307191来源bf41bf544f7eb8ea7841f5b1c187d8364f530af5：签名build SUCCESS/runtime FAIL，ContentTest19方法/1断言失败/0错误。c24加载全部通过，第二殿受控测试误将返回对白ID的pendingDialogue getter当成待执行状态查询；实际返回rom.dialogue.70.4。正常App接续尚未运行，不把受控加载成功当正常路线PASS。
+- 只修ContentTest检查真实pendingFlag已清除，保留重复完成、独立两殿旗标、门与存档断言；不改getter ABI、游戏规则、奖励和c24内容/hash。222 JVM方法0失败/错误/跳过，仪器编译通过。下一候选仍须同源完整实际App门禁；生产继续v27/c14，旧v26下载ProtocolException严格门槛保持。
+- v41不可变签名artifact11266090973已取回，APK16832600字节/SHA78e315c548ffc445ee5850bd29f7fdaae37e9ba3b5884e0c33872029095a104d；原ci_apk verify实际独立PASS：既有签名/包名、来源receipt、c24 manifest与127文件全部一致，artifact receipt本身不算运行验收。
+- 独立后续规则树behavior2/4单目标与behavior6状态10：3148/2575实际原CPU定向用例及229全JVM方法通过，仅局部实现，不在本候选、不算正常App/新地图验收。下一动作：冻结断言修正版并运行原CI，等待时继续后续有效地图/服务，不以第二殿或候选为总任务终点。
