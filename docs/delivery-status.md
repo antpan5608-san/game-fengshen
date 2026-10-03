@@ -1241,3 +1241,12 @@ v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真
 - v50/run37119767339签名成功、真实Content23通过/1错误，唯一失败是旧c1测试移除自动演员/战斗却保留后加sceneStories。修正仅删fixture的新脚本并断言无脚本/战斗；真实loader门槛与c30原hash不变，instrument编译PASS，正常新路线仍待跑。
 - inspect37119768728在11:29:05UTC成功：27/26=1319/2289，普通真机4/模拟器0/测试0，旧v26 ProtocolException1、清理0，生产仍v27，不擦除/绕过。
 - 独立村3原走路取得六NPC实际单帧、南向返回16(239,160)以及共享服务；受控源续跑不是正常新游戏/App。总体PARTIAL/ALL_MAPS_USABLE=NO继续。
+
+
+## WORLD-FULL-01 平安村隔离接续检查点（2026-10-03T12:25:48Z）
+
+- IMPLEMENTED/PARTIAL：原map3两入口、独立南向回16(239,160)、三店真实caller库存、40两住宿、十NPC静态姿态/八段原对白已走原导出/Loader/统一交易存档；不是正式发布或全部地图完成。受控原胜后源实际按键取证与正常Android明确分开。
+- c31/188文件/32图，manifest 3fc9e7ee17d0202a4bc42931a24b5fd0c6053a1b288fc93bb98635d4fc5a3a52；真实v27基底→固定c30本地配方→局部定义。父JSON字节/hash和中间manifest固定；Windows autocrlf真实checkout通过，保留TLS/签名/所有hash检查。新毛皮靴来源清除旧贡献记录，实际脚列表和迴避8不变。
+- 本地严格恢复、4村3导出、16ci_apk、249 JVM通过，instrument已编译。世界132项首轮130 PASS/2 ERROR：两个旧负例误读当前增量定义，改用各自固定golden后洞85六项/第一殿五项通过；不计作单次全量132通过。没有删除原反向断言。
+- Android新村3正常买卖/装备/住宿/对白/保存冷启已接原runtime，但尚未实跑；旧公开API签名保持。原v51/c30候选签名构建SUCCESS、runtime IN_PROGRESS，来源8aa冻结；生产仍v27，旧v26下载ProtocolException上传阻塞不绕过。
+- 本检查点真正关闭：村3局部定义/可复现导出缺口；正常可玩、手机、声音、医馆/住宅/NPC运动和跨手装备不关闭。十类欠账仍沿用本文权威清单，有效分母UNKNOWN、ALL_MAPS_USABLE=NO。继续医馆具体服务核定，不以此检查点结束总任务。

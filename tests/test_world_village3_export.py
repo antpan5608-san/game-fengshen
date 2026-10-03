@@ -42,6 +42,11 @@ class Village3ExportTests(unittest.TestCase):
         items={i['id']:i for i in self.scene['items']}
         self.assertEqual(['xiaolongnv'],items['rom.weapon.21']['equipment']['allowedCharacters'])
         self.assertEqual(['nezha'],items['rom.armor.30']['equipment']['allowedCharacters'])
+        foot=items['rom.armor.30']['equipment']
+        foot_list=next(s for s in foot['ruleSources']if s['cpuAddress']==0xefa6)
+        self.assertIn(30,ex.checked_span(self.r,foot_list)[:-1])
+        self.assertEqual(8,foot['evasionValue'])
+        self.assertNotIn(0xec0f,[s['cpuAddress']for s in foot['ruleSources']])
         self.assertNotIn('equipment',items['rom.weapon.33'])
         self.assertFalse(any('herbUse'in items[k]for k in ['rom.medicine.10','rom.medicine.14']))
     def test_forged_checkpoint_pin_provenance_base_or_cycle_is_rejected(self):

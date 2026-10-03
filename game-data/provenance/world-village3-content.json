@@ -2053,30 +2053,6 @@
             "sha256": "e72f4adc70f5fce7ba49bb1d5955b208d308579fe08d422b8152d2bfb16746b7"
           },
           {
-            "cpuAddress": 59752,
-            "length": 2,
-            "meaning": "weapon3 contribution=16",
-            "module": 2,
-            "offset": 92536,
-            "sha256": "707bf0b938f307b5c222e670598b865d5e1f8a8003df82c7abbf7c9f8fa4d720"
-          },
-          {
-            "cpuAddress": 60377,
-            "length": 2,
-            "meaning": "armor2 contribution=12",
-            "module": 2,
-            "offset": 93161,
-            "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839"
-          },
-          {
-            "cpuAddress": 60431,
-            "length": 2,
-            "meaning": "armor29 contribution=5",
-            "module": 2,
-            "offset": 93215,
-            "sha256": "2921a11f25dadaa24aa79a548e4e81508c2e5e56af2d833d65e2bcce448ce2f5"
-          },
-          {
             "offset": 92542,
             "length": 2,
             "sha256": "aa4fb8a61cab7db73f42671f2bb987a7291a436929b3d5f17ffe05f96be13371",
@@ -2492,30 +2468,6 @@
             "module": 2,
             "offset": 92526,
             "sha256": "e72f4adc70f5fce7ba49bb1d5955b208d308579fe08d422b8152d2bfb16746b7"
-          },
-          {
-            "cpuAddress": 59752,
-            "length": 2,
-            "meaning": "weapon3 contribution=16",
-            "module": 2,
-            "offset": 92536,
-            "sha256": "707bf0b938f307b5c222e670598b865d5e1f8a8003df82c7abbf7c9f8fa4d720"
-          },
-          {
-            "cpuAddress": 60377,
-            "length": 2,
-            "meaning": "armor2 contribution=12",
-            "module": 2,
-            "offset": 93161,
-            "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839"
-          },
-          {
-            "cpuAddress": 60431,
-            "length": 2,
-            "meaning": "armor29 contribution=5",
-            "module": 2,
-            "offset": 93215,
-            "sha256": "2921a11f25dadaa24aa79a548e4e81508c2e5e56af2d833d65e2bcce448ce2f5"
           },
           {
             "offset": 93217,

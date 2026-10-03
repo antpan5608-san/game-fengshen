@@ -4,7 +4,7 @@
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "contentVersion": "opening-segment-001-c31",
-  "manifestSha256": "3596b6e7690716e4761844898b05507e726e88f034861eee1a355a5a9dd3087c",
+  "manifestSha256": "3fc9e7ee17d0202a4bc42931a24b5fd0c6053a1b288fc93bb98635d4fc5a3a52",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
