@@ -2427,14 +2427,14 @@ class TouchTest:IsolatedGameTestCase(){
                 state("normal-earned-training-not-a-story-prerequisite")
             }
             if(cold)for(mid in maps){
-                val restoredStory=v.content.battle!!.storyBattles.getValue("rom.npc.$mid.1")
+                val restoredStory=v.content.npcs.filter{it.mapId==mid}.mapNotNull{v.content.battle!!.storyBattles[it.id]}.single()
                 assertTrue(restoredStory.alreadyWon(source.flags));assertTrue(source.flags[restoredStory.pendingFlag]!=true)
                 for(flag in restoredStory.victoryFlags)assertTrue(source.flags[flag]==true)
             }
             // Exact external cold snapshot covers all six completed halls;
             // normally re-enter the last one within the existing cold budget.
             for(mid in if(cold)listOf(maps.last())else maps){
-                val story=v.content.battle!!.storyBattles.getValue("rom.npc.$mid.1")
+                val story=v.content.npcs.filter{it.mapId==mid}.mapNotNull{v.content.battle!!.storyBattles[it.id]}.single()
                 val king=v.content.npcs.single{it.id==story.npcId}
                 val scene=v.content.scenes.getValue(mid)
                 val entry=v.content.exits.single{it.fromMapId==23&&it.toMapId==mid&&it.spawnX==scene.spawnX&&it.spawnY==scene.spawnY}

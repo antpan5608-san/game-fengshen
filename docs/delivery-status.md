@@ -1193,3 +1193,9 @@ v44/run37109855129来源73cc1b90在Windows恢复阶段因取证TSV被Git CRLF转
 v45/37110358080来源a73241ad/c25 Windows构建成功，证明TSV LF固定在真实runner通过；runtime实际16项加载错误同指Content.kt271旧定海珠限定，20项Content测试整体失败而不是正常AppPASS。原内容/类别grant取证未被否定，加载器改调用WorldItems.supportsTreasure与交易共用既有类别、稳定ID、maxCount、amount和flag规则，未知grant能力仍拒绝。238本地JVM全过、instrument编译成功；新App复测仍待原CI，不发布失败候选。
 
 后续定神珠代码和兼容性已保留独立cf5abea，242本地JVM通过，不混入本次被冻结c25加载修复候选。地图67/69/158/159真实受控入口和map68受控胜后→86自动对话的私有证据已取得，正常Android及正常末殿胜后仍NOT_RUN；不得以受控flag/坐标实验替主线可玩。全世界与十类欠账均未关闭。
+
+## WORLD-FULL-01 当前检查点 2026-10-03T09:15:44.708301+00:00
+
+- 正式仍v27/c14。v46/run37111464809来源f2f86ffa/c25签名构建成功，ContentTest 20执行/19通过/1错误：测试硬编码rom.npc.64.1不存在，原剧情NPC实为rom.npc.64.2；已按实际地图NPC与storyBattles绑定唯一解析，不改原数据/奖励断言。
+- 正常流程与冷启驱动同样修正该绑定；此次运行尚未进入正常主线，不能宣称六殿验收通过。独立后续树保留map67/c26及定神珠/schema1兼容进展；本次候选仅c25测试修复。
+- 旧v26 ProtocolException生产巡检阻塞仍保留，不发布失败候选，不降低门禁。下一动作：本地编译与原流程同源候选运行；独立继续map67侧室和末殿转世证据。ALL_MAPS_USABLE=NO。
