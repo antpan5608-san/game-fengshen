@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "ORIGINAL_ROM_STATIC_SLOT_MEMBERSHIP_AND_CONTRIBUTION",
+  "items": [
+    {
+      "id": "rom.weapon.18",
+      "equipment": {
+        "originalId": 18,
+        "slot": "rightHand",
+        "allowedCharacters": [
+          "xiaolongnv"
+        ],
+        "attackBonus": 12,
+        "defenseBonus": 0,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {
+            "offset": 92566,
+            "length": 2,
+            "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839",
+            "module": 2,
+            "cpuAddress": 59782,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94144,
+            "length": 15,
+            "sha256": "b0e67829f758335d7c911536047312ffaa04020b3f32ed35a4faa394a918878e",
+            "module": 2,
+            "cpuAddress": 61360,
+            "meaning": "Actor1 original equipment slot terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    },
+    {
+      "id": "rom.armor.10",
+      "equipment": {
+        "originalId": 10,
+        "slot": "body",
+        "allowedCharacters": [
+          "xiaolongnv"
+        ],
+        "attackBonus": 0,
+        "defenseBonus": 12,
+        "evasionValue": 0,
+        "operationEnabled": true,
+        "ruleSources": [
+          {
+            "offset": 93177,
+            "length": 2,
+            "sha256": "bf60e4349cace6bce0d552e8d783428db66d0d649bd9e430a3627e2ee14ac839",
+            "module": 2,
+            "cpuAddress": 60393,
+            "meaning": "Original equipment contribution"
+          },
+          {
+            "offset": 94159,
+            "length": 9,
+            "sha256": "14ffcafc51847f54bce183e792247c52b36b257256bb91075f08f9a51aa1b735",
+            "module": 2,
+            "cpuAddress": 61375,
+            "meaning": "Actor1 original equipment slot terminated list"
+          }
+        ],
+        "crossHandOccupancy": false
+      }
+    }
+  ],
+  "limits": [
+    "Current right-hand/body original shared transaction only; no left-hand command, new slot or extra stat inferred.",
+    "Normal Android equip/replace/old-save behavior remains NOT_RUN."
+  ]
+}

@@ -13,6 +13,49 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual bundled definitions with isolated inventory; not a normal acquisition recording. */
+    fun testControlledVillage2GirlEquipmentAndLegacyLootInventory(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val girl=c.joinCharacters.getValue("xiaolongnv")
+        val bag=mapOf("rom.weapon.18" to 1,"rom.armor.10" to 1,"rom.medicine.7" to 9)
+        val weapon=c.equipmentDefinitions.getValue("rom.weapon.18")
+        assertNull(OpeningEquipment.replace(c.initialPlayer,bag,weapon,c.equipmentDefinitions.values))
+        val equipped=OpeningEquipment.replace(girl,bag,weapon,c.equipmentDefinitions.values)!!
+        assertEquals(18,equipped.first.equipment!!.rightHand);assertEquals(1,equipped.second["rom.weapon.19"])
+        assertFalse(equipped.second.containsKey("rom.weapon.18"));assertEquals(girl,equipped.first.copy(equipment=girl.equipment))
+        val armored=OpeningEquipment.replace(equipped.first,equipped.second,c.equipmentDefinitions.getValue("rom.armor.10"),c.equipmentDefinitions.values)!!
+        assertEquals(10,armored.first.equipment!!.body);assertEquals(1,armored.second["rom.armor.11"])
+        val save=SaveSnapshot(c.scene.version,2,30*16+8,19*16+8,Key.DOWN,
+            listOf(c.initialPlayer,armored.first),armored.second,mapOf("unrelated" to true),50)
+        assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
+        val shop=c.shops.getValue("rom.shop.2.19");val oldDrop=c.itemDefinitions.getValue("rom.medicine.7")
+        val purchased=TownTrade.buy(save.money,save.inventory,shop,oldDrop)
+        assertNull(purchased.error);assertEquals(35,purchased.money);assertEquals(10,purchased.inventory[oldDrop.id])
+        val full=TownTrade.buy(purchased.money,purchased.inventory,shop,oldDrop)
+        assertNotNull(full.error);assertEquals(purchased.inventory,full.inventory);assertEquals(purchased.money,full.money)
+        val sold=TownTrade.sell(purchased.money,purchased.inventory,shop,oldDrop)
+        assertNull(sold.error);assertEquals(42,sold.money);assertEquals(9,sold.inventory[oldDrop.id])
+        assertNull(oldDrop.herbUse);assertNull(oldDrop.antidoteUse)
+    }
+    /** Bundled Hell data/loader fixture; it does not claim normal route acceptance. */
+    fun testScopedHellZonesRetainEveryGroupAndSupportedStatusBehavior(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val rules=c.battle!!
+        val zones=rules.zones.filter{it.mapId==23}
+        assertEquals(3,zones.size)
+        assertEquals(listOf(13,12,15),zones.map{it.groups.size})
+        assertTrue(c.scenes.getValue(23).unavailableRegions.isEmpty())
+        for(id in listOf(22,23,28,29,30)){
+            val enemy=rules.enemies.getValue(id)
+            assertTrue(OriginalStatus.enemySupported(enemy))
+            assertNotNull(c.enemyGraphics[id]);assertNotNull(c.itemDefinitions[enemy.loot!!.itemId])
+        }
+        assertEquals(8,rules.enemies.getValue(29).behaviorByte)
+        assertEquals(7,rules.enemies.getValue(30).behaviorByte)
+        assertEquals(setOf("xiaolongnv"),c.equipmentDefinitions.getValue("rom.weapon.18").allowedCharacters)
+        assertEquals("rightHand",c.equipmentDefinitions.getValue("rom.weapon.18").slot)
+        assertNull(c.itemDefinitions.getValue("rom.medicine.4").herbUse)
+    }
     /** Isolated persistence/collision fixture, not normal acquisition or route evidence. */
     fun testControlledReusableWorldItemRestoresRemovedObjectState(){
         val content=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

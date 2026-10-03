@@ -620,6 +620,22 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         if enemy['iceSource'].get(key)!=original_ice['iceSource'][key]:
                             raise ValueError('Ice evidence span differs from original dispatch')
                 checked_span(reader,enemy['iceSource'])
+            elif enemy['behaviorByte']==8:
+                if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
+                    raise ValueError('Behavior8 requires its scoped status evidence')
+                proof=load(ROOT/enemy['behaviorEvidence'])
+                rules=proof['rules']
+                if (proof['romSha256'],proof['scopeRevision'],proof['enemyId'],proof['behavior'],proof['statusMask']) != \
+                        (SHA256,'behavior8-state08-and-no-eligible-command-progress',29,8,8) or \
+                        rules['legalReplaceMasks']!=[0,4,8] or rules['hpChangedByStatus'] is not False or \
+                        rules['commandSkipMask']!=56 or rules['battleExitClearMask']!=8 or \
+                        rules['battleExitKeeps']!=[2,4,16,32]:
+                    raise ValueError('Behavior8 status rules differ from original dispatch')
+                required={(9,0x8dc4,12),(9,0x8de9,201),(9,0xa0d2,88),(9,0xb68e,119),
+                          (9,0xa69f,73),(9,0x818e,126),(9,0x9282,46)}
+                if {(s['module'],s['cpuAddress'],s['length']) for s in proof['sources']}!=required:
+                    raise ValueError('Behavior8 lacks command progression and exit evidence')
+                for span in proof['sources']:checked_span(reader,span)
             elif enemy['behaviorByte'] not in (0,7,9) or 'iceBaseDamage' in enemy:
                 raise ValueError('Enemy behavior requires implementation and evidence')
         for zone in overlay.get('zones',[]):
@@ -755,7 +771,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         flags=[checked_span(reader,span)[0] for span in inn['statusFlagSources']]
         if inn['blockedStatusMask']!=sum(set(flags)) or any(x not in (2,16,32,64) for x in flags):
             raise ValueError('Lodging status policy differs from original routine')
-    if evidence.get('shops') or evidence.get('items'):
+    if evidence.get('shops') or evidence.get('items') or evidence.get('existingItemPriceUpdates'):
         from forensics.fengshen246 import extract_world_service_catalog
         catalog=extract_world_service_catalog(reader)
         items={i['id']:i for i in catalog['items']}
@@ -809,6 +825,26 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if shop['items']!=expected or shop['sellItems']!=expected:
                 raise ValueError('Service stock differs from original category/context')
             checked_span(reader,shop['source']['stockRange'])
+        # An old loot definition can predate a usable merchant price. Preserve
+        # its stable ID/name/effects and only add the actual catalog price,
+        # bound to the complete reviewed definition and original price pointer.
+        for update in evidence.get('existingItemPriceUpdates',[]):
+            matches=[i for i in scene['items'] if i['id']==update['id']]
+            original=items.get(update['id'])
+            if len(matches)!=1 or original is None or digest(encoded(matches[0]))!=update['baseDefinitionSha256']:
+                raise ValueError('Existing item price update differs from reviewed definition')
+            old=matches[0]
+            if any(old[k]!=original[k] for k in ('category','originalId','maxCount')) or \
+                    any(update[k]!=original[k] for k in ('buyPrice','sellPrice')) or \
+                    any(k in old for k in ('buyPrice','sellPrice')):
+                raise ValueError('Existing item price update must fill absent actual catalog prices')
+            for key in ('offset','module','cpuAddress','length','sha256'):
+                if update['priceSource'].get(key)!=original['priceSource'][key]:
+                    raise ValueError('Existing item price source differs from its original pointer')
+            checked_span(reader,update['priceSource'])
+            old.update({k:update[k]for k in ('buyPrice','sellPrice')})
+            old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
+                               merchantPriceRange=update['priceSource'])
     for name in ('npcs','dialogues','inns','shops','items'):
         old=scene.get(name,[]);added=evidence.get(name,[])
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')

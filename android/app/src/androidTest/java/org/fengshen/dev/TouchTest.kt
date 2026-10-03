@@ -10,6 +10,11 @@ import java.io.File
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    // The opening zone is a separate original root, not an entry in the later
+    // zones array. A normal training driver must query both existing domains.
+    private fun inExistingEncounterRegion(content:BattleContent,mapId:Int,x:Int,y:Int)=
+        content.zones.any{it.contains(mapId,x,y)}||
+            (mapId==content.zoneMapId&&content.zoneRects.any{it.contains(x,y)})
     private fun launch():Pair<MainActivity,GameView>{
         val activity=instrumentation.startActivitySync(Intent(instrumentation.targetContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         var view:GameView?=null
@@ -19,7 +24,12 @@ class TouchTest:IsolatedGameTestCase(){
             if(view!=null)break
             SystemClock.sleep(50)
         }
-        assertNotNull(view)
+        if(view==null){
+            var visibleMessage=""
+            instrumentation.runOnMainSync{visibleMessage=(activity.findViewById<ViewGroup>(android.R.id.content)
+                .getChildAt(0) as? android.widget.TextView)?.text?.toString()?:"No GameView or loading message"}
+            fail("App failed to become interactive: $visibleMessage")
+        }
         instrumentation.runOnMainSync{view!!.active=true;view!!.focused=true}
         if(view!!.layer==GameView.Layer.DIALOGUE)tap(view!!,Pair(view!!.width*.5f,view!!.height*.5f))
         return activity to view!!
@@ -1630,7 +1640,7 @@ class TouchTest:IsolatedGameTestCase(){
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                         v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
-                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            inExistingEncounterRegion(v.content.battle!!,v.world.mapId,nx,ny)&&
                             v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
                     }
                 }
@@ -1940,7 +1950,7 @@ class TouchTest:IsolatedGameTestCase(){
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                         v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
-                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            inExistingEncounterRegion(v.content.battle!!,v.world.mapId,nx,ny)&&
                             v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
                     }
                 }
@@ -2082,13 +2092,15 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldCave85ColdStartAndReentryMatchesNormalSave(){normalWorldStoryContinuation(true,false)}
     fun testNormalWorldEastPalacePartyFromVerifiedCaveSave(){normalWorldStoryContinuation(false,true)}
     fun testWorldEastPartyColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true)}
+    fun testNormalWorldHellVillageServicesFromVerifiedEastPartySave(){normalWorldStoryContinuation(false,true,true)}
+    fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
     // Both routes share the same real touch/service/BFS driver. Only their
     // verified source checkpoints and scenario assertions differ.
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(east)"east-palace" else "cave85"
+        val label=if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2179,8 +2191,8 @@ class TouchTest:IsolatedGameTestCase(){
                     assertEquals(minOf(fight.hero.maxHp,displayedAction.beforeHeroHp+50),displayedAction.heroHp)
                     state("boss-herb-action");capturedBattleHerb=true
                 }
-                if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
-                    val acting=fight.inputHero?:fight.hero
+                if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
+                    val acting=fight.inputHero!!
                     val heal=acting.hp<=acting.maxHp/2||(boss&&bossHerbs==0&&acting.hp<acting.maxHp)
                     if(heal&&v.battleHerbCount()>0){
                         val before=fight.hero;val count=v.battleHerbCount()
@@ -2296,6 +2308,66 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
+        }
+        if(hell){
+            assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+            assertEquals(true,source.flags["rom.map.95.flag.128"])
+            state(if(cold)"cold-complete-party-and-services-save" else "verified-east-party-source")
+            if(cold){
+                assertEquals(2,v.world.mapId)
+                val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,1))
+                tap(v,center(v.panelCharacterBounds("xiaolongnv")));assertEquals(before,v.currentSnapshot())
+                state("cold-girl-equipment-and-owned-items");instrumentation.runOnMainSync{v.handleBack()}
+                val entry=enterService(2,22);val saved=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(saved,v.currentSnapshot())
+                leaveService(entry);assertEquals(source.flags,v.currentSnapshot().flags)
+                checkSourceUnchanged();persistChecked();state("cold-real-inn-reentry-no-free-rest-or-reward")
+                instrumentation.runOnMainSync{activity.finish()};return
+            }
+            assertEquals(23,v.world.mapId)
+            walkTo(55,91);assertEquals(2,v.world.mapId);assertEquals(30,v.world.x/16);assertEquals(19,v.world.y/16)
+            state("normal-hell-to-village2")
+            // Normal one-item buy/sell through each existing touch path. The
+            // source money and inventory are never repaired or replenished.
+            for((room,id)in listOf(17 to "rom.weapon.3",18 to "rom.armor.29",19 to HerbUse.ID)){
+                val entry=enterService(2,room);state("normal-shop-$room-open")
+                trade(id,true);state("normal-shop-$room-bought")
+                trade(id,false);state("normal-shop-$room-sold");leaveService(entry)
+            }
+            val medicineEntry=enterService(2,19)
+            trade(HerbUse.ID,true,(6-(v.currentSnapshot().inventory[HerbUse.ID]?:0)).coerceAtLeast(0))
+            trade(AntidoteUse.ID,true,(4-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0))
+            leaveService(medicineEntry)
+            // Cure each genuinely poisoned owner with the existing selected-
+            // character command, never borrow actor0 HP or mutate party order.
+            for(actor in v.currentSnapshot().characters.filter{it.statusMask and OriginalStatus.POISON!=0}){
+                val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
+                tap(v,center(v.panelCharacterBounds(actor.id)));scrollToItem(v,AntidoteUse.ID)
+                tap(v,center(v.panelItemBounds(AntidoteUse.ID)));assertEquals(before,v.currentSnapshot())
+                tap(v,center(v.panelPrimaryBounds()));val after=v.currentSnapshot()
+                assertEquals(0,after.characters.single{it.id==actor.id}.statusMask and OriginalStatus.POISON)
+                assertEquals(before.characters.filter{it.id!=actor.id},after.characters.filter{it.id!=actor.id})
+                assertEquals(((before.inventory[AntidoteUse.ID]?:0)-2).coerceAtLeast(0),after.inventory[AntidoteUse.ID]?:0)
+                instrumentation.runOnMainSync{v.handleBack()};state("normal-antidote-${actor.id}")
+            }
+            inn(2);assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
+            state("normal-original20-inn-two-actor-recovery-and-return")
+            walkTo(30,19);assertEquals(23,v.world.mapId);assertEquals(55,v.world.x/16);assertEquals(91,v.world.y/16)
+            state("normal-village2-return-to-hell")
+            // Enter the actual further partitions with ordinary movement and
+            // actual random encounters. No scene/grant/encounter injection.
+            walkTo(55,70);state("normal-original-zone10-reached")
+            val zone10Fights=fights;var count=0
+            while(fights==zone10Fights){assertTrue("Bounded natural zone10 encounter",count++<120);step(if(v.world.y/16>69)Key.UP else Key.DOWN)}
+            walkTo(55,35);state("normal-original-zone13-reached")
+            val zone13Fights=fights;count=0
+            while(fights==zone13Fights){assertTrue("Bounded natural zone13 encounter",count++<120);step(if(v.world.y/16>34)Key.UP else Key.DOWN)}
+            walkTo(55,91);assertEquals(2,v.world.mapId)
+            assertEquals(source.flags,v.currentSnapshot().flags);assertEquals(0,bossEntries)
+            checkSourceUnchanged();persistChecked()
+            File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-two-actor-extended-hell-and-services-saved")
+            instrumentation.runOnMainSync{activity.finish()};return
         }
         if(east){
             val story=v.content.battle!!.storyBattles.getValue("rom.npc.95.0")
@@ -2486,7 +2558,7 @@ class TouchTest:IsolatedGameTestCase(){
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                         v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
-                            v.content.battle!!.zones.any{it.contains(v.world.mapId,nx,ny)}&&
+                            inExistingEncounterRegion(v.content.battle!!,v.world.mapId,nx,ny)&&
                             v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
                     }
                 }
@@ -2708,6 +2780,35 @@ class TouchTest:IsolatedGameTestCase(){
     }
 
     /** Controlled gesture/HP fixture, never used as proof of normal route or real stats. */
+    fun testControlledWholly08PartyAdvancesWithoutTouchCommand(){
+        val(activity,v)=launch();val rules=v.content.battle!!
+        val zone=rules.zones.first{it.mapId==23&&it.groups.any{g->g.members.any{it.enemyId==29}}}
+        val group=zone.groups.first{it.members.size==1&&it.members.single().enemyId==29}
+        val actors=listOf(v.content.initialPlayer,v.content.joinCharacters.getValue("xiaolongnv"))
+            .map{it.copy(hp=1000,maxHp=1000,statusMask=8)} // Isolated status fixture only.
+        val fight=OpeningBattle(group,rules,actors.first(),0,0)
+        fight.configureParty(actors,mapOf("nezha" to 0,"xiaolongnv" to 1),
+            actors.associate{it.id to 0},actors.associate{it.id to 0})
+        val p=BattlePresentation();val enemyHp=fight.enemies.single().hp
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{
+            field("battle",fight);field("battlePresentation",p);field("battleID","controlled-all08")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
+            v.input.clear();p.tick(400)
+        }
+        val deadline=SystemClock.elapsedRealtime()+20000
+        var advanced=false
+        while(SystemClock.elapsedRealtime()<deadline){
+            instrumentation.runOnMainSync{advanced=fight.inputRevision>0}
+            if(advanced)break
+            SystemClock.sleep(40)
+        }
+        assertTrue("Ready controller must advance original enemy/recovery without a touch",advanced)
+        assertEquals(enemyHp,fight.enemies.single().hp)
+        assertEquals(0,fight.herbsConsumed)
+        screenshot(v,"world-hell-village2-controlled-all08-progress")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     fun testControlledMobileBattleTouchAndSnapshots(){
         val(activity,v)=launch();val rules=v.content.battle!!
         val group=rules.groups.first{g->g.members.groupBy{it.enemyId}.values.any{it.size>1}}

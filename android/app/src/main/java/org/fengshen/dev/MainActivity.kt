@@ -272,6 +272,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         } else if(active&&focused&&layer==Layer.BATTLE)clock.advance(time){
             if(!battleInfoOpen&&!battleItemsOpen){
                 if(battlePresentation.tick(16))finishBattlePresentation()
+                // No touch command exists for a wholly state08 party. The
+                // original scheduler still advances enemies and recovery once.
+                if(battlePresentation.screen==BattlePresentation.Screen.COMMAND){
+                    val current=battle
+                    if(current!=null&&current.inputHero==null){
+                        val revision=current.inputRevision
+                        val turn=current.continueSkippedCommands{battleRandom.nextInt(256)}
+                        if(turn!=null)showSubmittedBattleCommand(current,revision,turn)
+                    }
+                }
                 if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&storyBattle==null&&
                     !battleSavePending&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
             }
@@ -411,7 +421,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
             BattlePhase.ESCAPED->{
                 inventory=current.inventoryAfterBattle(inventory)
-                characters=current.party
+                characters=current.charactersAfterBattle()
                 battleMessage="逃跑成功" // No rewards, no invented grace period.
             }
             BattlePhase.DEFEAT->{
@@ -856,6 +866,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun panelListBounds()=modalLayout().list
     fun panelItemBounds(id:String)=modalLayout().visibleRow(panelItems().indexOfFirst{it.key==id},modalListScroll)
     fun panelSlotBounds(slot:String)=modalLayout().visibleRow(listOf("rightHand","leftHand","body","feet").indexOf(slot),modalListScroll)
+    fun panelCharacterBounds(id:String)=modalLayout().party.getOrNull(characters.indexOfFirst{it.id==id})?:Box(0f,0f,0f,0f)
     private fun heroName(id:String)=content.characterDefinitions[id]?.name?:id
     private fun slotName(slot:String)=mapOf("rightHand" to "右手","leftHand" to "左手","body" to "身体","feet" to "脚")[slot]?:slot
     private data class ItemAction(val kind:String?,val text:String,val enabled:Boolean,val reason:String,val target:String?)

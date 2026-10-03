@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "original-village2-shared-services",
+  "kind": "CONTINUATION_FROM_VERIFIED_ORIGINAL_SAVE",
+  "controllerOnly": true,
+  "ramWrites": false,
+  "licenseStatus": "UNKNOWN",
+  "normalEntry": {
+    "path": "private-derived/world-village2-normal/normal-village2-arrival.fc8",
+    "sha256": "6349dc36e752e99024ed5a2cde77b6ef284d88e2fc20249461f5e177b2af0242"
+  },
+  "normalThreeDoorBranches": {
+    "path": "private-derived/world-village2-services/report.json",
+    "sha256": "b0f4174a776f423d1aa7f1fd7e3c8425bf98e163c7d351e8c981f7a94ac7976d"
+  },
+  "lodging": {
+    "before": {
+      "mapId": 22,
+      "cell": [
+        12,
+        7
+      ],
+      "directionByte": 0,
+      "partyCount": 2,
+      "money": 1627,
+      "hp": [
+        50,
+        92
+      ],
+      "maxHp": [
+        128,
+        92
+      ],
+      "mp": [
+        0,
+        44
+      ],
+      "maxMp": [
+        0,
+        44
+      ]
+    },
+    "paid": {
+      "mapId": 22,
+      "cell": [
+        12,
+        7
+      ],
+      "directionByte": 0,
+      "partyCount": 2,
+      "money": 1607,
+      "hp": [
+        50,
+        92
+      ],
+      "maxHp": [
+        128,
+        92
+      ],
+      "mp": [
+        0,
+        44
+      ],
+      "maxMp": [
+        0,
+        44
+      ]
+    },
+    "rested": {
+      "mapId": 22,
+      "cell": [
+        12,
+        7
+      ],
+      "directionByte": 0,
+      "partyCount": 2,
+      "money": 1607,
+      "hp": [
+        128,
+        92
+      ],
+      "maxHp": [
+        128,
+        92
+      ],
+      "mp": [
+        0,
+        44
+      ],
+      "maxMp": [
+        0,
+        44
+      ]
+    },
+    "returned": {
+      "mapId": 2,
+      "cell": [
+        6,
+        14
+      ],
+      "directionByte": 0,
+      "partyCount": 2,
+      "money": 1607,
+      "hp": [
+        128,
+        92
+      ],
+      "maxHp": [
+        128,
+        92
+      ],
+      "mp": [
+        0,
+        44
+      ],
+      "maxMp": [
+        0,
+        44
+      ]
+    },
+    "samples": {
+      "normal-village2-inn-menu": {
+        "path": "private-derived/world-village2-normal/normal-village2-inn-menu-ram.bin",
+        "sha256": "8e179d3f201befce472e04ae45edea12a4eba8617323923c2d5630c9f2d3e2b0"
+      },
+      "normal-village2-inn-price": {
+        "path": "private-derived/world-village2-normal/normal-village2-inn-price-ram.bin",
+        "sha256": "c72835735d351046216dbbb666403fdbd833e5baf6f6c316565776ab0c335514"
+      },
+      "normal-village2-inn-rested": {
+        "path": "private-derived/world-village2-normal/normal-village2-inn-rested-ram.bin",
+        "sha256": "f30f662a4422e9519739b2b34f409bf178c726b28153818edf0a85949ca95d12"
+      },
+      "normal-village2-inn-return": {
+        "path": "private-derived/world-village2-normal/normal-village2-inn-return-ram.bin",
+        "sha256": "17b9b5e7fa46497152a0dfaed92eaf6aa122eb79af58d0e58439e50623bc1b1a"
+      }
+    }
+  },
+  "rules": {
+    "callerMapId": 2,
+    "shopOverlay": 23,
+    "innOverlay": 178,
+    "innPrice": 20,
+    "innBlockedMask": 114,
+    "normalReturnCell": [
+      6,
+      14
+    ],
+    "optionalServiceNotStoryGate": true
+  },
+  "sources": [
+    {
+      "offset": 19443,
+      "length": 79,
+      "sha256": "824843f03f89e97e7d09aa11dd25cb9283fdb6f4926c70ac5a1dbf36b0435178",
+      "module": 0,
+      "cpuAddress": 52195,
+      "meaning": "Existing shared caller and overlay selection"
+    },
+    {
+      "offset": 21193,
+      "length": 1,
+      "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977",
+      "module": 0,
+      "cpuAddress": 53945,
+      "meaning": "Village2 overlay offset12"
+    },
+    {
+      "offset": 21219,
+      "length": 6,
+      "sha256": "c09ef78ebddff4e55eaf501fb1a559fc4088fea3d26fba28dd1bc48bf743acb7",
+      "module": 0,
+      "cpuAddress": 53971,
+      "meaning": "Village2 six service overlays, including inn178"
+    },
+    {
+      "offset": 83663,
+      "length": 2,
+      "sha256": "5aeca385d8b781825b07bbec7c858b7170426c88088935850bc13dd6402368a5",
+      "module": 2,
+      "cpuAddress": 50879,
+      "meaning": "Village2 actual lodging price20"
+    }
+  ],
+  "limits": [
+    "Three merchant screenshots prove normal doors, room spawn and rendering only; normal original merchant buy/sell not rerun.",
+    "Inn normal continuation executes actual20 cost and both actor recovery/return; exceptional status mask uses already verified shared routine, not new full boundary claims.",
+    "No clinic, outside villagers, original optional guests, plot or Android runtime acceptance is claimed."
+  ]
+}

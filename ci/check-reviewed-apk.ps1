@@ -31,3 +31,4 @@ if($runtime.worldWestPalace -ne 'PASS' -or $runtime.worldSharedVillageServices -
 if($runtime.worldNorthPalace -ne 'PASS' -or $runtime.worldPearlUseAndColdRestart -ne 'PASS'){throw 'North palace/independent pearl/normal crossing/cold restart gates must verify this exact APK'}
 if($runtime.worldCave85Normal -ne 'PASS' -or $runtime.worldCave85OnceAndColdRestart -ne 'PASS'){throw 'Cave85 normal story/once-only rewards/cold restart gates must verify this exact APK'}
 if($runtime.worldEastPalaceNormal -ne 'PASS' -or $runtime.worldEastPartyAndColdRestart -ne 'PASS'){throw 'East palace mechanism/Boss/followup/party/normal battle/cold restart gates must verify this exact APK'}
+if($runtime.worldHellVillageNormal -ne 'PASS' -or $runtime.worldHellVillageColdRestart -ne 'PASS' -or $runtime.worldWholly08Controller -ne 'PASS'){throw 'Hell partitions/shared village services/08 command progression/cold restart gates must verify this exact APK'}

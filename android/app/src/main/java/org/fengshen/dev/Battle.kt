@@ -155,7 +155,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private val weaponBonus:Int,private val equippedArmorBonus:Int?=null) {
     val enemies=group.members.sortedBy{it.slot}.map{m->
         val definition=content.enemies[m.enemyId]?:error("Missing enemy ${m.enemyId}")
-        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(7,9)||content.physicalRules!=null))
+        require(OriginalStatus.enemySupported(definition)&&(definition.behaviorByte !in setOf(7,8,9)||content.physicalRules!=null))
             {"Unimplemented enemy special behavior"}
         BattleEnemy(m.slot,definition,definition.hp)
     }
@@ -194,6 +194,14 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         return originalRound(nextByte)
     }
     var phase=BattlePhase.TARGET;private set
+    /** Original B68E→BA18 advances directly to stage5 when every living actor
+     * is state08. Called by the controller only at a ready input boundary. */
+    fun continueSkippedCommands(nextByte:()->Int):BattleTurn? {
+        if(phase!=BattlePhase.TARGET||content.physicalRules==null||commands.isNotEmpty()||inputHero!=null)return null
+        val living=partyStates.filter{it.hp>0}
+        if(living.isEmpty()||living.any{it.statusMask and OriginalStatus.STATUS_BIT8==0})return null
+        return originalRound(nextByte)
+    }
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
@@ -211,6 +219,12 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         if(herbsConsumed==0)return inventory
         val count=inventory[HerbUse.ID]?:0;check(count>=herbsConsumed){"Pending battle item count changed"}
         return inventory.toMutableMap().also{if(count==herbsConsumed)it.remove(HerbUse.ID) else it[HerbUse.ID]=count-herbsConsumed}
+    }
+    /** Original 9:9282 battle-exit cleanup clears08 only for this supported
+     * normal status domain; status04, poison02 and death are not cured by leaving battle. */
+    fun charactersAfterBattle():List<CharacterState> {
+        check(phase in setOf(BattlePhase.VICTORY,BattlePhase.ESCAPED))
+        return partyStates.map{it.copy(statusMask=it.statusMask and 0xf7)}
     }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
         delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null)=
@@ -329,6 +343,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     val updated=OriginalStatus.applyStatus4(target);setCharacter(target.id,updated)
                     steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 04" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
                 }
+                if(enemy.definition.behaviorByte==8&&OriginalStatus.choosesStatus4(random)){
+                    steps.add(frame("${enemy.definition.name} 异常状态攻击",actor=slot,kind=BattleActionKind.ATTACK,targetId=target.id))
+                    val updated=OriginalStatus.applyStatus8(target);setCharacter(target.id,updated)
+                    steps.add(frame(if(updated.statusMask!=target.statusMask)"异常 08" else "异常状态保持",actor=slot,kind=BattleActionKind.STATUS,targetId=target.id));continue
+                }
                 val ice=enemy.definition.iceBaseDamage!=null&&(random and 127)<41
                 val targets=if(ice)partyStates.filter{it.hp>0} else listOf(target)
                 steps.add(frame(if(ice)"${enemy.definition.name} 冰系攻击" else "${enemy.definition.name} 攻击",actor=slot,
@@ -377,7 +396,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         val money=enemies.sumOf{it.definition.moneyReward}
         val shares=OriginalPartyRules.experienceShares(enemies.map{it.definition.experienceReward},originalActors())
         val levels=mutableMapOf<String,List<Int>>();val gained=mutableMapOf<String,Int>()
-        partyStates=partyStates.map{player->
+        partyStates=charactersAfterBattle().map{player->
             val amount=shares[originalIndices.getValue(player.id)]?:0;gained[player.id]=amount
             var grown=player.copy(experience=(player.experience+amount).coerceAtMost(0xffffff))
             val actorLevels=mutableListOf<Int>()

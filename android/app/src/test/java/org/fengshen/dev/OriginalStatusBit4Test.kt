@@ -74,7 +74,8 @@ class OriginalStatusBit4Test {
         // The shared scheduler now implements behavior9; map persistence is tested separately.
         val enemy=EnemyDefinition(16,"原版敌人 16",44,29,15,36,12,217,9)
         assertTrue(OriginalStatus.enemySupported(enemy))
-        for(unsupported in listOf(1,2,4,5,6,8,10,255))
+        assertTrue(OriginalStatus.enemySupported(enemy.copy(behaviorByte=8))) // Separate state08 CPU evidence.
+        for(unsupported in listOf(1,2,4,5,6,10,255))
             assertFalse("behavior=$unsupported",OriginalStatus.enemySupported(enemy.copy(behaviorByte=unsupported)))
         // Existing ice still needs its verified numerical input.
         assertFalse(OriginalStatus.enemySupported(enemy.copy(behaviorByte=3,iceBaseDamage=null)))
