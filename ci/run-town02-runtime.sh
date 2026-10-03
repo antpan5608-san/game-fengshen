@@ -178,7 +178,7 @@ python tools/record_app_audio.py world-north-palace testNormalWorldNorthPalaceAn
 python tools/record_app_audio.py world-cave85 testNormalWorldCave85FromVerifiedNorthPalaceSave --silent --cold-test testWorldCave85ColdStartAndReentryMatchesNormalSave --budget-seconds 2400
 python tools/record_app_audio.py world-east-palace testNormalWorldEastPalacePartyFromVerifiedCaveSave --silent --cold-test testWorldEastPartyColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-hell-village2 testNormalWorldHellVillageServicesFromVerifiedEastPartySave --silent --cold-test testWorldHellVillageColdStartMatchesNormalSave --budget-seconds 1200
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 2400
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600

@@ -2660,18 +2660,6 @@ class TouchTest:IsolatedGameTestCase(){
                     step(key)
                 }
             }
-            fun restock(){
-                val entry=enterService(2,19)
-                for(id in listOf(HerbUse.ID,AntidoteUse.ID)){
-                    val item=v.content.itemDefinitions.getValue(id)
-                    val count=minOf(10-(v.currentSnapshot().inventory[id]?:0),
-                        ((v.currentSnapshot().money-20).coerceAtLeast(0)/item.buyPrice!!)).coerceAtLeast(0)
-                    if(count>0)trade(id,true,count)
-                }
-                leaveService(entry);inn(2)
-                assertTrue("Actual inn must leave living party",v.currentSnapshot().characters.all{it.hp>0})
-                state("normal-bought-supply-and-paid-inn")
-            }
             if(rebirth&&cold){
                 val story=v.content.sceneStories.getValue("rom.npc.86.0")
                 assertTrue(source.flags[story.flagId]==true);assertTrue(source.flags[story.pendingFlag]!=true)
@@ -2692,20 +2680,11 @@ class TouchTest:IsolatedGameTestCase(){
                 instrumentation.runOnMainSync{activity.finish()};return
             }
             if(!cold){
-                leaveLanding();walkTo(55,91);assertEquals(2,v.world.mapId);restock()
-                training=true;walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(55,93)
-                var steps=0
-                while(v.currentSnapshot().characters.any{it.level<25}){
-                    assertTrue("Normal training only; never grant levels or money",steps++<7000)
-                    val s=v.currentSnapshot()
-                    if(s.characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}){
-                        walkTo(55,91);assertEquals(2,v.world.mapId);restock();walkTo(30,19);walkTo(55,93)
-                    }
-                    step(if(v.world.y/16>93)Key.UP else Key.DOWN)
-                }
-                walkTo(55,91);assertEquals(2,v.world.mapId);training=false;restock()
-                walkTo(30,19);assertEquals(23,v.world.mapId)
-                state("normal-earned-training-not-a-story-prerequisite")
+                // Prepare before crossing the lower bridge in the verified foot mode.
+                // Completed halls do not make a reverse supply route exist.
+                assertTrue("Use same-candidate first-hall normal preparation, never grant levels",
+                    v.currentSnapshot().characters.all{it.level>=25})
+                state("normal-earned-preparation-preserved-no-invented-village-return")
             }
             if(cold)for(mid in maps){
                 val restoredStory=v.content.npcs.filter{it.mapId==mid}.mapNotNull{v.content.battle!!.storyBattles[it.id]}.single()
@@ -2721,6 +2700,16 @@ class TouchTest:IsolatedGameTestCase(){
                 val entry=v.content.exits.single{it.fromMapId==23&&it.toMapId==mid&&it.spawnX==scene.spawnX&&it.spawnY==scene.spawnY}
                 val gate=v.content.sceneBarriers.single{it.mapId==mid}
                 val exit=v.content.exits.single{it.fromMapId==mid&&it.triggerX==gate.x&&it.triggerY==gate.y}
+                if(!cold&&!rebirth&&mid in listOf(62,66)){
+                    val zone=if(mid==62)10 else 13;val x=if(zone==10)50 else 51;val y=if(zone==10)60 else 32
+                    walkTo(x,y);state("normal-original-zone$zone-reached-after-real-hall-gates")
+                    val beforeFights=fights;var steps=0
+                    while(fights==beforeFights){
+                        assertTrue("Bounded natural zone$zone encounter",steps++<120)
+                        walkTo(x,if(v.world.y/16==y)y+1 else y)
+                    }
+                    state("normal-original-zone$zone-natural-encounter")
+                }
                 leaveLanding();walkTo(entry.triggerX,entry.triggerY);assertEquals(mid,v.world.mapId)
                 assertEquals(entry.spawnX,v.world.x/16);assertEquals(entry.spawnY,v.world.y/16)
                 state("normal-map-$mid-original-entry")
@@ -2828,9 +2817,6 @@ class TouchTest:IsolatedGameTestCase(){
                 walkTo(exit.triggerX,exit.triggerY);assertEquals(23,v.world.mapId)
                 assertEquals(exit.spawnX,v.world.x/16);assertEquals(exit.spawnY,v.world.y/16)
                 persistChecked();state("normal-map-$mid-original-open-gate-saved")
-                if(!cold&&mid!=maps.last()){
-                    leaveLanding();walkTo(55,91);assertEquals(2,v.world.mapId);restock();walkTo(30,19)
-                }
             }
             assertEquals(if(cold)0 else maps.size,bossEntries);checkSourceUnchanged();persistChecked()
             if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
@@ -2919,8 +2905,8 @@ class TouchTest:IsolatedGameTestCase(){
             buyAndEquip();restock();inn(2);training=true
             walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(55,93)
             var steps=0
-            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<15}){
-                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<4000)
+            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<25}){
+                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<7000)
                 val low=v.currentSnapshot().characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}
                 val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
                 if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){
@@ -2999,15 +2985,10 @@ class TouchTest:IsolatedGameTestCase(){
             state("normal-original20-inn-two-actor-recovery-and-return")
             walkTo(30,19);assertEquals(23,v.world.mapId);assertEquals(55,v.world.x/16);assertEquals(91,v.world.y/16)
             state("normal-village2-return-to-hell")
-            // Enter the actual further partitions with ordinary movement and
-            // actual random encounters. No scene/grant/encounter injection.
-            walkTo(55,70);state("normal-original-zone10-reached")
-            val zone10Fights=fights;var count=0
-            while(fights==zone10Fights){assertTrue("Bounded natural zone10 encounter",count++<120);step(if(v.world.y/16>69)Key.UP else Key.DOWN)}
-            walkTo(55,35);state("normal-original-zone13-reached")
-            val zone13Fights=fights;count=0
-            while(fights==zone13Fights){assertTrue("Bounded natural zone13 encounter",count++<120);step(if(v.world.y/16>34)Key.UP else Key.DOWN)}
-            walkTo(55,91);assertEquals(2,v.world.mapId)
+            // Later exterior partitions require the original completed halls.
+            // Their natural encounters are checked in the hall-batch phase,
+            // not reached by pretending exterior23 is one connected field.
+            step(Key.DOWN);walkTo(55,91);assertEquals(2,v.world.mapId)
             assertEquals(source.flags,v.currentSnapshot().flags);assertEquals(0,bossEntries)
             checkSourceUnchanged();persistChecked()
             File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())

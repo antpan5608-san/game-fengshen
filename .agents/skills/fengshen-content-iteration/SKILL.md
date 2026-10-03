@@ -265,3 +265,6 @@ F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启�
 
 
 - 当前授权可接受明确非阻断历史故障时，诊断投影仍保留status/ERROR/计数；原runtime-summary.mjs的独立--release-assessment只核已经精确review的旧版本下载中断与可信两版hash。19 Node/投影方法、22原审批隔离场景和实际脱敏inspect输入评估已运行；新错误、崩溃、丢档或查询不可用仍拒绝。PowerShell/生产路径未实际执行前保持待核，不将ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES写NO_ISSUES_OBSERVED。动态例外存ci/runtime-nonblocking-issues.json，不复制进skill。
+
+
+- 地府外图按实际独立出口分段，不能在村庄验收提前寻路至后段，或根据殿堂反向出口假定整条返村路径存在。test_world_hell_route_driver已实际检查十殿下一入口、下桥类别11反向限制及后两区真实落点附近往返；正常训练/补给前移只是驱动策略，不加游戏前置。对应新App尚待原runner，不能把三项静态检查写正常游玩PASS。录屏器限定准备预算与异常/持久化边界四项已运行，保持其他预算上限与同产物门禁。
