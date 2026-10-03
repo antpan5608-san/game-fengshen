@@ -29,7 +29,7 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(boss.alreadyWon(restored.flags));assertEquals("rom.dialogue.70.4",boss.pendingDialogue(restored.flags))
         assertNull(c.sceneForState(60,restored.flags)!!.check(28,22));assertEquals(won,boss.rewardFlags(won))
         val done=boss.completeDialogue(won);assertTrue(done["rom.map.70.flag.4"]==true);assertTrue(done["rom.map.60.flag.4"]==true)
-        assertNull(boss.pendingDialogue(done));assertEquals(done,boss.completeDialogue(done))
+        assertTrue(done[boss.pendingFlag]!=true);assertEquals(done,boss.completeDialogue(done))
     }
 
     /** Controlled actual c23 loader/state roundtrip; not a normal Boss victory. */
