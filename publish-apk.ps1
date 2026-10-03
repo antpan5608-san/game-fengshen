@@ -45,6 +45,9 @@ $inspection=Get-Content (Join-Path $PSScriptRoot 'reports/runtime-preflight.json
 if($inspection.task_id -ne $publicationTask -or $inspection.stage -ne 'preflight' -or
    ([DateTimeOffset]::UtcNow-[DateTimeOffset]::Parse($inspection.queriedAt)).TotalDays -gt 7){throw 'Run current task runtime preflight before publication; unrelated/stale audit is not accepted'}
 
+& node (Join-Path $PSScriptRoot 'server/runtime-summary.mjs') --release-assessment (Join-Path $PSScriptRoot 'reports/runtime-preflight.json') (Join-Path $PSScriptRoot 'ci/runtime-nonblocking-issues.json') | Set-Content (Join-Path $PSScriptRoot 'reports/runtime-preflight-decision.json') -Encoding utf8NoBOM
+if($LASTEXITCODE -ne 0){throw 'Runtime inspection unavailable or unresolved new/unknown/blocking errors; upload prohibited'}
+
 if (-not $env:ALIYUN_ACCESS_KEY_ID -or -not $env:ALIYUN_ACCESS_KEY_SECRET) {
     if($env:GITHUB_ACTIONS -eq 'true'){throw 'Upload blocked: configure production GitHub OSS Secrets; no local credential fallback in CI'}
     $savedRemote = @{}

@@ -115,8 +115,8 @@ class RuntimeSummaryTests(unittest.TestCase):
         self.assertNotIn('($raw -join "`n")|ConvertFrom-Json', script)
         self.assertIn("status='UNAVAILABLE'", script)
         workflow = (ROOT / '.github/workflows/android-publish.yml').read_text()
-        self.assertIn("$inspection.result.status -notin @('NO_ISSUES_OBSERVED','NO_DATA')", workflow)
-        self.assertIn('Runtime inspection unavailable or unresolved current errors; upload prohibited', workflow)
+        self.assertIn("--release-assessment reports/runtime-preflight.json ci/runtime-nonblocking-issues.json", workflow)
+        self.assertIn('Runtime inspection unavailable or unresolved new/unknown/blocking errors; upload prohibited', workflow)
 
 
 if __name__ == '__main__':
