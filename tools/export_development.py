@@ -617,6 +617,9 @@ def validate_world_hall_batch_script(reader,map_id):
     if rule['barrierCell']!=[(gate['xCandidate']-120)//16,(gate['yCandidate']-120)//16] or \
             rule['npcCell']!=[(king['xCandidate']-120)//16,(king['yCandidate']-120)//16] or rule['firstMessage']!=raw[1] or rule['repeatMessage']!=raw[2]:
         raise ValueError('Hell batch cell or message differs from original record')
+    if rule.get('normalTalkCell')!=[rule['npcCell'][0],rule['npcCell'][1]+2] or rule.get('normalTalkDirection')!='UP' or \
+            rule.get('interactionEvidenceKind')!='CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE' or len(rule.get('interactionRamSha256',''))!=64:
+        raise ValueError('Hell batch lacks its controlled original interaction boundary')
     event=reader.word(10,0xd1e3+2*rule['eventId']);start=reader.word(10,event+6);win=reader.word(10,event+8)
     expected_source=bytes([0xa9,rule['sourceType']])+bytes.fromhex('2030d360')
     expected_win=bytes.fromhex('adc107d00420cfd1602072d32059d3a9')+bytes([rule['repeatMessage']])+bytes.fromhex('2078d360')
@@ -1112,7 +1115,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if evidence['graphics'].get(npc['sprite'])!=recipe:
                 raise ValueError('NPC sprite differs from reviewed original actor pose')
         if npc.get('interactionDirection'):
-            proof=load(ROOT/npc['interactionEvidence']);rule=proof['rules']
+            proof=load(ROOT/npc['interactionEvidence'])
+            rule=validate_world_hall_batch_script(reader,npc['mapId']) if npc['interactionEvidence']=='game-data/provenance/world-hell-hall-batch-script.json' else proof['rules']
             if proof['romSha256']!=SHA256 or (npc['id'],npc['mapId'],npc['cell'],npc['interactionCell'],npc['interactionDirection'])!= \
                     (rule['npcId'],rule['mapId'],rule['npcCell'],rule['normalTalkCell'],rule['normalTalkDirection']):
                 raise ValueError('Original nonadjacent interaction point differs')

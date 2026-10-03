@@ -85,7 +85,14 @@
         "module": 0,
         "cpuAddress": 54541,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        24,
+        7
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "1e14c4f25f6be3459b8d4176abec26286b22e8236f2ac319059479556ca53348"
     },
     "62": {
       "mapId": 62,
@@ -167,7 +174,14 @@
         "module": 0,
         "cpuAddress": 54543,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        17,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "6eeb676840312844fb6d83bd9c10db0f5d93413a4d9acd0aff61887284bf1aa3"
     },
     "63": {
       "mapId": 63,
@@ -249,7 +263,14 @@
         "module": 0,
         "cpuAddress": 54545,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        23,
+        7
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "db4db03865bcf910e9ecb313ff53c21c7457f0dae12c0d684730b7184e38dd20"
     },
     "64": {
       "mapId": 64,
@@ -331,7 +352,14 @@
         "module": 0,
         "cpuAddress": 54547,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        3,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "49c16e871da7b281daedec671004cc919521a2e5290db961c19152ae464d424b"
     },
     "65": {
       "mapId": 65,
@@ -413,7 +441,14 @@
         "module": 0,
         "cpuAddress": 54549,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        4,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "d0fa8f4cd12e771fda284012cc3de3c88bfda0c2e04fb607357ce6a0793686a7"
     },
     "66": {
       "mapId": 66,
@@ -495,7 +530,14 @@
         "module": 0,
         "cpuAddress": 54551,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        12,
+        9
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "a2c1519e0f833daad553436fcf59621931628f47bd64ce5916ce726aaedaf56f"
     },
     "67": {
       "mapId": 67,
@@ -577,7 +619,14 @@
         "module": 0,
         "cpuAddress": 54553,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        10,
+        3
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "d5bf0c3ea9f255b2017f4217a909098f5bcae446d17f6c29f3bd1b1255668efc"
     },
     "68": {
       "mapId": 68,
@@ -659,7 +708,14 @@
         "module": 0,
         "cpuAddress": 54555,
         "meaning": "Original per-map flag byte pointer"
-      }
+      },
+      "normalTalkCell": [
+        7,
+        5
+      ],
+      "normalTalkDirection": "UP",
+      "interactionEvidenceKind": "CONTROLLED_POSITION_DISPATCH_NOT_NORMAL_ROUTE",
+      "interactionRamSha256": "439fea023a19b61f7d6add0735f0140161d5f6ecaf4a515a0e2772ce96e402da"
     }
   },
   "sources": [

@@ -78,6 +78,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original status10 hit priority and defeat evidence gates failed'}
     & python -m unittest discover -s tests -p test_world_second_hall_export.py
     if($LASTEXITCODE -ne 0){throw 'Original second hall content and independent state gates failed'}
+    & python -m unittest discover -s tests -p test_world_hall_batch_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original Hell batch content, chest and independent state gates failed'}
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}
