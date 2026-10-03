@@ -47,3 +47,5 @@ if($runtime.worldTree107Normal -ne 'PASS' -or $runtime.worldTree107ColdRestart -
 if($runtime.worldRoom171Normal -ne 'PASS' -or $runtime.worldRoom171GiftColdRestart -ne 'PASS'){throw 'Original room171 route, teacher gift before dialogue, repeat and cold return must verify this exact APK'}
 
 if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndColdRestart -ne 'PASS'){throw 'Actual teacher signal, Yang use/dialogues, original third-actor battle and cold restart must verify this exact APK'}
+
+if($runtime.worldVillageFourServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFourColdRestart -ne 'PASS'){throw 'Actual village4 bridges, caller services, original NPC text/conditions and cold return must verify this exact APK'}

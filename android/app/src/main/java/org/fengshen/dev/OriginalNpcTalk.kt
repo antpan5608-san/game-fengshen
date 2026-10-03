@@ -26,6 +26,7 @@ object OriginalNpcTalk {
             return StoryFollowup.Result(next,if(repeat)rule.repeatDialogue else rule.firstDialogue,true)
         }
         if(rule.actionId==12)return teacher(before,rule,item)
+        if(rule.actionId==50)return villageFour(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -35,6 +36,24 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    private fun villageFour(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val masks=(0..6).map{1 shl it}
+        val mask=rule.mapFlagId.removePrefix("rom.map.4.flag.").toIntOrNull()
+        if(rule.mapId!=4||mask !in masks||rule.witnessFlagId!="rom.global.7c6.16"||rule.itemId.isNotEmpty()||
+            rule.messageDialogues.keys!=setOf(0,1,2)||rule.messageDialogues[0]!=rule.firstDialogue||
+            rule.messageDialogues[2]!=rule.repeatDialogue)
+            return StoryFollowup.Result(before,null,false,"当前村民对话规则未核验")
+        // The raw first/repeat selector skips action50 after this local bit.
+        // Action50 writes it only when the actual global witness is already set.
+        val message=when {
+            before.flags[rule.mapFlagId]==true->2
+            before.flags[rule.witnessFlagId]==true->1
+            else->0
+        }
+        val next=if(message==1)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,rule.messageDialogues.getValue(message),true)
     }
 
     private fun teacher(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {

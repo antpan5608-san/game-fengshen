@@ -2252,11 +2252,13 @@ class TouchTest:IsolatedGameTestCase(){
     fun testRoom171GiftColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,room171=true)}
     fun testNormalYangJoinAndThreePartyFromVerifiedRoomSave(){normalWorldStoryContinuation(false,true,yangJoin=true)}
     fun testYangJoinColdRestartAndOriginalTreeReturn(){normalWorldStoryContinuation(true,true,yangJoin=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false){
+    fun testNormalVillageFourServicesAndTalkFromVerifiedYangSave(){normalWorldStoryContinuation(false,true,village4=true)}
+    fun testVillageFourColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,village4=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(village4)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2311,7 +2313,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2539,6 +2541,90 @@ class TouchTest:IsolatedGameTestCase(){
                 .firstOrNull{treeRouteTo(it)!=null}
             assertNotNull("Original NPC must have a reachable adjacent cell",goal)
             treeWalkTo(goal!!);talk()
+        }
+        if(village4){
+            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+            assertEquals(true,source.flags["rom.map.110.flag.128"])
+            state(if(cold)"cold-exact-normal-village-save"else"verified-yang-three-party-source-no-grants")
+            if(!cold){
+                assertEquals(110,v.world.mapId);treeWalkTo(Triple(107,7,13));step(Key.DOWN)
+                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                walkTo(146,150);assertEquals(4,v.world.mapId);assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                state("normal-original-west-village-entry-no-optional-talk-lock")
+                for((room,id)in listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)){
+                    val entry=enterService(4,room);state("normal-original-shop-$room-open")
+                    trade(id,true);state("normal-original-shop-$room-bought")
+                    trade(id,false);state("normal-original-shop-$room-sold");leaveService(entry)
+                }
+                // Actual 90-tael command, same three-owner business result.
+                val innEntry=enterService(4,22);val beforeRest=v.currentSnapshot()
+                val expectedRest=InnStay.apply(beforeRest.money,beforeRest.characters,v.content.inns.getValue(v.activeInnId!!))
+                assertNull("Only normal earned money may pay the actual inn",expectedRest.error)
+                tap(v,center(v.innStayBounds()));assertEquals(expectedRest.money,v.currentSnapshot().money)
+                assertEquals(expectedRest.characters,v.currentSnapshot().characters)
+                assertEquals(beforeRest.inventory,v.currentSnapshot().inventory);assertEquals(beforeRest.flags,v.currentSnapshot().flags)
+                state("normal-original90-inn-three-owner-result");leaveService(innEntry)
+                for(id in listOf("rom.npc.20.0","rom.npc.20.1")){
+                    val entry=enterService(4,20,id);val before=v.currentSnapshot()
+                    state("normal-original-clinic-${id.substringAfterLast('.')}-view")
+                    instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
+                }
+                for(index in listOf(1,2,3,4,5,6,7,8)){
+                    val npc=v.content.npcs.single{it.id=="rom.npc.4.$index"}
+                    val candidates=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{npc.x+it.first to npc.y+it.second}
+                    // An individually legal tile can be on the other bridge bank.
+                    // Read-only component search follows actual directional edges and
+                    // avoids accidentally entering a shared room on the way to talk.
+                    val scene=v.world.scene;val reachable=mutableSetOf(v.world.x/16 to v.world.y/16)
+                    val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(reachable.single())
+                    while(queue.isNotEmpty()){
+                        val (x,y)=queue.removeFirst()
+                        for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                            val next=x+d.first to y+d.second
+                            if(scene.probeFrom(x,y,key,v.world.terrainMode)!=MovementBlock.NONE||next in reachable||
+                                v.content.exits.any{it.fromMapId==4&&it.triggerX==next.first&&it.triggerY==next.second&&it.edgeDirection==null})continue
+                            reachable.add(next);queue.add(next)
+                        }
+                    }
+                    val at=candidates.firstOrNull{it in reachable}
+                    assertNotNull("Original NPC must have a reachable interaction side",at)
+                    walkTo(at!!.first,at.second)
+                    val face=when{npc.x<at.first->Key.LEFT;npc.x>at.first->Key.RIGHT;npc.y<at.second->Key.UP;else->Key.DOWN}
+                    assertEquals(at,v.world.x/16 to v.world.y/16)
+                    val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                    val screen=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
+                    val before=v.currentSnapshot();tap(v,screen)
+                    assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                    // Actual NPC tap faces its stable actor before the pure talk proposal.
+                    val faced=before.copy(direction=face)
+                    val expected=npc.originalTalk?.let{OriginalNpcTalk.begin(faced,it)}
+                    if(expected!=null){assertTrue(expected.applied);assertEquals(expected.snapshot,v.currentSnapshot())}
+                    else assertEquals(faced,v.currentSnapshot())
+                    state("normal-original-resident-$index-first");dialogue()
+                    val again=v.currentSnapshot();tap(v,screen);dialogue()
+                    val repeat=npc.originalTalk?.let{OriginalNpcTalk.begin(again,it)}
+                    assertEquals(repeat?.snapshot?:again,v.currentSnapshot())
+                    assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
+                    assertEquals(before.characters,v.currentSnapshot().characters)
+                }
+                walkTo(13,3);state("normal-original-north-bank-without-claimed-ferry")
+                checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-original-services-residents-and-save")
+            }else{
+                assertEquals(4,v.world.mapId);assertNull(v.currentSnapshot().interiorContext)
+                val entry=enterService(4,22);val before=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
+                state("cold-real-inn-reentry-cancel-no-charge")
+                walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+                assertEquals(146 to 150,v.world.x/16 to v.world.y/16);state("cold-independent-original-south-return")
+                step(Key.DOWN);assertEquals(16,v.world.mapId)
+                walkTo(146,150);assertEquals(4,v.world.mapId)
+                assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+                assertEquals(1,v.currentSnapshot().characters.count{it.id=="yangjian"})
+                checkSourceUnchanged();persistChecked();state("cold-real-village-reentry-legacy-flags-kept")
+            }
+            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
         if(yangJoin){
             assertEquals(1,source.inventory[OriginalYangJoin.ITEM_ID]);assertEquals(true,source.flags["rom.global.7c8.1"])

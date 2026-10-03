@@ -407,6 +407,8 @@ def extend_world_characters(reader, scene, combat, additions, overlay):
         original=original_groups[index]
         if table['originalActorIndex']!=index or proof['actorIndex']!=index or table['knownMaxLevel']!=proof['maxLevel']:
             raise ValueError('Growth owner or max level differs')
+        if table.get('limitEvidence')!=actor['evidence']:
+            raise ValueError('Joined growth must include its actual loader-facing cap evidence')
         for field in ('growthRange','thresholdRange'):
             if proof[field]!=original[field]:raise ValueError('Joined growth range differs')
             checked_span(reader,proof[field])
@@ -1025,6 +1027,60 @@ def validate_world_yang_join(reader,evidence):
     return proof
 
 
+def validate_world_village4_resources(reader):
+    """Only this village's original bridge and NPC branches; no global town change."""
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens
+    path='game-data/provenance/world-village4-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map4-original-shared-services-bridge10-11-and-action50':
+        raise ValueError('Village4 resource scope differs')
+    required={(0,0xcb6c,17),(0,0xcbda,8),(0,0xced3,17),(0,0xd257,18),(0,0xcf43,1),
+        (10,0xa160,42),(10,0xcdfa,24),(10,0xcf1d,5),(10,0xcf29,9),(0,0xd49b,2)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Village4 bridge/NPC dispatch sources differ')
+    for span in p['sources']:checked_span(reader,span)
+    bridge=p['bridge'];talk=p['talk']
+    if bridge['sourceEdges']!={'10':['UP','DOWN'],'11':['LEFT','RIGHT']} or bridge['walkableClasses']!=[0,*range(2,12)] or \
+            (talk['textGroup'],talk['actionId'],talk['witnessFlagId'])!=(14,50,'rom.global.7c6.16'):
+        raise ValueError('Village4 rules cannot create new walking or reward conditions')
+    for row,count,sha in [(bridge,576,'4659284c278da00c998eef81727552f8edabfa18f68b1df2422dabd1e86cdb54'),
+                          (talk,3584,'ba64ea5c57719b1eb0cdcf0ef6a5abfa1218f9d153e78b64e81e209c83c1d982')]:
+        raw=(ROOT/row['cpuExpectedPath']).read_bytes()
+        if row['cpuCaseCount']!=count or row['cpuFailures']!=0 or row['cpuExpectedSha256']!=sha or \
+                digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Village4 original CPU matrix differs')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources'])
+    if len(data)!=4096:raise ValueError('Village4 text needs its two actual active font banks')
+    charset={int(k):v for k,v in font['charset'].items()}
+    for glyph in font['glyphs']:
+        k=glyph['code'];pixels=glyph_pixels(data,0,k)
+        if charset[k]!=glyph['character'] or digest(bytes(v for row in pixels for v in row))!=glyph['pixelsSha256']:
+            raise ValueError('Village4 original glyph differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:
+        raise ValueError('Village4 font transcription is incomplete')
+    for dialogue in p['dialogues']:
+        msg=int(dialogue['id'].split('.')[-1]);t=extract_text(reader,14,msg)
+        if dialogue['source']['record']!=t['range'] or dialogue['source']['pointerEvidence']!=t['pointerEvidence'] or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=dialogue['text']:
+            raise ValueError('Village4 text differs from original group14 bytes/glyphs')
+    records=extract_npcs(reader,4)['records']
+    if len(records)!=9 or len(p['npcs'])!=8:raise ValueError('Village4 original actor count differs')
+    for npc,record in zip(p['npcs'],records[1:]):
+        raw=checked_span(reader,record['range']);i=record['index'];cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        first=f'rom.dialogue.14.{raw[1]}';repeat=f'rom.dialogue.14.{raw[2]}'if raw[2]!=255 else first
+        if (npc['id'],npc['mapId'],npc['cell'],npc['spriteId'],npc['source']['record'],npc['firstDialogue'],npc['repeatDialogue'],npc['firstEffects'])!= \
+                (f'rom.npc.4.{i}',4,cell,raw[0],record['range'],first,repeat,[]):
+            raise ValueError('Village4 actor identity, message or side effects differ')
+        if i<8:
+            expected=dict(actionId=50,mapFlagId=f'rom.map.4.flag.{raw[13]}',witnessFlagId='rom.global.7c6.16',itemId='',
+                messageDialogues={'0':first,'1':f'rom.dialogue.14.{raw[1]+1}','2':repeat},evidence=path)
+            if raw[12]!=50 or raw[13]!=1<<(i-1) or npc['originalTalk']!=expected:
+                raise ValueError('Village4 actual action50 must not give items or manufacture story flags')
+        elif raw[12]!=0 or npc.get('originalTalk'):
+            raise ValueError('Original lender conversation does not unlock the boat')
+    for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
+    return p
+
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -1125,6 +1181,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if original['tilesetId']!=0:raise ValueError('Town directional profile on another tileset')
             town=extract_town_shops(reader)
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
+            if recipe.get('townBridgeCollisionEvidence'):
+                if mid!=4 or recipe['townBridgeCollisionEvidence']!='game-data/provenance/world-village4-resources.json':
+                    raise ValueError('Unreviewed town bridge extension')
+                proof=validate_world_village4_resources(reader)
+                if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Village4 walking classes differ')
+                data['sourceEdges']={**data['sourceEdges'],**{int(k):v for k,v in proof['bridge']['sourceEdges'].items()}}
         if recipe.get('terrain'):
             terrain=recipe['terrain'];proof=load(ROOT/terrain['evidence'])
             if original['tilesetId']!=terrain['tileset'] or proof['romSha256']!=SHA256:
@@ -1611,6 +1673,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc!=expected or any(d not in evidence['dialogues']for d in room['dialogues'])or \
                     any(evidence['graphics'].get(n)!=v for n,v in room['graphics'].items()):
                 raise ValueError('Original room171 actor, dialogue or graphic differs')
+        elif npc['mapId']==4:
+            proof=validate_world_village4_resources(reader)
+            expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in evidence['dialogues'] and d not in scene['dialogues']for d in proof['dialogues']) or \
+                    any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
+                raise ValueError('Village4 actor/dialogue/graphic differs')
         elif npc.get('originalTalk'):
             from forensics.fengshen246 import extract_npcs
             path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)

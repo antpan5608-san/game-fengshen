@@ -289,3 +289,14 @@ NPC首谈action与一次性seen分开；原action17在对白前写见面旗标�
 原export_from_base的限定existingItemCapabilityUpdates/既存NPC目标只允许公开provenance所列稳定ID/字段，固定父配方和旧定义hash，未变媒体保持逐字节相同。局部4测试、完整世界166方法、LF实际checkout及ci_apk.restore空目录215文件严格校验已运行。入队复用StoryFollowup/统一commit/save rollback，UI仍选物品后明确执行；三人自然遇敌与冷启正常驱动仅编译，须同候选实际运行才能记PASS，不能拿CPU或导出替代。
 
 - 独立出口落点不是可任意离开的空地：真实runtime曾在23(55,91)固定向下撞55,92墙，原拓扑也核55,93墙。test_world_hell_route_driver新增实际落点西侧离开/返门与54,93↔54,94自然zone8邻格反例，4方法已运行；保留失败run，新正常App须重新审核，不放宽地形。
+
+- 新角色成长配方必须输出ContentLoader实际要求的limitEvidence，不能只有原ROM levelCapSource。签名候选曾在真实Content仪器门禁报JSONException；原extend_world_characters增加来源路径早期拒绝，局部导出测试缺字段反例及原restore已运行。更新旧仪器断言时仍核真实目标/只读双手能力，不吞加载错误；修后实际App须新候选重跑。
+
+
+## 已验证的共享村庄定向恢复（新App另验）
+
+原NPC记录第3字节不是文本组号；先从真实对话RAM/PPU核文本组，再复用extract_text/原字体图块hash转写。目标ROM两段2048字节font匹配、15段文本decode及三张原OAM/RGBArecipe已执行，Reference不能按未经核对的map/NPC序号套用。action50的原首谈/repeat selector与post-action分开，probe-world-village4.py实际运行576桥矩阵/3584对话案例，保留特殊repeat反例，不用通用NPC-seen新增剧情门槛。
+
+caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导出器只新增本村桥类别10/11边，不改历史父hash。原ci_apk.restore严格恢复220文件与局部4方法/282 JVM及仪器编译已运行；新增正常UI与冷启驱动未执行前须NOT_RUN，不能将原版/CPU/编译写正常Android可玩。
+
+- 静态可站的NPC邻格未必在当前桥的连通分量；本次村4驱动first邻格13,14反例实际失败，改只读probeFrom方向搜索选14,13，不放宽墙。5局部方法与282 JVM/仪器重新执行、真实LF checkout含新父pin及576/3584派生表通过；正常App仍待同产物门禁。

@@ -2933,7 +2933,8 @@
           "module": 9,
           "cpuAddress": 44743,
           "meaning": "Original storedlevel79 cap"
-        }
+        },
+        "limitEvidence": "game-data/provenance/world-party-yangjian.json"
       }
     ],
     "characterMultiplierThresholds": {

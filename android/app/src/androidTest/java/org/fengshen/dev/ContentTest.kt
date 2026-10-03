@@ -13,6 +13,33 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Bundled map4 and isolated old save; normal service recording is separate. */
+    fun testVillageFourOriginalBridgeServicesNpcRulesAndPriorSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val m=c.scenes.getValue(4)
+        assertEquals(32,m.width);assertEquals(30,m.height)
+        assertEquals(setOf(Key.UP,Key.DOWN),m.sourceEdges.getValue(10))
+        assertEquals(setOf(Key.LEFT,Key.RIGHT),m.sourceEdges.getValue(11))
+        assertFalse(m.targetEdges.containsKey(10));assertFalse(m.targetEdges.containsKey(11))
+        assertNotNull(m.check(10,3));assertEquals(8,c.npcs.count{it.mapId==4})
+        val seven=c.npcs.single{it.id=="rom.npc.4.7"}.originalTalk!!
+        assertEquals(50,seven.actionId);assertEquals("rom.map.4.flag.64",seven.mapFlagId)
+        assertEquals("rom.dialogue.14.20",seven.firstDialogue);assertEquals("rom.dialogue.14.14",seven.repeatDialogue)
+        assertNull(c.npcs.single{it.id=="rom.npc.4.8"}.originalTalk)
+        assertEquals("『我把船借給你們。』",c.dialogues.getValue("rom.dialogue.14.15").text)
+        assertEquals(listOf(7,22,34),c.shops.getValue("rom.shop.4.17").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(listOf(4,12,18,30,39),c.shops.getValue("rom.shop.4.18").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(listOf(1,2,4,6,7,11,12),c.shops.getValue("rom.shop.4.19").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(90,c.inns.getValue("rom.inn.4").price)
+        assertEquals(6,c.serviceBindings.count{it.callerMapId==4})
+        val back=c.exits.single{it.fromMapId==4&&it.toMapId==16}
+        assertEquals(15 to 29,back.triggerX to back.triggerY);assertEquals(Key.DOWN,back.edgeDirection)
+        assertEquals(146 to 150,back.spawnX to back.spawnY);assertTrue(back.preserveArrivalDirection)
+        val old=SaveSnapshot("opening-segment-001-c39",110,7*16+8,6*16+8,Key.LEFT,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
+            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,"rom.original.npc.context.207" to true),1019)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
+
     fun testOriginalYangSignalPendingSaveCollisionAndOwnBattleContent(){
         // Isolated definition/save fixture; never a normal-route claim.
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -50,7 +77,8 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(12,rule.actionId);assertEquals(7 to 5,npc.interactionCell);assertEquals(Key.UP,npc.interactionDirection)
         val item=c.itemDefinitions.getValue("rom.special.19")
         assertEquals(19,item.originalId);assertEquals("special",item.category);assertEquals(1,item.maxCount)
-        assertNull(item.worldUse);assertNull(item.buyPrice);assertNull(item.sellPrice)
+        assertNotNull(item.worldUse);assertEquals(130,item.worldUse!!.targetSpriteId)
+        assertNotNull(item.worldUse!!.yangJoin);assertNull(item.buyPrice);assertNull(item.sellPrice)
         val old=SaveSnapshot("opening-segment-001-c37",171,7*16+8,5*16+8,Key.UP,
             listOf(c.initialPlayer),emptyMap(),mapOf("rom.global.7c8.1" to true),0)
         assertTrue(old.validate(c));val grant=OriginalNpcTalk.begin(old,rule,item)
@@ -339,8 +367,8 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(MovementBlock.PHYSICAL,room.probeFrom(12,7,Key.UP))
         assertEquals(MovementBlock.PHYSICAL,room.probeFrom(13,5,Key.UP))
         assertEquals(2,c.npcs.count{it.mapId==20&&it.clinicId!=null})
-        assertEquals(6,c.clinics.size)
-        for(caller in listOf(1,2,3)){
+        assertEquals(8,c.clinics.size)
+        for(caller in listOf(1,2,3,4)){
             val bindings=c.serviceBindings.filter{it.callerMapId==caller&&it.interiorMapId==20}
             assertEquals(2,bindings.size);assertEquals(setOf("rom.clinic.$caller.revival","rom.clinic.$caller.care"),bindings.map{it.clinicId}.toSet())
             assertTrue(ClinicRevival.valid(c.clinics.getValue("rom.clinic.$caller.revival")))
@@ -388,7 +416,10 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(save.validate(c));assertEquals(save,SaveSnapshot.parse(save.json().toString()))
         assertTrue(save.copy(contentVersion="opening-segment-001-c30").validate(c))
         assertFalse(save.copy(x=32*16+8).validate(c))
-        assertFalse(c.equipmentDefinitions.containsKey("rom.weapon.33"))
+        val paired=c.equipmentDefinitions.getValue("rom.weapon.33")
+        assertEquals(setOf("yangjian"),paired.allowedCharacters)
+        assertFalse(paired.operationEnabled)
+        assertNull(OpeningEquipment.replace(girl,mapOf("rom.weapon.33" to 1),paired,c.equipmentDefinitions.values))
         for(id in listOf("rom.medicine.10","rom.medicine.14")){
             assertNull(c.itemDefinitions.getValue(id).herbUse);assertNull(c.itemDefinitions.getValue(id).antidoteUse)
         }

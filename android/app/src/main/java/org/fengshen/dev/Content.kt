@@ -280,6 +280,17 @@ object ContentLoader {
                             rule.completionWitnessFlagId=t.getString("completionWitnessFlagId")
                             require(rule.completionWitnessFlagId=="rom.global.7c7.128")
                         }
+                        50->{
+                            require(t.getString("evidence")=="game-data/provenance/world-village4-resources.json"&&
+                                npc.mapId==4&&npc.id in (1..7).map{"rom.npc.4.$it"}&&
+                                rule.mapFlagId=="rom.map.4.flag.${1 shl (npc.id.substringAfterLast('.').toInt()-1)}"&&
+                                rule.witnessFlagId=="rom.global.7c6.16"&&rule.itemId.isEmpty())
+                            val messages=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=messages.keys().asSequence().associate{k->k.toInt() to messages.getString(k)}
+                            require(rule.messageDialogues.keys==setOf(0,1,2)&&rule.messageDialogues[0]==rule.firstDialogue&&
+                                rule.messageDialogues[2]==rule.repeatDialogue&&
+                                rule.messageDialogues.values.all{it.startsWith("rom.dialogue.14.")})
+                        }
                         else->error("Original actor action has no scoped implementation")
                     }
                     npc.originalTalk=rule
