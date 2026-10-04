@@ -239,6 +239,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
                 (x/16!=i.openingMovement.destination.x||y/16!=i.openingMovement.destination.y))}==true}==true)return false
         if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
+        if(!OriginalNpcTalk.validHuangPending(this))return false
+        if(flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.117.0"&&it.originalTalk?.actionId==43})return false
         if(!OriginalFerry.validPending(this,content.ferries.values))return false
         val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
@@ -252,11 +254,11 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         return scene.check(x/16,y/16,terrainMode)==null
     }
     companion object {
-        /** Known schema1 content iterations through the original rebirth checkpoint.
+        /** Known schema1 content iterations through the original Queen content checkpoint.
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved in (1..48).map{"opening-segment-001-c$it"}
+            saved in (1..49).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

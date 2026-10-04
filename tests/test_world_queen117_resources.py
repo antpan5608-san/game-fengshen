@@ -21,8 +21,18 @@ class QueenResourceTests(unittest.TestCase):
         self.assertEqual((7000,372,178,3000,2400),tuple(p['enemy'][f]for f in ['hp','attack','defense','experienceReward','moneyReward']))
         self.assertEqual(0,p['boss']['intro']['completedSteps'])
         self.assertTrue(p['boss']['commitAfterDialogue']);self.assertFalse(p['rules']['extraEventReward'])
-        self.assertEqual([1536,1024,36],[t['caseCount']for t in p['cpu']])
+        self.assertEqual([1536,1024,36,5,256,1024],[t['caseCount']for t in p['cpu']])
         self.assertEqual(2,p['itemCapabilityUpdates'][0]['fields']['battleBindingUse']['bindingMarker'])
+    def test_huang_action43_is_event16_and_cannot_invent_gift_or_consumption(self):
+        h=self.proof['huang'];self.assertEqual((43,16,20),(h['actionId'],h['eventId'],h['scriptId']))
+        self.assertTrue(h['grantBeforeDialogue']);self.assertTrue(h['completionAfterDialogue'])
+        self.assertEqual('rom.special.18',h['item']['id'])
+        for key,value in [('eventId',43),('scriptId',21),('grantBeforeDialogue',False),('completionGlobalFlag','rom.global.7c6.64')]:
+            p=copy.deepcopy(self.proof);p['huang'][key]=value
+            with self.assertRaises(ValueError,msg=key):self.changed(p)
+        p=copy.deepcopy(self.proof);p['huang']['item']['worldUse']={'healHp':50}
+        with self.assertRaises(ValueError):self.changed(p)
+
     def test_actual_stable_graphic_is_rebuilt_from_all_original_tiles(self):
         g=self.proof['queenGraphic'];self.assertEqual([96,32,80,96],g['observedRect']);self.assertEqual(120,len(g['tiles']))
         self.assertEqual(ex.scoped_observed_graphic(self.reader,g),ex.scoped_observed_graphic(self.reader,g))

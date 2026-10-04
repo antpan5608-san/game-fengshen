@@ -276,12 +276,18 @@ object ContentLoader {
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
-                if(npc.hiddenInvestigation)require(((npc.id=="rom.npc.5.5"&&npc.mapId==5&&npc.x==15&&npc.y==7&&
+                if(npc.hiddenInvestigation){
+                    val queen=npc.id=="rom.npc.115.5"&&npc.mapId==115&&npc.x==41&&npc.y==7&&
+                        npc.treasure?.flagId=="rom.map.115.flag.2"&&npc.treasure?.itemId=="rom.weapon.23"&&
+                        npc.treasure.categoryGrant==2&&n.getString("queen117ResourceEvidence")==OriginalNpcTalk.HUANG_EVIDENCE
+                    val old=((npc.id=="rom.npc.5.5"&&npc.mapId==5&&npc.x==15&&npc.y==7&&
                     npc.treasure?.flagId=="rom.map.5.flag.1")||
                     (npc.id=="rom.npc.6.3"&&npc.mapId==6&&npc.x==18&&npc.y==5&&npc.treasure?.flagId=="rom.map.6.flag.8"))&&
                     npc.treasure?.itemId=="rom.medicine.1"&&
                     npc.treasure.categoryGrant==0&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
-                    npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
+                    npc.firstEffects.isEmpty()&&npc.openedSprite!=null
+                    require((old||queen)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
+                }
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
                 if(npc.automaticStoryOnly||npc.removedFlagId!=null){
@@ -291,7 +297,14 @@ object ContentLoader {
                     val cave=npc.mapId==87&&npc.id=="rom.npc.87.0"&&npc.x==5&&npc.y==4&&
                         npc.removedFlagId=="rom.map.87.flag.128"&&
                         n.getString("automaticStoryEvidence")=="game-data/provenance/world-cave87-state.json"
-                    require((island||cave)&&npc.automaticStoryOnly&&npc.firstEffects.isEmpty())
+                    val queenEvidence=n.optString("automaticStoryEvidence")==OriginalNpcTalk.HUANG_EVIDENCE
+                    val queen=queenEvidence&&npc.mapId==117&&npc.id=="rom.npc.117.1"&&npc.x==7&&npc.y==4&&
+                        npc.removedFlagId=="rom.map.117.flag.128"&&npc.automaticStoryOnly
+                    val huang=queenEvidence&&npc.mapId==117&&npc.id=="rom.npc.117.0"&&npc.x==7&&npc.y==3&&
+                        npc.removedFlagId==OriginalNpcTalk.HUANG_COMPLETED_FLAG&&!npc.automaticStoryOnly
+                    val women=queenEvidence&&npc.mapId==115&&npc.id in (0..4).map{"rom.npc.115.$it"}&&
+                        npc.removedFlagId=="rom.npccontext.115.208"&&!npc.automaticStoryOnly
+                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women)&&npc.firstEffects.isEmpty())
                 }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("moneyTreasure")?.let{t->
@@ -318,11 +331,16 @@ object ContentLoader {
 
                 n.optJSONObject("stateVariant")?.let{v->
                     val cell=ints(v,"cell")
-                    require(npc.id=="rom.npc.163.0"&&npc.mapId==163&&npc.x==7&&npc.y==10&&
+                    val teacher163=npc.id=="rom.npc.163.0"&&npc.mapId==163&&npc.x==7&&npc.y==10&&
                         cell.contentEquals(intArrayOf(7,9))&&v.getString("flagId")==OriginalNpcTalk.TEACHER_CONTEXT_FLAG&&
                         v.getString("firstDialogue")=="rom.dialogue.173.1"&&v.getString("repeatDialogue")=="rom.dialogue.173.1"&&
                         v.getString("evidence")=="game-data/provenance/world-teacher163-gate.json"&&
-                        npc.firstEffects.isEmpty()&&!n.has("originalTalk"))
+                        npc.firstEffects.isEmpty()&&!n.has("originalTalk")
+                    val teacher164=npc.id=="rom.npc.164.0"&&npc.mapId==164&&npc.x==7&&npc.y==9&&
+                        cell.contentEquals(intArrayOf(7,10))&&v.getString("flagId")=="rom.npccontext.164.220"&&
+                        v.getString("firstDialogue")=="rom.dialogue.174.0"&&v.getString("repeatDialogue")=="rom.dialogue.174.0"&&
+                        v.getString("evidence")==OriginalNpcTalk.HUANG_EVIDENCE&&npc.firstEffects.isEmpty()&&!n.has("originalTalk")
+                    require(teacher163||teacher164)
                     npc.stateVariant=NpcStateVariant(v.getString("flagId"),cell[0],cell[1],v.getString("firstDialogue"),v.getString("repeatDialogue"))
                 }
                 n.optJSONObject("originalTalk")?.let{t->
@@ -338,6 +356,11 @@ object ContentLoader {
                                 rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.$gift"&&
                                 rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.2"&&rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.3")
                         }
+                        43->require(t.getString("evidence")==OriginalNpcTalk.HUANG_EVIDENCE&&
+                            npc.id=="rom.npc.117.0"&&npc.mapId==117&&npc.x==7&&npc.y==3&&
+                            rule.mapFlagId==OriginalNpcTalk.HUANG_COMPLETED_FLAG&&rule.witnessFlagId.isEmpty()&&
+                            rule.itemId=="rom.special.18"&&rule.firstDialogue=="rom.dialogue.127.14"&&
+                            rule.repeatDialogue==rule.firstDialogue&&npc.removedFlagId==OriginalNpcTalk.HUANG_COMPLETED_FLAG)
                         17->require(t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
                             npc.id=="rom.npc.110.0"&&npc.mapId==110&&rule.mapFlagId=="rom.map.110.flag.2"&&
                             rule.witnessFlagId=="rom.global.7c8.1"&&rule.itemId=="rom.special.19"&&

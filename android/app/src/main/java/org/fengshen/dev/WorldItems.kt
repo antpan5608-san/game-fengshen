@@ -32,6 +32,8 @@ object WorldItems {
             "game-data/provenance/world-night8-chests.json"->
                 (mapId==100&&mapOf("rom.npc.100.0" to 2,"rom.npc.100.1" to 0,"rom.npc.100.2" to 0)[npcId]==category)||
                 (mapId==74&&mapOf("rom.npc.74.0" to 0,"rom.npc.74.1" to 0,"rom.npc.74.5" to 1,"rom.npc.74.6" to 2)[npcId]==category)
+            "game-data/provenance/world-queen117-state.json"->mapId==115&&
+                mapOf("rom.npc.115.5" to 2,"rom.npc.115.6" to 3)[npcId]==category
             "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
             "game-data/provenance/world-village-batch-resources.json"->mapId==6&&npcId=="rom.npc.6.3"&&category==0
             else->false

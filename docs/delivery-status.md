@@ -1,3 +1,13 @@
+## WORLD-FULL-01 女人国连续内容候选（2026-10-04T10:25Z，未发布）
+
+本地c49已由原export_from_base生成，新增141/115/117真实路线、女王157/special13原保护调度、胜后文本状态、黄天化action43→event16/script20赠攢心釘18，及两原箱/普通敌58/59；55打包地图/294文件/manifest3f422cf6163d493db700e5dc6859027b9b5defad8f6b1e7fbc283ca6af86f04b。严格继承c48，未变媒体逐字节保留。332 JVM/67 suites、4来源校验、3导出66.154秒、全新目录完整restore PASS；仪器编译与正常驱动状态见唯一current-task，真实新Android/冷启/覆盖/声音/一加13T NOT_RUN，尚未发布。
+
+实际原返回141→16已取得受控按键证据，旧“返程未知/event43”是历史误记：须同步原位置字段，黄天化event是16；原实验不是正常Android。116易容与140全墙入口尚未开放，NPC静帧暂定、防具14原名未知、攢心釘使用未实现。总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN，十类权威欠账完整保留，正常App未通过的内容不关闭。
+
+正式仍v27/c14。原main87df6cf/v64/run37185539165 build PASS、runtime执行中，独立c49不改变其来源。最新实际inspect37189846556/08:44:02Z为27/26、3734事件、普通真机9/模拟器0/测试0，旧v26下载错误root UNCONFIRMED。重大可玩增量按用户授权通过原门槛即阶段发布。
+
+下方检查点均为历史，当前状态以本段及docs/current-task.md为准。
+
 ## WORLD-FULL-01清峰山与暗黑洞窟局部实现（2026-10-04T08:30Z，c48未发布）
 
 新增原100/164/74、清虚真君原赠夜明珠、暗黑洞窟可重复使用照明/离洞重置、七原物品箱和120两钱箱、完整zone25/26与四敌原属性/真实图形；52图/276文件，manifest d53c9158facd29acb72421e7e0ebc6b258120b5e134fa014ee8e08d50c5ec721。原before-text赠物/容量与局部CPU证据、真实菜单/进出键受控证据见world-night8-resources.json和world-night8-chests.json。320 JVM/64 suites、3导出75.113秒、全新空目录严格恢复、原仪器编译和22审批fixture PASS；完整world回归211方法/1136.741秒PASS且远端WIP已验精确树/main未变；所有新增Android正常/冷启/覆盖/声音/真机NOT_RUN。special13仅取得/名称暂定，未实现使用；两FF/FF箱待核，全墙结构返程保留记录不开放假路。生产仍v27，v64/run37185539165原c41运行中，不能拿其结果背书c48。总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN；十类欠账原权威清单完整保留。

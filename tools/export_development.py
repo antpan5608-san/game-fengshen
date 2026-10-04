@@ -755,6 +755,12 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/world-queen117-state.json':
+        proof=validate_world_queen117_resources(reader)
+        expected=next((n for n in proof['region']['npcs']if n['id']==npc['id']),None)
+        if npc!=expected or npc['id']not in ['rom.npc.115.5','rom.npc.115.6']:
+            raise ValueError('Queen region pickup requires actual source and capacity/flag cases')
+        return proof
     if npc['treasure']['evidence']=='game-data/provenance/world-village-batch-resources.json':
         v,_=validate_world_village_batch_resources(reader,npc['mapId'])
         if npc not in v['npcs']:raise ValueError('Village hidden record differs')
@@ -1396,7 +1402,10 @@ def validate_world_queen117_resources(reader):
         raise ValueError('Queen binding protection differs')
     tables=[('queen13-binding-original.tsv',1536,'73726542be6d96b2b0b61d715a246da14c195ba2a442c92caeaf8385bb15a5f1'),
         ('queen117-completion-original.tsv',1024,'3235a9c800b09f008eb858160470ffffa5907ad82acf6e298c24791bd9b47580'),
-        ('queen-castle6-foot-original.tsv',36,'5a448c14c94a5f47daddf81dd32d5e62f08154745236f48bfcc2e27eb46d5ce7')]
+        ('queen-castle6-foot-original.tsv',36,'5a448c14c94a5f47daddf81dd32d5e62f08154745236f48bfcc2e27eb46d5ce7'),
+        ('queen117-huang-gift-original.tsv',5,'148e3e20fdcacbc425baa2f08809fe0bcbc98c8f56b26ea70fc8749d8b1194ed'),
+        ('queen117-huang-selector-original.tsv',256,'0c18b7975aebf38876018a241d101639bf1873ee9f4f5954877693da941633a5'),
+        ('queen117-huang-event16-finish-original.tsv',1024,'e86e7d38da32d19b2fa9d14209b7c3ce0541c541dde7f99d98df57398c711a24')]
     if len(p['cpu'])!=len(tables):raise ValueError('Queen CPU coverage missing')
     for c,(name,count,sha)in zip(p['cpu'],tables):
         raw=(ROOT/c['path']).read_bytes()
@@ -1441,6 +1450,72 @@ def validate_world_queen117_resources(reader):
         if m['mapId']not in [141,115,116,117]or m['gridSha256']!=original['gridSha256']or m['tilesetId']!=original['tilesetId']or \
                 m['walkableClasses']!=[0,2]or m['palette']!=extract_default_map_palette(reader,m['mapId'])['palette']:
             raise ValueError('Queen region original geometry/palette differs')
+    h=p['huang']
+    expected_h=dict(mapId=117,npcId='rom.npc.117.0',npcCell=[7,3],actionId=43,eventId=16,scriptId=20,
+        firstDialogue='rom.dialogue.127.14',rawRepeatMessage=255,mapFlagId='rom.map.117.flag.2',witnessFlagId='',
+        itemId='rom.special.18',grantBeforeDialogue=True,completionAfterDialogue=True,noPlayerSteps=True,
+        quantityRetainedIfOwned=True,fullCategoryNoGift=True,contextAfter=dict(map117=211,map121=215),
+        completionGlobalFlag='rom.global.7fe.128')
+    if any(h.get(k)!=v for k,v in expected_h.items())or h['npcSource']!=extract_npcs(reader,117)['records'][0]['range']:
+        raise ValueError('Huang action43 must retain actual gift and event16 semantics')
+    for span in h['sources']:checked_span(reader,span)
+    if reader.word(11,0xcb5e+32)!=0xd24a or reader.word(11,0xc2a6+40)!=0xc5e1 or \
+            reader.read(11,0xc5e1,21).hex()!='ac000907030107070102080702010707010505acff':
+        raise ValueError('Huang original NPC-only script20 differs')
+    item=h['item'];ptr=reader.word(2,reader.word(2,0xe610)+36)
+    if (item['id'],item['category'],item['originalId'],item['maxCount'],item['name'])!=('rom.special.18','special',18,1,'攢心釘')or \
+            item['source']['nameRange']['cpuAddress']!=ptr or checked_span(reader,item['source']['nameRange'])!=bytes.fromhex('00707478ff')or \
+            any(k in item for k in ['buyPrice','sellPrice','equipment','herbUse','worldUse','battleBindingUse']):
+        raise ValueError('Huang gift item must not invent unrelated capability')
+    region=p['region'];font=region['font'];data=b''.join(checked_span(reader,v)for v in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [v['offset']for v in font['sources']]!=[610320,612368]:raise ValueError('Woman region actual font differs')
+    for g in font['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Woman region glyph differs')
+    if region['dialogues'][4:]!=p['dialogues']or [d['id']for d in region['dialogues'][:4]]!=[f'rom.dialogue.125.{v}'for v in [9,10,11,12]]:
+        raise ValueError('Woman region dialogue IDs differ')
+    for d in region['dialogues'][:4]:
+        t=extract_text(reader,125,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:
+            raise ValueError('Woman region original text differs')
+    identities=[(115,i)for i in range(7)]+[(117,0),(117,1)]
+    if [(n['mapId'],int(n['id'].split('.')[-1]))for n in region['npcs']]!=identities:
+        raise ValueError('Woman region actual actor set differs')
+    for n,(mid,index)in zip(region['npcs'],identities):
+        record=extract_npcs(reader,mid)['records'][index];raw=checked_span(reader,record['range'])
+        if n['source']['record']!=record['range']or n['spriteId']!=raw[0]or n['cell']!=[(record[k]-120)//16 for k in ['xCandidate','yCandidate']]or n['firstEffects']:
+            raise ValueError('Woman region actor must retain actual source, cell and no invented reward')
+        if mid==115 and index<5:
+            if raw[12]!=0 or n['firstDialogue']!=f'rom.dialogue.125.{raw[1]}'or n.get('removedFlagId')!='rom.npccontext.115.208':
+                raise ValueError('Woman region resident dialogue/removal differs')
+        elif mid==115:
+            expected=dict(itemId=f'rom.{["medicine","special","weapon","armor"][raw[1]]}.{raw[2]}',flagId=f'rom.map.115.flag.{raw[13]}',amount=1,categoryGrant=raw[1],evidence=path)
+            if n['treasure']!=expected or raw[12]!=0 or n.get('hiddenInvestigation')!=(raw[0]==198)or not n.get('openedSprite'):
+                raise ValueError('Woman region actual pickup category/item/once flag differs')
+        elif index==0:
+            if n['originalTalk']!=dict(actionId=43,mapFlagId='rom.map.117.flag.2',witnessFlagId='',itemId='rom.special.18',evidence=path)or n.get('removedFlagId')!='rom.map.117.flag.2' or n['firstDialogue']!='rom.dialogue.127.14' or n['repeatDialogue']!=n['firstDialogue']:
+                raise ValueError('Huang original talk and removal differs')
+        elif n.get('automaticStoryOnly')is not True or n['firstDialogue']!='rom.dialogue.127.13'or n.get('removedFlagId')!='rom.map.117.flag.128':
+            raise ValueError('Queen actual field actor differs')
+        g=region['graphics'][n['sprite']];checked_span(reader,g['animationSource']);checked_span(reader,g['frameSource'])
+        frame=checked_span(reader,g['frameSource'])
+        if len(frame)!=5 or frame[0]not in range(4)or g['captureKind']!='PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED'or g['normalPlayEvidence']is not False:
+            raise ValueError('Unobserved NPC still frame must remain provisional')
+        for v in g['patternBankSources']:checked_span(reader,v)
+        scoped_observed_graphic(reader,g)
+    cpu=region['pickupCpu'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu!=dict(path='android/app/src/test/resources/queen115-chests-original.tsv',caseCount=14,sha256='c07e63af304612d144f0295fd58e034b6699221b25b07ac0fdfbd34d9d9fe6bf')or digest(raw)!=cpu['sha256']or len(raw.splitlines())!=15:
+        raise ValueError('Woman region original pickup capacity cases differ')
+    for span in region['pickupSources']:checked_span(reader,span)
+    for eid,sha in [(58,'985402ebc0fb8125878fa0f626dd3d0e1d914b89ac7c1f12d4e8f756345460d8'),(59,'05ce9bdb76906bcc52d859ee1730592fe3aaef07035f14d52ededcedafc5f465')]:
+        g=region['ordinaryEnemyGraphics'][str(eid)]
+        if g['rgbaSha256']!=sha:raise ValueError('Woman region complete actual enemy composition differs')
+        scoped_observed_graphic(reader,g)
+    updates=p['teacherContextUpdates'];expected_variant=dict(flagId='rom.npccontext.164.220',cell=[7,10],firstDialogue='rom.dialogue.174.0',repeatDialogue='rom.dialogue.174.0',evidence=path)
+    after=extract_npcs(reader,220)['records'][0]
+    if len(updates)!=1 or updates[0]['id']!='rom.npc.164.0'or updates[0]['fields']!=dict(stateVariant=expected_variant)or \
+            (after['entityByte'],after['xCandidate'],after['yCandidate'])!=(178,232,280)or bytes.fromhex(after['rawHex'])[1:3]!=bytes([0,255]):
+        raise ValueError('Actual teacher NPC context220 differs')
     return p
 
 def validate_world_night8_resources(reader):
@@ -1807,6 +1882,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             proof=validate_world_night8_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
             if night!='game-data/provenance/world-night8-resources.json'or binding is None or allowed!=binding['walkableClasses']or recipe['palette']!=binding['palette']or recipe.get('directionalCollision')or recipe.get('forestCollisionEvidence'):
                 raise ValueError('Night8 map collision/palette differs')
+        if recipe.get('queen117CollisionEvidence'):
+            proof=validate_world_queen117_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
+            if recipe['queen117CollisionEvidence']!='game-data/provenance/world-queen117-state.json'or binding is None or \
+                    allowed!=binding['walkableClasses']or recipe['palette']!=binding['palette']or recipe.get('directionalCollision'):
+                raise ValueError('Queen region cannot change actual terrain or palette')
         if recipe.get('teacher163CollisionEvidence'):
             room=validate_world_teacher163_binding(reader)
             if recipe['teacher163CollisionEvidence']!='game-data/provenance/world-teacher163-binding.json' or mid!=163 or \
@@ -2006,6 +2086,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
             if enemy['id'] in [152,153,154,155]:validate_world_island_binding(reader,enemy)
+            elif enemy['id']==157:
+                validate_world_queen117_resources(reader)
+                if enemy.get('requiredBindingMarker')!=2 or enemy.get('bindingEvidence')!='game-data/provenance/world-queen117-state.json':
+                    raise ValueError('Queen protection requires original special13 marker2')
             elif any(k in enemy for k in ('requiredBindingMarker','bindingEvidence')):raise ValueError('Unreviewed battle protection identity')
             if enemy['behaviorByte'] not in (1,2,4) and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
                 raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
@@ -2125,6 +2209,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Cave story source/trigger differs')
                     raw=checked_span(reader,boss['actorScriptSource'])
                     if raw!=reader.read(11,0xc4b6,9):raise ValueError('Original cave actor script differs')
+                elif trigger['evidence']=='game-data/provenance/world-queen117-state.json':
+                    if boss!=validate_world_queen117_resources(reader)['boss']:
+                        raise ValueError('Queen event14 source/trigger/final state differs')
                 elif trigger['evidence']=='game-data/provenance/world-cave87-state.json':
                     if boss!=validate_world_cave87_state(reader)['boss']:
                         raise ValueError('Cave87 event6 differs from actual script/actor state')
@@ -2266,6 +2353,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     proof=validate_world_night8_resources(reader)
                     if item not in proof['items']:raise ValueError('Night8 special definitions differ')
                     continue
+                if item['id']=='rom.special.18':
+                    if item!=validate_world_queen117_resources(reader)['huang']['item']:
+                        raise ValueError('Huang gift cannot invent capability or change source')
+                    continue
                 if item['id']=='rom.special.9':
                     proof=validate_world_teacher163_binding(reader)
                     if item!=proof['items'][0]:raise ValueError('Teacher163 special9 differs from actual gift/command')
@@ -2349,29 +2440,42 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
-    if evidence.get('existingItemCapabilityUpdates') or evidence.get('existingNpcCapabilityUpdates'):
-        proof=validate_world_yang_join(reader,evidence)
-        for update in evidence['existingItemCapabilityUpdates']:
-            old=next((i for i in scene['items']if i['id']==update['id']),None)
-            if old is None or digest(encoded(old))!=update['baseDefinitionSha256']:
-                raise ValueError('Item capability parent definition differs')
-            if update['id']=='rom.armor.29':
-                new=update['fields']['equipment'];prior=old['equipment']
-                if any(new[k]!=v for k,v in prior.items()if k not in ('allowedCharacters','ruleSources')):
-                    raise ValueError('Existing feet contribution/rules must remain unchanged')
-                if new['ruleSources'][:len(prior['ruleSources'])]!=prior['ruleSources']:
-                    raise ValueError('Existing equipment evidence was replaced')
-            for span in update['fields'].get('equipment',{}).get('ruleSources',[]):checked_span(reader,span)
+    if evidence.get('queen117CapabilityEvidence'):
+        proof=validate_world_queen117_resources(reader)
+        if evidence['queen117CapabilityEvidence']!='game-data/provenance/world-queen117-state.json'or \
+                evidence.get('existingItemCapabilityUpdates')!=proof['itemCapabilityUpdates']or \
+                evidence.get('existingNpcCapabilityUpdates')!=proof['teacherContextUpdates']:
+            raise ValueError('Queen parent capability changes differ from original scoped evidence')
+        for kind,key in [('items','existingItemCapabilityUpdates'),('npcs','existingNpcCapabilityUpdates')]:
+            for update in evidence[key]:
+                matches=[v for v in scene[kind]if v['id']==update['id']]
+                if len(matches)!=1 or digest(encoded(matches[0]))!=update['baseDefinitionSha256']:
+                    raise ValueError('Queen capability parent definition differs')
+                matches[0].update(update['fields'])
+    else:
+        if evidence.get('existingItemCapabilityUpdates') or evidence.get('existingNpcCapabilityUpdates'):
+            proof=validate_world_yang_join(reader,evidence)
+            for update in evidence['existingItemCapabilityUpdates']:
+                old=next((i for i in scene['items']if i['id']==update['id']),None)
+                if old is None or digest(encoded(old))!=update['baseDefinitionSha256']:
+                    raise ValueError('Item capability parent definition differs')
+                if update['id']=='rom.armor.29':
+                    new=update['fields']['equipment'];prior=old['equipment']
+                    if any(new[k]!=v for k,v in prior.items()if k not in ('allowedCharacters','ruleSources')):
+                        raise ValueError('Existing feet contribution/rules must remain unchanged')
+                    if new['ruleSources'][:len(prior['ruleSources'])]!=prior['ruleSources']:
+                        raise ValueError('Existing equipment evidence was replaced')
+                for span in update['fields'].get('equipment',{}).get('ruleSources',[]):checked_span(reader,span)
+                old.update(update['fields'])
+            updates=evidence.get('existingNpcCapabilityUpdates',[])
+            if len(updates)!=1 or updates[0]['id']!=proof['rules']['npcId'] or updates[0]['fields']!={
+                    'worldItemTarget':dict(spriteId=130,removedFlagId='rom.npccontext.110.207',
+                        completionFlagId='rom.map.110.flag.128',evidence='game-data/provenance/world-yang-join.json')}:
+                raise ValueError('Unreviewed original NPC context change')
+            update=updates[0];old=next(n for n in scene['npcs']if n['id']==update['id'])
+            if digest(encoded(old))!=update['baseDefinitionSha256'] or old['mapId']!=110 or old['cell']!=[6,6]:
+                raise ValueError('NPC capability parent differs')
             old.update(update['fields'])
-        updates=evidence.get('existingNpcCapabilityUpdates',[])
-        if len(updates)!=1 or updates[0]['id']!=proof['rules']['npcId'] or updates[0]['fields']!={
-                'worldItemTarget':dict(spriteId=130,removedFlagId='rom.npccontext.110.207',
-                    completionFlagId='rom.map.110.flag.128',evidence='game-data/provenance/world-yang-join.json')}:
-            raise ValueError('Unreviewed original NPC context change')
-        update=updates[0];old=next(n for n in scene['npcs']if n['id']==update['id'])
-        if digest(encoded(old))!=update['baseDefinitionSha256'] or old['mapId']!=110 or old['cell']!=[6,6]:
-            raise ValueError('NPC capability parent differs')
-        old.update(update['fields'])
     for definition in evidence.get('sceneStories',[]):
         validate_world_rebirth_script(reader,definition)
         if any(s['id']==definition['id']or s['npcId']==definition['npcId']for s in scene.get('sceneStories',[])):
@@ -2390,6 +2494,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
                     any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
                 raise ValueError('Village batch actor/dialogue/graphic differs')
+        elif npc.get('queen117ResourceEvidence'):
+            proof=validate_world_queen117_resources(reader)
+            if npc['queen117ResourceEvidence']!='game-data/provenance/world-queen117-state.json'or \
+                    npc not in proof['region']['npcs']or any(d not in scene['dialogues']for d in proof['region']['dialogues']):
+                raise ValueError('Queen region actual actor/dialogue differs')
         elif npc['mapId']==164:
             proof=validate_world_night8_resources(reader)
             if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Night8 teacher actor/dialogue differs')
@@ -2492,7 +2601,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
-        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-cave87-state.json':
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-queen117-state.json':
+            proof=validate_world_queen117_resources(reader)
+            if npc not in proof['region']['npcs']:raise ValueError('Queen actor identity/removal differs')
+        elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-cave87-state.json':
             proof=validate_world_cave87_state(reader)
             from forensics.fengshen246 import extract_npcs
             record=extract_npcs(reader,87)['records'][0]

@@ -833,6 +833,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return true
     }
     fun startOpeningIfNeeded(){
+        if(flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true&&OriginalNpcTalk.validHuangPending(currentSnapshot())){
+            content.npcs.firstOrNull{it.id=="rom.npc.117.0"&&it.originalTalk?.actionId==43}?.let{npc->
+                openDialogue(content.dialogues.getValue(npc.firstDialogue),npc);return
+            }
+        }
+
         content.yangJoin()?.let{rule->
             if(flags[rule.pendingFlag]==true){
                 val stage=rule.continuation.stage(rule.id,flags)
@@ -940,7 +946,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
             startStoryBattle(story);return
         }
-        if(npc?.originalTalk!=null){dismissDialogue();return}
+        npc?.originalTalk?.let{rule->
+            if(rule.actionId==43){
+                if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+                val before=currentSnapshot()
+                commitStoryFollowup(before,OriginalNpcTalk.finishHuang(before,rule,dialogueText?.id?:""),npc);return
+            }
+            dismissDialogue();return
+        }
         if(npc==null)flags=flags+("opening.intro.seen" to true)
         else if(flags[npc.id]!=true){
             for(effect in npc.firstEffects)when(effect.type){
@@ -966,6 +979,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()
     }
     private fun canDismissDialogue():Boolean {
+        if(dialogueNpc?.originalTalk?.actionId==43&&flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true)return false
         dialogueNpc?.let{content.sceneStories[it.id]}?.let{if(flags[it.pendingFlag]==true)return false}
         val story=dialogueNpc?.let{content.battle?.storyBattles?.get(it.id)}?:return true
         return story.entryTrigger==null&&!(story.continuation!=null&&flags[story.pendingFlag]==true)

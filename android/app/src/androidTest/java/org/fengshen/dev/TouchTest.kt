@@ -2463,8 +2463,74 @@ class TouchTest:IsolatedGameTestCase(){
             }
     }
     /** Exact same-candidate flower save, then ordinary movement/services; no witness injection. */
-    fun testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave()=normalWorldStoryContinuation(false,false,night8=true)
-    fun testNightEightColdRestartAndOriginalLightReset()=normalWorldStoryContinuation(true,false,night8=true)
+    fun testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave()=normalWorldStoryContinuation(false,true,night8=true)
+    fun testNightEightColdRestartAndOriginalLightReset()=normalWorldStoryContinuation(true,true,night8=true)
+
+    fun testNormalQueenRouteBindingAndHuangFromVerifiedNightEightSave()=normalWorldStoryContinuation(false,true,queen=true)
+    fun testQueenHuangColdRestartAndOriginalReturn()=normalWorldStoryContinuation(true,true,queen=true)
+
+    /** Same-candidate earned save. Planning is read-only; all progression uses real UI input. */
+    private fun normalQueenStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,
+        dialogue:()->Unit,finishFight:()->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val victory="rom.map.117.flag.128"
+        val gift="rom.special.18"
+        assertEquals(1,source.inventory["rom.special.13"])
+        assertEquals(true,source.flags["rom.map.87.flag.128"])
+        state(if(cold)"cold-exact-queen-huang-completed-save"else"verified-night8-source-no-state-grants",true)
+        if(!cold){
+            assertEquals(74,v.world.mapId);walk(3,28);assertEquals(16,v.world.mapId)
+            step(Key.DOWN);walk(91,134);assertEquals(141,v.world.mapId)
+            assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-courtyard141-entry",true)
+            walk(15,15);assertEquals(115,v.world.mapId);assertEquals(32 to 28,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-city115-real-link",true)
+            walk(56,44);assertEquals(141,v.world.mapId);assertEquals(24 to 19,v.world.x/16 to v.world.y/16)
+            walk(26,7);assertEquals(117,v.world.mapId);assertEquals(7 to 13,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-palace117-entry",true)
+            walk(7,5);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            assertEquals(7 to 5,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-event14-dialogue13",true)
+            dialogue();assertEquals(GameView.Layer.BATTLE,v.layer);finishFight()
+            assertEquals(GameView.Layer.DIALOGUE,v.layer);assertTrue(v.currentSnapshot().flags[victory]!=true)
+            assertEquals(1,v.currentSnapshot().inventory["rom.special.13"])
+            state("normal-original-queen-victory-dialogue15-before-flag",true);dialogue()
+            assertEquals(GameView.Layer.MAP,v.layer);assertEquals(true,v.currentSnapshot().flags[victory])
+            assertEquals(true,v.currentSnapshot().flags["rom.global.7c6.64"])
+            state("normal-original-queen-completed-once",true)
+            walk(7,4);val huang=v.content.npcs.single{it.id=="rom.npc.117.0"}
+            val before=v.currentSnapshot();assertEquals(0,before.inventory[gift]?:0)
+            assertTrue("Earned inventory must have the original special-category slot",InventoryCapacity.hasCategorySlot(before.inventory,gift,"special"))
+            val ui=layoutFor(v);tap(v,ui.worldToScreen((huang.x*16+8).toFloat(),(huang.y*16+8).toFloat(),v.world.camera(ui.viewWidth,ui.viewHeight)))
+            assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            val begun=OriginalNpcTalk.begin(before.copy(direction=Key.UP),huang.originalTalk!!,v.content.itemDefinitions.getValue(gift))
+            assertTrue(begun.applied);assertEquals(begun.snapshot,v.currentSnapshot());assertEquals(1,v.currentSnapshot().inventory[gift])
+            assertTrue(v.currentSnapshot().flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG]!=true)
+            state("normal-original-huang-gift-before-dialogue14",true);dialogue()
+            val done=OriginalNpcTalk.finishHuang(begun.snapshot,huang.originalTalk!!,"rom.dialogue.127.14")
+            assertTrue(done.applied);assertEquals(done.snapshot,v.currentSnapshot())
+            assertEquals(true,v.currentSnapshot().flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG])
+            assertEquals(true,v.currentSnapshot().flags["rom.global.7fe.128"])
+            assertEquals(7 to 4,v.world.x/16 to v.world.y/16)
+            persist();File(root,"world-queen117-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-queen-huang-once-and-save",true)
+        }else{
+            assertEquals(117,v.world.mapId);assertEquals(true,source.flags[victory])
+            assertEquals(true,source.flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG]);assertEquals(1,source.inventory[gift])
+            assertTrue(source.flags[OriginalNpcTalk.HUANG_PENDING_FLAG]!=true)
+            val money=v.currentSnapshot().money;val inventory=v.currentSnapshot().inventory
+            walk(7,5);assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(money,v.currentSnapshot().money);assertEquals(inventory,v.currentSnapshot().inventory)
+            state("cold-original-queen-reentry-no-boss-or-gift-repeat",true)
+            walk(7,13);assertEquals(141,v.world.mapId)
+            walk(24,19);assertEquals(115,v.world.mapId);walk(32,28);assertEquals(141,v.world.mapId)
+            walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(91 to 134,v.world.x/16 to v.world.y/16)
+            assertEquals(true,v.currentSnapshot().flags[victory]);assertEquals(1,v.currentSnapshot().inventory[gift])
+            persist();state("cold-independent-queen-original-city-and-world-return",true)
+        }
+    }
 
     private fun normalNightEightStage(v:GameView,cold:Boolean,source:SaveSnapshot,
         walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,dialogue:()->Unit,persist:()->Unit){
@@ -2747,11 +2813,11 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(queen)"world-night8-expected-save.json"else if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2806,7 +2872,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0&&OriginalPartyRules.present(it)}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2820,7 +2886,7 @@ class TouchTest:IsolatedGameTestCase(){
             var entered:OpeningBattle?=null
             instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)entered=battleField.get(v) as OpeningBattle}
             val initial=entered?:return;val beforeFight=v.currentSnapshot()
-            val boss=initial.enemies.any{if(cave87)it.definition.id==156 else if(island)it.definition.id in 152..155 else if(rebirth)it.definition.id in listOf(150,151) else if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
+            val boss=initial.enemies.any{if(queen)it.definition.id==157 else if(cave87)it.definition.id==156 else if(island)it.definition.id in 152..155 else if(rebirth)it.definition.id in listOf(150,151) else if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
                 it.definition.id==if(secondHall)143 else if(firstHall)142 else if(east)141 else 140};fights++
             if(initial.party.size==2){twoActorBattles++;state("two-actor-natural-encounter")}
             if(initial.party.size==3){threeActorBattles++;state("three-actor-natural-encounter")}
@@ -2835,11 +2901,11 @@ class TouchTest:IsolatedGameTestCase(){
                     assertEquals(listOf(1400,1600,1400,1800),initial.enemies.map{it.definition.hp})
                 }else assertEquals(if(rebirth)mapOf(150 to 2500,151 to 3500).getValue(initial.enemies.single().definition.id)
                     else if(hallBatch)mapOf(144 to 850,145 to 1150,146 to 1300,147 to 1540,148 to 1860,149 to 2100).getValue(initial.enemies.single().definition.id)
-                    else if(cave87)4500 else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
+                    else if(queen)7000 else if(cave87)4500 else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
             var bindingSubmitted=false
-            val deadline=SystemClock.elapsedRealtime()+240000
+            val deadline=SystemClock.elapsedRealtime()+if(queen&&boss)600000 else 240000
             while(true){
                 var observed:Triple<OpeningBattle,BattlePresentation,Boolean>?=null
                 instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)observed=Triple(
@@ -2848,8 +2914,8 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue("Normal $label encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
                 assertTrue("Normal $label defeat; no state repair or forced victory permitted",fight.phase!=BattlePhase.DEFEAT)
                 val displayedAction=presentation.action
-                if(island&&boss&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL&&displayedAction.actorId!=null){
-                    assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                if((island||queen)&&boss&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL&&displayedAction.actorId!=null){
+                    assertEquals(1,v.currentSnapshot().inventory[if(queen)"rom.special.13"else"rom.special.9"])
                     state("normal-binding-original-actor-order-effect")
                 }
                 if(boss&&!capturedBossSpecial&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL){
@@ -2874,8 +2940,8 @@ class TouchTest:IsolatedGameTestCase(){
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
                     val acting=fight.inputHero!!
                     val heal=acting.hp<=acting.maxHp/2||(boss&&bossHerbs==0&&acting.hp<acting.maxHp)
-                    if(island&&boss&&!bindingSubmitted){
-                        val id="rom.special.9";val count=v.currentSnapshot().inventory[id]
+                    if((island||queen)&&boss&&!bindingSubmitted){
+                        val id=if(queen)"rom.special.13"else"rom.special.9";val count=v.currentSnapshot().inventory[id]
                         assertEquals(1,count);val previous=fight.inputRevision
                         tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id)
                         val selected=v.currentSnapshot();tap(v,center(v.battleItemBounds(id)))
@@ -3091,6 +3157,11 @@ class TouchTest:IsolatedGameTestCase(){
                 .firstOrNull{treeRouteTo(it)!=null}
             assertNotNull("Original NPC must have a reachable adjacent cell",goal)
             treeWalkTo(goal!!);talk()
+        }
+        if(queen){
+            normalQueenStage(v,cold,source,::walkTo,::step,::state,::dialogue,::finishFight,::persistChecked)
+            checkSourceUnchanged();assertEquals(if(cold)0 else 1,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
         }
         if(night8){
             normalNightEightStage(v,cold,source,::walkTo,::step,::state,::dialogue,::persistChecked)

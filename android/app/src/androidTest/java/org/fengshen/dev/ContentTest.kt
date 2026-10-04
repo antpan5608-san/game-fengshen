@@ -13,6 +13,42 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Bundled Queen resources + controlled save round trips; not a normal win. */
+    fun testQueenOriginalResourcesAndDurableHuangGiftFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for((mid,w,h)in listOf(Triple(141,32,30),Triple(115,64,45),Triple(117,16,15))){
+            assertEquals(w,c.scenes.getValue(mid).width);assertEquals(h,c.scenes.getValue(mid).height)
+        }
+        val rules=c.battle!!;val queen=rules.enemies.getValue(157)
+        assertEquals(7000,queen.hp);assertEquals(372,queen.attack);assertEquals(178,queen.defense)
+        assertEquals(3000,queen.experienceReward);assertEquals(2400,queen.moneyReward)
+        assertEquals(2,queen.requiredBindingMarker)
+        val rope=c.itemDefinitions.getValue("rom.special.13");assertEquals("捆妖繩",rope.name)
+        assertEquals(2,rope.battleBindingUse!!.bindingMarker)
+        for(id in listOf(58,59,157))assertNotNull(c.enemyGraphics[id])
+        val boss=rules.storyBattles.getValue("rom.npc.117.1")
+        assertEquals(StoryEntryTrigger(117,7,5),boss.entryTrigger);assertEquals(0,boss.intro!!.openingMovement.completedSteps)
+        assertTrue(boss.commitAfterDialogue)
+        val before=SaveSnapshot(c.scene.version,117,120,72,Key.UP,listOf(c.initialPlayer),
+            mapOf(rope.id to 1),mapOf("rom.map.117.flag.128" to true,"rom.npccontext.117.231" to true),money=73)
+        assertTrue(before.validate(c));val npc=c.npcs.single{it.id=="rom.npc.117.0"};val item=c.itemDefinitions.getValue("rom.special.18")
+        val first=OriginalNpcTalk.begin(before,npc.originalTalk!!,item);assertTrue(first.applied)
+        assertTrue(first.snapshot.validate(c));assertEquals(1,first.snapshot.inventory[item.id])
+        val restored=SaveSnapshot.parse(first.snapshot.json().toString());assertEquals(first.snapshot,restored)
+        assertTrue(restored.validate(c));assertEquals(restored,OriginalNpcTalk.begin(restored,npc.originalTalk!!,item).snapshot)
+        val closed=OriginalNpcTalk.finishHuang(restored,npc.originalTalk!!,"rom.dialogue.127.14")
+        assertTrue(closed.applied);assertTrue(closed.snapshot.validate(c));assertFalse(c.npcVisible(npc,closed.snapshot.flags))
+        assertEquals(first.snapshot.inventory,closed.snapshot.inventory);assertEquals(before.characters,closed.snapshot.characters)
+        assertEquals(closed.snapshot,SaveSnapshot.parse(closed.snapshot.json().toString()))
+        assertFalse(OriginalNpcTalk.begin(closed.snapshot,npc.originalTalk!!,item).applied)
+        assertFalse(restored.copy(mapId=16).validate(c));assertTrue(before.copy(contentVersion="opening-segment-001-c48").validate(c))
+        assertFalse(before.copy(contentVersion="opening-segment-001-c50").validate(c))
+        val women=c.npcs.filter{it.mapId==115&&it.id.substringAfterLast('.').toInt()<5}
+        assertTrue(women.all{c.npcVisible(it,emptyMap())});assertTrue(women.none{c.npcVisible(it,mapOf("rom.npccontext.115.208" to true))})
+        assertEquals(7 to 10,c.npcsForState(164,mapOf("rom.npccontext.164.220" to true)).first{it.id=="rom.npc.164.0"}.let{it.x to it.y})
+        assertEquals("rom.dialogue.174.0",c.npcsForState(164,mapOf("rom.npccontext.164.220" to true)).first{it.id=="rom.npc.164.0"}.firstDialogue)
+    }
+
     /** Real loader/JSON fixtures; actual normal gift/use remains a separate recorded route. */
     fun testNightEightOriginalMapAtlasGiftAndColdSaveFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

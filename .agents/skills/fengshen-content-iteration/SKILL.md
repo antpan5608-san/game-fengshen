@@ -343,6 +343,9 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 ## 已验证的女王局部取证（正常App待验）
 
-- probe-world-queen117.py继续原py65 call：校完整ROM并执行1536目标/既有marker、1024完成位/context、36原tileset6足行。三张派生TSV及当前探针hash受原export_development的局部validator审核；原回放/PPU仍忽略。字段和源码地址实际验证后复用，不以名称猜绑定目标或凭对白猜赠物。
+- probe-world-queen117.py继续原py65 call：校完整ROM并执行1536目标/既有marker、1024完成位/context、36原tileset6足行。派生数值TSV及当前探针hash受原export_development的局部validator审核；原回放/PPU仍忽略。字段和源码地址实际验证后复用，不以名称猜绑定目标或凭对白猜赠物。
 - 原行动中的画面可能有角色OAM覆盖Boss，导致palette/图块匹配失败。先找同敌稳定指令等待帧；本次原observed_graphic_recipe重建全部120图块及RGBA成功，未扩展成另一导入器。失败瞬时帧保留私有来源限制，不当原静态图形。
-- CPU/纯业务/仪器编译只证明局部数据与代码；最新实际inspect脱敏计数单独记录，不借旧版日志给新候选健康背书。当前局部资源三正反门禁和327 JVM已运行，干净目标内容导出、真实Android仍须任务门禁，未验证不得写成功。
+- CPU/纯业务/仪器编译只证明局部数据与代码；最新实际inspect脱敏计数单独记录，不借旧版日志给新候选健康背书。局部原CPU/纯逻辑、来源拒绝、原export_from_base重复导出/旧媒体逐字节和全新ci_apk.restore已实际通过；真实Android仍须同产物原runtime，不把编译当运行。
+
+- 原受控位置实验须同步0406/0408与8E/90原坐标字段，边界从前一真实格按键接近，不能在未完成transition上猜返程失败。遗漏曾导致假失败；补齐后原宫殿/内城/世界独立返程实际通过。所有位置/HP fixture仍不是正常路线。
+- 同一provenance局部事件按实际action→dispatcher→event/script逐段核，action编号不等于event编号。赠物before-text与文本后完成分开纯proposal和pending存档，原容量/已有物/used位/复谈边界用现有py65 probe和JVM核；静态actor F0属性未解时复用同原身份已知姿势且明确PROVISIONAL，不猜动画。

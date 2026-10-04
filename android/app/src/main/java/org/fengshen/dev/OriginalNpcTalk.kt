@@ -13,6 +13,9 @@ data class OriginalNpcTalkDefinition(val mapId:Int,val mapFlagId:String,val witn
     var completionWitnessFlagId:String="";internal set
 }
 object OriginalNpcTalk {
+    const val HUANG_PENDING_FLAG="runtime.story.117.huang.gift.dialogue.pending"
+    const val HUANG_COMPLETED_FLAG="rom.map.117.flag.2"
+    const val HUANG_EVIDENCE="game-data/provenance/world-queen117-state.json"
     const val TEACHER_CONTEXT_FLAG="rom.npccontext.163.219"
     /** Actual 0:A664 map reconstruction, not a new conversation prerequisite. */
     fun flagsAfterMapLoad(mapId:Int,partyCount:Int,flags:Map<String,Boolean>):Map<String,Boolean> {
@@ -24,6 +27,7 @@ object OriginalNpcTalk {
     fun begin(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
         if(before.mapId!=rule.mapId)return reject("当前场景已变化")
+        if(rule.actionId==43)return huang117(before,rule,item)
         if(rule.actionId==1)return teacher163(before,rule,item)
         if(rule.actionId==11){
             if(rule.mapId!=171||rule.mapFlagId!="rom.map.171.flag.1"||
@@ -46,6 +50,44 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    private fun isHuangRule(rule:OriginalNpcTalkDefinition)=rule.actionId==43&&rule.mapId==117&&
+        rule.mapFlagId==HUANG_COMPLETED_FLAG&&rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.18"&&
+        rule.firstDialogue=="rom.dialogue.127.14"&&rule.repeatDialogue==rule.firstDialogue
+    /** Runtime pending records an already submitted gift, not a second original
+     * claim bit. It survives process death while the original text is visible. */
+    fun validHuangPending(before:SaveSnapshot):Boolean {
+        if(before.flags[HUANG_PENDING_FLAG]!=true)return true
+        return before.mapId==117&&before.flags[HUANG_COMPLETED_FLAG]!=true&&
+            kotlin.math.abs(before.x/16-7)+kotlin.math.abs(before.y/16-3)==1&&
+            (before.inventory["rom.special.18"]?:0) in 0..1
+    }
+    private fun huang117(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
+        fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
+        if(!isHuangRule(rule)||!validHuangPending(before))return reject("黄天化赠物规则或状态未核验")
+        if(before.flags[rule.mapFlagId]==true)return reject("黄天化已离开")
+        if(kotlin.math.abs(before.x/16-7)+kotlin.math.abs(before.y/16-3)!=1)return reject("当前交谈位置已变化")
+        if(before.flags[HUANG_PENDING_FLAG]==true)return StoryFollowup.Result(before,rule.firstDialogue,true)
+        val count=before.inventory[rule.itemId]?:0
+        if(count !in 0..1||item?.id!=rule.itemId||item.originalId!=18||item.category!="special"||item.maxCount!=1)
+            return reject("攢心釘取得定义或数量未核验")
+        // Actual B54D->B60E grants BEFORE message14. Existing/used/full
+        // inventory fails the grant without inventing quantity or a retry gift.
+        val inventory=if(count==0&&InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category))
+            before.inventory+(item.id to 1)else before.inventory
+        return StoryFollowup.Result(before.copy(inventory=inventory,flags=before.flags+(HUANG_PENDING_FLAG to true)),rule.firstDialogue,true)
+    }
+    fun finishHuang(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,currentDialogue:String):StoryFollowup.Result {
+        if(!isHuangRule(rule)||currentDialogue!=rule.firstDialogue||before.flags[HUANG_PENDING_FLAG]!=true||!validHuangPending(before))
+            return StoryFollowup.Result(before,null,false,"黄天化对白阶段已变化")
+        // Original closes text, writes actor bit2, runs NPC-only script20,
+        // switches contexts117/121, then event16 finishes via global7FE128.
+        // No player step, extra reward or Queen completion is inferred here.
+        val flags=before.flags+(HUANG_PENDING_FLAG to false)+(HUANG_COMPLETED_FLAG to true)+
+            mapOf("rom.npccontext.117.231" to false,"rom.npccontext.117.211" to true,
+                "rom.npccontext.121.215" to true,"rom.global.7fe.128" to true)
+        return StoryFollowup.Result(before.copy(flags=flags),null,true)
     }
 
     private fun teacher163(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {

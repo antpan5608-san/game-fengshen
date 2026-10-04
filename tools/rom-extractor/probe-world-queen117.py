@@ -63,6 +63,47 @@ def main():
         assert got == (flag|128,global_flag|64,0,208,210,220,231,0), (flag,global_flag,got)
         rows.append('\t'.join(map(str,(flag,global_flag,*got))))
     save(args.output, 'queen117-completion-original.tsv', rows)
+    # Huang action43 is not event43: real text14 grants special18 before text,
+    # then action43 schedules event16 and script20; finish sets global7FE bit128.
+    assert reader.word(11,0xcb5e+32)==0xd24a
+    assert reader.word(11,0xc2a6+40)==0xc5e1
+    base=reader.word(2,0xa194+2)
+    rows=['case\tquantityAfter\tgrantFailed']
+    for name,initial in {'empty':[],'existing':[(18,1)],'used':[(18,129)],
+            'full':[(i,1)for i in range(16)],'full-existing':[(i,1)for i in range(15)]+[(18,1)]}.items():
+        cpu=MPU();cpu.memory[0x8000:]=reader.read(2,0x8000,32768)
+        cpu.memory[0x675]=117;cpu.memory[0x3b]=14
+        for j,(item,quantity)in enumerate(initial):cpu.memory[base+j]=item;cpu.memory[base+64+j]=quantity
+        shared.call(cpu,0xb481)
+        quantities=[cpu.memory[base+64+j]for j in range(16)if cpu.memory[base+j]==18 and cpu.memory[base+64+j]&127]
+        got=quantities[0]if quantities else 0
+        assert got==({'empty':1,'existing':1,'used':129,'full':0,'full-existing':1}[name])
+        assert cpu.memory[0x68e]==int(name!='empty')
+        rows.append(f'{name}\t{got}\t{cpu.memory[0x68e]}')
+    save(args.output,'queen117-huang-gift-original.tsv',rows)
+    record=bytes.fromhex(records[0]['rawHex']);assert (record[0],record[1],record[2],record[12],record[13])==(172,14,255,43,2)
+    rows=['mapFlagBefore\tmessage\tactionPending\tmapFlagAfter']
+    for flag in range(256):
+        cpu=MPU();cpu.memory[0x8000:]=reader.read(10,0x8000,32768)
+        cpu.memory[0xa3]=flag_address&255;cpu.memory[0xa4]=flag_address>>8;cpu.memory[flag_address]=flag
+        cpu.memory[0xa2]=2;cpu.memory[0x400:0x40e]=record;cpu.memory[0x3d]=0;cpu.memory[0x3e]=4;cpu.pc=0xa160
+        for _ in range(80):
+            if cpu.pc==0xa18a:break
+            cpu.step()
+        else:raise RuntimeError('Original Huang selector did not finish')
+        if cpu.memory[0xa1]==43:shared.call(cpu,0xcb90)
+        assert (cpu.memory[0x3b],cpu.memory[0x7c2],cpu.memory[flag_address])==((255,0,flag)if flag&2 else(14,43,flag))
+        rows.append(f'{flag}\t{cpu.memory[0x3b]}\t{cpu.memory[0x7c2]}\t{cpu.memory[flag_address]}')
+    save(args.output,'queen117-huang-selector-original.tsv',rows)
+    rows=['mapFlagBefore\tglobal7feBefore\tmapFlagAfter\tglobal7feAfter\teventAfter']
+    for flag,global_flag in itertools.product(range(256),(0,16,128,255)):
+        cpu=MPU();cpu.memory[0x8000:]=event_bank;cpu.memory[0xe000:]=fixed_bank
+        cpu.memory[0xa3]=flag_address&255;cpu.memory[0xa4]=flag_address>>8;cpu.memory[flag_address]=flag
+        cpu.memory[0x7fe]=global_flag;cpu.memory[0xa5]=16
+        shared.call(cpu,0xcd9a)
+        assert(cpu.memory[flag_address],cpu.memory[0x7fe],cpu.memory[0xa5])==(flag,global_flag|128,0)
+        rows.append(f'{flag}\t{global_flag}\t{flag}\t{cpu.memory[0x7fe]}\t0')
+    save(args.output,'queen117-huang-event16-finish-original.tsv',rows)
     # Original castle tileset6 foot dispatch, not a copied town/forest whitelist.
     bank = reader.read(0, 0x8000, 32768)
     rows = ['source\ttarget\tdirection\tblocked\tocclusion\tmode']

@@ -563,6 +563,11 @@ jobs:
             artifacts/checkpoint-ui/world-night8-*.json
             artifacts/checkpoint-ui/world-night8-*-test.txt
             artifacts/world-night8-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-queen117-*.png
+            artifacts/checkpoint-ui/touch-ux-world-queen117-*.json
+            artifacts/checkpoint-ui/world-queen117-*.json
+            artifacts/checkpoint-ui/world-queen117-*-test.txt
+            artifacts/world-queen117-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
 
