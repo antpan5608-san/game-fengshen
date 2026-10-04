@@ -2412,8 +2412,15 @@ class TouchTest:IsolatedGameTestCase(){
             val away=v.currentSnapshot().characters.single{it.id=="xiaolongnv"}
             val original=source.characters.single{it.id=="xiaolongnv"}
             assertEquals(original.copy(hp=away.hp,statusMask=away.statusMask),away)
-            assertEquals(64,away.statusMask and 64)
-            assertEquals(2,OriginalPartyRules.battleCharacters(v.currentSnapshot().characters).size)
+            // Original BA30..BA7F still processes poisoned away records; at HP0
+            // it writes status20 (not OR20). Do not invent immunity/preserve40.
+            if(original.statusMask and OriginalStatus.POISON==0||original.hp==0)assertEquals(original,away)
+            else{
+                assertTrue(away.hp in 0..original.hp)
+                assertEquals(if(away.hp==0)OriginalStatus.DEAD else original.statusMask,away.statusMask)
+            }
+            assertEquals(if(OriginalPartyRules.present(away))3 else 2,
+                OriginalPartyRules.battleCharacters(v.currentSnapshot().characters).size)
             persist();state("cold-original-reentry-away-actor-retained-and-continue",true)
         }
     }
