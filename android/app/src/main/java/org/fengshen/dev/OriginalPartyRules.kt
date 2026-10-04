@@ -5,6 +5,19 @@ package org.fengshen.dev
  * This object neither samples randomness nor changes HP, inventory, EXP or saves.
  * See game-data/provenance/world-two-party.json for source spans and limits. */
 object OriginalPartyRules {
+    /** 1:8B0E..8B47 / 9:927C..92A8: bit40 actors retain their original
+     * record and HP but are omitted from the active battle identities. */
+    fun present(character:CharacterState)=character.statusMask and 64==0
+    fun battleCharacters(roster:List<CharacterState>):List<CharacterState> {
+        require(roster.size in 1..3&&roster.map{it.id}.distinct().size==roster.size)
+        return roster.filter(::present)
+    }
+    fun restoreBattleCharacters(roster:List<CharacterState>,active:List<CharacterState>):List<CharacterState> {
+        require(active.map{it.id}.distinct().size==active.size)
+        require(active.map{it.id}.toSet()==battleCharacters(roster).map{it.id}.toSet())
+        val changed=active.associateBy{it.id}
+        return roster.map{(changed[it.id]?:it).let{hero->hero.copy(statusMask=hero.statusMask and 247)}}
+    }
     data class Actor(val originalActorIndex:Int,val partySlot:Int,val hp:Int,val status:Int,
                      val agility:Int,val command:Int=0) {
         init {

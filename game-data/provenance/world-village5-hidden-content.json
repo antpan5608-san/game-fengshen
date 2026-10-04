@@ -1,0 +1,516 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "map5-c6-investigation-medicine1-success-only-local-flag",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "baseManifestSha256": "eac9f8888fe00f03082f856ded2e23ad42eed58e3eba848e0e9cbb1282b5eec4",
+  "baseExport": {
+    "pinPath": "ci/golden-world-village5-content.json",
+    "pinSha256": "45e5db57776e5abd4f6f095809f884ff50428c8dd5fd59eb099a7d5122ba088e",
+    "provenanceSha256": "cd51e97494389f5163c4cfa3523fbcf4ceb512c430b952b015bfff0d13ae5ce7",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "ruleRanges": [
+    {
+      "offset": 337744,
+      "length": 233,
+      "sha256": "1c0157a2f7d60788c87e42fbface3923d95044cb8b77b8e39e8628dcf9ed7805",
+      "module": 10,
+      "cpuAddress": 42816,
+      "meaning": "Actual C6 investigate selector, category/id and repeat branch"
+    },
+    {
+      "offset": 73424,
+      "length": 249,
+      "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+      "module": 2,
+      "cpuAddress": 40640,
+      "meaning": "Shared investigate/category-grant and success-only flag"
+    },
+    {
+      "offset": 73967,
+      "length": 12,
+      "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Original category grant dispatch"
+    },
+    {
+      "offset": 73979,
+      "length": 173,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original inventory capacity transaction"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original category limits/rows"
+    },
+    {
+      "offset": 21677,
+      "length": 2,
+      "sha256": "a37473f76d4814e67eb342853e2321fa6fb8e236f38d5808a8deb11abd7e6fa8",
+      "module": 0,
+      "cpuAddress": 54429,
+      "meaning": "Independent map5 flag RAM pointer0705"
+    },
+    {
+      "offset": 3682,
+      "length": 20,
+      "sha256": "65d20e360bcb6fdaf5e7177971ccd2a5f96831b44c47494527284ccad27f261c",
+      "module": 0,
+      "cpuAddress": 36434,
+      "meaning": "Original C6 initially invisible actor animation"
+    }
+  ],
+  "maps": [],
+  "exits": [],
+  "graphics": {
+    "npc-198-village5-hidden.png": {
+      "width": 16,
+      "height": 16,
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          0,
+          0,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "observedTile": 127
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "observedTile": 127
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "observedTile": 127
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "observedTile": 127
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "opaquePixelCount": 0,
+      "completeGraphic": false,
+      "captureKind": "ACTUAL_ORIGINAL_INITIAL_HIDDEN_C6_ZERO_ALPHA_ONLY",
+      "normalPlayEvidence": false,
+      "sourcePpuSha256": "d348a69520f5c6fb21681eadb1b5ed9b58e5a8435ea79d628addbb7826afbbc4"
+    }
+  },
+  "npcs": [
+    {
+      "id": "rom.npc.5.5",
+      "mapId": 5,
+      "cell": [
+        15,
+        7
+      ],
+      "spriteId": 198,
+      "sprite": "npc-198-village5-hidden.png",
+      "openedSprite": "npc-198-village5-hidden.png",
+      "hiddenInvestigation": true,
+      "firstDialogue": "",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "treasure": {
+        "itemId": "rom.medicine.1",
+        "flagId": "rom.map.5.flag.1",
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-village5-hidden.json"
+      },
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276995,
+          "length": 14,
+          "sha256": "a6c3425be247c7bb23b9f131909a5a16fc8139324e80147e777dbe18bfe0fe68",
+          "module": 8,
+          "cpuAddress": 47603,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-hidden.json",
+        "remainingUnknown": [
+          "Alternate noninitial visible animation; original invisible pickup only"
+        ]
+      }
+    }
+  ],
+  "dialogues": [],
+  "items": [],
+  "limitations": [
+    "Original alternate visible animation; Android normal discovery path NOT_RUN; item use effect remains unimplemented"
+  ]
+}

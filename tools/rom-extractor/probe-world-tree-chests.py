@@ -17,11 +17,14 @@ def run(cpu,entry,stops):
     raise RuntimeError(f'Original chest grant did not return {cpu.pc:04x}')
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--rom',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--rom',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--map-id',type=int,action='append',choices=(76,87,99,107,108));a=p.parse_args()
     r=Reader(a.rom.read_bytes());bank=r.read(2,0x8000,32768);rows=['map\tnpc\tcategory\titem\tmax\tcase\tapplied\tquantityAfter\tflagAfter\tmask\tinitialRows'];failures=0
-    for mid in (107,108):
+    for mid in (a.map_id or (107,108)):
         for n in extract_npcs(r,mid)['records']:
-            raw=bytes.fromhex(n['rawHex']);assert raw[0]==144 and raw[12]==0
+            raw=bytes.fromhex(n['rawHex'])
+            if mid in (76,87) and (raw[0]!=144 or raw[1]==4):continue # Money has its own actual grant path.
+            assert raw[0]==144 and raw[12]==0
             cat,item,mask=raw[1],raw[2],raw[13];limit=r.read(2,0xa190+cat)[0];base=r.word(2,0xa194+cat*2)
             others=[i for i in range(256)if i!=item][:16]
             cases={'empty':[],'one':[(item,1)],'below_cap':[(item,limit-1)],'at_cap':[(item,limit)],'used':[(item,129)],'full_new':[(i,1)for i in others],'full_existing':[(item,1)]+[(i,1)for i in others[:15]]}
