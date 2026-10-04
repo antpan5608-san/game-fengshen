@@ -537,7 +537,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Retain bounded original village5 service and restart evidence
+      - name: Retain bounded original village5 and cave87 restart evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
@@ -548,6 +548,11 @@ jobs:
             artifacts/checkpoint-ui/world-village5-*.json
             artifacts/checkpoint-ui/world-village5-*-test.txt
             artifacts/world-village5-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-cave87-*.png
+            artifacts/checkpoint-ui/touch-ux-world-cave87-*.json
+            artifacts/checkpoint-ui/world-cave87-*.json
+            artifacts/checkpoint-ui/world-cave87-*-test.txt
+            artifacts/world-cave87-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
 

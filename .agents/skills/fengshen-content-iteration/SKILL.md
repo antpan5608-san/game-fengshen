@@ -325,3 +325,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原export_from_base父pin固定、scoped ROM tile/glyph及ci_apk.restore在空目录严格核验新场景；test_world_cave87_export.py已执行两次一致/旧媒体不变/错误坐标、对白、离队身份、额外奖励、像素与CPU表拒绝。计算新目标hash仅用于初次生成审查，随后必须完整严格重生成/restore，不能关最终目标pin校验。
 - 完整Boss矩形须包含实际边缘像素；过小矩形即便图块全匹配也可能裁图。普通敌框不可含玩家红点造成混palette。ROM静态初帧组合明确PROVISIONAL，未OAM观察不得标成截图匹配或正常App画面。
 - 无普通对白的钱箱须按已证身份/金额/旗标加载，不能因复用普通NPC校验导致新包全局拒绝。JVM/导出/编译通过后仍必须原runtime验证正常路线、存档及真实画面；本局部Android目前未运行。
+
+- 空目录恢复必须调用原ci_apk.restore(source,destination=...)：当前CLI restore忽略--output（该参数只供verify回执），曾错误认为写入指定临时目录；随后在新TemporaryDirectory/assets实际复核完整目标文件/hash成功。不是更换导入器或关闭pin。仅编译正常驱动不代表App正常胜利/外部冷启已执行。

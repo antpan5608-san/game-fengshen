@@ -1,3 +1,11 @@
+## 当前有效正常驱动接续（2026-10-04T06:23Z，本地保存未发布）
+
+- 独立c46/0435b35后接正常驱动：仅续同候选四恶人正常保存文件，原楼梯返回/固定渡船/真实村4补给→村5→87(1,7)/花狐貂→七段对白→离队保留→外部冷启/独立返回/再入；无人物、库存、flag注入或传送。原runtime录屏、同产物receipt/review和有界artifact白名单已薄扩展，Android实际NOT_RUN。
+- 首编译因既有normalWorldStoryContinuation超过Kotlin单方法64KiB失败，保留失败。抽取原渡船测试段为小函数，所有状态/自然遇敌/冷启/源存档断言保留；随后缺state第二参数修正，最终assembleDebugAndroidTest实际PASS(8秒)。此为测试编译问题，非App崩溃，不宣称新正常路线已通过。
+- 修正恢复记录：原CLI restore的--output仅用于verify回执，restore未使用该参数；首次实际严格恢复到了既有ignored assets，不是空目录。本次直接调用已存在ci_apk.restore(source,destination=新TemporaryDirectory/assets)，确认目标最初不存在，255文件/全部manifest entries/完整hash实际PASS。后续空目录恢复使用既有函数destination，不关闭校验、不新建提取器。
+- 同步v62已验证北海正常驱动的真实采购/西海无毒练级修正，2预算守卫PASS；原main仍a2b3ca3冻结run37180967103，不推独立WIP改来源。v62签名build已PASS；独立验签/hash/package/c41 PASS：APK3d130195dbc17165210055b9834e0be8919dff0f63c6e0588577113792944c91，runtime进行中。新内容c46不借其运行结果。
+- 下一动作：原v62实际正常/App/旧档门槛通过即原审批发布；独立树继续当前c46实际正常运行准备，不关闭全地图/花狐貂Android欠账。生产仍v27，WORLD总任务PARTIAL/ALL_MAPS_USABLE=NO/分母UNKNOWN。
+
 ## 当前有效局部实现检查点（2026-10-04T06:08Z，独立树未发布）
 
 - WORLD-FULL-01继续，生产仍v27/c14；ALL_MAPS_USABLE=NO/有效原版分母UNKNOWN。原main a2b3ca386125b2f2ef4d6170b469c36ffb510e8e冻结，v62/run37180967103原签名构建进行中，不推独立树干扰同提交发布。用户原连接实际恢复；最近inspect37180842747于05:46:55Z查询可信27/26=1431/2289、普通真机8会话/测试0/模拟器0，旧v26 ProtocolException1/root UNCONFIRMED保留。
