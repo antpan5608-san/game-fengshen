@@ -553,6 +553,16 @@ class TouchTest:IsolatedGameTestCase(){
             send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
         };fail("Shop item $id never reached an accessible row: ${v.shopItemBounds(id)}, view=${v.width}x${v.height}, density=$dp")
     }
+    private fun scrollToBattleItem(v:GameView,id:String){
+        val method=GameView::class.java.getDeclaredMethod("battleItemLayout").apply{isAccessible=true}
+        val dp=v.resources.displayMetrics.density
+        for(i in 0..24){
+            if(v.battleItemBounds(id).h>=48*dp)return
+            val list=(method.invoke(v) as TouchModalLayout).list
+            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,list.y+list.h*.18f)
+            send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
+        };fail("Original special $id never reached a real touch row")
+    }
     fun testTouchUxSelectionScrollAndAtomicEquipment(){
         val(activity,v)=launch();val base=v.currentSnapshot()
         val bag=v.content.itemDefinitions.keys.associateWith{2}
@@ -2330,11 +2340,484 @@ class TouchTest:IsolatedGameTestCase(){
     fun testVillageFourColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,village4=true)}
     fun testNormalFixedFerryAndIslandFromVerifiedVillageSave(){normalWorldStoryContinuation(false,true,ferry=true)}
     fun testFixedFerryIslandColdRestartAndOriginalReverse(){normalWorldStoryContinuation(true,true,ferry=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false){
+    fun testNormalIslandLayersFourVillainsAndChestsFromVerifiedFerrySave(){normalWorldStoryContinuation(false,true,island=true)}
+    fun testIslandVictoryColdRestartChestsAndRealReturn(){normalWorldStoryContinuation(true,true,island=true)}
+    fun testNormalVillageFiveServicesAndTalkFromVerifiedYangSave(){normalWorldStoryContinuation(false,true,village5=true)}
+    fun testVillageFiveColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,village5=true)}
+    fun testNormalCave87FlowerStoryFromVerifiedIslandSave(){normalWorldStoryContinuation(false,true,cave87=true)}
+    fun testCave87DepartureColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,cave87=true)}
+    fun testNormalVillageSixServicesAndTalkFromVerifiedFlowerSave(){normalWorldStoryContinuation(false,true,village6=true)}
+    fun testVillageSixColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,village6=true)}
+    /** Preserve the prior village4/5 UI paths while keeping JVM method size bounded. */
+    private fun normalWestVillageServicesStage(v:GameView,cold:Boolean,source:SaveSnapshot,village5:Boolean,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,
+        enter:(Int,Int,String?)->MapExit,leave:(MapExit)->Unit,trade:(String,Boolean,Int)->Unit,
+        treeWalk:(Triple<Int,Int,Int>)->Unit,dialogue:()->Unit,checkSourceUnchanged:()->Unit,persist:()->Unit){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+            val caller=if(village5)5 else 4
+            val label=if(village5)"village5"else"village4"
+            val worldDoor=if(village5)107 to 157 else 146 to 150
+            val stock=if(village5)listOf(17 to "rom.weapon.8",18 to "rom.armor.13",19 to "rom.medicine.1")else listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)
+            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+            assertEquals(true,source.flags["rom.map.110.flag.128"])
+            state(if(cold)"cold-exact-normal-village-save"else"verified-yang-three-party-source-no-grants",true)
+            if(!cold){
+                assertEquals(110,v.world.mapId);treeWalk(Triple(107,7,13));step(Key.DOWN)
+                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                walk(worldDoor.first,worldDoor.second);assertEquals(caller,v.world.mapId);assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                state("normal-original-west-village-entry-no-optional-talk-lock",true)
+                for((room,id)in stock){
+                    val entry=enter(caller,room,null);state("normal-original-shop-$room-open",true)
+                    trade(id,true,1);state("normal-original-shop-$room-bought",true)
+                    trade(id,false,1);state("normal-original-shop-$room-sold",true);leave(entry)
+                }
+                // Actual 90-tael command, same three-owner business result.
+                val innEntry=enter(caller,22,null);val beforeRest=v.currentSnapshot()
+                val expectedRest=InnStay.apply(beforeRest.money,beforeRest.characters,v.content.inns.getValue(v.activeInnId!!))
+                assertNull("Only normal earned money may pay the actual inn",expectedRest.error)
+                tap(v,center(v.innStayBounds()));assertEquals(expectedRest.money,v.currentSnapshot().money)
+                assertEquals(expectedRest.characters,v.currentSnapshot().characters)
+                assertEquals(beforeRest.inventory,v.currentSnapshot().inventory);assertEquals(beforeRest.flags,v.currentSnapshot().flags)
+                state("normal-original-paid-inn-three-owner-result",true);leave(innEntry)
+                for(id in listOf("rom.npc.20.0","rom.npc.20.1")){
+                    val entry=enter(caller,20,id);val before=v.currentSnapshot()
+                    state("normal-original-clinic-${id.substringAfterLast('.')}-view",true)
+                    instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leave(entry)
+                }
+                for(index in if(village5)(0..4).toList()else (1..8).toList()){
+                    val npc=v.content.npcs.single{it.id=="rom.npc.$caller.$index"}
+                    val candidates=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{npc.x+it.first to npc.y+it.second}
+                    // An individually legal tile can be on the other bridge bank.
+                    // Read-only component search follows actual directional edges and
+                    // avoids accidentally entering a shared room on the way to talk.
+                    val scene=v.world.scene;val reachable=mutableSetOf(v.world.x/16 to v.world.y/16)
+                    val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(reachable.single())
+                    while(queue.isNotEmpty()){
+                        val (x,y)=queue.removeFirst()
+                        for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                            val next=x+d.first to y+d.second
+                            if(scene.probeFrom(x,y,key,v.world.terrainMode)!=MovementBlock.NONE||next in reachable||
+                                v.content.exits.any{it.fromMapId==caller&&it.triggerX==next.first&&it.triggerY==next.second&&it.edgeDirection==null})continue
+                            reachable.add(next);queue.add(next)
+                        }
+                    }
+                    val at=candidates.firstOrNull{it in reachable}
+                    assertNotNull("Original NPC must have a reachable interaction side",at)
+                    walk(at!!.first,at.second)
+                    val face=when{npc.x<at.first->Key.LEFT;npc.x>at.first->Key.RIGHT;npc.y<at.second->Key.UP;else->Key.DOWN}
+                    assertEquals(at,v.world.x/16 to v.world.y/16)
+                    val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                    val screen=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
+                    val before=v.currentSnapshot();tap(v,screen)
+                    assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                    // Actual NPC tap faces its stable actor before the pure talk proposal.
+                    val faced=before.copy(direction=face)
+                    val expected=npc.originalTalk?.let{OriginalNpcTalk.begin(faced,it)}
+                    if(expected!=null){assertTrue(expected.applied);assertEquals(expected.snapshot,v.currentSnapshot())}
+                    else assertEquals(faced,v.currentSnapshot())
+                    state("normal-original-resident-$index-first",true);dialogue()
+                    val again=v.currentSnapshot();tap(v,screen);dialogue()
+                    val repeat=npc.originalTalk?.let{OriginalNpcTalk.begin(again,it)}
+                    assertEquals(repeat?.snapshot?:again,v.currentSnapshot())
+                    assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
+                    assertEquals(before.characters,v.currentSnapshot().characters)
+                }
+                fun discoverHiddenMedicine(){
+                    val hidden=v.content.npcs.single{it.id=="rom.npc.5.5"};val item=v.content.itemDefinitions.getValue("rom.medicine.1")
+                    if((v.currentSnapshot().inventory[item.id]?:0)>=item.maxCount){
+                        val store=enter(5,19,null);trade(item.id,false,1);leave(store)
+                    }
+                    walk(15,8)
+                    val stick=layoutFor(v).stick;val middle=center(stick);val up=Pair(middle.first,stick.y+2f)
+                    val at=v.currentSnapshot();send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(up))
+                    SystemClock.sleep(120);send(v,MotionEvent.ACTION_UP,listOf(up))
+                    assertEquals(at.x,v.world.x);assertEquals(at.y,v.world.y);assertEquals(Key.UP,v.world.direction)
+                    val before=v.currentSnapshot();assertTrue(before.flags["rom.map.5.flag.1"]!=true)
+                    val action=center(layoutFor(v).buttons.getValue(Key.A))
+                    send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));assertEquals(before,v.currentSnapshot())
+                    tap(v,action);val after=v.currentSnapshot();val expected=WorldItems.openTreasure(before,hidden.treasure!!,item)
+                    assertTrue(expected.applied);assertEquals(before.copy(inventory=expected.inventory,flags=expected.flags),after)
+                    assertEquals(before.money,after.money);assertEquals(before.characters,after.characters)
+                    send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(after,v.currentSnapshot())
+                    tap(v,action);assertEquals(after,v.currentSnapshot())
+                    assertEquals(MovementBlock.PHYSICAL,v.world.scene.probeFrom(15,8,Key.UP))
+                    state("normal-original-hidden-medicine1-once-still-blocking",true)
+                }
+                if(village5)discoverHiddenMedicine()
+                if(!village5){walk(13,3);state("normal-original-north-bank-without-claimed-ferry",true)}
+                checkSourceUnchanged();persist();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-original-services-residents-and-save",true)
+            }else{
+                assertEquals(caller,v.world.mapId);assertNull(v.currentSnapshot().interiorContext)
+                val entry=enter(caller,22,null);val before=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leave(entry)
+                state("cold-real-inn-reentry-cancel-no-charge",true)
+                walk(15,29);if(!village5)step(Key.DOWN);assertEquals(16,v.world.mapId)
+                assertEquals(worldDoor,v.world.x/16 to v.world.y/16);state("cold-independent-original-south-return",true)
+                step(Key.DOWN);assertEquals(16,v.world.mapId)
+                walk(worldDoor.first,worldDoor.second);assertEquals(caller,v.world.mapId)
+                assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+                assertEquals(1,v.currentSnapshot().characters.count{it.id=="yangjian"})
+                checkSourceUnchanged();persist();state("cold-real-village-reentry-legacy-flags-kept",true)
+            }
+    }
+    /** Exact same-candidate flower save, then ordinary movement/services; no witness injection. */
+    fun testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave()=normalWorldStoryContinuation(false,true,night8=true)
+    fun testNightEightColdRestartAndOriginalLightReset()=normalWorldStoryContinuation(true,true,night8=true)
+
+    fun testNormalQueenRouteBindingAndHuangFromVerifiedNightEightSave()=normalWorldStoryContinuation(false,true,queen=true)
+    fun testQueenHuangColdRestartAndOriginalReturn()=normalWorldStoryContinuation(true,true,queen=true)
+
+    /** Same-candidate earned save. Planning is read-only; all progression uses real UI input. */
+    private fun normalQueenStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,
+        dialogue:()->Unit,finishFight:()->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val victory="rom.map.117.flag.128"
+        val gift="rom.special.18"
+        assertEquals(1,source.inventory["rom.special.13"])
+        assertEquals(true,source.flags["rom.map.87.flag.128"])
+        state(if(cold)"cold-exact-queen-huang-completed-save"else"verified-night8-source-no-state-grants",true)
+        if(!cold){
+            assertEquals(74,v.world.mapId);walk(3,28);assertEquals(16,v.world.mapId)
+            step(Key.DOWN);walk(91,134);assertEquals(141,v.world.mapId)
+            assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-courtyard141-entry",true)
+            walk(15,15);assertEquals(115,v.world.mapId);assertEquals(32 to 28,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-city115-real-link",true)
+            walk(56,44);assertEquals(141,v.world.mapId);assertEquals(24 to 19,v.world.x/16 to v.world.y/16)
+            walk(26,7);assertEquals(117,v.world.mapId);assertEquals(7 to 13,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-palace117-entry",true)
+            walk(7,5);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            assertEquals(7 to 5,v.world.x/16 to v.world.y/16)
+            state("normal-original-queen-event14-dialogue13",true)
+            dialogue();assertEquals(GameView.Layer.BATTLE,v.layer);finishFight()
+            assertEquals(GameView.Layer.DIALOGUE,v.layer);assertTrue(v.currentSnapshot().flags[victory]!=true)
+            assertEquals(1,v.currentSnapshot().inventory["rom.special.13"])
+            state("normal-original-queen-victory-dialogue15-before-flag",true);dialogue()
+            assertEquals(GameView.Layer.MAP,v.layer);assertEquals(true,v.currentSnapshot().flags[victory])
+            assertEquals(true,v.currentSnapshot().flags["rom.global.7c6.64"])
+            state("normal-original-queen-completed-once",true)
+            walk(7,4);val huang=v.content.npcs.single{it.id=="rom.npc.117.0"}
+            val before=v.currentSnapshot();assertEquals(0,before.inventory[gift]?:0)
+            assertTrue("Earned inventory must have the original special-category slot",InventoryCapacity.hasCategorySlot(before.inventory,gift,"special"))
+            val ui=layoutFor(v);tap(v,ui.worldToScreen((huang.x*16+8).toFloat(),(huang.y*16+8).toFloat(),v.world.camera(ui.viewWidth,ui.viewHeight)))
+            assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            val begun=OriginalNpcTalk.begin(before.copy(direction=Key.UP),huang.originalTalk!!,v.content.itemDefinitions.getValue(gift))
+            assertTrue(begun.applied);assertEquals(begun.snapshot,v.currentSnapshot());assertEquals(1,v.currentSnapshot().inventory[gift])
+            assertTrue(v.currentSnapshot().flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG]!=true)
+            state("normal-original-huang-gift-before-dialogue14",true);dialogue()
+            val done=OriginalNpcTalk.finishHuang(begun.snapshot,huang.originalTalk!!,"rom.dialogue.127.14")
+            assertTrue(done.applied);assertEquals(done.snapshot,v.currentSnapshot())
+            assertEquals(true,v.currentSnapshot().flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG])
+            assertEquals(true,v.currentSnapshot().flags["rom.global.7fe.128"])
+            assertEquals(7 to 4,v.world.x/16 to v.world.y/16)
+            persist();File(root,"world-queen117-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-queen-huang-once-and-save",true)
+        }else{
+            assertEquals(117,v.world.mapId);assertEquals(true,source.flags[victory])
+            assertEquals(true,source.flags[OriginalNpcTalk.HUANG_COMPLETED_FLAG]);assertEquals(1,source.inventory[gift])
+            assertTrue(source.flags[OriginalNpcTalk.HUANG_PENDING_FLAG]!=true)
+            val money=v.currentSnapshot().money;val inventory=v.currentSnapshot().inventory
+            walk(7,5);assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(money,v.currentSnapshot().money);assertEquals(inventory,v.currentSnapshot().inventory)
+            state("cold-original-queen-reentry-no-boss-or-gift-repeat",true)
+            walk(7,13);assertEquals(141,v.world.mapId)
+            walk(24,19);assertEquals(115,v.world.mapId);walk(32,28);assertEquals(141,v.world.mapId)
+            walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(91 to 134,v.world.x/16 to v.world.y/16)
+            assertEquals(true,v.currentSnapshot().flags[victory]);assertEquals(1,v.currentSnapshot().inventory[gift])
+            persist();state("cold-independent-queen-original-city-and-world-return",true)
+        }
+    }
+
+    private fun normalNightEightStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,dialogue:()->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val item=v.content.itemDefinitions.getValue(WorldItems.NIGHT_LIGHT_ID)
+        fun npcTap(n:StoryNpc){
+            val ui=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+            tap(v,ui.worldToScreen((n.x*16+8).toFloat(),(n.y*16+8).toFloat(),v.world.camera(ui.viewWidth,ui.viewHeight)))
+        }
+        fun useNight(){
+            val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,item.id)
+            tap(v,center(v.panelItemBounds(item.id)));assertEquals(before,v.currentSnapshot())
+            val action=center(v.panelPrimaryBounds());send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+            assertEquals(before,v.currentSnapshot());tap(v,action)
+            val expected=WorldItems.useNightLight(before,item,true);assertTrue(expected.applied)
+            assertEquals(before.copy(inventory=expected.inventory,flags=expected.flags),v.currentSnapshot())
+            val used=v.currentSnapshot();send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(used,v.currentSnapshot())
+            instrumentation.runOnMainSync{v.handleBack()};assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(1,v.currentSnapshot().inventory[item.id]);assertEquals(true,v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG])
+        }
+        assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.87.flag.128"])
+        state(if(cold)"cold-exact-earned-night8-and-rope-save"else"verified-village6-source-no-grants",true)
+        if(!cold){
+            assertEquals(6,v.world.mapId);walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            walk(78,158);assertEquals(100,v.world.mapId);state("normal-original-clear-peak-entry",true)
+            walk(20,11);assertEquals(164,v.world.mapId);state("normal-original-teacher164-door",true)
+            walk(7,5);val teacher=v.content.npcs.single{it.id=="rom.npc.164.1"};val before=v.currentSnapshot()
+            assertEquals(0,before.inventory[item.id]?:0);assertTrue(InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category))
+            npcTap(teacher);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            val faced=before.copy(direction=Key.UP);val gift=OriginalNpcTalk.begin(faced,teacher.originalTalk!!,item)
+            assertTrue(gift.applied);assertEquals(gift.snapshot,v.currentSnapshot());assertEquals(1,v.currentSnapshot().inventory[item.id])
+            state("normal-original-teacher164-earned-night8-dialogue",true);dialogue()
+            val paid=v.currentSnapshot();npcTap(teacher);dialogue();assertEquals(paid,v.currentSnapshot())
+            state("normal-original-teacher164-repeat-no-second-gift",true)
+            walk(7,14);assertEquals(100,v.world.mapId);walk(8,51);assertEquals(16,v.world.mapId)
+            walk(70,105);assertEquals(74,v.world.mapId);state("normal-original-dark74-before-light",true)
+            assertTrue(v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG]!=true);useNight()
+            state("normal-original-dark74-night8-no-consumption",true)
+            val chest=v.content.npcs.single{it.id=="rom.npc.74.5"};val s=v.world.scene
+            val q=java.util.ArrayDeque<Pair<Int,Int>>();val seen=mutableSetOf(v.world.x/16 to v.world.y/16);q.add(seen.single())
+            while(q.isNotEmpty()){
+                val at=q.removeFirst()
+                for(key in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
+                    if(s.probeFrom(at.first,at.second,key)!=null)continue
+                    val delta=when(key){Key.UP->0 to -1;Key.DOWN->0 to 1;Key.LEFT->-1 to 0;else->1 to 0}
+                    val next=at.first+delta.first to at.second+delta.second
+                    if(next.first !in 0 until s.width||next.second !in 0 until s.height)continue
+                    if(seen.add(next))q.add(next)
+                }
+            }
+            val side=listOf(chest.x to chest.y+1,chest.x+1 to chest.y,chest.x-1 to chest.y,chest.x to chest.y-1).firstOrNull{it in seen}
+            assertNotNull("Original rope chest must have an actually reachable side",side);walk(side!!.first,side.second)
+            val beforeChest=v.currentSnapshot();assertTrue(beforeChest.flags[chest.treasure!!.flagId]!=true)
+            npcTap(chest);val after=v.currentSnapshot();val expected=WorldItems.openTreasure(beforeChest,chest.treasure!!,v.content.itemDefinitions.getValue("rom.special.13"))
+            assertTrue(expected.applied);assertEquals(expected.inventory,after.inventory);assertEquals(expected.flags,after.flags)
+            assertEquals(beforeChest.money,after.money);assertEquals(beforeChest.characters,after.characters)
+            state("normal-original-dark74-rope13-once",true);npcTap(chest);assertEquals(after,v.currentSnapshot())
+            persist();File(root,"world-night8-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-dark74-night8-rope-and-save",true)
+        }else{
+            assertEquals(74,v.world.mapId);assertEquals(true,source.flags[WorldItems.NIGHT_LIGHT_FLAG]);assertEquals(1,source.inventory[item.id])
+            assertEquals(1,source.inventory["rom.special.13"]);assertEquals(true,source.flags["rom.map.74.flag.64"])
+            state("cold-original-dark74-lit-scene-and-owned-items",true)
+            walk(3,28);assertEquals(16,v.world.mapId);assertEquals(70 to 105,v.world.x/16 to v.world.y/16)
+            assertTrue(WorldItems.NIGHT_LIGHT_FLAG !in v.currentSnapshot().flags)
+            assertEquals(true,v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_USED_FLAG]);state("cold-original-dark74-left-retains-night8",true)
+            step(Key.DOWN);walk(70,105);assertEquals(74,v.world.mapId);assertTrue(v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG]!=true)
+            state("cold-original-dark74-reentry-dark-no-second-rope",true);useNight();assertEquals(1,v.currentSnapshot().inventory["rom.special.13"])
+            assertEquals(true,v.currentSnapshot().flags["rom.map.74.flag.64"]);persist();state("cold-original-dark74-reused-night8-and-continue",true)
+        }
+    }
+
+    private fun normalVillageSixStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,
+        enter:(Int,Int,String?)->MapExit,leave:(MapExit)->Unit,
+        trade:(String,Boolean,Int)->Unit,dialogue:()->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.87.flag.128"])
+        state(if(cold)"cold-exact-normal-village6-save"else"verified-flower-source-no-grants",true)
+        if(!cold){
+            assertEquals(87,v.world.mapId);walk(19,13);assertEquals(5,v.world.mapId)
+            walk(15,29);assertEquals(16,v.world.mapId)
+            walk(63,135);assertEquals(6,v.world.mapId);assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+            state("normal-original-village6-entry-no-speech-gate",true)
+            for((room,id)in listOf(17 to "rom.weapon.9",18 to "rom.armor.31",19 to "rom.medicine.1")){
+                val entry=enter(6,room,null);state("normal-original-village6-shop-$room-open",true)
+                val item=v.content.itemDefinitions.getValue(id)
+                if((v.currentSnapshot().inventory[id]?:0)>=item.maxCount)trade(id,false,1)
+                assertTrue("Only actual earned money pays original village6 prices",v.currentSnapshot().money>=item.buyPrice!!)
+                trade(id,true,1);state("normal-original-village6-shop-$room-bought",true)
+                trade(id,false,1);state("normal-original-village6-shop-$room-sold",true);leave(entry)
+            }
+            val innEntry=enter(6,22,null);val beforeRest=v.currentSnapshot()
+            val rest=InnStay.apply(beforeRest.money,beforeRest.characters,v.content.inns.getValue(v.activeInnId!!))
+            assertNull("Normal earnings must cover original 200-liang inn",rest.error)
+            tap(v,center(v.innStayBounds()));assertEquals(rest.money,v.currentSnapshot().money)
+            assertEquals(rest.characters,v.currentSnapshot().characters)
+            assertEquals(beforeRest.inventory,v.currentSnapshot().inventory);assertEquals(beforeRest.flags,v.currentSnapshot().flags)
+            state("normal-original-village6-inn-paid",true);leave(innEntry)
+            for(id in listOf("rom.npc.20.0","rom.npc.20.1")){
+                val entry=enter(6,20,id);val before=v.currentSnapshot()
+                state("normal-original-village6-clinic-${id.substringAfterLast('.')}-view",true)
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leave(entry)
+            }
+            for(index in listOf(0,1,2,4,5,6,7)){
+                val npc=v.content.npcs.single{it.id=="rom.npc.6.$index"}
+                val scene=v.world.scene;val reachable=mutableSetOf(v.world.x/16 to v.world.y/16)
+                val q=java.util.ArrayDeque<Pair<Int,Int>>();q.add(reachable.single())
+                while(q.isNotEmpty()){
+                    val(x,y)=q.removeFirst()
+                    for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                        val next=x+d.first to y+d.second
+                        if(scene.probeFrom(x,y,key,v.world.terrainMode)!=MovementBlock.NONE||next in reachable||
+                            v.content.exits.any{it.fromMapId==6&&it.triggerX==next.first&&it.triggerY==next.second&&it.edgeDirection==null})continue
+                        reachable.add(next);q.add(next)
+                    }
+                }
+                val at=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{npc.x+it.first to npc.y+it.second}.firstOrNull{it in reachable}
+                assertNotNull("Original village6 NPC must have a reachable side",at);walk(at!!.first,at.second)
+                val face=when{npc.x<at.first->Key.LEFT;npc.x>at.first->Key.RIGHT;npc.y<at.second->Key.UP;else->Key.DOWN}
+                val ui=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                val screen=ui.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(ui.viewWidth,ui.viewHeight))
+                repeat(2){visit->
+                    val before=v.currentSnapshot();tap(v,screen);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                    val faced=before.copy(direction=face)
+                    val expected=npc.originalTalk?.let{OriginalNpcTalk.begin(faced,it)}
+                    assertEquals(expected?.snapshot?:faced,v.currentSnapshot())
+                    state("normal-original-village6-resident-$index-${if(visit==0)"first"else"repeat"}",true);dialogue()
+                    assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
+                    assertEquals(before.characters,v.currentSnapshot().characters)
+                }
+            }
+            val hidden=v.content.npcs.single{it.id=="rom.npc.6.3"};val item=v.content.itemDefinitions.getValue("rom.medicine.1")
+            if((v.currentSnapshot().inventory[item.id]?:0)>=item.maxCount){val store=enter(6,19,null);trade(item.id,false,1);leave(store)}
+            walk(17,5);assertEquals(MovementBlock.PHYSICAL,v.world.scene.probeFrom(17,5,Key.RIGHT))
+            val stick=layoutFor(v).stick;val middle=center(stick);val right=Pair(stick.x+stick.w-2f,middle.second)
+            val at=v.currentSnapshot();send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(right))
+            SystemClock.sleep(120);send(v,MotionEvent.ACTION_UP,listOf(right))
+            assertEquals(at.x,v.world.x);assertEquals(at.y,v.world.y);assertEquals(Key.RIGHT,v.world.direction)
+            val before=v.currentSnapshot();assertTrue(before.flags["rom.map.6.flag.8"]!=true)
+            val action=center(layoutFor(v).buttons.getValue(Key.A))
+            send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));assertEquals(before,v.currentSnapshot())
+            tap(v,action);val after=v.currentSnapshot();val expected=WorldItems.openTreasure(before,hidden.treasure!!,item)
+            assertTrue(expected.applied);assertEquals(before.copy(inventory=expected.inventory,flags=expected.flags),after)
+            send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(after,v.currentSnapshot())
+            tap(v,action);assertEquals(after,v.currentSnapshot());state("normal-original-village6-hidden-medicine1-once",true)
+            persist();File(root,"world-village6-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-village6-services-residents-and-save",true)
+        }else{
+            assertEquals(6,v.world.mapId);assertEquals(true,source.flags["rom.map.6.flag.8"])
+            val entry=enter(6,22,null);val before=v.currentSnapshot()
+            instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leave(entry)
+            state("cold-original-village6-inn-cancel-no-charge",true)
+            walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            assertEquals(63 to 135,v.world.x/16 to v.world.y/16);state("cold-original-village6-independent-return",true)
+            val departure=listOf(Key.DOWN,Key.LEFT,Key.UP,Key.RIGHT).first{key->
+                val nx=v.world.x/16+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
+                val ny=v.world.y/16+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
+                v.world.scene.probeFrom(v.world.x/16,v.world.y/16,key,v.world.terrainMode)==MovementBlock.NONE&&
+                    v.content.exits.none{it.fromMapId==16&&it.triggerX==nx&&it.triggerY==ny}}
+            step(departure);assertEquals(16,v.world.mapId);walk(63,135);assertEquals(6,v.world.mapId)
+            assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+            for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+            assertEquals(source.inventory,v.currentSnapshot().inventory)
+            assertEquals(source.characters.map{it.id},v.currentSnapshot().characters.map{it.id})
+            persist();state("cold-original-village6-reentry-no-repeat-pickup",true)
+        }
+    }
+    /** Same-run ordinary island save; callbacks execute existing UI paths only. */
+    private fun normalCave87Stage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,ferry:(Int)->Unit,state:(String,Boolean)->Unit,
+        fight:()->Unit,inn:(Int)->Unit,enter:(Int,Int)->MapExit,leave:(MapExit)->Unit,
+        trade:(String,Boolean,Int)->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val boss=v.content.battle!!.storyBattles.getValue("rom.npc.87.0");val chain=boss.continuation!!
+        assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.76.flag.128"])
+        assertEquals(true,source.flags["rom.global.7c6.16"])
+        state(if(cold)"cold-exact-flower-event-save"else"verified-four-villains-source-no-grants",true)
+        if(!cold){
+            assertEquals(76,v.world.mapId);assertTrue(source.flags[boss.flagId]!=true)
+            for(next in listOf(77,78,79,16)){
+                val exit=v.content.exits.first{it.fromMapId==v.world.mapId&&it.toMapId==next}
+                walk(exit.triggerX,exit.triggerY);assertEquals(next,v.world.mapId)
+            }
+            walk(150,135);ferry(46);assertEquals(4,v.world.mapId)
+            // Actual village4 stock contains both supplies; town5 has no herb0.
+            inn(4);val store=enter(4,19)
+            for(id in listOf(HerbUse.ID,AntidoteUse.ID)){
+                val count=(10-(v.currentSnapshot().inventory[id]?:0)).coerceAtLeast(0)
+                if(count>0){
+                    val price=v.content.itemDefinitions.getValue(id).buyPrice!!
+                    assertTrue("Use actual earned money, never gift supplies",v.currentSnapshot().money>=count*price)
+                    trade(id,true,count)
+                }
+            }
+            leave(store);walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            walk(107,157);assertEquals(5,v.world.mapId);state("normal-original-village5-after-island",true)
+            walk(7,6);assertEquals(87,v.world.mapId);assertEquals(19 to 13,v.world.x/16 to v.world.y/16)
+            state("normal-real-back-cave87-door-and-encounters",true)
+            walk(1,8);val before=v.currentSnapshot();step(Key.UP)
+            assertEquals(GameView.Layer.DIALOGUE,v.layer);val won=v.currentSnapshot()
+            assertEquals(before.money+1600,won.money)
+            assertEquals(true,won.flags[boss.pendingFlag]);assertTrue(won.flags[boss.flagId]!=true)
+            assertEquals(5 to 5,v.world.x/16 to v.world.y/16)
+            state("normal-flower-boss-victory-before-seven-messages",true)
+            for(id in chain.dialogueIds){
+                assertEquals(GameView.Layer.DIALOGUE,v.layer);assertEquals(id,boss.pendingDialogue(v.currentSnapshot().flags))
+                state("normal-original-flower-message-$id",true)
+                tap(v,Pair(v.width*.5f,v.height*.5f))
+            }
+            assertEquals(GameView.Layer.MAP,v.layer);val after=v.currentSnapshot()
+            assertEquals(4 to 6,v.world.x/16 to v.world.y/16);assertEquals(Key.RIGHT,v.world.direction)
+            assertEquals(true,after.flags[boss.flagId]);assertEquals(true,after.flags["rom.global.7bf.16"])
+            assertTrue(after.flags[boss.pendingFlag]!=true)
+            assertEquals(won.inventory,after.inventory);assertEquals(won.money,after.money)
+            assertEquals(won.characters.single{it.id=="xiaolongnv"}.copy(statusMask=won.characters.single{it.id=="xiaolongnv"}.statusMask or 64),
+                after.characters.single{it.id=="xiaolongnv"})
+            assertEquals(listOf("nezha","yangjian"),OriginalPartyRules.battleCharacters(after.characters).map{it.id})
+            assertFalse(v.content.npcsForState(87,after.flags).any{it.id==boss.npcId})
+            persist();File(root,"world-cave87-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-flower-script-complete-away-record-and-save",true)
+        }else{
+            assertEquals(87,v.world.mapId);assertEquals(true,source.flags[boss.flagId])
+            assertEquals(64,source.characters.single{it.id=="xiaolongnv"}.statusMask and 64)
+            walk(1,7);assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(true,v.currentSnapshot().flags[boss.flagId]);assertTrue(v.currentSnapshot().flags[boss.pendingFlag]!=true)
+            state("cold-real-trigger-no-repeat-flower-or-reward",true)
+            walk(19,13);assertEquals(5,v.world.mapId);assertEquals(7 to 6,v.world.x/16 to v.world.y/16)
+            state("cold-original-independent-return-to-village5",true)
+            step(Key.DOWN);walk(7,6);assertEquals(87,v.world.mapId)
+            assertFalse(v.content.npcsForState(87,v.currentSnapshot().flags).any{it.id==boss.npcId})
+            val away=v.currentSnapshot().characters.single{it.id=="xiaolongnv"}
+            val original=source.characters.single{it.id=="xiaolongnv"}
+            assertEquals(original.copy(hp=away.hp,statusMask=away.statusMask),away)
+            // Original BA30..BA7F still processes poisoned away records; at HP0
+            // it writes status20 (not OR20). Do not invent immunity/preserve40.
+            if(original.statusMask and OriginalStatus.POISON==0||original.hp==0)assertEquals(original,away)
+            else{
+                assertTrue(away.hp in 0..original.hp)
+                assertEquals(if(away.hp==0)OriginalStatus.DEAD else original.statusMask,away.statusMask)
+            }
+            assertEquals(if(OriginalPartyRules.present(away))3 else 2,
+                OriginalPartyRules.battleCharacters(v.currentSnapshot().characters).size)
+            persist();state("cold-original-reentry-away-actor-retained-and-continue",true)
+        }
+    }
+    private fun normalFerryStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,ferry:(Int)->Unit,state:(String,Boolean)->Unit,
+        actors:()->Int,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+            state(if(cold)"cold-exact-normal-island-save"else"verified-village-source-no-state-grants",true)
+            if(!cold){
+                assertEquals(4,v.world.mapId);walk(11,3);ferry(45)
+                assertEquals(16,v.world.mapId);assertEquals(150 to 135,v.world.x/16 to v.world.y/16)
+                for(key in listOf(Key.UP,Key.UP,Key.RIGHT,Key.UP,Key.UP,Key.UP,Key.UP,Key.UP,Key.RIGHT,Key.RIGHT))step(key)
+                assertEquals(79,v.world.mapId);assertEquals(7 to 12,v.world.x/16 to v.world.y/16)
+                state("normal-original-island79-door-and-complete-zone22",true)
+                walk(7,11)
+                var steps=0
+                while(actors()==0){
+                    assertTrue("Island actual encounter must occur without forcing RNG",steps++<200)
+                    walk(7,10);walk(7,11)
+                }
+                assertEquals(79,v.world.mapId);assertTrue(actors()>0)
+                walk(7,11);persist()
+                File(root,"world-ferry-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-island-natural-three-party-encounter-and-save",true)
+            }else{
+                assertEquals(79,v.world.mapId);assertEquals(true,source.flags[OriginalFerry.PARKED_FLAG])
+                walk(7,12);assertEquals(16,v.world.mapId);assertEquals(153 to 128,v.world.x/16 to v.world.y/16)
+                state("cold-independent-island-original-return",true)
+                walk(150,135);ferry(46)
+                assertEquals(4,v.world.mapId);assertEquals(11 to 3,v.world.x/16 to v.world.y/16)
+                assertTrue(v.currentSnapshot().flags[OriginalFerry.PARKED_FLAG]!=true)
+                for((flag,value)in source.flags.filterKeys{it!=OriginalFerry.PARKED_FLAG})assertEquals(value,v.currentSnapshot().flags[flag])
+                persist();state("cold-original-fixed-reverse-and-village-continue",true)
+            }
+    }
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val label=if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(ferry)"world-village4-expected-save.json"else if(village4)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(queen)"world-night8-expected-save.json"else if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2389,8 +2872,8 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry){
-                for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
+                for(actor in v.currentSnapshot().characters.filter{it.hp>0&&OriginalPartyRules.present(it)}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
                 };return
@@ -2403,7 +2886,7 @@ class TouchTest:IsolatedGameTestCase(){
             var entered:OpeningBattle?=null
             instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)entered=battleField.get(v) as OpeningBattle}
             val initial=entered?:return;val beforeFight=v.currentSnapshot()
-            val boss=initial.enemies.any{if(rebirth)it.definition.id in listOf(150,151) else if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
+            val boss=initial.enemies.any{if(queen)it.definition.id==157 else if(cave87)it.definition.id==156 else if(island)it.definition.id in 152..155 else if(rebirth)it.definition.id in listOf(150,151) else if(hallBatch)it.definition.id in listOf(144,145,146,147,148,149) else
                 it.definition.id==if(secondHall)143 else if(firstHall)142 else if(east)141 else 140};fights++
             if(initial.party.size==2){twoActorBattles++;state("two-actor-natural-encounter")}
             if(initial.party.size==3){threeActorBattles++;state("three-actor-natural-encounter")}
@@ -2412,12 +2895,17 @@ class TouchTest:IsolatedGameTestCase(){
                 if(rebirth)assertTrue("No repeated final hall battle",++bossEntries<=2)
                 else if(hallBatch)assertTrue("No repeated hall battle",++bossEntries<=6)
                 else assertEquals("Only the original one-shot encounter may start",1,++bossEntries)
-                assertEquals(if(rebirth)mapOf(150 to 2500,151 to 3500).getValue(initial.enemies.single().definition.id)
+                if(island){
+                    assertEquals(listOf(0,2,4,6),initial.enemies.map{it.slot})
+                    assertEquals(listOf(152,153,154,155),initial.enemies.map{it.definition.id})
+                    assertEquals(listOf(1400,1600,1400,1800),initial.enemies.map{it.definition.hp})
+                }else assertEquals(if(rebirth)mapOf(150 to 2500,151 to 3500).getValue(initial.enemies.single().definition.id)
                     else if(hallBatch)mapOf(144 to 850,145 to 1150,146 to 1300,147 to 1540,148 to 1860,149 to 2100).getValue(initial.enemies.single().definition.id)
-                    else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
+                    else if(queen)7000 else if(cave87)4500 else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
-            val deadline=SystemClock.elapsedRealtime()+240000
+            var bindingSubmitted=false;var bindingApplied=false;var bindingRoundPresented=false
+            val deadline=SystemClock.elapsedRealtime()+if(queen&&boss)600000 else 240000
             while(true){
                 var observed:Triple<OpeningBattle,BattlePresentation,Boolean>?=null
                 instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)observed=Triple(
@@ -2426,6 +2914,11 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue("Normal $label encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
                 assertTrue("Normal $label defeat; no state repair or forced victory permitted",fight.phase!=BattlePhase.DEFEAT)
                 val displayedAction=presentation.action
+                if((island||queen)&&boss&&presentation.screen==BattlePresentation.Screen.ACTING)bindingRoundPresented=true
+                if((island||queen)&&boss&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL&&displayedAction.actorId!=null){
+                    assertEquals(1,v.currentSnapshot().inventory[if(queen)"rom.special.13"else"rom.special.9"])
+                    bindingApplied=true;state("normal-binding-original-actor-order-effect")
+                }
                 if(boss&&!capturedBossSpecial&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL){
                     capturedBossSpecial=true;state("boss-original-special-action")
                 }
@@ -2446,9 +2939,24 @@ class TouchTest:IsolatedGameTestCase(){
                     state("boss-herb-action");capturedBattleHerb=true
                 }
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
+                    // A faster enemy can legitimately kill the caster before its
+                    // queued slot. Retry through a NEW normal command after that
+                    // presented round; never set the internal protection marker.
+                    if((island||queen)&&boss&&bindingRoundPresented&&!bindingApplied){bindingSubmitted=false;bindingRoundPresented=false}
                     val acting=fight.inputHero!!
                     val heal=acting.hp<=acting.maxHp/2||(boss&&bossHerbs==0&&acting.hp<acting.maxHp)
-                    if(heal&&v.battleHerbCount()>0){
+                    if((island||queen)&&boss&&!bindingSubmitted){
+                        val id=if(queen)"rom.special.13"else"rom.special.9";val count=v.currentSnapshot().inventory[id]
+                        assertEquals(1,count);val previous=fight.inputRevision
+                        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id)
+                        val selected=v.currentSnapshot();tap(v,center(v.battleItemBounds(id)))
+                        assertEquals(selected,v.currentSnapshot());assertEquals(previous,fight.inputRevision)
+                        val action=center(v.battleItemUseBounds())
+                        tap(v,action);assertEquals(previous+1,fight.inputRevision)
+                        send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(previous+1,fight.inputRevision)
+                        assertEquals(count,v.currentSnapshot().inventory[id]);bindingSubmitted=true
+                        state("normal-real-binding-command-selected-not-consumed")
+                    }else if(heal&&v.battleHerbCount()>0){
                         val before=fight.hero;val count=v.battleHerbCount()
                         tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
                         assertEquals(before,fight.hero);assertEquals(count,v.battleHerbCount())
@@ -2516,6 +3024,10 @@ class TouchTest:IsolatedGameTestCase(){
                     return
                 }
                 if(v.layer==GameView.Layer.DIALOGUE)assertEquals("Original story may only trigger at requested route endpoint",keys.lastIndex,index)
+                if(island&&v.layer==GameView.Layer.DIALOGUE){
+                    assertEquals(76,scene.mapId);assertEquals(12 to 12,tx to ty)
+                    assertEquals(9 to 11,v.world.x/16 to v.world.y/16);return
+                }
                 val expectedX=beforeX+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                 val expectedY=beforeY+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                 // A held real joystick can travel farther under runner load.
@@ -2578,6 +3090,39 @@ class TouchTest:IsolatedGameTestCase(){
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
         }
+            fun fixedFerry(event:Int){
+                val rule=v.content.ferries.getValue("rom.ferry.$event");val before=v.currentSnapshot()
+                assertEquals(rule.start.mapId,before.mapId)
+                assertEquals(rule.start.x to rule.start.y,before.x/16 to before.y/16)
+                val expectedBegin=OriginalFerry.begin(before,rule,rule.start.direction,v.content.ferries.values)
+                assertTrue(expectedBegin.applied)
+                var expected=expectedBegin.snapshot
+                for(i in rule.legs.indices){
+                    val next=OriginalFerry.advance(expected,rule,i,v.content.ferries.values)
+                    assertTrue(next.applied);expected=next.snapshot
+                }
+                assertFalse("Normal supply must survive original boat costs without state repair",OriginalStatus.allDisabled(expected.characters))
+                val stick=layoutFor(v).stick;val middle=center(stick)
+                val point=if(rule.start.direction==Key.LEFT)Pair(stick.x+2f,middle.second)else Pair(middle.first,stick.y+stick.h-2f)
+                send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
+                val deadline=SystemClock.elapsedRealtime()+15000;var begun=false;var released=false;var done=false;var captured=false
+                while(!done){
+                    assertTrue("Actual fixed boat command did not settle",SystemClock.elapsedRealtime()<deadline)
+                    var observed:SaveSnapshot?=null
+                    instrumentation.runOnMainSync{
+                        observed=v.currentSnapshot();val pending=OriginalFerry.pending(observed!!.flags,v.content.ferries.values)
+                        if(pending!=null){begun=true
+                            if(!released){dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));released=true}}
+                        done=begun&&pending==null
+                    }
+                    if(begun&&!captured){state("normal-event$event-actual-boat-stage");captured=true}
+                    assertEquals(GameView.Layer.MAP,v.layer)
+                    if(!done)SystemClock.sleep(15)
+                }
+                if(!released)send(v,MotionEvent.ACTION_UP,listOf(point))
+                assertEquals(expected,v.currentSnapshot())
+                state("normal-event$event-exact-original-landing-no-free-heal")
+            }
         // Read-only route planning across the actual four floors. Every edge
         // is normal joystick input, including independently recorded stairs.
         fun treeRouteTo(goal:Triple<Int,Int,Int>):List<Key>?{
@@ -2618,152 +3163,171 @@ class TouchTest:IsolatedGameTestCase(){
             assertNotNull("Original NPC must have a reachable adjacent cell",goal)
             treeWalkTo(goal!!);talk()
         }
-        if(ferry){
-            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
-            state(if(cold)"cold-exact-normal-island-save"else"verified-village-source-no-state-grants")
-            fun fixedFerry(event:Int){
-                val rule=v.content.ferries.getValue("rom.ferry.$event");val before=v.currentSnapshot()
-                assertEquals(rule.start.mapId,before.mapId)
-                assertEquals(rule.start.x to rule.start.y,before.x/16 to before.y/16)
-                val expectedBegin=OriginalFerry.begin(before,rule,rule.start.direction,v.content.ferries.values)
-                assertTrue(expectedBegin.applied)
-                var expected=expectedBegin.snapshot
-                for(i in rule.legs.indices){
-                    val next=OriginalFerry.advance(expected,rule,i,v.content.ferries.values)
-                    assertTrue(next.applied);expected=next.snapshot
-                }
-                assertFalse("Normal supply must survive original boat costs without state repair",OriginalStatus.allDisabled(expected.characters))
-                val stick=layoutFor(v).stick;val middle=center(stick)
-                val point=if(rule.start.direction==Key.LEFT)Pair(stick.x+2f,middle.second)else Pair(middle.first,stick.y+stick.h-2f)
-                send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
-                val deadline=SystemClock.elapsedRealtime()+15000;var begun=false;var released=false;var done=false;var captured=false
-                while(!done){
-                    assertTrue("Actual fixed boat command did not settle",SystemClock.elapsedRealtime()<deadline)
-                    var observed:SaveSnapshot?=null
-                    instrumentation.runOnMainSync{
-                        observed=v.currentSnapshot();val pending=OriginalFerry.pending(observed!!.flags,v.content.ferries.values)
-                        if(pending!=null){begun=true
-                            if(!released){dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));released=true}}
-                        done=begun&&pending==null
-                    }
-                    if(begun&&!captured){state("normal-event$event-actual-boat-stage");captured=true}
-                    assertEquals(GameView.Layer.MAP,v.layer)
-                    if(!done)SystemClock.sleep(15)
-                }
-                if(!released)send(v,MotionEvent.ACTION_UP,listOf(point))
-                assertEquals(expected,v.currentSnapshot())
-                state("normal-event$event-exact-original-landing-no-free-heal")
-            }
-            if(!cold){
-                assertEquals(4,v.world.mapId);walkTo(11,3);fixedFerry(45)
-                assertEquals(16,v.world.mapId);assertEquals(150 to 135,v.world.x/16 to v.world.y/16)
-                for(key in listOf(Key.UP,Key.UP,Key.RIGHT,Key.UP,Key.UP,Key.UP,Key.UP,Key.UP,Key.RIGHT,Key.RIGHT))step(key)
-                assertEquals(79,v.world.mapId);assertEquals(7 to 12,v.world.x/16 to v.world.y/16)
-                state("normal-original-island79-door-and-complete-zone22")
-                walkTo(7,11)
-                var steps=0
-                while(threeActorBattles==0){
-                    assertTrue("Island actual encounter must occur without forcing RNG",steps++<200)
-                    walkTo(7,10);walkTo(7,11)
-                }
-                assertEquals(79,v.world.mapId);assertTrue(threeActorBattles>0)
-                walkTo(7,11);checkSourceUnchanged();persistChecked()
-                File(root,"world-ferry-expected-save.json").writeText(v.currentSnapshot().json().toString())
-                state("normal-island-natural-three-party-encounter-and-save")
-            }else{
-                assertEquals(79,v.world.mapId);assertEquals(true,source.flags[OriginalFerry.PARKED_FLAG])
-                walkTo(7,12);assertEquals(16,v.world.mapId);assertEquals(153 to 128,v.world.x/16 to v.world.y/16)
-                state("cold-independent-island-original-return")
-                walkTo(150,135);fixedFerry(46)
-                assertEquals(4,v.world.mapId);assertEquals(11 to 3,v.world.x/16 to v.world.y/16)
-                assertTrue(v.currentSnapshot().flags[OriginalFerry.PARKED_FLAG]!=true)
-                for((flag,value)in source.flags.filterKeys{it!=OriginalFerry.PARKED_FLAG})assertEquals(value,v.currentSnapshot().flags[flag])
-                checkSourceUnchanged();persistChecked();state("cold-original-fixed-reverse-and-village-continue")
-            }
-            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
+        if(queen){
+            normalQueenStage(v,cold,source,::walkTo,::step,::state,::dialogue,::finishFight,::persistChecked)
+            checkSourceUnchanged();assertEquals(if(cold)0 else 1,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(village4){
+        if(night8){
+            normalNightEightStage(v,cold,source,::walkTo,::step,::state,::dialogue,::persistChecked)
+            checkSourceUnchanged();assertEquals(0,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(village6){
+            normalVillageSixStage(v,cold,source,::walkTo,::step,::state,
+                {caller,room,npc->enterService(caller,room,npc)},::leaveService,::trade,::dialogue,::persistChecked)
+            checkSourceUnchanged();assertEquals(0,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(cave87){
+            normalCave87Stage(v,cold,source,::walkTo,::step,::fixedFerry,::state,::finishFight,
+                ::inn,{caller,room->enterService(caller,room)},::leaveService,::trade,::persistChecked)
+            checkSourceUnchanged();assertEquals(if(cold)0 else 1,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(island){
             assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
-            assertEquals(true,source.flags["rom.map.110.flag.128"])
-            state(if(cold)"cold-exact-normal-village-save"else"verified-yang-three-party-source-no-grants")
-            if(!cold){
-                assertEquals(110,v.world.mapId);treeWalkTo(Triple(107,7,13));step(Key.DOWN)
-                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
-                walkTo(146,150);assertEquals(4,v.world.mapId);assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
-                state("normal-original-west-village-entry-no-optional-talk-lock")
-                for((room,id)in listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)){
-                    val entry=enterService(4,room);state("normal-original-shop-$room-open")
-                    trade(id,true);state("normal-original-shop-$room-bought")
-                    trade(id,false);state("normal-original-shop-$room-sold");leaveService(entry)
-                }
-                // Actual 90-tael command, same three-owner business result.
-                val innEntry=enterService(4,22);val beforeRest=v.currentSnapshot()
-                val expectedRest=InnStay.apply(beforeRest.money,beforeRest.characters,v.content.inns.getValue(v.activeInnId!!))
-                assertNull("Only normal earned money may pay the actual inn",expectedRest.error)
-                tap(v,center(v.innStayBounds()));assertEquals(expectedRest.money,v.currentSnapshot().money)
-                assertEquals(expectedRest.characters,v.currentSnapshot().characters)
-                assertEquals(beforeRest.inventory,v.currentSnapshot().inventory);assertEquals(beforeRest.flags,v.currentSnapshot().flags)
-                state("normal-original90-inn-three-owner-result");leaveService(innEntry)
-                for(id in listOf("rom.npc.20.0","rom.npc.20.1")){
-                    val entry=enterService(4,20,id);val before=v.currentSnapshot()
-                    state("normal-original-clinic-${id.substringAfterLast('.')}-view")
-                    instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
-                }
-                for(index in listOf(1,2,3,4,5,6,7,8)){
-                    val npc=v.content.npcs.single{it.id=="rom.npc.4.$index"}
-                    val candidates=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{npc.x+it.first to npc.y+it.second}
-                    // An individually legal tile can be on the other bridge bank.
-                    // Read-only component search follows actual directional edges and
-                    // avoids accidentally entering a shared room on the way to talk.
-                    val scene=v.world.scene;val reachable=mutableSetOf(v.world.x/16 to v.world.y/16)
-                    val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(reachable.single())
-                    while(queue.isNotEmpty()){
-                        val (x,y)=queue.removeFirst()
-                        for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
-                            val next=x+d.first to y+d.second
-                            if(scene.probeFrom(x,y,key,v.world.terrainMode)!=MovementBlock.NONE||next in reachable||
-                                v.content.exits.any{it.fromMapId==4&&it.triggerX==next.first&&it.triggerY==next.second&&it.edgeDirection==null})continue
-                            reachable.add(next);queue.add(next)
-                        }
+            val victory="rom.map.76.flag.128";val witness="rom.global.7c6.16"
+            state(if(cold)"cold-exact-island-victory-save"else"verified-ferry-source-no-state-grants")
+            // Read-only plane-aware planning, every edge is a real joystick gesture.
+            data class Node(val map:Int,val x:Int,val y:Int,val plane:Int)
+            fun route(goal:Triple<Int,Int,Int>):List<Key>?{
+                val begin=Node(v.world.mapId,v.world.x/16,v.world.y/16,v.world.terrainMode)
+                val flags=v.currentSnapshot().flags;val q=java.util.ArrayDeque<Node>();q.add(begin)
+                val parents=mutableMapOf<Node,Pair<Node,Key>>();parents[begin]=begin to Key.UP
+                var end:Node?=null
+                while(q.isNotEmpty()){
+                    val a=q.removeFirst();if(Triple(a.map,a.x,a.y)==goal){end=a;break}
+                    val m=v.content.sceneForState(a.map,flags)!!
+                    for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                        if(m.probeFrom(a.x,a.y,key,a.plane)!=MovementBlock.NONE)continue
+                        val nx=a.x+d.first;val ny=a.y+d.second
+                        val exit=v.content.exits.firstOrNull{it.fromMapId==a.map&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null}
+                        val next=if(exit!=null)Node(exit.toMapId,exit.spawnX,exit.spawnY,0)
+                            else Node(a.map,nx,ny,m.terrainDecision(a.x,a.y,key,a.plane).nextMode)
+                        if(next.map !in 76..79||next in parents)continue
+                        if(Triple(next.map,next.x,next.y)!=goal&&v.content.battle!!.storyBattles.values.any{
+                            it.triggersAt(next.map,next.x,next.y,flags)})continue
+                        parents[next]=a to key;q.add(next)
                     }
-                    val at=candidates.firstOrNull{it in reachable}
-                    assertNotNull("Original NPC must have a reachable interaction side",at)
-                    walkTo(at!!.first,at.second)
-                    val face=when{npc.x<at.first->Key.LEFT;npc.x>at.first->Key.RIGHT;npc.y<at.second->Key.UP;else->Key.DOWN}
-                    assertEquals(at,v.world.x/16 to v.world.y/16)
-                    val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
-                    val screen=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
-                    val before=v.currentSnapshot();tap(v,screen)
-                    assertEquals(GameView.Layer.DIALOGUE,v.layer)
-                    // Actual NPC tap faces its stable actor before the pure talk proposal.
-                    val faced=before.copy(direction=face)
-                    val expected=npc.originalTalk?.let{OriginalNpcTalk.begin(faced,it)}
-                    if(expected!=null){assertTrue(expected.applied);assertEquals(expected.snapshot,v.currentSnapshot())}
-                    else assertEquals(faced,v.currentSnapshot())
-                    state("normal-original-resident-$index-first");dialogue()
-                    val again=v.currentSnapshot();tap(v,screen);dialogue()
-                    val repeat=npc.originalTalk?.let{OriginalNpcTalk.begin(again,it)}
-                    assertEquals(repeat?.snapshot?:again,v.currentSnapshot())
-                    assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
-                    assertEquals(before.characters,v.currentSnapshot().characters)
                 }
-                walkTo(13,3);state("normal-original-north-bank-without-claimed-ferry")
-                checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
-                state("normal-original-services-residents-and-save")
-            }else{
-                assertEquals(4,v.world.mapId);assertNull(v.currentSnapshot().interiorContext)
-                val entry=enterService(4,22);val before=v.currentSnapshot()
-                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
-                state("cold-real-inn-reentry-cancel-no-charge")
-                walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
-                assertEquals(146 to 150,v.world.x/16 to v.world.y/16);state("cold-independent-original-south-return")
-                step(Key.DOWN);assertEquals(16,v.world.mapId)
-                walkTo(146,150);assertEquals(4,v.world.mapId)
-                assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
-                for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
-                assertEquals(1,v.currentSnapshot().characters.count{it.id=="yangjian"})
-                checkSourceUnchanged();persistChecked();state("cold-real-village-reentry-legacy-flags-kept")
+                var a=end?:return null;val keys=mutableListOf<Key>()
+                while(a!=begin){val previous=parents.getValue(a);keys.add(previous.second);a=previous.first}
+                return keys.asReversed()
             }
+            fun islandWalk(goal:Triple<Int,Int,Int>){
+                var n=0
+                while(Triple(v.world.mapId,v.world.x/16,v.world.y/16)!=goal){
+                    assertTrue("Original island route did not settle; no coordinate repair",n++<512)
+                    val keys=route(goal);assertNotNull("No real island route to $goal",keys)
+                    assertTrue(keys!!.isNotEmpty());step(keys.first())
+                }
+            }
+            fun resident(id:String){
+                val npc=v.content.npcs.single{it.id==id};val rule=npc.originalTalk!!
+                val goal=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{Triple(78,npc.x+it.first,npc.y+it.second)}.firstOrNull{route(it)!=null}
+                assertNotNull("Original resident must have a real reachable interaction cell",goal);islandWalk(goal!!)
+                val before=v.currentSnapshot();val expected=OriginalNpcTalk.begin(before,rule)
+                val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                val point=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
+                tap(v,point);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                assertEquals(expected.snapshot.flags,v.currentSnapshot().flags)
+                assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.money,v.currentSnapshot().money)
+                assertEquals(before.characters,v.currentSnapshot().characters);state("normal-original-resident-$id-${expected.nextDialogue}")
+                dialogue();val once=v.currentSnapshot();tap(v,point);dialogue()
+                assertEquals(once.flags,v.currentSnapshot().flags);assertEquals(once.money,v.currentSnapshot().money)
+                assertEquals(once.inventory,v.currentSnapshot().inventory);assertEquals(once.characters,v.currentSnapshot().characters)
+            }
+            if(!cold){
+                assertEquals(79,v.world.mapId);assertTrue(source.flags[victory]!=true)
+                // Source remains the actual same-candidate normal ferry save.
+                // Advice is optional; no possession lock is added to the map.
+                walkTo(7,12);assertEquals(16,v.world.mapId)
+                walkTo(150,135);fixedFerry(46);assertEquals(4,v.world.mapId)
+                walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+                walkTo(183,143);assertEquals(99,v.world.mapId);state("normal-five-dragon-original-entry")
+                walkTo(13,11);assertEquals(163,v.world.mapId)
+                assertTrue(v.currentSnapshot().flags[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
+                assertFalse(10*16+7 in v.world.scene.dynamicObjectCells)
+                assertTrue(9*16+7 in v.world.scene.dynamicObjectCells)
+                val disciple=v.content.npcsForState(163,v.currentSnapshot().flags).single{it.id=="rom.npc.163.0"}
+                assertEquals(7 to 9,disciple.x to disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
+                walkTo(7,5);val teacherBefore=v.currentSnapshot()
+                assertTrue(teacherBefore.flags["rom.map.163.flag.2"]!=true)
+                tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                assertEquals(teacherBefore.money,v.currentSnapshot().money)
+                assertEquals(teacherBefore.characters,v.currentSnapshot().characters)
+                state("normal-teacher-original-gift-before-dialogue");dialogue()
+                val teacherOnce=v.currentSnapshot();talk();assertEquals(teacherOnce,v.currentSnapshot())
+                state("normal-teacher-repeat-no-second-gift")
+                walkTo(7,14);assertEquals(99,v.world.mapId);walkTo(8,51);assertEquals(16,v.world.mapId)
+                walkTo(146,150);assertEquals(4,v.world.mapId)
+                inn(4)
+                val supplyEntry=enterService(4,19)
+                val herbs=(10-(v.currentSnapshot().inventory[HerbUse.ID]?:0)).coerceAtLeast(0)
+                if(herbs>0)trade(HerbUse.ID,true,herbs)
+                leaveService(supplyEntry);walkTo(11,3);fixedFerry(45)
+                for(key in listOf(Key.UP,Key.UP,Key.RIGHT,Key.UP,Key.UP,Key.UP,Key.UP,Key.UP,Key.RIGHT,Key.RIGHT))step(key)
+                assertEquals(79,v.world.mapId);assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                state("normal-earned-gift-and-supply-original-island-return")
+                islandWalk(Triple(78,1,12));state("normal-original-first-stair-floor78")
+                resident("rom.npc.78.0");resident("rom.npc.78.1")
+                islandWalk(Triple(77,3,7));state("normal-original-second-stair-floor77")
+                islandWalk(Triple(76,14,13));state("normal-original-floor76-four-actors-and-six-chests")
+                walkTo(12,12);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                val story=v.content.battle!!.storyBattles.getValue("rom.npc.76.0");val intro=story.intro!!
+                assertEquals(9 to 11,v.world.x/16 to v.world.y/16)
+                for(id in intro.continuation.dialogueIds){
+                    assertEquals(GameView.Layer.DIALOGUE,v.layer);assertEquals(id,intro.pendingDialogue(v.currentSnapshot().flags))
+                    state("normal-original-intro-$id");tap(v,Pair(v.width*.5f,v.height*.5f))
+                }
+                assertEquals(GameView.Layer.BATTLE,v.layer);finishFight()
+                assertEquals(GameView.Layer.MAP,v.layer);assertEquals(1,bossEntries)
+                assertEquals(true,v.currentSnapshot().flags[victory]);assertEquals(true,v.currentSnapshot().flags[witness])
+                assertFalse(v.currentSnapshot().flags[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
+                assertTrue(v.currentSnapshot().flags[story.pendingFlag]!=true)
+                state("normal-four-villains-victory-no-invented-postdialogue")
+                for(npc in v.content.npcs.filter{it.mapId==76&&(it.treasure!=null||it.moneyTreasure!=null)}){
+                    val goal=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{Triple(76,npc.x+it.first,npc.y+it.second)}.firstOrNull{route(it)!=null}
+                    assertNotNull("Original chest must be normally reachable",goal);islandWalk(goal!!)
+                    val before=v.currentSnapshot();val itemResult=npc.treasure?.let{WorldItems.openTreasure(before,it,v.content.itemDefinitions.getValue(it.itemId))}
+                    val moneyResult=npc.moneyTreasure?.let{WorldItems.openMoneyTreasure(before,it)}
+                    val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                    val screen=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight));tap(v,screen);dialogue()
+                    if(itemResult!=null){assertEquals(itemResult.inventory,v.currentSnapshot().inventory);assertEquals(itemResult.flags,v.currentSnapshot().flags);assertEquals(before.money,v.currentSnapshot().money)}
+                    else{assertNotNull(moneyResult);assertEquals(moneyResult!!.snapshot.inventory,v.currentSnapshot().inventory);assertEquals(moneyResult.snapshot.flags,v.currentSnapshot().flags);assertEquals(moneyResult.snapshot.money,v.currentSnapshot().money)}
+                    assertEquals(before.characters,v.currentSnapshot().characters)
+                    val once=v.currentSnapshot();tap(v,screen);dialogue()
+                    assertEquals(once.inventory,v.currentSnapshot().inventory);assertEquals(once.flags,v.currentSnapshot().flags);assertEquals(once.money,v.currentSnapshot().money)
+                    state("normal-original-chest-${npc.id}-once-or-capacity-failure")
+                }
+                islandWalk(Triple(78,1,12));resident("rom.npc.78.0");resident("rom.npc.78.1")
+                islandWalk(Triple(76,9,11));checkSourceUnchanged();persistChecked()
+                File(root,"world-island-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-island-original-once-state-and-save")
+            }else{
+                assertEquals(76,v.world.mapId);assertEquals(true,source.flags[victory]);assertEquals(true,source.flags[witness])
+                islandWalk(Triple(76,12,12));assertEquals(GameView.Layer.MAP,v.layer)
+                assertEquals(source.flags,v.currentSnapshot().flags);assertEquals(source.inventory,v.currentSnapshot().inventory)
+                assertEquals(source.money,v.currentSnapshot().money);state("cold-trigger-cell-no-repeat-battle-or-reward")
+                islandWalk(Triple(77,1,2));state("cold-independent-original-floor76-return")
+                islandWalk(Triple(76,14,13));state("cold-original-reentry-actors-stay-removed-chests-stay-once")
+                assertEquals(source.flags,v.currentSnapshot().flags);assertEquals(source.inventory,v.currentSnapshot().inventory)
+                checkSourceUnchanged();persistChecked()
+            }
+            assertEquals(if(cold)0 else 1,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(ferry){
+            normalFerryStage(v,cold,source,::walkTo,::step,::fixedFerry,::state,{threeActorBattles},::persistChecked)
+            checkSourceUnchanged();assertEquals(0,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(village4||village5){
+            normalWestVillageServicesStage(v,cold,source,village5,::walkTo,::step,::state,
+                {caller,room,npc->enterService(caller,room,npc)},::leaveService,::trade,::treeWalkTo,
+                ::dialogue,::checkSourceUnchanged,::persistChecked)
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
         if(yangJoin){
@@ -3901,6 +4465,43 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(computed,fight.hero);assertEquals(computedEnemies,fight.enemies.map{it.hp})
         assertEquals(BattlePresentation.Screen.COMMAND,p.screen);assertEquals(0,p.command)
         assertEquals(computedEnemies,fight.enemies.map{v.battleVisibleHp(it.slot)})
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    /** Isolated gesture/scheduler fixture; injected resources are NOT normal-play proof. */
+    fun testControlledBindingItemSelectionCancelAndSingleActorCommand(){
+        val(activity,v)=launch();val base=v.currentSnapshot();val rules=v.content.battle!!
+        val id="rom.special.9";val item=v.content.itemDefinitions.getValue(id)
+        val hero=v.content.initialPlayer.copy(hp=2000,maxHp=2000,strength=200,agility=200)
+        val girl=v.content.joinCharacters.getValue("xiaolongnv").copy(hp=2000,maxHp=2000,strength=200,agility=100)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(characters=listOf(hero,girl),inventory=mapOf(id to 1,HerbUse.ID to 2))))}
+        val checkpoint=v.currentSnapshot();val boss=rules.storyBattles.getValue("rom.npc.76.0")
+        val fight=OpeningBattle(boss.group,rules,hero,0,0)
+        fight.configureParty(listOf(hero,girl),mapOf(hero.id to 0,girl.id to 1),
+            mapOf(hero.id to 0,girl.id to 0),mapOf(hero.id to 0,girl.id to 0))
+        val p=BattlePresentation()
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-binding-gesture")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE);p.tick(400)}
+        assertTrue(fight.bindingAvailable(1,item))
+        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id);tap(v,center(v.battleItemBounds(id)))
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(0,fight.inputRevision)
+        tap(v,center(v.battleItemCloseBounds()));assertEquals(0,fight.inputRevision)
+        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id);tap(v,center(v.battleItemBounds(id)))
+        val action=center(v.battleItemUseBounds())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(0,fight.inputRevision);assertEquals(checkpoint,v.currentSnapshot())
+        tap(v,action);assertEquals(1,fight.inputRevision);assertEquals(girl.id,fight.inputHero!!.id)
+        repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(1,fight.inputRevision)
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(BattlePresentation.Screen.COMMAND,p.screen)
+        instrumentation.runOnMainSync{v.active=false};SystemClock.sleep(200)
+        assertEquals(1,fight.inputRevision);assertEquals(checkpoint,v.currentSnapshot())
+        instrumentation.runOnMainSync{v.active=true}
+        tap(v,center(v.battleTargetBounds(fight.enemies.first().slot)))
+        assertEquals(BattlePresentation.Screen.ACTING,p.screen)
+        assertEquals(BattleActionKind.SPECIAL,p.action!!.kind);assertEquals(hero.id,p.action!!.actorId)
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(0,fight.herbsConsumed)
+        assertEquals(checkpoint.inventory,fight.inventoryAfterBattle(checkpoint.inventory))
+        screenshot(v,"world-island-controlled-binding-real-touch-single-command")
         instrumentation.runOnMainSync{activity.finish()}
     }
     /** Ordered-item and touch/persistence fixture; no normal-play or real-player-save claim. */

@@ -1,0 +1,1476 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "clear-peak100-teacher164-reusable-night8-dark74",
+  "kind": "CONTROLLED_ORIGINAL_KEYS_AND_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "font": {
+    "sources": [
+      {
+        "offset": 602128,
+        "length": 2048,
+        "sha256": "6e2a0900ddd7d4ce00020946cdf3f1979125835d5bfe0d8d7a4290372d588187",
+        "meaning": "Actual group174 active font CHR half"
+      },
+      {
+        "offset": 604176,
+        "length": 2048,
+        "sha256": "31615859ebfebacacc3efb404ade2c0606cd0f1bc110e91693672df46fc1c5ce",
+        "meaning": "Actual group174 active font CHR half"
+      }
+    ],
+    "charset": {
+      "178": "這",
+      "170": "裏",
+      "185": "是",
+      "179": "山",
+      "52": "請",
+      "0": "勿",
+      "128": "打",
+      "1": "擾",
+      "180": "師",
+      "53": "父",
+      "186": "你",
+      "59": "們",
+      "129": "進",
+      "56": "去",
+      "58": "我",
+      "2": "乃",
+      "171": "真",
+      "184": "了",
+      "181": "魔",
+      "57": "的",
+      "5": "花",
+      "133": "狐",
+      "6": "貂",
+      "7": "以",
+      "44": "小",
+      "135": "龍",
+      "8": "女",
+      "9": "被",
+      "172": "家",
+      "45": "四",
+      "173": "將",
+      "10": "走",
+      "138": "剋",
+      "11": "星",
+      "54": "在",
+      "13": "兒",
+      "174": "天",
+      "47": "身",
+      "175": "上",
+      "142": "但",
+      "182": "他",
+      "143": "前",
+      "16": "下",
+      "144": "先",
+      "55": "找",
+      "17": "吧",
+      "147": "對",
+      "148": "許",
+      "21": "有",
+      "3": "君",
+      "4": "禮",
+      "12": "釘",
+      "14": "化",
+      "15": "幾",
+      "18": "夜",
+      "19": "珠",
+      "20": "或",
+      "22": "助",
+      "43": "峰",
+      "46": "心",
+      "51": "清",
+      "130": "虛",
+      "131": "殺",
+      "132": "壽",
+      "134": "所",
+      "136": "才",
+      "137": "捉",
+      "139": "攢",
+      "140": "徒",
+      "141": "黃",
+      "145": "顆",
+      "146": "明",
+      "149": "幫"
+    },
+    "glyphs": [
+      {
+        "code": 0,
+        "character": "勿",
+        "pixelsSha256": "3c1eb754ed304c3f904054d5f3d483e7a9e70d07420ad634bd34538297710630"
+      },
+      {
+        "code": 1,
+        "character": "擾",
+        "pixelsSha256": "0e70477c823515c7aca356b61c979e5d197ec2d0636ec8fc4f84688e7694b3dd"
+      },
+      {
+        "code": 2,
+        "character": "乃",
+        "pixelsSha256": "3902fd53f416089d0c0811892869d60f074407d75d05a7717ff9c6dc7c7c6406"
+      },
+      {
+        "code": 3,
+        "character": "君",
+        "pixelsSha256": "21b45c43ce804fc8a9ac46fccda47e562ae37be3bf4b6baaf6edee37945983ed"
+      },
+      {
+        "code": 4,
+        "character": "禮",
+        "pixelsSha256": "f5c157f0f9f065c13e6665f083624543be6c1a4e053742e65a189ca6a2c1f4a3"
+      },
+      {
+        "code": 5,
+        "character": "花",
+        "pixelsSha256": "ea295cba891f2ffe567913276a779638d5bf3cac88d244b77198fb22ceed2ec6"
+      },
+      {
+        "code": 6,
+        "character": "貂",
+        "pixelsSha256": "086fa328b0cb0ddaea9187ed0cdee80ab324026041700bbc517f73b38dc32c86"
+      },
+      {
+        "code": 7,
+        "character": "以",
+        "pixelsSha256": "00ed0121affda5e65e1914608b9740ed5347823b417d28a747a97c6a55261aa5"
+      },
+      {
+        "code": 8,
+        "character": "女",
+        "pixelsSha256": "f79325588ea291a6cd2719202f7bb5142d0874f970586852d3b3a9b0a4d2b6fb"
+      },
+      {
+        "code": 9,
+        "character": "被",
+        "pixelsSha256": "7453bfc4fb13bbdab80a49466515f92f3354920f803bff53c649c6b1db7abd63"
+      },
+      {
+        "code": 10,
+        "character": "走",
+        "pixelsSha256": "ebe1dc28cadb5a1feacea2377297d7525101790d201a2e069e3301d212a2b26e"
+      },
+      {
+        "code": 11,
+        "character": "星",
+        "pixelsSha256": "4f798c8afb4e7a1c6702fcf2652cc6e0e6cf7acdcb0ce1593cc1a845887c6d4c"
+      },
+      {
+        "code": 12,
+        "character": "釘",
+        "pixelsSha256": "162162038b3ca3365bd763618f3f7f0e112958ffbd8513f5114d4bcddc650558"
+      },
+      {
+        "code": 13,
+        "character": "兒",
+        "pixelsSha256": "4aab53f06653becf505e9e3933cb399dc66190d9532cf17c8c58922fd1b8a186"
+      },
+      {
+        "code": 14,
+        "character": "化",
+        "pixelsSha256": "f4f176f666151fb06d9f3be0269a049b659187edd905601a100ae9851998eaab"
+      },
+      {
+        "code": 15,
+        "character": "幾",
+        "pixelsSha256": "db110a49314e760b98632bb03583dbeb92be8abe2f258ff465046289462bae20"
+      },
+      {
+        "code": 16,
+        "character": "下",
+        "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+      },
+      {
+        "code": 17,
+        "character": "吧",
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+      },
+      {
+        "code": 18,
+        "character": "夜",
+        "pixelsSha256": "9de924918e5049146114c5e70b0f82c2c797225bf4d573b25efb428134a9d225"
+      },
+      {
+        "code": 19,
+        "character": "珠",
+        "pixelsSha256": "69f0053ff01f40277b2da5b32f3ccf769bd8257f3a833739a7dd9d45887f69ba"
+      },
+      {
+        "code": 20,
+        "character": "或",
+        "pixelsSha256": "718cafb2d914802c57dc8a76e525f193c3f19c99c2460ce6cb2f7c43deb77fa1"
+      },
+      {
+        "code": 21,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "code": 22,
+        "character": "助",
+        "pixelsSha256": "3982a1e1187a77882fab3d0635ab34465dfe42e569d7e5853c2c926283a57216"
+      },
+      {
+        "code": 43,
+        "character": "峰",
+        "pixelsSha256": "a8302b694eccb13d24220a69d866b472c0ac35a1d7148c24823b882a4493da05"
+      },
+      {
+        "code": 44,
+        "character": "小",
+        "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856"
+      },
+      {
+        "code": 45,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724"
+      },
+      {
+        "code": 46,
+        "character": "心",
+        "pixelsSha256": "6aafd097a47f1f90930d3222a17a33d4474c9f1f6c34037fd43e745b19807beb"
+      },
+      {
+        "code": 47,
+        "character": "身",
+        "pixelsSha256": "67909ca7f5f353fd32ef8b0ca525e19f34ad4c4d0e942f9a4717e7b213edbe67"
+      },
+      {
+        "code": 51,
+        "character": "清",
+        "pixelsSha256": "8b2bc7de8429d6fe74f79108af4febc2bef547ceec27843ff4bfcf4903693380"
+      },
+      {
+        "code": 52,
+        "character": "請",
+        "pixelsSha256": "0fe980e424a061baad1c4efac717f75f3ff2ebd08a67c8bda27a87f02d17d71b"
+      },
+      {
+        "code": 53,
+        "character": "父",
+        "pixelsSha256": "c7d1efe6efe4fff46987567c40ec5e5e68b8c37525598d1640b3525d15ef4656"
+      },
+      {
+        "code": 54,
+        "character": "在",
+        "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb"
+      },
+      {
+        "code": 55,
+        "character": "找",
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "code": 56,
+        "character": "去",
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "code": 57,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 58,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "code": 59,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "code": 128,
+        "character": "打",
+        "pixelsSha256": "3a038bee24015ff307807b122453db1a862a94ef31220fea9f1b76903b43a92c"
+      },
+      {
+        "code": 129,
+        "character": "進",
+        "pixelsSha256": "c70cd6e525dc85979cecbb301b2d1f26e25b353c6fe7d3f51bc19f2b2331cbf4"
+      },
+      {
+        "code": 130,
+        "character": "虛",
+        "pixelsSha256": "49be18d44e46dab3b43c98333f98bb97bd3933c9d1217899448772717ab046c9"
+      },
+      {
+        "code": 131,
+        "character": "殺",
+        "pixelsSha256": "102df822f58b347edafcb7be80fdd47c82c41c97d9122be00dffa1cb4e23dedc"
+      },
+      {
+        "code": 132,
+        "character": "壽",
+        "pixelsSha256": "fbf282afa092a45c9cf8388fa208a71d0d649b886708da5cf117dca38fa52a08"
+      },
+      {
+        "code": 133,
+        "character": "狐",
+        "pixelsSha256": "0534ed43cff90dd735cca72a0e15dd0b0475f5896e03c77c63eb94f1af221d53"
+      },
+      {
+        "code": 134,
+        "character": "所",
+        "pixelsSha256": "3c302a2611f8a665bb003e16e2e1ab12a963fbe232573645b0e640e078c08e1a"
+      },
+      {
+        "code": 135,
+        "character": "龍",
+        "pixelsSha256": "880c8f604cf13f170b483f290d5ceb3f30410cccf993356d27bc8d334dbaca9f"
+      },
+      {
+        "code": 136,
+        "character": "才",
+        "pixelsSha256": "6b103092847f8276fca2ff6b363dca1b7d6fdc920118a3333f3ea8aaa8b45e83"
+      },
+      {
+        "code": 137,
+        "character": "捉",
+        "pixelsSha256": "112b80539f99a43886a8b2ea1d1611b67621a74170ac5123b32677f5871c1304"
+      },
+      {
+        "code": 138,
+        "character": "剋",
+        "pixelsSha256": "c9884b039e8f3893e0ff384a664a94810ec1df7762eaa979cadae817d65d31aa"
+      },
+      {
+        "code": 139,
+        "character": "攢",
+        "pixelsSha256": "76052c90a519bf09cbf7c7c56c715080d56ed142bfdbad78a135bcf54c1b315a"
+      },
+      {
+        "code": 140,
+        "character": "徒",
+        "pixelsSha256": "505d2f1ee5cc1c3fc16885e3fe5803e28adb08a7f346651b4ec43d8fafb90164"
+      },
+      {
+        "code": 141,
+        "character": "黃",
+        "pixelsSha256": "ea5860c94c4539db31a8a8b6a7b4a3ea47f9c8388a71621753db4e2b090df933"
+      },
+      {
+        "code": 142,
+        "character": "但",
+        "pixelsSha256": "8f5233639acd9b3ee04e581d6439821bfb75cb749553e190e6b6249d2b142b6b"
+      },
+      {
+        "code": 143,
+        "character": "前",
+        "pixelsSha256": "49fe334ded7c4ddf1c5de31b9faabb1d58823c925dbf38d9fd608ab07c1491bc"
+      },
+      {
+        "code": 144,
+        "character": "先",
+        "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+      },
+      {
+        "code": 145,
+        "character": "顆",
+        "pixelsSha256": "a1c019553f8d811d4565c78bd8978b7714aee94045b41b81a97645107421c615"
+      },
+      {
+        "code": 146,
+        "character": "明",
+        "pixelsSha256": "fd90380cb3ac7e3d0ea29c7510c1a0258a7b75d17e402f6e3d02de3d0114cc55"
+      },
+      {
+        "code": 147,
+        "character": "對",
+        "pixelsSha256": "9ecf2061c7587098a4589cc5c7014463e5b63b0c703b3de4e563c77975391b88"
+      },
+      {
+        "code": 148,
+        "character": "許",
+        "pixelsSha256": "1b6bdb0a4d4e669001262a59f98d6fbc45538abf3c33edfa3531a63aa3fbeb99"
+      },
+      {
+        "code": 149,
+        "character": "幫",
+        "pixelsSha256": "7ecf7c040a9c5721552b8c6ee36f0d55b2fdcd2f6a162dfaa940f51895693808"
+      },
+      {
+        "code": 170,
+        "character": "裏",
+        "pixelsSha256": "f6ed5c1534cab367bc8c7c83067591a895ff95775dd6eb04549e8487c404b49a"
+      },
+      {
+        "code": 171,
+        "character": "真",
+        "pixelsSha256": "e877d8db8c8c2f3c9d08a36e122913eeb7d71d5bdaa77a648871f565242f9fcc"
+      },
+      {
+        "code": 172,
+        "character": "家",
+        "pixelsSha256": "9cdf0f17a57a8d19c3503d868bdd649575813633d44bd97401df0dd00f17b425"
+      },
+      {
+        "code": 173,
+        "character": "將",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82"
+      },
+      {
+        "code": 174,
+        "character": "天",
+        "pixelsSha256": "6d8ee8cf270d736f813151fb12e567ac3e431e4e2cf8981bf61a373e0fc537ac"
+      },
+      {
+        "code": 175,
+        "character": "上",
+        "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+      },
+      {
+        "code": 178,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "code": 179,
+        "character": "山",
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "code": 180,
+        "character": "師",
+        "pixelsSha256": "477a1233e39a4a2057d13ac782bcb421940adff6ca4e47fc884041902569d74c"
+      },
+      {
+        "code": 181,
+        "character": "魔",
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106"
+      },
+      {
+        "code": 182,
+        "character": "他",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+      },
+      {
+        "code": 184,
+        "character": "了",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "code": 185,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      },
+      {
+        "code": 186,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      }
+    ]
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.174.0",
+      "text": "『這裏是清峰山，請勿打擾。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107805,
+          "length": 15,
+          "sha256": "6de407b1ca86bb5796fd2d274e1fe41d5ccfc56ef05a9a958561d30db6a37524",
+          "module": 3,
+          "cpuAddress": 42253,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101908,
+            "length": 2,
+            "sha256": "8e16082712af66c6135be68123714f8ff6a37d9ad1ce21e6d562a6bd9ee20d1a",
+            "module": 3,
+            "cpuAddress": 36356,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.1",
+      "text": "『這裏是清峰山，師父請你們進去。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107820,
+          "length": 18,
+          "sha256": "20fd6e50ff8e26268e667ad4f0443d68839b89a751a33a09c3574029c96d636e",
+          "module": 3,
+          "cpuAddress": 42268,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101910,
+            "length": 2,
+            "sha256": "5b38c78333eb7abd77d2564352d442ad77fe7d888dbd08b583487f853e33c84b",
+            "module": 3,
+            "cpuAddress": 36358,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.2",
+      "text": "『我乃清虛真君，你們殺了魔禮壽的花狐貂，所以小龍女才被魔家四將捉走，魔家四將的剋星是攢心釘，在我徒兒黃天化身上，但他幾天前下山了！』『你們先去找他吧！這顆是夜明珠對你們或許有幫助。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107838,
+          "length": 92,
+          "sha256": "367a1bae7c337364bb452ef4c74011468ffdef156b3980c187fbad16ae2f6d6b",
+          "module": 3,
+          "cpuAddress": 42286,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101912,
+            "length": 2,
+            "sha256": "cd1a8dccb9d57994ce88a5a49e3b283cc8747372dcbfd09527521229438300d5",
+            "module": 3,
+            "cpuAddress": 36360,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.3",
+      "text": "『你們殺了魔禮壽的花狐貂，所以小龍女才被魔家四將捉走，魔家四將的剋星是攢心釘，在我徒兒黃天化身上，但他幾天前下山了！』『你們先去找他吧！夜明珠對你們或許有幫助。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107930,
+          "length": 82,
+          "sha256": "4beed2c07aef8619659df7c8be9198a8208a1b99a5eab7dd4450164ee890b1ac",
+          "module": 3,
+          "cpuAddress": 42378,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101914,
+            "length": 2,
+            "sha256": "2a67af639e6bc888b04a773ad25cdf4a2eef985c0a8961edb5a301d70d4ed30f",
+            "module": 3,
+            "cpuAddress": 36362,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.164.0",
+      "mapId": 164,
+      "cell": [
+        7,
+        9
+      ],
+      "spriteId": 178,
+      "sprite": "npc-disciple-178.png",
+      "firstDialogue": "rom.dialogue.174.1",
+      "repeatDialogue": "rom.dialogue.174.1",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285048,
+          "length": 14,
+          "sha256": "a9e2193cf7e5f96fea16a39594d6bca110218082e97701dcfd09e4e2840c8525",
+          "module": 8,
+          "cpuAddress": 55656,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    },
+    {
+      "id": "rom.npc.164.1",
+      "mapId": 164,
+      "cell": [
+        7,
+        3
+      ],
+      "spriteId": 175,
+      "sprite": "npc-teacher-175.png",
+      "firstDialogue": "rom.dialogue.174.2",
+      "repeatDialogue": "rom.dialogue.174.3",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285062,
+          "length": 14,
+          "sha256": "50fd2122bd4a6820b00edac490187c3468534760431981315c22ec06a82b1509",
+          "module": 8,
+          "cpuAddress": 55670,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      },
+      "interactionCell": [
+        7,
+        5
+      ],
+      "interactionDirection": "UP",
+      "interactionEvidence": "game-data/provenance/world-night8-resources.json",
+      "originalTalk": {
+        "actionId": 1,
+        "mapFlagId": "rom.map.164.flag.2",
+        "witnessFlagId": "",
+        "itemId": "rom.special.8",
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "rom.special.8",
+      "category": "special",
+      "originalId": 8,
+      "maxCount": 1,
+      "name": "夜明珠",
+      "description": "仅在暗黑洞窟的地图菜单使用；照明，数量保留，离洞后重置。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "ORIGINAL_MENU_VERIFIED",
+        "nameRange": {
+          "offset": 92227,
+          "length": 5,
+          "sha256": "fd4c024e6e1d2a8aa97b1547f8692a3155cc38aad15f8ff5c9bbc8041653b79a",
+          "module": 2,
+          "cpuAddress": 59443,
+          "meaning": "Actual stable special item name bytes"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "verifiedFields": [
+          "stableId",
+          "category",
+          "maxCount",
+          "name",
+          "mapUse",
+          "reusable",
+          "mapLoadReset"
+        ]
+      },
+      "nightLightUse": {
+        "mapId": 74,
+        "paletteSelector": 32,
+        "reusable": true,
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    },
+    {
+      "id": "rom.special.13",
+      "category": "special",
+      "originalId": 13,
+      "maxCount": 1,
+      "name": "捆妖繩（名称暂定）",
+      "description": "暗黑洞窟原special13；村民有捆妖繩线索，具体使用功能尚未接入。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "PROVISIONAL_TARGET_DIALOGUE_REFERENCE",
+        "nameRange": {
+          "offset": 92252,
+          "length": 5,
+          "sha256": "58e6dfbf773006122bd800fd1752ee2bf835ceb1518dd2f88eb98f6333af9b07",
+          "module": 2,
+          "cpuAddress": 59468,
+          "meaning": "Actual stable special item name bytes"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "verifiedFields": [
+          "stableId",
+          "category",
+          "maxCount"
+        ]
+      }
+    }
+  ],
+  "maps": [
+    {
+      "mapId": 100,
+      "tilesetId": 5,
+      "gridSha256": "f1a3cbd8cd705b371f0a777ba689af15648bb63775415d2f672d896b7540b85b",
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        7,
+        8,
+        9
+      ],
+      "palette": [
+        14,
+        10,
+        17,
+        48,
+        25,
+        0,
+        16,
+        10,
+        25,
+        10,
+        7,
+        39,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "staticPalette": {
+        "mapId": 100,
+        "palette": [
+          14,
+          10,
+          17,
+          48,
+          25,
+          0,
+          16,
+          10,
+          25,
+          10,
+          7,
+          39,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 37,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 24987,
+            "length": 2,
+            "sha256": "bbb3afa31af1adf2deb2cd3774f62df5807acf44963fc296e62de13b00380a6b",
+            "module": 0,
+            "cpuAddress": 57739,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25600,
+            "length": 2,
+            "sha256": "bce6bd6758755c712c264953b69313a7796b80ff7a22066629c41a93578953b8",
+            "module": 0,
+            "cpuAddress": 58352,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26250,
+            "length": 16,
+            "sha256": "d9820b79d204791540e9ba7799e35b9c57423f87671e564f637cbdcc7b216778",
+            "module": 0,
+            "cpuAddress": 59002,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEdges": {
+        "3": [
+          "LEFT",
+          "RIGHT"
+        ]
+      },
+      "targetEdges": {},
+      "ruleReuse": null
+    },
+    {
+      "mapId": 164,
+      "tilesetId": 2,
+      "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "staticPalette": {
+        "mapId": 164,
+        "palette": [
+          14,
+          7,
+          23,
+          55,
+          25,
+          7,
+          38,
+          22,
+          25,
+          33,
+          23,
+          22,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 28,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 25115,
+            "length": 2,
+            "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04",
+            "module": 0,
+            "cpuAddress": 57867,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25582,
+            "length": 2,
+            "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567",
+            "module": 0,
+            "cpuAddress": 58334,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26074,
+            "length": 16,
+            "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9",
+            "module": 0,
+            "cpuAddress": 58826,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEdges": {},
+      "targetEdges": {},
+      "ruleReuse": {
+        "path": "game-data/provenance/world-room171-resources.json",
+        "sha256": "48947ce4008315d0775f3843b30a743b9bd0b04c59fd8cc998a1258035ce2af8"
+      }
+    },
+    {
+      "mapId": 74,
+      "tilesetId": 3,
+      "gridSha256": "24ff751f40b8a19e669751d86cde29c3f63cffb62728b1b4f133a7cecb980537",
+      "walkableClasses": [
+        0
+      ],
+      "palette": [
+        14,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "staticPalette": {
+        "mapId": 74,
+        "palette": [
+          14,
+          14,
+          14,
+          14,
+          25,
+          14,
+          14,
+          14,
+          25,
+          14,
+          14,
+          14,
+          25,
+          14,
+          14,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "backgroundSelector": 52,
+        "spriteSelector": 0,
+        "confidence": "STATIC_ROM_DEFAULT_ONLY",
+        "remainingUnknown": [
+          "Scripted palette/lighting transitions and non-default event states"
+        ],
+        "source": [
+          {
+            "offset": 24935,
+            "length": 2,
+            "sha256": "3089c464221340fed4229d6ba913a04224c91b44158c22163e8849eb7dcc4878",
+            "module": 0,
+            "cpuAddress": 57687,
+            "meaning": "Map background/sprite palette selector pair"
+          },
+          {
+            "offset": 25630,
+            "length": 2,
+            "sha256": "283b99c61db99ef79cdc7407c8c841515babf3c73ce3048d2a17de3de73e949a",
+            "module": 0,
+            "cpuAddress": 58382,
+            "meaning": "Background palette pointer"
+          },
+          {
+            "offset": 25672,
+            "length": 2,
+            "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+            "module": 0,
+            "cpuAddress": 58424,
+            "meaning": "Sprite palette pointer"
+          },
+          {
+            "offset": 26154,
+            "length": 16,
+            "sha256": "ae46a31229c8020fc7447ec731609bb8db2d0ea93ede8aa3f4328d645fc6765d",
+            "module": 0,
+            "cpuAddress": 58906,
+            "meaning": "Original default background colors"
+          },
+          {
+            "offset": 25882,
+            "length": 16,
+            "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+            "module": 0,
+            "cpuAddress": 58634,
+            "meaning": "Original sprite colors"
+          }
+        ],
+        "routineEvidence": [
+          {
+            "offset": 10249,
+            "length": 44,
+            "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+            "module": 0,
+            "cpuAddress": 43001,
+            "meaning": "Signed map ID selector dispatch"
+          },
+          {
+            "offset": 9120,
+            "length": 110,
+            "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+            "module": 0,
+            "cpuAddress": 41872,
+            "meaning": "Original queued background then sprite palette writes"
+          }
+        ]
+      },
+      "sourceEdges": {},
+      "targetEdges": {},
+      "ruleReuse": null
+    }
+  ],
+  "cpu": [
+    {
+      "path": "android/app/src/test/resources/night8-map-use-original.tsv",
+      "caseCount": 24576,
+      "failures": 0,
+      "sha256": "3c05dce6974aec960d317367b7d16cf99f2a431f190ca2f1b6111bc500b65791"
+    },
+    {
+      "path": "android/app/src/test/resources/night8-bookkeeping-original.tsv",
+      "caseCount": 2,
+      "failures": 0,
+      "sha256": "026a3706da9190b37e9159b2e444be5edb3162ec5a80f596e617668d9e1e53d9"
+    },
+    {
+      "path": "android/app/src/test/resources/night8-before-text-gift-original.tsv",
+      "caseCount": 4,
+      "failures": 0,
+      "sha256": "351b9c5d4c6043c95ab6e715e8f05956e92dd42d31cb2ab61017964bda837c84"
+    },
+    {
+      "path": "android/app/src/test/resources/forest100-foot-original.tsv",
+      "caseCount": 196,
+      "failures": 0,
+      "sha256": "e6c25297c2bff21444010e82ff75749f079cc389254b25fc9f26fe6510230dde"
+    },
+    {
+      "path": "android/app/src/test/resources/teacher164-selector-original.tsv",
+      "caseCount": 256,
+      "failures": 0,
+      "sha256": "5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b"
+    }
+  ],
+  "sources": [
+    {
+      "offset": 91472,
+      "length": 28,
+      "sha256": "944ae508954e3dad5a0127fee6c5bb2dd8baa493beacac4381d7c93bc2a96df3",
+      "module": 2,
+      "cpuAddress": 58688,
+      "meaning": "Actual special8/map74 palette selector and failure"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Reusable special bookkeeping; retains quantity and sets bit128"
+    },
+    {
+      "offset": 92138,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59354,
+      "meaning": "Actual special8 reusable table entry"
+    },
+    {
+      "offset": 79014,
+      "length": 21,
+      "sha256": "f22b531ee4e0ed9ca6ed0169ca888a4526d30bd60f8e7f8a4de83e9670f15a05",
+      "module": 2,
+      "cpuAddress": 46230,
+      "meaning": "Actual teacher164/message2 before-text gift8"
+    },
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first/repeat NPC selector"
+    },
+    {
+      "offset": 347028,
+      "length": 12,
+      "sha256": "4ae7ebfb14eb1e9b44a367a9bb28598fba64cc9735d125430de1262b5d92dbd1",
+      "module": 10,
+      "cpuAddress": 52100,
+      "meaning": "Action1 flag before gift"
+    },
+    {
+      "offset": 347961,
+      "length": 15,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Current map flag OR"
+    },
+    {
+      "offset": 79390,
+      "length": 9,
+      "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe",
+      "module": 2,
+      "cpuAddress": 46606,
+      "meaning": "Special grant dispatch"
+    },
+    {
+      "offset": 73979,
+      "length": 169,
+      "sha256": "dbe4dc6c7e546cabe99df068b2bc4e23db2af0fad2cee705d61e80de2b867c08",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original grant and capacity"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original category capacity and bases"
+    },
+    {
+      "offset": 10249,
+      "length": 40,
+      "sha256": "a23e8810f14635fcc762b4a02d6b930e273cdc2a9eb489a19db59ff1517ffb2d",
+      "module": 0,
+      "cpuAddress": 43001,
+      "meaning": "Original map load selects default palette"
+    },
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Actual source tileset dispatch"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Actual target tileset dispatch"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target dispatch"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Actual terrain mode conditions"
+    }
+  ],
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-night8.py",
+    "sha256": "9c9c3058edf1345954979ac8c4cc61192712a36a85752920bc2ef4b8808a2b3d"
+  },
+  "lighting": {
+    "mapId": 74,
+    "itemId": "rom.special.8",
+    "paletteSelector": 32,
+    "reusable": true,
+    "usedFlag": "rom.inventory.special.8.used",
+    "activeFlag": "runtime.map74.light.active",
+    "resetOnMapLoad": true,
+    "characterTarget": false,
+    "palette": [
+      14,
+      17,
+      16,
+      48,
+      14,
+      0,
+      16,
+      17,
+      14,
+      0,
+      16,
+      48,
+      14,
+      14,
+      14,
+      48,
+      14,
+      14,
+      54,
+      22,
+      14,
+      14,
+      54,
+      43,
+      14,
+      14,
+      38,
+      34,
+      14,
+      14,
+      38,
+      32
+    ],
+    "paletteSource": {
+      "offset": 26138,
+      "length": 16,
+      "sha256": "6891381ece47ef95a01e14425e8b98ba0b81dc0847f648c4f84992d6d43dce3c",
+      "module": 0,
+      "cpuAddress": 58890,
+      "meaning": "Actual background palette selector32"
+    },
+    "asset": "tiles74-lit.png",
+    "evidence": "game-data/provenance/world-night8-resources.json"
+  },
+  "observations": {
+    "kind": "CONTROLLED_ORIGINAL_OWNED_ITEM_AND_POSITION_REAL_KEYS_NOT_NORMAL_PLAY",
+    "teacher": {
+      "captureSha256": "f03e11d2199f0b8b8c942ee4a6477707637fc19339b38af5c07eecba32378fd2",
+      "giftId": 8,
+      "giftCount": 1
+    },
+    "menu": {
+      "captureSha256": "a8f587748889d653ca4bd110d489234cf55562578e8b28f448ecebba7a0dd121",
+      "beforeQuantity": 1,
+      "afterQuantityRaw": 129,
+      "beforePalette": 52,
+      "afterPalette": 32
+    },
+    "exitReentry": {
+      "traceSha256": "690f8879dc2fb0c5e4d62e27f32a824617ba3ce726e6bf7f91f01b0a5d875bc8",
+      "states": [
+        {
+          "map": 74,
+          "palette": 32,
+          "quantityRaw": 129
+        },
+        {
+          "map": 16,
+          "palette": 16,
+          "quantityRaw": 129
+        },
+        {
+          "map": 74,
+          "palette": 52,
+          "quantityRaw": 129
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "New normal Android route/gift/night8/cold restart NOT_RUN",
+    "Teacher175/disciple178 graphics reuse existing observed original poses; exact local walking presentation remains provisional",
+    "Logical Android cold resume preserves the saved current scene/light state; original map reconstruction resets lighting, not an inferred NES manual save guarantee",
+    "Special13 name is provisional from actual group16 reference; its command/effect is NOT_IMPLEMENTED; no name-based binding use",
+    "No invented mandatory night8 ownership route gate; original dark cave can be entered before the gift"
+  ],
+  "rules": {
+    "npcId": "rom.npc.164.1",
+    "mapId": 164,
+    "npcCell": [
+      7,
+      3
+    ],
+    "normalTalkCell": [
+      7,
+      5
+    ],
+    "normalTalkDirection": "UP"
+  }
+}

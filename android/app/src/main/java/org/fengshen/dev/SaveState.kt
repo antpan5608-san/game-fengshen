@@ -234,7 +234,15 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(!compatibleContentVersion(contentVersion,content.scene.version) || direction !in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT) ||
             x%16!=8 || y%16!=8 || characters.isEmpty() || characters.size>4 || inventory.size>256 || flags.size>1024 || money !in 0..9999999 || encounterSteps !in 0..255)return false
         if(content.sceneStories.values.any{!it.validPending(this)})return false
+        if(content.battle?.storyBattles?.values?.any{story->story.intro?.let{i->
+            !i.validPending(this)||(flags[i.pendingFlag]==true&&
+                (x/16!=i.openingMovement.destination.x||y/16!=i.openingMovement.destination.y))}==true}==true)return false
+        if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
+        if(!OriginalNpcTalk.validRoom116Pending(this))return false
+        if(flags[OriginalNpcTalk.ROOM116_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.116.0"&&it.originalTalk?.actionId==41})return false
+        if(!OriginalNpcTalk.validHuangPending(this))return false
+        if(flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.117.0"&&it.originalTalk?.actionId==43})return false
         if(!OriginalFerry.validPending(this,content.ferries.values))return false
         val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
@@ -248,11 +256,11 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         return scene.check(x/16,y/16,terrainMode)==null
     }
     companion object {
-        /** Known schema1 content iterations through the original rebirth checkpoint.
+        /** Known schema1 content iterations through the original Queen content checkpoint.
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved in (1..40).map{"opening-segment-001-c$it"}
+            saved in (1..50).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

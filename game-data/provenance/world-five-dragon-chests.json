@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "grantAmount": 1,
+    "categoryLimits": [
+      10,
+      1,
+      10,
+      10
+    ],
+    "categorySlotCount": 16,
+    "fullExistingStackCanIncrease": true,
+    "failureDoesNotSetOpenedFlag": true,
+    "repeatDoesNotGrant": true,
+    "quantityMask": 127,
+    "worldUseRuleInferred": false
+  },
+  "sources": [
+    {
+      "offset": 337744,
+      "length": 92,
+      "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+      "module": 10,
+      "cpuAddress": 42816,
+      "meaning": "Original chest reads category/item/mask and current map flag"
+    },
+    {
+      "offset": 73424,
+      "length": 249,
+      "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+      "module": 2,
+      "cpuAddress": 40640,
+      "meaning": "Original granted inventory branch and success-only map-flag OR"
+    },
+    {
+      "offset": 73967,
+      "length": 12,
+      "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Original category/item inventory dispatcher"
+    },
+    {
+      "offset": 73979,
+      "length": 173,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original existing stack increment and 16-slot insertion"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original four category limits and inventory base pointers"
+    }
+  ],
+  "scopeRevision": "five-dragon99-three-original-item-chests",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "bindings": [
+    {
+      "mapId": 99,
+      "npcIndex": 0,
+      "categoryId": 2,
+      "originalId": 2,
+      "flagMask": 2,
+      "maxCount": 10,
+      "source": {
+        "offset": 282876,
+        "length": 14,
+        "sha256": "4f9f56d1c5074c7a2f244391b11a6e53c90d8f365381b23ef3fd8601ec7e46fb",
+        "module": 8,
+        "cpuAddress": 53484,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 13,
+        "sha256": "d759b7ca1eb644bf6414ad5b7247cc602b0a365de27e554aefa2e607becc7c9e",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Original chest display program"
+      }
+    },
+    {
+      "mapId": 99,
+      "npcIndex": 1,
+      "categoryId": 3,
+      "originalId": 30,
+      "flagMask": 4,
+      "maxCount": 10,
+      "source": {
+        "offset": 282890,
+        "length": 14,
+        "sha256": "ca6e504af18be1a9bf52155f0fb5295ffed2e7bbee0798752af27014681155ca",
+        "module": 8,
+        "cpuAddress": 53498,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 13,
+        "sha256": "d759b7ca1eb644bf6414ad5b7247cc602b0a365de27e554aefa2e607becc7c9e",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Original chest display program"
+      }
+    },
+    {
+      "mapId": 99,
+      "npcIndex": 2,
+      "categoryId": 0,
+      "originalId": 9,
+      "flagMask": 8,
+      "maxCount": 10,
+      "source": {
+        "offset": 282904,
+        "length": 14,
+        "sha256": "84e31f92c23989a2e79d7fa23044c649651ca811464f3bbd928f5a25de60368c",
+        "module": 8,
+        "cpuAddress": 53512,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 13,
+        "sha256": "d759b7ca1eb644bf6414ad5b7247cc602b0a365de27e554aefa2e607becc7c9e",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Original chest display program"
+      }
+    }
+  ],
+  "testCount": 21,
+  "failures": 0,
+  "cpuExpectedPath": "android/app/src/test/resources/world-five-dragon-chest-grants.tsv",
+  "activeCpuSha256": "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24",
+  "ruleReuse": {
+    "path": "game-data/provenance/world-hell-chest-grants.json",
+    "sha256": "cc0ad87e6f01bd7e9cbbdba6e6d9800fbabd47bb55b0f9c3ccf88bd7f9f30e69",
+    "repeatAndCancellation": "EXISTING_VERIFIED_SHARED_CHEST_PATH_NOT_NEW_NORMAL_TREE_PLAY"
+  },
+  "normalAndroid": "NOT_RUN",
+  "cpuExpectedSha256": "c3b5a64a1cb4c5fde68daeb418f6ca925a7247699fce66608c98c529ceedff8a"
+}

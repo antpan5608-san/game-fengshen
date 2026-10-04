@@ -1,0 +1,27 @@
+{
+  "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
+  "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
+  "package": "org.fengshen.dev",
+  "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
+  "contentVersion": "opening-segment-001-c49",
+  "manifestSha256": "3f422cf6163d493db700e5dc6859027b9b5defad8f6b1e7fbc283ca6af86f04b",
+  "iteration": {
+    "base": {
+      "buildRunId": 36995827962,
+      "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+      "versionCode": 27,
+      "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+      "contentVersion": "opening-segment-001-c14",
+      "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
+    },
+    "provenance": "game-data/provenance/world-queen117-content.json"
+  },
+  "runtimeBaseline": {
+    "buildRunId": 36995827962,
+    "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+    "versionCode": 27,
+    "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+    "contentVersion": "opening-segment-001-c14",
+    "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
+  }
+}

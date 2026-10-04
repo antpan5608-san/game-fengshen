@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "island76-through78-ground-and-upper-plane-bridge-zero",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "inputModes": [
+    0,
+    1
+  ],
+  "initialBridgeState": 0,
+  "testCount": 1536,
+  "failures": 0,
+  "maps": {
+    "76": {
+      "mapId": 76,
+      "gridSha256": "193d7d410af2411c653e94f827ac8196c1ba713efa54aa498e30d131697f0e56",
+      "classCounts": {
+        "0": 86,
+        "1": 139,
+        "23": 1,
+        "4": 1,
+        "5": 2,
+        "6": 4,
+        "7": 4,
+        "8": 3
+      },
+      "testCount": 512
+    },
+    "77": {
+      "mapId": 77,
+      "gridSha256": "a9e5905f052b43907c83782839a46e7410f048f08f8e923d2d4ef7644d63f6f1",
+      "classCounts": {
+        "0": 34,
+        "1": 177,
+        "2": 3,
+        "23": 1,
+        "3": 10,
+        "5": 2,
+        "6": 11,
+        "8": 2
+      },
+      "testCount": 512
+    },
+    "78": {
+      "mapId": 78,
+      "gridSha256": "feeb968d634675bfb01f9691399406bd5f704a029b1552e70a477540dbedb825",
+      "classCounts": {
+        "0": 64,
+        "1": 162,
+        "2": 4,
+        "3": 5,
+        "4": 1,
+        "5": 2,
+        "8": 1,
+        "9": 1
+      },
+      "testCount": 512
+    }
+  },
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Original collision source dispatcher"
+    },
+    {
+      "offset": 19607,
+      "length": 215,
+      "sha256": "a118646fa613c07d783eeb31976365917292580ea2c333942ec1762bb48382b5",
+      "module": 0,
+      "cpuAddress": 52359,
+      "meaning": "Tileset3 source-plane table and direction dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Original collision target dispatcher"
+    },
+    {
+      "offset": 20649,
+      "length": 153,
+      "sha256": "028a66c214d87469fc1161db986e50c24087eae0a0fa441cd0346489bdf1b9bf",
+      "module": 0,
+      "cpuAddress": 53401,
+      "meaning": "Tileset3 target-plane and stair dispatch"
+    },
+    {
+      "offset": 21028,
+      "length": 115,
+      "sha256": "fc726076185b454cb84a59fc1d05d3899ed7ff15afde7b7c3301b872aefa9f83",
+      "module": 0,
+      "cpuAddress": 53780,
+      "meaning": "Original directional barriers"
+    },
+    {
+      "offset": 1884,
+      "length": 34,
+      "sha256": "b2c50ccedebf387743cb66c3ea8043a955ae2224b1f6d92d78985be488444269",
+      "module": 0,
+      "cpuAddress": 34636,
+      "meaning": "9B sprite occlusion branch; not encounter suppression"
+    },
+    {
+      "offset": 377027,
+      "length": 100,
+      "sha256": "03813f125a34e0d6848b753e65400e9524d8621dc694091bea94ac7bc5ad9132",
+      "module": 11,
+      "cpuAddress": 49331,
+      "meaning": "Actual encounter gate does not read 9B"
+    },
+    {
+      "offset": 388579,
+      "length": 3,
+      "sha256": "d3b065133b862a96bbc0da4ef143a9e20d482b78d5e1881c04c7e9b833c4e076",
+      "module": 11,
+      "cpuAddress": 60883,
+      "meaning": "Actual island maps76..78 encounter map types, 76 original no encounter FF"
+    }
+  ],
+  "cpuExpectedPath": "android/app/src/test/resources/world-island-collision-original-cpu.tsv",
+  "cpuExpectedSha256": "39459e33f28b967821ee1e0e68bc3c762e514d9eaab928809e861774abb6c41b",
+  "controlledReportSha256": "6df81ac7a10a4f174a2fef5369f9a7f909a42e40964f612408d1cb9177a39ba8",
+  "encounterGate": {
+    "testCount": 480,
+    "failures": 0,
+    "cpuExpectedPath": "android/app/src/test/resources/hell-ground-encounter-gate-cpu.tsv",
+    "cpuExpectedSha256": "9663280bc711892b4555b9a4957b42bb77bd7af63939c4c1e44cfd950cd0153b",
+    "controlledReportSha256": "5e8eaa05fc4549218aaaef8ea12d1bb66b3e2ff43eaf145b2cc3f99abac5eed2",
+    "suppressesOn9b": false
+  },
+  "rules": {
+    "source23VerticalSelectsUpperOnlyForTarget14": true,
+    "upperStandingClasses": [
+      10,
+      11,
+      13,
+      14,
+      17,
+      18,
+      23
+    ],
+    "upperBridge20Through22": "NOT_IMPLEMENTED",
+    "9b": "ORIGINAL_SPRITE_OCCLUSION_NOT_ENCOUNTER_CONTROL"
+  },
+  "normalAndroid": "NOT_RUN",
+  "limits": [
+    "Controlled original CPU matrix, not normal Android reachability.",
+    "Only original classes present on 76/77/78, mode0/1 and bridge state zero.",
+    "Original sprite occlusion remains visual debt; no new transport or field effect inferred."
+  ],
+  "cpuReportSha256": "6df81ac7a10a4f174a2fef5369f9a7f909a42e40964f612408d1cb9177a39ba8",
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-island-terrain.py",
+    "sha256": "f90c4f00e71d99e2ce3cf54aebfbe6a29f2f2d7a565a00bc2b5316117786374a",
+    "verifiedCases": 1536,
+    "differences": 0
+  }
+}
