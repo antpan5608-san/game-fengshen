@@ -1164,6 +1164,28 @@ def validate_world_island_event7(reader):
     return p
 
 
+def validate_world_teacher163_gate(reader):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-teacher163-gate.json';p=load(ROOT/path)
+    expected=dict(loadMapId=79,minimumPartyCount=3,victoryFlag='rom.global.7c6.16',contextFlag='rom.npccontext.163.219',
+        targetMapId=163,contextId=219,npcId='rom.npc.163.0',fromCell=[7,10],toCell=[7,9],
+        firstDialogue='rom.dialogue.173.1',repeatDialogue='rom.dialogue.173.1',noDialoguePrerequisite=True,clearOnVictory=True)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map79-load-selects-map163-npc-context219-before-four-villains' or p['rules']!=expected:
+        raise ValueError('Teacher guard cannot invent another prerequisite or target')
+    required={(0,0xa664,33),(0,0xd664+326,2),(0,0xa73f,70),(8,0xb311+438,2),(11,0xceba,35)}
+    records=extract_npcs(reader,219)
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!=required|{(8,records['range']['cpuAddress'],29)}:
+        raise ValueError('Teacher guard context sources differ')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.word(0,0xd664+326)!=0x7ea or [v['rawHex']for v in records['records']]!=['b201ff00e8000801f99401020000','af020300e800a800a59401020102']:
+        raise ValueError('Teacher guard actual context219 position/text differs')
+    cpu=p['cpu'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['cases']!=1284 or cpu['failures']!=0 or cpu['sha256']!='3da757f7aa93dd40eab84104ee0c454d9e82ee45f1ccf7f4e8213e9451e7b51e' or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=1285 or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-teacher163-gate.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Teacher guard actual selector expectations differ')
+    return p
+
+
 def validate_world_teacher163_binding(reader):
     from forensics.fengshen246 import extract_npcs,extract_map,extract_text,decode_tokens,glyph_pixels
     path='game-data/provenance/world-teacher163-binding.json';p=load(ROOT/path)
@@ -1202,6 +1224,11 @@ def validate_world_teacher163_binding(reader):
         if i==1 and n['originalTalk']!=dict(actionId=1,mapFlagId='rom.map.163.flag.2',witnessFlagId='',itemId='rom.special.9',evidence=path):
             raise ValueError('Teacher163 cannot create another gate or gift')
         if i==0 and (raw[12]!=0 or n.get('originalTalk')):raise ValueError('Teacher163 disciple has no inferred side effects')
+        if i==0:
+            gate=validate_world_teacher163_gate(reader)
+            if n.get('stateVariant')!=dict(flagId=gate['rules']['contextFlag'],cell=[7,9],firstDialogue='rom.dialogue.173.1',
+                    repeatDialogue='rom.dialogue.173.1',evidence='game-data/provenance/world-teacher163-gate.json'):
+                raise ValueError('Teacher163 must preserve the actual conditional guard context')
     t=p['terrain'];m=extract_map(reader,163);c=m['collisionCandidate'];classes=set(reader.read(c['module'],c['cpuAddress'],256)[v]for row in m['grid']for v in row)
     reuse=t['ruleReuse'];room=validate_world_room171_resources(reader)
     if (t['mapId'],t['tilesetId'],t['gridSha256'],t['walkableClasses'],classes)!=(163,2,m['gridSha256'],[0,2],{0,1,2}) or \

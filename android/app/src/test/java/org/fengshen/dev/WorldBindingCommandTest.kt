@@ -5,6 +5,24 @@ import org.junit.Test
 
 /** Isolated scheduler/capacity fixtures, never evidence of normal App completion. */
 class WorldBindingCommandTest {
+    @Test fun originalIslandLoadSelectsGuardContextWithoutInventedTalkPrerequisite(){
+        val rows=javaClass.getResourceAsStream("/world-teacher163-gate-original.tsv")!!.bufferedReader().readLines().drop(1)
+        assertEquals(1284,rows.size)
+        for(line in rows){
+            val r=line.split('\t').map(String::toInt)
+            val flags=mapOf(OriginalNpcTalk.TEACHER_CONTEXT_FLAG to true,"rom.global.7c6.16" to (r[2]and 16!=0),"unrelated" to true)
+            val next=OriginalNpcTalk.flagsAfterMapLoad(r[0],r[1],flags)
+            assertEquals(r[4]==219,next[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
+            assertEquals(flags["rom.global.7c6.16"],next["rom.global.7c6.16"]);assertTrue(next["unrelated"]==true)
+        }
+        val flags=mapOf(OriginalNpcTalk.TEACHER_CONTEXT_FLAG to true,"unrelated" to true)
+        val story=StoryBattleDefinition("rom.boss.152","rom.npc.76.0","rom.map.76.flag.128",EncounterGroup(62,emptyList()),"fixture")
+            .also{it.victoryFlags=setOf("rom.global.7c6.16");it.finalizeWithoutDialogue=true}
+        val victory=story.rewardFlags(flags)
+        assertFalse(victory[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
+        assertTrue(victory["rom.global.7c6.16"]==true);assertTrue(victory["unrelated"]==true)
+        assertEquals(victory,OriginalNpcTalk.flagsAfterMapLoad(79,3,victory))
+    }
     private val item=ItemDefinition("rom.special.9","遁龍樁",null,"original",category="special",originalId=9,maxCount=1)
         .also{it.battleBindingUse=BattleBindingUseDefinition("game-data/provenance/world-teacher163-binding.json")}
     private val hero=CharacterState("nezha",12,2000,1000,1000,0,120,30,30,20,equipment=EquipmentState(0,-1,0,28))

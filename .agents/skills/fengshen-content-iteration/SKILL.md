@@ -308,3 +308,6 @@ caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导�
 NPC callback表、world坐标event表和正文赠物selector是独立命名空间，不能按相同数字推成同一效果。局部teacher/森林/箱配方复用原Reader、已核RTS方向矩阵和既存物品定义；目标ROM受控按键/原字体hash与CPU表可复用，不推成正常Android通关。秘宝命令需核原菜单收集、目标、数量/used位及调度执行时机，不能套地图药草或在选择时先置效果。定向JVM/导出/实际LF checkout已执行；新App路径仅编译时继续NOT_RUN。
 
 需要证明干净目标恢复时直接调用现有ci_apk.restore(source,destination=空目录)，核完整manifest与文件集合。CLI restore的--output不会改变assets目的地；曾误用后已通过显式destination重跑纠正，不把同assets覆盖写成空目录验证。
+
+
+- 新NPC堵路先核完整原加载状态，不能仅用静态base context判原路线不可达。原map79加载按真实party数与胜标切换map163 context219；原NPC指针、位置/文本及1284 CPU边界已执行，受控原版房内按键走到师父成功。公开攻略只提供定位线索，推荐对话不成为虚构前置；同一variant必须同时影响碰撞、绘制和交谈。新App流程仍须同候选另验，原版/CPU不代替Android通过。

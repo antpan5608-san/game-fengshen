@@ -674,6 +674,16 @@
           "meaning": "Fixed 14-byte NPC source record"
         },
         "evidence": "game-data/provenance/world-teacher163-binding.json"
+      },
+      "stateVariant": {
+        "flagId": "rom.npccontext.163.219",
+        "cell": [
+          7,
+          9
+        ],
+        "firstDialogue": "rom.dialogue.173.1",
+        "repeatDialogue": "rom.dialogue.173.1",
+        "evidence": "game-data/provenance/world-teacher163-gate.json"
       }
     },
     {

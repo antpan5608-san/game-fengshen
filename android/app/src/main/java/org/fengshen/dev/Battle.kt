@@ -152,9 +152,12 @@ data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:Strin
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
         !alreadyWon(flags)&&(entryTrigger==StoryEntryTrigger(mapId,x,y)||intro?.let{i->
             flags[i.flagId]==true&&i.continuation.destination?.let{it.mapId==mapId&&it.x==x&&it.y==y}==true}==true)
-    fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> =
-        (if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+
+    fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> {
+        val next=(if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+
             (if(finalizeWithoutDialogue)emptyMap()else mapOf(pendingFlag to true))
+        return if(id=="rom.boss.152"&&flagId=="rom.map.76.flag.128"&&"rom.global.7c6.16" in victoryFlags)
+            OriginalNpcTalk.flagsAfterIslandVictory(next)else next
+    }
     fun completeDialogue(flags:Map<String,Boolean>):Map<String,Boolean> =
         if(alreadyWon(flags))(flags+(flagId to true))-pendingFlag else flags
 }

@@ -199,7 +199,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         inventory.isNotEmpty() || flags.isNotEmpty() || money!=content.initialMoney
     fun backupBeforeCloudRestore(){savePrefs.getString("saveJson",null)?.let{savePrefs.edit().putString("preCloudRecovery",it).commit()}}
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
-        if(!applySnapshotState(snapshot))return false
+        val loaded=snapshot.copy(flags=OriginalNpcTalk.flagsAfterMapLoad(snapshot.mapId,snapshot.characters.size,snapshot.flags))
+        if(!applySnapshotState(loaded))return false
         localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState()
         if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
         return true
@@ -363,6 +364,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedContactSeq==world.contactTransitionSeq)return
         processedContactSeq=world.contactTransitionSeq
         val exit=world.lastContactExit?:return
+        flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
         input.clear();npcTouch.clear();hudTouch.clear();clock.reset()
         Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",exit.fromMapId)
             .put("mapId",world.mapId).put("contactActorId",exit.contactActorId).put("x",world.x/16).put("y",world.y/16))
@@ -382,6 +384,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(step.transitioned){
+            flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
             Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",step.mapId)
                 .put("mapId",world.mapId).put("x",world.x/16).put("y",world.y/16));audio.scene(world.mapId)
             val exit=content.exits.firstOrNull{it.fromMapId==step.mapId&&it.triggerX==step.x&&it.triggerY==step.y}
@@ -697,7 +700,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor && !it.automaticStoryOnly && content.npcVisible(it,flags) &&
+        return content.npcsForState(world.mapId,flags).filter{!it.scriptedActor && !it.automaticStoryOnly && content.npcVisible(it,flags) &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
@@ -706,8 +709,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val (x,y)=world.destinationCell()
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
         if(originalPoint!=null)return originalPoint
-        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor&&!it.automaticStoryOnly&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
-        return content.npcs.firstOrNull{it.id==id}
+        val actors=content.npcsForState(world.mapId,flags)
+        val id=interactionTarget(x,y,world.direction,actors.filter{!it.scriptedActor&&!it.automaticStoryOnly&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
+        return actors.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
         if(!ui.game.contains(x,y))return null
@@ -1660,7 +1664,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
         paint.color=Color.WHITE;paint.alpha=255
-        val actors=content.npcs.filter{it.mapId==world.mapId&&
+        val actors=content.npcsForState(world.mapId,flags).filter{
             (content.npcVisible(it,flags)||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))&&
             (!it.scriptedActor||it.id in content.sceneStories||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}

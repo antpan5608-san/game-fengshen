@@ -30,6 +30,9 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 raw=(ROOT/group['path']).read_bytes()
                 self.assertEqual(group['sha256'],hashlib.sha256(raw).hexdigest())
                 tables[group['path']]=raw
+        gate=json.loads((ROOT/'game-data/provenance/world-teacher163-gate.json').read_text(encoding='utf-8'))['cpu']
+        raw=(ROOT/gate['path']).read_bytes();self.assertEqual(gate['sha256'],hashlib.sha256(raw).hexdigest());tables[gate['path']]=raw
+        raw=(ROOT/gate['probePath']).read_bytes();self.assertEqual(gate['probeSha256'],hashlib.sha256(raw).hexdigest());tables[gate['probePath']]=raw
         village=json.loads((ROOT/'game-data/provenance/world-village4-resources.json').read_text(encoding='utf-8'))
         ferry=json.loads((ROOT/'game-data/provenance/world-ferry-original.json').read_text(encoding='utf-8'))
         for path,sha in [(ferry['expected']['path'],ferry['expected']['sha256']),(ferry['expected']['probe'],ferry['expected']['probeSha256'])]:

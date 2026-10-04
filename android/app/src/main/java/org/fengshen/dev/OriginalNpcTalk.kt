@@ -13,6 +13,13 @@ data class OriginalNpcTalkDefinition(val mapId:Int,val mapFlagId:String,val witn
     var completionWitnessFlagId:String="";internal set
 }
 object OriginalNpcTalk {
+    const val TEACHER_CONTEXT_FLAG="rom.npccontext.163.219"
+    /** Actual 0:A664 map reconstruction, not a new conversation prerequisite. */
+    fun flagsAfterMapLoad(mapId:Int,partyCount:Int,flags:Map<String,Boolean>):Map<String,Boolean> {
+        if(mapId!=79)return flags
+        return flags+(TEACHER_CONTEXT_FLAG to (partyCount>=3&&flags["rom.global.7c6.16"]!=true))
+    }
+    fun flagsAfterIslandVictory(flags:Map<String,Boolean>)=flags+(TEACHER_CONTEXT_FLAG to false)
     fun begin(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result=begin(before,rule,null)
     fun begin(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)

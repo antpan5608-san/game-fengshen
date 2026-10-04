@@ -32,7 +32,9 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var automaticStoryOnly:Boolean=false;internal set
     var removedFlagId:String?=null;internal set
     var moneyTreasure:MoneyTreasureDefinition?=null;internal set
+    var stateVariant:NpcStateVariant?=null;internal set
 }
+data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String)
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
 data class StoryText(val id:String,val text:String,val source:String)
@@ -100,6 +102,10 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     private var stateFlags:Map<String,Boolean>?=null
     fun worldItemTargets()=mapObjects.mapNotNull{it.itemTarget}+npcs.mapNotNull{it.worldItemTarget}
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
+    fun npcsForState(mapId:Int,flags:Map<String,Boolean>)=npcs.filter{it.mapId==mapId}.map{npc->
+        val v=npc.stateVariant
+        if(v!=null&&flags[v.flagId]==true)npc.copy(x=v.x,y=v.y,firstDialogue=v.firstDialogue,repeatDialogue=v.repeatDialogue)else npc
+    }
     fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=npc.removedFlagId?.let{flags[it]!=true}
         ?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
@@ -109,6 +115,9 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
             .map{it.y*base.width+it.x}.toSet()+npcs.filter{it.mapId==mapId&&it.removedFlagId?.let{f->flags[f]}==true}
             .map{it.y*base.width+it.x}.toSet()
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
+        for(npc in npcs.filter{it.mapId==mapId})npc.stateVariant?.takeIf{flags[it.flagId]==true}?.let{v->
+            result=result.copy(dynamicObjectCells=(result.dynamicObjectCells-(npc.y*base.width+npc.x))+(v.y*base.width+v.x))
+        }
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
         for(mechanism in mechanisms)result=mechanism.apply(result,flags)
         result=OriginalFerry.sceneView(result,flags,ferries.values)
@@ -280,6 +289,15 @@ object ContentLoader {
                         t.getString("removedFlagId"),t.getString("completionFlagId"))
                 }
 
+                n.optJSONObject("stateVariant")?.let{v->
+                    val cell=ints(v,"cell")
+                    require(npc.id=="rom.npc.163.0"&&npc.mapId==163&&npc.x==7&&npc.y==10&&
+                        cell.contentEquals(intArrayOf(7,9))&&v.getString("flagId")==OriginalNpcTalk.TEACHER_CONTEXT_FLAG&&
+                        v.getString("firstDialogue")=="rom.dialogue.173.1"&&v.getString("repeatDialogue")=="rom.dialogue.173.1"&&
+                        v.getString("evidence")=="game-data/provenance/world-teacher163-gate.json"&&
+                        npc.firstEffects.isEmpty()&&!n.has("originalTalk"))
+                    npc.stateVariant=NpcStateVariant(v.getString("flagId"),cell[0],cell[1],v.getString("firstDialogue"),v.getString("repeatDialogue"))
+                }
                 n.optJSONObject("originalTalk")?.let{t->
                     val rule=OriginalNpcTalkDefinition(npc.mapId,t.getString("mapFlagId"),t.getString("witnessFlagId"),
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
@@ -355,6 +373,7 @@ object ContentLoader {
         }}?:emptyList()
         require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         require(npcs.all{it.originalTalk?.messageDialogues?.values?.all{id->id in dialogues}!=false})
+        require(npcs.all{it.stateVariant?.let{v->v.firstDialogue in dialogues&&v.repeatDialogue in dialogues}!=false})
         data.optJSONArray("mapObjects")?.let{a->for(i in 0 until a.length()){
             val o=a.getJSONObject(i)
             if(o.getString("interaction")=="FERRY_CONTACT")require(o.getString("id")=="rom.object.4.0"&&

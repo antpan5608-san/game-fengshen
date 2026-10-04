@@ -1,4 +1,16 @@
-## 当前有效五龙山与四恶人检查点（2026-10-04T03:00:45.218233+00:00，本地未发布）
+## 当前有效让路与候选检查点（2026-10-04T03:46Z，本地隔离未发布）
+
+- WORLD-FULL-01继续F3/F4；用户最新授权重大可玩进展通过实际不崩溃/存档/原审核门禁即阶段正式发布，已知非阻断BUG保留。公网实际读回仍v27/0.8.7-world-full01-f0；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。
+- main冻结fb5b85c94d8d7bc92c04b51e2c43ef562102457d；v60/run37172267100签名build SUCCESS、同候选KVM runtime仍进行。不可变APK独立ci_apk.verify PASS：SHA89a3cf7b87c2dad07bbb04b518bd9c76cae278947b0b1274b1eb44e3da6f36fb、23231145字节、225文件/c41 manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f、原包名签名一致；未发布。
+- 新环境gh实际`run view 37172267100 --repo antpan5608-san/game-fengshen --json status,conclusion,jobs`返回HTTP401 Bad credentials；连接器可继续只读查询，已启动CI不受影响。runtime skill实际状态observations_current=true、network unrestricted/enforced、无已绑定Secret或outbound identity；不得把env变量存在或旧审批当作当前API授权。用户安全连接更新问题已提出；发布触发受影响，其余独立本地工作继续。
+- 新c43仍242文件/46已打包地图；真实条件NPC增量后manifest35ad485c82dcf91c4ed8e4cdf367a0683233b5d50d347a427e65ba8bdcc82917。父c42 pin与可信v27APK不变，历史未变媒体逐字节复用。
+- 新真实路线测试发现静态163道童(7,10)阻断走廊。原idle/UP/完整交谈受控1200帧不让路，不能靠放墙/删NPC/传送通过。公开攻略277181提供“先访岛”线索；目标ROM0:A664真实条件为map79加载、party>=3、global7c6.bit16未置，选择163的NPC context219，原guard改到(7,9)/173.1“请进”。无需先谈两居民；原攻略推荐不新增剧情锁。四恶人原CEBA胜利清context7EA。1284原CPU零差异。
+- 原受控16→79→16→99→163输入实际保留context219；163入口(7,14)沿(7,10)/(8,10)/(8,5)/(7,5)正常按键绕过原NPC，到师父原菜单赠special9数量1、复谈3不重发。只外门定位受控，原房内无位置/flag写入；不是正常Android证据。实际原RAM物品包含19/129、11/129、9/1。
+- 最小接入：统一flags加载/胜后处理；同一Content场景状态更新NPC绘制/触摸/碰撞和173.1，保留原墙/商业/毒步/奖励规则。原npccontext稳定flag持久并在四恶人胜后清除。14定向JVM和instrument编译PASS；6局部导出60.827秒PASS，含前置阻断/真实条件后可达；新LFcheckout PASS。完整JVM301方法/59 suites/0失败错误跳过及instrument编译PASS；新显式空目录恢复242文件/目标manifest严格PASS。首次漏SDK环境变量被原工具拒绝，补既有SDK/JDK选择后重跑通过，未放宽校验。
+- 前一c43检查点完整世界Python189方法773.505秒PASS，不混称新6方法同次全量通过；新App正常岛内/取得/秘宝命令/胜后/冷启仍NOT_RUN。不能因CPU或构建通过覆盖公网APK。
+- 下一动作：保存c43已验证让路修复检查点；继续v60实际runtime审核，连接恢复且原门禁通过立即阶段发布；候选来源冻结期间不推岛内WIP。十类欠账仍docs/delivery-status.md权威清单；不关闭全地图/全商店。
+
+## 历史五龙山与四恶人检查点（2026-10-04T03:00:45.218233+00:00，本地未发布）
 
 - WORLD-FULL-01继续F3/F4。生产仍v27/c14；显著可玩进展按用户授权通过不崩溃/存档/原审核门槛即阶段发布，非阻断BUG如实保留。ALL_MAPS_USABLE=NO；完整有效原版分母UNKNOWN。
 - main冻结fb5b85c94d8d7bc92c04b51e2c43ef562102457d；v60/run37172267100重新签名构建与运行中。v59/run37168134097整体FAIL，村1原价80购买时只有76、测试漏算买卖现金峰值；改按真实目录计算220峰值，正常赚取资金，没改商店/存档/交易断言。v59南海/北海/西海实际运行与相应冷启通过不代表整个候选通过。

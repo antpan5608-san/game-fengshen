@@ -19,6 +19,15 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(48,c.scenes.getValue(99).width);assertEquals(75,c.scenes.getValue(99).height)
         assertEquals(16,c.scenes.getValue(163).width)
         val teacher=c.npcs.single{it.id=="rom.npc.163.1"}
+        val gate=OriginalNpcTalk.flagsAfterMapLoad(79,3,emptyMap())
+        val baseRoom=c.sceneForState(163,emptyMap())!!;val openRoom=c.sceneForState(163,gate)!!
+        assertTrue(10*16+7 in baseRoom.dynamicObjectCells);assertFalse(10*16+7 in openRoom.dynamicObjectCells)
+        assertTrue(9*16+7 in openRoom.dynamicObjectCells)
+        assertEquals(baseRoom.collision.toList(),openRoom.collision.toList())
+        assertEquals(baseRoom.enabled,openRoom.enabled)
+        val disciple=c.npcsForState(163,gate).single{it.id=="rom.npc.163.0"}
+        assertEquals(7 to 9,disciple.x to disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
+        assertEquals(10,c.npcsForState(163,emptyMap()).single{it.id==disciple.id}.y)
         assertEquals(7 to 5,teacher.interactionCell);assertEquals(Key.UP,teacher.interactionDirection)
         val item=c.itemDefinitions.getValue("rom.special.9")
         assertEquals(9,item.originalId);assertEquals(1,item.maxCount)

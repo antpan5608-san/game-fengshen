@@ -2725,6 +2725,11 @@ class TouchTest:IsolatedGameTestCase(){
                 walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
                 walkTo(183,143);assertEquals(99,v.world.mapId);state("normal-five-dragon-original-entry")
                 walkTo(13,11);assertEquals(163,v.world.mapId)
+                assertTrue(v.currentSnapshot().flags[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
+                assertFalse(10*16+7 in v.world.scene.dynamicObjectCells)
+                assertTrue(9*16+7 in v.world.scene.dynamicObjectCells)
+                val disciple=v.content.npcsForState(163,v.currentSnapshot().flags).single{it.id=="rom.npc.163.0"}
+                assertEquals(7 to 9,disciple.x to disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
                 walkTo(7,5);val teacherBefore=v.currentSnapshot()
                 assertTrue(teacherBefore.flags["rom.map.163.flag.2"]!=true)
                 tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
@@ -2759,6 +2764,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(GameView.Layer.BATTLE,v.layer);finishFight()
                 assertEquals(GameView.Layer.MAP,v.layer);assertEquals(1,bossEntries)
                 assertEquals(true,v.currentSnapshot().flags[victory]);assertEquals(true,v.currentSnapshot().flags[witness])
+                assertFalse(v.currentSnapshot().flags[OriginalNpcTalk.TEACHER_CONTEXT_FLAG]==true)
                 assertTrue(v.currentSnapshot().flags[story.pendingFlag]!=true)
                 state("normal-four-villains-victory-no-invented-postdialogue")
                 for(npc in v.content.npcs.filter{it.mapId==76&&(it.treasure!=null||it.moneyTreasure!=null)}){
