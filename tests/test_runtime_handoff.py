@@ -1,6 +1,8 @@
 """Isolated transport/receipt rejection tests; these are not Android gameplay."""
 import copy
 import base64
+import contextlib
+import io
 import json
 import os
 import shutil
@@ -166,7 +168,7 @@ class RuntimeHandoffTest(unittest.TestCase):
         with patch.object(handoff.subprocess, 'check_output', return_value=b'ranchu'), \
                 patch.object(handoff.subprocess, 'run', return_value=failed):
             receipt = self.root / 'previous.json'
-            with self.assertRaisesRegex(ValueError, 'App-owned checkpoint'):
+            with contextlib.redirect_stdout(io.StringIO()), self.assertRaisesRegex(ValueError, 'App-owned checkpoint'):
                 handoff.import_to_isolated_avd(output, 'world', self.candidate, receipt)
             self.assertFalse(receipt.exists())
 
@@ -215,8 +217,10 @@ adb(){ :; }
 sleep(){ :; }
 '''
         observed = {}
+        fixture = self.root / 'dispatch-fixture.sh'
+        fixture.write_text(prefix + block, encoding='utf-8', newline='\n')
         for stage in (*handoff.STAGES, 'all'):
-            result = subprocess.run([existing_bash(), '-c', prefix + block, 'dispatch-fixture', stage],
+            result = subprocess.run([existing_bash(), fixture.as_posix(), stage],
                 cwd=self.root, capture_output=True, text=True, timeout=10)
             self.assertEqual(0, result.returncode, result.stderr[:2000])
             lines = result.stdout.splitlines()
@@ -251,8 +255,12 @@ adb(){ :; }
 sleep(){ :; }
 '''
         observed = {}
+        # Git Bash -c transport truncated the >8KiB block on the Windows runner.
+        # Execute the same full block from LF/UTF-8 bytes, with no omitted gates.
+        fixture = self.root / 'r1-dispatch-fixture.sh'
+        fixture.write_text(prefix + block, encoding='utf-8', newline='\n')
         for stage in handoff.STAGES:
-            result = subprocess.run([existing_bash(), '-c', prefix + block, 'r1-dispatch-fixture', stage],
+            result = subprocess.run([existing_bash(), fixture.as_posix(), stage],
                 cwd=self.root, capture_output=True, text=True, timeout=10)
             self.assertEqual(0, result.returncode, result.stderr[:2000])
             lines = result.stdout.splitlines()
