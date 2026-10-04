@@ -1,4 +1,4 @@
-## WORLD-FULL-01 Windows门禁修正（2026-10-04T11:45Z，未发布）
+## WORLD-FULL-01 Windows门禁修正（2026-10-04T11:43:03Z，未发布）
 
 v65/run37199054406/sourcece5bebaf build在新脚本分派fixture退出1，后续三段App作业未执行；没有APK或发布PASS。保留失败，显式定位已有Git Bash替代默认bash/WSL入口，新增缺Git Bash拒绝与选择测试并输出真实stderr。Linux runtime相关31方法PASS；Windows修正和跨runner接续仍待下一候选。当前c50内容/玩家代码/原版数值不变，正式仍v27/c14，总体PARTIAL，原十类欠账保持。
 
