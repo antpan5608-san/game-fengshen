@@ -340,3 +340,9 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原validate_world_night8_resources/export_from_base的局部图集使用同一metatile/CHR，仅改变原palette；旧媒体不变。test_world_night8_export.py、NightLightTest和实际空目录ci_apk.restore已通过。低层CPU不能证明菜单持有/目标，须结合真实按键实验；原退出再入洞实验将临时照明与永久ownership/used区分。
 - 原结构出口可能落全墙且无可达邻格。先核真实grid/源记录，保留inactive来源、不开放假墙；初轮路径断言失败曾发现此问题。Android JSONObject在普通JVM为stub，真实JSON冷启断言放原ContentTest仪器，不把该编译写运行PASS。
 - 新正常光照/赠物/冷启驱动已编译并接原CI，实际App仍以任务记录为准；编译、受控实验和派生atlas不是正常路线或手机证据。
+
+## 已验证的女王局部取证（正常App待验）
+
+- probe-world-queen117.py继续原py65 call：校完整ROM并执行1536目标/既有marker、1024完成位/context、36原tileset6足行。三张派生TSV及当前探针hash受原export_development的局部validator审核；原回放/PPU仍忽略。字段和源码地址实际验证后复用，不以名称猜绑定目标或凭对白猜赠物。
+- 原行动中的画面可能有角色OAM覆盖Boss，导致palette/图块匹配失败。先找同敌稳定指令等待帧；本次原observed_graphic_recipe重建全部120图块及RGBA成功，未扩展成另一导入器。失败瞬时帧保留私有来源限制，不当原静态图形。
+- CPU/纯业务/仪器编译只证明局部数据与代码；最新实际inspect脱敏计数单独记录，不借旧版日志给新候选健康背书。当前局部资源三正反门禁和327 JVM已运行，干净目标内容导出、真实Android仍须任务门禁，未验证不得写成功。

@@ -24,6 +24,16 @@ fun originalBoundTargetDamage(requiredMarker:Int,battleMarker:Int,computed:Int):
     require(requiredMarker in 0..5&&battleMarker in 0..255&&computed in 0..65535)
     return if(requiredMarker!=0&&battleMarker!=requiredMarker)0 else computed
 }
+/** Original special13 dispatcher 9:8954. The marker is local to this battle;
+ * matching a name, owning the item or a past victory never applies the effect. */
+fun originalSpecialBindingMarker(itemId:Int,targetEnemyId:Int,before:Int):Int {
+    require(itemId in 0..255&&targetEnemyId in 0..255&&before in 0..255)
+    return when {
+        itemId==9&&targetEnemyId in 152..155->1
+        itemId==13&&targetEnemyId in setOf(157,174)->2
+        else->before
+    }
+}
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
     init {require(weaponHitThreshold.isNotEmpty()&&weaponHitThreshold.all{(id,n)->id in -1..255&&n in 0..64}&&
@@ -59,7 +69,7 @@ data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:St
 /** Original scene scripts use the same durable dialogue continuation as Boss followup.
  * Cutscene movement proposals retain the witnessed completed-step poison costs. */
 data class StoryMovement(val destination:StoryDestination,val completedSteps:Int) {
-    init {require(completedSteps in 1..32)}
+    init {require(completedSteps in 0..32)}
     var accumulateEncounterSteps:Boolean=false;internal set
 }
 data class SceneStoryDefinition(val id:String,val npcId:String,val flagId:String,
@@ -118,7 +128,10 @@ object StoryFollowup {
     }
     private fun move(before:SaveSnapshot,movement:StoryMovement):SaveSnapshot {
         // Original witnessed cutscenes on these maps; no cross-map shortcut.
-        require(before.mapId in setOf(86,76,87)&&movement.destination.mapId==before.mapId)
+        require(before.mapId in setOf(86,76,87,117)&&movement.destination.mapId==before.mapId)
+        if(movement.completedSteps==0)require(before.mapId==117&&before.x/16==movement.destination.x&&
+            before.y/16==movement.destination.y) // Script18 moves an NPC, not the player.
+        if(before.mapId==117)require(movement.completedSteps==0)
         var party=before.characters
         repeat(movement.completedSteps){party=OriginalStatus.step(party,before.mapId)}
         val d=movement.destination
@@ -288,7 +301,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     // Original6948 is local to the current battle and resets on exit.
     private var bindingMarker=0
     private enum class CommandKind { ATTACK, HERB, BINDING, ESCAPE, ESCAPED }
-    private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null)
+    private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null,
+        val bindingName:String="",val bindingTarget:String="",val bindingOriginalId:Int=-1)
     private val commands=linkedMapOf<String,QueuedCommand>()
     var inputRevision=0;private set
     private fun originalActors()=partyStates.mapIndexed{slot,p->OriginalPartyRules.Actor(originalIndices.getValue(p.id),slot,p.hp,p.statusMask,p.agility)}
@@ -326,18 +340,29 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
-    fun bindingAvailable(count:Int,item:ItemDefinition,alreadyUsed:Boolean=false):Boolean=
-        phase==BattlePhase.TARGET&&content.physicalRules!=null&&(inputHero?.hp?:0)>0&&count==1&&!alreadyUsed&&
-        item.id=="rom.special.9"&&item.category=="special"&&item.originalId==9&&item.maxCount==1&&
-        item.battleBindingUse?.evidence=="game-data/provenance/world-teacher163-binding.json"&&
-        enemies.size==4&&enemies.map{it.definition.id}.toSet()==setOf(152,153,154,155)&&
-        enemies.all{it.definition.requiredBindingMarker==1}
+    fun bindingAvailable(count:Int,item:ItemDefinition,alreadyUsed:Boolean=false):Boolean {
+        if(phase!=BattlePhase.TARGET||content.physicalRules==null||(inputHero?.hp?:0)<=0||count!=1||alreadyUsed||
+            item.category!="special"||item.maxCount!=1)return false
+        val use=item.battleBindingUse?:return false
+        return when(item.id) {
+            "rom.special.9"->item.originalId==9&&use.bindingMarker==1&&
+                use.evidence=="game-data/provenance/world-teacher163-binding.json"&&
+                enemies.size==4&&enemies.map{it.definition.id}.toSet()==setOf(152,153,154,155)&&
+                enemies.all{it.definition.requiredBindingMarker==1}
+            "rom.special.13"->item.originalId==13&&use.bindingMarker==2&&
+                use.evidence=="game-data/provenance/world-queen117-state.json"&&
+                enemies.size==1&&enemies.single().definition.id==157&&enemies.single().definition.requiredBindingMarker==2
+            else->false
+        }
+    }
     fun useBinding(count:Int,item:ItemDefinition,alreadyUsed:Boolean,nextByte:()->Int):BattleTurn? {
         if(!bindingAvailable(count,item,alreadyUsed))return null
-        // Original BE6E->BE9D collects special9 directly, no target screen,
+        // Original BE6E->BE9D collects the special directly, no target screen,
         // quantity decrement or used bit write. Its ordinary scheduler slot
         // executes 8935; faster enemy actions are not skipped or refunded.
-        return submit(QueuedCommand(CommandKind.BINDING),nextByte)
+        val use=item.battleBindingUse!!
+        return submit(QueuedCommand(CommandKind.BINDING,
+            bindingName=item.name,bindingTarget=use.targetLabel,bindingOriginalId=item.originalId),nextByte)
     }
     fun herbAvailable(targetId:String,count:Int,item:ItemDefinition):Boolean =
         phase==BattlePhase.TARGET && content.physicalRules!=null && (inputHero?.hp?:0)>0 &&
@@ -414,8 +439,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 val command=commands[player.id]?:continue
                 if(command.kind==CommandKind.ESCAPED)continue
                 if(command.kind==CommandKind.BINDING){
-                    bindingMarker=1
-                    steps.add(frame("遁龙樁困住四恶人 · 数量保留",kind=BattleActionKind.SPECIAL,actorId=player.id))
+                    val target=enemies.firstOrNull{it.hp>0}?:continue
+                    bindingMarker=originalSpecialBindingMarker(command.bindingOriginalId,target.definition.id,bindingMarker)
+                    steps.add(frame("${command.bindingName}困住${command.bindingTarget} · 数量保留",kind=BattleActionKind.SPECIAL,actorId=player.id))
                     continue
                 }
                 if(command.kind==CommandKind.HERB){

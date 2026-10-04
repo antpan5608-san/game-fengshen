@@ -4,15 +4,24 @@ task_id: WORLD-FULL-01
 
 任务：全部有效原版地图、交易商店与住宿可用，解除人为试玩边界。连续实施，不以5/10小时或一个小区段为终点；平台/权限中断时保存可复现检查点。原墙、地形、单向连接、剧情条件与交通/道具要求保留，不赠资源/改数值/关闭遇敌/强制胜利。不reset、clean或覆盖玩家存档。复用原两个Actions、reviewer、签名、同提交/同产物hash和既有两个Fengshen对象；Language不变。
 
-## 当前有效状态（2026-10-04T08:30Z）
+## 当前有效状态（2026-10-04T09:24Z）
 
 - task_id保持WORLD-FULL-01，原巡检需要该机器字段；本文件为唯一当前任务入口。
 - 生产仍v27/0.8.7-world-full01-f0/c14，APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，用户已安装。总体PARTIAL，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN；175几何缓存/259索引不是正常可用分母。
 - main冻结87df6cf836ec7d2106f2231f67f13c622272528c；v64/run37185539165原签名构建SUCCESS、真实Android runtime执行中，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。独立树不混入审核来源。
 - v62/run37180967103 build PASS/runtime FAILURE，TouchTest北海训练waypoint25(29,43)实际class1墙；真实源8级/EXP858/57HP/346两/药草1。仅修测试路径，原网格BFS去返39,42↔5,24均53节点、zone1无毒且无别的出口；7拓扑/3采购与task_id守卫、仪器编译PASS，修后App待v64。v61毒药不足失败保持历史，不混用源状态。
 - v63/run37185326471未完成即取消：精简任务文档漏task_id，inspect37185327792查询前失败UNAVAILABLE；已恢复必需行并测试实际正则，修后新来源重新构建v64，不放宽同源门禁。
-- 最新真实inspect37185540769/2026-10-04T07:22:03.5547836Z成功，可信27/26=1445/2289、3734事件、普通真机9会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。自动reviewer成功，publish SKIPPED，不拿旧生产样本证明v64健康。
+- 最新真实inspect37189846556/2026-10-04T08:44:02.1513945Z成功，可信27/26=1445/2289、3734事件、普通真机9会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。自动reviewer成功，publish SKIPPED，不拿旧生产样本证明v64健康。
 - 本独立work/world-island：c48/52图/276文件，manifestd53c9158facd29acb72421e7e0ebc6b258120b5e134fa014ee8e08d50c5ec721；固定c47父pin/golden与审核v27媒体。c46已保存e6803a5、202世界回归PASS、远端work/world-island-c46/a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4。c48未发布，全部新Android正常/覆盖/声音/一加13T NOT_RUN。
+
+## 当前女人国女王 WIP（尚未导出下一内容包）
+
+- 实际原门16→141→117及自动event14(7,5)已受控定位；141入口组件与宫殿组件不直连，必须经原115，不能制造外城捷径。真实115三条返回141已取得按键证据；140入口6,14及四邻全墙，暂不开放。141 FF/FF边界返回未实际触发，原因待核；不交换坐标伪造返程。
+- 女王为source171→enemy157/slot3，7000HP/372攻/178防/3000EXP/2400钱/behavior9，原受控真实菜单确认special13捆妖繩：直接收集命令、占行动、数量1/used位不变、轮到角色时marker2。没有关闭敌方行动或降低数值；另一个原目标174未启用。
+- 原script18只移动NPC并显示group127.13，玩家保持7,5且不加毒步成本；胜后group127.15结束才写map117.bit128/global7C6.bit64，删除170，context115=208/116=210/164=220/117=231。原NPC172为黄天化，后续action43/event43与攢心釘赠物是独立待接功能，不凭对白发物。
+- 原CPU1536绑定/1024完成/36城堡足行零差异；真实字体56字均核，原13/14/15正文已解；120完整女王图块与稳定帧RGBA校验成功。首取行动帧混入角色动画，改为稳定command帧后直接复用原工具；临时多palette扩展已移除。
+- 已薄扩展既有OpeningBattle/StoryFollowup/ContentLoader和同一物品面板，不另建战斗/库存/UI；special9旧调度保留。327 JVM/66 suites/0失败错误跳过、3来源正反校验/0失败、仪器编译PASS；新App仍NOT_RUN，当前目标pin继续c48/52图/276文件，没有伪造c49内容或发布新版本。原部分类别fixture漏growth和RNG0走状态攻击导致两项失败，修测试输入后实际通过，未改原AI。
+- 下一条实际动作：核141/115原返回条件和连通链、黄天化event43；把有据地图/女王/物品更新薄接原export_from_base，再做同候选正常App。main仍冻结v64；该原runtime通过即按原同产物保护阶段发布。
 
 ## 当前清峰山与暗黑洞窟检查点（c48，未发布）
 
@@ -21,7 +30,7 @@ task_id: WORLD-FULL-01
 - 原24576低层选择器/2库存案例核special8只在map74改变palette32、数量保留/used位。实际原正常菜单键与出入洞键（持有/外门定位受控）确认32→world16/16→74/52，数量raw129不变；不是正常Android证据。运行场景照明和原ownership/used分离；换图清照明、Android存档冷启恢复当前场景，未宣称NES手动存档等价。
 - 地图物品面板仅选择，明确使用夜明珠才统一提交/保存，先验证照明图集再提交；不加角色目标/持有物入洞锁，不在draw结算。七个物品箱49原CPU/钱箱120两35原CPU零差异；rope13名称基于目标村民线索暂定，使用规则未接，不能套遁龙樁。
 - 原100(1,43)结构返程处于全墙组件，和四邻都class1；仅保留inactiveExitRecords原来源，不开放假通道。原8,51独立返程可达。两个74的FF/FF原箱保留图形/阻挡及待核，不猜奖励。
-- 320 JVM/64 suites/0失败错误跳过，3局部导出75.113秒PASS，全新TemporaryDirectory/assets严格276文件/全manifest PASS，仪器编译8秒及22审批Bash fixture PASS。首次JVM JSON调用因Android stub失败，移至真实ContentTest仪器fixture；首轮导出路径断言抓到全墙记录，修原输出后通过，均保留失败日志。c48完整世界回归211方法/1136.741秒/0失败错误跳过PASS（/tmp/world-c48-full-world-regression.log）。安全远端work/world-island-c48/78af3cb2f7173c2e25f7723b7b035b41358dc4d4与本地f3bcc05精确tree744b14552877d384baf492eed8b09da6a0c8af7d一致；main未变。
+- 320 JVM/64 suites/0失败错误跳过，3局部导出75.113秒PASS，全新TemporaryDirectory/assets严格276文件/全manifest PASS，仪器编译8秒及22审批Bash fixture PASS。首次JVM JSON调用因Android stub失败，移至真实ContentTest仪器fixture；首轮导出路径断言抓到全墙记录，修原输出后通过，均保留失败日志。c48完整世界回归211方法/1136.741秒/0失败错误跳过PASS（/tmp/world-c48-full-world-regression.log）。安全远端work/world-island-c48/eca87de4a5c21a30052e5fbe07cb175f068cd56a与本地8d066d9精确tree37cfd0b1f17971424c799349ef2a259e68787312一致；main未变。
 - 同原runtime/review链新增已编译正常女儿村存档→真实清峰山→实际赠物→洞内使用→取得rope13→外部冷启/原返程/重入变暗/再使用的驱动、有界视频/截图/索引；实际Android仍NOT_RUN。原ContentTest新增真实加载器/JSON/照明variant fixture，只有编译，不冒称运行PASS。
 - 下一可执行：原v64同源门槛通过即阶段发布；独立c48回归收尾/安全检查点；限定查真实女人国路线/事件与special13调度，现有技能/地图可继续，来源/奖励/连接不能猜。
 

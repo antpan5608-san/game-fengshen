@@ -2,6 +2,12 @@
 
 新增原100/164/74、清虚真君原赠夜明珠、暗黑洞窟可重复使用照明/离洞重置、七原物品箱和120两钱箱、完整zone25/26与四敌原属性/真实图形；52图/276文件，manifest d53c9158facd29acb72421e7e0ebc6b258120b5e134fa014ee8e08d50c5ec721。原before-text赠物/容量与局部CPU证据、真实菜单/进出键受控证据见world-night8-resources.json和world-night8-chests.json。320 JVM/64 suites、3导出75.113秒、全新空目录严格恢复、原仪器编译和22审批fixture PASS；完整world回归211方法/1136.741秒PASS且远端WIP已验精确树/main未变；所有新增Android正常/冷启/覆盖/声音/真机NOT_RUN。special13仅取得/名称暂定，未实现使用；两FF/FF箱待核，全墙结构返程保留记录不开放假路。生产仍v27，v64/run37185539165原c41运行中，不能拿其结果背书c48。总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN；十类欠账原权威清单完整保留。
 
+## 当前女王资源与共享调度检查点（2026-10-04T09:24Z，未发布）
+
+WORLD-FULL-01持续PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。新Queen117 event14/special13 marker2原CPU与实际菜单取证已进入现有业务逻辑；原7000HP/奖励/敌方行动保持，胜后文本完成再提交状态。327 JVM/66 suites与3来源校验及仪器编译PASS。女王和路线下一内容包尚未导出，正常App/冷启/升级/一加13T NOT_RUN；仍使用c48目标pin，不把代码/来源进展算新发布。生产仍v27；v64/run37185539165 build成功/runtime执行中，来源冻结main87df6cf。最新实际巡检37189846556/08:44:02Z为27/26、3734事件、普通真机9会话/模拟器0/测试0，旧v26下载ProtocolException1根因仍UNCONFIRMED，无新增错误记录。
+
+141到117需经原115；141边界返回尚未触发、115→140记录位于全墙、黄天化action43后续馈赠未接，均保留精确欠账，不假造捷径/奖励。实际方法、失败与下一执行命令见唯一current-task；十类权威清单保持不变，仅在正常App通过后关闭相应项目。
+
 ## WORLD-FULL-01本地增量（2026-10-04T07:32Z，c47未发布）
 
 女儿村实际地图6、独立世界连接、三店/200两客栈/双医生、7村民原文字和action52、隐藏參須1已接原统一内容/存档/命令。4局部导出/路径方法79.223秒、314 JVM/63 suites、全新目录265文件严格恢复、原仪器编译与22审批fixture PASS；完整世界回归208方法/1064.753秒PASS，安全WIP work/world-island-c47/1381cac3已验证精确树且main未变；Android正常续段、覆盖升级、声音和一加13T均NOT_RUN。十类欠账原权威完整段保持，未关闭全地图/全商店/全量canonical或新图正常可玩验收。

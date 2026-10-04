@@ -52,7 +52,11 @@ data class ItemDefinition(val id:String,val name:String,val description:String?,
     var nightLightUse:WorldFieldProtectionDefinition?=null;internal set
     var battleBindingUse:BattleBindingUseDefinition?=null;internal set
 }
-data class BattleBindingUseDefinition(val evidence:String)
+data class BattleBindingUseDefinition(val evidence:String) {
+    // Body properties preserve the existing cross-APK constructor ABI.
+    var bindingMarker:Int=1;internal set
+    var targetLabel:String="四恶人";internal set
+}
 data class AntidoteUseDefinition(val evidence:String)
 data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
@@ -466,12 +470,17 @@ object ContentLoader {
                 item.nightLightUse=WorldFieldProtectionDefinition(use.getString("evidence"))
             }
             o.optJSONObject("battleBindingUse")?.let{use->
-                require(item.id=="rom.special.9"&&item.category=="special"&&item.originalId==9&&item.maxCount==1&&
+                val queen=item.id=="rom.special.13"
+                require(item.id=="rom.special.${if(queen)13 else 9}"&&item.category=="special"&&item.originalId==if(queen)13 else 9)
+                require(item.maxCount==1&&
                     item.buyPrice==null&&item.sellPrice==null&&item.worldUse==null&&item.herbUse==null&&
                     use.getBoolean("reusable")&&use.getBoolean("consumesAction")&&!use.getBoolean("chooseTarget")&&
-                    use.getString("target")=="four-villains-current-battle"&&use.getInt("bindingMarker")==1&&
-                    use.getString("evidence")=="game-data/provenance/world-teacher163-binding.json")
-                item.battleBindingUse=BattleBindingUseDefinition(use.getString("evidence"))
+                    use.getString("target")==if(queen)"queen-current-battle" else "four-villains-current-battle")
+                require(use.getInt("bindingMarker")==if(queen)2 else 1)
+                require(use.getString("evidence")==if(queen)"game-data/provenance/world-queen117-state.json" else "game-data/provenance/world-teacher163-binding.json")
+                item.battleBindingUse=BattleBindingUseDefinition(use.getString("evidence")).also{
+                    it.bindingMarker=if(queen)2 else 1;it.targetLabel=if(queen)"女王" else "四恶人"
+                }
             }
             item.id to item
         }
@@ -583,6 +592,9 @@ object ContentLoader {
                         require(e.getInt("requiredBindingMarker")==1&&
                             e.getString("bindingEvidence")=="game-data/provenance/world-island-binding.json")
                         enemy.requiredBindingMarker=1
+                    }else if(enemy.id==157){
+                        require(e.getInt("requiredBindingMarker")==2&&e.getString("bindingEvidence")=="game-data/provenance/world-queen117-state.json")
+                        enemy.requiredBindingMarker=2
                     }else require(!e.has("requiredBindingMarker")&&!e.has("bindingEvidence"))
                     if(e.has("specialBaseDamage")){
                         require(enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&
@@ -652,6 +664,20 @@ object ContentLoader {
                             StoryEntryTrigger(mid,x,y)
                         }
                         b.optJSONObject("intro")?.let{v->
+                            if(boss.id=="rom.boss.157"){
+                                require(boss.npcId=="rom.npc.117.1"&&boss.entryTrigger==StoryEntryTrigger(117,7,5)&&
+                                    v.getString("evidence")=="game-data/provenance/world-queen117-state.json"&&
+                                    v.getInt("completedSteps")==0&&!v.getBoolean("accumulateEncounterSteps"))
+                                val ids=v.getJSONArray("dialogueIds").let{d->(0 until d.length()).map{d.getString(it)}}
+                                require(ids==listOf("rom.dialogue.127.13")&&ids.all{it in dialogues}&&
+                                    ints(v,"destinationCell").contentEquals(intArrayOf(7,5)))
+                                val destination=StoryDestination(117,7,5,Key.UP,0,null)
+                                require(scenes[117]?.check(7,5)==null)
+                                val flag="runtime.story.117.event14.intro.complete"
+                                boss.intro=SceneStoryDefinition("rom.scene-story.117.queen-intro",boss.npcId,flag,
+                                    boss.entryTrigger!!,StoryContinuation(ids,null,destination,setOf(flag)),
+                                    StoryMovement(destination,0),emptyMap())
+                            }else{
                             require(boss.id=="rom.boss.152"&&boss.npcId=="rom.npc.76.0"&&
                                 boss.entryTrigger==StoryEntryTrigger(76,12,12)&&
                                 v.getString("evidence")=="game-data/provenance/world-island-event7.json"&&
@@ -664,6 +690,7 @@ object ContentLoader {
                             val flag="runtime.story.76.event7.intro.complete"
                             boss.intro=SceneStoryDefinition("rom.scene-story.76.four-villains-intro",boss.npcId,flag,
                                 boss.entryTrigger!!,StoryContinuation(ids,null,destination,setOf(flag)),movement,emptyMap())
+                            }
                         }
                         b.optJSONObject("approach")?.let{v->
                             require(boss.id=="rom.boss.156"&&boss.npcId=="rom.npc.87.0"&&

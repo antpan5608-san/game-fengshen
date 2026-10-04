@@ -1374,6 +1374,75 @@ def validate_world_teacher163_gate(reader):
     return p
 
 
+def validate_world_queen117_resources(reader):
+    """Scoped original event14/special13; no name-based rules or free rewards."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
+    path='game-data/provenance/world-queen117-state.json';p=load(ROOT/path)
+    expected=dict(mapId=117,eventId=14,triggerCell=[7,5],sourceType=171,enemyId=157,scriptId=18,
+        itemId='rom.special.13',bindingMarker=2,quantityRetained=True,consumesAction=True,
+        chooseTarget=False,extraEventReward=False,removedFieldActor=170,
+        contextAfter=dict(map115=208,map116=210,map164=220,map117=231))
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='woman-region141-115-palace117-queen157-special13-event14' or p['rules']!=expected:
+        raise ValueError('Queen rule identity differs')
+    for s in p['sources']:checked_span(reader,s)
+    if reader.read(11,0xdaa2,3)!=bytes([7,5,0])or reader.word(11,0xcb5e+28)!=0xd05c or \
+            reader.read(11,0xd069,2)!=bytes([0xa9,18])or reader.read(1,0x9ea3+171,1)!=bytes([157]):
+        raise ValueError('Queen trigger/source/script differs')
+    if p['enemy']!=extract_enemy(reader,157)or (p['enemy']['hp'],p['enemy']['attack'],p['enemy']['defense'],
+            p['enemy']['experienceReward'],p['enemy']['moneyReward'])!=(7000,372,178,3000,2400):
+        raise ValueError('Queen original stats/rewards must not be reduced')
+    targets=reader.read(9,0xaba8,13);markers=reader.read(9,0xac25,13)
+    if markers[targets.index(157)]!=2 or reader.word(9,0x890a+26)!=0x8954:
+        raise ValueError('Queen binding protection differs')
+    tables=[('queen13-binding-original.tsv',1536,'73726542be6d96b2b0b61d715a246da14c195ba2a442c92caeaf8385bb15a5f1'),
+        ('queen117-completion-original.tsv',1024,'3235a9c800b09f008eb858160470ffffa5907ad82acf6e298c24791bd9b47580'),
+        ('queen-castle6-foot-original.tsv',36,'5a448c14c94a5f47daddf81dd32d5e62f08154745236f48bfcc2e27eb46d5ce7')]
+    if len(p['cpu'])!=len(tables):raise ValueError('Queen CPU coverage missing')
+    for c,(name,count,sha)in zip(p['cpu'],tables):
+        raw=(ROOT/c['path']).read_bytes()
+        if c['path']!='android/app/src/test/resources/'+name or c['caseCount']!=count or c['failures']!=0 or \
+                c['sha256']!=sha or digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Queen unchanged CPU expectations differ')
+    if p['probe']['path']!='tools/rom-extractor/probe-world-queen117.py'or \
+            digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Queen CPU probe changed without reproving')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [s['offset']for s in font['sources']]!=[610320,612368]:raise ValueError('Queen active font differs')
+    for g in font['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Queen glyph transcription differs')
+    if [d['id']for d in p['dialogues']]!=['rom.dialogue.127.13','rom.dialogue.127.14','rom.dialogue.127.15']:
+        raise ValueError('Queen real dialogue sequence missing')
+    for d in p['dialogues']:
+        t=extract_text(reader,127,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:
+            raise ValueError('Queen original dialogue bytes differ')
+    b=p['boss'];flags=['rom.map.117.flag.128','rom.global.7c6.64','rom.npccontext.115.208',
+        'rom.npccontext.116.210','rom.npccontext.164.220','rom.npccontext.117.231']
+    expected_boss=dict(id='rom.boss.157',npcId='rom.npc.117.1',mapId=117,eventId=14,eventArgument=0,
+        sourceType=171,enemyId=157,group=dict(id=0,entities=[dict(slot=3,enemyId=157)]),flagId=flags[0],
+        victoryDialogue='rom.dialogue.127.15',commitAfterDialogue=True,
+        entryTrigger=dict(mapId=117,x=7,y=5,evidence=path),
+        intro=dict(dialogueIds=['rom.dialogue.127.13'],destinationCell=[7,5],completedSteps=0,accumulateEncounterSteps=False,evidence=path),
+        continuation=dict(dialogueIds=['rom.dialogue.127.15'],completionFlags=flags,evidence=path),
+        npcSource=extract_npcs(reader,117)['records'][1]['range'],ruleSources=p['sources'],source=path)
+    if b!=expected_boss:raise ValueError('Queen victory must commit after actual text without extra event reward')
+    if p['queenGraphic']['observedRect']!=[96,32,80,96]or \
+            p['queenGraphic']['rgbaSha256']!='ccd6ceb3c6571d0cee03e4900bc7fe577b9e3026c147652fc495e0eb0e02339a':
+        raise ValueError('Queen settled graphic differs; reject transient player overlay')
+    scoped_observed_graphic(reader,p['queenGraphic'])
+    u=p['itemCapabilityUpdates']
+    if len(u)!=1 or u[0]['id']!='rom.special.13' or u[0]['fields']['name']!='捆妖繩' or \
+            u[0]['fields']['battleBindingUse']!=dict(target='queen-current-battle',bindingMarker=2,chooseTarget=False,
+                reusable=True,consumesAction=True,evidence=path):raise ValueError('Special13 command differs')
+    for m in p['maps']:
+        original=extract_map(reader,m['mapId'])
+        if m['mapId']not in [141,115,116,117]or m['gridSha256']!=original['gridSha256']or m['tilesetId']!=original['tilesetId']or \
+                m['walkableClasses']!=[0,2]or m['palette']!=extract_default_map_palette(reader,m['mapId'])['palette']:
+            raise ValueError('Queen region original geometry/palette differs')
+    return p
+
 def validate_world_night8_resources(reader):
     """Exact local maps/teacher/use; reuses room, forest and inventory dispatch."""
     from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
