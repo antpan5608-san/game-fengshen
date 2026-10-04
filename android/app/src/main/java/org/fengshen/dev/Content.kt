@@ -114,7 +114,12 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
     fun npcsForState(mapId:Int,flags:Map<String,Boolean>)=npcs.filter{it.mapId==mapId}.map{npc->
         val v=npc.stateVariant
-        if(v!=null&&flags[v.flagId]==true)npc.copy(x=v.x,y=v.y,firstDialogue=v.firstDialogue,repeatDialogue=v.repeatDialogue)else npc
+        if(v!=null&&flags[v.flagId]==true)npc.copy(x=v.x,y=v.y,firstDialogue=v.firstDialogue,repeatDialogue=v.repeatDialogue).also{n->
+            n.scriptedActor=npc.scriptedActor;n.interactionDirection=npc.interactionDirection;n.clinicId=npc.clinicId
+            n.originalTalk=npc.originalTalk;n.worldItemTarget=npc.worldItemTarget;n.automaticStoryOnly=npc.automaticStoryOnly
+            n.removedFlagId=npc.removedFlagId;n.moneyTreasure=npc.moneyTreasure;n.stateVariant=npc.stateVariant
+            n.hiddenInvestigation=npc.hiddenInvestigation
+        }else npc
     }
     fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=npc.removedFlagId?.let{flags[it]!=true}
         ?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true
@@ -125,7 +130,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
             .map{it.y*base.width+it.x}.toSet()+npcs.filter{it.mapId==mapId&&it.removedFlagId?.let{f->flags[f]}==true}
             .map{it.y*base.width+it.x}.toSet()
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
-        for(npc in npcs.filter{it.mapId==mapId})npc.stateVariant?.takeIf{flags[it.flagId]==true}?.let{v->
+        for(npc in npcs.filter{it.mapId==mapId})npc.stateVariant?.takeIf{flags[it.flagId]==true&&npcVisible(npc,flags)}?.let{v->
             result=result.copy(dynamicObjectCells=(result.dynamicObjectCells-(npc.y*base.width+npc.x))+(v.y*base.width+v.x))
         }
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
@@ -304,7 +309,9 @@ object ContentLoader {
                         npc.removedFlagId==OriginalNpcTalk.HUANG_COMPLETED_FLAG&&!npc.automaticStoryOnly
                     val women=queenEvidence&&npc.mapId==115&&npc.id in (0..4).map{"rom.npc.115.$it"}&&
                         npc.removedFlagId=="rom.npccontext.115.208"&&!npc.automaticStoryOnly
-                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women)&&npc.firstEffects.isEmpty())
+                    val jail=npc.mapId==116&&npc.id in (0..5).map{"rom.npc.116.$it"}&&!npc.automaticStoryOnly&&
+                        npc.removedFlagId=="rom.npccontext.116.210"&&n.optString("automaticStoryEvidence")==OriginalNpcTalk.ROOM116_EVIDENCE
+                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women||jail)&&npc.firstEffects.isEmpty())
                 }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("moneyTreasure")?.let{t->
@@ -340,7 +347,12 @@ object ContentLoader {
                         cell.contentEquals(intArrayOf(7,10))&&v.getString("flagId")=="rom.npccontext.164.220"&&
                         v.getString("firstDialogue")=="rom.dialogue.174.0"&&v.getString("repeatDialogue")=="rom.dialogue.174.0"&&
                         v.getString("evidence")==OriginalNpcTalk.HUANG_EVIDENCE&&npc.firstEffects.isEmpty()&&!n.has("originalTalk")
-                    require(teacher163||teacher164)
+                    val jail=npc.mapId==116&&v.getString("flagId")==OriginalNpcTalk.ROOM116_COMPLETED_FLAG&&
+                        v.getString("evidence")==OriginalNpcTalk.ROOM116_EVIDENCE&&npc.firstEffects.isEmpty()&&when(npc.id){
+                            "rom.npc.116.0"->cell.contentEquals(intArrayOf(6,3))&&v.getString("firstDialogue")=="rom.dialogue.126.8"&&v.getString("repeatDialogue")=="rom.dialogue.126.8"
+                            "rom.npc.116.3"->cell.contentEquals(intArrayOf(16,5))&&v.getString("firstDialogue")=="rom.dialogue.126.3"&&v.getString("repeatDialogue")=="rom.dialogue.126.3"
+                            else->false}
+                    require(teacher163||teacher164||jail)
                     npc.stateVariant=NpcStateVariant(v.getString("flagId"),cell[0],cell[1],v.getString("firstDialogue"),v.getString("repeatDialogue"))
                 }
                 n.optJSONObject("originalTalk")?.let{t->
@@ -356,6 +368,10 @@ object ContentLoader {
                                 rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.$gift"&&
                                 rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.2"&&rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.3")
                         }
+                        41->require(t.getString("evidence")==OriginalNpcTalk.ROOM116_EVIDENCE&&
+                            npc.id=="rom.npc.116.0"&&npc.mapId==116&&npc.x==5&&npc.y==3&&
+                            rule.mapFlagId==OriginalNpcTalk.ROOM116_ACTOR_FLAG&&rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
+                            rule.firstDialogue=="rom.dialogue.126.6"&&rule.repeatDialogue=="rom.dialogue.126.8")
                         43->require(t.getString("evidence")==OriginalNpcTalk.HUANG_EVIDENCE&&
                             npc.id=="rom.npc.117.0"&&npc.mapId==117&&npc.x==7&&npc.y==3&&
                             rule.mapFlagId==OriginalNpcTalk.HUANG_COMPLETED_FLAG&&rule.witnessFlagId.isEmpty()&&

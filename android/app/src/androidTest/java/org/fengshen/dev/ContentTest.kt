@@ -13,6 +13,34 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual loader and controlled JSON/variant fixtures, separate from normal optional talk. */
+    fun testRoom116OriginalEventAndPreservedVariantCapabilitiesFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(32,c.scenes.getValue(116).width);assertEquals(15,c.scenes.getValue(116).height)
+        val n=c.npcs.single{it.id=="rom.npc.116.0"};assertEquals(41,n.originalTalk!!.actionId)
+        val before=SaveSnapshot(c.scene.version,116,88,72,Key.UP,listOf(c.initialPlayer),
+            mapOf(HerbUse.ID to 2),emptyMap(),money=89,encounterSteps=17)
+        assertTrue(before.validate(c))
+        val first=OriginalNpcTalk.begin(before,n.originalTalk!!);assertTrue(first.applied);assertTrue(first.snapshot.validate(c))
+        assertEquals(first.snapshot,SaveSnapshot.parse(first.snapshot.json().toString()))
+        val second=OriginalNpcTalk.advanceRoom116(first.snapshot,n.originalTalk!!,first.nextDialogue!!)
+        assertTrue(second.applied);assertTrue(second.snapshot.validate(c))
+        assertEquals(second.snapshot,SaveSnapshot.parse(second.snapshot.json().toString()))
+        val completed=OriginalNpcTalk.advanceRoom116(second.snapshot,n.originalTalk!!,second.nextDialogue!!)
+        assertTrue(completed.applied);assertTrue(completed.snapshot.validate(c))
+        assertEquals(before.copy(flags=completed.snapshot.flags),completed.snapshot)
+        val actors=c.npcsForState(116,completed.snapshot.flags)
+        val variant=actors.single{it.id==n.id};assertEquals(6 to 3,variant.x to variant.y)
+        assertSame(n.originalTalk,variant.originalTalk);assertEquals(n.removedFlagId,variant.removedFlagId)
+        assertEquals(16 to 5,actors.single{it.id=="rom.npc.116.3"}.let{it.x to it.y})
+        val removed=completed.snapshot.flags+("rom.npccontext.116.210" to true)
+        assertTrue(c.npcsForState(116,removed).none{c.npcVisible(it,removed)})
+        val dynamic=c.sceneForState(116,removed)!!.dynamicObjectCells
+        assertFalse(3*32+6 in dynamic);assertFalse(5*32+16 in dynamic)
+        assertFalse(first.snapshot.copy(mapId=141).validate(c))
+        assertTrue(before.copy(contentVersion="opening-segment-001-c49").validate(c))
+    }
+
     /** Bundled Queen resources + controlled save round trips; not a normal win. */
     fun testQueenOriginalResourcesAndDurableHuangGiftFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -42,7 +70,7 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(closed.snapshot,SaveSnapshot.parse(closed.snapshot.json().toString()))
         assertFalse(OriginalNpcTalk.begin(closed.snapshot,npc.originalTalk!!,item).applied)
         assertFalse(restored.copy(mapId=16).validate(c));assertTrue(before.copy(contentVersion="opening-segment-001-c48").validate(c))
-        assertFalse(before.copy(contentVersion="opening-segment-001-c50").validate(c))
+        assertFalse(before.copy(contentVersion="opening-segment-001-c51").validate(c))
         val women=c.npcs.filter{it.mapId==115&&it.id.substringAfterLast('.').toInt()<5}
         assertTrue(women.all{c.npcVisible(it,emptyMap())});assertTrue(women.none{c.npcVisible(it,mapOf("rom.npccontext.115.208" to true))})
         assertEquals(7 to 10,c.npcsForState(164,mapOf("rom.npccontext.164.220" to true)).first{it.id=="rom.npc.164.0"}.let{it.x to it.y})

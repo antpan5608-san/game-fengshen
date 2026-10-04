@@ -349,3 +349,6 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 原受控位置实验须同步0406/0408与8E/90原坐标字段，边界从前一真实格按键接近，不能在未完成transition上猜返程失败。遗漏曾导致假失败；补齐后原宫殿/内城/世界独立返程实际通过。所有位置/HP fixture仍不是正常路线。
 - 同一provenance局部事件按实际action→dispatcher→event/script逐段核，action编号不等于event编号。赠物before-text与文本后完成分开纯proposal和pending存档，原容量/已有物/used位/复谈边界用现有py65 probe和JVM核；静态actor F0属性未解时复用同原身份已知姿势且明确PROVISIONAL，不猜动画。
+
+- NPC帧首字节含F1等未解释属性时不猜palette/翻转；复用现有OAM重建方法，在受控附近位置捕获原RAM/PPU/PNG，由四个实际sprite索引及attribute确定flip，比较全部不透明像素且图案表匹配唯一，再用scoped_observed_graphic固定ROM跨度/RGBA。已实际用于当前局部六NPC；位置fixture不是正常路线，完整走动仍欠账。
+- 单actor编号须查真实handler表，不套相邻通用分支；原action41实查CD1A，初误套CB84没有deferred action，失败保留，改查actual dispatcher后CPU对照通过。静态拓扑失败时再比较无NPC组件，只能区分原墙与演员阻挡，不删除墙来让测试变绿；未证明世界连续入口的局部数据不得计正常可玩。

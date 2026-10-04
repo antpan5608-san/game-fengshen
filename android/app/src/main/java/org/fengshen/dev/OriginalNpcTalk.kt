@@ -13,6 +13,11 @@ data class OriginalNpcTalkDefinition(val mapId:Int,val mapFlagId:String,val witn
     var completionWitnessFlagId:String="";internal set
 }
 object OriginalNpcTalk {
+    const val ROOM116_PENDING_FLAG="runtime.story.116.actor41.dialogue.pending"
+    const val ROOM116_SECOND_FLAG="runtime.story.116.actor41.dialogue8"
+    const val ROOM116_EVIDENCE="game-data/provenance/world-room116-state.json"
+    const val ROOM116_ACTOR_FLAG="rom.map.116.flag.1"
+    const val ROOM116_COMPLETED_FLAG="rom.map.116.flag.128"
     const val HUANG_PENDING_FLAG="runtime.story.117.huang.gift.dialogue.pending"
     const val HUANG_COMPLETED_FLAG="rom.map.117.flag.2"
     const val HUANG_EVIDENCE="game-data/provenance/world-queen117-state.json"
@@ -27,6 +32,7 @@ object OriginalNpcTalk {
     fun begin(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
         if(before.mapId!=rule.mapId)return reject("当前场景已变化")
+        if(rule.actionId==41)return room116(before,rule)
         if(rule.actionId==43)return huang117(before,rule,item)
         if(rule.actionId==1)return teacher163(before,rule,item)
         if(rule.actionId==11){
@@ -50,6 +56,34 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    private fun isRoom116Rule(rule:OriginalNpcTalkDefinition)=rule.actionId==41&&rule.mapId==116&&
+        rule.mapFlagId==ROOM116_ACTOR_FLAG&&rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
+        rule.firstDialogue=="rom.dialogue.126.6"&&rule.repeatDialogue=="rom.dialogue.126.8"
+    fun validRoom116Pending(before:SaveSnapshot):Boolean {
+        if(before.flags[ROOM116_PENDING_FLAG]!=true)return before.flags[ROOM116_SECOND_FLAG]!=true
+        return before.mapId==116&&before.flags[ROOM116_ACTOR_FLAG]==true&&
+            kotlin.math.abs(before.x/16-5)+kotlin.math.abs(before.y/16-3)==1
+    }
+    fun room116PendingDialogue(flags:Map<String,Boolean>)=if(flags[ROOM116_SECOND_FLAG]==true)"rom.dialogue.126.8"else"rom.dialogue.126.6"
+    private fun room116(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
+        if(!isRoom116Rule(rule)||!validRoom116Pending(before))return reject("地牢对白规则或阶段未核验")
+        if(before.flags[ROOM116_PENDING_FLAG]==true)return StoryFollowup.Result(before,room116PendingDialogue(before.flags),true)
+        if(before.flags[ROOM116_ACTOR_FLAG]==true)return StoryFollowup.Result(before,rule.repeatDialogue,true)
+        if(kotlin.math.abs(before.x/16-5)+kotlin.math.abs(before.y/16-3)!=1)return reject("当前交谈位置已变化")
+        // Original action41/CD1A sets actor bit BEFORE text6, then schedules
+        // event15/script19. This contains text8 and NPC movement, no gift or player step.
+        return StoryFollowup.Result(before.copy(flags=before.flags+(ROOM116_ACTOR_FLAG to true)+(ROOM116_PENDING_FLAG to true)),rule.firstDialogue,true)
+    }
+    fun advanceRoom116(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,currentDialogue:String):StoryFollowup.Result {
+        if(!isRoom116Rule(rule)||before.flags[ROOM116_PENDING_FLAG]!=true||!validRoom116Pending(before)||
+            currentDialogue!=room116PendingDialogue(before.flags))return StoryFollowup.Result(before,null,false,"地牢对白阶段已变化")
+        if(before.flags[ROOM116_SECOND_FLAG]!=true)return StoryFollowup.Result(before.copy(flags=before.flags+
+            (ROOM116_SECOND_FLAG to true)+("rom.npccontext.116.209" to true)),rule.repeatDialogue,true)
+        return StoryFollowup.Result(before.copy(flags=(before.flags-ROOM116_PENDING_FLAG-ROOM116_SECOND_FLAG)+
+            (ROOM116_COMPLETED_FLAG to true)),null,true)
     }
 
     private fun isHuangRule(rule:OriginalNpcTalkDefinition)=rule.actionId==43&&rule.mapId==117&&

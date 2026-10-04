@@ -2904,7 +2904,7 @@ class TouchTest:IsolatedGameTestCase(){
                     else if(queen)7000 else if(cave87)4500 else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
-            var bindingSubmitted=false
+            var bindingSubmitted=false;var bindingApplied=false;var bindingRoundPresented=false
             val deadline=SystemClock.elapsedRealtime()+if(queen&&boss)600000 else 240000
             while(true){
                 var observed:Triple<OpeningBattle,BattlePresentation,Boolean>?=null
@@ -2914,9 +2914,10 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue("Normal $label encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
                 assertTrue("Normal $label defeat; no state repair or forced victory permitted",fight.phase!=BattlePhase.DEFEAT)
                 val displayedAction=presentation.action
+                if((island||queen)&&boss&&presentation.screen==BattlePresentation.Screen.ACTING)bindingRoundPresented=true
                 if((island||queen)&&boss&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL&&displayedAction.actorId!=null){
                     assertEquals(1,v.currentSnapshot().inventory[if(queen)"rom.special.13"else"rom.special.9"])
-                    state("normal-binding-original-actor-order-effect")
+                    bindingApplied=true;state("normal-binding-original-actor-order-effect")
                 }
                 if(boss&&!capturedBossSpecial&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL){
                     capturedBossSpecial=true;state("boss-original-special-action")
@@ -2938,6 +2939,10 @@ class TouchTest:IsolatedGameTestCase(){
                     state("boss-herb-action");capturedBattleHerb=true
                 }
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
+                    // A faster enemy can legitimately kill the caster before its
+                    // queued slot. Retry through a NEW normal command after that
+                    // presented round; never set the internal protection marker.
+                    if((island||queen)&&boss&&bindingRoundPresented&&!bindingApplied){bindingSubmitted=false;bindingRoundPresented=false}
                     val acting=fight.inputHero!!
                     val heal=acting.hp<=acting.maxHp/2||(boss&&bossHerbs==0&&acting.hp<acting.maxHp)
                     if((island||queen)&&boss&&!bindingSubmitted){

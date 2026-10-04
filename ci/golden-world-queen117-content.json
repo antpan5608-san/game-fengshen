@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c50",
-  "manifestSha256": "421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0",
+  "contentVersion": "opening-segment-001-c49",
+  "manifestSha256": "3f422cf6163d493db700e5dc6859027b9b5defad8f6b1e7fbc283ca6af86f04b",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-room116-content.json"
+    "provenance": "game-data/provenance/world-queen117-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

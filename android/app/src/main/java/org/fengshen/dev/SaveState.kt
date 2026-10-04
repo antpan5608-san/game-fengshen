@@ -239,6 +239,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
                 (x/16!=i.openingMovement.destination.x||y/16!=i.openingMovement.destination.y))}==true}==true)return false
         if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
+        if(!OriginalNpcTalk.validRoom116Pending(this))return false
+        if(flags[OriginalNpcTalk.ROOM116_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.116.0"&&it.originalTalk?.actionId==41})return false
         if(!OriginalNpcTalk.validHuangPending(this))return false
         if(flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.117.0"&&it.originalTalk?.actionId==43})return false
         if(!OriginalFerry.validPending(this,content.ferries.values))return false
@@ -258,7 +260,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved in (1..49).map{"opening-segment-001-c$it"}
+            saved in (1..50).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

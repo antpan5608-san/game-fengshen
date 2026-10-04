@@ -1,3 +1,11 @@
+## WORLD-FULL-01 地牢资源/局部事件检查点（2026-10-04T10:58Z，c50未发布）
+
+c50通过原export_from_base生成：56已打包地图/302文件/manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0；新增116六NPC真实OAM、组126对白及action41→event15/script19局部持久流程。256选择/512完成原CPU零差异，335 JVM/68 suites、3导出90.597秒、严格全新目标恢复及仪器驱动编译PASS。未变媒体逐字节保留；原body能力在NPC variant view继续保留，已移除NPC不被重新塞进碰撞。
+
+**116正常可达仍未证明，不计为新增可玩。**拓扑测试暴露115中部与左出口断开、141已核入口与地牢组件不通；保留原格网/出口，不开假墙。房门格5,2应朝下对NPC交谈，不能直接穿过；首轮错误正常驱动已撤下，记录实际失败。仍未恢复完整NPC走位/易容外观与持续效果，不从对白发明计时/奖励/入宫锁。女王主线不依赖可选地牢，新正常Android/覆盖/冷启/声音/真机全部NOT_RUN。
+
+c49稳定检查点本地f22502e365667d113234fde2a939b191f6e7ee2f、远端work/world-queen117-c49/132ca74cd6a7cadc9d1f5bd30a23410a591fd737、精确树b9455485319276732358520c4c7114539bdf015b已备份。正式仍v27/c14，main87df6cf/v64/run37185539165签名build PASS、runtime执行中。最新真实inspect37195607468/10:31:28Z仍可信27/26、3734事件、普通真机9/模拟器0/测试0，历史v26下载错误根因UNCONFIRMED。总体PARTIAL/ALL_MAPS_USABLE=NO/分母UNKNOWN；既有十类权威欠账保留。
+
 ## WORLD-FULL-01 女人国连续内容候选（2026-10-04T10:25Z，未发布）
 
 本地c49已由原export_from_base生成，新增141/115/117真实路线、女王157/special13原保护调度、胜后文本状态、黄天化action43→event16/script20赠攢心釘18，及两原箱/普通敌58/59；55打包地图/294文件/manifest3f422cf6163d493db700e5dc6859027b9b5defad8f6b1e7fbc283ca6af86f04b。严格继承c48，未变媒体逐字节保留。332 JVM/67 suites、4来源校验、3导出66.154秒、全新目录完整restore PASS；仪器编译与正常驱动状态见唯一current-task，真实新Android/冷启/覆盖/声音/一加13T NOT_RUN，尚未发布。

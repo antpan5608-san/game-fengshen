@@ -1380,6 +1380,69 @@ def validate_world_teacher163_gate(reader):
     return p
 
 
+def validate_world_room116_resources(reader):
+    """Original actor41/event15 only; text is not evidence of a costume timer."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
+    path='game-data/provenance/world-room116-state.json';p=load(ROOT/path)
+    expected=dict(mapId=116,npcId='rom.npc.116.0',actionId=41,eventId=15,scriptId=19,
+        firstDialogue='rom.dialogue.126.6',scriptDialogue='rom.dialogue.126.8',repeatDialogue='rom.dialogue.126.8',
+        actorFlag='rom.map.116.flag.1',completionFlag='rom.map.116.flag.128',contextFlag='rom.npccontext.116.209',
+        flagBeforeText=True,noPlayerSteps=True,noGift=True,noNewRouteGate=True)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='room116-actor41-event15-original-dialogues-and-context'or p['rules']!=expected:
+        raise ValueError('Room116 real actor/event rules differ')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.word(10,0xcb08+82)!=0xcd1a or reader.word(11,0xcb5e+30)!=0xd236 or \
+            reader.word(11,0xc2a6+38)!=0xc5d8 or reader.read(11,0xc5d8,9).hex()!='8c00040809070302ff':
+        raise ValueError('Room116 actual dispatcher or NPC-only script differs')
+    if p['probe']['path']!='tools/rom-extractor/probe-world-room116-state.py'or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Room116 original CPU probe changed without reproving')
+    tables=[('room116-actor41-selector-original.tsv',256,'8a7c1e7952083e86cdd5fcf3afe89068f894a41c7e93fd23184b0497644c7373'),
+        ('room116-event15-finish-original.tsv',512,'d9b8f9b231e9ee26b0d6fe16aa60453b14f768064079c4a7109a3b4875a7c813')]
+    if len(p['cpu'])!=2:raise ValueError('Room116 CPU coverage missing')
+    for c,(name,count,sha)in zip(p['cpu'],tables):
+        raw=(ROOT/c['path']).read_bytes()
+        if c['path']!='android/app/src/test/resources/'+name or c['caseCount']!=count or c['failures']!=0 or \
+                c['sha256']!=sha or digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Room116 unchanged CPU expectations differ')
+    m=extract_map(reader,116);binding=p['map']
+    if binding!=dict(mapId=116,gridSha256=m['gridSha256'],tilesetId=4,palette=extract_default_map_palette(reader,116)['palette'],walkableClasses=[0,2]):
+        raise ValueError('Room116 original map/palette/collision differs')
+    font=p['font'];data=b''.join(checked_span(reader,a)for a in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [a['offset']for a in font['sources']]!=[610320,612368]:raise ValueError('Room116 active font differs')
+    for g in font['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Room116 glyph transcription differs')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.126.{i}'for i in range(1,9)]:raise ValueError('Room116 real dialogue set differs')
+    for d in p['dialogues']:
+        t=extract_text(reader,126,int(d['id'].split('.')[-1]));decoded=decode_tokens(bytes.fromhex(t['rawHex']),cs)
+        if decoded['unknownCodes']or decoded['text']!=d['text']or d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']:
+            raise ValueError('Room116 original dialogue differs')
+    records=extract_npcs(reader,116)['records'];after=extract_npcs(reader,209)['records']
+    if len(p['npcs'])!=6 or len(p['graphics'])!=6:
+        raise ValueError('Room116 actual actor count differs')
+    for n,rec in zip(p['npcs'],records):
+        i=rec['index'];raw=bytes.fromhex(rec['rawHex']);msg=raw[1]
+        if n['id']!=f'rom.npc.116.{i}'or n['cell']!=[(rec[k]-120)//16 for k in ['xCandidate','yCandidate']]or \
+                n['spriteId']!=raw[0]or n['source']['record']!=rec['range']or n['mapId']!=116 or n['firstEffects']or \
+                n['firstDialogue']!=f'rom.dialogue.126.{msg}'or n['removedFlagId']!='rom.npccontext.116.210'or \
+                n['automaticStoryEvidence']!=path or n['room116ResourceEvidence']!=path:
+            raise ValueError('Room116 original actor identity, position or removal differs')
+        if i==0:
+            if n['originalTalk']!=dict(actionId=41,mapFlagId=expected['actorFlag'],witnessFlagId='',itemId='',evidence=path)or n['repeatDialogue']!='rom.dialogue.126.8':
+                raise ValueError('Room116 actor41 must retain real repeat, no gift or added route gate')
+        elif n.get('originalTalk')or n['repeatDialogue']is not None:raise ValueError('Room116 prisoner must not invent side effects')
+        if i in [0,3]:
+            a=after[i];b=bytes.fromhex(a['rawHex']);v=dict(flagId=expected['completionFlag'],cell=[(a[k]-120)//16 for k in ['xCandidate','yCandidate']],
+                firstDialogue=f'rom.dialogue.126.{b[1]}',repeatDialogue=f'rom.dialogue.126.{b[1]}',evidence=path)
+            if n['stateVariant']!=v:raise ValueError('Room116 original next-map actor context differs')
+        elif n.get('stateVariant'):raise ValueError('Unproved Room116 actor variant')
+        g=p['graphics'][n['sprite']]
+        if g['normalPlayEvidence']is not False or g['captureKind']!='CONTROLLED_ORIGINAL_NPC_POSITION_ONLY'or \
+                g['animationSource']!=reader.span(0,rec['animationProgramPointer'],3,'Original NPC animation pointer'):
+            raise ValueError('Room116 observed pose must retain controlled provenance')
+        scoped_observed_graphic(reader,g)
+    return p
+
 def validate_world_queen117_resources(reader):
     """Scoped original event14/special13; no name-based rules or free rewards."""
     from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
@@ -1882,6 +1945,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             proof=validate_world_night8_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
             if night!='game-data/provenance/world-night8-resources.json'or binding is None or allowed!=binding['walkableClasses']or recipe['palette']!=binding['palette']or recipe.get('directionalCollision')or recipe.get('forestCollisionEvidence'):
                 raise ValueError('Night8 map collision/palette differs')
+        if recipe.get('room116CollisionEvidence'):
+            proof=validate_world_room116_resources(reader)
+            if recipe['room116CollisionEvidence']!='game-data/provenance/world-room116-state.json'or mid!=116 or \
+                    allowed!=proof['map']['walkableClasses']or recipe['palette']!=proof['map']['palette']or original['tilesetId']!=4:
+                raise ValueError('Room116 collision/palette differs')
         if recipe.get('queen117CollisionEvidence'):
             proof=validate_world_queen117_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
             if recipe['queen117CollisionEvidence']!='game-data/provenance/world-queen117-state.json'or binding is None or \
@@ -2494,6 +2562,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
                     any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
                 raise ValueError('Village batch actor/dialogue/graphic differs')
+        elif npc.get('room116ResourceEvidence'):
+            proof=validate_world_room116_resources(reader)
+            if npc['room116ResourceEvidence']!='game-data/provenance/world-room116-state.json'or npc not in proof['npcs']or \
+                    any(d not in scene['dialogues']for d in proof['dialogues'])or any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
+                raise ValueError('Room116 original actors/text/graphics differ')
         elif npc.get('queen117ResourceEvidence'):
             proof=validate_world_queen117_resources(reader)
             if npc['queen117ResourceEvidence']!='game-data/provenance/world-queen117-state.json'or \
@@ -2601,7 +2674,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
-        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-queen117-state.json':
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-room116-state.json':
+            proof=validate_world_room116_resources(reader)
+            if npc not in proof['npcs']:raise ValueError('Room116 actor removal differs')
+        elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-queen117-state.json':
             proof=validate_world_queen117_resources(reader)
             if npc not in proof['region']['npcs']:raise ValueError('Queen actor identity/removal differs')
         elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-cave87-state.json':
