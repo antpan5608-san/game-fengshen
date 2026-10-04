@@ -22,4 +22,15 @@ class ServiceBudgetTest(unittest.TestCase):
   self.assertIn('afterArmor+medicine.buyPrice!!',driver)
   self.assertIn('Normal supply earnings exhausted',driver.replace('Bounded normal supply earnings exhausted','Normal supply earnings exhausted'))
   self.assertNotIn('money=220',driver)
+ def test_north_training_buys_existing_herbs_before_the_first_encounter(self):
+  source=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
+  driver=source.split('fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave()',1)[1].split('\n    fun ',1)[0]
+  # Actual v60 source: 398 liang, two herbs; eight legitimate purchases are
+  # affordable while retaining money for two original four-liang stays.
+  self.assertGreaterEqual(398-8*15,8)
+  self.assertIn('replenishTrainingHerbs();inn();walkTo(0,14)',driver)
+  self.assertIn('assertEquals(0,v.world.mapId);replenishTrainingHerbs();inn()',driver)
+  self.assertIn('trade(HerbUse.ID,true,count)',driver)
+  self.assertIn('fight.phase!=BattlePhase.DEFEAT',driver)
+  self.assertNotIn('inventory=',driver)
 if __name__=='__main__':unittest.main()

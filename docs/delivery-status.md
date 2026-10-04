@@ -4,6 +4,15 @@
 - 正常服务备款改按原价格计算整条买卖的现金峰值220，而非只留武器200；仍自然遇敌赚差额/原客栈收费，买卖/选择/重复UP断言保留。本地仪器编译PASS，新同产物运行待验。
 - WORLD-FULL-01继续，显著可玩进展通过运行不崩溃、存档和既有审核门槛即阶段发布；旧非阻断问题不作为全部BUG清零等待，未知/严重故障不跳过。正式仍v27/c14；岛内WIP隔离，不改本候选来源。ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。
 
+## 当前有效候选检查点（2026-10-04T04:24Z）
+
+- v60/run37172267100：签名build SUCCESS；实际runtime FAILURE。正常南海、三店触控、北海方向基础路线、西海与村庄1及其外部冷启通过；北海宫廷续跑在练级阶段正常战败，未发布。
+- 已取得该run的fengshen-world-north-palace-checkpoints实际索引/断言：源存档8级54/57HP、398两、药草2；64步时库存耗尽，8场战斗/2次用草后失败。无App异常或强制胜利证据，不把角色战败冒称客户端崩溃。
+- 本树最小驱动修复：练级前与正常返村时按既有15两药草价补至最多10，预留8两住宿；真实购买/扣款/背包与DEFEAT断言保留。业务规则、c41内容和签名不变。两项预算回归PASS，原Gradle wrapper仪器APK编译PASS。修后实际App NOT_RUN，不继承v60失败APK的通过结果。
+- 当前GitHub CLI仍401 Bad credentials；connected GitHub工具可读完成run/artifact，不能视为已获得Actions触发/部署权限。原安全凭据更新问题待回复；未绕过main、reviewer、保护或TLS。
+- 独立work/world-island的9d6e9fc已保存c43/46图五龙山原守门context修复与301 JVM/严格恢复验证；实际Android NOT_RUN。继续佳东镇局部证据与服务接入，WORLD总任务PARTIAL、ALL_MAPS_USABLE=NO、有效分母UNKNOWN。
+- 下一可执行动作：凭据恢复后冻结新来源并沿原build workflow重新运行同产物正常流程；独立内容树继续当前镇服务。明显可玩增量实际运行/存档/签名审核门槛通过即阶段发布，不等非阻断欠账清零。
+
 ## WORLD-FULL-01检查点：修正原始入队存档测试（2026-10-04T01:26:26Z，未发布）
 
 - WORLD-FULL-01继续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户已授权显著可玩增量实际App不崩溃且旧档/签名/同产物门禁通过后阶段发布；非阻断欠账保持真实状态，不等待全世界完成。
