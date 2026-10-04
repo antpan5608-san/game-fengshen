@@ -1,3 +1,13 @@
+## WORLD-FULL-01检查点：修正原始入队存档测试（2026-10-04T01:26:26Z，未发布）
+
+- WORLD-FULL-01继续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户已授权显著可玩增量实际App不崩溃且旧档/签名/同产物门禁通过后阶段发布；非阻断欠账保持真实状态，不等待全世界完成。
+- v58/run37166998991/source ee1b3e61d67b5be501cc9188d57f02d9cd827db9签名build SUCCESS；原KVM runtime在2026-10-04T01:21:27Z ContentTest 34方法/33通过/1失败/0错误。首错testVillageFourOriginalBridgeServicesNpcRulesAndPriorSave:73，隔离夹具用rom.original.npc.context.207错误键且漏玉佩used旗标；真实校验正确拒绝，非客户端崩溃证据。其他正常流程未运行，不拿v57旧片给v58背书。失败候选不发布。
+- 修正夹具复用OriginalYangJoin.CONTEXT_FLAG/USED_FLAG，原validate/context/库存保护不放宽；新增JVM验证缺真实context或used仍拒绝、无关flag保持。287 JVM/57 suites/0失败错误跳过、Android instrument编译PASS(3秒)。内容仍c41/225文件/41地图，manifest 7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f，不伪造内容变化。
+- v57实际低区准备失败与v58新增Content断言失败分别保留；zone4真实12,21↔12,22修正与6静态门禁保持。下一动作：提交修后代码/规则与现有文档，再原workflow新候选v59同产物实际运行，成功则原自动审批阶段发布，不中途推main。
+- 新只读巡检run37168013570已实际发起，当前尚未完成；最近完成仍37165465663/2026-10-04T00:37:03.5955350Z，可信27/26=1398/2289，普通真机7会话/模拟器0/测试0，精确旧v26更新ProtocolException1保持ISSUES_FOUND/root UNCONFIRMED。新查询未完成不写正常。
+- 独立work/world-island树继续原79→78→77→76/event7四恶人/六宝箱的有证据接入；未推main、不进入本次c41候选。ROM、回放、PPU与原日志不公开。声音/一加13T NOT_RUN。
+- 十类欠账权威清单仍docs/delivery-status.md原完整段；本轮未关闭正常App、全地图、全部服务或规则欠账。无reset/clean/真实存档覆盖/Language修改。
+
 ## WORLD-FULL-01 增量候选状态（2026-10-04T01:01Z）
 
 总体PARTIAL，不代表全地图完成；正式仍v27/c14。c41本地225资源/41地图、manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f，176世界方法、286 JVM/57 suites及严格恢复已PASS，村4/固定渡船真实Android待下一候选。此次仅修北海正常训练驱动的原区域选择，6静态方法和修后仪器编译PASS；不改游戏成长、遇敌、伤害、等级/补给目标，不额外发资源。

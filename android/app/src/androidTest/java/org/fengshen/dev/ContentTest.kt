@@ -69,7 +69,7 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(146 to 150,back.spawnX to back.spawnY);assertTrue(back.preserveArrivalDirection)
         val old=SaveSnapshot("opening-segment-001-c39",110,7*16+8,6*16+8,Key.LEFT,
             listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
-            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,"rom.original.npc.context.207" to true),1019)
+            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),1019)
         assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
     }
 

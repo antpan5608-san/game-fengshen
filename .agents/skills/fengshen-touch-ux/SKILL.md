@@ -86,3 +86,5 @@ GrowthRow.level为达到等级、threshold为累计EXP，HUD/详情只派生(E-T
 ## 正常训练驱动的真实区域检查（本地已验，修后App待验）
 
 原北海准备曾在注释所称海域高经验区耗尽正常步数。实际矩形证明旧邻格处于低经验zone1；只读BFS确认新zone4邻格和原住宿返程，保持真实遇敌、数值和补给。EncounterZone运行类没有id字段，应使用已有矩形/contains与原定义核对，不按注释或名称猜区域。静态检查与仪器编译分别记录，App正常准备仍须下一同产物运行；不得靠升EXP、注入资源、关闭遇敌或删除次数/等级断言通过。
+
+- 隔离旧档fixture必须使用真实OriginalYangJoin.CONTEXT_FLAG/USED_FLAG，加入角色却用不存在的上下文键会被validPending正确拒绝；不能据此放宽存档校验。缺键拒绝/正确键及无关flag的JVM断言已实际通过，修后Android方法仍待同候选runner，不把编译当实际旧档通过。
