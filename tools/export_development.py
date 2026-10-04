@@ -586,7 +586,9 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
         'game-data/provenance/world-seventh-side-terrain.json':
         ('seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero',864,{69,158,159}),
         'game-data/provenance/world-rebirth-terrain.json':
-        ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86})}
+        ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86}),
+        'game-data/provenance/world-island-terrain.json':
+        ('island76-through78-ground-and-upper-plane-bridge-zero',1536,{76,77,78})}
     if evidence_path not in scopes:raise ValueError('Unreviewed terrain evidence path')
     scope,count,maps=scopes[evidence_path];proof=load(ROOT/evidence_path)
     if proof['romSha256']!=SHA256 or proof['scopeRevision']!=scope or map_id not in maps or \
@@ -607,7 +609,15 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
             proof['encounterGate']['testCount']!=480 or proof['encounterGate']['failures']!=0:
         raise ValueError('Terrain/encounter semantics differ from original CPU scope')
     required={(0,0xca98,29),(0,0xcc87,215),(0,0xce35,29),(0,0xd099,153),(0,0xd214,115),
-        (0,0x874c,34),(11,0xc0b3,100),(11,0xed87+23,46)}
+        (0,0x874c,34),(11,0xc0b3,100)}
+    if evidence_path=='game-data/provenance/world-island-terrain.json':
+        required.add((11,0xed87+76,3))
+        probe=proof['probe'];table=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if probe['path']!='tools/rom-extractor/probe-world-island-terrain.py' or \
+                digest((ROOT/probe['path']).read_bytes())!=probe['sha256'] or \
+                (probe['verifiedCases'],probe['differences'])!=(1536,0) or len(table.splitlines())!=1537:
+            raise ValueError('Island terrain requires its actual bounded probe and complete matrix')
+    else:required.add((11,0xed87+23,46))
     if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
         raise ValueError('Hell terrain lacks original plane, direction, occlusion or encounter code')
     for span in proof['sources']:checked_span(reader,span)
@@ -745,9 +755,19 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/world-village-batch-resources.json':
+        v,_=validate_world_village_batch_resources(reader,npc['mapId'])
+        if npc not in v['npcs']:raise ValueError('Village hidden record differs')
+        return v
+    if npc['treasure']['evidence']=='game-data/provenance/world-village5-hidden.json':
+        return validate_world_village5_hidden(reader,npc)
     path=npc['treasure']['evidence'];proof=load(ROOT/path)
     scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
-            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21)}
+            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
+            'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35),
+            'game-data/provenance/world-five-dragon-chests.json':('five-dragon99-three-original-item-chests',21),
+            'game-data/provenance/world-cave87-chests.json':('cave87-six-original-item-chests-and-money550',42),
+            'game-data/provenance/world-night8-chests.json':('clear-peak100-dark74-seven-original-item-chests-and-money120',49)}
     if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
@@ -759,6 +779,32 @@ def validate_world_chest_grant(reader,npc):
                 proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
                 [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(107,0,3,30),(107,1,2,7),(108,0,0,14)]:
             raise ValueError('Tree chest source, original CPU or reused capacity rules differ')
+    elif path=='game-data/provenance/world-five-dragon-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or len(raw.splitlines())!=22 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(99,0,2,2),(99,1,3,30),(99,2,0,9)]:
+            raise ValueError('Five-dragon chests require actual three records and capacity cases')
+    elif path=='game-data/provenance/world-night8-chests.json':
+        raw=(ROOT/proof['cpuExpectedPath']).read_bytes();reuse=proof['ruleReuse']
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or len(raw.splitlines())!=50 or proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768))or [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(100,0,2,9),(100,1,0,2),(100,2,0,9),(74,0,0,0),(74,1,0,4),(74,5,1,13),(74,6,2,4)]:
+            raise ValueError('Night8 chests require actual seven records/capacity cases')
+    elif path=='game-data/provenance/world-cave87-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or len(raw.splitlines())!=43 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768))or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=                [(87,1,0,10),(87,2,0,11),(87,3,0,1),(87,5,2,8),(87,6,0,0),(87,7,2,22)]:
+            raise ValueError('Cave87 six item chests require actual records/capacity cases')
+    elif path=='game-data/provenance/world-island-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or len(raw.splitlines())!=36 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=\
+                [(76,4,2,7),(76,5,0,1),(76,7,0,14),(76,8,2,21),(76,9,0,4)]:
+            raise ValueError('Island item chests require their actual five records and capacity cases')
     from forensics.fengshen246 import extract_npcs
     matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
     if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
@@ -1081,6 +1127,588 @@ def validate_world_village4_resources(reader):
     return p
 
 
+def validate_world_village_batch_resources(reader,map_id):
+    """Shared village profile with each caller's actual records and evidenced actions.
+
+    New callers extend one bounded data batch, not a second village importer.
+    No NPC side effect is inferred from the shared visual/collision profile.
+    """
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
+    path='game-data/provenance/world-village-batch-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='original-village-shared-profile-evidenced-callers':
+        raise ValueError('Village batch resource scope differs')
+    if len({m['mapId']for m in p['villages']})!=len(p['villages']):raise ValueError('Duplicate village caller')
+    matches=[m for m in p['villages']if m['mapId']==map_id]
+    if len(matches)!=1 or map_id not in range(16):raise ValueError('Village caller lacks local evidence')
+    v=matches[0];original=extract_map(reader,map_id)
+    if original['tilesetId']!=0 or v['map']!=dict(mapId=map_id,width=original['width'],height=original['height'],
+            tilesetId=0,gridSha256=original['gridSha256'],palette=extract_default_map_palette(reader,map_id)['palette']):
+        raise ValueError('Village caller geometry/palette differs')
+    required={(0,0xcb6c,17),(0,0xcbda,8),(0,0xced3,17),(0,0xd257,18),(0,0xcf43,1)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sharedSources']}!=required:
+        raise ValueError('Village batch shared collision dispatch differs')
+    for span in p['sharedSources']+v['sources']:checked_span(reader,span)
+    bridge=p['bridge'];old=load(ROOT/'game-data/provenance/world-village4-resources.json')['bridge']
+    if bridge!=old or digest((ROOT/bridge['cpuExpectedPath']).read_bytes())!=bridge['cpuExpectedSha256']:
+        raise ValueError('Village batch must reuse actual original bridge matrix')
+    font=v['font'];raw=b''.join(checked_span(reader,s)for s in font['sources'])
+    if len(raw)!=4096:raise ValueError('Village font CHR missing')
+    charset={int(k):ch for k,ch in font['charset'].items()}
+    if {g['code']for g in font['glyphs']}!=set(charset):raise ValueError('Village font coverage incomplete')
+    for g in font['glyphs']:
+        if charset[g['code']]!=g['character']or digest(bytes(n for row in glyph_pixels(raw,0,g['code'])for n in row))!=g['pixelsSha256']:
+            raise ValueError('Village original glyph differs')
+    for d in v['dialogues']:
+        group,msg=map(int,d['id'].split('.')[-2:]);t=extract_text(reader,group,msg)
+        if group!=v['textGroup']or d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Village text differs from original stream/font')
+    for table in v['cpu']:
+        data=(ROOT/table['path']).read_bytes()
+        if digest(data)!=table['sha256']or len(data.splitlines())-1!=table['caseCount']or table['failures']!=0 or \
+                digest((ROOT/table['probePath']).read_bytes())!=table['probeSha256']:
+            raise ValueError('Village original CPU cases differ')
+    records=extract_npcs(reader,map_id)['records']
+    if len(records)!=len(v['npcs']):raise ValueError('Village actor count differs')
+    for n,record in zip(v['npcs'],records):
+        raw=checked_span(reader,record['range']);idx=record['index']
+        cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstEffects'])!= \
+                (f'rom.npc.{map_id}.{idx}',map_id,cell,raw[0],record['range'],[]):
+            raise ValueError('Village original actor identity differs')
+        if raw[0]==198:
+            # Only this actual category0/id1 C6 behavior has been exercised here.
+            t=n.get('treasure',{})
+            if (map_id,idx,raw[1],raw[2],raw[12],raw[13])!=(6,3,0,1,0,8)or \
+                    t!=dict(itemId='rom.medicine.1',flagId='rom.map.6.flag.8',amount=1,categoryGrant=0,evidence=path)or \
+                    n.get('hiddenInvestigation')is not True or n['firstDialogue']!=''or n['repeatDialogue']is not None or \
+                    n.get('removedFlagId')or n.get('openedSprite')!=n['sprite']:
+                raise ValueError('Village hidden pickup cannot invent an effect or remove collision')
+        else:
+            first=f'rom.dialogue.{v["textGroup"]}.{raw[1]}';repeat=f'rom.dialogue.{v["textGroup"]}.{raw[2] if raw[2]!=255 else raw[1]}'
+            if n['firstDialogue']!=first or n['repeatDialogue']!=repeat:raise ValueError('Village actor message differs')
+            if raw[12]==52:
+                expected=dict(actionId=52,mapFlagId=f'rom.map.{map_id}.flag.{raw[13]}',witnessFlagId='rom.global.7c6.64',itemId='',
+                    messageDialogues={'0':first,'1':f'rom.dialogue.{v["textGroup"]}.{raw[1]+1}','2':repeat},evidence=path)
+                if map_id!=6 or idx not in range(3)or raw[13]!=1<<idx or n.get('originalTalk')!=expected:
+                    raise ValueError('Village action52 lacks actual original selector evidence')
+            elif raw[12]!=0 or raw[2]!=255 or n.get('originalTalk'):
+                raise ValueError('Village side effect is not supported by the local evidence')
+        g=v['graphics'][n['sprite']]
+        frames=[rec for rec in records if rec['range']==g['frameRecordSource']]
+        if len(frames)!=1 or frames[0]['entityByte']!=raw[0]:raise ValueError('Village still-frame belongs to another original actor')
+        frame_record=frames[0];address=frame_record['animationProgramPointer']
+        transport=checked_span(reader,g['animationSource'])
+        if g['animationSource']['module']!=0 or g['animationSource']['cpuAddress']!=address or \
+                len(transport)!=3 or transport[0]not in (0xf0,0xf8):raise ValueError('Village initial frame transport differs')
+        frame_address=int.from_bytes(transport[1:],'little');frame=checked_span(reader,g['frameSource'])
+        if g['frameSource']['module']!=0 or g['frameSource']['cpuAddress']!=frame_address or len(frame)!=5 or frame[0]not in (0,1,2):
+            raise ValueError('Village static frame is not supported by original bytes')
+        banks=g['patternBankSources']
+        if len(banks)!=4 or any(len(checked_span(reader,b))!=1024 for b in banks):raise ValueError('Village original sprite CHR banks missing')
+        if len(g['tiles'])!=4:raise ValueError('Village original four-tile frame incomplete')
+        for q,(tile,code)in enumerate(zip(g['tiles'],frame[1:])):
+            if tile['xy']!=[q%2*8,q//2*8]or tile['offset']!=banks[code//64]['offset']+(code%64)*16 or tile['length']!=16:
+                raise ValueError('Village still-frame tile identity differs')
+        if g['captureKind']!='PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED'or g['normalPlayEvidence']is not False:
+            raise ValueError('Unobserved village pose must remain provisional')
+        rgba=Image.open(io.BytesIO(scoped_observed_graphic(reader,g))).convert('RGBA')
+        if raw[0]==198 and any(rgba.getchannel('A').getdata()):raise ValueError('Original hidden actor cannot become a fake icon')
+    return v,p['bridge']
+
+
+def validate_world_village5_resources(reader):
+    """Reuse the actual town profile; preserve this caller's independent actors/text."""
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_map,extract_default_map_palette
+    path='game-data/provenance/world-village5-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map5-original-shared-services-static-npcs-group15':
+        raise ValueError('Village5 resource scope differs')
+    required={(0,0xcb6c,17),(0,0xcbda,8),(0,0xced3,17),(0,0xd257,18),(0,0xcf43,1)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Village5 shared bridge dispatch differs')
+    for span in p['sources']:checked_span(reader,span)
+    if p['bridge']!=validate_world_village4_resources(reader)['bridge']:
+        raise ValueError('Village5 cannot invent a second bridge profile')
+    original=extract_map(reader,5);palette=extract_default_map_palette(reader,5)['palette']
+    if p['map']!=dict(mapId=5,width=32,height=30,tilesetId=0,gridSha256=original['gridSha256'],palette=palette):
+        raise ValueError('Village5 geometry/palette differs')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources'])
+    if len(data)!=4096:raise ValueError('Village5 active font banks missing')
+    charset={int(k):v for k,v in font['charset'].items()}
+    for glyph in font['glyphs']:
+        pixels=glyph_pixels(data,0,glyph['code'])
+        if charset[glyph['code']]!=glyph['character'] or digest(bytes(v for row in pixels for v in row))!=glyph['pixelsSha256']:
+            raise ValueError('Village5 original glyph differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:
+        raise ValueError('Village5 character evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.15.{i}'for i in (0,3,5,6,10)]:
+        raise ValueError('Village5 ordinary actor messages differ')
+    for d in p['dialogues']:
+        t=extract_text(reader,15,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Village5 text differs from target bytes and actual font')
+    records=extract_npcs(reader,5)['records']
+    if len(records)!=6 or len(p['npcs'])!=5:raise ValueError('Village5 ordinary actor count differs')
+    for npc,record in zip(p['npcs'],records[:5]):
+        raw=checked_span(reader,record['range']);cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        first=f'rom.dialogue.15.{raw[1]}'
+        if raw[2]!=255 or raw[12]!=0 or npc['id']!=f'rom.npc.5.{record["index"]}'or npc['mapId']!=5 or \
+                npc['cell']!=cell or npc['spriteId']!=raw[0]or npc['source']['record']!=record['range']or \
+                npc['firstDialogue']!=first or npc['repeatDialogue']!=first or npc['firstEffects']or npc.get('originalTalk'):
+            raise ValueError('Village5 must not reinterpret hidden investigation as ordinary dialogue')
+        if npc['sprite']!=f'npc-{raw[0]}-village5.png':raise ValueError('Village5 actor pose identity differs')
+    if set(p['graphics'])!={f'npc-{i}-village5.png'for i in (142,161,162,163)}:
+        raise ValueError('Village5 reviewed actor graphics missing')
+    for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
+    return p
+
+
+def validate_world_village5_hidden(reader,npc):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-village5-hidden.json';p=load(ROOT/path)
+    record=extract_npcs(reader,5)['records'][5];raw=checked_span(reader,record['range'])
+    required={(10,0xa740,233),(2,0x9ec0,249),(2,0xa0df,12),(2,0xa0eb,173),(2,0xa190,12),(0,0xd49d,2),(0,0x8e52,20)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map5-c6-investigation-medicine1-success-only-local-flag' or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            raw!=bytes.fromhex('c60001006801e800528e01020001')or p['originalRecord']!=record['range']or npc!=p['npc']:
+        raise ValueError('Hidden investigation identity, scene or source differs')
+    for span in p['sources']:checked_span(reader,span)
+    reuse=p['ruleReuse'];proof=load(ROOT/reuse['path'])
+    if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or p['rules']!=proof['rules']:
+        raise ValueError('Hidden pickup cannot invent another inventory policy')
+    expected=dict(itemId='rom.medicine.1',flagId='rom.map.5.flag.1',amount=1,categoryGrant=0,evidence=path)
+    if npc['id']!='rom.npc.5.5'or npc['mapId']!=5 or npc['cell']!=[15,7]or npc['spriteId']!=198 or \
+            npc['source']['record']!=record['range']or npc['treasure']!=expected or npc.get('hiddenInvestigation')is not True or \
+            npc['firstDialogue']!=''or npc['repeatDialogue']is not None or npc['firstEffects']or \
+            npc['sprite']!='npc-198-village5-hidden.png'or npc['openedSprite']!=npc['sprite']or npc.get('removedFlagId'):
+        raise ValueError('Hidden pickup must retain invisible pose, no dialogue and no removal')
+    cpu=p['cpu'];table=(ROOT/cpu['path']).read_bytes()
+    if (cpu['caseCount'],cpu['failures'])!=(9,0)or len(table.splitlines())!=10 or digest(table)!=cpu['sha256']or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-village5-hidden.py'or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Hidden pickup original selector/capacity cases differ')
+    if p['blocking']!=dict(beforeCell=[15,8],afterUpCell=[15,8],beforePickupFlag=0,afterPickupFlag=1,remainsBlockingAfterPickup=True):
+        raise ValueError('Hidden actor must still block after successful pickup')
+    graphic=p['graphic'];png=scoped_observed_graphic(reader,graphic)
+    if graphic['opaquePixelCount']!=0 or graphic['completeGraphic']is not False or \
+            any(Image.open(io.BytesIO(png)).convert('RGBA').getchannel('A').getdata()):
+        raise ValueError('Do not invent a visible hidden-item icon')
+    return expected
+
+
+def validate_world_island_event7(reader):
+    """The actual composite story loader and its post-battle boundary, not an ordinary encounter."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-island-event7.json';p=load(ROOT/path)
+    entities=[dict(slot=s,sourceType=t,enemyId=e)for s,t,e in [(0,189,152),(2,190,153),(4,191,154),(6,192,155)]]
+    expected=dict(mapId=76,triggerCell=[12,12],eventId=7,sourceType=169,groupId=62,entities=entities,
+        openingDestination=[9,11],completedSteps=4,accumulateEncounterSteps=True,dialogueIds=[f'rom.dialogue.86.{i}'for i in range(3,7)],
+        completionFlag='rom.map.76.flag.128',globalVictoryFlag='rom.global.7c6.16',removedSpriteIds=[162,165,140,143],
+        overlayContext=199,victoryDialogue=False,extraEventReward=False)
+    required={(11,0xd8cb,22),(11,0xda90,3),(11,0xcb5e+14,2),(11,0xce9f,69),(11,0xd043,30),(11,0xcd9a,81),
+        (0,0xf68e,61),(1,0x8d39,93),(1,0xa93c+62*4,4),(1,0xaa40,2),(1,0xaa42,9)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='island76-coordinate-event7-four-original-villains' or p['rules']!=expected or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Island event7 identity, movement, completion or composite source differs')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.read(11,0xda90,3)!=bytes([12,12,0]) or reader.word(1,0xa93c+62*4)!=0xaa40 or \
+            reader.word(1,0xaa40)!=0xaa42 or reader.read(1,0xaa42,9)!=bytes.fromhex('01bd03be05bf07c000') or \
+            [reader.read(1,0x9ea3+v['sourceType'])[0]for v in entities]!=[152,153,154,155]:
+        raise ValueError('Forced group is not the exact original four source pairs')
+    cpu=p['victoryCpu'];raw=(ROOT/cpu['tablePath']).read_bytes()
+    if (cpu['testCount'],cpu['failures'])!=(40,0) or len(raw.splitlines())!=41 or digest(raw)!=cpu['tableSha256'] or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-island-victory.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Island event7 lacks actual original finalization boundary cases')
+    move=p['movement'];table=(ROOT/move['tablePath']).read_bytes()
+    if digest(table)!=move['tableSha256'] or move['before']!={'cell':[12,13],'hp':100,'poison':2,'encounterSteps':0} or \
+            move['after']!={'cell':[9,11],'hp':95,'poison':2,'encounterSteps':5} or move['triggerStepSeparate']is not True:
+        raise ValueError('Original poisoned trigger/script step accounting differs')
+    rows=[line.split('\t')for line in table.decode('ascii').splitlines()[1:]if line.startswith('aligned-')]
+    actual=[(int(v[2]),int(v[3]),int(v[4]),int(v[5]),int(v[10]))for v in rows[:5]]
+    if actual!=[(12,12,99,2,1),(11,12,98,2,2),(10,12,97,2,3),(9,12,96,2,4),(9,11,95,2,5)]:
+        raise ValueError('Movement must retain four actual script steps after the separate trigger step')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or any(s['length']!=2048 for s in font['sources']):raise ValueError('Island dialogue font context missing')
+    for g in font['glyphs']:
+        pixels=glyph_pixels(data,0,g['code'])
+        if charset[g['code']]!=g['character']or digest(bytes(v for row in pixels for v in row))!=g['pixelsSha256']:
+            raise ValueError('Island actual glyph transcription differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Island glyph evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=expected['dialogueIds']:raise ValueError('Missing actual four pre-battle dialogues')
+    for d in p['dialogues']:
+        original=extract_text(reader,86,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=original['range']or d['source']['pointerEvidence']!=original['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Island intro text differs from actual original group86')
+    boss=p['boss'];group={'id':62,'entities':[{k:v for k,v in e.items()if k!='sourceType'}for e in entities]}
+    intro=dict(dialogueIds=expected['dialogueIds'],destinationCell=[9,11],completedSteps=4,accumulateEncounterSteps=True,evidence=path)
+    if any(boss[k]!=v for k,v in dict(id='rom.boss.152',npcId='rom.npc.76.0',mapId=76,eventId=7,eventArgument=0,
+            sourceType=169,enemyId=152,group=group,flagId='rom.map.76.flag.128',victoryFlags=['rom.global.7c6.16'],
+            victoryFlagEvidence=path,finalizeWithoutDialogue=True,commitAfterDialogue=False,
+            entryTrigger=dict(mapId=76,x=12,y=12,evidence=path),intro=intro,victoryDialogue='rom.dialogue.86.6').items()) or \
+            boss['npcSource']!=extract_npcs(reader,76)['records'][0]['range'] or boss['ruleSources']!=p['sources'] or boss.get('continuation'):
+        raise ValueError('Island story must keep the actual composite battle and no invented victory dialogue')
+    for recipe in p['graphics'].values():scoped_observed_graphic(reader,recipe)
+    return p
+
+
+def validate_world_teacher163_gate(reader):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-teacher163-gate.json';p=load(ROOT/path)
+    expected=dict(loadMapId=79,minimumPartyCount=3,victoryFlag='rom.global.7c6.16',contextFlag='rom.npccontext.163.219',
+        targetMapId=163,contextId=219,npcId='rom.npc.163.0',fromCell=[7,10],toCell=[7,9],
+        firstDialogue='rom.dialogue.173.1',repeatDialogue='rom.dialogue.173.1',noDialoguePrerequisite=True,clearOnVictory=True)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map79-load-selects-map163-npc-context219-before-four-villains' or p['rules']!=expected:
+        raise ValueError('Teacher guard cannot invent another prerequisite or target')
+    required={(0,0xa664,33),(0,0xd664+326,2),(0,0xa73f,70),(8,0xb311+438,2),(11,0xceba,35)}
+    records=extract_npcs(reader,219)
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!=required|{(8,records['range']['cpuAddress'],29)}:
+        raise ValueError('Teacher guard context sources differ')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.word(0,0xd664+326)!=0x7ea or [v['rawHex']for v in records['records']]!=['b201ff00e8000801f99401020000','af020300e800a800a59401020102']:
+        raise ValueError('Teacher guard actual context219 position/text differs')
+    cpu=p['cpu'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['cases']!=1284 or cpu['failures']!=0 or cpu['sha256']!='3da757f7aa93dd40eab84104ee0c454d9e82ee45f1ccf7f4e8213e9451e7b51e' or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=1285 or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-teacher163-gate.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Teacher guard actual selector expectations differ')
+    return p
+
+
+def validate_world_queen117_resources(reader):
+    """Scoped original event14/special13; no name-based rules or free rewards."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
+    path='game-data/provenance/world-queen117-state.json';p=load(ROOT/path)
+    expected=dict(mapId=117,eventId=14,triggerCell=[7,5],sourceType=171,enemyId=157,scriptId=18,
+        itemId='rom.special.13',bindingMarker=2,quantityRetained=True,consumesAction=True,
+        chooseTarget=False,extraEventReward=False,removedFieldActor=170,
+        contextAfter=dict(map115=208,map116=210,map164=220,map117=231))
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='woman-region141-115-palace117-queen157-special13-event14' or p['rules']!=expected:
+        raise ValueError('Queen rule identity differs')
+    for s in p['sources']:checked_span(reader,s)
+    if reader.read(11,0xdaa2,3)!=bytes([7,5,0])or reader.word(11,0xcb5e+28)!=0xd05c or \
+            reader.read(11,0xd069,2)!=bytes([0xa9,18])or reader.read(1,0x9ea3+171,1)!=bytes([157]):
+        raise ValueError('Queen trigger/source/script differs')
+    if p['enemy']!=extract_enemy(reader,157)or (p['enemy']['hp'],p['enemy']['attack'],p['enemy']['defense'],
+            p['enemy']['experienceReward'],p['enemy']['moneyReward'])!=(7000,372,178,3000,2400):
+        raise ValueError('Queen original stats/rewards must not be reduced')
+    targets=reader.read(9,0xaba8,13);markers=reader.read(9,0xac25,13)
+    if markers[targets.index(157)]!=2 or reader.word(9,0x890a+26)!=0x8954:
+        raise ValueError('Queen binding protection differs')
+    tables=[('queen13-binding-original.tsv',1536,'73726542be6d96b2b0b61d715a246da14c195ba2a442c92caeaf8385bb15a5f1'),
+        ('queen117-completion-original.tsv',1024,'3235a9c800b09f008eb858160470ffffa5907ad82acf6e298c24791bd9b47580'),
+        ('queen-castle6-foot-original.tsv',36,'5a448c14c94a5f47daddf81dd32d5e62f08154745236f48bfcc2e27eb46d5ce7')]
+    if len(p['cpu'])!=len(tables):raise ValueError('Queen CPU coverage missing')
+    for c,(name,count,sha)in zip(p['cpu'],tables):
+        raw=(ROOT/c['path']).read_bytes()
+        if c['path']!='android/app/src/test/resources/'+name or c['caseCount']!=count or c['failures']!=0 or \
+                c['sha256']!=sha or digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Queen unchanged CPU expectations differ')
+    if p['probe']['path']!='tools/rom-extractor/probe-world-queen117.py'or \
+            digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Queen CPU probe changed without reproving')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [s['offset']for s in font['sources']]!=[610320,612368]:raise ValueError('Queen active font differs')
+    for g in font['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Queen glyph transcription differs')
+    if [d['id']for d in p['dialogues']]!=['rom.dialogue.127.13','rom.dialogue.127.14','rom.dialogue.127.15']:
+        raise ValueError('Queen real dialogue sequence missing')
+    for d in p['dialogues']:
+        t=extract_text(reader,127,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:
+            raise ValueError('Queen original dialogue bytes differ')
+    b=p['boss'];flags=['rom.map.117.flag.128','rom.global.7c6.64','rom.npccontext.115.208',
+        'rom.npccontext.116.210','rom.npccontext.164.220','rom.npccontext.117.231']
+    expected_boss=dict(id='rom.boss.157',npcId='rom.npc.117.1',mapId=117,eventId=14,eventArgument=0,
+        sourceType=171,enemyId=157,group=dict(id=0,entities=[dict(slot=3,enemyId=157)]),flagId=flags[0],
+        victoryDialogue='rom.dialogue.127.15',commitAfterDialogue=True,
+        entryTrigger=dict(mapId=117,x=7,y=5,evidence=path),
+        intro=dict(dialogueIds=['rom.dialogue.127.13'],destinationCell=[7,5],completedSteps=0,accumulateEncounterSteps=False,evidence=path),
+        continuation=dict(dialogueIds=['rom.dialogue.127.15'],completionFlags=flags,evidence=path),
+        npcSource=extract_npcs(reader,117)['records'][1]['range'],ruleSources=p['sources'],source=path)
+    if b!=expected_boss:raise ValueError('Queen victory must commit after actual text without extra event reward')
+    if p['queenGraphic']['observedRect']!=[96,32,80,96]or \
+            p['queenGraphic']['rgbaSha256']!='ccd6ceb3c6571d0cee03e4900bc7fe577b9e3026c147652fc495e0eb0e02339a':
+        raise ValueError('Queen settled graphic differs; reject transient player overlay')
+    scoped_observed_graphic(reader,p['queenGraphic'])
+    u=p['itemCapabilityUpdates']
+    if len(u)!=1 or u[0]['id']!='rom.special.13' or u[0]['fields']['name']!='捆妖繩' or \
+            u[0]['fields']['battleBindingUse']!=dict(target='queen-current-battle',bindingMarker=2,chooseTarget=False,
+                reusable=True,consumesAction=True,evidence=path):raise ValueError('Special13 command differs')
+    for m in p['maps']:
+        original=extract_map(reader,m['mapId'])
+        if m['mapId']not in [141,115,116,117]or m['gridSha256']!=original['gridSha256']or m['tilesetId']!=original['tilesetId']or \
+                m['walkableClasses']!=[0,2]or m['palette']!=extract_default_map_palette(reader,m['mapId'])['palette']:
+            raise ValueError('Queen region original geometry/palette differs')
+    return p
+
+def validate_world_night8_resources(reader):
+    """Exact local maps/teacher/use; reuses room, forest and inventory dispatch."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-night8-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='clear-peak100-teacher164-reusable-night8-dark74':
+        raise ValueError('Night8 target version/scope differs')
+    required={(2,0xe540,28),(2,0xa22c,108),(2,0xe7da,1),(2,0xb496,21),(10,0xa160,42),(10,0xcb84,12),(10,0xcf29,15),
+        (2,0xb60e,9),(2,0xa0eb,169),(2,0xa190,12),(0,0xa7f9,40),(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:raise ValueError('Night8 missing original branches')
+    for s in p['sources']:checked_span(reader,s)
+    counts=[24576,2,4,196,256]
+    hashes=['3c05dce6974aec960d317367b7d16cf99f2a431f190ca2f1b6111bc500b65791','026a3706da9190b37e9159b2e444be5edb3162ec5a80f596e617668d9e1e53d9','351b9c5d4c6043c95ab6e715e8f05956e92dd42d31cb2ab61017964bda837c84','e6c25297c2bff21444010e82ff75749f079cc389254b25fc9f26fe6510230dde','5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b']
+    if len(p['cpu'])!=5 or p['probe']['path']!='tools/rom-extractor/probe-world-night8.py' or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Night8 original CPU probe identity differs')
+    for row,count,sha in zip(p['cpu'],counts,hashes):
+        raw=(ROOT/row['path']).read_bytes()
+        if (row['caseCount'],row['failures'],row['sha256'],digest(raw),len(raw.splitlines()))!=(count,0,sha,sha,count+1):raise ValueError('Night8 original CPU expectations differ')
+    f=p['font'];data=b''.join(checked_span(reader,s)for s in f['sources']);cs={int(k):v for k,v in f['charset'].items()}
+    if len(data)!=4096 or {g['code']for g in f['glyphs']}!=set(cs):raise ValueError('Night8 incomplete active font')
+    for g in f['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:raise ValueError('Night8 original glyph differs')
+    if len(p['dialogues'])!=4:raise ValueError('Night8 teacher messages incomplete')
+    for i,d in enumerate(p['dialogues']):
+        t=extract_text(reader,174,i)
+        if d['id']!=f'rom.dialogue.174.{i}'or d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or d['text']!=decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']:raise ValueError('Night8 actual teacher message differs')
+    if p['rules']!=dict(npcId='rom.npc.164.1',mapId=164,npcCell=[7,3],normalTalkCell=[7,5],normalTalkDirection='UP'):raise ValueError('Night8 actual teacher interaction differs')
+    records=extract_npcs(reader,164)['records']
+    if len(p['npcs'])!=2:raise ValueError('Night8 teacher actor count differs')
+    for i,(n,rec)in enumerate(zip(p['npcs'],records)):
+        b=bytes.fromhex(rec['rawHex']);repeat=b[2]if b[2]!=255 else b[1]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstDialogue'],n['repeatDialogue'],n['firstEffects'])!=(f'rom.npc.164.{i}',164,[(rec[k]-120)//16 for k in ['xCandidate','yCandidate']],b[0],rec['range'],f'rom.dialogue.174.{b[1]}',f'rom.dialogue.174.{repeat}',[]):raise ValueError('Night8 original teacher actor differs')
+        if i==1 and n['originalTalk']!=dict(actionId=1,mapFlagId='rom.map.164.flag.2',witnessFlagId='',itemId='rom.special.8',evidence=path):raise ValueError('Night8 cannot infer another prerequisite or gift')
+        if i==0 and(n.get('originalTalk')or n.get('stateVariant')):raise ValueError('Night8 disciple has no new guard condition')
+    identities=[(100,5,[0,2,3,7,8,9],{0,1,2,3,7,8,9}),(164,2,[0,2],{0,1,2}),(74,3,[0],{0,1})]
+    if len(p['maps'])!=3:raise ValueError('Night8 map scope differs')
+    for m,(mid,tiles,allowed,classes)in zip(p['maps'],identities):
+        original=extract_map(reader,mid);c=original['collisionCandidate'];actual={reader.read(c['module'],c['cpuAddress']+v,1)[0]for row in original['grid']for v in row}
+        if(m['mapId'],m['tilesetId'],m['gridSha256'],m['walkableClasses'],actual)!=(mid,tiles,original['gridSha256'],allowed,classes)or m['sourceEdges']!=({'3':['LEFT','RIGHT']}if mid==100 else{})or m['targetEdges']!={}:raise ValueError('Night8 cannot open walls or alter original movement')
+        for s in m['staticPalette']['source']:checked_span(reader,s)
+        if any(m['palette'][i]!=m['staticPalette']['palette'][i]for i in range(32)if i%4):raise ValueError('Night8 default scene palette differs')
+        if mid==164:
+            reuse=m['ruleReuse'];validate_world_room171_resources(reader)
+            if reuse['path']!='game-data/provenance/world-room171-resources.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']:raise ValueError('Night8 room cannot invent movement')
+    light=p['lighting'];expected=dict(mapId=74,itemId='rom.special.8',paletteSelector=32,reusable=True,usedFlag='rom.inventory.special.8.used',activeFlag='runtime.map74.light.active',resetOnMapLoad=True,characterTarget=False,asset='tiles74-lit.png',evidence=path)
+    if any(light[k]!=v for k,v in expected.items())or light['paletteSource']['cpuAddress']!=reader.word(0,0xe3a6+64):raise ValueError('Night8 scene/use scope differs')
+    actual=checked_span(reader,light['paletteSource'])
+    if len(light['palette'])!=32 or any(light['palette'][i]!=actual[i]for i in range(16)if i%4)or any(light['palette'][i]!=p['maps'][2]['palette'][i]for i in range(16,32)if i%4):raise ValueError('Night8 light must change actual background palette only')
+    if len(p['items'])!=2:raise ValueError('Night8 item scope differs')
+    for item,oid in zip(p['items'],[8,13]):
+        ptr=reader.word(2,reader.word(2,0xe610)+oid*2);raw=reader.read(2,ptr,32);raw=raw[:raw.index(255)+1]
+        if(item['id'],item['category'],item['originalId'],item['maxCount'])!=(f'rom.special.{oid}','special',oid,1)or item['source']['nameRange']['cpuAddress']!=ptr or checked_span(reader,item['source']['nameRange'])!=raw or any(k in item for k in ['buyPrice','sellPrice','battleBindingUse','worldUse','herbUse']):raise ValueError('Night8 item cannot infer price, medicine or another command')
+        if oid==8 and(item['name']!='夜明珠'or item['nightLightUse']!=dict(mapId=74,paletteSelector=32,reusable=True,evidence=path)):raise ValueError('Night8 actual name/use differs')
+        if oid==13 and item.get('nightLightUse'):raise ValueError('Special13 use still unsupported')
+    return p
+
+def validate_world_teacher163_binding(reader):
+    from forensics.fengshen246 import extract_npcs,extract_map,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-teacher163-binding.json';p=load(ROOT/path)
+    rules=dict(npcId='rom.npc.163.1',mapId=163,npcCell=[7,3],normalTalkCell=[7,5],normalTalkDirection='UP',
+        actionId=1,mapFlagId='rom.map.163.flag.2',itemId='rom.special.9',giftMessage=2,giftBeforeText=True,
+        flagBeforeGift=True,fullCategoryRetainsFlag=True,repeatMessage=3)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='five-dragon163-before-text-special9-and-original-battle-command' or p['rules']!=rules:
+        raise ValueError('Teacher163 actual gift order/identity differs')
+    required={(10,0xa160,42),(10,0xcb84,12),(10,0xcf29,15),(2,0xb481,21),(2,0xb60e,9),(2,0xa0eb,169),(2,0xa190,12),
+        (9,0xbe31,121),(9,0xb9f9,50),(9,0xb682,12),(9,0x890a+18,2),(9,0x8935,31),(9,0xabf3,80)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:raise ValueError('Teacher163 original sources differ')
+    for span in p['sources']:checked_span(reader,span)
+    for row,count,sha in zip(p['cpuExpected'],[256,5],['5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b','b0cd0432abb46c65aded0ef47e61513bb5dc7a930dcb1544ba8eeec7f35da46b']):
+        raw=(ROOT/row['path']).read_bytes()
+        if row['caseCount']!=count or row['failures']!=0 or row['sha256']!=sha or digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Teacher163 actual original selector/gift capacity differs')
+    if len(p['cpuExpected'])!=2 or p['probe']['path']!='tools/rom-extractor/probe-world-teacher163.py' or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Teacher163 probe/source expectations differ')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Teacher163 incomplete active font')
+    for g in font['glyphs']:
+        if charset[g['code']]!=g['character'] or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Teacher163 original text glyph differs')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.173.{i}'for i in range(4)]:raise ValueError('Teacher163 exact message scope differs')
+    for d in p['dialogues']:
+        t=extract_text(reader,173,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range'] or d['source']['pointerEvidence']!=t['pointerEvidence'] or decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Teacher163 original message differs')
+    records=extract_npcs(reader,163)['records']
+    if len(records)!=2 or len(p['npcs'])!=2:raise ValueError('Teacher163 actor extent differs')
+    for n,rec in zip(p['npcs'],records):
+        raw=bytes.fromhex(rec['rawHex']);i=rec['index'];repeat=raw[2]if raw[2]!=255 else raw[1]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstDialogue'],n['repeatDialogue'],n['firstEffects'])!= \
+                (f'rom.npc.163.{i}',163,[(rec[k]-120)//16 for k in ['xCandidate','yCandidate']],raw[0],rec['range'],f'rom.dialogue.173.{raw[1]}',f'rom.dialogue.173.{repeat}',[]):
+            raise ValueError('Teacher163 original actor/text differs')
+        if i==1 and n['originalTalk']!=dict(actionId=1,mapFlagId='rom.map.163.flag.2',witnessFlagId='',itemId='rom.special.9',evidence=path):
+            raise ValueError('Teacher163 cannot create another gate or gift')
+        if i==0 and (raw[12]!=0 or n.get('originalTalk')):raise ValueError('Teacher163 disciple has no inferred side effects')
+        if i==0:
+            gate=validate_world_teacher163_gate(reader)
+            if n.get('stateVariant')!=dict(flagId=gate['rules']['contextFlag'],cell=[7,9],firstDialogue='rom.dialogue.173.1',
+                    repeatDialogue='rom.dialogue.173.1',evidence='game-data/provenance/world-teacher163-gate.json'):
+                raise ValueError('Teacher163 must preserve the actual conditional guard context')
+    t=p['terrain'];m=extract_map(reader,163);c=m['collisionCandidate'];classes=set(reader.read(c['module'],c['cpuAddress'],256)[v]for row in m['grid']for v in row)
+    reuse=t['ruleReuse'];room=validate_world_room171_resources(reader)
+    if (t['mapId'],t['tilesetId'],t['gridSha256'],t['walkableClasses'],classes)!=(163,2,m['gridSha256'],[0,2],{0,1,2}) or \
+            reuse['path']!='game-data/provenance/world-room171-resources.json' or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or reuse['cpuExpected']!=room['cpuExpected']:
+        raise ValueError('Teacher163 cannot open room walls or invent another terrain profile')
+    if any(t['palette'][i]!=t['staticPalette']['palette'][i]for i in range(32)if i%4):raise ValueError('Teacher163 settled palette differs')
+    for span in t['staticPalette']['source']:checked_span(reader,span)
+    item=p['items'][0];use=dict(target='four-villains-current-battle',bindingMarker=1,chooseTarget=False,reusable=True,consumesAction=True,evidence=path)
+    ptr=reader.word(2,reader.word(2,0xe610)+18)
+    if len(p['items'])!=1 or (item['id'],item['category'],item['originalId'],item['maxCount'],item['name'])!=('rom.special.9','special',9,1,'遁龍樁') or \
+            item['battleBindingUse']!=use or any(k in item for k in ['buyPrice','sellPrice','herbUse','worldUse']) or \
+            item['source']['nameRange']['cpuAddress']!=ptr or checked_span(reader,item['source']['nameRange'])!=reader.read(2,ptr,5):
+        raise ValueError('Teacher163 special9 cannot infer price, HP or other use')
+    observed=p['battleObservation']
+    if observed['selection']!=dict(commandKind=2,itemId=9,nextActor=1,quantityBefore=1,quantityAfter=1,usedBitAfter=False) or \
+            observed['effect']!=dict(markerBefore=0,markerAfter=1,quantityAfter=1):raise ValueError('Special9 command/consumption differs')
+    return p
+
+def validate_world_island_binding(reader,enemy):
+    path='game-data/provenance/world-island-binding.json';p=load(ROOT/path)
+    required={(9,0xaba8,13),(9,0xac25,13),(9,0xabf3,80),(9,0x890a+18,2),(9,0x8935,31),(9,0x9270,18)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='four-villains-original-marker1-and-special9-not-free-damage' or \
+            p['enemyIds']!=[152,153,154,155] or p['requiredMarker']!=1 or p['itemOriginalId']!=9 or \
+            enemy['id']not in p['enemyIds']or enemy.get('requiredBindingMarker')!=1 or enemy.get('bindingEvidence')!=path or \
+            (p['damageCases'],p['damageFailures'],p['effectCases'],p['effectFailures'])!=(80,0,32,0) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            reader.read(9,0xaba8,4)!=bytes([152,153,154,155])or reader.read(9,0xac25,4)!=bytes([1]*4)or \
+            reader.word(9,0x890a+18)!=0x8935:
+        raise ValueError('Four villains must not bypass original battle binding protection')
+    for span in p['sources']:checked_span(reader,span)
+    for key,sha,length in [('damageTablePath','damageSha256',81),('effectTablePath','effectSha256',33)]:
+        raw=(ROOT/p[key]).read_bytes()
+        if digest(raw)!=p[sha]or len(raw.splitlines())!=length:raise ValueError('Original binding CPU boundaries differ')
+    if p['probePath']!='tools/rom-extractor/probe-world-island-protection.py'or digest((ROOT/p['probePath']).read_bytes())!=p['probeSha256']:
+        raise ValueError('Original binding probe identity differs')
+    return p
+
+
+def validate_world_island_talk(reader,npc):
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-island-talk31.json';p=load(ROOT/path);cpu=p['cpu']
+    expected=dict(mapId=78,actionId=31,witnessFlagId='rom.global.7c6.16',messageGroup=88,firstMessages=[0,1],repeatMessage=2,noRewards=True,noWorldEvent=True)
+    required={(10,0xa160,42),(10,0xcb08+62,2),(10,0xccac,26),(10,0xcf1d,21),(0,0xd493+156,2)}
+    table=(ROOT/cpu['tablePath']).read_bytes()
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map78-actual-npc-callback31-not-world-event31' or p['rules']!=expected or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            (cpu['caseCount'],cpu['failures'],cpu['callbackAddress'],cpu['noWorldEvent31'])!=(1024,0,0xccac,True) or \
+            digest(table)!=cpu['tableSha256'] or len(table.splitlines())!=1025 or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-island-talk.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Island NPC31 must use the actual callback, not unrelated world event31')
+    for span in p['sources']:checked_span(reader,span)
+    records=extract_npcs(reader,78)['records'];index=next((i for i in range(2)if npc['id']==f'rom.npc.78.{i}'),None)
+    if index is None:raise ValueError('Unknown original island resident')
+    record=records[index];raw=checked_span(reader,record['range']);first=f'rom.dialogue.88.{index}';repeat='rom.dialogue.88.2'
+    rule=dict(actionId=31,mapFlagId=f'rom.map.78.flag.{1<<index}',witnessFlagId='rom.global.7c6.16',itemId='',messageDialogues={'0':first,'2':repeat},evidence=path)
+    if p['records']!=[n['range']for n in records] or list(raw[:3])!=[165,index,2] or list(raw[12:14])!=[31,1<<index] or \
+            (npc['mapId'],npc['cell'],npc['spriteId'],npc['firstDialogue'],npc['repeatDialogue'],npc['originalTalk'],npc['firstEffects'])!= \
+            (78,[(record[k]-120)//16 for k in ('xCandidate','yCandidate')],165,first,repeat,rule,[]) or npc['source']['record']!=record['range']:
+        raise ValueError('Island resident record, no-reward dialogue or completion bit differs')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or any(s['length']!=2048 for s in font['sources']):raise ValueError('Group88 font context missing')
+    for g in font['glyphs']:
+        pixels=glyph_pixels(data,0,g['code'])
+        if charset[g['code']]!=g['character']or digest(bytes(v for row in pixels for v in row))!=g['pixelsSha256']:
+            raise ValueError('Island group88 actual glyph transcription differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Group88 glyph evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.88.{i}'for i in range(3)]:raise ValueError('Original resident messages incomplete')
+    for d in p['dialogues']:
+        original=extract_text(reader,88,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=original['range']or d['source']['pointerEvidence']!=original['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Island resident text differs from original group88')
+    return p
+
+
+def validate_world_cave87_state(reader):
+    """Bounded event6 scripts/actor preservation; never substitutes CPU for App play."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
+    path='game-data/provenance/world-cave87-state.json';p=load(ROOT/path)
+    expected_rules=dict(mapId=87,eventId=6,triggerCell=[1,7],sourceType=170,enemyId=156,
+        sourceFieldActor=155,overlayContext=201,departureCharacterId='xiaolongnv',departureStatusOr=64,
+        preservesFullActorRecord=True,extraEventReward=False)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map87-event6-flower-boss-script37-38-retained-away-actor' or p['rules']!=expected_rules:
+        raise ValueError('Cave87 identity/departure differs; hexadecimal87 is another map')
+    required={(11,0xd8b5,22),(11,0xda8d,3),(11,0xcb6a,2),(11,0xce31,0xce9f-0xce31),
+        (11,0xc872,11),(11,0xc87d,95),(1,0x9ea3+170,1),(1,0x8b0e,0x8b47-0x8b0e),
+        (9,0x927c,0x92a8-0x927c),(0,0xf349,14),(0,0x8faf,5),(0,0x9077,5)}
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!=required:
+        raise ValueError('Cave87 requires actual dispatch/scripts/actor preservation spans')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.read(11,0xda8d,3)!=bytes([1,7,0])or reader.word(11,0xcb6a)!=0xce31 or \
+            reader.read(11,0xc872,11)!=bytes.fromhex('80000907030406070002ff')or \
+            reader.read(11,0xc87d,95)!=bytes.fromhex('8000040b822c060700010707040c040d8000070701010807020407070101040e080709070707822c090703010607000109070302040f0607070709070807020207070103080702018000060700010907030304100411822c080702010582ff'):
+        raise ValueError('Cave87 normal player movements/message timing differs')
+    boss=p['boss'];ids=[f'rom.dialogue.97.{i}'for i in range(11,18)]
+    expected=dict(id='rom.boss.156',npcId='rom.npc.87.0',mapId=87,eventId=6,eventArgument=0,sourceType=170,
+        enemyId=156,group=dict(id=0,entities=[dict(slot=3,enemyId=156)]),flagId='rom.map.87.flag.128',
+        victoryDialogue=ids[0],commitAfterDialogue=True,entryTrigger=dict(mapId=87,x=1,y=7,evidence=path),
+        approach=dict(destination=dict(mapId=87,x=5,y=5,direction='UP',terrainMode=0),completedSteps=6,
+            accumulateEncounterSteps=True,evidence=path),
+        continuation=dict(dialogueIds=ids,departureCharacterId='xiaolongnv',destination=dict(mapId=87,x=4,y=6,
+            direction='RIGHT',terrainMode=0,encounterSteps=0),completionFlags=['rom.map.87.flag.128','rom.global.7bf.16'],
+            movementsBeforeDialogue=[dict(index=i,destination=dict(mapId=87,x=x,y=y,direction=d,terrainMode=0),
+                completedSteps=n,accumulateEncounterSteps=True)for i,x,y,d,n in [(3,1,7,'DOWN',6),(5,4,6,'RIGHT',4)]],evidence=path),
+        npcSource=extract_npcs(reader,87)['records'][0]['range'],ruleSources=p['sources'],source=path)
+    if boss!=expected:raise ValueError('Cave87 must not invent rewards/gates/actor deletion or omit dialogue')
+    tables={'world-cave87-state-original.tsv':(3078,'cec5073c119d3bb9d39aae7e1fd000da3e08094309eb97f280f14fd23c696c8d'),
+        'world-party-unavailable-original.tsv':(1536,'5ab8da346305e9adec063fe448608332e05b2eaee1b3186bf167ea5602fbb8ce'),
+        'world-cave87-money-original.tsv':(35,'e66789e0b4f636d3d20c06efbaaaa8861a8a77d9d76756b4cbe97aeef840fd44')}
+    if len(p['cpu'])!=3:raise ValueError('Cave87 original CPU expectations missing')
+    for c in p['cpu']:
+        name=Path(c['path']).name;raw=(ROOT/c['path']).read_bytes()
+        if name not in tables or (c['caseCount'],c['sha256'])!=tables[name]or c['failures']!=0 or \
+                c['path']!='android/app/src/test/resources/'+name or len(raw.splitlines())!=c['caseCount']+1 or \
+                digest(raw)!=c['sha256']or c['probePath']!='tools/rom-extractor/probe-world-cave87-state.py'or \
+                digest((ROOT/c['probePath']).read_bytes())!=c['probeSha256']:
+            raise ValueError('Cave87 CPU preservation/once boundaries differ')
+    if {Path(c['path']).name for c in p['cpu']}!=set(tables):raise ValueError('Duplicate/missing CPU table')
+    font=p['font'];data=b''.join(checked_span(reader,v)for v in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [d['id']for d in p['dialogues']]!=ids:raise ValueError('Cave87 seven original messages/font missing')
+    for glyph in font['glyphs']:
+        pixels=glyph_pixels(data,0,glyph['code'])
+        if charset[glyph['code']]!=glyph['character']or digest(bytes(v for row in pixels for v in row))!=glyph['pixelsSha256']:
+            raise ValueError('Cave87 original glyph differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Cave87 font scope incomplete')
+    for d in p['dialogues']:
+        t=extract_text(reader,97,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Cave87 text differs from actual original font and stream')
+    field=p['fieldGraphic'];scoped_observed_graphic(reader,field)
+    if field['captureKind']!='PROVISIONAL_ROM_STATIC_ANIMATION_FRAME_NOT_OBSERVED'or field['normalPlayEvidence']is not False or \
+            (field['width'],field['height'],field['rgbaSha256'])!=(16,16,'83939d68555d6b05138f5f14ba9d726e56723604d5955612534bb581224346d5')or \
+            checked_span(reader,field['frameSource'])!=bytes.fromhex('00acadbcbd'):
+        raise ValueError('Field155 initial pose must remain a labelled ROM-static composition')
+    for eid,sha in [(50,'e3731abd6cb9354ecff2a3a81dc1910f4c9962c282e3c3e4813a9c991aeb93ef'),
+            (51,'d732bfdc460198ffac69fedfeba6404a8e4c491cb19e97b8c6552d382f9a2ef1'),
+            (156,'aa45626415ffbb214b5fbc2ddf2ece2efa03b57cb97590267219fd47ca5d26fd')]:
+        graphic=p['graphics'][str(eid)];scoped_observed_graphic(reader,graphic)
+        if graphic['rgbaSha256']!=sha:raise ValueError('Cave87 complete observed battle graphic differs')
+    return p
+
+
+def validate_world_island_money(reader,npc):
+    from forensics.fengshen246 import extract_npcs
+    path=npc['moneyTreasure']['evidence']
+    identity={'game-data/provenance/world-island-chests.json':(76,6,4,8,100,'island76-five-original-item-chests-and-money100','tools/rom-extractor/probe-world-island-money.py'),
+        'game-data/provenance/world-cave87-chests.json':(87,4,8,5,550,'cave87-six-original-item-chests-and-money550','tools/rom-extractor/probe-world-cave87-state.py'),
+        'game-data/provenance/world-night8-chests.json':(74,4,32,10,120,'clear-peak100-dark74-seven-original-item-chests-and-money120','tools/rom-extractor/probe-world-night8-money.py')}
+    if path not in identity:raise ValueError('Unknown original money chest scope')
+    mid,index,mask,item,amount,scope,probe=identity[path];p=load(ROOT/path);m=p['money'];record=extract_npcs(reader,mid)['records'][index]
+    raw=checked_span(reader,record['range']);t=npc['moneyTreasure'];cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+    required={(10,0xa740,92),(2,0x9fb5,58),(2,0xc530,32),(2,0x86cd,41),(2,0xe616,2)};table=(ROOT/m['tablePath']).read_bytes()
+    if p['romSha256']!=SHA256 or p['scopeRevision']!=scope or \
+            (m['testCount'],m['failures'],m['categoryId'],m['originalId'],m['amount'],m['moneyCap'])!=(35,0,4,item,amount,999999)or \
+            npc['id']!=f'rom.npc.{mid}.{index}'or npc['mapId']!=mid or npc['cell']!=cell or not npc.get('openedSprite')or npc.get('treasure')or \
+            npc['source']['record']!=record['range']or m['npcSource']!=record['range']or list(raw[:3])!=[144,4,item]or raw[13]!=mask or \
+            t!=dict(flagId=f'rom.map.{mid}.flag.{mask}',amount=amount,moneyCap=999999,evidence=path)or \
+            digest(table)!=m['tableSha256']or len(table.splitlines())!=36 or m['probePath']!=probe or \
+            digest((ROOT/m['probePath']).read_bytes())!=m['probeSha256']or \
+            {(v['module'],v['cpuAddress'],v['length'])for v in m['sources']}!=required:
+        raise ValueError('Money chest lacks original distinct once/amount/cap boundary')
+    for span in m['sources']:checked_span(reader,span)
+    if checked_span(reader,m['amountSource'])!=amount.to_bytes(2,'little')or reader.word(2,reader.word(2,0xe616)+2*item)!=amount:
+        raise ValueError('Money chest must retain actual category4/id amount table')
+    return m
+
+
 def validate_world_ferry_resources(reader):
     """Two fixed original scripts and current island encounter inputs, not sea travel."""
     from forensics.fengshen246 import extract_npcs
@@ -1174,6 +1802,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
                     original['tilesetId']!=2 or set(collision)!={0,1,2}or allowed!=[0,2]or recipe['palette']!=room['map']['palette']:
                 raise ValueError('Room171 collision scope or reviewed palette differs')
+        night=recipe.get('night8CollisionEvidence')
+        if night:
+            proof=validate_world_night8_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
+            if night!='game-data/provenance/world-night8-resources.json'or binding is None or allowed!=binding['walkableClasses']or recipe['palette']!=binding['palette']or recipe.get('directionalCollision')or recipe.get('forestCollisionEvidence'):
+                raise ValueError('Night8 map collision/palette differs')
+        if recipe.get('teacher163CollisionEvidence'):
+            room=validate_world_teacher163_binding(reader)
+            if recipe['teacher163CollisionEvidence']!='game-data/provenance/world-teacher163-binding.json' or mid!=163 or \
+                    allowed!=[0,2] or recipe['palette']!=room['terrain']['palette'] or recipe.get('directionalCollision'):
+                raise ValueError('Teacher163 collision/palette differs')
         forest=recipe.get('forestCollisionEvidence')
         if forest:
             proof=load(ROOT/forest)
@@ -1189,15 +1827,21 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         recipe['palette']!=binding['palette']['palette'] or \
                         {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
                     raise ValueError('Tree floor lacks actual forest dispatcher, grid or palette')
-            elif forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+            elif (mid,forest,proof['scopeRevision']) not in \
+                    [(101,'game-data/provenance/world-forest101-terrain.json','map101-foot-mode-zero-full-rts-dispatch'),
+                     (99,'game-data/provenance/world-forest99-terrain.json','map99-foot-mode-zero-full-rts-dispatch')] or original['tilesetId']!=5 or \
                     proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
-                    proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
                     proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
                     proof['sourceEntry']!=0xcdc0 or proof['targetEntry']!=0xd197 or \
                     set(collision)!={0,1,3,7,8,9} or allowed!=[0,3,7,8,9] or \
                     proof['sourceEdges']!={'3':['LEFT','RIGHT']} or proof['targetEdges']!={} or \
                     {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
                 raise ValueError('Forest foot movement lacks its complete original RTS-dispatch scope')
+            if mid==99:
+                reuse=proof['ruleReuse']
+                if reuse['path']!='game-data/provenance/world-forest101-terrain.json' or \
+                        digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or recipe['palette']!=proof['palette']:
+                    raise ValueError('Forest99 must reuse the exact original foot dispatcher and its own palette')
             for span in proof['sources']:checked_span(reader,span)
             if proof['activeCpuSha256']!=digest(reader.read(0,0x8000,0x8000)) or \
                     digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
@@ -1210,6 +1854,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if night:
+            data['sourceEdges']=binding['sourceEdges'];data['targetEdges']=binding['targetEdges']
         if forest:
             data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
         if recipe.get('unavailableRegions'):
@@ -1227,10 +1873,17 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             town=extract_town_shops(reader)
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
             if recipe.get('townBridgeCollisionEvidence'):
-                if mid!=4 or recipe['townBridgeCollisionEvidence']!='game-data/provenance/world-village4-resources.json':
-                    raise ValueError('Unreviewed town bridge extension')
-                proof=validate_world_village4_resources(reader)
-                if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Village4 walking classes differ')
+                if recipe['townBridgeCollisionEvidence']=='game-data/provenance/world-village-batch-resources.json':
+                    v,bridge=validate_world_village_batch_resources(reader,mid)
+                    if recipe['palette']!=v['map']['palette']or recipe['npcCells']!=[n['cell'][1]*original['width']+n['cell'][0]for n in v['npcs']]:
+                        raise ValueError('Village batch map/actor profile differs')
+                    proof={'bridge':bridge}
+                else:
+                    expected={4:'game-data/provenance/world-village4-resources.json',5:'game-data/provenance/world-village5-resources.json'}
+                    if mid not in expected or recipe['townBridgeCollisionEvidence']!=expected[mid]:
+                        raise ValueError('Unreviewed town bridge extension')
+                    proof=validate_world_village4_resources(reader)if mid==4 else validate_world_village5_resources(reader)
+                if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Town walking classes differ')
                 data['sourceEdges']={**data['sourceEdges'],**{int(k):v for k,v in proof['bridge']['sourceEdges'].items()}}
         if recipe.get('terrain'):
             terrain=recipe['terrain'];proof=load(ROOT/terrain['evidence'])
@@ -1252,7 +1905,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
             elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
-                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero'):
+                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero',
+                    'island76-through78-ground-and-upper-plane-bridge-zero'):
                 validate_world_hall_batch_terrain(reader,mid,terrain['evidence'])
                 if set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
@@ -1351,6 +2005,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
+            if enemy['id'] in [152,153,154,155]:validate_world_island_binding(reader,enemy)
+            elif any(k in enemy for k in ('requiredBindingMarker','bindingEvidence')):raise ValueError('Unreviewed battle protection identity')
             if enemy['behaviorByte'] not in (1,2,4) and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
                 raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
             if enemy['behaviorByte']==3:
@@ -1469,8 +2125,14 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Cave story source/trigger differs')
                     raw=checked_span(reader,boss['actorScriptSource'])
                     if raw!=reader.read(11,0xc4b6,9):raise ValueError('Original cave actor script differs')
+                elif trigger['evidence']=='game-data/provenance/world-cave87-state.json':
+                    if boss!=validate_world_cave87_state(reader)['boss']:
+                        raise ValueError('Cave87 event6 differs from actual script/actor state')
+                elif trigger['evidence']=='game-data/provenance/world-island-event7.json':
+                    original=validate_world_island_event7(reader)
+                    if boss!=original['boss']:raise ValueError('Island composite story differs from verified scoped definition')
                 else:raise ValueError('Coordinate story requires verified phase semantics')
-                if not boss.get('commitAfterDialogue') or boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128':
+                if (not boss.get('commitAfterDialogue') and not (trigger['evidence']=='game-data/provenance/world-island-event7.json' and boss.get('finalizeWithoutDialogue'))) or boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128':
                     raise ValueError('Coordinate story phase or completion differs')
             else:
                 raw=checked_span(reader,boss['npcSource'])
@@ -1507,7 +2169,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Hell hall source or message/event instruction differs')
                 elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
-            if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
+            if boss.get('entryTrigger',{}).get('evidence')=='game-data/provenance/world-island-event7.json':
+                if boss!=validate_world_island_event7(reader)['boss']:
+                    raise ValueError('Original composite story group differs')
+            elif boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
                 raise ValueError('Original story enemy source differs')
             for span in boss['ruleSources']:checked_span(reader,span)
             combat.setdefault('bosses',[]).append(boss)
@@ -1597,6 +2262,14 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item['id']in ('rom.special.8','rom.special.13'):
+                    proof=validate_world_night8_resources(reader)
+                    if item not in proof['items']:raise ValueError('Night8 special definitions differ')
+                    continue
+                if item['id']=='rom.special.9':
+                    proof=validate_world_teacher163_binding(reader)
+                    if item!=proof['items'][0]:raise ValueError('Teacher163 special9 differs from actual gift/command')
+                    continue
                 if item['id']=='rom.special.19':
                     room=validate_world_room171_resources(reader)
                     if item!=room['items'][0] or item['originalId']!=19 or item['maxCount']!=1 or \
@@ -1712,7 +2385,20 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('originalTalk') and npc['mapId']==171:
+        if npc.get('villageResourceEvidence')=='game-data/provenance/world-village-batch-resources.json':
+            proof,_=validate_world_village_batch_resources(reader,npc['mapId'])
+            if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
+                raise ValueError('Village batch actor/dialogue/graphic differs')
+        elif npc['mapId']==164:
+            proof=validate_world_night8_resources(reader)
+            if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Night8 teacher actor/dialogue differs')
+        elif npc['mapId']==163:
+            proof=validate_world_teacher163_binding(reader)
+            expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in scene['dialogues']for d in proof['dialogues']):
+                raise ValueError('Teacher163 actor or actual dialogue differs')
+        elif npc.get('originalTalk') and npc['mapId']==171:
             room=validate_world_room171_resources(reader)
             expected=next((n for n in room['npcs']if n['id']==npc['id']),None)
             if npc!=expected or any(d not in evidence['dialogues']for d in room['dialogues'])or \
@@ -1724,6 +2410,24 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc!=expected or any(d not in evidence['dialogues'] and d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
                 raise ValueError('Village4 actor/dialogue/graphic differs')
+        elif npc.get('hiddenInvestigation'):
+            validate_world_village5_hidden(reader,npc)
+            proof=load(ROOT/'game-data/provenance/world-village5-hidden.json')
+            if evidence['graphics'].get(npc['sprite'])!=proof['graphic']:
+                raise ValueError('Hidden actor graphic differs')
+            name=next(m['scene']for m in scene['maps']if m['id']==5);data=json.loads(result[name]);cell=7*data['width']+15
+            if data['collision'][cell]!=0 or cell not in data['enabledCells']:
+                raise ValueError('Hidden actor collision parent differs')
+            data['dynamicObjectCells']=sorted(set(data['dynamicObjectCells'])|{cell});result[name]=encoded(data)
+        elif npc['mapId']==5:
+            proof=validate_world_village5_resources(reader)
+            expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in scene['dialogues']for d in proof['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
+                raise ValueError('Village5 actor/dialogue/graphic differs')
+        elif npc.get('originalTalk') and npc['mapId']==78:
+            proof=validate_world_island_talk(reader,npc)
+            if any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Island resident dialogue missing')
         elif npc.get('originalTalk'):
             from forensics.fengshen246 import extract_npcs
             path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)
@@ -1788,6 +2492,29 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-cave87-state.json':
+            proof=validate_world_cave87_state(reader)
+            from forensics.fengshen246 import extract_npcs
+            record=extract_npcs(reader,87)['records'][0]
+            if npc['id']!='rom.npc.87.0'or npc['mapId']!=87 or npc['cell']!=[5,4]or npc['spriteId']!=155 or \
+                    npc['source']['record']!=record['range']or npc['firstEffects']or npc.get('repeatDialogue')or \
+                    npc['firstDialogue']!=proof['boss']['victoryDialogue']or npc.get('automaticStoryOnly')is not True or \
+                    npc.get('removedFlagId')!='rom.map.87.flag.128'or evidence['graphics'].get(npc['sprite'])!=proof['fieldGraphic']:
+                raise ValueError('Cave87 actor identity/removal/static pose differs')
+        elif npc.get('automaticStoryOnly') or npc.get('removedFlagId'):
+            from forensics.fengshen246 import extract_npcs
+            proof=validate_world_island_event7(reader)
+            index=next((i for i in range(4)if npc['id']==f'rom.npc.76.{i}'),None)
+            if index is None:raise ValueError('Unknown automatic story actor')
+            record=extract_npcs(reader,76)['records'][index];raw=checked_span(reader,record['range'])
+            cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+            if npc['mapId']!=76 or npc['cell']!=cell or npc['spriteId']!=raw[0] or \
+                    npc['source']['record']!=record['range'] or npc['firstEffects'] or npc.get('repeatDialogue') or \
+                    npc['firstDialogue']!=proof['rules']['dialogueIds'][index] or npc.get('automaticStoryOnly')is not True or \
+                    npc.get('removedFlagId')!='rom.map.76.flag.128' or \
+                    npc.get('automaticStoryEvidence')!='game-data/provenance/world-island-event7.json':
+                raise ValueError('Automatic island actor identity, disappearance or side effects differ')
+        if npc.get('moneyTreasure'):validate_world_island_money(reader,npc)
         if not npc.get('treasure'):continue
         if npc['treasure'].get('categoryGrant') is not None:
             validate_world_chest_grant(reader,npc)
@@ -1798,6 +2525,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('Treasure differs from original category, item or grant flag')
         if not overlay or not any(b['npcId']==npc['id'] and b.get('entryTrigger') for b in overlay.get('bosses',[])):
             raise ValueError('Guarded treasure requires its original coordinate story')
+    if evidence.get('nightLightAtlas'):
+        proof=validate_world_night8_resources(reader);light=proof['lighting']
+        expected=dict(mapId=74,activeFlag=light['activeFlag'],asset=light['asset'],evidence='game-data/provenance/world-night8-resources.json')
+        if evidence['nightLightAtlas']!=expected or 74 not in known:raise ValueError('Night8 atlas lacks actual current cave definition')
+        result[light['asset']]=scoped_map_atlas(reader,extract_map(reader,74),light['palette'],evidence['emulatorRgb']);scene['nightLightAtlas']=expected
     for obj in evidence.get('mapObjects',[]):
         raw=checked_span(reader,obj['recordSource']);mid=obj['mapId']
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]

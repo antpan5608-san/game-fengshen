@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "scopeRevision": "map79-load-selects-map163-npc-context219-before-four-villains",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_KEYS_NOT_NORMAL_ANDROID",
+  "sources": [
+    {
+      "offset": 9844,
+      "length": 33,
+      "sha256": "2d45e68f97ef403d2e680075148212bfdc1d0c931a01f2194a57c6c156e751fb",
+      "module": 0,
+      "cpuAddress": 42596,
+      "meaning": "Island map-load selector: clears context, victory bit16 and party>=3 select219"
+    },
+    {
+      "offset": 22458,
+      "length": 2,
+      "sha256": "95f055661a2c687182bcb51bdf2bcf0c9585206480c824cdc4bc594051d4d817",
+      "module": 0,
+      "cpuAddress": 55210,
+      "meaning": "Map163 NPC overlay RAM address7EA"
+    },
+    {
+      "offset": 10063,
+      "length": 70,
+      "sha256": "06500d1ddde4824add40b22b7cfb6cc85c54434c735d5409d0308a75a72f573b",
+      "module": 0,
+      "cpuAddress": 42815,
+      "meaning": "Original actual map preserved while using alternate NPC context"
+    },
+    {
+      "offset": 275671,
+      "length": 2,
+      "sha256": "03bdc58a63a844b5eece9149791d5c707ec18463e499146823084307e1ac59c4",
+      "module": 8,
+      "cpuAddress": 46279,
+      "meaning": "Context219 NPC list pointer"
+    },
+    {
+      "offset": 284990,
+      "length": 29,
+      "sha256": "a32147120b93b1459c77df01c67ab4f1cdbb8aced1b36f67c2fdd4645309dd84",
+      "module": 8,
+      "cpuAddress": 55598,
+      "meaning": "14-byte records terminated by FF"
+    },
+    {
+      "offset": 380618,
+      "length": 35,
+      "sha256": "19f1923f00a0f4332fb1a2733e3f1a56fa1d85b5da0bf0c4d5320a573ec37582",
+      "module": 11,
+      "cpuAddress": 52922,
+      "meaning": "Original four-villain victory clears map163 alternate context"
+    }
+  ],
+  "rules": {
+    "loadMapId": 79,
+    "minimumPartyCount": 3,
+    "victoryFlag": "rom.global.7c6.16",
+    "contextFlag": "rom.npccontext.163.219",
+    "targetMapId": 163,
+    "contextId": 219,
+    "npcId": "rom.npc.163.0",
+    "fromCell": [
+      7,
+      10
+    ],
+    "toCell": [
+      7,
+      9
+    ],
+    "firstDialogue": "rom.dialogue.173.1",
+    "repeatDialogue": "rom.dialogue.173.1",
+    "noDialoguePrerequisite": true,
+    "clearOnVictory": true
+  },
+  "cpu": {
+    "path": "android/app/src/test/resources/world-teacher163-gate-original.tsv",
+    "cases": 1284,
+    "failures": 0,
+    "sha256": "3da757f7aa93dd40eab84104ee0c454d9e82ee45f1ccf7f4e8213e9451e7b51e",
+    "probePath": "tools/rom-extractor/probe-world-teacher163-gate.py",
+    "probeSha256": "b193e4a5fb33bcb850923e28c35e35ee463db2fb4a93732f210c5746452d0c68"
+  },
+  "publicClue": {
+    "url": "https://bbs.newwise.com/thread-277181-1-1.html",
+    "acquiredAt": "2026-10-04",
+    "sha256": "99a7c16aef7574c48c35d7cdf7862628b63cfe755c0c629b4fcde14320d4fcb3",
+    "usage": "Suggests visit island before teacher; actual ROM map-load rule takes priority over claimed two conversations",
+    "licenseStatus": "UNKNOWN"
+  },
+  "controlledWalk": {
+    "source": "Original map16 controlled prior source; pose only for outer-door setup, no flag injection",
+    "nodes": [
+      "16->79->16->99->163",
+      "163(7,14)->(7,10)->(8,10)->(8,5)->(7,5)",
+      "Normal A-menu talk173.2 gift, repeat173.3"
+    ],
+    "overlay": 219,
+    "partyCount": 3,
+    "evidence": [
+      {
+        "file": "talk1.png",
+        "sha256": "3a9d68f83866ab25d24c581e01c68496e9afef2202c0159de3c487fb48960ea1"
+      },
+      {
+        "file": "visit79.png",
+        "sha256": "1fe9257e2599f56194374f605563cf36ce061eafac125cd53e407ab15c32683c"
+      },
+      {
+        "file": "talk5.png",
+        "sha256": "bb84c74c4c9537d8efaae5ba8eb1ad98084a62f01ae2f859b3ee4b7212657e83"
+      },
+      {
+        "file": "return16.png",
+        "sha256": "5ac9f0713e1da57590522706961c1048623ef8fd56a8632aee4f921490b3351b"
+      },
+      {
+        "file": "talk4.png",
+        "sha256": "d8b53d1190eb7c8e03294c1f351cfe9362b572230567c76fcdfcf552e4d01847"
+      },
+      {
+        "file": "talk2.png",
+        "sha256": "299582f93d571a60e5e918e100944d86fa9dcf1340d42f9ff6537130c1ee30cc"
+      },
+      {
+        "file": "talk3.png",
+        "sha256": "8e21f32f528d999d01dae55181c3c2bc6cee189680cc7904f17776862249fa0e"
+      },
+      {
+        "file": "entry163.png",
+        "sha256": "2bfe2fb0a6ea2eda5a76fd5e1fdcecc3c3f0c88a10e98287e2b25b684ac47173"
+      },
+      {
+        "file": "walked-teacher.png",
+        "sha256": "99a6657be4be57c4d602787e07fe8c1adf41307a5e71db2722a0cd47ac43259b"
+      },
+      {
+        "file": "entry99.png",
+        "sha256": "2ff3b004c2a5414aced1692168d096609c4dbea48d9754efa7fbd9dffc17462f"
+      },
+      {
+        "file": "cases.tsv",
+        "sha256": "fbd468070e30ecba39aeb3eb19208b62b594c985347686b19156066864a85d6e"
+      }
+    ],
+    "gift": {
+      "id": 9,
+      "quantity": 1,
+      "sourceRamSha256": "3ccd7e9be1da9ca2bd4745c07ce7ffaf2fe9b72f01c2eb457c0eb5e0c7bba2f8",
+      "originalQuantityUsedBitExcluded": true
+    }
+  },
+  "remainingUnknown": [
+    "Normal Android same-candidate route NOT_RUN; controlled original not a normal Android proof",
+    "Exact disciple animation remains PROVISIONAL; position and text selector are original bytes"
+  ]
+}

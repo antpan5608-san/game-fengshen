@@ -383,6 +383,10 @@ jobs:
             artifacts/checkpoint-ui/touch-ux-world-village1-*.json
             artifacts/checkpoint-ui/world-village1-*.json
             artifacts/checkpoint-ui/world-village1-normal-test.txt
+            artifacts/checkpoint-ui/touch-ux-world-village5-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village5-*.json
+            artifacts/checkpoint-ui/world-village5-*.json
+            artifacts/checkpoint-ui/world-village5-*-test.txt
           if-no-files-found: ignore
           retention-days: 14
 
@@ -530,5 +534,48 @@ jobs:
             artifacts/checkpoint-ui/world-yang-join-*.json
             artifacts/checkpoint-ui/world-yang-join-*-test.txt
             artifacts/world-yang-join-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain bounded original village5 and cave87 restart evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-village5-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-village5-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village5-*.json
+            artifacts/checkpoint-ui/world-village5-*.json
+            artifacts/checkpoint-ui/world-village5-*-test.txt
+            artifacts/world-village5-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-cave87-*.png
+            artifacts/checkpoint-ui/touch-ux-world-cave87-*.json
+            artifacts/checkpoint-ui/world-cave87-*.json
+            artifacts/checkpoint-ui/world-cave87-*-test.txt
+            artifacts/world-cave87-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-village6-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village6-*.json
+            artifacts/checkpoint-ui/world-village6-*.json
+            artifacts/checkpoint-ui/world-village6-*-test.txt
+            artifacts/world-village6-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-night8-*.png
+            artifacts/checkpoint-ui/touch-ux-world-night8-*.json
+            artifacts/checkpoint-ui/world-night8-*.json
+            artifacts/checkpoint-ui/world-night8-*-test.txt
+            artifacts/world-night8-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain scoped island normal and cold continuation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-island-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-island-*.png
+            artifacts/checkpoint-ui/touch-ux-world-island-*.json
+            artifacts/checkpoint-ui/world-island-*.json
+            artifacts/checkpoint-ui/world-island-*-test.txt
+            artifacts/world-island-review-clips/*
           if-no-files-found: ignore
           retention-days: 14

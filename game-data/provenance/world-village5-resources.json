@@ -1,0 +1,1221 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "map5-original-shared-services-static-npcs-group15",
+  "licenseStatus": "UNKNOWN",
+  "kind": "TARGET_ROM_AND_CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+  "map": {
+    "mapId": 5,
+    "width": 32,
+    "height": 30,
+    "tilesetId": 0,
+    "gridSha256": "264076586c7ffff05f201626c74669dbaf4443bcb9f1dfddf948ec43ddbdb580",
+    "palette": [
+      14,
+      39,
+      55,
+      25,
+      25,
+      33,
+      50,
+      48,
+      25,
+      22,
+      9,
+      25,
+      25,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      25,
+      14,
+      54,
+      43,
+      25,
+      14,
+      38,
+      34,
+      25,
+      14,
+      38,
+      32
+    ]
+  },
+  "bridge": {
+    "sourceEdges": {
+      "10": [
+        "UP",
+        "DOWN"
+      ],
+      "11": [
+        "LEFT",
+        "RIGHT"
+      ]
+    },
+    "walkableClasses": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "cpuExpectedPath": "android/app/src/test/resources/world-town-bridges-original-cpu.tsv",
+    "cpuCaseCount": 576,
+    "cpuFailures": 0,
+    "cpuExpectedSha256": "4659284c278da00c998eef81727552f8edabfa18f68b1df2422dabd1e86cdb54"
+  },
+  "font": {
+    "sources": [
+      {
+        "offset": 598032,
+        "length": 2048,
+        "sha256": "c2a709e2d353859f44dd7619a3ccfa58bf661fb41728a6c23a485cdc82a28ae3"
+      },
+      {
+        "offset": 600080,
+        "length": 2048,
+        "sha256": "23c3a20def3706481c099fa9a91b9c0dab029e2773e24a803b4b97161c4c8f8f"
+      }
+    ],
+    "charset": {
+      "160": "你",
+      "33": "們",
+      "0": "真",
+      "128": "可",
+      "129": "做",
+      "169": "我",
+      "2": "乾",
+      "161": "好",
+      "48": "了",
+      "179": "有",
+      "3": "去",
+      "42": "看",
+      "52": "的",
+      "43": "山",
+      "49": "人",
+      "11": "寶",
+      "12": "沒",
+      "171": "敢",
+      "36": "這",
+      "164": "裏",
+      "44": "是",
+      "141": "東",
+      "165": "鎮",
+      "21": "西",
+      "51": "一",
+      "23": "定",
+      "172": "魔",
+      "177": "家",
+      "45": "四",
+      "173": "將",
+      "24": "大",
+      "166": "都",
+      "50": "不",
+      "1": "愛",
+      "130": "兒",
+      "53": "女",
+      "170": "過",
+      "131": "洞",
+      "4": "裡",
+      "132": "奇",
+      "5": "景",
+      "133": "嗎",
+      "176": "後",
+      "34": "洞",
+      "162": "怪",
+      "35": "物",
+      "9": "會",
+      "137": "吃",
+      "163": "藏",
+      "139": "但",
+      "140": "接",
+      "13": "近",
+      "37": "佳",
+      "149": "方",
+      "22": "巨",
+      "150": "石",
+      "151": "放",
+      "152": "怒",
+      "25": "言"
+    },
+    "glyphs": [
+      {
+        "code": 0,
+        "character": "真",
+        "pixelsSha256": "e877d8db8c8c2f3c9d08a36e122913eeb7d71d5bdaa77a648871f565242f9fcc"
+      },
+      {
+        "code": 1,
+        "character": "愛",
+        "pixelsSha256": "9710c61bf647db9ba834caafa5e80218025b4d767e6cf0ab9e816db67c142ee9"
+      },
+      {
+        "code": 2,
+        "character": "乾",
+        "pixelsSha256": "5af7cbfac9f9cf4497a14efc661b64fae47fdf5b1e83969838ab167742c6074c"
+      },
+      {
+        "code": 3,
+        "character": "去",
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "code": 4,
+        "character": "裡",
+        "pixelsSha256": "ebbf50e675464ac204b9912251fb96959d8d777a28dad99edcca572c9c4188e5"
+      },
+      {
+        "code": 5,
+        "character": "景",
+        "pixelsSha256": "d93ccc6ac461b2aadf9c205b6da257bd02059321956c98bcc48d3b618c2d526d"
+      },
+      {
+        "code": 9,
+        "character": "會",
+        "pixelsSha256": "db4fe0555411a09f4015deb42cf5ea949030c502c173d162fad20ea0f3740067"
+      },
+      {
+        "code": 11,
+        "character": "寶",
+        "pixelsSha256": "870f367d82c8fe72bac9c0945e47782e03b0aa7ecb2dcaffe52a5e0a4dcf73bb"
+      },
+      {
+        "code": 12,
+        "character": "沒",
+        "pixelsSha256": "82e6ce68b9cfb446d0d3b108dfe8cc0943e17cb5d32e3b3458210005ad5afc24"
+      },
+      {
+        "code": 13,
+        "character": "近",
+        "pixelsSha256": "da77e9d8ac091bd13f84533a3ef536df582a24e0f28229baf3655c9d950ea7c1"
+      },
+      {
+        "code": 21,
+        "character": "西",
+        "pixelsSha256": "d7cdf6ae61e67249117469b0a2b00b7148da8732861a46e53a96e591f5551e5c"
+      },
+      {
+        "code": 22,
+        "character": "巨",
+        "pixelsSha256": "41118e922a5e39a0103ed5f79b7ab85e00078e73f63a9ae79e5b8d29b2997b0d"
+      },
+      {
+        "code": 23,
+        "character": "定",
+        "pixelsSha256": "cb237e94acebd7f22cba6fb3dabf03877476de388476d6f78bd9b3042afa39eb"
+      },
+      {
+        "code": 24,
+        "character": "大",
+        "pixelsSha256": "18b5668cc28938c7131e9fccb189c81bc2becee1d79e37135260922e3ac517ba"
+      },
+      {
+        "code": 25,
+        "character": "言",
+        "pixelsSha256": "83d85d3e9c8e171a59728a6248a1c2ca256efd7b2ae70d49bfe6fd248d58e9f5"
+      },
+      {
+        "code": 33,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "code": 34,
+        "character": "洞",
+        "pixelsSha256": "484ecc016fb7fb1d2d29b4e80608621c6cca356633b5187aadd58b664c5dd62f"
+      },
+      {
+        "code": 35,
+        "character": "物",
+        "pixelsSha256": "9ee347b240f1f458e440cced7d3335c0763658b9f26eb5533805973caa6c1dcd"
+      },
+      {
+        "code": 36,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "code": 37,
+        "character": "佳",
+        "pixelsSha256": "5abd64a30e0674c07735a4f9d8d8aff85d4325f32db2827ac60b60050c87ff29"
+      },
+      {
+        "code": 42,
+        "character": "看",
+        "pixelsSha256": "481aaa36bff65111de51f09334e2fb63d0e522f48e79b1b4023935dcf8a19bec"
+      },
+      {
+        "code": 43,
+        "character": "山",
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "code": 44,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      },
+      {
+        "code": 45,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724"
+      },
+      {
+        "code": 48,
+        "character": "了",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "code": 49,
+        "character": "人",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "code": 50,
+        "character": "不",
+        "pixelsSha256": "8dcebfe880db18259e1679e1623abd40bd0f03a28ec2461a0fbe057fd78ae5ba"
+      },
+      {
+        "code": 51,
+        "character": "一",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "code": 52,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 53,
+        "character": "女",
+        "pixelsSha256": "f79325588ea291a6cd2719202f7bb5142d0874f970586852d3b3a9b0a4d2b6fb"
+      },
+      {
+        "code": 128,
+        "character": "可",
+        "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8"
+      },
+      {
+        "code": 129,
+        "character": "做",
+        "pixelsSha256": "dfa7a65c67edb188576d046efcbe1bcbac9e8129a093833b0373c6e8fc05eb44"
+      },
+      {
+        "code": 130,
+        "character": "兒",
+        "pixelsSha256": "4aab53f06653becf505e9e3933cb399dc66190d9532cf17c8c58922fd1b8a186"
+      },
+      {
+        "code": 131,
+        "character": "洞",
+        "pixelsSha256": "0ba4411ed6627b6d3d991f1439fee716a9a251a1fca33ed600da5b48f3e434a3"
+      },
+      {
+        "code": 132,
+        "character": "奇",
+        "pixelsSha256": "43c438746a340a9797e022f7944ad64a6a3320610bb4db4d87401f621037bb6e"
+      },
+      {
+        "code": 133,
+        "character": "嗎",
+        "pixelsSha256": "d9a8b5810b9d1dc1caf3fada32ce4ede513994b1472434633efd97af7709892e"
+      },
+      {
+        "code": 137,
+        "character": "吃",
+        "pixelsSha256": "9a77a3253970cec123c6591dd749157c09c118c7509d12dabb318e9797a2a06d"
+      },
+      {
+        "code": 139,
+        "character": "但",
+        "pixelsSha256": "8f5233639acd9b3ee04e581d6439821bfb75cb749553e190e6b6249d2b142b6b"
+      },
+      {
+        "code": 140,
+        "character": "接",
+        "pixelsSha256": "008528d8cb8056c720a1060812fc304bd869da0df07b8d4c20d0b4793cb4d931"
+      },
+      {
+        "code": 141,
+        "character": "東",
+        "pixelsSha256": "bec9897f1252a88f54ab051701efb6ccb6031cb723da4b1107ddfe0dff6445f6"
+      },
+      {
+        "code": 149,
+        "character": "方",
+        "pixelsSha256": "8ca28957a1b3ed46ef036b2a9282fbae3ec81334da0b88bafb03920b6ddadbd7"
+      },
+      {
+        "code": 150,
+        "character": "石",
+        "pixelsSha256": "76cb7bc9b2e9cd4407c44bbd83378b03248930cd7f74a220d701f3e9182ed111"
+      },
+      {
+        "code": 151,
+        "character": "放",
+        "pixelsSha256": "5348f7289e28e54460905ac24d7f37a07cf2383f999c5387c09945827c95922b"
+      },
+      {
+        "code": 152,
+        "character": "怒",
+        "pixelsSha256": "baeae8e96f1d7bbd252e18807a861231da8faf89b85aa06aa3cd68b0ef3f7066"
+      },
+      {
+        "code": 160,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      },
+      {
+        "code": 161,
+        "character": "好",
+        "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+      },
+      {
+        "code": 162,
+        "character": "怪",
+        "pixelsSha256": "d25df422ceec4bd9eec491b123f6cd4b6dc4ab4d384eb136e335cf3cefda58d6"
+      },
+      {
+        "code": 163,
+        "character": "藏",
+        "pixelsSha256": "dd63ceaf90b9978140955c5245625ba6d6b55cf399d0f2386a9047189d7d6b3f"
+      },
+      {
+        "code": 164,
+        "character": "裏",
+        "pixelsSha256": "f6ed5c1534cab367bc8c7c83067591a895ff95775dd6eb04549e8487c404b49a"
+      },
+      {
+        "code": 165,
+        "character": "鎮",
+        "pixelsSha256": "bb80d915b0a189d3065de46b64125060c5293366c47ecbb996097ac496bd6dc9"
+      },
+      {
+        "code": 166,
+        "character": "都",
+        "pixelsSha256": "80ef4a92fb130173bbbf1b51b5897fd670c48c92c714a450c4803e2f4c591b0d"
+      },
+      {
+        "code": 169,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "code": 170,
+        "character": "過",
+        "pixelsSha256": "a1d1876b750a2c0888fb4d3cdf13f953159803cdafb9a5c7f79e0eb6592d45a2"
+      },
+      {
+        "code": 171,
+        "character": "敢",
+        "pixelsSha256": "b0737474bf3e05e1435100c7de3f04bde2d63edfebb93bd12ee1429fbd1cf810"
+      },
+      {
+        "code": 172,
+        "character": "魔",
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106"
+      },
+      {
+        "code": 173,
+        "character": "將",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82"
+      },
+      {
+        "code": 176,
+        "character": "後",
+        "pixelsSha256": "2b9b01654647256323e012db8c4be0299ee56491cfe236bd3e220a877a6aa552"
+      },
+      {
+        "code": 177,
+        "character": "家",
+        "pixelsSha256": "9cdf0f17a57a8d19c3503d868bdd649575813633d44bd97401df0dd00f17b425"
+      },
+      {
+        "code": 179,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      }
+    ]
+  },
+  "graphics": {
+    "npc-163-village5.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        80,
+        121,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 871520,
+          "length": 16,
+          "sha256": "6a6dd68bb201f9bac450c15d33a4a30578cdb436706b2396edeb192b774e3d3c",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 5,
+          "observedTile": 197
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 871504,
+          "length": 16,
+          "sha256": "6cef8cb2c769b6be564d78c9774b056500fe329625c62f4904929dd4f332e9d3",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 6,
+          "observedTile": 196
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 871776,
+          "length": 16,
+          "sha256": "cc629969fe8a9fca671ca9848f28485aca489a219657e7bce23f2ffa7f749cb5",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 7,
+          "observedTile": 213
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 871760,
+          "length": 16,
+          "sha256": "f5d01503e60837bc3b0d7d1c0bbf2ac2642b1b41b83dc7eade6378b100562b43",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 8,
+          "observedTile": 212
+        }
+      ],
+      "rgbaSha256": "0e178ff731d83f4cbb7cd953ceaea1368c1a494b6128b0fe49c0351d8845e8dd",
+      "captureSha256": "d80e8dccf1a44e34fe89680c2f81cd1fd734696d6d1d549f69bc0eba4fc79ed1",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false
+    },
+    "npc-162-village5.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        25,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 871008,
+          "length": 16,
+          "sha256": "ef64e1b60a9a9467851630068f13d8b023b56ef05929e6ead0326f3117443a12",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 9,
+          "observedTile": 165
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 870992,
+          "length": 16,
+          "sha256": "780ed1129f9cde1fa6b9497daee203feef67288b6e2fd43f6b239fd57b1fa9f6",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 10,
+          "observedTile": 164
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 871264,
+          "length": 16,
+          "sha256": "ee769ca052d7dceb37062e559b4995ea3e4b476a43c5b4025a4f6535de814b05",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 11,
+          "observedTile": 181
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 871248,
+          "length": 16,
+          "sha256": "e1963b3d60fc7b9d646b6ce4361a213f4e5f07d942e5613de5c3d835430eff46",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 12,
+          "observedTile": 180
+        }
+      ],
+      "rgbaSha256": "1413c2fcd813c7698cb28f319533b12abc18c32cd6b28bc2845e76c8c14c6a97",
+      "captureSha256": "d80e8dccf1a44e34fe89680c2f81cd1fd734696d6d1d549f69bc0eba4fc79ed1",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false
+    },
+    "npc-161-village5.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        86,
+        121,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 870512,
+          "length": 16,
+          "sha256": "6801941559a849012a2869aaa336dca09504247cdb8e3d46a33359e8eb5223d2",
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 9,
+          "observedTile": 134
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 870528,
+          "length": 16,
+          "sha256": "cfc3386985aa696e75998b3415521268feb618f8f3ad5b4156e324e28290e9b2",
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 10,
+          "observedTile": 135
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 870768,
+          "length": 16,
+          "sha256": "e0ab80d96027dfbe759f5238e252f34cd34f6b10af5d68541eceaa2d50c5d66a",
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 11,
+          "observedTile": 150
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 870784,
+          "length": 16,
+          "sha256": "53e0ff9a963365846f7b1cd170acdcf54a317ef44a0a4cafaaabfb1adf80512a",
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 12,
+          "observedTile": 151
+        }
+      ],
+      "rgbaSha256": "46d2a74ddb866afd73d37471740370013b4db45284cb9df1a09d2e0958faadaf",
+      "captureSha256": "f2c33df6dcc6ceb46042a124f501cdc23afa34621a63a69d8266db02326a0212",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false
+    },
+    "npc-142-village5.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        96,
+        105,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 870016,
+          "length": 16,
+          "sha256": "73d73af51018d8b2a1a23e18ad87de9a9b4b69c71694a627803513c2626e5694",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 9,
+          "observedTile": 103
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 870000,
+          "length": 16,
+          "sha256": "145a6202010c47dc032eedec674977e41f17b862b1da907cc0e15b1583fdacba",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 10,
+          "observedTile": 102
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 870272,
+          "length": 16,
+          "sha256": "3159c9cf8c41b35332602c8a17c333b7013881763eff0a9379c0c2383d6091d7",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 11,
+          "observedTile": 119
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 870256,
+          "length": 16,
+          "sha256": "c64bc98a313db333be5ce43dbfdd8e0c825be4cd2dd16a1748b3ff02fffb3c6d",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 12,
+          "observedTile": 118
+        }
+      ],
+      "rgbaSha256": "71d126f14bcf7d78718ffe2c328b7920daef7a3b279541a61b4380bfcb227e5b",
+      "captureSha256": "36a0943a2b103892c345fa2dba38bbe79a0a29d11b9912390d138eb4b99b8ec5",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false
+    }
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.15.0",
+      "text": "『你們真可愛，做我乾兒女好了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107500,
+          "length": 17,
+          "sha256": "0eb8371d9b5e3b806bbeea682dd0f9abe68c99d45d916db3110531a8197b9040",
+          "module": 3,
+          "cpuAddress": 41948,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101008,
+            "length": 2,
+            "sha256": "92964bc126f40deb431f91999a64a00be76f320d948561c198c89781561be1e3",
+            "module": 3,
+            "cpuAddress": 35456,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101872,
+            "length": 2,
+            "sha256": "dc4ae99a887ff99208f28daefdf3a8e34f228e6a6faaa7ab91ff2ed003da810a",
+            "module": 3,
+            "cpuAddress": 36320,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "originalEvidenceKind": "TARGET_GROUP15_AND_ACTUAL_ACTIVE_FONT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.15.3",
+      "text": "『後山洞有怪物會吃人！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107550,
+          "length": 13,
+          "sha256": "b496067af99f582881922e6cd4454235ce91c49b54cc5c7ef5c19995e6075575",
+          "module": 3,
+          "cpuAddress": 41998,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101008,
+            "length": 2,
+            "sha256": "92964bc126f40deb431f91999a64a00be76f320d948561c198c89781561be1e3",
+            "module": 3,
+            "cpuAddress": 35456,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101878,
+            "length": 2,
+            "sha256": "366c005e3f129ad1d57d9181a4c3c10d45c8ce9306a72061006f0d969919abd1",
+            "module": 3,
+            "cpuAddress": 36326,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "originalEvidenceKind": "TARGET_GROUP15_AND_ACTUAL_ACTIVE_FONT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.15.5",
+      "text": "『後山洞藏有寶藏，但沒有人敢接近。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107577,
+          "length": 19,
+          "sha256": "d3f478abc68a8879580010a199aa8b36f5ed6b2862f4aa004df02a355792137f",
+          "module": 3,
+          "cpuAddress": 42025,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101008,
+            "length": 2,
+            "sha256": "92964bc126f40deb431f91999a64a00be76f320d948561c198c89781561be1e3",
+            "module": 3,
+            "cpuAddress": 35456,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101882,
+            "length": 2,
+            "sha256": "fc6475074c54602e48cfbc567f15e26907264b0ebbe3ba3f48684530277cf564",
+            "module": 3,
+            "cpuAddress": 36330,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "originalEvidenceKind": "TARGET_GROUP15_AND_ACTUAL_ACTIVE_FONT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.15.6",
+      "text": "『這裏是佳東鎮。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107596,
+          "length": 10,
+          "sha256": "7f29bee6d0021652d0603021e4b74b92064c3001abeb57270d3e41ba95be9a7b",
+          "module": 3,
+          "cpuAddress": 42044,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101008,
+            "length": 2,
+            "sha256": "92964bc126f40deb431f91999a64a00be76f320d948561c198c89781561be1e3",
+            "module": 3,
+            "cpuAddress": 35456,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101884,
+            "length": 2,
+            "sha256": "54991de797b50d6c0407fa284b561bd496fced24ff235710ba1696f11c75cd49",
+            "module": 3,
+            "cpuAddress": 36332,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "originalEvidenceKind": "TARGET_GROUP15_AND_ACTUAL_ACTIVE_FONT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.15.10",
+      "text": "『西方的巨石一定是魔家四將放的，大家都敢怒不敢言。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107657,
+          "length": 27,
+          "sha256": "7546f22264292a8cc194d9fe486eeb4a761075446edfc3e8fb4f25c9b8aec2ee",
+          "module": 3,
+          "cpuAddress": 42105,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101008,
+            "length": 2,
+            "sha256": "92964bc126f40deb431f91999a64a00be76f320d948561c198c89781561be1e3",
+            "module": 3,
+            "cpuAddress": 35456,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101892,
+            "length": 2,
+            "sha256": "7388865ca17f073acb414bfd118547def9ffbef853b214f606404ee93165b121",
+            "module": 3,
+            "cpuAddress": 36340,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "originalEvidenceKind": "TARGET_GROUP15_AND_ACTUAL_ACTIVE_FONT_NOT_NORMAL_ANDROID"
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.5.0",
+      "mapId": 5,
+      "cell": [
+        3,
+        24
+      ],
+      "spriteId": 163,
+      "sprite": "npc-163-village5.png",
+      "firstDialogue": "rom.dialogue.15.0",
+      "repeatDialogue": "rom.dialogue.15.0",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276925,
+          "length": 14,
+          "sha256": "05b2f9537b36e9832525a1be1284a252d6367b5eb814ea86b9763ac26f854521",
+          "module": 8,
+          "cpuAddress": 47533,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "remainingUnknown": [
+          "Original movement and timing; initial static position only"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.5.1",
+      "mapId": 5,
+      "cell": [
+        20,
+        19
+      ],
+      "spriteId": 142,
+      "sprite": "npc-142-village5.png",
+      "firstDialogue": "rom.dialogue.15.3",
+      "repeatDialogue": "rom.dialogue.15.3",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276939,
+          "length": 14,
+          "sha256": "377acdda9542dff4fc887f617704876f006dea6685a1409192218c270bd2a327",
+          "module": 8,
+          "cpuAddress": 47547,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "remainingUnknown": [
+          "Original movement and timing; initial static position only"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.5.2",
+      "mapId": 5,
+      "cell": [
+        5,
+        18
+      ],
+      "spriteId": 162,
+      "sprite": "npc-162-village5.png",
+      "firstDialogue": "rom.dialogue.15.5",
+      "repeatDialogue": "rom.dialogue.15.5",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276953,
+          "length": 14,
+          "sha256": "9a4986f42a2078a1a62246735b9b9436b88d4731d901dd65f92c43e2228accc5",
+          "module": 8,
+          "cpuAddress": 47561,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "remainingUnknown": [
+          "Original movement and timing; initial static position only"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.5.3",
+      "mapId": 5,
+      "cell": [
+        18,
+        24
+      ],
+      "spriteId": 161,
+      "sprite": "npc-161-village5.png",
+      "firstDialogue": "rom.dialogue.15.6",
+      "repeatDialogue": "rom.dialogue.15.6",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276967,
+          "length": 14,
+          "sha256": "79d0eae3895b76e040dab62c51927c7b876da92ac562b41cb7bcf1a0847ea2c9",
+          "module": 8,
+          "cpuAddress": 47575,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "remainingUnknown": [
+          "Original movement and timing; initial static position only"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.5.4",
+      "mapId": 5,
+      "cell": [
+        12,
+        15
+      ],
+      "spriteId": 142,
+      "sprite": "npc-142-village5.png",
+      "firstDialogue": "rom.dialogue.15.10",
+      "repeatDialogue": "rom.dialogue.15.10",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "record": {
+          "offset": 276981,
+          "length": 14,
+          "sha256": "a0d73342e6272a8661ea83b9275fbc45ab57ea7deb9e44333e6289d1a5dd7c73",
+          "module": 8,
+          "cpuAddress": 47589,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-village5-resources.json",
+        "remainingUnknown": [
+          "Original movement and timing; initial static position only"
+        ]
+      }
+    }
+  ],
+  "sources": [
+    {
+      "offset": 19324,
+      "length": 17,
+      "sha256": "ccedf7b2bc4f9f9a42060b233e36e5af3bc5d37facbef30d9b264fce0f3a9936",
+      "module": 0,
+      "cpuAddress": 52076,
+      "meaning": "Shared original source collision dispatch"
+    },
+    {
+      "offset": 19434,
+      "length": 8,
+      "sha256": "e832dc6ae9b4cedd6f6cf998fa00b402f4ff955b704b8c05b2a75a7d1015c2a0",
+      "module": 0,
+      "cpuAddress": 52186,
+      "meaning": "Shared class10/11 source branches"
+    },
+    {
+      "offset": 20195,
+      "length": 17,
+      "sha256": "2ab3e9bb4916e24ebb1bd6119d5f14a976be072e6c119cc0afa6c541a7a4bae3",
+      "module": 0,
+      "cpuAddress": 52947,
+      "meaning": "Shared original target collision dispatch"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Shared bridge directional source restrictions"
+    },
+    {
+      "offset": 20307,
+      "length": 1,
+      "sha256": "8d33f520a3c4cef80d2453aef81b612bfe1cb44c8b2025630ad38662763f13d3",
+      "module": 0,
+      "cpuAddress": 53059,
+      "meaning": "Shared bridge target return"
+    }
+  ],
+  "remainingUnknown": [
+    "Map87/event25 and return plot not restored in this checkpoint",
+    "Investigate object198 at15,7 grant/quantity observed but complete failure boundary not implemented",
+    "Inn caller overlay180 three additional NPCs and original NPC movement not implemented",
+    "Item names/capabilities not yet decoded for new stock remain UNKNOWN",
+    "Android normal map5/service path NOT_RUN"
+  ],
+  "originalEntry": {
+    "path": "private-derived/world-village5-entry-talk/entry5-ram.bin",
+    "sha256": "fa31cfa790e36097500768ae9790eaac7dc43055d983b50304bdbea925911a3f",
+    "mapId": 5,
+    "cell": [
+      15,
+      29
+    ],
+    "kind": "CONTROLLED_SOURCE_DOOR_THEN_REAL_ORIGINAL_ENTRY"
+  },
+  "serviceEvidence": {
+    "directory": "private-derived/world-village5-services-capture-settled",
+    "kind": "CONTROLLED_OUTER_DOOR_THEN_NORMAL_INNER_WALK_AND_MENU_KEYS",
+    "casesSha256": "1364c651308d40177850b02d478ff6605ddd492ad9b726f6c226771797148b2c",
+    "screenshotCapture": "One emulated frame after savescreenshotas before changing source; previous scheduled-image trial is retained as failed evidence"
+  }
+}

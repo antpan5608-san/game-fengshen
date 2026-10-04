@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "mapId": 99,
+  "tilesetId": 5,
+  "scopeRevision": "map99-foot-mode-zero-full-rts-dispatch",
+  "kind": "CONTROLLED_POSITION_ORIGINAL_KEYS_AND_FULL_CPU_DISPATCH_NOT_NORMAL_ANDROID",
+  "gridSha256": "00ec967742011b083fbe97251d849900c7b4d32605ef12cb14c1bfe838a1d124",
+  "mode": 0,
+  "sourceEntry": 52672,
+  "targetEntry": 53655,
+  "sourceEdges": {
+    "3": [
+      "LEFT",
+      "RIGHT"
+    ]
+  },
+  "targetEdges": {},
+  "standingClasses": [
+    0,
+    3,
+    7,
+    8,
+    9
+  ],
+  "classCounts": {
+    "0": 497,
+    "1": 3020,
+    "3": 50,
+    "7": 3,
+    "8": 15,
+    "9": 15
+  },
+  "cpuCaseCount": 144,
+  "cpuFailures": 0,
+  "cpuExpectedPath": "android/app/src/test/resources/forest101-foot-original-cpu.tsv",
+  "cpuExpectedSha256": "a80e8964cd05261adc66652fbbb4dd719b43821a3f13337959f0ad15097dee2e",
+  "activeCpuSha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853",
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Source tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source-class dispatch and occlusion"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Target tileset dispatch pushes address-minus-one then RTS"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target-class and source3 horizontal blocking"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Existing terrain mode conditions"
+    }
+  ],
+  "controllerEvidence": {
+    "kind": "CONTROLLED_POSITION_REAL_ORIGINAL_EXIT_NOT_NORMAL_ANDROID",
+    "fromMapId": 16,
+    "fromCell": [
+      183,
+      144
+    ],
+    "key": "UP",
+    "toMapId": 99,
+    "toCell": [
+      8,
+      51
+    ],
+    "captureSha256": "2ff3b004c2a5414aced1692168d096609c4dbea48d9754efa7fbd9dffc17462f"
+  },
+  "palette": [
+    14,
+    10,
+    17,
+    48,
+    25,
+    0,
+    16,
+    10,
+    25,
+    10,
+    7,
+    39,
+    25,
+    0,
+    16,
+    48,
+    14,
+    14,
+    54,
+    22,
+    25,
+    14,
+    54,
+    43,
+    25,
+    14,
+    38,
+    34,
+    25,
+    14,
+    38,
+    32
+  ],
+  "licenseStatus": "UNKNOWN",
+  "limits": [
+    "Original entry source was reached using controlled position/camera. Not normal new-game or Android evidence.",
+    "Earlier calls at CDBF/D196 returned before the actual +1 entry; rejected as collision proof.",
+    "Class7 original sprite occlusion is recorded but presentation not implemented. No transport mode enabled.",
+    "Area original name and further room171 rules remain scoped gaps."
+  ],
+  "ruleReuse": {
+    "path": "game-data/provenance/world-forest101-terrain.json",
+    "sha256": "713dbf2744cdfc4c47ba021386cd71f76017325af5c2facd62bd478f9268a811",
+    "scope": "same tileset5/source and target dispatcher/classes, independent map99 geometry and palette"
+  }
+}
