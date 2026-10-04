@@ -8,7 +8,7 @@ status: PARTIAL
 
 ## 当前有效状态（2026-10-04；时间标为UTC，用户展示北京时间+8）
 
-- 执行工作树：/workspace/game-fengshen-world-next，work/world-14f1e214；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源14f1e2143fe87ef35d8bf16cad90b2dfb4f26778/treec1e53895bd45cc3651991259f9f4604fd79a2500（本地955796e同树），v74/run37234225583已触发；v73 base/world PASS、末医疗第二次进门驱动FAIL，未发布。此前候选记录均为历史，正式仍v27；本文件现场状态仅本地更新，不推main改变候选来源。
+- 执行工作树：/workspace/game-fengshen-world-next，work/world-da514038；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源da514038556bb0732b599b1826eba8acbd703007/tree33c393feaaf2011e6f661fd4d538500e930d640f（本地6384fc5同树），v75/run37236599301已触发；v74早期医疗28秒PASS，随后夹具保留污染装备回归而FAIL，未发布。此前候选均为历史，正式仍v27；本文件现场状态仅本地，不推main改变候选来源。
 - 独立公网读取：正式仍v27/0.8.7-world-full01-f0/c14，SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，原签名保留。
 - v67/run37199961466/source7747010d build于12:08:15Z FAILURE：BUILD_ENV，村5隐藏物导出测试硬编码Linux基底APK路径。真实Windows原Bash/路径相关门禁已过，此失败发生在后续导出；所有App job SKIPPED/NOT_PUBLISHED。修正测试读取已有FENGSHEN_CONTENT_BASE_APK，保留所有断言。
 - 冻结R1：正常新游戏→南海/西北龙宫→85洞→东海胜后小龙女实际加入→地府村2买卖/住宿/双人战斗→医疗室实际入口/取消/原返程→保存/外部停止/冷启继续。购物/住店/等级不是剧情门槛。第一殿/十殿/重生/女人国不作为R1终点。
@@ -99,3 +99,13 @@ v74 build111530043722于21:25:38Z SUCCESS，原Windows48组/258 Python方法执�
 v74 base111535222898于21:27:48Z FAILURE，后两段SKIPPED/NOT_PUBLISHED。实际native storage PASS，新增有源医疗双人normal/Activity复现28.214秒 PASS（21:27:45Z）；随后testTouchUxSelectionScrollAndAtomicEquipment在600行unequip小刀结果!! NPE。新医疗隔离源已装备長劍2，原run_test一律keepFixtureForRestart=true保留该源，污染下一个预期小刀0的fixture。分类TEST_HARNESS，不是医疗进店失败/客户端崩溃；不能把这次28秒受控通过当完整主线。最小修复：原run_test增可校验的可选retention参数，仅此提前医疗复现传false，复用IsolatedGameTestCase已有backup/restore；真实覆盖/录屏的保留方式不改。16相关方法及语法/diff已本地PASS，真实下一测试不受污染仍待runner。
 
 夹具保留参数相关真实shell测试：17独立方法/17执行PASS，包含直接执行原run_test函数验证默认true、局部false实际传到adb及非法值在调用adb前拒绝。Kotlin/药草/装备/内容未再修改，原仪器已实际医疗PASS；下一候选须证明局部复现后原装备回归不受污染，再完整同APK三段。
+
+## 当前冻结v75（21:33:49Z）
+
+原run37236599301/source da514038556bb0732b599b1826eba8acbd703007，75/0.8.10-playable-r1。仅早期医疗复现传原IsolatedGameTestCase的false retention参数，实际shell17独立方法PASS，默认保留/非法拒绝均核；游戏/内容/Kotlin仪器与v74相同。需证明早期医疗后原装备回归不受污染，再正常新游戏完整三段；不能用v73或v74局部给最终APK背书。内容c51-r1/hash427/原3job/reviewer不变，正式v27。
+
+v75 build111536832053于21:53:40Z SUCCESS；实际Windows48组/259 Python方法执行、immutable XML335 JVM/68 suites/0失败错误跳过。原ci_apk.receipt独立验75/0.8.10-playable-r1/原签名/120文件/c51-r1 PASS，APK16632573字节/SHAbe20ccbaa4a9c4c781dcf3f0d14245caf0445753dd231a39fddbeecf7eb146c1；内容与v74逐字节一致，签名仪器医疗fixture也与提交字节一致。base111540594518从21:53:43Z运行，早期医疗后装备与最终三段结果待实际回执；源码da514038冻结，正式仍v27。
+
+v75 attempt1 runtime111540594518实际21:55Z FAILURE：覆盖升级导出/安装、Content17项、升级保存比较均通过；随后native storage probe的adb root返回1，cleanup观察device offline。分类BUILD_ENV/ADB transport，未取得root stderr，不猜具体根因。医疗false retention及长路线NOT_RUN，world/continuation SKIPPED；不是医疗又失败或游戏已崩溃。来源da514/APK be20继续冻结，正式v27。保存失败prefix artifact11316222765，下一动作为同候选一次有界失败job重试，不删旧证据。
+
+22:18Z 发布预检查实际发现task binding不一致：inspect的task_id=PLAYABLE-R1，而ci/runtime-nonblocking-issues.json仍WORLD-FULL-01，原Node门禁拒绝invalid_release_inspection_or_authorization。必要配置修复仅绑定本次R1，旧26错误/hash/时间/count1/UNCONFIRMED全部不变；13项原Node决策正反例PASS，同一次22:05实际巡检修正后ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES。不能改冻结v75来源后拿旧APK背书；已请求取消其attempt2以免继续跑不可发布候选，实际结果另记。下一个候选包含这项精确配置修复及当前任务一致性回归，不新增地图或业务。

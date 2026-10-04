@@ -10,7 +10,7 @@ class RuntimeReleaseDecisionTests(unittest.TestCase):
     def setUp(self):
         self.accepted=json.loads((ROOT/'ci/runtime-nonblocking-issues.json').read_text(encoding='utf-8'))
         issue=self.accepted['issues'][0]
-        self.report={'task_id':'WORLD-FULL-01','stage':'preflight','queriedAt':'2026-10-03T16:56:21Z',
+        self.report={'task_id':self.accepted['taskId'],'stage':'preflight','queriedAt':'2026-10-03T16:56:21Z',
             'result':{'status':'ISSUES_FOUND','retention':{'cleanupFailures':0,
                 'releaseAuthority':'admin_verified_OSS_publication_metadata','allowedReleases':[
                     {'versionCode':issue['recoveredVersionCode'],'sha256':issue['recoveredReleaseSha256']},
@@ -32,6 +32,18 @@ process.stdout.write(JSON.stringify(decision));"""
         self.assertEqual('ALLOW_WITH_KNOWN_NON_BLOCKING_ISSUES',d['status'])
         self.assertEqual('UNCONFIRMED',d['acknowledgedIssues'][0]['rootCause']);self.assertEqual(1,d['acknowledgedIssues'][0]['count'])
         self.assertEqual('ERROR',self.error['severity'])
+    def test_authorization_is_bound_to_actual_current_task(self):
+        import re
+        task=(ROOT/'docs/current-task.md').read_text(encoding='utf-8')
+        match=re.search(r'^task_id:\s*([A-Z0-9-]+)',task,re.MULTILINE)
+        self.assertIsNotNone(match)
+        self.assertEqual(match.group(1),self.accepted['taskId'])
+        original=self.report['task_id']
+        self.report['task_id']='TOWN-02'
+        self.assertFalse(self.assess()['allowed'])
+        self.report['task_id']=original
+        self.assertTrue(self.assess()['allowed'])
+
     def test_clean_and_no_data_remain_distinct_and_allowed(self):
         self.report['result'].pop('errors')
         for status in ('NO_DATA','NO_ISSUES_OBSERVED'):
@@ -61,7 +73,7 @@ process.stdout.write(JSON.stringify(decision));"""
         for status in ('UNAVAILABLE','NOT_AVAILABLE','UNKNOWN'):
             self.report['result']['status']=status;self.assertFalse(self.assess()['allowed'])
     def test_task_authorization_and_independent_review_are_required(self):
-        self.report['task_id']='TOWN-02';self.assertFalse(self.assess()['allowed']);self.report['task_id']='WORLD-FULL-01'
+        self.report['task_id']='TOWN-02';self.assertFalse(self.assess()['allowed']);self.report['task_id']=self.accepted['taskId']
         self.accepted['issues']=[];self.assertFalse(self.assess()['allowed'])
     def test_inconsistent_error_status_count_and_unclassified_issues_reject(self):
         self.report['result']['status']='NO_ISSUES_OBSERVED';self.assertFalse(self.assess()['allowed'])
