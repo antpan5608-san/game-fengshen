@@ -354,10 +354,10 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 单actor编号须查真实handler表，不套相邻通用分支；原action41实查CD1A，初误套CB84没有deferred action，失败保留，改查actual dispatcher后CPU对照通过。静态拓扑失败时再比较无NPC组件，只能区分原墙与演员阻挡，不删除墙来让测试变绿；未证明世界连续入口的局部数据不得计正常可玩。
 
 
-## 已核的连续回归接续边界（跨runner App仍待核）
+## 已核的连续回归接续边界（整段验收以当前回执为准）
 
 - 原ci/run-town02-runtime.sh的阶段分派经隔离Bash函数执行验证，保留全部原normal recorder/cold-test；tools/runtime_handoff.py只验证/原样搬运App-written JSON，部分阶段不能声明全部PASS。Linux执行`python -m unittest discover -s tests -p test_runtime_handoff.py`实际覆盖同候选/正常与冷启边界、不同run/hash/版本/签名、改数据/缺阶段/真机拒绝和完整分派；此传输fixture不是正常App。
-- 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow三段AVD导入和继续须等同候选实际runner，不把脚本存在当成功。
+- 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow跨runner App-owned导入、85洞→东海胜后→真实双人村2已实际通过同候选；最终阶段不能从前段通过推断PASS。
 - 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。
 
 - 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，原Windows runner实际门禁已通过；其成功不等于Android路线通过。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。
@@ -372,8 +372,10 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 长路线无奖励重进比较前，先定位normal-index中的合法补给：真实用药可改变HP/库存，比较点须在补给后；原两格室内重进使用普通触控，不混入自动补给field helper。半血区可能再次合法用药，不能假设一次恢复就足够。实际索引46HP来源逐值/SHA核对，新增4HP明确隔离边界，保留全部角色/物品/钱/flag断言；编译/相关fixture及原Android两例隔离复现、正常北宫重进已通过；它们不替代新候选整段主线。正常/cold索引与截图分名防覆盖，医疗分名实际路径仍待验。
 
-- 跨runner交接曾仅root推送/hash成功，但App读取实际EACCES；不能把主机读回当App可读。原runtime_handoff的来源/cold/hash验证继续保留。新增App-owned字节写入/读回及64KiB/文件名边界已通过Linux主机35相关方法、5scope方法和仪器编译；原生存储探针/下一段接续仍待实际runner，不写已成功。探针只搬隔离历史snapshot原值、不启动或restore GameState，不计正常流程。
+- 跨runner交接曾仅root推送/hash成功，但App读取实际EACCES；不能把主机读回当App可读。原runtime_handoff的来源/cold/hash验证继续保留。新增App-owned字节写入/读回及64KiB/文件名边界已通过Linux主机35相关方法、5scope方法和仪器编译；原生存储探针、后两runner的App-owned导入已实际通过；85洞/东海/村2正常和cold同候选接续通过，末段仍以当前结果为准。探针只搬隔离历史snapshot原值、不启动或restore GameState，不计正常流程。
 
-- 实际Windows长分派fixture通过Git Bash -c传递时末尾两fi未到达，报unexpected EOF；本地块为8007字符，不能以Linux -c通过推断Windows参数传输可靠。改在隔离临时目录写UTF-8/LF脚本文件，以原Git Bash执行同一完整分派与断言；本地已实跑，Windows结果另核，不安装另一Bash或删范围外原测试。
+- 实际Windows长分派fixture通过Git Bash -c传递时末尾两fi未到达，报unexpected EOF；本地块为8007字符，不能以Linux -c通过推断Windows参数传输可靠。改在隔离临时目录写UTF-8/LF脚本文件，以原Git Bash执行同一完整分派与断言；本地及原Windows门禁已实际通过，不安装另一Bash或删范围外原测试。
 
-- App-owned存储探针及文件分派已经原Windows构建/实际AOSP执行成功；跨runner接续尚未执行完，不能推断成功。正常旅程失败也可能是合法战败：先读真实起点HP/等级/库存与采购索引。本次满药仍在低等级多敌群战败，改用同候选已有正常准备检查点串联可选回归，不再重复练级；不改玩家规则或建立剧情等级锁。原29路径及cold保留，新接续/早期隔离回归仍待实际App。历史正常fixture只用于有源局部复现，原字节/SHA/来源另记在test资产；正常主线必须本次新游戏生成同候选状态。
+- App-owned存储探针及文件分派已经原Windows构建/实际AOSP执行成功；实际跨runner导入及世界中段已通过，最终整体以完整回执为准。正常旅程失败也可能是合法战败：先读真实起点HP/等级/库存与采购索引。本次满药仍在低等级多敌群战败，改用同候选已有正常准备检查点串联可选回归，不再重复练级；不改玩家规则或建立剧情等级锁。原29路径及cold保留，提前隔离北向复现及同候选准备后的北向/村1正常和cold已实际通过，独立分支不合并奖励。历史正常fixture只用于有源局部复现，原字节/SHA/来源另记在test资产；正常主线必须本次新游戏生成同候选状态。
+
+- 共享室内返程会落在原门口trigger；BFS目标等于当前位置时不会发输入，不能当再次进店。实际医疗首店/取消/返程已通过，第二次入店断言失败属于驱动遗漏离门步骤；新增普通合法一步离门再返回，原价格/角色/存档断言保持。此修正与有源正常双人fixture的提前Activity重启回归已编译，Android复测仍待原runner；Activity重启不冒称外部force-stop冷启。

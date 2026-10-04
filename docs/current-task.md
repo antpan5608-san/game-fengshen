@@ -8,7 +8,7 @@ status: PARTIAL
 
 ## 当前有效状态（2026-10-04；时间标为UTC，用户展示北京时间+8）
 
-- 执行工作树：/workspace/game-fengshen-world-next，work/world-25c8464e；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源25c8464e45f9e9ed43750e96715579d403ae656d/tree6337c2fe2c14ce457ec1e6f516fbd259d0a03182（本地3893d288同树），v72/run37220707823构建中；此前候选记录均为历史，正式仍v27。v68失败/v69构建前取消的证据与修复见下方；本文件现场状态仅本地更新，不能推动main改变候选来源。
+- 执行工作树：/workspace/game-fengshen-world-next，work/world-62313454；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源623134547d38591679d21de8ddaf57887aa715d5/treee0d22ae3dcdef429a04e5b52a9d31c30657cdd57（本地fb05cde同树），v73/run37226014658已触发；此前候选记录均为历史，正式仍v27。v68失败/v69构建前取消的证据与修复见下方；本文件现场状态仅本地更新，不能推动main改变候选来源。
 - 独立公网读取：正式仍v27/0.8.7-world-full01-f0/c14，SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，原签名保留。
 - v67/run37199961466/source7747010d build于12:08:15Z FAILURE：BUILD_ENV，村5隐藏物导出测试硬编码Linux基底APK路径。真实Windows原Bash/路径相关门禁已过，此失败发生在后续导出；所有App job SKIPPED/NOT_PUBLISHED。修正测试读取已有FENGSHEN_CONTENT_BASE_APK，保留所有断言。
 - 冻结R1：正常新游戏→南海/西北龙宫→85洞→东海胜后小龙女实际加入→地府村2买卖/住宿/双人战斗→医疗室实际入口/取消/原返程→保存/外部停止/冷启继续。购物/住店/等级不是剧情门槛。第一殿/十殿/重生/女人国不作为R1终点。
@@ -71,3 +71,21 @@ Base111495166540 FAILURE，world/continuation SKIPPED/NOT_PUBLISHED。原生App-
 35运行工具/5scope本地PASS，最终仪器编译结果见后续；目标内容仍c51-r1/同427manifest，源码游戏规则无变化。新候选须重新完整同APK正常R1，不借v72南海PASS给新产物背书。正式仍v27。
 
 最终仪器编译11秒PASS（JVM既有任务UP-TO-DATE，不新增计335执行）。致死回合原片/完整行动上下文本次尚未取得，不能凭断言证明每个伤害规则等价；按实际准备状态修驱动并加现场，不宣称修复原版数值BUG。
+
+## 当前冻结v73（18:51:07Z，未发布）
+
+来源623134547d38591679d21de8ddaf57887aa715d5/treee0d22ae3dcdef429a04e5b52a9d31c30657cdd57（本地fb05cde同树），work/world-62313454。原run37226014658触发一次，73/0.8.10-playable-r1。先在原base做隔离北向合法来源复现，正常主线仍从本次新游戏生成；原三job全部必需、原29全开发/11 R1路径及cold保留，内容c51-r1/hash427不变。新App三段待本次实际run；正式仍v27。来源冻结，本文件现场状态仅本地。
+
+## v73实际构建与独立验包（19:12:09Z SUCCESS）
+
+原build111505697067 SUCCESS；实际Windows48组/258 Python方法执行、immutable XML335 JVM/68 suites/0失败错误跳过。artifact11312681062签名APK16632573字节、SHA6c11e5ea6c8bbbebe87b0cbeb12d50b1dbe7068ef278363317aba5fabf793453；原ci_apk.verify独立验包名/签名/版本/c51-r1 manifest及120文件PASS，内容字节与v72相同。原runtime/base111509681871从19:12:11Z运行中；早期隔离北向复现、新候选正常路线及world/continuation仍待实际回执。正式v27/NOT_PUBLISHED；源码62313454继续冻结，本文现场状态仅本地。
+
+现场20:01Z：v73原runtime/base仍IN_PROGRESS，后两段未启动，正式v27不变；没有新App全路线PASS声明。原受保护inspect37229225906实际SUCCESS，19:41:45.9956761Z查询27/26共3757事件（1468/2289）、普通真机9会话/模拟器0/测试0/cleanupFailures0；仍仅旧26下载ProtocolException1，UNCONFIRMED，没有新增错误。来源62313454保持冻结；下一条动作继续同run原三段，不另触发候选。
+
+v73 base111509681871实际20:25:51Z SUCCESS；七条正常及对应外部cold/继续均PASS，原生probe19:13:42Z PASS，早期受控北向复现随原必需命令通过。实际base receipt仅PARTIAL/[base]，原handoff.verify对本候选来源/run/SHA/正常末状态/外部cold边界独立PASS；末存档Lv12/EXP2564/HP71of109，药草7/解毒8，保持实际原值。world111523702966于20:25:53Z启动，85洞/东海/村2及continuation未完成，仍NOT_PUBLISHED/正式v27。五段原片实际取得并对索引SHA/视频流核对，不计真机或声音。
+
+实际v73截图审阅：防具店界面/原宫殿像素可见，药草2×目标/效果/满HP消耗/明确动作可读；1.3×/2×角色切换小按钮名字换行后部分裁切，记录P2表现欠账，不把geometry PASS当完全可读。普通字体名字可读，角色状态/成交/保存门禁照常；没有据此改动冻结候选或游戏规则。声音/一加13T仍NOT_RUN。
+
+v73 world111523702966于20:49:41Z SUCCESS；85洞/东海/小龙女入队/双人村2及各自外部cold均PASS，原handoff.verify对下一continuation独立PASS，末map2/哪吒13 HP128/小龙女12 HP92。continuation111528197664于20:51Z FAILURE：医疗revival首次真实进入20/选目标/取消/返回2(22,26)均通过；care次轮walk同一个门口无输入，expected20/actual2。原索引1701字节存档SHA8b27094e9a1bc2f5f1e5d9a1f72e55c615f4bb0835ec4174d7667b6d970ffc70及失败原片已取得。分类TEST_HARNESS，整体v73 FAILURE/NOT_PUBLISHED；不是App-owned文件故障或地图20首次不可进。最小修复为真实合法离门一步后重新走入，原断言不删；提前复用原v73同候选normal/cold已核的双人原值做CONTROLLED/Activity重启，最终新候选仍完整新游戏/三段/外部cold。
+
+医疗最小修复本地验证：runtime_handoff实际16独立方法/16执行PASS，R1 scope5/5 PASS，仪器编译24秒PASS，Bash语法/diff PASS；只改测试普通触控接续/提前有源隔离检查与相关skill，没有游戏数值/内容/UI变化。早期医疗Activity复现和新同APK完整三段仍待实际runner，不能把编译写App PASS。

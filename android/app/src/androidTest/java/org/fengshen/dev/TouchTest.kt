@@ -2421,11 +2421,26 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}
     fun testPlayableR1MedicalColdStartMatchesNormalSave(){normalPlayableR1Medical(true)}
 
+    /** Isolated replay of exact v73 normal/cold-verified bytes, never current mainline proof. */
+    fun testControlledPlayableR1MedicalDoorReentryFromVerifiedSave(){
+        val fixture=JSONObject(instrumentation.context.assets.open("r1-medical-verified-village.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-medical-source.json")
+        file.writeBytes(bytes)
+        normalPlayableR1Medical(false,"controlled-r1-medical",file.name,fixture.getString("kind"))
+        // Activity restart of the actual saved result; the final normal recorder
+        // still separately requires an external force-stop/cold-start boundary.
+        normalPlayableR1Medical(true,"controlled-r1-medical",file.name,fixture.getString("kind"))
+    }
+
     /** Exact same-candidate village checkpoint, original door and normal touch only. */
-    private fun normalPlayableR1Medical(cold:Boolean){
+    private fun normalPlayableR1Medical(cold:Boolean,label:String="r1-medical",
+        normalSourceName:String="world-hell-village2-expected-save.json",kind:String="CONTINUATION_FROM_VERIFIED_SAVE"){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label="r1-medical"
-        val file=File(root,if(cold)"world-$label-expected-save.json"else"world-hell-village2-expected-save.json")
+        val file=File(root,if(cold)"world-$label-expected-save.json"else normalSourceName)
         assertTrue(file.exists());val bytes=file.readBytes();val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
         val hash=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
         val(activity,v)=launch()
@@ -2440,7 +2455,9 @@ class TouchTest:IsolatedGameTestCase(){
             events.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.uptimeMillis()).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("snapshot",snapshot.json()))
             File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
-                .put("kind",if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE")
+                .put("kind",if(kind=="CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE")
+                    if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else kind
+                    else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY"else kind)
                 .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
                 .put("stateChangesAtLoad",false).put("normalInputsOnly",true).put("events",events).toString())
             screenshot(v,"world-$label-${if(cold)"cold-" else ""}$name")
@@ -2470,6 +2487,20 @@ class TouchTest:IsolatedGameTestCase(){
         }
         state(if(cold)"cold-exact-normal-state"else"verified-village-source")
         for((role,id)in listOf("revival" to "rom.npc.20.1","care" to "rom.npc.20.0")){
+            // Original shared-room return lands on the entrance trigger. Merely
+            // asking walk() for that same cell emits no input and cannot reenter.
+            // Move to a real adjacent legal cell, then walk back through the door.
+            if(v.world.mapId==2&&v.world.x/16==22&&v.world.y/16==26){
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).firstOrNull{key->
+                    val next=when(key){Key.DOWN->22 to 27;Key.LEFT->21 to 26;Key.RIGHT->23 to 26;else->22 to 25}
+                    v.world.scene.probeFrom(22,26,key,v.world.terrainMode)==MovementBlock.NONE&&
+                        v.content.exits.none{it.fromMapId==2&&it.triggerX==next.first&&it.triggerY==next.second}
+                }
+                assertNotNull("Original medical door requires a legal step away before reentry",departure)
+                stickStep(v,departure!!);assertEquals(2,v.world.mapId)
+                assertFalse(v.world.x/16==22&&v.world.y/16==26)
+                state("$role-normal-step-away-before-reentry")
+            }
             walk(22,26);assertEquals(20,v.world.mapId)
             assertEquals(InteriorContext(2,22,26),v.currentSnapshot().interiorContext)
             val npc=v.content.npcs.single{it.id==id};val cell=npc.interactionCell!!
