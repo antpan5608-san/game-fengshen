@@ -1505,9 +1505,22 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{activity.finish()}
     }
     /** Exact checkpoint produced above by normal new-game play; no changed HP/level/money/flags. */
-    fun testNormalWorldSeaNorthFromVerifiedNanhaiSave(){
-        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-expected-save.json")
-        assertTrue("Same candidate normal Nanhai flow must first produce its save",file.exists())
+    fun testNormalWorldSeaNorthFromVerifiedNanhaiSave(){normalWorldSeaNorthFromSave("nanhai-expected-save.json")}
+    fun testNormalWorldSeaNorthFromVerifiedNorthPalaceSave(){normalWorldSeaNorthFromSave("world-north-palace-expected-save.json")}
+    fun testControlledNorthTravelFromVerifiedPalaceSave(){
+        val fixture=JSONObject(instrumentation.context.assets.open("north-travel-verified-palace.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-north-travel-source.json")
+        file.writeBytes(bytes)
+        normalWorldSeaNorthFromSave(file.name,"controlled-north-travel",fixture.getString("kind"))
+    }
+    private fun normalWorldSeaNorthFromSave(sourceName:String,label:String="north",
+        kind:String="CONTINUATION_FROM_VERIFIED_NORMAL_SAVE"){
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),sourceName)
+        assertTrue("The recorded normal source must exist before route continuation",file.exists())
         val source=SaveSnapshot.parse(file.readText());assertEquals(true,source.flags["rom.event.97.39.1"])
         val(activity,v)=launch();instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals(source,v.currentSnapshot())
@@ -1515,13 +1528,13 @@ class TouchTest:IsolatedGameTestCase(){
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
         fun state(name:String){
-            screenshot(v,"world-north-$name")
+            screenshot(v,"world-$label-$name")
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             val hash=java.security.MessageDigest.getInstance("SHA-256").digest(file.readBytes()).joinToString(""){"%02x".format(it)}
-            File(instrumentation.targetContext.getExternalFilesDir(null),"world-north-normal-index.json").writeText(
-                org.json.JSONObject().put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_NANHAI_SAVE")
-                    .put("sourceFile","nanhai-expected-save.json").put("sourceSha256",hash).put("sourceSnapshot",source.json())
+            File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-normal-index.json").writeText(
+                org.json.JSONObject().put("kind",kind)
+                    .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
                     .put("stateChangesAtLoad",false).put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).toString())
         }
         fun mapMedicine(id:String){
@@ -1552,6 +1565,19 @@ class TouchTest:IsolatedGameTestCase(){
                 instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)pair=(f.get(v) as OpeningBattle) to (p.get(v) as BattlePresentation)}
                 val (battle,presentation)=pair?:break
                 assertTrue("Normal north encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
+                if(battle.phase==BattlePhase.DEFEAT){
+                    val enemies=org.json.JSONArray()
+                    for(enemy in battle.enemies)enemies.put(JSONObject().put("slot",enemy.slot)
+                        .put("definitionId",enemy.definition.id).put("hp",enemy.hp).put("maxHp",enemy.definition.hp))
+                    File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-failed-battle.json")
+                        .writeText(JSONObject().put("kind","FAILED_INPUT_RUN_BATTLE_OBSERVATION")
+                            .put("inputOrigin",kind).put("battleNumber",fights).put("remainingHerbs",v.battleHerbCount())
+                            .put("heroHp",battle.hero.hp).put("heroMaxHp",battle.hero.maxHp)
+                            .put("heroStatus",battle.hero.statusMask).put("enemies",enemies)
+                            .put("displayedActionKind",presentation.action?.kind?.name)
+                            .put("displayedHeroHp",presentation.action?.heroHp).put("world",v.currentSnapshot().json()).toString())
+                    state("failed-battle-$fights")
+                }
                 assertTrue("Normal north player defeated; no state repair allowed",battle.phase!=BattlePhase.DEFEAT)
                 if(!capturedPoison&&presentation.screen==BattlePresentation.Screen.ACTING&&presentation.action?.kind==BattleActionKind.STATUS){
                     state("original-enemy-poison-action");capturedPoison=true
@@ -1570,7 +1596,7 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(GameView.Layer.MAP,v.layer);supply()
         }
-        fun step(key:Key){stickStep(v,key);finishFight();supply()}
+        fun step(key:Key){supply();stickStep(v,key);finishFight();supply()}
         fun walkTo(tx:Int,ty:Int){
             val scene=v.world.scene;val goal=ty*scene.width+tx;var attempts=0
             while(v.world.mapId==scene.mapId&&v.world.y/16*scene.width+v.world.x/16!=goal){
@@ -1593,15 +1619,17 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)));repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
         state("verified-normal-source-loaded")
-        walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
+        if(v.world.mapId==97){walkTo(15,29);assertEquals(25,v.world.mapId)}
+        else{assertEquals(25,v.world.mapId);assertEquals(true,source.flags["rom.map.139.flag.128"])}
+        walkTo(39,42);assertEquals(16,v.world.mapId)
         walkTo(202,130);assertEquals(0,v.world.mapId)
         val entry=v.content.exits.first{it.fromMapId==0&&it.toMapId==19};walkTo(entry.triggerX,entry.triggerY)
         assertEquals(InteriorContext(0,24,25),v.currentSnapshot().interiorContext)
         val npc=v.content.npcs.first{it.mapId==19&&it.shopId!=null};walkTo(npc.interactionCell!!.first,npc.interactionCell.second)
         talk();assertEquals(GameView.Layer.SHOP,v.layer)
         tap(v,center(v.shopActionBounds(1)));scrollToShopItem(v,AntidoteUse.ID);tap(v,center(v.shopItemBounds(AntidoteUse.ID)))
-        val count=minOf(10-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0),v.currentSnapshot().money/20)
-        assertTrue("Legitimate Boss/encounter earnings must support antidote supply",count>=2)
+        val count=minOf((10-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0),v.currentSnapshot().money/20)
+        assertTrue("Legitimate source must fund or already carry antidotes",(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)+count>=2)
         repeat(count){val before=v.currentSnapshot();tap(v,center(v.shopActionBounds(4)))
             assertEquals(before.money-20,v.currentSnapshot().money)
             assertEquals((before.inventory[AntidoteUse.ID]?:0)+1,v.currentSnapshot().inventory[AntidoteUse.ID])}
@@ -1619,7 +1647,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(0,v.currentSnapshot().encounterSteps);assertEquals(true,v.currentSnapshot().flags["rom.event.97.39.1"])
         state("northwest-sea-return");step(Key.DOWN);state("next-operable")
         instrumentation.runOnMainSync{v.persistState()}
-        File(instrumentation.targetContext.getExternalFilesDir(null),"world-north-expected-save.json").writeText(v.currentSnapshot().json().toString())
+        File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
     fun testWorldNorthColdStartMatchesNormalSave(){
@@ -1636,14 +1664,15 @@ class TouchTest:IsolatedGameTestCase(){
     /** Two isolated continuations load only the byte-exact save from this candidate's normal Nanhai run. */
     fun testNormalWorldWestPalaceFromVerifiedNanhaiSave(){normalWorldBatchContinuation(true)}
     fun testNormalWorldVillageOneServicesFromVerifiedNanhaiSave(){normalWorldBatchContinuation(false)}
-    private fun normalWorldBatchContinuation(west:Boolean){
+    fun testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave(){normalWorldBatchContinuation(false,"world-north-palace-expected-save.json")}
+    private fun normalWorldBatchContinuation(west:Boolean,sourceName:String="nanhai-expected-save.json"){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val sourceFile=File(root,"nanhai-expected-save.json")
+        val sourceFile=File(root,sourceName)
         assertTrue("The same candidate's normal Nanhai recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
         assertEquals(true,source.flags["rom.event.97.39.1"])
-        assertTrue("Normal source must precede West victory",source.flags["rom.event.96.40.2"]!=true)
+        if(west)assertTrue("Normal source must precede West victory",source.flags["rom.event.96.40.2"]!=true)
         val(activity,v)=launch();instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals("No resources or flags may be changed at continuation load",source,v.currentSnapshot())
         val label=if(west)"west" else "village1";val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
@@ -1656,7 +1685,7 @@ class TouchTest:IsolatedGameTestCase(){
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             File(root,"world-$label-normal-index.json").writeText(org.json.JSONObject()
-                .put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_NANHAI_SAVE").put("sourceFile",sourceFile.name)
+                .put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_SAVE").put("sourceFile",sourceFile.name)
                 .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("westIceObserved",capturedIce).toString())
@@ -1808,7 +1837,9 @@ class TouchTest:IsolatedGameTestCase(){
             instrumentation.runOnMainSync{v.handleBack()}
         }
         state("verified-normal-source-loaded")
-        walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
+        if(v.world.mapId==97){walkTo(15,29);assertEquals(25,v.world.mapId)}
+        else{assertEquals(25,v.world.mapId);assertEquals(true,source.flags["rom.map.139.flag.128"])}
+        walkTo(39,42);assertEquals(16,v.world.mapId)
         walkTo(202,130);assertEquals(0,v.world.mapId)
         // SecureRandom makes the legitimate prior run's earnings variable. If
         // needed, earn the shortfall in the already verified opening zone and pay
