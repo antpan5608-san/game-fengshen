@@ -112,6 +112,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original final hall and durable rebirth content gates failed'}
     & python -m unittest discover -s tests -p test_world_island_export.py
     if($LASTEXITCODE -ne 0){throw 'Original island composite story, chest and clean content evidence gates failed'}
+    & python -m unittest discover -s tests -p test_world_five_dragon_export.py
+    if($LASTEXITCODE -ne 0){throw 'Original five-dragon teacher, special command and clean export evidence gates failed'}
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
     Push-Location (Join-Path $root 'android')

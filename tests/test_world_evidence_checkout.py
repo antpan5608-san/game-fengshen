@@ -5,7 +5,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class EvidenceCheckoutTests(unittest.TestCase):
     def test_cpu_tables_keep_their_reviewed_bytes_under_autocrlf_checkout(self):
-        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json','world-seventh-side-terrain.json','world-rebirth-terrain.json','world-rebirth-script.json','world-continent-bridges.json','world-continent-actor-barriers.json','world-forest101-terrain.json','world-forest101-direction.json','world-tree-contact.json','world-tree107-talk.json','world-tree107-chests.json','world-island-terrain.json','world-island-chests.json']
+        proofs=['world-hell-hall-batch-terrain.json','world-hell-chest-grants.json','world-hell-field67-step.json','world-field67-item12.json','world-seventh-side-terrain.json','world-rebirth-terrain.json','world-rebirth-script.json','world-continent-bridges.json','world-continent-actor-barriers.json','world-forest101-terrain.json','world-forest101-direction.json','world-tree-contact.json','world-tree107-talk.json','world-tree107-chests.json','world-island-terrain.json','world-island-chests.json','world-forest99-terrain.json','world-five-dragon-chests.json']
         tables={}
         for name in proofs:
             p=json.loads((ROOT/'game-data/provenance'/name).read_text(encoding='utf-8'))
@@ -15,13 +15,13 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json','world-ferry-content.json','world-island-content.json'):
+        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json','world-ferry-content.json','world-island-content.json','world-five-dragon-content.json'):
             p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
             pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
             self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
             pin=json.loads(raw);proof_path=pin['iteration']['provenance'];raw=(ROOT/proof_path).read_bytes()
             self.assertEqual(p['baseExport']['provenanceSha256'],hashlib.sha256(raw).hexdigest());tables[proof_path]=raw
-        for name in ('world-room171-resources.json','world-teacher171-talk.json','world-yang-join.json'):
+        for name in ('world-room171-resources.json','world-teacher171-talk.json','world-yang-join.json','world-teacher163-binding.json'):
             p=json.loads((ROOT/'game-data/provenance'/name).read_text(encoding='utf-8'))
             groups=p['cpuExpected'] if isinstance(p['cpuExpected'],list) else [p['cpuExpected']]
             if 'discipleCpuExpected' in p:groups=groups+[p['discipleCpuExpected']]
@@ -50,6 +50,9 @@ class EvidenceCheckoutTests(unittest.TestCase):
         for proof in [island['victoryCpu'],chest['money'],talk['cpu'],binding]:pairs.append((proof['probePath'],proof['probeSha256']))
         for path,sha in pairs:
             raw=(ROOT/path).read_bytes();self.assertEqual(sha,hashlib.sha256(raw).hexdigest());tables[path]=raw
+        teacher=json.loads((ROOT/'game-data/provenance/world-teacher163-binding.json').read_text(encoding='utf-8'))
+        definition=teacher['probe'];raw=(ROOT/definition['path']).read_bytes()
+        self.assertEqual(definition['sha256'],hashlib.sha256(raw).hexdigest());tables[definition['path']]=raw
         medical=json.loads((ROOT/'game-data/provenance/world-clinic-rules.json').read_text(encoding='utf-8'))
         for prefix in ('revival','care'):
             table_path=medical[prefix+'ExpectedPath'];raw=(ROOT/table_path).read_bytes()

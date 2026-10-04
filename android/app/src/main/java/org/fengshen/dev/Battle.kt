@@ -243,9 +243,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var armorBonuses:Map<String,Int> = equippedArmorBonus?.let{mapOf(hero.id to it)}?:emptyMap()
     private var configured=false
     // Original6948 is local to the current battle and resets on exit.
-    // Item9 command is not enabled until order/consumption and acquisition are verified.
     private var bindingMarker=0
-    private enum class CommandKind { ATTACK, HERB, ESCAPE, ESCAPED }
+    private enum class CommandKind { ATTACK, HERB, BINDING, ESCAPE, ESCAPED }
     private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null)
     private val commands=linkedMapOf<String,QueuedCommand>()
     var inputRevision=0;private set
@@ -282,6 +281,19 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
+    fun bindingAvailable(count:Int,item:ItemDefinition,alreadyUsed:Boolean=false):Boolean=
+        phase==BattlePhase.TARGET&&content.physicalRules!=null&&(inputHero?.hp?:0)>0&&count==1&&!alreadyUsed&&
+        item.id=="rom.special.9"&&item.category=="special"&&item.originalId==9&&item.maxCount==1&&
+        item.battleBindingUse?.evidence=="game-data/provenance/world-teacher163-binding.json"&&
+        enemies.size==4&&enemies.map{it.definition.id}.toSet()==setOf(152,153,154,155)&&
+        enemies.all{it.definition.requiredBindingMarker==1}
+    fun useBinding(count:Int,item:ItemDefinition,alreadyUsed:Boolean,nextByte:()->Int):BattleTurn? {
+        if(!bindingAvailable(count,item,alreadyUsed))return null
+        // Original BE6E->BE9D collects special9 directly, no target screen,
+        // quantity decrement or used bit write. Its ordinary scheduler slot
+        // executes 8935; faster enemy actions are not skipped or refunded.
+        return submit(QueuedCommand(CommandKind.BINDING),nextByte)
+    }
     fun herbAvailable(targetId:String,count:Int,item:ItemDefinition):Boolean =
         phase==BattlePhase.TARGET && content.physicalRules!=null && (inputHero?.hp?:0)>0 &&
         partyStates.any{it.id==targetId&&it.hp>=0&&it.hp<=it.maxHp&&it.maxHp>0} && count>herbsConsumed &&
@@ -356,6 +368,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(!OriginalPartyRules.canAct(originalActors().first{it.originalActorIndex==actor}))continue
                 val command=commands[player.id]?:continue
                 if(command.kind==CommandKind.ESCAPED)continue
+                if(command.kind==CommandKind.BINDING){
+                    bindingMarker=1
+                    steps.add(frame("遁龙樁困住四恶人 · 数量保留",kind=BattleActionKind.SPECIAL,actorId=player.id))
+                    continue
+                }
                 if(command.kind==CommandKind.HERB){
                     val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
                     if(target.statusMask and OriginalStatus.DEAD!=0){

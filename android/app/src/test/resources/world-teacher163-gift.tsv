@@ -1,0 +1,6 @@
+case	message	flagAfterSelector	quantity	error
+empty	2	2	1	0
+already	2	2	1	1
+used	2	2	1	1
+full	2	2	0	1
+one-free	2	2	1	0

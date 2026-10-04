@@ -13,6 +13,31 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Controlled loader/gift/scheduler fixture, not a normal route recording. */
+    fun testFiveDragonOriginalGiftAndReusableBattleItem(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(48,c.scenes.getValue(99).width);assertEquals(75,c.scenes.getValue(99).height)
+        assertEquals(16,c.scenes.getValue(163).width)
+        val teacher=c.npcs.single{it.id=="rom.npc.163.1"}
+        assertEquals(7 to 5,teacher.interactionCell);assertEquals(Key.UP,teacher.interactionDirection)
+        val item=c.itemDefinitions.getValue("rom.special.9")
+        assertEquals(9,item.originalId);assertEquals(1,item.maxCount)
+        assertNotNull(item.battleBindingUse);assertNull(item.herbUse);assertNull(item.buyPrice)
+        val initial=SaveSnapshot(c.scene.version,163,7*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer),emptyMap(),money=100)
+        assertTrue(initial.validate(c))
+        val gift=OriginalNpcTalk.begin(initial,teacher.originalTalk!!,item)
+        assertTrue(gift.applied);assertEquals(1,gift.snapshot.inventory[item.id])
+        assertEquals(initial.money,gift.snapshot.money);assertEquals(initial.characters,gift.snapshot.characters)
+        assertTrue(gift.snapshot.validate(c));assertEquals(gift.snapshot,SaveSnapshot.parse(gift.snapshot.json().toString()))
+        val repeat=OriginalNpcTalk.begin(gift.snapshot,teacher.originalTalk!!,item)
+        assertEquals("rom.dialogue.173.3",repeat.nextDialogue);assertEquals(gift.snapshot,repeat.snapshot)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.76.0")
+        val fight=OpeningBattle(boss.group,c.battle!!,c.initialPlayer.copy(hp=1000,maxHp=1000),0,0)
+        assertTrue(fight.bindingAvailable(1,item));assertFalse(fight.bindingAvailable(0,item))
+        assertNotNull(fight.useBinding(1,item,false){0})
+        assertEquals(gift.snapshot.inventory,fight.inventoryAfterBattle(gift.snapshot.inventory))
+    }
     /** Bundled event7/load/save fixtures; actual island play is separately recorded. */
     fun testIslandCompositeIntroChestAndOnceFinalization(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

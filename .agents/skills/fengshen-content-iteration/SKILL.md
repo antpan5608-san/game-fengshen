@@ -302,3 +302,9 @@ caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导�
 - 静态可站的NPC邻格未必在当前桥的连通分量；本次村4驱动first邻格13,14反例实际失败，改只读probeFrom方向搜索选14,13，不放宽墙。5局部方法与282 JVM/仪器重新执行、真实LF checkout含新父pin及576/3584派生表通过；正常App仍待同产物门禁。
 
 - 原固定交通不得套门出口免费传送：先用现有Reader/ROM movement stream及实际接触按键核每个状态步、扣血/死亡位置、独立返程。跟踪probe-world-ferry.lua在官方FCEUX/Xvfb有界重跑、受控派生TSV一致；原回放仍受控缓存，不要求迁整目录。复用原局部export验证route/既存稳定对象hash/完整敌群，严格restore和4导出/完整世界回归/LFcheckout已运行。动作由统一状态持久、渲染不结算；JSON/真实正常路线/外部冷启须同候选仪器另验，未执行标NOT_RUN。初轮把整份旧地图JSON固定会漏掉合法的新出口格，应只核有证据的exact delta，禁止借此开放其他墙/海面。
+
+## 已验证的原NPC与特殊战斗资源定位（正常App另验）
+
+NPC callback表、world坐标event表和正文赠物selector是独立命名空间，不能按相同数字推成同一效果。局部teacher/森林/箱配方复用原Reader、已核RTS方向矩阵和既存物品定义；目标ROM受控按键/原字体hash与CPU表可复用，不推成正常Android通关。秘宝命令需核原菜单收集、目标、数量/used位及调度执行时机，不能套地图药草或在选择时先置效果。定向JVM/导出/实际LF checkout已执行；新App路径仅编译时继续NOT_RUN。
+
+需要证明干净目标恢复时直接调用现有ci_apk.restore(source,destination=空目录)，核完整manifest与文件集合。CLI restore的--output不会改变assets目的地；曾误用后已通过显式destination重跑纠正，不把同assets覆盖写成空目录验证。

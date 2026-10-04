@@ -46,7 +46,9 @@ data class ItemDefinition(val id:String,val name:String,val description:String?,
     val worldUse:WorldItemUseDefinition?=null) {
     // Body property preserves the published cross-APK constructor signature.
     var fieldProtectionUse:WorldFieldProtectionDefinition?=null;internal set
+    var battleBindingUse:BattleBindingUseDefinition?=null;internal set
 }
+data class BattleBindingUseDefinition(val evidence:String)
 data class AntidoteUseDefinition(val evidence:String)
 data class HerbUseDefinition(val healHp:Int,val consumeAtFullHp:Boolean,val evidence:String)
 data class EquipmentDefinition(val itemId:String,val originalId:Int,val slot:String,val attackBonus:Int,
@@ -283,6 +285,10 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        1->require(t.getString("evidence")=="game-data/provenance/world-teacher163-binding.json"&&
+                            npc.id=="rom.npc.163.1"&&npc.mapId==163&&rule.mapFlagId=="rom.map.163.flag.2"&&
+                            rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.9"&&
+                            rule.firstDialogue=="rom.dialogue.173.2"&&rule.repeatDialogue=="rom.dialogue.173.3")
                         17->require(t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
                             npc.id=="rom.npc.110.0"&&npc.mapId==110&&rule.mapFlagId=="rom.map.110.flag.2"&&
                             rule.witnessFlagId=="rom.global.7c8.1"&&rule.itemId=="rom.special.19"&&
@@ -395,6 +401,14 @@ object ContentLoader {
                     item.herbUse==null&&item.antidoteUse==null&&use.getInt("mapId")==67&&
                     use.getBoolean("reusable")&&use.getString("evidence")=="game-data/provenance/world-field67-item12.json")
                 item.fieldProtectionUse=WorldFieldProtectionDefinition(use.getString("evidence"))
+            }
+            o.optJSONObject("battleBindingUse")?.let{use->
+                require(item.id=="rom.special.9"&&item.category=="special"&&item.originalId==9&&item.maxCount==1&&
+                    item.buyPrice==null&&item.sellPrice==null&&item.worldUse==null&&item.herbUse==null&&
+                    use.getBoolean("reusable")&&use.getBoolean("consumesAction")&&!use.getBoolean("chooseTarget")&&
+                    use.getString("target")=="four-villains-current-battle"&&use.getInt("bindingMarker")==1&&
+                    use.getString("evidence")=="game-data/provenance/world-teacher163-binding.json")
+                item.battleBindingUse=BattleBindingUseDefinition(use.getString("evidence"))
             }
             item.id to item
         }

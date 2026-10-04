@@ -18,7 +18,7 @@ def run(cpu,entry,stops):
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--rom',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    p.add_argument('--map-id',type=int,action='append',choices=(76,107,108));a=p.parse_args()
+    p.add_argument('--map-id',type=int,action='append',choices=(76,99,107,108));a=p.parse_args()
     r=Reader(a.rom.read_bytes());bank=r.read(2,0x8000,32768);rows=['map\tnpc\tcategory\titem\tmax\tcase\tapplied\tquantityAfter\tflagAfter\tmask\tinitialRows'];failures=0
     for mid in (a.map_id or (107,108)):
         for n in extract_npcs(r,mid)['records']:

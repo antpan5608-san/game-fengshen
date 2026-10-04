@@ -553,6 +553,16 @@ class TouchTest:IsolatedGameTestCase(){
             send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
         };fail("Shop item $id never reached an accessible row: ${v.shopItemBounds(id)}, view=${v.width}x${v.height}, density=$dp")
     }
+    private fun scrollToBattleItem(v:GameView,id:String){
+        val method=GameView::class.java.getDeclaredMethod("battleItemLayout").apply{isAccessible=true}
+        val dp=v.resources.displayMetrics.density
+        for(i in 0..24){
+            if(v.battleItemBounds(id).h>=48*dp)return
+            val list=(method.invoke(v) as TouchModalLayout).list
+            val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,list.y+list.h*.18f)
+            send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
+        };fail("Original special $id never reached a real touch row")
+    }
     fun testTouchUxSelectionScrollAndAtomicEquipment(){
         val(activity,v)=launch();val base=v.currentSnapshot()
         val bag=v.content.itemDefinitions.keys.associateWith{2}
@@ -1781,7 +1791,19 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=v.currentSnapshot()
             val pills=((if(west)6 else 3)-(saved.inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0)*20
             val herbs=(10-(saved.inventory[HerbUse.ID]?:0)).coerceAtLeast(0)*15
-            return pills+herbs+if(west)0 else 200
+            // Budget the peak real cost of the whole buy/equip/restore/sell path,
+            // not only the initial weapon. Original random earnings vary.
+            val serviceBudget=if(west)0 else run {
+                val weapon=v.content.itemDefinitions.getValue("rom.weapon.3")
+                val armor=v.content.itemDefinitions.getValue("rom.armor.1")
+                val medicine=v.content.itemDefinitions.getValue("rom.medicine.12")
+                val inn=v.content.inns.getValue("rom.inn.1").price
+                val afterWeapon=weapon.buyPrice!!-weapon.sellPrice!!
+                val afterArmor=afterWeapon+armor.buyPrice!!-armor.sellPrice!!
+                maxOf(weapon.buyPrice,afterWeapon+armor.buyPrice,
+                    afterArmor+medicine.buyPrice!!,afterArmor+medicine.buyPrice-medicine.sellPrice!!+inn)
+            }
+            return pills+herbs+serviceBudget
         }
         if(v.currentSnapshot().money<neededSupplyMoney()){
             state("normal-earned-supply-start")
@@ -2387,6 +2409,7 @@ class TouchTest:IsolatedGameTestCase(){
                     else if(secondHall)600 else if(firstHall)520 else if(east)400 else 240,initial.enemies.single().definition.hp)
                 state("boss-entry")
             }
+            var bindingSubmitted=false
             val deadline=SystemClock.elapsedRealtime()+240000
             while(true){
                 var observed:Triple<OpeningBattle,BattlePresentation,Boolean>?=null
@@ -2396,6 +2419,10 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue("Normal $label encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
                 assertTrue("Normal $label defeat; no state repair or forced victory permitted",fight.phase!=BattlePhase.DEFEAT)
                 val displayedAction=presentation.action
+                if(island&&boss&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL&&displayedAction.actorId!=null){
+                    assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                    state("normal-binding-original-actor-order-effect")
+                }
                 if(boss&&!capturedBossSpecial&&presentation.screen==BattlePresentation.Screen.ACTING&&displayedAction?.kind==BattleActionKind.SPECIAL){
                     capturedBossSpecial=true;state("boss-original-special-action")
                 }
@@ -2418,7 +2445,18 @@ class TouchTest:IsolatedGameTestCase(){
                 if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)&&fight.inputHero!=null){
                     val acting=fight.inputHero!!
                     val heal=acting.hp<=acting.maxHp/2||(boss&&bossHerbs==0&&acting.hp<acting.maxHp)
-                    if(heal&&v.battleHerbCount()>0){
+                    if(island&&boss&&!bindingSubmitted){
+                        val id="rom.special.9";val count=v.currentSnapshot().inventory[id]
+                        assertEquals(1,count);val previous=fight.inputRevision
+                        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id)
+                        val selected=v.currentSnapshot();tap(v,center(v.battleItemBounds(id)))
+                        assertEquals(selected,v.currentSnapshot());assertEquals(previous,fight.inputRevision)
+                        val action=center(v.battleItemUseBounds())
+                        tap(v,action);assertEquals(previous+1,fight.inputRevision)
+                        send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(previous+1,fight.inputRevision)
+                        assertEquals(count,v.currentSnapshot().inventory[id]);bindingSubmitted=true
+                        state("normal-real-binding-command-selected-not-consumed")
+                    }else if(heal&&v.battleHerbCount()>0){
                         val before=fight.hero;val count=v.battleHerbCount()
                         tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
                         assertEquals(before,fight.hero);assertEquals(count,v.battleHerbCount())
@@ -2552,6 +2590,39 @@ class TouchTest:IsolatedGameTestCase(){
             assertNotNull("Persist must write the actual normal state",saved)
             assertEquals(v.currentSnapshot(),SaveSnapshot.parse(saved!!))
         }
+            fun fixedFerry(event:Int){
+                val rule=v.content.ferries.getValue("rom.ferry.$event");val before=v.currentSnapshot()
+                assertEquals(rule.start.mapId,before.mapId)
+                assertEquals(rule.start.x to rule.start.y,before.x/16 to before.y/16)
+                val expectedBegin=OriginalFerry.begin(before,rule,rule.start.direction,v.content.ferries.values)
+                assertTrue(expectedBegin.applied)
+                var expected=expectedBegin.snapshot
+                for(i in rule.legs.indices){
+                    val next=OriginalFerry.advance(expected,rule,i,v.content.ferries.values)
+                    assertTrue(next.applied);expected=next.snapshot
+                }
+                assertFalse("Normal supply must survive original boat costs without state repair",OriginalStatus.allDisabled(expected.characters))
+                val stick=layoutFor(v).stick;val middle=center(stick)
+                val point=if(rule.start.direction==Key.LEFT)Pair(stick.x+2f,middle.second)else Pair(middle.first,stick.y+stick.h-2f)
+                send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
+                val deadline=SystemClock.elapsedRealtime()+15000;var begun=false;var released=false;var done=false;var captured=false
+                while(!done){
+                    assertTrue("Actual fixed boat command did not settle",SystemClock.elapsedRealtime()<deadline)
+                    var observed:SaveSnapshot?=null
+                    instrumentation.runOnMainSync{
+                        observed=v.currentSnapshot();val pending=OriginalFerry.pending(observed!!.flags,v.content.ferries.values)
+                        if(pending!=null){begun=true
+                            if(!released){dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));released=true}}
+                        done=begun&&pending==null
+                    }
+                    if(begun&&!captured){state("normal-event$event-actual-boat-stage");captured=true}
+                    assertEquals(GameView.Layer.MAP,v.layer)
+                    if(!done)SystemClock.sleep(15)
+                }
+                if(!released)send(v,MotionEvent.ACTION_UP,listOf(point))
+                assertEquals(expected,v.currentSnapshot())
+                state("normal-event$event-exact-original-landing-no-free-heal")
+            }
         // Read-only route planning across the actual four floors. Every edge
         // is normal joystick input, including independently recorded stairs.
         fun treeRouteTo(goal:Triple<Int,Int,Int>):List<Key>?{
@@ -2647,6 +2718,33 @@ class TouchTest:IsolatedGameTestCase(){
             }
             if(!cold){
                 assertEquals(79,v.world.mapId);assertTrue(source.flags[victory]!=true)
+                // Source remains the actual same-candidate normal ferry save.
+                // Advice is optional; no possession lock is added to the map.
+                walkTo(7,12);assertEquals(16,v.world.mapId)
+                walkTo(150,135);fixedFerry(46);assertEquals(4,v.world.mapId)
+                walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+                walkTo(183,143);assertEquals(99,v.world.mapId);state("normal-five-dragon-original-entry")
+                walkTo(13,11);assertEquals(163,v.world.mapId)
+                walkTo(7,5);val teacherBefore=v.currentSnapshot()
+                assertTrue(teacherBefore.flags["rom.map.163.flag.2"]!=true)
+                tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+                assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                assertEquals(teacherBefore.money,v.currentSnapshot().money)
+                assertEquals(teacherBefore.characters,v.currentSnapshot().characters)
+                state("normal-teacher-original-gift-before-dialogue");dialogue()
+                val teacherOnce=v.currentSnapshot();talk();assertEquals(teacherOnce,v.currentSnapshot())
+                state("normal-teacher-repeat-no-second-gift")
+                walkTo(7,14);assertEquals(99,v.world.mapId);walkTo(8,51);assertEquals(16,v.world.mapId)
+                walkTo(146,150);assertEquals(4,v.world.mapId)
+                inn(4)
+                val supplyEntry=enterService(4,19)
+                val herbs=(10-(v.currentSnapshot().inventory[HerbUse.ID]?:0)).coerceAtLeast(0)
+                if(herbs>0)trade(HerbUse.ID,true,herbs)
+                leaveService(supplyEntry);walkTo(11,3);fixedFerry(45)
+                for(key in listOf(Key.UP,Key.UP,Key.RIGHT,Key.UP,Key.UP,Key.UP,Key.UP,Key.UP,Key.RIGHT,Key.RIGHT))step(key)
+                assertEquals(79,v.world.mapId);assertEquals(1,v.currentSnapshot().inventory["rom.special.9"])
+                state("normal-earned-gift-and-supply-original-island-return")
                 islandWalk(Triple(78,1,12));state("normal-original-first-stair-floor78")
                 resident("rom.npc.78.0");resident("rom.npc.78.1")
                 islandWalk(Triple(77,3,7));state("normal-original-second-stair-floor77")
@@ -2696,39 +2794,6 @@ class TouchTest:IsolatedGameTestCase(){
         if(ferry){
             assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
             state(if(cold)"cold-exact-normal-island-save"else"verified-village-source-no-state-grants")
-            fun fixedFerry(event:Int){
-                val rule=v.content.ferries.getValue("rom.ferry.$event");val before=v.currentSnapshot()
-                assertEquals(rule.start.mapId,before.mapId)
-                assertEquals(rule.start.x to rule.start.y,before.x/16 to before.y/16)
-                val expectedBegin=OriginalFerry.begin(before,rule,rule.start.direction,v.content.ferries.values)
-                assertTrue(expectedBegin.applied)
-                var expected=expectedBegin.snapshot
-                for(i in rule.legs.indices){
-                    val next=OriginalFerry.advance(expected,rule,i,v.content.ferries.values)
-                    assertTrue(next.applied);expected=next.snapshot
-                }
-                assertFalse("Normal supply must survive original boat costs without state repair",OriginalStatus.allDisabled(expected.characters))
-                val stick=layoutFor(v).stick;val middle=center(stick)
-                val point=if(rule.start.direction==Key.LEFT)Pair(stick.x+2f,middle.second)else Pair(middle.first,stick.y+stick.h-2f)
-                send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
-                val deadline=SystemClock.elapsedRealtime()+15000;var begun=false;var released=false;var done=false;var captured=false
-                while(!done){
-                    assertTrue("Actual fixed boat command did not settle",SystemClock.elapsedRealtime()<deadline)
-                    var observed:SaveSnapshot?=null
-                    instrumentation.runOnMainSync{
-                        observed=v.currentSnapshot();val pending=OriginalFerry.pending(observed!!.flags,v.content.ferries.values)
-                        if(pending!=null){begun=true
-                            if(!released){dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));released=true}}
-                        done=begun&&pending==null
-                    }
-                    if(begun&&!captured){state("normal-event$event-actual-boat-stage");captured=true}
-                    assertEquals(GameView.Layer.MAP,v.layer)
-                    if(!done)SystemClock.sleep(15)
-                }
-                if(!released)send(v,MotionEvent.ACTION_UP,listOf(point))
-                assertEquals(expected,v.currentSnapshot())
-                state("normal-event$event-exact-original-landing-no-free-heal")
-            }
             if(!cold){
                 assertEquals(4,v.world.mapId);walkTo(11,3);fixedFerry(45)
                 assertEquals(16,v.world.mapId);assertEquals(150 to 135,v.world.x/16 to v.world.y/16)
@@ -3976,6 +4041,43 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(computed,fight.hero);assertEquals(computedEnemies,fight.enemies.map{it.hp})
         assertEquals(BattlePresentation.Screen.COMMAND,p.screen);assertEquals(0,p.command)
         assertEquals(computedEnemies,fight.enemies.map{v.battleVisibleHp(it.slot)})
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    /** Isolated gesture/scheduler fixture; injected resources are NOT normal-play proof. */
+    fun testControlledBindingItemSelectionCancelAndSingleActorCommand(){
+        val(activity,v)=launch();val base=v.currentSnapshot();val rules=v.content.battle!!
+        val id="rom.special.9";val item=v.content.itemDefinitions.getValue(id)
+        val hero=v.content.initialPlayer.copy(hp=2000,maxHp=2000,strength=200,agility=200)
+        val girl=v.content.joinCharacters.getValue("xiaolongnv").copy(hp=2000,maxHp=2000,strength=200,agility=100)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(characters=listOf(hero,girl),inventory=mapOf(id to 1,HerbUse.ID to 2))))}
+        val checkpoint=v.currentSnapshot();val boss=rules.storyBattles.getValue("rom.npc.76.0")
+        val fight=OpeningBattle(boss.group,rules,hero,0,0)
+        fight.configureParty(listOf(hero,girl),mapOf(hero.id to 0,girl.id to 1),
+            mapOf(hero.id to 0,girl.id to 0),mapOf(hero.id to 0,girl.id to 0))
+        val p=BattlePresentation()
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-binding-gesture")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE);p.tick(400)}
+        assertTrue(fight.bindingAvailable(1,item))
+        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id);tap(v,center(v.battleItemBounds(id)))
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(0,fight.inputRevision)
+        tap(v,center(v.battleItemCloseBounds()));assertEquals(0,fight.inputRevision)
+        tap(v,center(v.battleCommandBounds(2)));scrollToBattleItem(v,id);tap(v,center(v.battleItemBounds(id)))
+        val action=center(v.battleItemUseBounds())
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));send(v,MotionEvent.ACTION_UP,listOf(action))
+        assertEquals(0,fight.inputRevision);assertEquals(checkpoint,v.currentSnapshot())
+        tap(v,action);assertEquals(1,fight.inputRevision);assertEquals(girl.id,fight.inputHero!!.id)
+        repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(1,fight.inputRevision)
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(BattlePresentation.Screen.COMMAND,p.screen)
+        instrumentation.runOnMainSync{v.active=false};SystemClock.sleep(200)
+        assertEquals(1,fight.inputRevision);assertEquals(checkpoint,v.currentSnapshot())
+        instrumentation.runOnMainSync{v.active=true}
+        tap(v,center(v.battleTargetBounds(fight.enemies.first().slot)))
+        assertEquals(BattlePresentation.Screen.ACTING,p.screen)
+        assertEquals(BattleActionKind.SPECIAL,p.action!!.kind);assertEquals(hero.id,p.action!!.actorId)
+        assertEquals(checkpoint,v.currentSnapshot());assertEquals(0,fight.herbsConsumed)
+        assertEquals(checkpoint.inventory,fight.inventoryAfterBattle(checkpoint.inventory))
+        screenshot(v,"world-island-controlled-binding-real-touch-single-command")
         instrumentation.runOnMainSync{activity.finish()}
     }
     /** Ordered-item and touch/persistence fixture; no normal-play or real-player-save claim. */

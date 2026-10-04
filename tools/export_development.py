@@ -758,7 +758,8 @@ def validate_world_chest_grant(reader,npc):
     path=npc['treasure']['evidence'];proof=load(ROOT/path)
     scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
             'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
-            'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35)}
+            'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35),
+            'game-data/provenance/world-five-dragon-chests.json':('five-dragon99-three-original-item-chests',21)}
     if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
@@ -770,6 +771,13 @@ def validate_world_chest_grant(reader,npc):
                 proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
                 [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(107,0,3,30),(107,1,2,7),(108,0,0,14)]:
             raise ValueError('Tree chest source, original CPU or reused capacity rules differ')
+    elif path=='game-data/provenance/world-five-dragon-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or len(raw.splitlines())!=22 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(99,0,2,2),(99,1,3,30),(99,2,0,9)]:
+            raise ValueError('Five-dragon chests require actual three records and capacity cases')
     elif path=='game-data/provenance/world-island-chests.json':
         reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
         if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
@@ -1156,6 +1164,62 @@ def validate_world_island_event7(reader):
     return p
 
 
+def validate_world_teacher163_binding(reader):
+    from forensics.fengshen246 import extract_npcs,extract_map,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-teacher163-binding.json';p=load(ROOT/path)
+    rules=dict(npcId='rom.npc.163.1',mapId=163,npcCell=[7,3],normalTalkCell=[7,5],normalTalkDirection='UP',
+        actionId=1,mapFlagId='rom.map.163.flag.2',itemId='rom.special.9',giftMessage=2,giftBeforeText=True,
+        flagBeforeGift=True,fullCategoryRetainsFlag=True,repeatMessage=3)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='five-dragon163-before-text-special9-and-original-battle-command' or p['rules']!=rules:
+        raise ValueError('Teacher163 actual gift order/identity differs')
+    required={(10,0xa160,42),(10,0xcb84,12),(10,0xcf29,15),(2,0xb481,21),(2,0xb60e,9),(2,0xa0eb,169),(2,0xa190,12),
+        (9,0xbe31,121),(9,0xb9f9,50),(9,0xb682,12),(9,0x890a+18,2),(9,0x8935,31),(9,0xabf3,80)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:raise ValueError('Teacher163 original sources differ')
+    for span in p['sources']:checked_span(reader,span)
+    for row,count,sha in zip(p['cpuExpected'],[256,5],['5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b','b0cd0432abb46c65aded0ef47e61513bb5dc7a930dcb1544ba8eeec7f35da46b']):
+        raw=(ROOT/row['path']).read_bytes()
+        if row['caseCount']!=count or row['failures']!=0 or row['sha256']!=sha or digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Teacher163 actual original selector/gift capacity differs')
+    if len(p['cpuExpected'])!=2 or p['probe']['path']!='tools/rom-extractor/probe-world-teacher163.py' or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Teacher163 probe/source expectations differ')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Teacher163 incomplete active font')
+    for g in font['glyphs']:
+        if charset[g['code']]!=g['character'] or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Teacher163 original text glyph differs')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.173.{i}'for i in range(4)]:raise ValueError('Teacher163 exact message scope differs')
+    for d in p['dialogues']:
+        t=extract_text(reader,173,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range'] or d['source']['pointerEvidence']!=t['pointerEvidence'] or decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Teacher163 original message differs')
+    records=extract_npcs(reader,163)['records']
+    if len(records)!=2 or len(p['npcs'])!=2:raise ValueError('Teacher163 actor extent differs')
+    for n,rec in zip(p['npcs'],records):
+        raw=bytes.fromhex(rec['rawHex']);i=rec['index'];repeat=raw[2]if raw[2]!=255 else raw[1]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstDialogue'],n['repeatDialogue'],n['firstEffects'])!= \
+                (f'rom.npc.163.{i}',163,[(rec[k]-120)//16 for k in ['xCandidate','yCandidate']],raw[0],rec['range'],f'rom.dialogue.173.{raw[1]}',f'rom.dialogue.173.{repeat}',[]):
+            raise ValueError('Teacher163 original actor/text differs')
+        if i==1 and n['originalTalk']!=dict(actionId=1,mapFlagId='rom.map.163.flag.2',witnessFlagId='',itemId='rom.special.9',evidence=path):
+            raise ValueError('Teacher163 cannot create another gate or gift')
+        if i==0 and (raw[12]!=0 or n.get('originalTalk')):raise ValueError('Teacher163 disciple has no inferred side effects')
+    t=p['terrain'];m=extract_map(reader,163);c=m['collisionCandidate'];classes=set(reader.read(c['module'],c['cpuAddress'],256)[v]for row in m['grid']for v in row)
+    reuse=t['ruleReuse'];room=validate_world_room171_resources(reader)
+    if (t['mapId'],t['tilesetId'],t['gridSha256'],t['walkableClasses'],classes)!=(163,2,m['gridSha256'],[0,2],{0,1,2}) or \
+            reuse['path']!='game-data/provenance/world-room171-resources.json' or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or reuse['cpuExpected']!=room['cpuExpected']:
+        raise ValueError('Teacher163 cannot open room walls or invent another terrain profile')
+    if any(t['palette'][i]!=t['staticPalette']['palette'][i]for i in range(32)if i%4):raise ValueError('Teacher163 settled palette differs')
+    for span in t['staticPalette']['source']:checked_span(reader,span)
+    item=p['items'][0];use=dict(target='four-villains-current-battle',bindingMarker=1,chooseTarget=False,reusable=True,consumesAction=True,evidence=path)
+    ptr=reader.word(2,reader.word(2,0xe610)+18)
+    if len(p['items'])!=1 or (item['id'],item['category'],item['originalId'],item['maxCount'],item['name'])!=('rom.special.9','special',9,1,'遁龍樁') or \
+            item['battleBindingUse']!=use or any(k in item for k in ['buyPrice','sellPrice','herbUse','worldUse']) or \
+            item['source']['nameRange']['cpuAddress']!=ptr or checked_span(reader,item['source']['nameRange'])!=reader.read(2,ptr,5):
+        raise ValueError('Teacher163 special9 cannot infer price, HP or other use')
+    observed=p['battleObservation']
+    if observed['selection']!=dict(commandKind=2,itemId=9,nextActor=1,quantityBefore=1,quantityAfter=1,usedBitAfter=False) or \
+            observed['effect']!=dict(markerBefore=0,markerAfter=1,quantityAfter=1):raise ValueError('Special9 command/consumption differs')
+    return p
+
 def validate_world_island_binding(reader,enemy):
     path='game-data/provenance/world-island-binding.json';p=load(ROOT/path)
     required={(9,0xaba8,13),(9,0xac25,13),(9,0xabf3,80),(9,0x890a+18,2),(9,0x8935,31),(9,0x9270,18)}
@@ -1327,6 +1391,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
                     original['tilesetId']!=2 or set(collision)!={0,1,2}or allowed!=[0,2]or recipe['palette']!=room['map']['palette']:
                 raise ValueError('Room171 collision scope or reviewed palette differs')
+        if recipe.get('teacher163CollisionEvidence'):
+            room=validate_world_teacher163_binding(reader)
+            if recipe['teacher163CollisionEvidence']!='game-data/provenance/world-teacher163-binding.json' or mid!=163 or \
+                    allowed!=[0,2] or recipe['palette']!=room['terrain']['palette'] or recipe.get('directionalCollision'):
+                raise ValueError('Teacher163 collision/palette differs')
         forest=recipe.get('forestCollisionEvidence')
         if forest:
             proof=load(ROOT/forest)
@@ -1342,15 +1411,21 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         recipe['palette']!=binding['palette']['palette'] or \
                         {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
                     raise ValueError('Tree floor lacks actual forest dispatcher, grid or palette')
-            elif forest!='game-data/provenance/world-forest101-terrain.json' or mid!=101 or original['tilesetId']!=5 or \
+            elif (mid,forest,proof['scopeRevision']) not in \
+                    [(101,'game-data/provenance/world-forest101-terrain.json','map101-foot-mode-zero-full-rts-dispatch'),
+                     (99,'game-data/provenance/world-forest99-terrain.json','map99-foot-mode-zero-full-rts-dispatch')] or original['tilesetId']!=5 or \
                     proof['romSha256']!=SHA256 or proof['gridSha256']!=original['gridSha256'] or \
-                    proof['scopeRevision']!='map101-foot-mode-zero-full-rts-dispatch' or \
                     proof['cpuCaseCount']!=144 or proof['cpuFailures']!=0 or proof['mode']!=0 or \
                     proof['sourceEntry']!=0xcdc0 or proof['targetEntry']!=0xd197 or \
                     set(collision)!={0,1,3,7,8,9} or allowed!=[0,3,7,8,9] or \
                     proof['sourceEdges']!={'3':['LEFT','RIGHT']} or proof['targetEdges']!={} or \
                     {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
                 raise ValueError('Forest foot movement lacks its complete original RTS-dispatch scope')
+            if mid==99:
+                reuse=proof['ruleReuse']
+                if reuse['path']!='game-data/provenance/world-forest101-terrain.json' or \
+                        digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or recipe['palette']!=proof['palette']:
+                    raise ValueError('Forest99 must reuse the exact original foot dispatcher and its own palette')
             for span in proof['sources']:checked_span(reader,span)
             if proof['activeCpuSha256']!=digest(reader.read(0,0x8000,0x8000)) or \
                     digest((ROOT/proof['cpuExpectedPath']).read_bytes())!=proof['cpuExpectedSha256']:
@@ -1759,6 +1834,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item['id']=='rom.special.9':
+                    proof=validate_world_teacher163_binding(reader)
+                    if item!=proof['items'][0]:raise ValueError('Teacher163 special9 differs from actual gift/command')
+                    continue
                 if item['id']=='rom.special.19':
                     room=validate_world_room171_resources(reader)
                     if item!=room['items'][0] or item['originalId']!=19 or item['maxCount']!=1 or \
@@ -1874,7 +1953,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('originalTalk') and npc['mapId']==171:
+        if npc['mapId']==163:
+            proof=validate_world_teacher163_binding(reader)
+            expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in scene['dialogues']for d in proof['dialogues']):
+                raise ValueError('Teacher163 actor or actual dialogue differs')
+        elif npc.get('originalTalk') and npc['mapId']==171:
             room=validate_world_room171_resources(reader)
             expected=next((n for n in room['npcs']if n['id']==npc['id']),None)
             if npc!=expected or any(d not in evidence['dialogues']for d in room['dialogues'])or \
