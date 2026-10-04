@@ -1,8 +1,11 @@
 """Real, variable normal-game earnings must cover the full service path."""
-import json,unittest
+import json,re,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class ServiceBudgetTest(unittest.TestCase):
+ def test_current_task_keeps_required_runtime_identity(self):
+  task=(ROOT/'docs/current-task.md').read_text(encoding='utf-8')
+  self.assertEqual(['WORLD-FULL-01'],re.findall(r'^task_id:\s*([A-Z0-9-]+)',task,re.M))
  def test_original_trade_peak_is_covered_without_gifting_or_changing_prices(self):
   p=json.loads((ROOT/'game-data/provenance/world-cave85-content.json').read_text(encoding='utf-8'))
   base=json.loads((ROOT/'game-data/provenance/town01.json').read_text(encoding='utf-8'))

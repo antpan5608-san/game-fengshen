@@ -1,5 +1,7 @@
 # 当前任务：WORLD-FULL-01
 
+task_id: WORLD-FULL-01
+
 继续全部有效原版地图、商店与住宿的连续恢复。真实墙、地形、单向出口、剧情与道具条件保留；不改数值、不赠资源、不清档。原两份Actions、签名、reviewer、同提交/同产物审核与两个Fengshen对象不变，Language不变。重大可玩进展通过实际App运行、存档与原门禁即阶段发布，不等待非阻断欠账清零。
 
 ## 当前有效状态（2026-10-04T07:18Z）
@@ -13,12 +15,14 @@
 - GitHub API/原Actions/审批实际恢复；Git HTTPS写入失败已记录，不改全局认证、不泄露凭据。使用已验证严格树/hash/非force Git API提交；来源冻结期间不混入独立内容。
 - 独立work/world-island保存c46/48图/255文件及202世界Python回归PASS，备份work/world-island-c46/a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4；继续c47女儿村真实连接/共享服务/原对白/隐藏參須。该分支新内容正常Android仍NOT_RUN，不拿本c41候选背书。
 
+- 本次inspect37185327792在查询前因任务文档缺task_id失败，UNAVAILABLE，非服务器健康结论；已恢复原必需字段并用脚本实际正则核对。v63/run37185326471构建未验收即主动取消，防止浪费runner与旧来源审核。修后新来源重新构建，不用旧产物背书。
+
 ## 巡检与限制
 
 最近实际inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289，共3720事件；普通真机8会话、模拟器0、测试0、清理0。精确旧v26 apk_update ProtocolException1保持ISSUES_FOUND/根因UNCONFIRMED；不拿旧日志证明新候选健康。发布前后须新巡检。声音、一加13T NOT_RUN。
 
 ## 下一条实际动作
 
-提交上述驱动与证据检查，原workflow构建新的v63候选；同产物正常流程/原审批门禁通过才阶段发布。等待期间继续隔离c47实现与局部回归，不改候选来源。新失败读取真实断言后修受影响部分，不无限重试、不主动在单节点结案。
+提交上述驱动与证据检查，原workflow构建新的v64候选；同产物正常流程/原审批门禁通过才阶段发布。等待期间继续隔离c47实现与局部回归，不改候选来源。新失败读取真实断言后修受影响部分，不无限重试、不主动在单节点结案。
 
 累计十类权威清单：docs/delivery-status.md。路线：docs/original-playthrough-roadmap.md。历史状态完整保留docs/history/world-full01-runtime-checkpoints.md；旧“当前有效”标题均为历史，不与本任务入口竞争。
