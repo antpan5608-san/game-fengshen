@@ -586,7 +586,9 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
         'game-data/provenance/world-seventh-side-terrain.json':
         ('seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero',864,{69,158,159}),
         'game-data/provenance/world-rebirth-terrain.json':
-        ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86})}
+        ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86}),
+        'game-data/provenance/world-island-terrain.json':
+        ('island76-through78-ground-and-upper-plane-bridge-zero',1536,{76,77,78})}
     if evidence_path not in scopes:raise ValueError('Unreviewed terrain evidence path')
     scope,count,maps=scopes[evidence_path];proof=load(ROOT/evidence_path)
     if proof['romSha256']!=SHA256 or proof['scopeRevision']!=scope or map_id not in maps or \
@@ -607,7 +609,15 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
             proof['encounterGate']['testCount']!=480 or proof['encounterGate']['failures']!=0:
         raise ValueError('Terrain/encounter semantics differ from original CPU scope')
     required={(0,0xca98,29),(0,0xcc87,215),(0,0xce35,29),(0,0xd099,153),(0,0xd214,115),
-        (0,0x874c,34),(11,0xc0b3,100),(11,0xed87+23,46)}
+        (0,0x874c,34),(11,0xc0b3,100)}
+    if evidence_path=='game-data/provenance/world-island-terrain.json':
+        required.add((11,0xed87+76,3))
+        probe=proof['probe'];table=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if probe['path']!='tools/rom-extractor/probe-world-island-terrain.py' or \
+                digest((ROOT/probe['path']).read_bytes())!=probe['sha256'] or \
+                (probe['verifiedCases'],probe['differences'])!=(1536,0) or len(table.splitlines())!=1537:
+            raise ValueError('Island terrain requires its actual bounded probe and complete matrix')
+    else:required.add((11,0xed87+23,46))
     if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
         raise ValueError('Hell terrain lacks original plane, direction, occlusion or encounter code')
     for span in proof['sources']:checked_span(reader,span)
@@ -747,7 +757,8 @@ def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
     path=npc['treasure']['evidence'];proof=load(ROOT/path)
     scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
-            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21)}
+            'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
+            'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35)}
     if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
@@ -759,6 +770,14 @@ def validate_world_chest_grant(reader,npc):
                 proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
                 [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(107,0,3,30),(107,1,2,7),(108,0,0,14)]:
             raise ValueError('Tree chest source, original CPU or reused capacity rules differ')
+    elif path=='game-data/provenance/world-island-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256'] or len(raw.splitlines())!=36 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=\
+                [(76,4,2,7),(76,5,0,1),(76,7,0,14),(76,8,2,21),(76,9,0,4)]:
+            raise ValueError('Island item chests require their actual five records and capacity cases')
     from forensics.fengshen246 import extract_npcs
     matches=[b for b in proof['bindings']if npc['id']==f'rom.npc.{b["mapId"]}.{b["npcIndex"]}']
     if len(matches)!=1:raise ValueError('Chest outside actual raw-record scope')
@@ -1081,6 +1100,140 @@ def validate_world_village4_resources(reader):
     return p
 
 
+def validate_world_island_event7(reader):
+    """The actual composite story loader and its post-battle boundary, not an ordinary encounter."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-island-event7.json';p=load(ROOT/path)
+    entities=[dict(slot=s,sourceType=t,enemyId=e)for s,t,e in [(0,189,152),(2,190,153),(4,191,154),(6,192,155)]]
+    expected=dict(mapId=76,triggerCell=[12,12],eventId=7,sourceType=169,groupId=62,entities=entities,
+        openingDestination=[9,11],completedSteps=4,accumulateEncounterSteps=True,dialogueIds=[f'rom.dialogue.86.{i}'for i in range(3,7)],
+        completionFlag='rom.map.76.flag.128',globalVictoryFlag='rom.global.7c6.16',removedSpriteIds=[162,165,140,143],
+        overlayContext=199,victoryDialogue=False,extraEventReward=False)
+    required={(11,0xd8cb,22),(11,0xda90,3),(11,0xcb5e+14,2),(11,0xce9f,69),(11,0xd043,30),(11,0xcd9a,81),
+        (0,0xf68e,61),(1,0x8d39,93),(1,0xa93c+62*4,4),(1,0xaa40,2),(1,0xaa42,9)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='island76-coordinate-event7-four-original-villains' or p['rules']!=expected or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Island event7 identity, movement, completion or composite source differs')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.read(11,0xda90,3)!=bytes([12,12,0]) or reader.word(1,0xa93c+62*4)!=0xaa40 or \
+            reader.word(1,0xaa40)!=0xaa42 or reader.read(1,0xaa42,9)!=bytes.fromhex('01bd03be05bf07c000') or \
+            [reader.read(1,0x9ea3+v['sourceType'])[0]for v in entities]!=[152,153,154,155]:
+        raise ValueError('Forced group is not the exact original four source pairs')
+    cpu=p['victoryCpu'];raw=(ROOT/cpu['tablePath']).read_bytes()
+    if (cpu['testCount'],cpu['failures'])!=(40,0) or len(raw.splitlines())!=41 or digest(raw)!=cpu['tableSha256'] or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-island-victory.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Island event7 lacks actual original finalization boundary cases')
+    move=p['movement'];table=(ROOT/move['tablePath']).read_bytes()
+    if digest(table)!=move['tableSha256'] or move['before']!={'cell':[12,13],'hp':100,'poison':2,'encounterSteps':0} or \
+            move['after']!={'cell':[9,11],'hp':95,'poison':2,'encounterSteps':5} or move['triggerStepSeparate']is not True:
+        raise ValueError('Original poisoned trigger/script step accounting differs')
+    rows=[line.split('\t')for line in table.decode('ascii').splitlines()[1:]if line.startswith('aligned-')]
+    actual=[(int(v[2]),int(v[3]),int(v[4]),int(v[5]),int(v[10]))for v in rows[:5]]
+    if actual!=[(12,12,99,2,1),(11,12,98,2,2),(10,12,97,2,3),(9,12,96,2,4),(9,11,95,2,5)]:
+        raise ValueError('Movement must retain four actual script steps after the separate trigger step')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or any(s['length']!=2048 for s in font['sources']):raise ValueError('Island dialogue font context missing')
+    for g in font['glyphs']:
+        pixels=glyph_pixels(data,0,g['code'])
+        if charset[g['code']]!=g['character']or digest(bytes(v for row in pixels for v in row))!=g['pixelsSha256']:
+            raise ValueError('Island actual glyph transcription differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Island glyph evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=expected['dialogueIds']:raise ValueError('Missing actual four pre-battle dialogues')
+    for d in p['dialogues']:
+        original=extract_text(reader,86,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=original['range']or d['source']['pointerEvidence']!=original['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Island intro text differs from actual original group86')
+    boss=p['boss'];group={'id':62,'entities':[{k:v for k,v in e.items()if k!='sourceType'}for e in entities]}
+    intro=dict(dialogueIds=expected['dialogueIds'],destinationCell=[9,11],completedSteps=4,accumulateEncounterSteps=True,evidence=path)
+    if any(boss[k]!=v for k,v in dict(id='rom.boss.152',npcId='rom.npc.76.0',mapId=76,eventId=7,eventArgument=0,
+            sourceType=169,enemyId=152,group=group,flagId='rom.map.76.flag.128',victoryFlags=['rom.global.7c6.16'],
+            victoryFlagEvidence=path,finalizeWithoutDialogue=True,commitAfterDialogue=False,
+            entryTrigger=dict(mapId=76,x=12,y=12,evidence=path),intro=intro,victoryDialogue='rom.dialogue.86.6').items()) or \
+            boss['npcSource']!=extract_npcs(reader,76)['records'][0]['range'] or boss['ruleSources']!=p['sources'] or boss.get('continuation'):
+        raise ValueError('Island story must keep the actual composite battle and no invented victory dialogue')
+    for recipe in p['graphics'].values():scoped_observed_graphic(reader,recipe)
+    return p
+
+
+def validate_world_island_binding(reader,enemy):
+    path='game-data/provenance/world-island-binding.json';p=load(ROOT/path)
+    required={(9,0xaba8,13),(9,0xac25,13),(9,0xabf3,80),(9,0x890a+18,2),(9,0x8935,31),(9,0x9270,18)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='four-villains-original-marker1-and-special9-not-free-damage' or \
+            p['enemyIds']!=[152,153,154,155] or p['requiredMarker']!=1 or p['itemOriginalId']!=9 or \
+            enemy['id']not in p['enemyIds']or enemy.get('requiredBindingMarker')!=1 or enemy.get('bindingEvidence')!=path or \
+            (p['damageCases'],p['damageFailures'],p['effectCases'],p['effectFailures'])!=(80,0,32,0) or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            reader.read(9,0xaba8,4)!=bytes([152,153,154,155])or reader.read(9,0xac25,4)!=bytes([1]*4)or \
+            reader.word(9,0x890a+18)!=0x8935:
+        raise ValueError('Four villains must not bypass original battle binding protection')
+    for span in p['sources']:checked_span(reader,span)
+    for key,sha,length in [('damageTablePath','damageSha256',81),('effectTablePath','effectSha256',33)]:
+        raw=(ROOT/p[key]).read_bytes()
+        if digest(raw)!=p[sha]or len(raw.splitlines())!=length:raise ValueError('Original binding CPU boundaries differ')
+    if p['probePath']!='tools/rom-extractor/probe-world-island-protection.py'or digest((ROOT/p['probePath']).read_bytes())!=p['probeSha256']:
+        raise ValueError('Original binding probe identity differs')
+    return p
+
+
+def validate_world_island_talk(reader,npc):
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-island-talk31.json';p=load(ROOT/path);cpu=p['cpu']
+    expected=dict(mapId=78,actionId=31,witnessFlagId='rom.global.7c6.16',messageGroup=88,firstMessages=[0,1],repeatMessage=2,noRewards=True,noWorldEvent=True)
+    required={(10,0xa160,42),(10,0xcb08+62,2),(10,0xccac,26),(10,0xcf1d,21),(0,0xd493+156,2)}
+    table=(ROOT/cpu['tablePath']).read_bytes()
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map78-actual-npc-callback31-not-world-event31' or p['rules']!=expected or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            (cpu['caseCount'],cpu['failures'],cpu['callbackAddress'],cpu['noWorldEvent31'])!=(1024,0,0xccac,True) or \
+            digest(table)!=cpu['tableSha256'] or len(table.splitlines())!=1025 or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-island-talk.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Island NPC31 must use the actual callback, not unrelated world event31')
+    for span in p['sources']:checked_span(reader,span)
+    records=extract_npcs(reader,78)['records'];index=next((i for i in range(2)if npc['id']==f'rom.npc.78.{i}'),None)
+    if index is None:raise ValueError('Unknown original island resident')
+    record=records[index];raw=checked_span(reader,record['range']);first=f'rom.dialogue.88.{index}';repeat='rom.dialogue.88.2'
+    rule=dict(actionId=31,mapFlagId=f'rom.map.78.flag.{1<<index}',witnessFlagId='rom.global.7c6.16',itemId='',messageDialogues={'0':first,'2':repeat},evidence=path)
+    if p['records']!=[n['range']for n in records] or list(raw[:3])!=[165,index,2] or list(raw[12:14])!=[31,1<<index] or \
+            (npc['mapId'],npc['cell'],npc['spriteId'],npc['firstDialogue'],npc['repeatDialogue'],npc['originalTalk'],npc['firstEffects'])!= \
+            (78,[(record[k]-120)//16 for k in ('xCandidate','yCandidate')],165,first,repeat,rule,[]) or npc['source']['record']!=record['range']:
+        raise ValueError('Island resident record, no-reward dialogue or completion bit differs')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or any(s['length']!=2048 for s in font['sources']):raise ValueError('Group88 font context missing')
+    for g in font['glyphs']:
+        pixels=glyph_pixels(data,0,g['code'])
+        if charset[g['code']]!=g['character']or digest(bytes(v for row in pixels for v in row))!=g['pixelsSha256']:
+            raise ValueError('Island group88 actual glyph transcription differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Group88 glyph evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.88.{i}'for i in range(3)]:raise ValueError('Original resident messages incomplete')
+    for d in p['dialogues']:
+        original=extract_text(reader,88,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=original['range']or d['source']['pointerEvidence']!=original['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Island resident text differs from original group88')
+    return p
+
+
+def validate_world_island_money(reader,npc):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-island-chests.json';p=load(ROOT/path);m=p['money'];record=extract_npcs(reader,76)['records'][6]
+    raw=checked_span(reader,record['range']);t=npc['moneyTreasure']
+    required={(10,0xa740,92),(2,0x9fb5,58),(2,0xc530,32),(2,0x86cd,41),(2,0xe616,2)}
+    table=(ROOT/m['tablePath']).read_bytes()
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='island76-five-original-item-chests-and-money100' or \
+            (m['testCount'],m['failures'],m['categoryId'],m['originalId'],m['amount'],m['moneyCap'])!=(35,0,4,8,100,999999) or \
+            npc['id']!='rom.npc.76.6' or npc['mapId']!=76 or npc['cell']!=[2,5] or not npc.get('openedSprite') or npc.get('treasure') or \
+            npc['source']['record']!=record['range'] or m['npcSource']!=record['range'] or list(raw[:3])!=[144,4,8] or raw[13]!=4 or \
+            t!=dict(flagId='rom.map.76.flag.4',amount=100,moneyCap=999999,evidence=path) or \
+            digest(table)!=m['tableSha256'] or len(table.splitlines())!=36 or \
+            m['probePath']!='tools/rom-extractor/probe-world-island-money.py' or digest((ROOT/m['probePath']).read_bytes())!=m['probeSha256'] or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in m['sources']}!=required:
+        raise ValueError('Money chest lacks its original distinct once/amount/cap boundary')
+    for span in m['sources']:checked_span(reader,span)
+    if checked_span(reader,m['amountSource'])!=bytes([100,0])or reader.word(2,reader.word(2,0xe616)+16)!=100:
+        raise ValueError('Money100 must use actual category4/id8 amount table')
+    return m
+
+
 def validate_world_ferry_resources(reader):
     """Two fixed original scripts and current island encounter inputs, not sea travel."""
     from forensics.fengshen246 import extract_npcs
@@ -1252,7 +1405,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
             elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
-                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero'):
+                    'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero',
+                    'island76-through78-ground-and-upper-plane-bridge-zero'):
                 validate_world_hall_batch_terrain(reader,mid,terrain['evidence'])
                 if set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')
@@ -1351,6 +1505,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if category is None or enemy.get('loot')!={'category':category,'itemId':item_id,'threshold':tail[3]}:
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
+            if enemy['id'] in [152,153,154,155]:validate_world_island_binding(reader,enemy)
+            elif any(k in enemy for k in ('requiredBindingMarker','bindingEvidence')):raise ValueError('Unreviewed battle protection identity')
             if enemy['behaviorByte'] not in (1,2,4) and any(k in enemy for k in ('specialBaseDamage','specialSource','specialDamageEvidence')):
                 raise ValueError('Special damage cannot be assigned to an unevidenced behavior')
             if enemy['behaviorByte']==3:
@@ -1469,8 +1625,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Cave story source/trigger differs')
                     raw=checked_span(reader,boss['actorScriptSource'])
                     if raw!=reader.read(11,0xc4b6,9):raise ValueError('Original cave actor script differs')
+                elif trigger['evidence']=='game-data/provenance/world-island-event7.json':
+                    original=validate_world_island_event7(reader)
+                    if boss!=original['boss']:raise ValueError('Island composite story differs from verified scoped definition')
                 else:raise ValueError('Coordinate story requires verified phase semantics')
-                if not boss.get('commitAfterDialogue') or boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128':
+                if (not boss.get('commitAfterDialogue') and not (trigger['evidence']=='game-data/provenance/world-island-event7.json' and boss.get('finalizeWithoutDialogue'))) or boss['flagId']!=f'rom.map.{boss["mapId"]}.flag.128':
                     raise ValueError('Coordinate story phase or completion differs')
             else:
                 raw=checked_span(reader,boss['npcSource'])
@@ -1507,7 +1666,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Hell hall source or message/event instruction differs')
                 elif boss['flagId']!=f'rom.event.{boss["mapId"]}.{boss["eventId"]}.{boss["eventArgument"]}':
                     raise ValueError('Story flag must retain original event identity')
-            if boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
+            if boss.get('entryTrigger',{}).get('evidence')=='game-data/provenance/world-island-event7.json':
+                if boss!=validate_world_island_event7(reader)['boss']:
+                    raise ValueError('Original composite story group differs')
+            elif boss['group']['entities']!=[{'slot':3,'enemyId':boss['enemyId']}] or reader.read(1,0x9ea3+boss['sourceType'])[0]!=boss['enemyId']:
                 raise ValueError('Original story enemy source differs')
             for span in boss['ruleSources']:checked_span(reader,span)
             combat.setdefault('bosses',[]).append(boss)
@@ -1724,6 +1886,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc!=expected or any(d not in evidence['dialogues'] and d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
                 raise ValueError('Village4 actor/dialogue/graphic differs')
+        elif npc.get('originalTalk') and npc['mapId']==78:
+            proof=validate_world_island_talk(reader,npc)
+            if any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Island resident dialogue missing')
         elif npc.get('originalTalk'):
             from forensics.fengshen246 import extract_npcs
             path='game-data/provenance/world-tree107-talk.json';proof=load(ROOT/path)
@@ -1788,6 +1953,20 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
+        if npc.get('automaticStoryOnly') or npc.get('removedFlagId'):
+            from forensics.fengshen246 import extract_npcs
+            proof=validate_world_island_event7(reader)
+            index=next((i for i in range(4)if npc['id']==f'rom.npc.76.{i}'),None)
+            if index is None:raise ValueError('Unknown automatic story actor')
+            record=extract_npcs(reader,76)['records'][index];raw=checked_span(reader,record['range'])
+            cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+            if npc['mapId']!=76 or npc['cell']!=cell or npc['spriteId']!=raw[0] or \
+                    npc['source']['record']!=record['range'] or npc['firstEffects'] or npc.get('repeatDialogue') or \
+                    npc['firstDialogue']!=proof['rules']['dialogueIds'][index] or npc.get('automaticStoryOnly')is not True or \
+                    npc.get('removedFlagId')!='rom.map.76.flag.128' or \
+                    npc.get('automaticStoryEvidence')!='game-data/provenance/world-island-event7.json':
+                raise ValueError('Automatic island actor identity, disappearance or side effects differ')
+        if npc.get('moneyTreasure'):validate_world_island_money(reader,npc)
         if not npc.get('treasure'):continue
         if npc['treasure'].get('categoryGrant') is not None:
             validate_world_chest_grant(reader,npc)

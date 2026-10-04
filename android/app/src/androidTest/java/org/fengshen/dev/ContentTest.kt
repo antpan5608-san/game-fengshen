@@ -13,6 +13,42 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Bundled event7/load/save fixtures; actual island play is separately recorded. */
+    fun testIslandCompositeIntroChestAndOnceFinalization(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in listOf(76,77,78))assertEquals(16,c.scenes.getValue(mid).width)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.76.0");val intro=boss.intro!!
+        assertEquals(listOf(0,2,4,6),boss.group.members.map{it.slot})
+        assertEquals(listOf(152,153,154,155),boss.group.members.map{it.enemyId})
+        assertTrue(boss.finalizeWithoutDialogue)
+        val hero=c.initialPlayer.copy(hp=100,maxHp=100,statusMask=OriginalStatus.POISON)
+        val old=SaveSnapshot("opening-segment-001-c41",76,12*16+8,12*16+8,Key.UP,
+            listOf(hero),mapOf(HerbUse.ID to 4),money=1019,encounterSteps=1)
+        assertTrue(old.validate(c));var pending=StoryFollowup.begin(old,intro).snapshot
+        assertEquals(96,pending.characters.single().hp);assertEquals(5,pending.encounterSteps)
+        assertEquals(9,pending.x/16);assertEquals(11,pending.y/16)
+        for(id in intro.continuation.dialogueIds){
+            assertTrue(pending.validate(c));pending=SaveSnapshot.parse(pending.json().toString())
+            assertEquals(id,intro.pendingDialogue(pending.flags))
+            pending=StoryFollowup.advance(pending,intro,id).snapshot
+        }
+        assertTrue(pending.validate(c));assertTrue(boss.triggersAt(76,9,11,pending.flags))
+        val final=pending.copy(flags=boss.rewardFlags(pending.flags))
+        assertTrue(final.validate(c));assertFalse(boss.triggersAt(76,12,12,final.flags))
+        assertFalse(final.flags[boss.pendingFlag]==true)
+        assertEquals(final.flags,boss.rewardFlags(final.flags))
+        val beforeScene=c.sceneForState(76,emptyMap())!!;val afterScene=c.sceneForState(76,final.flags)!!
+        for(npc in c.npcs.filter{it.mapId==76&&it.automaticStoryOnly}){
+            assertTrue(c.npcVisible(npc,emptyMap()));assertFalse(c.npcVisible(npc,final.flags))
+            assertNotNull(beforeScene.check(npc.x,npc.y));assertNull(afterScene.check(npc.x,npc.y))
+        }
+        val money=c.npcs.single{it.id=="rom.npc.76.6"}.moneyTreasure!!
+        val opened=WorldItems.openMoneyTreasure(final,money)
+        assertTrue(opened.applied);assertEquals(final.money+100,opened.snapshot.money)
+        assertTrue(opened.snapshot.validate(c));assertEquals(opened.snapshot,SaveSnapshot.parse(opened.snapshot.json().toString()))
+        assertEquals(opened.snapshot,WorldItems.openMoneyTreasure(opened.snapshot,money).snapshot)
+        assertEquals(final.inventory,opened.snapshot.inventory);assertEquals(final.characters,opened.snapshot.characters)
+    }
     /** Isolated original contact/poison snapshots; not a normal-route recording. */
     fun testOriginalFerryEverySavedStageAndExactDockScope(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -69,7 +105,7 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(146 to 150,back.spawnX to back.spawnY);assertTrue(back.preserveArrivalDirection)
         val old=SaveSnapshot("opening-segment-001-c39",110,7*16+8,6*16+8,Key.LEFT,
             listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
-            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,"rom.original.npc.context.207" to true),1019)
+            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),1019)
         assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
     }
 

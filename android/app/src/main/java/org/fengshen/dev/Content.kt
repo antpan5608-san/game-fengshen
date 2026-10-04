@@ -29,6 +29,9 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var clinicId:String?=null;internal set
     var originalTalk:OriginalNpcTalkDefinition?=null;internal set
     var worldItemTarget:WorldObjectTarget?=null;internal set
+    var automaticStoryOnly:Boolean=false;internal set
+    var removedFlagId:String?=null;internal set
+    var moneyTreasure:MoneyTreasureDefinition?=null;internal set
 }
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
@@ -95,11 +98,13 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     private var stateFlags:Map<String,Boolean>?=null
     fun worldItemTargets()=mapObjects.mapNotNull{it.itemTarget}+npcs.mapNotNull{it.worldItemTarget}
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
-    fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true
+    fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=npc.removedFlagId?.let{flags[it]!=true}
+        ?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
         if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
         val base=scenes[mapId]?:return null
         val removed=worldItemTargets().filter{it.mapId==mapId&&flags[it.removedFlagId]==true}
+            .map{it.y*base.width+it.x}.toSet()+npcs.filter{it.mapId==mapId&&it.removedFlagId?.let{f->flags[f]}==true}
             .map{it.y*base.width+it.x}.toSet()
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
@@ -244,13 +249,27 @@ object ContentLoader {
                     TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount")).also{treasure->
                         if(t.has("categoryGrant")){
                             require(t.getString("evidence") in setOf("game-data/provenance/world-hell-chest-grants.json",
-                                "game-data/provenance/world-tree107-chests.json"))
+                                "game-data/provenance/world-tree107-chests.json","game-data/provenance/world-island-chests.json"))
                             treasure.categoryGrant=t.getInt("categoryGrant").also{require(it in 0..3)}
                         }
                     }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
+                npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
+                npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
+                if(npc.automaticStoryOnly||npc.removedFlagId!=null){
+                    require(npc.mapId==76&&npc.id in (0..3).map{"rom.npc.76.$it"}&&
+                        npc.automaticStoryOnly&&npc.removedFlagId=="rom.map.76.flag.128"&&
+                        n.getString("automaticStoryEvidence")=="game-data/provenance/world-island-event7.json"&&npc.firstEffects.isEmpty())
+                }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
+                n.optJSONObject("moneyTreasure")?.let{t->
+                    require(npc.id=="rom.npc.76.6"&&npc.mapId==76&&npc.x==2&&npc.y==5&&
+                        t.getString("flagId")=="rom.map.76.flag.4"&&t.getInt("amount")==100&&t.getInt("moneyCap")==999999&&
+                        t.getString("evidence")=="game-data/provenance/world-island-chests.json"&&npc.openedSprite!=null&&
+                        npc.treasure==null&&npc.firstEffects.isEmpty())
+                    npc.moneyTreasure=MoneyTreasureDefinition(t.getString("flagId"),t.getInt("amount"),t.getInt("moneyCap"),t.getString("evidence"))
+                }
                 n.optJSONObject("worldItemTarget")?.let{t->
                     require(npc.id=="rom.npc.110.0"&&npc.mapId==110&&npc.x==6&&npc.y==6&&
                         t.getInt("spriteId")==130&&t.getString("removedFlagId")==OriginalYangJoin.CONTEXT_FLAG&&
@@ -282,6 +301,16 @@ object ContentLoader {
                             require(rule.messageDialogues==listOf(0,1,2,3,7).associateWith{i->"rom.dialogue.181.$i"})
                             rule.completionWitnessFlagId=t.getString("completionWitnessFlagId")
                             require(rule.completionWitnessFlagId=="rom.global.7c7.128")
+                        }
+                        31->{
+                            require(t.getString("evidence")=="game-data/provenance/world-island-talk31.json"&&
+                                npc.mapId==78&&npc.id in listOf("rom.npc.78.0","rom.npc.78.1")&&
+                                rule.mapFlagId=="rom.map.78.flag.${1 shl npc.id.substringAfterLast('.').toInt()}"&&
+                                rule.witnessFlagId=="rom.global.7c6.16"&&rule.itemId.isEmpty()&&
+                                rule.firstDialogue=="rom.dialogue.88.${npc.id.substringAfterLast('.')}"&&rule.repeatDialogue=="rom.dialogue.88.2")
+                            val messages=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=messages.keys().asSequence().associate{k->k.toInt() to messages.getString(k)}
+                            require(rule.messageDialogues==mapOf(0 to rule.firstDialogue,2 to rule.repeatDialogue))
                         }
                         50->{
                             require(t.getString("evidence")=="game-data/provenance/world-village4-resources.json"&&
@@ -473,6 +502,11 @@ object ContentLoader {
                     e.optJSONObject("loot")?.let{l->BattleLoot(l.getString("itemId"),l.getInt("threshold"),l.getString("category"))
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
                             itemDefinitions.getValue(it.itemId).category==it.category)}}).also{enemy->
+                    if(enemy.id in 152..155){
+                        require(e.getInt("requiredBindingMarker")==1&&
+                            e.getString("bindingEvidence")=="game-data/provenance/world-island-binding.json")
+                        enemy.requiredBindingMarker=1
+                    }else require(!e.has("requiredBindingMarker")&&!e.has("bindingEvidence"))
                     if(e.has("specialBaseDamage")){
                         require(enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&
                             e.getInt("specialBaseDamage") in 0..65535&&e.getString("specialDamageEvidence").isNotBlank())
@@ -540,11 +574,31 @@ object ContentLoader {
                             require(mid in scenes&&x in 0 until scenes.getValue(mid).width&&y in 0 until scenes.getValue(mid).height)
                             StoryEntryTrigger(mid,x,y)
                         }
+                        b.optJSONObject("intro")?.let{v->
+                            require(boss.id=="rom.boss.152"&&boss.npcId=="rom.npc.76.0"&&
+                                boss.entryTrigger==StoryEntryTrigger(76,12,12)&&
+                                v.getString("evidence")=="game-data/provenance/world-island-event7.json"&&
+                                v.getBoolean("accumulateEncounterSteps")&&v.getInt("completedSteps")==4)
+                            val ids=v.getJSONArray("dialogueIds").let{d->(0 until d.length()).map{d.getString(it)}}
+                            require(ids==(3..6).map{"rom.dialogue.86.$it"}&&ids.all{it in dialogues})
+                            val destination=StoryDestination(76,9,11,Key.UP,0,null)
+                            require(ints(v,"destinationCell").contentEquals(intArrayOf(9,11))&&scenes[76]?.check(9,11)==null)
+                            val movement=StoryMovement(destination,4).also{it.accumulateEncounterSteps=true}
+                            val flag="runtime.story.76.event7.intro.complete"
+                            boss.intro=SceneStoryDefinition("rom.scene-story.76.four-villains-intro",boss.npcId,flag,
+                                boss.entryTrigger!!,StoryContinuation(ids,null,destination,setOf(flag)),movement,emptyMap())
+                        }
+                        boss.finalizeWithoutDialogue=b.optBoolean("finalizeWithoutDialogue",false)
+                        if(boss.finalizeWithoutDialogue)require(boss.intro!=null&&!b.optBoolean("commitAfterDialogue",false)&&
+                            boss.flagId=="rom.map.76.flag.128"&&members==listOf(EncounterMember(0,152),EncounterMember(2,153),
+                                EncounterMember(4,154),EncounterMember(6,155))&&g.getInt("id")==62&&
+                            b.getString("victoryFlagEvidence")=="game-data/provenance/world-island-event7.json")
                         b.optJSONArray("victoryFlags")?.let{fs->
                             require(b.getString("victoryFlagEvidence").isNotBlank())
                             boss.victoryFlags=(0 until fs.length()).map{fs.getString(it)}.toSet()
                             require(boss.victoryFlags.size==fs.length()&&boss.victoryFlags.size in 1..16&&
-                                boss.victoryFlags.all{it.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+"))})
+                                boss.victoryFlags.all{it.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+"))||
+                                    (boss.finalizeWithoutDialogue&&it=="rom.global.7c6.16")})
                         }
                         boss.commitAfterDialogue=b.optBoolean("commitAfterDialogue",false)
                         boss.continuation=b.optJSONObject("continuation")?.let{c->

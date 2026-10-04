@@ -5,6 +5,7 @@ data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int
     // original scoped category-grant evidence, not a name-based item effect.
     var categoryGrant:Int?=null;internal set
 }
+data class MoneyTreasureDefinition(val flagId:String,val amount:Int,val moneyCap:Int,val evidence:String)
 data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val spriteId:Int,
     val removedFlagId:String,val completionFlagId:String)
 data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String) {
@@ -25,6 +26,17 @@ object WorldItems {
     private const val TARGET_SPRITE=226
     data class Result(val inventory:Map<String,Int>,val flags:Map<String,Boolean>,
         val applied:Boolean,val error:String?=null)
+    data class MoneyResult(val snapshot:SaveSnapshot,val applied:Boolean,val error:String?=null)
+    fun openMoneyTreasure(snapshot:SaveSnapshot,treasure:MoneyTreasureDefinition):MoneyResult {
+        fun reject(reason:String)=MoneyResult(snapshot,false,reason)
+        if(treasure.flagId!="rom.map.76.flag.4"||treasure.amount!=100||treasure.moneyCap!=999999||
+            treasure.evidence!="game-data/provenance/world-island-chests.json")return reject("钱箱规则尚未核验")
+        if(snapshot.mapId!=76)return reject("当前场景不可用")
+        if(snapshot.flags[treasure.flagId]==true)return reject("已经取过了")
+        if(snapshot.money !in 0..treasure.moneyCap)return reject("当前银两超出原版钱箱可核范围，原状态已保留")
+        return MoneyResult(snapshot.copy(money=minOf(treasure.moneyCap,snapshot.money+treasure.amount),
+            flags=snapshot.flags+(treasure.flagId to true)),true)
+    }
 
     private fun supported(item:ItemDefinition)=item.id==ID&&item.category=="special"&&
         item.originalId==11&&item.maxCount==1

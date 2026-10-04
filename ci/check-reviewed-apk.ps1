@@ -50,3 +50,5 @@ if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndCo
 
 if($runtime.worldVillageFourServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFourColdRestart -ne 'PASS'){throw 'Actual village4 bridges, caller services, original NPC text/conditions and cold return must verify this exact APK'}
 if($runtime.worldFixedFerryIslandNormal -ne 'PASS' -or $runtime.worldFixedFerryColdRestartAndReverse -ne 'PASS'){throw 'Actual fixed boat, complete island encounters, cold save and independent reverse must verify this exact APK'}
+
+if($runtime.worldIslandOriginalLayersAndFourVillainsNormal -ne 'PASS' -or $runtime.worldIslandOnceChestsAndColdRestart -ne 'PASS'){throw 'Actual island layers, original composite fight/flags/chests and cold return must verify this exact APK'}

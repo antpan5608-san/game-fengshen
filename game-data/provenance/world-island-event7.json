@@ -1,0 +1,2824 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "island76-coordinate-event7-four-original-villains",
+  "kind": "ORIGINAL_KEYS_AND_CONTROLLED_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "rules": {
+    "mapId": 76,
+    "triggerCell": [
+      12,
+      12
+    ],
+    "eventId": 7,
+    "sourceType": 169,
+    "groupId": 62,
+    "entities": [
+      {
+        "slot": 0,
+        "sourceType": 189,
+        "enemyId": 152
+      },
+      {
+        "slot": 2,
+        "sourceType": 190,
+        "enemyId": 153
+      },
+      {
+        "slot": 4,
+        "sourceType": 191,
+        "enemyId": 154
+      },
+      {
+        "slot": 6,
+        "sourceType": 192,
+        "enemyId": 155
+      }
+    ],
+    "openingDestination": [
+      9,
+      11
+    ],
+    "completedSteps": 4,
+    "accumulateEncounterSteps": true,
+    "dialogueIds": [
+      "rom.dialogue.86.3",
+      "rom.dialogue.86.4",
+      "rom.dialogue.86.5",
+      "rom.dialogue.86.6"
+    ],
+    "completionFlag": "rom.map.76.flag.128",
+    "globalVictoryFlag": "rom.global.7c6.16",
+    "removedSpriteIds": [
+      162,
+      165,
+      140,
+      143
+    ],
+    "overlayContext": 199,
+    "victoryDialogue": false,
+    "extraEventReward": false
+  },
+  "sources": [
+    {
+      "offset": 383195,
+      "length": 22,
+      "sha256": "96aaf89dedad7a253c9522ba24c3408d48e5eed8b5b32d301b155d7358ebadcb",
+      "module": 11,
+      "cpuAddress": 55499,
+      "meaning": "Original map76 literal coordinate event7 dispatch"
+    },
+    {
+      "offset": 383648,
+      "length": 3,
+      "sha256": "0ca64fad67b58179384937a1e896b6ac143eb81266d9aa013b6429940d4c2d89",
+      "module": 11,
+      "cpuAddress": 55952,
+      "meaning": "Literal12,12,0 trigger, not camera-adjusted"
+    },
+    {
+      "offset": 379772,
+      "length": 2,
+      "sha256": "bcbf87574c28b5d369d4f962b63a4cd470b29fe86b0baa41913e7f74742a022f",
+      "module": 11,
+      "cpuAddress": 52076,
+      "meaning": "Event7 dispatch pointer"
+    },
+    {
+      "offset": 380591,
+      "length": 69,
+      "sha256": "3d900a699b1cc7ecf2178ba7158941c9d19663ec27b6cb4bbe7ef14e46bc260c",
+      "module": 11,
+      "cpuAddress": 52895,
+      "meaning": "Actual three event7 stages and source169"
+    },
+    {
+      "offset": 381011,
+      "length": 30,
+      "sha256": "ac31b54edb1e189688eb39a991674ad5f067ed16c3ae6948e98347c8868d906c",
+      "module": 11,
+      "cpuAddress": 53315,
+      "meaning": "Original script-completion to real battle"
+    },
+    {
+      "offset": 380330,
+      "length": 81,
+      "sha256": "f4ed26b56f6390f3ac46fb580cbb41ef881ec43da6b96ee0236dec48fe05de90",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Original finalizer preserves other map flags and sets bit80"
+    },
+    {
+      "offset": 30366,
+      "length": 61,
+      "sha256": "1a6bd90359d87a5818c69600385da7e861623cc297e29c3f8392664b16857def",
+      "module": 0,
+      "cpuAddress": 63118,
+      "meaning": "Original remove exact runtime sprite identities"
+    },
+    {
+      "offset": 36169,
+      "length": 93,
+      "sha256": "51c7cd9fa7c95ecfaf18cb856a59039d182f76d22da9e93db6aa5c99dcbc939d",
+      "module": 1,
+      "cpuAddress": 36153,
+      "meaning": "Original fixed story group loader"
+    },
+    {
+      "offset": 43588,
+      "length": 4,
+      "sha256": "147dee58a18e3f9a4246b244f9ae21607eab29897523f4ada5349d939fd101df",
+      "module": 1,
+      "cpuAddress": 43572,
+      "meaning": "Actual forced group62 root/CHR pair"
+    },
+    {
+      "offset": 43600,
+      "length": 2,
+      "sha256": "2d6040bf72fe8bb73e65d8708ccd55d1d985ba280f255d8c0b2d97241e558ff2",
+      "module": 1,
+      "cpuAddress": 43584,
+      "meaning": "First forced group pointer"
+    },
+    {
+      "offset": 43602,
+      "length": 9,
+      "sha256": "cfef8469526dbb3be0d033ccfc6ea58704ef20e5be42f3295523e5ebf110967a",
+      "module": 1,
+      "cpuAddress": 43586,
+      "meaning": "Exact four source pairs and terminator"
+    }
+  ],
+  "font": {
+    "sources": [
+      {
+        "offset": 589840,
+        "length": 2048,
+        "sha256": "f6e877cb2b267237053a0f7f0d8149dbc187e84ac0780c3639acc9f624148499",
+        "meaning": "Actual original group86 font CHR half"
+      },
+      {
+        "offset": 591888,
+        "length": 2048,
+        "sha256": "68eba3894cfc7e047bc25e9c4691445674f8774ce96cdae575f9fba40d26cb94",
+        "meaning": "Actual original group86 font CHR half"
+      }
+    ],
+    "charset": {
+      "183": "王",
+      "16": "魔",
+      "68": " ",
+      "64": "『",
+      "187": "哈",
+      "67": "。",
+      "184": "這",
+      "144": "些",
+      "17": "乳",
+      "145": "臭",
+      "18": "未",
+      "56": "乾",
+      "186": "的",
+      "146": "小",
+      "19": "子",
+      "192": "！",
+      "65": "』",
+      "147": "楊",
+      "20": "森",
+      "173": "就",
+      "148": "把",
+      "55": "他",
+      "188": "們",
+      "21": "捉",
+      "47": "起",
+      "149": "來",
+      "22": "做",
+      "59": "人",
+      "66": "，",
+      "172": "如",
+      "150": "何",
+      "193": "？",
+      "23": "高",
+      "151": "友",
+      "24": "好",
+      "152": "啊",
+      "25": "咱",
+      "153": "誰",
+      "42": "先",
+      "175": "上",
+      "26": "呢",
+      "154": "李",
+      "27": "興",
+      "155": "霸",
+      "58": "四",
+      "46": "一",
+      "169": "吧"
+    },
+    "glyphs": [
+      {
+        "code": 183,
+        "character": "王",
+        "pixelsSha256": "784accdfa04086e7aaaa81fe91f8d0ad8f8513202f23ea450e82a17f8e3a37d6"
+      },
+      {
+        "code": 16,
+        "character": "魔",
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106"
+      },
+      {
+        "code": 187,
+        "character": "哈",
+        "pixelsSha256": "f7a068cf58de6aef0097dfd5456c880aec885cf879366ae52c8474c9359c4d6f"
+      },
+      {
+        "code": 184,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "code": 144,
+        "character": "些",
+        "pixelsSha256": "02af8bc9807ca43cb2480d3b403e6c9704c480789d1b183664efd320c792f558"
+      },
+      {
+        "code": 17,
+        "character": "乳",
+        "pixelsSha256": "6ae7d30ec0755b74f928f2203aaa7d0f52c4f34d77ed4b9edddb950594403f99"
+      },
+      {
+        "code": 145,
+        "character": "臭",
+        "pixelsSha256": "e76d6d78b4a7999bfa45e56a38a09065a998383614dca19ea3bed5c066d4013e"
+      },
+      {
+        "code": 18,
+        "character": "未",
+        "pixelsSha256": "e9c4a91378a9fda96f62add7276fbffe6e4efc90342fec002754cfaa4cb4f369"
+      },
+      {
+        "code": 56,
+        "character": "乾",
+        "pixelsSha256": "5af7cbfac9f9cf4497a14efc661b64fae47fdf5b1e83969838ab167742c6074c"
+      },
+      {
+        "code": 186,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 146,
+        "character": "小",
+        "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856"
+      },
+      {
+        "code": 19,
+        "character": "子",
+        "pixelsSha256": "9e72153187ef49d6425b95c2455c3d74c94a6c3cb9035fd37061b57ef3c631d8"
+      },
+      {
+        "code": 147,
+        "character": "楊",
+        "pixelsSha256": "94f08be59b32c5e24a12a6911509fedd3f43caccedbb3bf654d5df255cc8eb20"
+      },
+      {
+        "code": 20,
+        "character": "森",
+        "pixelsSha256": "473faee273e482bdce9b8c351ba7894cc6527ec7fbc829506cf13dea3f208666"
+      },
+      {
+        "code": 173,
+        "character": "就",
+        "pixelsSha256": "9c58ddff3a4bd6d887acd03ca3875d4ef7d9410dba54dc2d1a1f99460ccd4cb5"
+      },
+      {
+        "code": 148,
+        "character": "把",
+        "pixelsSha256": "f05d1043c8abde60bd1b333a980f148e0c952a7f33e0fbafbdcc1e02c78a4670"
+      },
+      {
+        "code": 55,
+        "character": "他",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+      },
+      {
+        "code": 188,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "code": 21,
+        "character": "捉",
+        "pixelsSha256": "1cd2c19d4fa911362e072c1f888838945a7037fc47b986ee81581e5ddbe1474b"
+      },
+      {
+        "code": 47,
+        "character": "起",
+        "pixelsSha256": "fe51620371143de72a8cbd03d131c7c569eb36b89fbe8c55f86304685620f015"
+      },
+      {
+        "code": 149,
+        "character": "來",
+        "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+      },
+      {
+        "code": 22,
+        "character": "做",
+        "pixelsSha256": "dfa7a65c67edb188576d046efcbe1bcbac9e8129a093833b0373c6e8fc05eb44"
+      },
+      {
+        "code": 59,
+        "character": "人",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "code": 172,
+        "character": "如",
+        "pixelsSha256": "f0202b68db7539901dd0af33c491ac158e261e280c80649d9700bd074fc32c96"
+      },
+      {
+        "code": 150,
+        "character": "何",
+        "pixelsSha256": "abc07cd5d8ad265c0b8323b1435969a4b7a46f2600db0bb1f17a507384e61afd"
+      },
+      {
+        "code": 23,
+        "character": "高",
+        "pixelsSha256": "d4a2d0c3d06e14f82026ad35785622c099a83cb7ad85bb64091dfd761ffa329d"
+      },
+      {
+        "code": 151,
+        "character": "友",
+        "pixelsSha256": "e1a1c09e12cabf904da0c56a4b6e12caf0611f31d7889e11e669923d741a46e1"
+      },
+      {
+        "code": 24,
+        "character": "好",
+        "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+      },
+      {
+        "code": 152,
+        "character": "啊",
+        "pixelsSha256": "c6bb6d4495525f83b19d56083d24ce08317b10a5e050f732e15b7fd76f3d865a"
+      },
+      {
+        "code": 25,
+        "character": "咱",
+        "pixelsSha256": "2d4043a4da4d2c570530f8b4f4007cdda187477de25751b9adb265b4a1292489"
+      },
+      {
+        "code": 153,
+        "character": "誰",
+        "pixelsSha256": "ee683b3c22646ae4776a1ef29410149e1284351c6953e77c4cfe45c55785466a"
+      },
+      {
+        "code": 42,
+        "character": "先",
+        "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+      },
+      {
+        "code": 175,
+        "character": "上",
+        "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+      },
+      {
+        "code": 26,
+        "character": "呢",
+        "pixelsSha256": "dee9182f439e5b7f78673465f74d5bb16c077c45119bddf3d16a663e034e31d3"
+      },
+      {
+        "code": 154,
+        "character": "李",
+        "pixelsSha256": "69b34fbd9b8e71a2a927969e8b099b6e990fe749cd78989527b648e97ccd5ba7"
+      },
+      {
+        "code": 27,
+        "character": "興",
+        "pixelsSha256": "cfaf91fef0b3dc8a4c9aed34f31f6c717019ae8cb021953fda02d1bca06ca785"
+      },
+      {
+        "code": 155,
+        "character": "霸",
+        "pixelsSha256": "d4cdc6830e14263ea0d2997f6e8fbe613330ff709088a20b6449581c3b0b294f"
+      },
+      {
+        "code": 58,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724"
+      },
+      {
+        "code": 46,
+        "character": "一",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "code": 169,
+        "character": "吧",
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+      }
+    ],
+    "capturePpuSha256": "bb1317cde0cbd5a4bbc9f18c156b245f88cc31bac9f2a726d156aee967447c3c",
+    "kind": "SCOPED_ORIGINAL_GROUP86_FONT_TRANSCRIPTION"
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.86.3",
+      "text": "王魔 『哈哈哈。。。這些乳臭未乾的小子！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107020,
+          "length": 22,
+          "sha256": "47f514b97d8bcdf66c9113bae3e1232e471e75792176a67dd9243539b19aa6b7",
+          "module": 3,
+          "cpuAddress": 41468,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101150,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35598,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101808,
+            "length": 2,
+            "sha256": "ed99a8f068773a024c5e98ed8bbd40e5d7787eb883209aa3673d2ff038d33920",
+            "module": 3,
+            "cpuAddress": 36256,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-event7.json",
+        "originalEvidenceKind": "ACTUAL_GROUP86_FONT_AND_CONTROLLED_ORIGINAL_SCRIPT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.86.4",
+      "text": "楊森 『就把他們捉起來做人乾，如何？』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107042,
+          "length": 20,
+          "sha256": "c06346ce5b9a9dcd5f533ab198771a1313e63119de79afe77b2bf42463476c79",
+          "module": 3,
+          "cpuAddress": 41490,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101150,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35598,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101810,
+            "length": 2,
+            "sha256": "bed173d2fc0a2bef37a6b430c54d4bcccfa772ba596ab9f5c1cd9f5eedd40f30",
+            "module": 3,
+            "cpuAddress": 36258,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-event7.json",
+        "originalEvidenceKind": "ACTUAL_GROUP86_FONT_AND_CONTROLLED_ORIGINAL_SCRIPT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.86.5",
+      "text": "高友乾 『好啊！咱們誰先上呢？』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107062,
+          "length": 17,
+          "sha256": "8e3cbe7cba31370efaae2e8a760b1674b9d49b2fbb77bc0c635002b76b8333cc",
+          "module": 3,
+          "cpuAddress": 41510,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101150,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35598,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101812,
+            "length": 2,
+            "sha256": "30cebdf4410a7974f33719527798658fd65498dbd202cc445d851482c86a81ca",
+            "module": 3,
+            "cpuAddress": 36260,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-event7.json",
+        "originalEvidenceKind": "ACTUAL_GROUP86_FONT_AND_CONTROLLED_ORIGINAL_SCRIPT_NOT_NORMAL_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.86.6",
+      "text": "李興霸 『四人一起上吧！哈哈！！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107079,
+          "length": 18,
+          "sha256": "002e79e455fb8105ce0bfea42e31ba29bd55feb11dffa550d351d46cc6568045",
+          "module": 3,
+          "cpuAddress": 41527,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101150,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35598,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101814,
+            "length": 2,
+            "sha256": "77cb732fe74f3a8eae7755cee2a2ca71a90adeadb91ae0e66e635986302452f9",
+            "module": 3,
+            "cpuAddress": 36262,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-event7.json",
+        "originalEvidenceKind": "ACTUAL_GROUP86_FONT_AND_CONTROLLED_ORIGINAL_SCRIPT_NOT_NORMAL_ANDROID"
+      }
+    }
+  ],
+  "graphics": {
+    "152": {
+      "width": 32,
+      "height": 80,
+      "observedRect": [
+        16,
+        56,
+        32,
+        80
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          69,
+          0
+        ],
+        "3": [
+          199,
+          215,
+          255
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 913440,
+          "length": 16,
+          "sha256": "f20bab5150e95ba1d2041ceb781cbd233da56a852e9b9c22d425aa70b1b0d1ac"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 913456,
+          "length": 16,
+          "sha256": "63360f33ed7598d97c5df84a6f84aa072de74d5848797f4b0b7688680920264a"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 913472,
+          "length": 16,
+          "sha256": "97abcbdccdd7ae25f7c41c54638c9e1ecfa4ff05cee51df693814c5e1bde6ae1"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 913488,
+          "length": 16,
+          "sha256": "0d461235271ed3b85e7f865c1f869f23f7bae1d3c1baf92ecad9cac69d00c49c"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 913504,
+          "length": 16,
+          "sha256": "46fc13070ed582c19939d1a7dd1758385d52811efb1d838cf745fba2b760bb17"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 913520,
+          "length": 16,
+          "sha256": "9995a6a5314b670231813b130737cb68f6c874817a201dca75da5574db72490d"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 913536,
+          "length": 16,
+          "sha256": "674ba094dd30449a134197f4b27927bbef3f112945d909b02fa7c1c00a9ed207"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 913552,
+          "length": 16,
+          "sha256": "0b57e2324c965d8ff9cc5a18674b85ddda8dccbed28d05ccc0b084a3961d33ef"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 913568,
+          "length": 16,
+          "sha256": "78e996fc97f85b4fa4f76ac3bdf34155aad9e0c7f38abfe8071248413c1dfc49"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 913584,
+          "length": 16,
+          "sha256": "9d81cc6598dd2723725985d83e645341c935bc21af3cf98660530e26b7814fd8"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 913600,
+          "length": 16,
+          "sha256": "460fe041fe807eeab7698299f59ef45c52a82db145c74f4b7ce4833f5f7d0a41"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 913616,
+          "length": 16,
+          "sha256": "4f4ad960a16b7442c27a5c59e88e1197912e8f65a990cf2b55c63f874e338b24"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 913632,
+          "length": 16,
+          "sha256": "a0318e2dabac25e74f13e086f6446c2e7e42fdde733185bce2725d17d1d6183e"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 913648,
+          "length": 16,
+          "sha256": "170be8c3bda197489b41c73d35f0322dff427ed73d6b1b4d1f6f45132bd29e59"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 913664,
+          "length": 16,
+          "sha256": "fa63c1b511cd93995dbac8168909b3d2c6785e0ace825fb4f7e449846b91a060"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 913680,
+          "length": 16,
+          "sha256": "f975674900e4c39a824b0657a33942678d53d85e4a5f5761626231dd3e7f16af"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 913712,
+          "length": 16,
+          "sha256": "19ac09d349043fb0b8f31be1d46c9bbe6e453ea71775e81fc8bc0f5ebe8716cd"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 913728,
+          "length": 16,
+          "sha256": "1e41f36b2f8b8de2db7551d32e36998c695cb021a792d74d3b5646745e88a3bc"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 913744,
+          "length": 16,
+          "sha256": "025b27dad5378bab11e54e9ccd390759a5d33e8e551efab584dd807365a6078d"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            56
+          ],
+          "offset": 913760,
+          "length": 16,
+          "sha256": "220f7b756c602dc600b16911ddb06e9e93234f91751ce2aaf21c91721bd228d9"
+        },
+        {
+          "xy": [
+            8,
+            56
+          ],
+          "offset": 913776,
+          "length": 16,
+          "sha256": "f4d5925d98f24fee8d213c9062b253479a6fefe1db84b6297785656b7d99a709"
+        },
+        {
+          "xy": [
+            16,
+            56
+          ],
+          "offset": 913792,
+          "length": 16,
+          "sha256": "0925c69b486bae6e1a6244061e3654e29c02cfb0c8c402587a9971f809ee1119"
+        },
+        {
+          "xy": [
+            24,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            64
+          ],
+          "offset": 913808,
+          "length": 16,
+          "sha256": "5fb6000701dc6a1de1315b6d9dd178b192ab73f961fb0c0ef68c4aab5c83b0d3"
+        },
+        {
+          "xy": [
+            8,
+            64
+          ],
+          "offset": 913824,
+          "length": 16,
+          "sha256": "620178a0535b0d84a98d56a4e6b05e8bfe97de879ee70299864af8388a355307"
+        },
+        {
+          "xy": [
+            16,
+            64
+          ],
+          "offset": 913840,
+          "length": 16,
+          "sha256": "921a10c75e334a2f8cb2accc48a4fb71b6f75043e14169783a2091632a67eff3"
+        },
+        {
+          "xy": [
+            24,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            72
+          ],
+          "offset": 913856,
+          "length": 16,
+          "sha256": "d2df5e0eaae6a028c2ae8b7920e4bc1397ecc57d53c4a44450bf81cede5ee5ad"
+        },
+        {
+          "xy": [
+            8,
+            72
+          ],
+          "offset": 913872,
+          "length": 16,
+          "sha256": "5dd8cf11c0359a5031d2f259ecde5f70b102b7b2480bf8ef317ad553a7269a27"
+        },
+        {
+          "xy": [
+            16,
+            72
+          ],
+          "offset": 913888,
+          "length": 16,
+          "sha256": "ff1b6c344c1d9f4aaeec34b828d9c91ff10874de3c3cf8fcd013119ae7ea3594"
+        },
+        {
+          "xy": [
+            24,
+            72
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        }
+      ],
+      "rgbaSha256": "cd63c3bab6648169250103f3907c43cb5456c6a5225d20124b1e696e80b75abe",
+      "captureSha256": "7cb602c14beabbe06b687f9c197d04178c387ea958f12d26824eb9b434e20acb",
+      "captureKind": "ORIGINAL_FIXED_EVENT7_FOUR_ENEMY_LOADER_WAITING_INPUT_NO_COMBAT_EDITS",
+      "normalPlayEvidence": false
+    },
+    "153": {
+      "width": 32,
+      "height": 80,
+      "observedRect": [
+        80,
+        56,
+        32,
+        80
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          65,
+          44,
+          0
+        ],
+        "3": [
+          178,
+          255,
+          207
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 913904,
+          "length": 16,
+          "sha256": "f847b650480bba79476ebe2929343243f3ee9bc88854188038502a21e9d6e0b0"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 913920,
+          "length": 16,
+          "sha256": "e0b032640d6809ee676b677f9d8e7dd0a162db752e5e6ba3bdb46c4699360964"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 913936,
+          "length": 16,
+          "sha256": "4a54514bf687a6b6fe498b7f5781ef7ed3aee1c25676d7b393ab24168625d430"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 913952,
+          "length": 16,
+          "sha256": "e155b75bd4168dce753f646bcd4971c1777403e7f26b1d3b35daebc80db53992"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 913968,
+          "length": 16,
+          "sha256": "7c73309065118e68ef72c36c4aca26863ed46dfdecc684f5df0fcf6208bafbe1"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 913984,
+          "length": 16,
+          "sha256": "fb1e8ee6cbe7caab64f5ce78a7e0bc8a27fe27f2232c5c393ce990e1983f5f42"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 914000,
+          "length": 16,
+          "sha256": "4e70a505de2afaf56fdd89cb573e77839fd42fe2af8a4749c605a592890890fd"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 914016,
+          "length": 16,
+          "sha256": "8625a327c91144fb1467a1badf4848d96a73408c03b41e422d3df2bb457820d2"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 914032,
+          "length": 16,
+          "sha256": "7eb5f85e6e2b17a8d80f2da4f27fc8d41462357b41c92fe3aac823c7bef942c9"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 914048,
+          "length": 16,
+          "sha256": "544a3315ca0884d5c046f67048d7582d38c87e307a0998eee7ce5760ab076d57"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 914064,
+          "length": 16,
+          "sha256": "b4d449656d0353415d0e12771b54c4d83fa6ad314d5b2d28e74dc20029754855"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 914080,
+          "length": 16,
+          "sha256": "c758d7da36d6453c5c56005c4170f81a549632a359aaa90322d888cc1618c276"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 914096,
+          "length": 16,
+          "sha256": "e22872055422d9622b16427ffa59ee770a09dea5c32842340ce358a7af223075"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 914112,
+          "length": 16,
+          "sha256": "6d3a2d676162b9ddbdef7e33896e59db7d274db28f5bf05903c1a2003b02c1a1"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 914128,
+          "length": 16,
+          "sha256": "a63bbe2d91fd1642d55b597b9e775789d1f36cf3d0d6f627ac25ee5c994fa218"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 914144,
+          "length": 16,
+          "sha256": "de8ce8b6ea35c80f80282b8cfc0f6e0a7f1a78a4bc5f059deeeed1f418f9e8a8"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 914160,
+          "length": 16,
+          "sha256": "797744f02ded0092cd086eec3d6ae21cecb71044088cdd67439218feff3d171d"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 914176,
+          "length": 16,
+          "sha256": "d1f8f1b5670a2f094639c8c79dccb5c738306e73570505972d4eef5e88ee0d05"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 914192,
+          "length": 16,
+          "sha256": "009d226066a74a9fe96d47899b77e44559ca4cb7ae8ec1010e6145ee84288a34"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 914208,
+          "length": 16,
+          "sha256": "1af975609cee6a75df07091364191c931f9c85719adcfd199d8d0868f440c2a2"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 914224,
+          "length": 16,
+          "sha256": "22505f56a5498f7a73cd7cfa8ea7a589c18bc49b88224ecb94180fb205816779"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 914240,
+          "length": 16,
+          "sha256": "38818e88c68f0c25460ab7652c7b79d34a125e31a111f02ea7b90dbfcd224354"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 914256,
+          "length": 16,
+          "sha256": "5e505cdea0396bc3e9df95739b73ee7b6661cc0cb20b627eb65d1bdf988d9c4d"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 914272,
+          "length": 16,
+          "sha256": "880791e7d9baf527afdbbf30c1f2c77f2d473cbc60e3ac3375cd1d091843ee08"
+        },
+        {
+          "xy": [
+            0,
+            56
+          ],
+          "offset": 812004,
+          "length": 16,
+          "sha256": "e4150dae0a842a1de9d74f042a294eccdc708575e6eb035a0bf67fde800f7b97"
+        },
+        {
+          "xy": [
+            8,
+            56
+          ],
+          "offset": 914304,
+          "length": 16,
+          "sha256": "be0538609baa0ab1a4bbdab453249b9f27a8aece3d660cd4dc2a7725d4098801"
+        },
+        {
+          "xy": [
+            16,
+            56
+          ],
+          "offset": 914320,
+          "length": 16,
+          "sha256": "650f2cfdf73cfa90864afbb7847a17e8d2be0a4a8d97503cdb9988bfc22a6149"
+        },
+        {
+          "xy": [
+            24,
+            56
+          ],
+          "offset": 914336,
+          "length": 16,
+          "sha256": "75318183f3f453ebfdcc505a173602cd6ac1d70732fff3c67e926b41f39a2245"
+        },
+        {
+          "xy": [
+            0,
+            64
+          ],
+          "offset": 914352,
+          "length": 16,
+          "sha256": "0bd7f3ad7128d778b4ec0f13fcf8a1470c0d276c3172227ff122d5f90aff424c"
+        },
+        {
+          "xy": [
+            8,
+            64
+          ],
+          "offset": 914368,
+          "length": 16,
+          "sha256": "68cdc3477ff9a4079f7fd194714bdc6c1f8b3163fd8153218a6184772edb19c5"
+        },
+        {
+          "xy": [
+            16,
+            64
+          ],
+          "offset": 914384,
+          "length": 16,
+          "sha256": "2f5e59844474c1a86b9ee2d933b791fe385b27726e5ac35cfb98df38f7af0a84"
+        },
+        {
+          "xy": [
+            24,
+            64
+          ],
+          "offset": 914400,
+          "length": 16,
+          "sha256": "bdac2c62633b815586f7edff7374b6c72980d50db2df33c516099c038688c6ab"
+        },
+        {
+          "xy": [
+            0,
+            72
+          ],
+          "offset": 914416,
+          "length": 16,
+          "sha256": "1ade14a4bad4825ee37bab3b327ac6d3ccc5125b52ef46f1c126c9429675ae15"
+        },
+        {
+          "xy": [
+            8,
+            72
+          ],
+          "offset": 914432,
+          "length": 16,
+          "sha256": "887d85459b747b1f85d93ccaa4e4a01fb90e71ea649d8d0b7a306b26b6e4561d"
+        },
+        {
+          "xy": [
+            16,
+            72
+          ],
+          "offset": 914448,
+          "length": 16,
+          "sha256": "8e786a34bd9a2686bd71b7c828fd21871e81dffddec7eb362b1e0f81aea87d08"
+        },
+        {
+          "xy": [
+            24,
+            72
+          ],
+          "offset": 914464,
+          "length": 16,
+          "sha256": "09a7a8fda82c0ce93813e1185e5904578d4dc244063b4daf0a1b2250512541f0"
+        }
+      ],
+      "rgbaSha256": "c061b95af67a1d33aef3f03af3dee5abc2478b017a3dd00fbf23fce7bb8aa27d",
+      "captureSha256": "7cb602c14beabbe06b687f9c197d04178c387ea958f12d26824eb9b434e20acb",
+      "captureKind": "ORIGINAL_FIXED_EVENT7_FOUR_ENEMY_LOADER_WAITING_INPUT_NO_COMBAT_EDITS",
+      "normalPlayEvidence": false
+    },
+    "155": {
+      "width": 48,
+      "height": 72,
+      "observedRect": [
+        208,
+        72,
+        48,
+        72
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          69,
+          0
+        ],
+        "3": [
+          199,
+          215,
+          255
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 914496,
+          "length": 16,
+          "sha256": "b88c2c75e7f0d383bff65d8f2475d8080d3805a594f767f02bf9adab9043a66c"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 915232,
+          "length": 16,
+          "sha256": "9b203036db6e8253964307ba6487f8d489a0643bc310487eaf2a72e3861f7db4"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 915248,
+          "length": 16,
+          "sha256": "fdea853445a205b365a426a9046eee22575421813f6509890e9bd11c82d0c957"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 915264,
+          "length": 16,
+          "sha256": "e559ce41c8ad7b24bd0ee7ac14ed335a97ce190ffb27d68fe710e62c2e1c9f19"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 915280,
+          "length": 16,
+          "sha256": "27a26b3085d2adeb7e8d6972f8836bcdf68baddfe8f7b4df4c3ea2d15b89d6b8"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 915296,
+          "length": 16,
+          "sha256": "27f4645d4de05263937f30660d4549df875ec11b2f7901d5e50af92bfcc4c7d7"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 915312,
+          "length": 16,
+          "sha256": "d2e19c22d68510c3843f28999297aa4a3973aaaa4a2f4cb5f2cb1f7ae22b8e00"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 915328,
+          "length": 16,
+          "sha256": "4770b885dee88d94b7e0b7ee062fbf830aaf8e178dc4991d3cb5a3b9d11b54cb"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 915344,
+          "length": 16,
+          "sha256": "6754b86f0d3e129e0e5e928254c64587e70f5900238b668c6e7f53d355d91453"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 801440,
+          "length": 16,
+          "sha256": "532deabf88729cb43995ab5a9cd49bf9b90a079904dc0645ecda9e47ce7345a9"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 915376,
+          "length": 16,
+          "sha256": "9be1dff8001894a9843c8e156a9534c41727dfb1a70c5a9fdbbeffb1d868c3d6"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 915392,
+          "length": 16,
+          "sha256": "db687959e0ac8642f47035adc8257d4d3ab590e2fd74db08460d1ade8ac9172c"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 915408,
+          "length": 16,
+          "sha256": "a0fca96770ea926915d69836a86a3233a7f35a01a23272e362a6048d39387ef4"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 915424,
+          "length": 16,
+          "sha256": "7183729b8e2d4cafc24ee4cea1e9940e9d0f7d3946f32c96a7f6427d8d81c80d"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 915440,
+          "length": 16,
+          "sha256": "e0f9c957c79d67fd4f3e1a85f6ba49a030272fe2f1a4c9c0a3f4460b147c9b3c"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 915456,
+          "length": 16,
+          "sha256": "2c3807f337031f5149af0799e484b87d5929eebadcd42b998f53d51277235281"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 915472,
+          "length": 16,
+          "sha256": "76e12ab575ca72712093611c8db5dbd0c4306927bdf90cfd4d0b968ef0029d13"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 915488,
+          "length": 16,
+          "sha256": "f6e14336b38fa80d7f2b2853711b01c3e8c3f6ccb7ab591d4134f33036f0bed1"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 915504,
+          "length": 16,
+          "sha256": "11113d1df1bf54f012677cee8c86e9fdf70ce39bb516c3e500df9516241f1487"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 915520,
+          "length": 16,
+          "sha256": "f7631bbc080c9f66b80845ba26723a14bdd13a243f4dc4afef10856ee01573f0"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 915536,
+          "length": 16,
+          "sha256": "007381e84d652a77cf3da1b43b9e69ceddbd63bb5eb31b40e5c8fdeb4ec65801"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 915552,
+          "length": 16,
+          "sha256": "01de494ad24dbb33e69fcc33dec6b449e3197e610ab0f17ea03538fa8145653b"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 915568,
+          "length": 16,
+          "sha256": "0692445351db94171d8db00ef2c7967a1f8ab7062f04ccb032959a43778a7a2f"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 915584,
+          "length": 16,
+          "sha256": "a6a8321cd2e17175ec775e6c00477f144d8cb59472a82be832b09122b3d066f2"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 915600,
+          "length": 16,
+          "sha256": "3b274cab342c30393c9a0e5afb6e98d8c43c1ae80e8107dc72a40bce8bf50ac3"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 915616,
+          "length": 16,
+          "sha256": "b103c1b85e36b916b182d7f22d6ebd652777f3f91e06b3a01587b91db539bec6"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 915632,
+          "length": 16,
+          "sha256": "0fda67b803c416082b032538d51b5a578390f3bef86f719b504bf70e66319753"
+        },
+        {
+          "xy": [
+            32,
+            48
+          ],
+          "offset": 915648,
+          "length": 16,
+          "sha256": "e4efe1c4d42423f9959d8e98ddbed73be1439759fb02e3eaeff6e03fd76b91ff"
+        },
+        {
+          "xy": [
+            40,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            56
+          ],
+          "offset": 915664,
+          "length": 16,
+          "sha256": "00ed01270a58a09a3e20009a7a1234af105995d6e8a989b1a3ef297556badab4"
+        },
+        {
+          "xy": [
+            16,
+            56
+          ],
+          "offset": 915680,
+          "length": 16,
+          "sha256": "91fc6dc1c3b133848454def512de4855789d694f53b177c1c062f1414493e12d"
+        },
+        {
+          "xy": [
+            24,
+            56
+          ],
+          "offset": 915696,
+          "length": 16,
+          "sha256": "5829623fbebc05f837fa8da059e22eb095aed483f6c5465a5b1e894bd514b44c"
+        },
+        {
+          "xy": [
+            32,
+            56
+          ],
+          "offset": 915712,
+          "length": 16,
+          "sha256": "7e7daee38c424bff35d4c4f7144dc527f4aa72ebf63080d30d03e1dae43fa09b"
+        },
+        {
+          "xy": [
+            40,
+            56
+          ],
+          "offset": 915776,
+          "length": 16,
+          "sha256": "62030d266b04e3dec9cf56f2681f1a9689d06e91c9633193629c39b9ad81acc8"
+        },
+        {
+          "xy": [
+            0,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            64
+          ],
+          "offset": 784016,
+          "length": 16,
+          "sha256": "59d5966c96af7ecad5c9d2918d6582d102b2c67f6b765ea28ac24371ab4f93be"
+        },
+        {
+          "xy": [
+            16,
+            64
+          ],
+          "offset": 700455,
+          "length": 16,
+          "sha256": "9bf60ada1ebda63b700a56170f3c9485e2bd9287f73fb4ef4b0be8584a2abcab"
+        },
+        {
+          "xy": [
+            24,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        }
+      ],
+      "rgbaSha256": "db7776fb47c7d380f2b7a7af7d0bcb94b155c870fa7ec9158ee0f310f086f257",
+      "captureSha256": "7cb602c14beabbe06b687f9c197d04178c387ea958f12d26824eb9b434e20acb",
+      "captureKind": "ORIGINAL_FIXED_EVENT7_FOUR_ENEMY_LOADER_WAITING_INPUT_NO_COMBAT_EDITS",
+      "normalPlayEvidence": false
+    },
+    "154": {
+      "width": 56,
+      "height": 88,
+      "observedRect": [
+        112,
+        56,
+        56,
+        88
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          150,
+          0
+        ],
+        "3": [
+          178,
+          255,
+          207
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 914480,
+          "length": 16,
+          "sha256": "e9dedaaf3e52a7fbcb4e33e3e4df339dfde523dcdac69e685d1432f5f9df30b8"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            48,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 914512,
+          "length": 16,
+          "sha256": "7c35308c791f2c1ed73619b60be80da046145e597fa85d0bb23288a1559f442e"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 790208,
+          "length": 16,
+          "sha256": "8a5f16f43d7be9d5da1bb71656fa69fcc035482b234cfd571954d046f0ca954a"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 914544,
+          "length": 16,
+          "sha256": "3785170a7e809b9da227dcdd28846fb471e4faf7f2160ef9e7bcb802aa719f12"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 914560,
+          "length": 16,
+          "sha256": "d2c971515b9d2893c6529bb9c7d8bcb1397cebb2db156035149bf3411fb8774b"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 914576,
+          "length": 16,
+          "sha256": "acbe20b48e40d2d30832ca58cd09086e07429a83b5f721844ca2436bb1119a8a"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            48,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 914592,
+          "length": 16,
+          "sha256": "53f2730b95a1e78f6474fa94aafcd977784e92b073169262bdf6f01ba9e9e094"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 914608,
+          "length": 16,
+          "sha256": "3a5d4c0bb52028306552ee666862745353d00c1cd437b1a59552ddbd2b17dbd1"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 914624,
+          "length": 16,
+          "sha256": "6de28abfe57674b3335f55c8f098dca9f572863cc61e2da600b30a93a82aa40b"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 914640,
+          "length": 16,
+          "sha256": "0eddb6776fcdf67df549ff04c79a226f817e9c9e5eea79a16dc394b85bd44135"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 914656,
+          "length": 16,
+          "sha256": "4a37f2e911a45e791b1973e613844c0db8182ff827dccc36fabec7bb9d7bd07b"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 914672,
+          "length": 16,
+          "sha256": "67958735aaf04ca1d8988fcabb738392b674764c8f0dd5817defa059724cc29e"
+        },
+        {
+          "xy": [
+            48,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 914688,
+          "length": 16,
+          "sha256": "74f4496c80f9eb4a8984c8f7af7a58917cc87d4e0e8d27fcd25598377c2909df"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 914704,
+          "length": 16,
+          "sha256": "726f6d74e7641b15ea98b4eeda8fdeaec36eeecf5052e9519a3fa9f98a0ffdba"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 914720,
+          "length": 16,
+          "sha256": "ca3a2a966c9d68218871f6816d91cc4fa5303cce2eaaa6dc7b16468ff5ce8d72"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 914736,
+          "length": 16,
+          "sha256": "17b6ff49e232e5d3a50bc8cba411515db5b041dc6a0557621a83f3bb0712a874"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 914752,
+          "length": 16,
+          "sha256": "bf98de8a9ef73754746efc169d5312e3ea5a9b323d9ce816b30120d565e168f5"
+        },
+        {
+          "xy": [
+            48,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 915200,
+          "length": 16,
+          "sha256": "e4bb7ac02b3d3070ffe253b04591414001f73162cdc9a642e2f09c85a030f1dd"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 914768,
+          "length": 16,
+          "sha256": "f3f9b6de4be832d63ece8975a1a6d66f6e08adb66d5b56d200a6c8c15e6d2cae"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 914784,
+          "length": 16,
+          "sha256": "e9de8fa0e0f28b9b312b531778db9590965c92621bfd960dff7f685a2b16c684"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 914800,
+          "length": 16,
+          "sha256": "47cdcc7a0369f2e7f3c7bb06631191dff63dd0ca3d9f18f9eaf10f5fa411f8c7"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 914816,
+          "length": 16,
+          "sha256": "04a7140f3851def2d68f079b6173f7558c378867f523e3db6cef4dab5fda0b43"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 914832,
+          "length": 16,
+          "sha256": "f6917a615d277367add9f240bc36d9377cc169f4140a924cf21b58f9e0bf145e"
+        },
+        {
+          "xy": [
+            48,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 915216,
+          "length": 16,
+          "sha256": "60d82388a9f8fda5a3b9e60f004abec499e6372d62ce49bf5f2dbac9f23be329"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 914848,
+          "length": 16,
+          "sha256": "7ee8a512a7241e20ab057a73901d25e656846813c78a239ec844b58fd69c07d1"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 914864,
+          "length": 16,
+          "sha256": "3608902e879602bd7913d52fc8dd5bfa58ed2b1ac87bebfaf1f7bd11cbe8bcc4"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 914880,
+          "length": 16,
+          "sha256": "d0c9dd0774c94b88f226ef1aba40a4a029d568fba2fd8cad7e270a62b5c8a213"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 914896,
+          "length": 16,
+          "sha256": "fce1cbbe0b709e6869b41e077d3a4dffdec8c4ddaea1df453eaed761968c7780"
+        },
+        {
+          "xy": [
+            48,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 914912,
+          "length": 16,
+          "sha256": "779544b61fead62793473288dd62ed868474041573beb7b31975f1874da467a8"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 914928,
+          "length": 16,
+          "sha256": "84a1b03a461691bff140be419d13bce2ddeb7d5255a6d1196b8b52c0653ef8e4"
+        },
+        {
+          "xy": [
+            32,
+            48
+          ],
+          "offset": 914944,
+          "length": 16,
+          "sha256": "c831a454a3feb61c684f1e16a80199808113ce5507f93565cf9587ac043fba4e"
+        },
+        {
+          "xy": [
+            40,
+            48
+          ],
+          "offset": 914960,
+          "length": 16,
+          "sha256": "b084675f1fcb9bce6da1ada911deb2c51242f9d752b2abaf9a7913e992306886"
+        },
+        {
+          "xy": [
+            48,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            56
+          ],
+          "offset": 914976,
+          "length": 16,
+          "sha256": "83f1960ce0a4b80c377257c1f22eabdd83be435380f2d700630e43fb57840f77"
+        },
+        {
+          "xy": [
+            24,
+            56
+          ],
+          "offset": 914992,
+          "length": 16,
+          "sha256": "1ef892b5a9e0aaea8b0c7c060086a5e62919edf58b7f14adc973cc63511de06f"
+        },
+        {
+          "xy": [
+            32,
+            56
+          ],
+          "offset": 915008,
+          "length": 16,
+          "sha256": "bf3ca7d330aa36d77503a4d43c69247647f2dbe30b09f13f8fc4211ae02d9693"
+        },
+        {
+          "xy": [
+            40,
+            56
+          ],
+          "offset": 915024,
+          "length": 16,
+          "sha256": "a14676d0f972240456e782ca92c117530313a68a7b11c5dc6c94d9ca89e7d693"
+        },
+        {
+          "xy": [
+            48,
+            56
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            64
+          ],
+          "offset": 915040,
+          "length": 16,
+          "sha256": "3a136cf8741b2b1ca50fe022b1c44927dcdd970f71f9269d6439079a49e524b0"
+        },
+        {
+          "xy": [
+            24,
+            64
+          ],
+          "offset": 915056,
+          "length": 16,
+          "sha256": "be1add3a9a1c42e1c8a4491a04a5131eae71506f8060111f9add30b25a307391"
+        },
+        {
+          "xy": [
+            32,
+            64
+          ],
+          "offset": 915072,
+          "length": 16,
+          "sha256": "9f9ce60dfa7a711bfb060dd902c99d039c887a8b4ffbdac6c91026d468a1a753"
+        },
+        {
+          "xy": [
+            40,
+            64
+          ],
+          "offset": 915088,
+          "length": 16,
+          "sha256": "066c271d4eb0eea45e64ebd998dd679f5dde1873e23f4598e50007f1a16ef11b"
+        },
+        {
+          "xy": [
+            48,
+            64
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            72
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            72
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            72
+          ],
+          "offset": 915104,
+          "length": 16,
+          "sha256": "9b79090b8554495d6c552d90c35db341910c77927a058d0518f6ab2b22c539a5"
+        },
+        {
+          "xy": [
+            24,
+            72
+          ],
+          "offset": 915120,
+          "length": 16,
+          "sha256": "e3fa0e6b2ec33de937529c49c3c3b17324b2263b1f9f42b1b9fbd97ac9145b73"
+        },
+        {
+          "xy": [
+            32,
+            72
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            72
+          ],
+          "offset": 915136,
+          "length": 16,
+          "sha256": "a103c058407739c435e90f9f408ca1efe80e3b4b94a6f1d5d8a78fb7b36569de"
+        },
+        {
+          "xy": [
+            48,
+            72
+          ],
+          "offset": 915152,
+          "length": 16,
+          "sha256": "0913fa77c312dd5b64557acf3ab45be839fbb3172fcd0968c5c3c1088a4f0cd6"
+        },
+        {
+          "xy": [
+            0,
+            80
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            80
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            80
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            24,
+            80
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            80
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            80
+          ],
+          "offset": 784016,
+          "length": 16,
+          "sha256": "59d5966c96af7ecad5c9d2918d6582d102b2c67f6b765ea28ac24371ab4f93be"
+        },
+        {
+          "xy": [
+            48,
+            80
+          ],
+          "offset": 746763,
+          "length": 16,
+          "sha256": "39c8ec305472da697efbf1c6ca5f321f80b23acac759c5b4e012c17db63f9c47"
+        }
+      ],
+      "rgbaSha256": "fa689287181b243b6fdfa8c582eab5de2d076c6bc7de66ad592f9ae443ed73f9",
+      "captureSha256": "35bed166709bf97ee18d6068b46961a54e3bb25ad0bf400bf8ce41a30570d039",
+      "captureKind": "CONTROLLED_ORIGINAL_SOURCE191_SINGLE_RENDERER_SLOT3_RAM_POINTER_ONLY",
+      "normalPlayEvidence": false
+    }
+  },
+  "victoryCpu": {
+    "testCount": 40,
+    "failures": 0,
+    "tablePath": "android/app/src/test/resources/world-island-event7-victory-cpu.tsv",
+    "tableSha256": "42b9a715927c037e5ffe8e55e1a95f453755526ec281547ed20332b299f6db34",
+    "probePath": "tools/rom-extractor/probe-world-island-victory.py",
+    "probeSha256": "81c6ad794dd89e16d9cc8efdc1cb3b63f5434cc02446253bcf7662a8536754f2"
+  },
+  "movement": {
+    "kind": "CONTROLLED_ORIGINAL_POISON2_ACTUAL_UP_AND_SCRIPT",
+    "tablePath": "android/app/src/test/resources/world-island-script-movement.tsv",
+    "tableSha256": "c7a1122a4e3e1097655927d85f56753fdef942dd320b55010a163cb4f21db556",
+    "before": {
+      "cell": [
+        12,
+        13
+      ],
+      "hp": 100,
+      "poison": 2,
+      "encounterSteps": 0
+    },
+    "after": {
+      "cell": [
+        9,
+        11
+      ],
+      "hp": 95,
+      "poison": 2,
+      "encounterSteps": 5
+    },
+    "triggerStepSeparate": true,
+    "probeScriptSha256": "385db9a710d50f297a463c79e429d4bc403983bc340c99819f096492c0ed6740"
+  },
+  "limitations": [
+    "Original literal trigger corrected from mistaken camera-adjusted5,5; failure kept in roadmap.",
+    "Actor movement animation currently retains initial static poses; not whole original presentation.",
+    "Forced story source169 is NOT direct remap enemy0 and zone62 count0 is NOT an ordinary empty encounter.",
+    "Enemy names remain UNKNOWN; all four behavior bytes and numerical records are original.",
+    "Full-group bottom mixed pixels failed; source191 isolated renderer uses real RAM scratch0610 (67E0 failed), no ROM/stat/flag writes. Complete reviewed static graphic includes136th-row foot. No whole animation claim.",
+    "Normal Android route/Boss/upgrade NOT_RUN."
+  ],
+  "boss": {
+    "id": "rom.boss.152",
+    "npcId": "rom.npc.76.0",
+    "mapId": 76,
+    "eventId": 7,
+    "eventArgument": 0,
+    "sourceType": 169,
+    "enemyId": 152,
+    "group": {
+      "id": 62,
+      "entities": [
+        {
+          "slot": 0,
+          "enemyId": 152
+        },
+        {
+          "slot": 2,
+          "enemyId": 153
+        },
+        {
+          "slot": 4,
+          "enemyId": 154
+        },
+        {
+          "slot": 6,
+          "enemyId": 155
+        }
+      ]
+    },
+    "flagId": "rom.map.76.flag.128",
+    "victoryDialogue": "rom.dialogue.86.6",
+    "victoryFlags": [
+      "rom.global.7c6.16"
+    ],
+    "victoryFlagEvidence": "game-data/provenance/world-island-event7.json",
+    "finalizeWithoutDialogue": true,
+    "commitAfterDialogue": false,
+    "entryTrigger": {
+      "mapId": 76,
+      "x": 12,
+      "y": 12,
+      "evidence": "game-data/provenance/world-island-event7.json"
+    },
+    "intro": {
+      "dialogueIds": [
+        "rom.dialogue.86.3",
+        "rom.dialogue.86.4",
+        "rom.dialogue.86.5",
+        "rom.dialogue.86.6"
+      ],
+      "destinationCell": [
+        9,
+        11
+      ],
+      "completedSteps": 4,
+      "accumulateEncounterSteps": true,
+      "evidence": "game-data/provenance/world-island-event7.json"
+    },
+    "npcSource": {
+      "offset": 281410,
+      "length": 14,
+      "sha256": "544b52658ebf665703f0e200b646b554bf850b48542a6c0395f3fe6aa3c937ce",
+      "module": 8,
+      "cpuAddress": 52018,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "ruleSources": [
+      {
+        "offset": 383195,
+        "length": 22,
+        "sha256": "96aaf89dedad7a253c9522ba24c3408d48e5eed8b5b32d301b155d7358ebadcb",
+        "module": 11,
+        "cpuAddress": 55499,
+        "meaning": "Original map76 literal coordinate event7 dispatch"
+      },
+      {
+        "offset": 383648,
+        "length": 3,
+        "sha256": "0ca64fad67b58179384937a1e896b6ac143eb81266d9aa013b6429940d4c2d89",
+        "module": 11,
+        "cpuAddress": 55952,
+        "meaning": "Literal12,12,0 trigger, not camera-adjusted"
+      },
+      {
+        "offset": 379772,
+        "length": 2,
+        "sha256": "bcbf87574c28b5d369d4f962b63a4cd470b29fe86b0baa41913e7f74742a022f",
+        "module": 11,
+        "cpuAddress": 52076,
+        "meaning": "Event7 dispatch pointer"
+      },
+      {
+        "offset": 380591,
+        "length": 69,
+        "sha256": "3d900a699b1cc7ecf2178ba7158941c9d19663ec27b6cb4bbe7ef14e46bc260c",
+        "module": 11,
+        "cpuAddress": 52895,
+        "meaning": "Actual three event7 stages and source169"
+      },
+      {
+        "offset": 381011,
+        "length": 30,
+        "sha256": "ac31b54edb1e189688eb39a991674ad5f067ed16c3ae6948e98347c8868d906c",
+        "module": 11,
+        "cpuAddress": 53315,
+        "meaning": "Original script-completion to real battle"
+      },
+      {
+        "offset": 380330,
+        "length": 81,
+        "sha256": "f4ed26b56f6390f3ac46fb580cbb41ef881ec43da6b96ee0236dec48fe05de90",
+        "module": 11,
+        "cpuAddress": 52634,
+        "meaning": "Original finalizer preserves other map flags and sets bit80"
+      },
+      {
+        "offset": 30366,
+        "length": 61,
+        "sha256": "1a6bd90359d87a5818c69600385da7e861623cc297e29c3f8392664b16857def",
+        "module": 0,
+        "cpuAddress": 63118,
+        "meaning": "Original remove exact runtime sprite identities"
+      },
+      {
+        "offset": 36169,
+        "length": 93,
+        "sha256": "51c7cd9fa7c95ecfaf18cb856a59039d182f76d22da9e93db6aa5c99dcbc939d",
+        "module": 1,
+        "cpuAddress": 36153,
+        "meaning": "Original fixed story group loader"
+      },
+      {
+        "offset": 43588,
+        "length": 4,
+        "sha256": "147dee58a18e3f9a4246b244f9ae21607eab29897523f4ada5349d939fd101df",
+        "module": 1,
+        "cpuAddress": 43572,
+        "meaning": "Actual forced group62 root/CHR pair"
+      },
+      {
+        "offset": 43600,
+        "length": 2,
+        "sha256": "2d6040bf72fe8bb73e65d8708ccd55d1d985ba280f255d8c0b2d97241e558ff2",
+        "module": 1,
+        "cpuAddress": 43584,
+        "meaning": "First forced group pointer"
+      },
+      {
+        "offset": 43602,
+        "length": 9,
+        "sha256": "cfef8469526dbb3be0d033ccfc6ea58704ef20e5be42f3295523e5ebf110967a",
+        "module": 1,
+        "cpuAddress": 43586,
+        "meaning": "Exact four source pairs and terminator"
+      }
+    ],
+    "source": "game-data/provenance/world-island-event7.json"
+  }
+}

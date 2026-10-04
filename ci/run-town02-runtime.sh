@@ -31,7 +31,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry','world-island'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -192,6 +192,7 @@ python tools/record_app_audio.py world-room171 testNormalRoom171GiftFromVerified
 python tools/record_app_audio.py world-yang-join testNormalYangJoinAndThreePartyFromVerifiedRoomSave --silent --cold-test testYangJoinColdRestartAndOriginalTreeReturn --budget-seconds 3600
 python tools/record_app_audio.py world-village4 testNormalVillageFourServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFourColdRestartAndOriginalReturn --budget-seconds 2400
 python tools/record_app_audio.py world-ferry testNormalFixedFerryAndIslandFromVerifiedVillageSave --silent --cold-test testFixedFerryIslandColdRestartAndOriginalReverse --budget-seconds 2400
+python tools/record_app_audio.py world-island testNormalIslandLayersFourVillainsAndChestsFromVerifiedFerrySave --silent --cold-test testIslandVictoryColdRestartChestsAndRealReturn --budget-seconds 3600
 # Clinical sub-results are App-written evidence; pull before constructing receipt.
 pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
@@ -209,6 +210,7 @@ r.update(worldRoom171Normal='PASS',worldRoom171GiftColdRestart='PASS')
 r.update(worldYangJoinNormal='PASS',worldYangThreePartyAndColdRestart='PASS')
 r.update(worldVillageFourServicesTalkNormal='PASS',worldVillageFourColdRestart='PASS')
 r.update(worldFixedFerryIslandNormal='PASS',worldFixedFerryColdRestartAndReverse='PASS')
+r.update(worldIslandOriginalLayersAndFourVillainsNormal='PASS',worldIslandOnceChestsAndColdRestart='PASS')
 medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
 for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

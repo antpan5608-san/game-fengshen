@@ -27,6 +27,7 @@ object OriginalNpcTalk {
         }
         if(rule.actionId==12)return teacher(before,rule,item)
         if(rule.actionId==50)return villageFour(before,rule)
+        if(rule.actionId==31)return islandResidents(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -36,6 +37,18 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    private fun islandResidents(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val mask=rule.mapFlagId.removePrefix("rom.map.78.flag.").toIntOrNull()
+        if(rule.mapId!=78||mask !in listOf(1,2)||rule.witnessFlagId!="rom.global.7c6.16"||
+            rule.itemId.isNotEmpty()||rule.firstDialogue!="rom.dialogue.88.${if(mask==1)0 else 1}"||
+            rule.repeatDialogue!="rom.dialogue.88.2"||rule.messageDialogues!=mapOf(0 to rule.firstDialogue,2 to rule.repeatDialogue))
+            return StoryFollowup.Result(before,null,false,"当前岛内居民对白规则未核验")
+        val repeated=before.flags[rule.mapFlagId]==true
+        val witnessed=before.flags[rule.witnessFlagId]==true
+        val next=if(!repeated&&witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,if(repeated||witnessed)rule.repeatDialogue else rule.firstDialogue,true)
     }
 
     private fun villageFour(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {

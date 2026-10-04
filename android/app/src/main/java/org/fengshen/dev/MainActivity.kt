@@ -295,7 +295,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                         if(turn!=null)showSubmittedBattleCommand(current,revision,turn)
                     }
                 }
-                if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&storyBattle==null&&
+                if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&
+                    (storyBattle==null||storyBattle?.finalizeWithoutDialogue==true)&&
                     !battleSavePending&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
             }
         } else clock.reset()
@@ -684,7 +685,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor && content.npcVisible(it,flags) &&
+        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor && !it.automaticStoryOnly && content.npcVisible(it,flags) &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
@@ -693,7 +694,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val (x,y)=world.destinationCell()
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
         if(originalPoint!=null)return originalPoint
-        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
+        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor&&!it.automaticStoryOnly&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
         return content.npcs.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
@@ -744,6 +745,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule,content.itemDefinitions[rule.itemId]),npc);return
         }
         val story=content.battle?.storyBattles?.get(npc.id)
+        npc.moneyTreasure?.let{treasure->
+            if(localSaveProtected){showNotice("原存档受保护，不能领取钱箱");return}
+            val before=currentSnapshot();val result=WorldItems.openMoneyTreasure(before,treasure)
+            if(!result.applied){showNotice(result.error?:"没有取得银两");return}
+            money=result.snapshot.money;flags=result.snapshot.flags
+            if(persistStateResult())showNotice("获得${money-before.money}两")
+            else{money=before.money;flags=before.flags;showNotice("保存失败，未取得银两")}
+            clearUxGesture();uxRevision++;return
+        }
         // A guarded chest enters its original story battle first. The acquisition
         // transaction only runs after that exact victory flag is committed.
         npc.treasure?.takeIf{story==null||flags[story.flagId]==true}?.let{treasure->
@@ -781,6 +791,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val story=content.battle?.storyBattles?.values?.firstOrNull{
             it.triggersAt(world.mapId,world.x/16,world.y/16,flags)}?:return false
         val npc=content.npcs.first{it.id==story.npcId}
+        story.intro?.let{intro->
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
+            if(flags[intro.flagId]==true){startStoryBattle(story);return true}
+            val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.begin(before,intro),npc);return true
+        }
         openDialogue(content.dialogues.getValue(npc.firstDialogue),npc)
         return true
     }
@@ -802,6 +817,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             scenePending.pendingDialogue(flags)?.let{id->
                 openDialogue(content.dialogues.getValue(id),content.npcs.first{it.id==scenePending.npcId});return
             }
+        }
+        val introPending=content.battle?.storyBattles?.values?.firstOrNull{it.intro?.let{i->flags[i.pendingFlag]}==true}
+        if(introPending!=null){
+            val intro=introPending.intro!!
+            if(OriginalStatus.allDisabled(characters)){flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return}
+            intro.pendingDialogue(flags)?.let{id->openDialogue(content.dialogues.getValue(id),content.npcs.first{it.id==introPending.npcId});return}
         }
         val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
         if(pending!=null){
@@ -829,7 +850,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(!applySnapshotState(before))localSaveProtected=true
             showNotice("保存失败，请重试继续对话");return
         }
-        if(npc.id in content.sceneStories&&OriginalStatus.allDisabled(characters)){
+        if((npc.id in content.sceneStories||content.battle?.storyBattles?.get(npc.id)?.intro!=null)&&OriginalStatus.allDisabled(characters)){
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
@@ -861,6 +882,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
+            story.intro?.takeIf{flags[it.pendingFlag]==true}?.let{intro->
+                if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+                val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.advance(before,intro,dialogueText?.id?:""),npc)
+                if(layer==Layer.MAP&&flags[intro.flagId]==true&&!story.alreadyWon(flags))startStoryBattle(story)
+                return
+            }
             if(story.alreadyWon(flags)){
                 if(story.continuation!=null&&flags[story.pendingFlag]==true){
                     if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
@@ -1627,7 +1654,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
-            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true||npc.moneyTreasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         val ferry=OriginalFerry.pending(flags,content.ferries.values)
         if(world.mapId==16&&flags[OriginalFerry.PARKED_FLAG]==true&&ferry==null)
             content.ferrySprites["rom.ferry.46"]?.let{c.drawBitmap(it,150*16f,136*16f,paint)}
@@ -1636,7 +1663,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.drawBitmap(actor,(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
         for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8>world.y})
-            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true||npc.moneyTreasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         if(layer==Layer.MAP){
             overlayPaint.color=0xff75ded5.toInt();overlayPaint.alpha=230
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)

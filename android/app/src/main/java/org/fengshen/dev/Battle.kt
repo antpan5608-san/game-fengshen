@@ -17,6 +17,12 @@ data class EnemyDefinition(val id:Int,val name:String,val hp:Int,val attack:Int,
     val iceBaseDamage:Int?=null,val loot:BattleLoot?=null) {
     // Behavior1 name is not transcribed; keep it distinct from verified ice.
     var specialBaseDamage:Int?=null;internal set
+    var requiredBindingMarker:Int=0;internal set
+}
+/** Original 9:AC32 marker comparison. A victory flag is never an immunity bypass. */
+fun originalBoundTargetDamage(requiredMarker:Int,battleMarker:Int,computed:Int):Int {
+    require(requiredMarker in 0..5&&battleMarker in 0..255&&computed in 0..65535)
+    return if(requiredMarker!=0&&battleMarker!=requiredMarker)0 else computed
 }
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
@@ -51,6 +57,7 @@ data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:St
  * Cutscene movement proposals retain the witnessed completed-step poison costs. */
 data class StoryMovement(val destination:StoryDestination,val completedSteps:Int) {
     init {require(completedSteps in 1..32)}
+    var accumulateEncounterSteps:Boolean=false;internal set
 }
 data class SceneStoryDefinition(val id:String,val npcId:String,val flagId:String,
     val entryTrigger:StoryEntryTrigger,val continuation:StoryContinuation,
@@ -96,15 +103,15 @@ object StoryFollowup {
             (it+("rom.map.110.flag.128" to true))-rule.pendingFlag}
     }
     private fun move(before:SaveSnapshot,movement:StoryMovement):SaveSnapshot {
-        // Original map86 has no encounter region. This is a traced scene-script
-        // move, not a playable shortcut or an instruction to draw/award.
-        require(before.mapId==86&&movement.destination.mapId==86)
+        // Original witnessed cutscenes on these maps; no cross-map shortcut.
+        require(before.mapId in setOf(86,76)&&movement.destination.mapId==before.mapId)
         var party=before.characters
-        repeat(movement.completedSteps){party=OriginalStatus.step(party,86)}
+        repeat(movement.completedSteps){party=OriginalStatus.step(party,before.mapId)}
         val d=movement.destination
         return before.copy(x=d.x*16+8,y=d.y*16+8,direction=d.direction?:before.direction,
             characters=party,terrainMode=d.terrainMode?:before.terrainMode,
-            encounterSteps=d.encounterSteps?:before.encounterSteps)
+            encounterSteps=if(movement.accumulateEncounterSteps)(before.encounterSteps+movement.completedSteps) and 255
+                else d.encounterSteps?:before.encounterSteps)
     }
     private fun advance(before:SaveSnapshot,storyId:String,pendingFlag:String,chain:StoryContinuation,
         currentDialogue:String,templates:Map<String,CharacterState>,complete:(Map<String,Boolean>)->Map<String,Boolean>):Result {
@@ -137,13 +144,17 @@ data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:Strin
     var commitAfterDialogue:Boolean=false;internal set
     var continuation:StoryContinuation?=null;internal set
     var victoryFlags:Set<String> = emptySet();internal set
+    var intro:SceneStoryDefinition?=null;internal set
+    var finalizeWithoutDialogue:Boolean=false;internal set
     val pendingFlag get()=flagId+".dialogue.pending"
     fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
-        entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
+        !alreadyWon(flags)&&(entryTrigger==StoryEntryTrigger(mapId,x,y)||intro?.let{i->
+            flags[i.flagId]==true&&i.continuation.destination?.let{it.mapId==mapId&&it.x==x&&it.y==y}==true}==true)
     fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> =
-        (if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+(pendingFlag to true)
+        (if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+
+            (if(finalizeWithoutDialogue)emptyMap()else mapOf(pendingFlag to true))
     fun completeDialogue(flags:Map<String,Boolean>):Map<String,Boolean> =
         if(alreadyWon(flags))(flags+(flagId to true))-pendingFlag else flags
 }
@@ -231,6 +242,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var weaponBonuses=mapOf(hero.id to weaponBonus)
     private var armorBonuses:Map<String,Int> = equippedArmorBonus?.let{mapOf(hero.id to it)}?:emptyMap()
     private var configured=false
+    // Original6948 is local to the current battle and resets on exit.
+    // Item9 command is not enabled until order/consumption and acquisition are verified.
+    private var bindingMarker=0
     private enum class CommandKind { ATTACK, HERB, ESCAPE, ESCAPED }
     private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null)
     private val commands=linkedMapOf<String,QueuedCommand>()
@@ -384,7 +398,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     steps.add(frame("攻击未命中",target=slot,kind=BattleActionKind.MISS,actorId=player.id));continue
                 }
                 val computed=rules.damage(player.strength+weaponBonuses.getValue(player.id),target.definition.defense,player.level,random)
-                val damage=OriginalStatus.outgoingPhysicalDamage(computed,player.statusMask)
+                val damage=originalBoundTargetDamage(target.definition.requiredBindingMarker,bindingMarker,
+                    OriginalStatus.outgoingPhysicalDamage(computed,player.statusMask))
                 val actual=minOf(damage,target.hp);target.hp-=actual;dealt+=actual
                 steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=slot,kind=BattleActionKind.DAMAGE,
                     delta=-actual,beforeEnemy=target.hp+actual,actorId=player.id))

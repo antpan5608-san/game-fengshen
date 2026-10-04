@@ -532,3 +532,17 @@ jobs:
             artifacts/world-yang-join-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
+
+      - name: Retain scoped island normal and cold continuation evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: fengshen-world-island-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-island-*.png
+            artifacts/checkpoint-ui/touch-ux-world-island-*.json
+            artifacts/checkpoint-ui/world-island-*.json
+            artifacts/checkpoint-ui/world-island-*-test.txt
+            artifacts/world-island-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
