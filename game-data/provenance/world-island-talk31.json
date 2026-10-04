@@ -1,0 +1,441 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "map78-actual-npc-callback31-not-world-event31",
+  "kind": "CONTROLLED_ORIGINAL_KEYS_AND_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "rules": {
+    "mapId": 78,
+    "actionId": 31,
+    "witnessFlagId": "rom.global.7c6.16",
+    "messageGroup": 88,
+    "firstMessages": [
+      0,
+      1
+    ],
+    "repeatMessage": 2,
+    "noRewards": true,
+    "noWorldEvent": true
+  },
+  "sources": [
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first/repeat selector"
+    },
+    {
+      "offset": 346966,
+      "length": 2,
+      "sha256": "267081bd073a1a95aae388c5fc1ca36dcce78351adeda68cf3095fdab2904a2a",
+      "module": 10,
+      "cpuAddress": 52038,
+      "meaning": "NPC callback31 pointer, different namespace from world event31"
+    },
+    {
+      "offset": 347324,
+      "length": 26,
+      "sha256": "cbbc36394542114720255a607fd6f6be27e99f3fd4bcaf86fa45385bd8eb16fa",
+      "module": 10,
+      "cpuAddress": 52396,
+      "meaning": "Actual callback31 original global witness branch"
+    },
+    {
+      "offset": 347949,
+      "length": 21,
+      "sha256": "01c7443b6950e5413f6e5f5f5d413f5fb05c63e68c115f302ce43d3695c917ad",
+      "module": 10,
+      "cpuAddress": 53021,
+      "meaning": "Clear event callback and preserve/write actual local map bit"
+    },
+    {
+      "offset": 21823,
+      "length": 2,
+      "sha256": "19c6b3fd7cbacc4f1a17af4f4a93219df9f24b267df58d9b64b581f6367fa807",
+      "module": 0,
+      "cpuAddress": 54575,
+      "meaning": "Original map78 local flag address"
+    }
+  ],
+  "cpu": {
+    "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+    "kind": "CONTROLLED_ORIGINAL_NPC_CALLBACK_NOT_NORMAL_ANDROID",
+    "caseCount": 1024,
+    "failures": 0,
+    "tableSha256": "7fb7200604461126986214846c97790034318bf57b40f0d8a93e546f770b5850",
+    "callbackAddress": 52396,
+    "noWorldEvent31": true,
+    "tablePath": "android/app/src/test/resources/world-island-talk31-cpu.tsv",
+    "probePath": "tools/rom-extractor/probe-world-island-talk.py",
+    "probeSha256": "086117884d605ed48c0733ac54c84579ca6bd51a24e3dd6ff0b2dc21f6a04d02"
+  },
+  "font": {
+    "sources": [
+      {
+        "offset": 589840,
+        "length": 2048,
+        "sha256": "f6e877cb2b267237053a0f7f0d8149dbc187e84ac0780c3639acc9f624148499",
+        "meaning": "Actual original dialogue88 CHR half"
+      },
+      {
+        "offset": 591888,
+        "length": 2048,
+        "sha256": "68eba3894cfc7e047bc25e9c4691445674f8774ce96cdae575f9fba40d26cb94",
+        "meaning": "Actual original dialogue88 CHR half"
+      }
+    ],
+    "charset": {
+      "64": "『",
+      "185": "你",
+      "188": "們",
+      "46": "一",
+      "11": "定",
+      "45": "要",
+      "165": "有",
+      "181": "遁",
+      "60": "龍",
+      "54": "樁",
+      "66": "，",
+      "139": "否",
+      "12": "則",
+      "52": "打",
+      "140": "不",
+      "13": "贏",
+      "58": "四",
+      "182": "惡",
+      "59": "人",
+      "186": "的",
+      "192": "！",
+      "65": "』",
+      "57": "是",
+      "162": "五",
+      "35": "山",
+      "39": "文",
+      "167": "殊",
+      "40": "天",
+      "168": "尊",
+      "180": "秘",
+      "53": "寶",
+      "67": "。",
+      "174": "謝",
+      "141": "讓",
+      "166": "我",
+      "14": "重",
+      "142": "獲",
+      "15": "自",
+      "143": "由"
+    },
+    "glyphs": [
+      {
+        "code": 185,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      },
+      {
+        "code": 188,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "code": 46,
+        "character": "一",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "code": 11,
+        "character": "定",
+        "pixelsSha256": "cb237e94acebd7f22cba6fb3dabf03877476de388476d6f78bd9b3042afa39eb"
+      },
+      {
+        "code": 45,
+        "character": "要",
+        "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+      },
+      {
+        "code": 165,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "code": 181,
+        "character": "遁",
+        "pixelsSha256": "1e3f87b8f452a14c476d78a669a5fd88f7e58c8a3635df78127eb11db9bc07d3"
+      },
+      {
+        "code": 60,
+        "character": "龍",
+        "pixelsSha256": "880c8f604cf13f170b483f290d5ceb3f30410cccf993356d27bc8d334dbaca9f"
+      },
+      {
+        "code": 54,
+        "character": "樁",
+        "pixelsSha256": "a0d8c92bce647bd93a4feb7eb8ea2e59b68ea4821bc3541fe77345d383a98d34"
+      },
+      {
+        "code": 139,
+        "character": "否",
+        "pixelsSha256": "d222fb4beaf3a67c34a38ce5c1779e183af9cbcf33222d2dec26fd500571c869"
+      },
+      {
+        "code": 12,
+        "character": "則",
+        "pixelsSha256": "dfe237d6c06a164d1fcca74753199f81cf1690ccea110923037d1c7cfbfccc2e"
+      },
+      {
+        "code": 52,
+        "character": "打",
+        "pixelsSha256": "3a038bee24015ff307807b122453db1a862a94ef31220fea9f1b76903b43a92c"
+      },
+      {
+        "code": 140,
+        "character": "不",
+        "pixelsSha256": "8dcebfe880db18259e1679e1623abd40bd0f03a28ec2461a0fbe057fd78ae5ba"
+      },
+      {
+        "code": 13,
+        "character": "贏",
+        "pixelsSha256": "e626a2bfd572e9dfd5ee939bdf236f929ad55f8ecfe9a7d508998d7374557387"
+      },
+      {
+        "code": 58,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724"
+      },
+      {
+        "code": 182,
+        "character": "惡",
+        "pixelsSha256": "82b595ffe1ee2e93bf51c6068e6c29da2c10ea244a734a8de15ded3e52b029c7"
+      },
+      {
+        "code": 59,
+        "character": "人",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "code": 186,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 57,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      },
+      {
+        "code": 162,
+        "character": "五",
+        "pixelsSha256": "281ea3c11ff3363d8609d259c54be86c5991be0576527fb6c9a9a7ef74b907bb"
+      },
+      {
+        "code": 35,
+        "character": "山",
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "code": 39,
+        "character": "文",
+        "pixelsSha256": "667251e3d73a6ba2c523e932fb6a6df9df1434a971a33d3a63ef355e35a6690a"
+      },
+      {
+        "code": 167,
+        "character": "殊",
+        "pixelsSha256": "163f7cb532f1064a2a58af0cd877beffaa721ff2944a971a15a45ecdc160d4ba"
+      },
+      {
+        "code": 40,
+        "character": "天",
+        "pixelsSha256": "6d8ee8cf270d736f813151fb12e567ac3e431e4e2cf8981bf61a373e0fc537ac"
+      },
+      {
+        "code": 168,
+        "character": "尊",
+        "pixelsSha256": "9755eac76ba9dac7a87c8cbbb98e941927354289d3d0a2ed9ebf638ff4d4e7a4"
+      },
+      {
+        "code": 180,
+        "character": "秘",
+        "pixelsSha256": "5cf47fb2d7b43e74b2e9effd21e5d172c296cc746a2f900c45f90cc0a5b800e3"
+      },
+      {
+        "code": 53,
+        "character": "寶",
+        "pixelsSha256": "870f367d82c8fe72bac9c0945e47782e03b0aa7ecb2dcaffe52a5e0a4dcf73bb"
+      },
+      {
+        "code": 174,
+        "character": "謝",
+        "pixelsSha256": "81a0f5b31620454c2657201a7ce82ff61bc40e5b2ea9560240d79396575644cd"
+      },
+      {
+        "code": 141,
+        "character": "讓",
+        "pixelsSha256": "68d0faaeceff6daa1ad08b5a9ac590168615550358343b9a2264e70949345e7c"
+      },
+      {
+        "code": 166,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "code": 14,
+        "character": "重",
+        "pixelsSha256": "57dbf5028176aff97ec27ee33275e00872e83c39d4aa1180b677d434ad52df3d"
+      },
+      {
+        "code": 142,
+        "character": "獲",
+        "pixelsSha256": "d3dcfc25b34cabe6f358ec7e68ec1fdfdc48cf42cad0b1c0bd1eb9d8172f1f1f"
+      },
+      {
+        "code": 15,
+        "character": "自",
+        "pixelsSha256": "48338eae8ca0447c6eca9652442071eb3348aefd5ff87b06418ca9e4903f0832"
+      },
+      {
+        "code": 143,
+        "character": "由",
+        "pixelsSha256": "d5e11ee4f3bfcb021e1f673e2fd2acc8d1d5da975f670d06363859f1a63c1843"
+      }
+    ]
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.88.0",
+      "text": "『你們一定要有遁龍樁，否則打不贏四惡人的！』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 106965,
+          "length": 23,
+          "sha256": "645eda540683988982ba1795d3cd13729ddefe8819d4a578af429f0a83b554ca",
+          "module": 3,
+          "cpuAddress": 41413,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101154,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35602,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101802,
+            "length": 2,
+            "sha256": "5ccde93a7741eebe66772604237d08415b1c1d54ec84a5b5342c7e1054115b0e",
+            "module": 3,
+            "cpuAddress": 36250,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-talk31.json",
+        "originalEvidenceKind": "CONTROLLED_ORIGINAL_GROUP88_NPC_NOT_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.88.1",
+      "text": "『遁龍樁是五龍山文殊天尊的秘寶。』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 106988,
+          "length": 18,
+          "sha256": "c501e1a3d504c2277fe6c65438a29e7ec32941841808f82958f3ca721f338abd",
+          "module": 3,
+          "cpuAddress": 41436,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101154,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35602,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101804,
+            "length": 2,
+            "sha256": "5dd328316a8430f4bbbaf05798bb6908149c31eac41d9c450f01d18fe419471c",
+            "module": 3,
+            "cpuAddress": 36252,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-talk31.json",
+        "originalEvidenceKind": "CONTROLLED_ORIGINAL_GROUP88_NPC_NOT_ANDROID"
+      }
+    },
+    {
+      "id": "rom.dialogue.88.2",
+      "text": "『謝謝你們讓我重獲自由。』",
+      "source": {
+        "confidence": "GAMEPLAY_VERIFIED",
+        "originalVerified": true,
+        "record": {
+          "offset": 107006,
+          "length": 14,
+          "sha256": "35204dcc0480545d42cdbf673d9ccf7a35e4c9154b061e9cc531210ff6cd561f",
+          "module": 3,
+          "cpuAddress": 41454,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101154,
+            "length": 2,
+            "sha256": "53d9d9e1bb0d0b1fecaf50236e877477ebccd35e387405f3e8ff48411fef989f",
+            "module": 3,
+            "cpuAddress": 35602,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101806,
+            "length": 2,
+            "sha256": "0848cd63ef35430a62f9513b56cfd1a33dc15570ffcad1322028d707a2bb7ab0",
+            "module": 3,
+            "cpuAddress": 36254,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-island-talk31.json",
+        "originalEvidenceKind": "CONTROLLED_ORIGINAL_GROUP88_NPC_NOT_ANDROID"
+      }
+    }
+  ],
+  "records": [
+    {
+      "offset": 281551,
+      "length": 14,
+      "sha256": "b0d5ed5ea482df858467c393b015dfca1a24a2cec58ab47094300c463dab0091",
+      "module": 8,
+      "cpuAddress": 52159,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 281565,
+      "length": 14,
+      "sha256": "d0f1b631590e357c6ac27e75aa53bb55be6ae73ae7a2f8fef0076b77b6df28eb",
+      "module": 8,
+      "cpuAddress": 52173,
+      "meaning": "Fixed 14-byte NPC source record"
+    }
+  ],
+  "corrections": [
+    "NPC callback31 is not module11 event31. No prison116 door inferred from shared number.",
+    "Single A after loading the controlled source closed its existing menu state; two separated real A presses obtained original group88. Early attempts retained as failed observations, not source verification."
+  ],
+  "limitations": [
+    "Controlled original player pose/global witness fixture, not normal Android route.",
+    "Do not manufacture a mandatory possession lock from the NPC advice.",
+    "Original current-map sprite palette and movement remain separate debt."
+  ]
+}

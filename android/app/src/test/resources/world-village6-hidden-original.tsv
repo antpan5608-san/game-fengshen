@@ -1,0 +1,10 @@
+case	dispatch	category	item	applied	quantity	mapFlag
+select-0	47	0	1	1	0	0
+select-1	0	0	1	0	0	8
+empty	47	0	1	1	1	8
+one	47	0	1	1	2	8
+below_cap	47	0	1	1	10	8
+at_cap	47	0	1	0	10	0
+used	47	0	1	1	2	8
+full_new	47	0	1	0	0	0
+full_existing	47	0	1	1	2	8

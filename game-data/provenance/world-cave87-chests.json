@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "grantAmount": 1,
+    "categoryLimits": [
+      10,
+      1,
+      10,
+      10
+    ],
+    "categorySlotCount": 16,
+    "fullExistingStackCanIncrease": true,
+    "failureDoesNotSetOpenedFlag": true,
+    "repeatDoesNotGrant": true,
+    "quantityMask": 127,
+    "worldUseRuleInferred": false
+  },
+  "sources": [
+    {
+      "offset": 337744,
+      "length": 92,
+      "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+      "module": 10,
+      "cpuAddress": 42816,
+      "meaning": "Original chest reads category/item/mask and current map flag"
+    },
+    {
+      "offset": 73424,
+      "length": 249,
+      "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+      "module": 2,
+      "cpuAddress": 40640,
+      "meaning": "Original granted inventory branch and success-only map-flag OR"
+    },
+    {
+      "offset": 73967,
+      "length": 12,
+      "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Original category/item inventory dispatcher"
+    },
+    {
+      "offset": 73979,
+      "length": 173,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original existing stack increment and 16-slot insertion"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original four category limits and inventory base pointers"
+    }
+  ],
+  "scopeRevision": "cave87-six-original-item-chests-and-money550",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "bindings": [
+    {
+      "mapId": 87,
+      "npcIndex": 1,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 10,
+      "maxCount": 10,
+      "flagMask": 1,
+      "source": {
+        "offset": 282133,
+        "length": 14,
+        "sha256": "fc3a455c983cd2810be959c67d3087bb362332a896b9c5881dc36d13dd2bf10e",
+        "module": 8,
+        "cpuAddress": 52741,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    },
+    {
+      "mapId": 87,
+      "npcIndex": 2,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 11,
+      "maxCount": 10,
+      "flagMask": 2,
+      "source": {
+        "offset": 282147,
+        "length": 14,
+        "sha256": "51e492d426573c830b159ed4770e9ba5ad7bdb8c9e116f698b24d514c2a9e5e0",
+        "module": 8,
+        "cpuAddress": 52755,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    },
+    {
+      "mapId": 87,
+      "npcIndex": 3,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 1,
+      "maxCount": 10,
+      "flagMask": 4,
+      "source": {
+        "offset": 282161,
+        "length": 14,
+        "sha256": "c09424ba5bddc4d0f9f3cdc08a1730ae597953af432becf7b41e4ab7bd081634",
+        "module": 8,
+        "cpuAddress": 52769,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    },
+    {
+      "mapId": 87,
+      "npcIndex": 5,
+      "spriteId": 144,
+      "categoryId": 2,
+      "originalId": 8,
+      "maxCount": 10,
+      "flagMask": 16,
+      "source": {
+        "offset": 282189,
+        "length": 14,
+        "sha256": "552d7fc8c374c141717c665a4a576909a0fa95c64d1f87cd3e402fdf2a35dd1b",
+        "module": 8,
+        "cpuAddress": 52797,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    },
+    {
+      "mapId": 87,
+      "npcIndex": 6,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 0,
+      "maxCount": 10,
+      "flagMask": 32,
+      "source": {
+        "offset": 282203,
+        "length": 14,
+        "sha256": "ded2adc3f9486fdfdf2e644f28680dcfed1adef7fa3262948de001a9b89cbc71",
+        "module": 8,
+        "cpuAddress": 52811,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    },
+    {
+      "mapId": 87,
+      "npcIndex": 7,
+      "spriteId": 144,
+      "categoryId": 2,
+      "originalId": 22,
+      "maxCount": 10,
+      "flagMask": 64,
+      "source": {
+        "offset": 282217,
+        "length": 14,
+        "sha256": "0832002a9d641da8cc6f6c041647eaa83650868636ca6d1e4fb169b45bc2d13d",
+        "module": 8,
+        "cpuAddress": 52825,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused observed open pose"
+      }
+    }
+  ],
+  "testCount": 42,
+  "failures": 0,
+  "cpuExpectedPath": "android/app/src/test/resources/world-cave87-chests-original.tsv",
+  "activeCpuSha256": "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24",
+  "ruleReuse": {
+    "path": "game-data/provenance/world-hell-chest-grants.json",
+    "sha256": "cc0ad87e6f01bd7e9cbbdba6e6d9800fbabd47bb55b0f9c3ccf88bd7f9f30e69"
+  },
+  "normalAndroid": "NOT_RUN",
+  "cpuExpectedSha256": "eb42cf04ba7e2c4a45a05f93966bbc15e827c7134d88e91fc532213b23fa5881",
+  "money": {
+    "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+    "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+    "testCount": 35,
+    "failures": 0,
+    "tableSha256": "e66789e0b4f636d3d20c06efbaaaa8861a8a77d9d76756b4cbe97aeef840fd44",
+    "categoryId": 4,
+    "originalId": 5,
+    "amount": 550,
+    "moneyCap": 999999,
+    "npcSource": {
+      "offset": 282175,
+      "length": 14,
+      "sha256": "0b8788ff88d724df8028fb8e691ffbc23342b45603752237bc3fcd3c4303ba45",
+      "module": 8,
+      "cpuAddress": 52783,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "amountSource": {
+      "offset": 93760,
+      "length": 2,
+      "sha256": "5a9a31c809be334e46b05a3a9e82bf630e898a16db7891f21ae63b1c80404ce5",
+      "module": 2,
+      "cpuAddress": 60976,
+      "meaning": "Original category4/id5 money chest amount550"
+    },
+    "tablePath": "android/app/src/test/resources/world-cave87-money-original.tsv",
+    "probePath": "tools/rom-extractor/probe-world-cave87-state.py",
+    "probeSha256": "59192b0a54c4f17f08a3791c80b603e49ba76e00db24316d6227f35a9697d09e",
+    "sources": [
+      {
+        "offset": 337744,
+        "length": 92,
+        "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+        "module": 10,
+        "cpuAddress": 42816,
+        "meaning": "Original chest once selector"
+      },
+      {
+        "offset": 73669,
+        "length": 58,
+        "sha256": "ec675821489e981c6cd17c757e1314ac5dbd40378f11b27461e3d4f1edd4e0c5",
+        "module": 2,
+        "cpuAddress": 40885,
+        "meaning": "Actual category4 money amount and map flag"
+      },
+      {
+        "offset": 83264,
+        "length": 32,
+        "sha256": "0fe6b2800d4ac0fb9eb9c595fac1a25d4e92026d31fb6c03fef9ea40a6339173",
+        "module": 2,
+        "cpuAddress": 50480,
+        "meaning": "Original uint24 money grant"
+      },
+      {
+        "offset": 67293,
+        "length": 41,
+        "sha256": "5d0d4804daf52767fda88570a3fdf0c9edd2b34b8e2e8a61c006bca5a656cddb",
+        "module": 2,
+        "cpuAddress": 34509,
+        "meaning": "Original999999 saturation"
+      },
+      {
+        "offset": 91686,
+        "length": 2,
+        "sha256": "10cdd43e3da7117a0c592b94437e323bb62f375da31640d40e456a82c6c0fce9",
+        "module": 2,
+        "cpuAddress": 58902,
+        "meaning": "Money amount table pointer"
+      }
+    ]
+  }
+}

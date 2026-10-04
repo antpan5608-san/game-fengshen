@@ -199,7 +199,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         inventory.isNotEmpty() || flags.isNotEmpty() || money!=content.initialMoney
     fun backupBeforeCloudRestore(){savePrefs.getString("saveJson",null)?.let{savePrefs.edit().putString("preCloudRecovery",it).commit()}}
     fun restoreSnapshot(snapshot:SaveSnapshot):Boolean {
-        if(!applySnapshotState(snapshot))return false
+        val loaded=snapshot.copy(flags=OriginalNpcTalk.flagsAfterMapLoad(snapshot.mapId,snapshot.characters.size,snapshot.flags))
+        if(!applySnapshotState(loaded))return false
         localSaveProtected=false;savedSnapshot="";diagnoseExperience();persistState()
         if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
         return true
@@ -295,7 +296,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                         if(turn!=null)showSubmittedBattleCommand(current,revision,turn)
                     }
                 }
-                if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&storyBattle==null&&
+                if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&
+                    (storyBattle==null||storyBattle?.finalizeWithoutDialogue==true)&&
                     !battleSavePending&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
             }
         } else clock.reset()
@@ -362,6 +364,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedContactSeq==world.contactTransitionSeq)return
         processedContactSeq=world.contactTransitionSeq
         val exit=world.lastContactExit?:return
+        flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
         input.clear();npcTouch.clear();hudTouch.clear();clock.reset()
         Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",exit.fromMapId)
             .put("mapId",world.mapId).put("contactActorId",exit.contactActorId).put("x",world.x/16).put("y",world.y/16))
@@ -381,6 +384,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(step.transitioned){
+            flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
             Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",step.mapId)
                 .put("mapId",world.mapId).put("x",world.x/16).put("y",world.y/16));audio.scene(world.mapId)
             val exit=content.exits.firstOrNull{it.fromMapId==step.mapId&&it.triggerX==step.x&&it.triggerY==step.y}
@@ -492,7 +496,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     loot.acquired.joinToString(""){"  获得 ${content.itemNames[it]?:it}"}+
                     if(loot.skipped.isEmpty())"" else "  物品数量/格数已满，掉落未取得"
                 battleResultLines=listOf("胜利！", "总经验 ${reward.experience} · 银两 +${current.enemies.sumOf{it.definition.moneyReward}}")+
-                    reward.characters.flatMap{player->val before=partyBefore.getValue(player.id);listOf(
+                    reward.characters.filter{it.id in partyBefore}.flatMap{player->val before=partyBefore.getValue(player.id);listOf(
                         "${heroName(player.id)} EXP +${reward.experienceByCharacter.getValue(player.id)} · 累计 ${before.experience} → ${player.experience}",
                         if(before.level==player.level)"等级 ${player.level}" else "升级 ${before.level} → ${player.level}",growthProgress(player).summary)}+
                     loot.acquired.map{"获得 ${content.itemNames[it]?:it}"}+loot.skipped.map{"${content.itemNames[it]?:it}：数量/格数已满，未取得"}
@@ -601,8 +605,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val items=battleItemLayout()
             if(items.close.contains(x,y))return cmd("close-items")
             battleMedicines().firstOrNull{battleItemBounds(it).contains(x,y)&&battleItemBounds(it).h>=48*resources.displayMetrics.density}?.let{return cmd("select-medicine",item=it)}
-            current.party.firstOrNull{battleItemTargetBounds(it.id).contains(x,y)}?.let{return cmd("medicine-target",target=it.id)}
-            if(items.primary.contains(x,y))return selectedBattleItem?.let{cmd("use-medicine",item=it,target=battleItemTarget()?.id)}
+            val binding=selectedBattleItem=="rom.special.9"
+            if(!binding)current.party.firstOrNull{battleItemTargetBounds(it.id).contains(x,y)}?.let{return cmd("medicine-target",target=it.id)}
+            if(items.primary.contains(x,y))return selectedBattleItem?.let{
+                cmd(if(binding)"use-binding"else"use-medicine",item=it,target=if(binding)current.inputHero?.id else battleItemTarget()?.id)}
             return when{items.detail.contains(x,y)->cmd("medicine-scroll");items.list.contains(x,y)->cmd("medicine-list-scroll");else->null}
         }
         if(battleInfoOpen){
@@ -640,6 +646,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "medicine-target"->{val current=battle?:return;if(current.party.none{it.id==cmd.targetId})return
                 selectedBattleTarget=cmd.targetId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "medicine-scroll","medicine-list-scroll"->Unit
+            "use-binding"->{
+                val current=battle?:return;val item=content.itemDefinitions[cmd.itemId]?:return
+                if(cmd.itemId!=selectedBattleItem||cmd.targetId!=current.inputHero?.id)return
+                val revision=current.inputRevision
+                val turn=current.useBinding(inventory[item.id]?:0,item,flags["rom.inventory.special.9.used"]==true){battleRandom.nextInt(256)}
+                if(!showSubmittedBattleCommand(current,revision,turn)){battleNotice=battleMedicineReason(item.id);battlePresentation.invalidateInput();return}
+                battleItemsOpen=false;selectedBattleItem=null
+                Diagnostics.record("battle_item",details=JSONObject().put("battleID",battleID).put("itemID",item.id)
+                    .put("actorID",cmd.targetId).put("pendingConsumed",0))
+            }
             "use-medicine"->{
                 val current=battle?:return;val item=content.itemDefinitions[cmd.itemId]?:return
                 val targetId=cmd.targetId?:return
@@ -684,7 +700,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcs.filter{it.mapId==world.mapId && !it.scriptedActor && content.npcVisible(it,flags) &&
+        return content.npcsForState(world.mapId,flags).filter{!it.scriptedActor && !it.automaticStoryOnly && content.npcVisible(it,flags) &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
@@ -693,13 +709,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val (x,y)=world.destinationCell()
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
         if(originalPoint!=null)return originalPoint
-        val id=interactionTarget(x,y,world.direction,content.npcs.filter{it.mapId==world.mapId&&!it.scriptedActor&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
-        return content.npcs.firstOrNull{it.id==id}
+        val actors=content.npcsForState(world.mapId,flags)
+        val id=interactionTarget(x,y,world.direction,actors.filter{!it.scriptedActor&&!it.automaticStoryOnly&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
+        return actors.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
         if(!ui.game.contains(x,y))return null
         val camera=world.camera(ui.viewWidth,ui.viewHeight)
-        val candidates=nearbyNpcs().map{npc->
+        val candidates=nearbyNpcs().filter{!it.hiddenInvestigation}.map{npc->
             val (sx,sy)=ui.worldToScreen(npc.x*16f,npc.y*16f,camera)
             val size=16*ui.scale;val pad=min(12*resources.displayMetrics.density,size*.24f)
             npc to Box(sx-pad,sy-pad,size+pad*2,size+pad*2)
@@ -744,6 +761,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule,content.itemDefinitions[rule.itemId]),npc);return
         }
         val story=content.battle?.storyBattles?.get(npc.id)
+        npc.moneyTreasure?.let{treasure->
+            if(localSaveProtected){showNotice("原存档受保护，不能领取钱箱");return}
+            val before=currentSnapshot();val result=WorldItems.openMoneyTreasure(before,treasure)
+            if(!result.applied){showNotice(result.error?:"没有取得银两");return}
+            money=result.snapshot.money;flags=result.snapshot.flags
+            if(persistStateResult())showNotice("获得${money-before.money}两")
+            else{money=before.money;flags=before.flags;showNotice("保存失败，未取得银两")}
+            clearUxGesture();uxRevision++;return
+        }
         // A guarded chest enters its original story battle first. The acquisition
         // transaction only runs after that exact victory flag is committed.
         npc.treasure?.takeIf{story==null||flags[story.flagId]==true}?.let{treasure->
@@ -781,6 +807,28 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val story=content.battle?.storyBattles?.values?.firstOrNull{
             it.triggersAt(world.mapId,world.x/16,world.y/16,flags)}?:return false
         val npc=content.npcs.first{it.id==story.npcId}
+        story.intro?.let{intro->
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
+            if(flags[intro.flagId]==true){startStoryBattle(story);return true}
+            val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.begin(before,intro),npc);return true
+        }
+        story.approach?.let{
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
+            if(flags[story.approachFlag]!=true){
+                val before=currentSnapshot();val result=StoryFollowup.approachBattle(before,story)
+                if(!result.applied||!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+                    showNotice(result.error?:"剧情前行状态不可恢复");return true
+                }
+                if(!persistStateResult()){
+                    if(!applySnapshotState(before))localSaveProtected=true
+                    showNotice("保存失败，剧情前行未提交");return true
+                }
+                if(OriginalStatus.allDisabled(characters)){
+                    flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return true
+                }
+            }
+            startStoryBattle(story);return true
+        }
         openDialogue(content.dialogues.getValue(npc.firstDialogue),npc)
         return true
     }
@@ -802,6 +850,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             scenePending.pendingDialogue(flags)?.let{id->
                 openDialogue(content.dialogues.getValue(id),content.npcs.first{it.id==scenePending.npcId});return
             }
+        }
+        val introPending=content.battle?.storyBattles?.values?.firstOrNull{it.intro?.let{i->flags[i.pendingFlag]}==true}
+        if(introPending!=null){
+            val intro=introPending.intro!!
+            if(OriginalStatus.allDisabled(characters)){flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return}
+            intro.pendingDialogue(flags)?.let{id->openDialogue(content.dialogues.getValue(id),content.npcs.first{it.id==introPending.npcId});return}
         }
         val pending=content.battle?.storyBattles?.values?.firstOrNull{flags[it.flagId+".dialogue.pending"]==true}
         if(pending!=null){
@@ -829,7 +883,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(!applySnapshotState(before))localSaveProtected=true
             showNotice("保存失败，请重试继续对话");return
         }
-        if(npc.id in content.sceneStories&&OriginalStatus.allDisabled(characters)){
+        if((npc.id in content.sceneStories||content.battle?.storyBattles?.get(npc.id)?.intro!=null)&&OriginalStatus.allDisabled(characters)){
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
@@ -861,6 +915,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
         if(story!=null){
+            story.intro?.takeIf{flags[it.pendingFlag]==true}?.let{intro->
+                if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+                val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.advance(before,intro,dialogueText?.id?:""),npc)
+                if(layer==Layer.MAP&&flags[intro.flagId]==true&&!story.alreadyWon(flags))startStoryBattle(story)
+                return
+            }
             if(story.alreadyWon(flags)){
                 if(story.continuation!=null&&flags[story.pendingFlag]==true){
                     if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
@@ -1033,6 +1093,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 result==null->"当前装备条件不满足";else->""}
             return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
+        item.nightLightUse?.let{
+            val reason=WorldItems.nightLightUnavailable(currentSnapshot(),item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+            return ItemAction("night-light","使用${item.name}",reason==null,reason?:"","field-map-74")
+        }
         item.fieldProtectionUse?.let{
             val reason=WorldItems.fieldProtectionUnavailable(currentSnapshot(),item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
             return ItemAction("field-use","使用${item.name}",reason==null,reason?:"","field-map-67")
@@ -1102,6 +1166,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
             "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
             "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
+            "night-light"->{
+                val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return
+                val current=itemAction()
+                if(selectedItemId!=id||current.kind!="night-light"||!current.enabled||cmd.targetId!=current.target)return
+                val before=currentSnapshot()
+                val result=WorldItems.useNightLight(before,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                // Verify/decode before committing state; draw never changes the effect.
+                try{content.atlasForState(world.mapId,result.flags)}catch(e:Exception){
+                    Diagnostics.record("night_light_atlas","ERROR",code=e.javaClass.simpleName,stack=e.stackTrace.take(12).joinToString("\n"));feedback("照明素材加载失败，物品和状态已保留");return
+                }
+                inventory=result.inventory;flags=result.flags;commitModal(before,"已使用${item.name}")
+            }
             "field-use"->{
                 val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return
                 val current=itemAction()
@@ -1606,10 +1683,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.translate(ui.game.x,ui.game.y);c.scale(ui.scale,ui.scale);c.translate(-cam.x,-cam.y)
         val firstX=max(0,floor(cam.x/16).toInt());val lastX=min(scene.width-1,ceil((cam.x+cam.viewWidth)/16).toInt())
         val firstY=max(0,floor(cam.y/16).toInt());val lastY=min(scene.height-1,ceil((cam.y+cam.viewHeight)/16).toInt())
+        val mapAtlas=content.atlasForState(world.mapId,flags)
         for(ty in firstY..lastY)for(tx in firstX..lastX){
             val i=ty*scene.width+tx;val t=scene.grid[i];val x=tx*16f;val y=ty*16f
             paint.color=Color.WHITE;paint.alpha=255
-            c.drawBitmap(content.atlases.getValue(world.mapId),Rect(t%16*16,t/16*16,t%16*16+16,t/16*16+16),RectF(x,y,x+16,y+16),paint)
+            c.drawBitmap(mapAtlas,Rect(t%16*16,t/16*16,t%16*16+16,t/16*16+16),RectF(x,y,x+16,y+16),paint)
             if(debug){
                 if(i !in scene.enabled){paint.color=0x55000000;c.drawRect(x,y,x+16,y+16,paint)}
                 else {paint.color=0xffc56cff.toInt();paint.strokeWidth=.4f
@@ -1621,13 +1699,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
         paint.color=Color.WHITE;paint.alpha=255
-        val actors=content.npcs.filter{it.mapId==world.mapId&&
+        val actors=content.npcsForState(world.mapId,flags).filter{
             (content.npcVisible(it,flags)||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))&&
             (!it.scriptedActor||it.id in content.sceneStories||(layer==Layer.DIALOGUE&&dialogueNpc?.id==it.id))}.sortedBy{it.y}
         val objects=content.mapObjects.filter{it.mapId==world.mapId&&it.itemTarget?.let{t->flags[t.removedFlagId]!=true}!=false}
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
-            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true||npc.moneyTreasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         val ferry=OriginalFerry.pending(flags,content.ferries.values)
         if(world.mapId==16&&flags[OriginalFerry.PARKED_FLAG]==true&&ferry==null)
             content.ferrySprites["rom.ferry.46"]?.let{c.drawBitmap(it,150*16f,136*16f,paint)}
@@ -1636,7 +1714,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.drawBitmap(actor,(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
         for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8>world.y})
-            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
+            c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true||npc.moneyTreasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         if(layer==Layer.MAP){
             overlayPaint.color=0xff75ded5.toInt();overlayPaint.alpha=230
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)
@@ -1851,7 +1929,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         textPaint.color=Color.WHITE
     }
     fun battleHerbCount()=max(0,(inventory[HerbUse.ID]?:0)-(battle?.herbsConsumed?:0))
-    private fun battleMedicines()=content.itemDefinitions.values.filter{it.category=="medicine"&&
+    private fun battleMedicines()=content.itemDefinitions.values.filter{(it.category=="medicine"||it.battleBindingUse!=null)&&
         ((inventory[it.id]?:0)>0||it.id==HerbUse.ID)}.map{it.id}.sorted()
     private fun battleItemLayout():TouchModalLayout {
         val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
@@ -1874,6 +1952,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun battleItemUseBounds()=battleItemLayout().primary
     fun battleItemCloseBounds()=battleItemLayout().close
     private fun battleMedicineReason(id:String):String {
+        if(id=="rom.special.9"){
+            val item=content.itemDefinitions[id]?:return "原版秘宝定义未接入"
+            if((inventory[id]?:0)!=1)return "没有遁龙樁"
+            if(flags["rom.inventory.special.9.used"]==true)return "此秘宝已有原版使用标记"
+            val current=battle?:return "当前不在战斗中"
+            return if(current.bindingAvailable(inventory[id]?:0,item))"轮到当前角色时困住四恶人；保留数量"else "当前不是已支持的四恶人战斗或输入阶段"
+        }
         if(id!=HerbUse.ID)return "此物品的战斗效果尚未实现"
         if(battleHerbCount()<=0)return "没有药草库存"
         val current=battle?:return "当前不在战斗"
@@ -1887,7 +1972,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         touchText(c,"战斗物品",Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
         touchText(c,"点列表查看 · 使用才提交",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
         touchButton(c,l.close,"关闭")
-        if(current.party.size>1)for(player in current.party)touchButton(c,battleItemTargetBounds(player.id),
+        if(current.party.size>1&&selectedBattleItem!="rom.special.9")for(player in current.party)touchButton(c,battleItemTargetBounds(player.id),
             "${if(battleItemTarget()?.id==player.id)"✓ " else ""}${heroName(player.id)} · HP ${player.hp}/${player.maxHp}")
         c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
         for((i,id) in battleMedicines().withIndex()){
@@ -1898,8 +1983,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         };c.restore()
         val id=selectedBattleItem;val item=id?.let{content.itemDefinitions[it]}
         val target=battleItemTarget()
-        val enabled=item!=null&&target!=null&&current.herbAvailable(target.id,inventory[HerbUse.ID]?:0,item)
-        val lines=if(id==null)listOf("选择物品后查看效果与合法目标", "只浏览、取消或滑动不会消耗物品") else listOf(
+        val binding=id=="rom.special.9"
+        val enabled=item!=null&&if(binding)current.bindingAvailable(inventory[item.id]?:0,item,flags["rom.inventory.special.9.used"]==true)
+            else target!=null&&current.herbAvailable(target.id,inventory[HerbUse.ID]?:0,item)
+        val lines=if(id==null)listOf("选择物品后查看效果与合法目标", "只浏览、取消或滑动不会消耗物品") else if(binding)listOf(
+            "${current.inputHero?.id?.let{heroName(it)}?:"当前没有合法角色"} · 本场四恶人",
+            "困住四恶人，解除原伤害保护", "使用耗本次行动；数量保留",battleMedicineReason(id),
+            "取消无副作用；敌人按原顺序行动")else listOf(
             target?.let{"${heroName(it.id)} · HP ${it.hp}/${it.maxHp}"}?:"当前没有合法目标",
             if(id==HerbUse.ID)"HP +50 · 不超过上限" else "效果尚未实现",
             if(id==HerbUse.ID)"满HP仍消耗1份" else "当前不能使用",
@@ -1909,7 +1999,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
         if(battleNotice.isNotEmpty())y+=touchText(c,battleNotice,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
         battleItemDetailScroll=battleItemDetailScroll.coerceAtMost(max(0f,y+battleItemDetailScroll-l.detail.y-l.detail.h));c.restore()
-        touchButton(c,l.primary,if(id==null)"先选择物品" else target?.let{"使用于${heroName(it.id)}"}?:"没有合法目标",enabled)
+        touchButton(c,l.primary,if(id==null)"先选择物品" else if(binding)"对四恶人使用"else target?.let{"使用于${heroName(it.id)}"}?:"没有合法目标",enabled)
     }
     private fun drawBattleInformation(c:Canvas,current:OpeningBattle){
         val l=battleInfoLayout();val dp=resources.displayMetrics.density
