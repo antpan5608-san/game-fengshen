@@ -1,5 +1,5 @@
 """Real original region groups, antidote and caller overlays on the immutable published base."""
-import io,json,os,sys,unittest
+import io,json,os,sys,unittest,collections
 from pathlib import Path
 from unittest.mock import patch
 from PIL import Image
@@ -27,6 +27,30 @@ class WorldNorthExportTests(unittest.TestCase):
         for enemy in (10,11):
             self.assertGreater(len(Image.open(io.BytesIO(self.result[f'battle-enemy-{enemy}.png'])).getcolors(65536)),1)
         e=next(e for e in combat['enemies']if e['id']==10);self.assertEqual(7,e['behaviorByte']);self.assertEqual('UNKNOWN',e['nameConfidence'])
+    def test_north_preparation_stays_in_actual_zone4_and_can_return_without_a_shortcut(self):
+        m=json.loads(self.result['scene25.json']);world=json.loads(self.result['scene.json'])
+        zones=json.loads(self.result['combat.json'])['zones'];zone=next(z for z in zones if z['mapId']==25 and z['id']==4)
+        contains=lambda z,x,y:any(l<x<=r and t<y<=b for l,t,r,b in z['rectangles'])
+        self.assertTrue(all(contains(zone,x,y)for x,y in [(12,21),(12,22)]))
+        self.assertFalse(contains(zone,39,40));self.assertFalse(contains(zone,39,41))
+        old_zone=next(z for z in zones if z['mapId']==25 and z['id']==1)
+        self.assertTrue(contains(old_zone,39,40));self.assertTrue(contains(old_zone,39,41))
+        exits={tuple(e['trigger'])for e in world['exits']if e['fromMapId']==25}
+        allowed=set(m['enabledCells'])-set(m['dynamicObjectCells']);w=m['width']
+        for start,target in [((38,43),(12,22)),((12,21),(12,22)),((12,22),(12,21)),((12,22),(39,42))]:
+            queue=collections.deque([start]);seen={start}
+            while queue:
+                x,y=queue.popleft()
+                if(x,y)==target:break
+                for p in [(x,y-1),(x,y+1),(x-1,y),(x+1,y)]:
+                    nx,ny=p
+                    if 0<=nx<w and 0<=ny<m['height'] and ny*w+nx in allowed and(p not in exits or p==target)and p not in seen:
+                        seen.add(p);queue.append(p)
+            self.assertIn(target,seen,(start,target))
+        source=(ci.ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
+        driver=source.split('fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave()',1)[1].split('fun testWorldNorthPalacePearlColdStartMatchesNormalSave()',1)[0]
+        self.assertIn('walkTo(12,22)',driver);self.assertIn('if(y>21)Key.UP else Key.DOWN',driver)
+        self.assertIn('it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains',driver)
     def test_true_northwest_records_caller_and_exact_antidote_definition(self):
         scene=json.loads(self.result['scene.json']);edges={(e['fromMapId'],tuple(e['trigger']),e['toMapId'],tuple(e['spawn']))for e in scene['exits']}
         self.assertIn((25,(26,14),16,(186,102)),edges);self.assertIn((16,(186,102),25,(26,14)),edges)

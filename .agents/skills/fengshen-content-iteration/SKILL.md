@@ -302,3 +302,7 @@ caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导�
 - 静态可站的NPC邻格未必在当前桥的连通分量；本次村4驱动first邻格13,14反例实际失败，改只读probeFrom方向搜索选14,13，不放宽墙。5局部方法与282 JVM/仪器重新执行、真实LF checkout含新父pin及576/3584派生表通过；正常App仍待同产物门禁。
 
 - 原固定交通不得套门出口免费传送：先用现有Reader/ROM movement stream及实际接触按键核每个状态步、扣血/死亡位置、独立返程。跟踪probe-world-ferry.lua在官方FCEUX/Xvfb有界重跑、受控派生TSV一致；原回放仍受控缓存，不要求迁整目录。复用原局部export验证route/既存稳定对象hash/完整敌群，严格restore和4导出/完整世界回归/LFcheckout已运行。动作由统一状态持久、渲染不结算；JSON/真实正常路线/外部冷启须同候选仪器另验，未执行标NOT_RUN。初轮把整份旧地图JSON固定会漏掉合法的新出口格，应只核有证据的exact delta，禁止借此开放其他墙/海面。
+
+## 已验证的不可变artifact连接器回退
+
+直接gh artifact下载遇到blob403时，安装的GitHub连接器download_workflow_artifact可取得同仓库指定artifact的file_id，再由download_file取回ZIP。本轮已实际成功。只输出artifact身份和本地文件，不打印临时签名URL；解包前限制总大小与路径必须处于指定目录，随后仍调用原ci_apk.py verify检查receipt、APK完整SHA、签名、包名和内容pin。连接器成功不代表运行或发布成功，超过传输上限仍使用原受限证据入口；不删除代理或重写解包/验包平台。
