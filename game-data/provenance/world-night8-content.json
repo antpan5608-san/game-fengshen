@@ -1,0 +1,3835 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "clear-peak100-teacher164-and-dark74-original-night8",
+  "baseManifestSha256": "42d0015ac3da6e10b684b72fc8917fb761b057f835c7f241b248dd300d2a303f",
+  "baseExport": {
+    "pinPath": "ci/golden-world-village6-content.json",
+    "pinSha256": "17a702f6dbfb17a1ef2bf326edb3491e45599ed94205ac14547464312c696f48",
+    "provenanceSha256": "266caf023c420a758e10d708cb5ca055e01b79be5b46b310a1643cbd8affa580",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "ruleRanges": [
+    {
+      "offset": 91472,
+      "length": 28,
+      "sha256": "944ae508954e3dad5a0127fee6c5bb2dd8baa493beacac4381d7c93bc2a96df3",
+      "module": 2,
+      "cpuAddress": 58688,
+      "meaning": "Actual special8/map74 palette selector and failure"
+    },
+    {
+      "offset": 74300,
+      "length": 108,
+      "sha256": "81702052b82fa581b57c6d153f2a15fbacad159b172928e39a1e943ff621e701",
+      "module": 2,
+      "cpuAddress": 41516,
+      "meaning": "Reusable special bookkeeping; retains quantity and sets bit128"
+    },
+    {
+      "offset": 92138,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59354,
+      "meaning": "Actual special8 reusable table entry"
+    },
+    {
+      "offset": 79014,
+      "length": 21,
+      "sha256": "f22b531ee4e0ed9ca6ed0169ca888a4526d30bd60f8e7f8a4de83e9670f15a05",
+      "module": 2,
+      "cpuAddress": 46230,
+      "meaning": "Actual teacher164/message2 before-text gift8"
+    },
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first/repeat NPC selector"
+    },
+    {
+      "offset": 347028,
+      "length": 12,
+      "sha256": "4ae7ebfb14eb1e9b44a367a9bb28598fba64cc9735d125430de1262b5d92dbd1",
+      "module": 10,
+      "cpuAddress": 52100,
+      "meaning": "Action1 flag before gift"
+    },
+    {
+      "offset": 347961,
+      "length": 15,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Current map flag OR"
+    },
+    {
+      "offset": 79390,
+      "length": 9,
+      "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe",
+      "module": 2,
+      "cpuAddress": 46606,
+      "meaning": "Special grant dispatch"
+    },
+    {
+      "offset": 73979,
+      "length": 169,
+      "sha256": "dbe4dc6c7e546cabe99df068b2bc4e23db2af0fad2cee705d61e80de2b867c08",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original grant and capacity"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original category capacity and bases"
+    },
+    {
+      "offset": 10249,
+      "length": 40,
+      "sha256": "a23e8810f14635fcc762b4a02d6b930e273cdc2a9eb489a19db59ff1517ffb2d",
+      "module": 0,
+      "cpuAddress": 43001,
+      "meaning": "Original map load selects default palette"
+    },
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Actual source tileset dispatch"
+    },
+    {
+      "offset": 19920,
+      "length": 41,
+      "sha256": "e51fd3e9ca1d66a5a2c2c24fd3d17b94c11a568b707e467b287b1cf694472726",
+      "module": 0,
+      "cpuAddress": 52672,
+      "meaning": "Actual forest source dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Actual target tileset dispatch"
+    },
+    {
+      "offset": 20903,
+      "length": 60,
+      "sha256": "cc3a2d8f4f56685fc8f5e7c1dcb6841b621a04324aaccdcf158dc2b22325d595",
+      "module": 0,
+      "cpuAddress": 53655,
+      "meaning": "Actual forest target dispatch"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Actual terrain mode conditions"
+    }
+  ],
+  "maps": [
+    {
+      "mapId": 100,
+      "gridSha256": "f1a3cbd8cd705b371f0a777ba689af15648bb63775415d2f672d896b7540b85b",
+      "palette": [
+        14,
+        10,
+        17,
+        48,
+        25,
+        0,
+        16,
+        10,
+        25,
+        10,
+        7,
+        39,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        8,
+        51
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        7,
+        8,
+        9
+      ],
+      "night8CollisionEvidence": "game-data/provenance/world-night8-resources.json",
+      "npcCells": [
+        1614,
+        1331,
+        1283
+      ],
+      "limitations": []
+    },
+    {
+      "mapId": 164,
+      "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        7,
+        14
+      ],
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "night8CollisionEvidence": "game-data/provenance/world-night8-resources.json",
+      "npcCells": [
+        151,
+        55
+      ],
+      "limitations": []
+    },
+    {
+      "mapId": 74,
+      "gridSha256": "24ff751f40b8a19e669751d86cde29c3f63cffb62728b1b4f133a7cecb980537",
+      "palette": [
+        14,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        14,
+        25,
+        14,
+        14,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        3,
+        27
+      ],
+      "walkableClasses": [
+        0
+      ],
+      "night8CollisionEvidence": "game-data/provenance/world-night8-resources.json",
+      "npcCells": [
+        146,
+        1231,
+        1294,
+        951,
+        904,
+        380,
+        181
+      ],
+      "limitations": [
+        "Actual default dark74 palette is intentionally dark until original night8 use; not an empty unloaded atlas"
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "fromMapId": 16,
+      "trigger": [
+        78,
+        158
+      ],
+      "toMapId": 100,
+      "spawn": [
+        8,
+        51
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 286440,
+        "length": 5,
+        "sha256": "99ff118d41aeffbb998bfd17fbd97aab8ff61c8d2af100e98c7561c9975c5569",
+        "module": 8,
+        "cpuAddress": 57048,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "UP",
+      "resetEncounterSteps": true
+    },
+    {
+      "fromMapId": 100,
+      "trigger": [
+        8,
+        51
+      ],
+      "toMapId": 16,
+      "spawn": [
+        78,
+        158
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287758,
+        "length": 5,
+        "sha256": "8b769904a3e588995d3d5914f7686711caf0d8920cdf0cd86ee55c0aecd68880",
+        "module": 8,
+        "cpuAddress": 58366,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "resetEncounterSteps": true
+    },
+    {
+      "fromMapId": 100,
+      "trigger": [
+        20,
+        11
+      ],
+      "toMapId": 164,
+      "spawn": [
+        7,
+        14
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287768,
+        "length": 5,
+        "sha256": "35a0c15f81628faac8b8483c991d38e620e87ba4af0afd37343e0bb9b35e8063",
+        "module": 8,
+        "cpuAddress": 58376,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "UP",
+      "resetEncounterSteps": true
+    },
+    {
+      "fromMapId": 164,
+      "trigger": [
+        7,
+        14
+      ],
+      "toMapId": 100,
+      "spawn": [
+        20,
+        11
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 288789,
+        "length": 5,
+        "sha256": "2010502dc38e541f8b94933beb68912732a281b969fdc4930268db9129375702",
+        "module": 8,
+        "cpuAddress": 59397,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "resetEncounterSteps": true
+    },
+    {
+      "fromMapId": 16,
+      "trigger": [
+        70,
+        105
+      ],
+      "toMapId": 74,
+      "spawn": [
+        3,
+        27
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 286510,
+        "length": 5,
+        "sha256": "192ce55ec8c5f64198ae7b70ad3882a50076384879ee8a3e97a764515c206527",
+        "module": 8,
+        "cpuAddress": 57118,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "UP",
+      "resetEncounterSteps": true
+    },
+    {
+      "fromMapId": 74,
+      "trigger": [
+        3,
+        28
+      ],
+      "toMapId": 16,
+      "spawn": [
+        70,
+        105
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287455,
+        "length": 5,
+        "sha256": "25c61bf2fec728fea930b0395b8cfef2753211b68dbaac3e6ab15c3b7bc53866",
+        "module": 8,
+        "cpuAddress": 58063,
+        "meaning": "Independent original Clear Peak/dark cave entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "arrivalDirection": "DOWN",
+      "resetEncounterSteps": true
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.164.0",
+      "mapId": 164,
+      "cell": [
+        7,
+        9
+      ],
+      "spriteId": 178,
+      "sprite": "npc-disciple-178.png",
+      "firstDialogue": "rom.dialogue.174.1",
+      "repeatDialogue": "rom.dialogue.174.1",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285048,
+          "length": 14,
+          "sha256": "a9e2193cf7e5f96fea16a39594d6bca110218082e97701dcfd09e4e2840c8525",
+          "module": 8,
+          "cpuAddress": 55656,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    },
+    {
+      "id": "rom.npc.164.1",
+      "mapId": 164,
+      "cell": [
+        7,
+        3
+      ],
+      "spriteId": 175,
+      "sprite": "npc-teacher-175.png",
+      "firstDialogue": "rom.dialogue.174.2",
+      "repeatDialogue": "rom.dialogue.174.3",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 285062,
+          "length": 14,
+          "sha256": "50fd2122bd4a6820b00edac490187c3468534760431981315c22ec06a82b1509",
+          "module": 8,
+          "cpuAddress": 55670,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      },
+      "interactionCell": [
+        7,
+        5
+      ],
+      "interactionDirection": "UP",
+      "interactionEvidence": "game-data/provenance/world-night8-resources.json",
+      "originalTalk": {
+        "actionId": 1,
+        "mapFlagId": "rom.map.164.flag.2",
+        "witnessFlagId": "",
+        "itemId": "rom.special.8",
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    },
+    {
+      "cell": [
+        30,
+        33
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.100.0",
+      "mapId": 100,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 282919,
+          "length": 14,
+          "sha256": "c666066069c76bf55ef23bdda46d84a9631e497b70505f403c297d490c091304",
+          "module": 8,
+          "cpuAddress": 53527,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.weapon.9",
+        "flagId": "rom.map.100.flag.2",
+        "amount": 1,
+        "categoryGrant": 2,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        35,
+        27
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.100.1",
+      "mapId": 100,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 282933,
+          "length": 14,
+          "sha256": "ff9d7faa6b7e935e259db8c3f3351d68aca58296d30de48809599bbcda42e782",
+          "module": 8,
+          "cpuAddress": 53541,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.medicine.2",
+        "flagId": "rom.map.100.flag.4",
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        35,
+        26
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.100.2",
+      "mapId": 100,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 282947,
+          "length": 14,
+          "sha256": "f8a4f6eef3f1e70fa6a7ddbdc584c9c6ac0ae63e41ea319b6833e32ef4fec702",
+          "module": 8,
+          "cpuAddress": 53555,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.medicine.9",
+        "flagId": "rom.map.100.flag.8",
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        2,
+        3
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.74.0",
+      "mapId": 74,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 281282,
+          "length": 14,
+          "sha256": "fe0e856650e7331179d8faf08413554d939e2d277f0556de070a92f8850759ea",
+          "module": 8,
+          "cpuAddress": 51890,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.medicine.0",
+        "flagId": "rom.map.74.flag.2",
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        31,
+        25
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.74.1",
+      "mapId": 74,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 281296,
+          "length": 14,
+          "sha256": "f08dc4f37357be6cd4592cf1d4cf693e2ec1f6b78499d739d05fc6bfa702c3bf",
+          "module": 8,
+          "cpuAddress": 51904,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.medicine.4",
+        "flagId": "rom.map.74.flag.4",
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        44,
+        7
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.74.5",
+      "mapId": 74,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 281352,
+          "length": 14,
+          "sha256": "7cb8c2cb63e88378c4436d697476ddf71caea30182b6fde585d56fe813f854f0",
+          "module": 8,
+          "cpuAddress": 51960,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.special.13",
+        "flagId": "rom.map.74.flag.64",
+        "amount": 1,
+        "categoryGrant": 1,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        37,
+        3
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.74.6",
+      "mapId": 74,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 281366,
+          "length": 14,
+          "sha256": "6f9726666a6e17b3914f0feb164cfc3f5ecae90f8ab848d496c5756919a4647c",
+          "module": 8,
+          "cpuAddress": 51974,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "treasure": {
+        "itemId": "rom.weapon.4",
+        "flagId": "rom.map.74.flag.128",
+        "amount": 1,
+        "categoryGrant": 2,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    },
+    {
+      "cell": [
+        40,
+        18
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.74.4",
+      "mapId": 74,
+      "openedSprite": "chest-144-open.png",
+      "repeatDialogue": "",
+      "source": {
+        "confidence": "ORIGINAL_ROM",
+        "record": {
+          "offset": 281338,
+          "length": 14,
+          "sha256": "03b304ae58418c3f7bd5bcac74870eafd0ab9b11ab2d7e729ab2f371f9b89d96",
+          "module": 8,
+          "cpuAddress": 51946,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      },
+      "sprite": "chest-144.png",
+      "spriteId": 144,
+      "moneyTreasure": {
+        "flagId": "rom.map.74.flag.32",
+        "amount": 120,
+        "moneyCap": 999999,
+        "evidence": "game-data/provenance/world-night8-chests.json"
+      }
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.174.0",
+      "text": "『這裏是清峰山，請勿打擾。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107805,
+          "length": 15,
+          "sha256": "6de407b1ca86bb5796fd2d274e1fe41d5ccfc56ef05a9a958561d30db6a37524",
+          "module": 3,
+          "cpuAddress": 42253,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101908,
+            "length": 2,
+            "sha256": "8e16082712af66c6135be68123714f8ff6a37d9ad1ce21e6d562a6bd9ee20d1a",
+            "module": 3,
+            "cpuAddress": 36356,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.1",
+      "text": "『這裏是清峰山，師父請你們進去。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107820,
+          "length": 18,
+          "sha256": "20fd6e50ff8e26268e667ad4f0443d68839b89a751a33a09c3574029c96d636e",
+          "module": 3,
+          "cpuAddress": 42268,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101910,
+            "length": 2,
+            "sha256": "5b38c78333eb7abd77d2564352d442ad77fe7d888dbd08b583487f853e33c84b",
+            "module": 3,
+            "cpuAddress": 36358,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.2",
+      "text": "『我乃清虛真君，你們殺了魔禮壽的花狐貂，所以小龍女才被魔家四將捉走，魔家四將的剋星是攢心釘，在我徒兒黃天化身上，但他幾天前下山了！』『你們先去找他吧！這顆是夜明珠對你們或許有幫助。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107838,
+          "length": 92,
+          "sha256": "367a1bae7c337364bb452ef4c74011468ffdef156b3980c187fbad16ae2f6d6b",
+          "module": 3,
+          "cpuAddress": 42286,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101912,
+            "length": 2,
+            "sha256": "cd1a8dccb9d57994ce88a5a49e3b283cc8747372dcbfd09527521229438300d5",
+            "module": 3,
+            "cpuAddress": 36360,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.174.3",
+      "text": "『你們殺了魔禮壽的花狐貂，所以小龍女才被魔家四將捉走，魔家四將的剋星是攢心釘，在我徒兒黃天化身上，但他幾天前下山了！』『你們先去找他吧！夜明珠對你們或許有幫助。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 107930,
+          "length": 82,
+          "sha256": "4beed2c07aef8619659df7c8be9198a8208a1b99a5eab7dd4450164ee890b1ac",
+          "module": 3,
+          "cpuAddress": 42378,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101326,
+            "length": 2,
+            "sha256": "449d6729e09168cc3c76a75bb543a42f8122b076ff7ca2c69ac4635621cc1ec5",
+            "module": 3,
+            "cpuAddress": 35774,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101914,
+            "length": 2,
+            "sha256": "2a67af639e6bc888b04a773ad25cdf4a2eef985c0a8961edb5a301d70d4ed30f",
+            "module": 3,
+            "cpuAddress": 36362,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "originalVerified": true,
+        "verificationScope": "Matched target group174 bytes and actual active glyphs; controlled entry/menu not normal Android"
+      }
+    }
+  ],
+  "graphics": {
+    "battle-enemy-52.png": {
+      "width": 40,
+      "height": 32,
+      "observedRect": [
+        112,
+        72,
+        40,
+        32
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          150,
+          0
+        ],
+        "3": [
+          178,
+          255,
+          207
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 837664,
+          "length": 16,
+          "sha256": "cdd8750123b72ec1370beae369d76e994bdbd65ba9778501809c82e34fdbe2c1"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 837680,
+          "length": 16,
+          "sha256": "21c78d6fe3cfffcc71099b6919133acf9402a04b67113310174494b00e42df06"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 837696,
+          "length": 16,
+          "sha256": "e92fa3544e9a798ec6e0ee25d9cdcbb7368c813092c85555a0c7793a4834dc70"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 837712,
+          "length": 16,
+          "sha256": "dec7a213507ca99d1e0197e3ecf61c68bbb63dbd0d392c46145d34011e307ccf"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 837728,
+          "length": 16,
+          "sha256": "ec4a9d289e06ee854241123264566851eefd97dff00da1dd460bf48fab6de11f"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 837824,
+          "length": 16,
+          "sha256": "1cb9ba313ff5849888292f211309d351728bdcbdb85d74ebc050f477e013bdd9"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 837840,
+          "length": 16,
+          "sha256": "a204473c708cb840c25cf98749979d40fb07a9968ece9e15949488edbc3af2d7"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 837856,
+          "length": 16,
+          "sha256": "84463bd47dcf9f7908126d359702a82d13ddad12612e6d4b0b4eea3ece7ba49b"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 837872,
+          "length": 16,
+          "sha256": "40c6136236c2bf08a61f7f446449945bf0ffdd9754c1489c9e1477085e739568"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 812560,
+          "length": 16,
+          "sha256": "3fa6758737672a52dd0ac4e8fcb7e8ca7c6cad1bfcd9a8fb301b82e57a7c8ee0"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 837984,
+          "length": 16,
+          "sha256": "b304ed7956590b32763a659f3aca1d962afd9140a8e6446b372629c3ebcdea7f"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 838000,
+          "length": 16,
+          "sha256": "4c5fcd25449a773ca8c13352b46e7989313db2b9b1f36fec1442a47e0ca5df66"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 838016,
+          "length": 16,
+          "sha256": "edce90afd79c657ff764ab255d92234638bc6a577a8a732ecc6da9b6a66667ee"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 838032,
+          "length": 16,
+          "sha256": "09c6710e319fbc8118d7c79bb46052ec2e8fcaa11e7bdab3458c67af67f95edb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 838128,
+          "length": 16,
+          "sha256": "decabaa020c0291565ee29dac43bf6aabfdfa92c8d8e8fd620668057c7e5a1ec"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 838144,
+          "length": 16,
+          "sha256": "8c5ef7bfa75e01afbc27021496bc3f9082b03e16ee98d21f4745c18527f97a5c"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 838160,
+          "length": 16,
+          "sha256": "6b70ce51a186e2ec9dab53921b15124b8a06932b564607c8b14db3e5b44dbc39"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 838176,
+          "length": 16,
+          "sha256": "e51026f137f3e61647a96faad5e1d68655adda33f01e18c8e7bb6646d56159af"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 634849,
+          "length": 16,
+          "sha256": "27e9ccf143bd034d15c2c38cf4352bc3be8ae49119035ebd8287e2c18b835c5d"
+        }
+      ],
+      "rgbaSha256": "e80ce26af07e378c6fa19a6e3295b32dfe7c9b88bd1e846d92d28eae5b273bac",
+      "captureSha256": "f7817cc00db18c2908972b6db236fd67ced5b73a9fe0a02881428b9d203c4039",
+      "captureKind": "CONTROLLED_ORIGINAL_SINGLE_RENDERER_WITH_ACTUAL_ZONE_CHR_PAIR",
+      "normalPlayEvidence": false,
+      "enemyId": 52,
+      "sourceType": 42,
+      "graphicZone": 25
+    },
+    "battle-enemy-53.png": {
+      "width": 32,
+      "height": 48,
+      "observedRect": [
+        112,
+        72,
+        32,
+        48
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          69,
+          0
+        ],
+        "3": [
+          199,
+          215,
+          255
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 838352,
+          "length": 16,
+          "sha256": "850f9865ac4ef658aa1ad2f51ca18f613fd9fb267ea0658ca6be857b871f9c26"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 838368,
+          "length": 16,
+          "sha256": "a6c7d4473fcefc22f4e1de903bc913bc8f66d0661e88fe3d82ccc4fbce980fd5"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 838384,
+          "length": 16,
+          "sha256": "9bf3a529a0535e20113b4c984ffb5420b6f959d2b55e4ca778ee117bbe1d71ff"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 838400,
+          "length": 16,
+          "sha256": "22ac338efb7aa1f712bb266618a1f188730882201199e12d36aeed106f018576"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 838416,
+          "length": 16,
+          "sha256": "ce0ee9cdaf991a888087f419adc220f16d3feffbcc22b02a743cc8401f5ec189"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 808281,
+          "length": 16,
+          "sha256": "8ede8cea9e354ed869c20648912c67c30ddf45c914ffb764746dc1fe92d874b4"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 838448,
+          "length": 16,
+          "sha256": "11985af14c262817470d13ac11cacf613fbda3996c76c2e9b2ec7de8ef20f962"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 838464,
+          "length": 16,
+          "sha256": "c0dddfbe3c2c2a9844625a980962b7e62d2a46962999b6e5c337184f7e76cd4e"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 838480,
+          "length": 16,
+          "sha256": "46f93c3e6dd6c77d40d09b6dc43a61f3a342e0880bcaf8fed60d14262dbfae1c"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 838496,
+          "length": 16,
+          "sha256": "112881ecfe8624c7bdd9740257b537cfc4404a0c3e9b9ff657da644c44ae58f0"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 838512,
+          "length": 16,
+          "sha256": "38038243961e60ea541c0f84e7cd90d69038f2c28797b48673a949068efbee47"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 838528,
+          "length": 16,
+          "sha256": "c7ac40f529e408908830d2e8a943a2a5aa7bee6df5405d8a9afcaa0d23f51968"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 838544,
+          "length": 16,
+          "sha256": "b3ef87cc7f78bd24c84cf7cd10b47381d7f688e4328344f0907ce42c03834ac7"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 838560,
+          "length": 16,
+          "sha256": "4db0e4dd4f5e84b769e246c3e2776c2665f0e43ef8c3c6115df4897c93181655"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 838640,
+          "length": 16,
+          "sha256": "b9890ce80553d376bad06d005390f83749e72a7503d22df3b39a893c54bbedca"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 838656,
+          "length": 16,
+          "sha256": "4cd063be7d5e00fdec39a89cb7f9f45909260f8c071b6e657dfbc6bef6f4db76"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 838672,
+          "length": 16,
+          "sha256": "0ea00ec748ad02329028632e2a91e004c0085349a15c2e42fba9f80ae1d02649"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 838688,
+          "length": 16,
+          "sha256": "a256444b213941b8130ac17ecc76b6ce7041d7afc0352bd94e0f82bc226a0fca"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 838768,
+          "length": 16,
+          "sha256": "ac56eaab4c66a51350ba0b528633250779909708cfc489cbf3808f765f5c73de"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 838784,
+          "length": 16,
+          "sha256": "c6d8347a7c357506c597f18016a939715a7e7f98db37a5d7759ef1be03e826b3"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 838800,
+          "length": 16,
+          "sha256": "54d0b0ec01f000dfe21aa2b5a2041c278e6f9e355e58e61eb9677e3c6c452487"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 838816,
+          "length": 16,
+          "sha256": "339626b5b0267034e62a3ff50836be3d32c7e9cc77cb0fd3e8aa42e8580ebaa5"
+        }
+      ],
+      "rgbaSha256": "3dd37dd77a9ef9b429c89765aff5d3ab47348736813f43565915781d457b6683",
+      "captureSha256": "aca26ce4bd4a499f1e375120efa026fc7e640886b757fbbd4ed948ec989d5282",
+      "captureKind": "CONTROLLED_ORIGINAL_SINGLE_RENDERER_WITH_ACTUAL_ZONE_CHR_PAIR",
+      "normalPlayEvidence": false,
+      "enemyId": 53,
+      "sourceType": 44,
+      "graphicZone": 25
+    },
+    "battle-enemy-56.png": {
+      "width": 56,
+      "height": 48,
+      "observedRect": [
+        112,
+        72,
+        56,
+        48
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          65,
+          44,
+          0
+        ],
+        "3": [
+          178,
+          255,
+          207
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 835696,
+          "length": 16,
+          "sha256": "c38d596fd70343c8e0ec13c9fe4ebbdf570eb43b7d2628db50a8a973760a2ab7"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 835712,
+          "length": 16,
+          "sha256": "f1c864d1011f5b86abb7b8323d42b3bc06c3ead3ddfbd4028f1f56935bf83f11"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 835728,
+          "length": 16,
+          "sha256": "404f224d130d244c85a1bb0f3a8c66ec49f0f3547c7606767f0a647c7a983444"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 835744,
+          "length": 16,
+          "sha256": "08681af5df18eedf4f88246b7882d77e0f1cfa7195ebb775543bdde5f3b40f31"
+        },
+        {
+          "xy": [
+            48,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 835840,
+          "length": 16,
+          "sha256": "79163dad52e95ad573bd7b588c9d9619aaf5701eb5d2ae6b576d555a8de0335e"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 835856,
+          "length": 16,
+          "sha256": "89f3c5ded9d20ce914b98c3cbc7ff176511d9a27cf41a48c6e4ffa619ace880c"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 835872,
+          "length": 16,
+          "sha256": "0dfe6bf0ee311398b9bb38a9ed0e45c86fbe49f513824809bb8adff7292e3f4c"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 835888,
+          "length": 16,
+          "sha256": "f0dd40969fcbfd924ca3445d90ea7f449167b0666b4f68bd67b6929e0839cd68"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 835904,
+          "length": 16,
+          "sha256": "fb7941fb1d97174e33fc4716c77142fb048f420ae2916a664f7d0f03449536cf"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 835920,
+          "length": 16,
+          "sha256": "b4611695d7842e78ba44cf2623bcf06d9127abe26297dc50b63d78e41086cf26"
+        },
+        {
+          "xy": [
+            48,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 836016,
+          "length": 16,
+          "sha256": "bc6f401be952739b30b358f92814f112d3cd6bac9e8aa9ec1c48de96c2f9b7e6"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 836032,
+          "length": 16,
+          "sha256": "5899e3b5dd7bbfb269460edd42c76cfc08fc4c1a39c503cf6a7d0e4f32ad0bb8"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 836048,
+          "length": 16,
+          "sha256": "badfc116ce8161366cf1ff0b5b4456d1b6b37360064b56ba319a6b7205523160"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 836064,
+          "length": 16,
+          "sha256": "6d7b662ffc1967d831d8964635630e0d347c80fced7049f5bfe5eab13dc42b53"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 836080,
+          "length": 16,
+          "sha256": "374bee269597b2370adb0ec861c823e4de816c95b21eddaa2a06754ffca27cdd"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 836096,
+          "length": 16,
+          "sha256": "5c85cf5862556753f290e3f4930441f7ec2ecce8702a9cb2821036d8b9edf31e"
+        },
+        {
+          "xy": [
+            48,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 836144,
+          "length": 16,
+          "sha256": "f25945ef6471728aa3f96e689931af47705980a82c3c50ab17cf81ed40846539"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 836160,
+          "length": 16,
+          "sha256": "4d5f35aa718c9df9be420d333a407a2970b0877d3f669eaf5af2a30a8e9c2c38"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 836176,
+          "length": 16,
+          "sha256": "40597e6343f84fcd6147d8cdbcd13e2378bec2e02afc277a1b663cf8cc109369"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 836192,
+          "length": 16,
+          "sha256": "dc8e9af453e45a0f531ed6fb943210a93f3dc383848207e3ac09920999d9dd3b"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 836208,
+          "length": 16,
+          "sha256": "79ca7bc31a646ca9a25ee2c065f0ed51e6557f9a2797170aa22c96c9fd0cf2e8"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 836224,
+          "length": 16,
+          "sha256": "3231be784750aeb79739a7bcf7867eba52d5f8aff62849a64dc8c24a7d5f12a9"
+        },
+        {
+          "xy": [
+            48,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 836240,
+          "length": 16,
+          "sha256": "5ccd86a5466990b57f876d211a7b3e2ad58b9860b4199555688e1e423355508c"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 836256,
+          "length": 16,
+          "sha256": "2eab29925d97a532988c2588dcd8435dae536699bcfc3cc204c32c5130a266d0"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 836272,
+          "length": 16,
+          "sha256": "5112f11b0c829087acebea927acdd685daefd2feef6daad5fc7269cca83ea80c"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 836288,
+          "length": 16,
+          "sha256": "6115e06838873072ff7390a922b6a33408b78d425f3fe0aeba81020c1e33931e"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 836304,
+          "length": 16,
+          "sha256": "42cf98d2070608501f2e0561b8573a91fb57c03f078d86c6f7c76fe21abfee05"
+        },
+        {
+          "xy": [
+            48,
+            32
+          ],
+          "offset": 836320,
+          "length": 16,
+          "sha256": "e69b88eddb83008cb41736e19596b23b788de19780574e94fdb66d619cad2ae1"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 836336,
+          "length": 16,
+          "sha256": "2e0d9ba055cadf6902a58eed715238dba7bf21bce30ce4f863a7118893b4c64d"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 836352,
+          "length": 16,
+          "sha256": "343e3b92ade622a8e2a26dd713cd894816d60196f44038562e479cdfc928829f"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            48,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        }
+      ],
+      "rgbaSha256": "d8aecc2d5f6328a10ca177738ae210850532e3c0c182126159e74251d98778f2",
+      "captureSha256": "fc0a8bf3559d0ab3af32ba1d2d5f74ea47036ff72a600c31e224ef536c9b1615",
+      "captureKind": "CONTROLLED_ORIGINAL_SINGLE_RENDERER_WITH_ACTUAL_ZONE_CHR_PAIR",
+      "normalPlayEvidence": false,
+      "enemyId": 56,
+      "sourceType": 40,
+      "graphicZone": 26
+    },
+    "battle-enemy-57.png": {
+      "width": 72,
+      "height": 56,
+      "observedRect": [
+        96,
+        72,
+        72,
+        56
+      ],
+      "transparentZero": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          69,
+          0
+        ],
+        "3": [
+          199,
+          215,
+          255
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 836368,
+          "length": 16,
+          "sha256": "0566310516723dc2825557ac344412c86a30075c532499a5b3d9febf7787db53"
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 836384,
+          "length": 16,
+          "sha256": "9aaf39b4c15086cc281d72123c978b1ddd3bac1cf88a15c7dbac96f0bdea0a97"
+        },
+        {
+          "xy": [
+            16,
+            0
+          ],
+          "offset": 836400,
+          "length": 16,
+          "sha256": "d39f7a09743fcac93d5b52a2bfbb710986b96476f7869bfb69ac5a2c3b9a113b"
+        },
+        {
+          "xy": [
+            24,
+            0
+          ],
+          "offset": 836416,
+          "length": 16,
+          "sha256": "5643bb33d454003842400857a26ff638a0b18a3b1a4c4d100f0429cd9df4b28c"
+        },
+        {
+          "xy": [
+            32,
+            0
+          ],
+          "offset": 836432,
+          "length": 16,
+          "sha256": "1de914b24bdae461331ce5df13a80c60dc53d96538eb8f921b8977d3d1b7b701"
+        },
+        {
+          "xy": [
+            40,
+            0
+          ],
+          "offset": 836448,
+          "length": 16,
+          "sha256": "f514db15ebf75f23ecf51fea5c4a066d8da5a3b323ab9a16cece587560c1796b"
+        },
+        {
+          "xy": [
+            48,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            56,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            64,
+            0
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 836528,
+          "length": 16,
+          "sha256": "29befffb175d09473ff1920c4146d52643a73f6ba406aeeab9a9334e7a0745b3"
+        },
+        {
+          "xy": [
+            16,
+            8
+          ],
+          "offset": 836544,
+          "length": 16,
+          "sha256": "44acc23e23791f3d201c2374c5917804d6e14af33421dfdaf3a4c4dd464d5a09"
+        },
+        {
+          "xy": [
+            24,
+            8
+          ],
+          "offset": 836560,
+          "length": 16,
+          "sha256": "c4ba826427b94cba461a71c9e99d3fe34739bf515db4a884a2c54ad443e11b63"
+        },
+        {
+          "xy": [
+            32,
+            8
+          ],
+          "offset": 836576,
+          "length": 16,
+          "sha256": "8dfd0c050a4efe13196f27379b6833e61d9364f2d7b2cddf12db116561a51480"
+        },
+        {
+          "xy": [
+            40,
+            8
+          ],
+          "offset": 836592,
+          "length": 16,
+          "sha256": "1b83635aa85aa45a45018af91c4aa4cd7b77e215e88a2cba24d04977b7f29090"
+        },
+        {
+          "xy": [
+            48,
+            8
+          ],
+          "offset": 831841,
+          "length": 16,
+          "sha256": "5738de415dff5b13c5d176bee342bec83ada615decd1c5c4d5518cc2fcc090a3"
+        },
+        {
+          "xy": [
+            56,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            64,
+            8
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            16
+          ],
+          "offset": 836688,
+          "length": 16,
+          "sha256": "01d05b756e406f2913964ce966417407480bc25acc3dcd475ed00841e3303b68"
+        },
+        {
+          "xy": [
+            16,
+            16
+          ],
+          "offset": 836704,
+          "length": 16,
+          "sha256": "edbe3fcbfd297940716fd2d333bd5e27cfd8b80be469b2f41d89c04fc68d533c"
+        },
+        {
+          "xy": [
+            24,
+            16
+          ],
+          "offset": 836720,
+          "length": 16,
+          "sha256": "3107684c6f17b46076f7f569b7fcc4b7ac5a75596470618c4d68690119cfe432"
+        },
+        {
+          "xy": [
+            32,
+            16
+          ],
+          "offset": 836736,
+          "length": 16,
+          "sha256": "2cac08868806c8c8f9ea387ba7bc54f7ef1ac01a04b9bbba3edf0cfeb6ed022b"
+        },
+        {
+          "xy": [
+            40,
+            16
+          ],
+          "offset": 836752,
+          "length": 16,
+          "sha256": "363b70238833285e5254081f802c4cb5c7d6c97318bc0b4d4bc52aea85e0a3c0"
+        },
+        {
+          "xy": [
+            48,
+            16
+          ],
+          "offset": 836768,
+          "length": 16,
+          "sha256": "27794ed532f468beff57e291c9f6a7eaa76e8ebf3c469f5cbcac187e565ab90e"
+        },
+        {
+          "xy": [
+            56,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            64,
+            16
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            24
+          ],
+          "offset": 836848,
+          "length": 16,
+          "sha256": "0fdd0ed70ab79ff4343b145d6d611dd8c60183057cfd3ffe0b68298d46fd9f1d"
+        },
+        {
+          "xy": [
+            8,
+            24
+          ],
+          "offset": 836864,
+          "length": 16,
+          "sha256": "f618b9306ba0f230a73afe9cb3619f9a64d51c13ef9525b9b8686f1f97d0847b"
+        },
+        {
+          "xy": [
+            16,
+            24
+          ],
+          "offset": 836880,
+          "length": 16,
+          "sha256": "fef902a937381bd30e64d3e7e29b9543c05a53b104e1c1758c5763bf30d1f418"
+        },
+        {
+          "xy": [
+            24,
+            24
+          ],
+          "offset": 836896,
+          "length": 16,
+          "sha256": "ba4336fa374acb928edec401a91df4d9ac7b9a7e65e5b610e4269f64fb351e55"
+        },
+        {
+          "xy": [
+            32,
+            24
+          ],
+          "offset": 836912,
+          "length": 16,
+          "sha256": "9fc8dc225c00691518da47b282b2713db32833b2d2e59da3f54c2ca6023a694c"
+        },
+        {
+          "xy": [
+            40,
+            24
+          ],
+          "offset": 836928,
+          "length": 16,
+          "sha256": "967810e1a40f3b87835cfb39411bd0c90679323588101881c40240724d2083da"
+        },
+        {
+          "xy": [
+            48,
+            24
+          ],
+          "offset": 806435,
+          "length": 16,
+          "sha256": "0827fd05442d5279a37c60207e21a0e11585427eebdf4b2a0a35ded23a7cd9ed"
+        },
+        {
+          "xy": [
+            56,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            64,
+            24
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            32
+          ],
+          "offset": 837024,
+          "length": 16,
+          "sha256": "9551d4bca73259843c38384f023449ff134d0df84418326fc65b41b0cc7107c4"
+        },
+        {
+          "xy": [
+            16,
+            32
+          ],
+          "offset": 837040,
+          "length": 16,
+          "sha256": "7d092def9d63b2ec8590677eb0158d52389ecae6b09805b6c7130c231f4fc192"
+        },
+        {
+          "xy": [
+            24,
+            32
+          ],
+          "offset": 837056,
+          "length": 16,
+          "sha256": "ce02d8c960f53a9f3471f70d5670cbe00ed817d9e03aba4e6d5df156f22aa9dd"
+        },
+        {
+          "xy": [
+            32,
+            32
+          ],
+          "offset": 837072,
+          "length": 16,
+          "sha256": "38cd53831d1d5afb8472456f9e48262935c5f1a5debd0bab1b3415d274c19668"
+        },
+        {
+          "xy": [
+            40,
+            32
+          ],
+          "offset": 837088,
+          "length": 16,
+          "sha256": "b17113e05514c94cb2a47450a4d2595f30cdc9a71afe13af672f86e22e79b8e1"
+        },
+        {
+          "xy": [
+            48,
+            32
+          ],
+          "offset": 837104,
+          "length": 16,
+          "sha256": "f3da1ecb43566274e16b8f54b315a8eda34e5061583e5edaca765b618f7b2615"
+        },
+        {
+          "xy": [
+            56,
+            32
+          ],
+          "offset": 837120,
+          "length": 16,
+          "sha256": "35b8e16514092442cb4a17d84335e355d3fb519a5a364085def1ed24538c1ff8"
+        },
+        {
+          "xy": [
+            64,
+            32
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            0,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            40
+          ],
+          "offset": 837200,
+          "length": 16,
+          "sha256": "8acaa3d57f1df2d27c302ee67dfc0e1340ff260f2364f5a3710419f08c754eb8"
+        },
+        {
+          "xy": [
+            24,
+            40
+          ],
+          "offset": 837216,
+          "length": 16,
+          "sha256": "42a4a224e9b36e6422080025fc7fec1d08630031b1acd80bda3c722bd1a71173"
+        },
+        {
+          "xy": [
+            32,
+            40
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            40
+          ],
+          "offset": 837232,
+          "length": 16,
+          "sha256": "58953c45507132c461c273e110f717ed2dcdf7bdbdcafa81c1fa81247a9eee37"
+        },
+        {
+          "xy": [
+            48,
+            40
+          ],
+          "offset": 837248,
+          "length": 16,
+          "sha256": "cda06f5608a173fe813b899984c5c76fd1abfeef613a26109636aff9fbb7dc82"
+        },
+        {
+          "xy": [
+            56,
+            40
+          ],
+          "offset": 837264,
+          "length": 16,
+          "sha256": "e439a44826fe791a36fef624809e1ccbacce8e230855c703c3e24f0e4a7782ad"
+        },
+        {
+          "xy": [
+            64,
+            40
+          ],
+          "offset": 837280,
+          "length": 16,
+          "sha256": "527639e1b19f5d73d9e1d679c5d3c0c0e79a45b8c3e15320a3305b0f8e7d8627"
+        },
+        {
+          "xy": [
+            0,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            8,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            16,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            24,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            32,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            40,
+            48
+          ],
+          "offset": 528166,
+          "length": 16,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+        },
+        {
+          "xy": [
+            48,
+            48
+          ],
+          "offset": 837296,
+          "length": 16,
+          "sha256": "0b0a4c47e093958f25e573df92d5df61793fbcbb6b315514a38209b11ef7a8ca"
+        },
+        {
+          "xy": [
+            56,
+            48
+          ],
+          "offset": 801441,
+          "length": 16,
+          "sha256": "d7e025da5798a67d7fd074d6996c76279fdb045709c94ccbd52baafd463aad50"
+        },
+        {
+          "xy": [
+            64,
+            48
+          ],
+          "offset": 837328,
+          "length": 16,
+          "sha256": "3bfc9cf212d40eafe236f0257957f77496f359150ad0806e8a76bba8274f8c57"
+        }
+      ],
+      "rgbaSha256": "f76652159306775f472242b80cc3655a40be024b0bbcef439e059de0450cabcc",
+      "captureSha256": "bbe5708802f47b1e1fb98d6f66470cc2ec2b9b23a916a64e23451188ba8532fa",
+      "captureKind": "CONTROLLED_ORIGINAL_SINGLE_RENDERER_WITH_ACTUAL_ZONE_CHR_PAIR",
+      "normalPlayEvidence": false,
+      "enemyId": 57,
+      "sourceType": 70,
+      "graphicZone": 26
+    }
+  },
+  "mapObjects": [
+    {
+      "id": "rom.object.74.2",
+      "mapId": 74,
+      "spriteId": 144,
+      "cell": [
+        46,
+        26
+      ],
+      "sprite": "chest-144.png",
+      "recordSource": {
+        "offset": 281310,
+        "length": 14,
+        "sha256": "ba34b645a06e628d5507740a9ede1dfe99c2ec27ed6df0fa4308022b43f5dd3c",
+        "module": 8,
+        "cpuAddress": 51918,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "interaction": "NOT_IMPLEMENTED",
+      "reason": "Original FF/FF chest payload requires its own dispatch evidence; no inferred item or reward"
+    },
+    {
+      "id": "rom.object.74.3",
+      "mapId": 74,
+      "spriteId": 144,
+      "cell": [
+        39,
+        19
+      ],
+      "sprite": "chest-144.png",
+      "recordSource": {
+        "offset": 281324,
+        "length": 14,
+        "sha256": "f348eba69950d955f8b2531dbee232b8b0a0dc73843f0cf5572df057a98a1f57",
+        "module": 8,
+        "cpuAddress": 51932,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "interaction": "NOT_IMPLEMENTED",
+      "reason": "Original FF/FF chest payload requires its own dispatch evidence; no inferred item or reward"
+    }
+  ],
+  "shops": [],
+  "inns": [],
+  "clinics": [],
+  "serviceBindings": [],
+  "items": [
+    {
+      "id": "rom.special.8",
+      "category": "special",
+      "originalId": 8,
+      "maxCount": 1,
+      "name": "夜明珠",
+      "description": "仅在暗黑洞窟的地图菜单使用；照明，数量保留，离洞后重置。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "ORIGINAL_MENU_VERIFIED",
+        "nameRange": {
+          "offset": 92227,
+          "length": 5,
+          "sha256": "fd4c024e6e1d2a8aa97b1547f8692a3155cc38aad15f8ff5c9bbc8041653b79a",
+          "module": 2,
+          "cpuAddress": 59443,
+          "meaning": "Actual stable special item name bytes"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "verifiedFields": [
+          "stableId",
+          "category",
+          "maxCount",
+          "name",
+          "mapUse",
+          "reusable",
+          "mapLoadReset"
+        ]
+      },
+      "nightLightUse": {
+        "mapId": 74,
+        "paletteSelector": 32,
+        "reusable": true,
+        "evidence": "game-data/provenance/world-night8-resources.json"
+      }
+    },
+    {
+      "id": "rom.special.13",
+      "category": "special",
+      "originalId": 13,
+      "maxCount": 1,
+      "name": "捆妖繩（名称暂定）",
+      "description": "暗黑洞窟原special13；村民有捆妖繩线索，具体使用功能尚未接入。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "PROVISIONAL_TARGET_DIALOGUE_REFERENCE",
+        "nameRange": {
+          "offset": 92252,
+          "length": 5,
+          "sha256": "58e6dfbf773006122bd800fd1752ee2bf835ceb1518dd2f88eb98f6333af9b07",
+          "module": 2,
+          "cpuAddress": 59468,
+          "meaning": "Actual stable special item name bytes"
+        },
+        "evidence": "game-data/provenance/world-night8-resources.json",
+        "verifiedFields": [
+          "stableId",
+          "category",
+          "maxCount"
+        ]
+      }
+    }
+  ],
+  "inactiveExitRecords": [
+    {
+      "fromMapId": 100,
+      "trigger": [
+        1,
+        43
+      ],
+      "toMapId": 16,
+      "spawn": [
+        78,
+        158
+      ],
+      "source": {
+        "offset": 287763,
+        "length": 5,
+        "sha256": "79353765edd82bfd764aaf0757d47b0913be71bfe56bb0102f65a2e69ae15312",
+        "module": 8,
+        "cpuAddress": 58371,
+        "meaning": "Original structurally present return record inside an all-wall component"
+      },
+      "status": "UNREACHABLE_ORIGINAL_GEOMETRY",
+      "reason": "Target and all four neighbors are original class1 walls; do not open a fake return"
+    }
+  ],
+  "nightLightAtlas": {
+    "mapId": 74,
+    "activeFlag": "runtime.map74.light.active",
+    "asset": "tiles74-lit.png",
+    "evidence": "game-data/provenance/world-night8-resources.json"
+  },
+  "combatOverlay": {
+    "enemies": [
+      {
+        "hp": 504,
+        "attack": 162,
+        "defense": 95,
+        "experienceReward": 520,
+        "moneyReward": 64,
+        "id": 52,
+        "name": "原名未核（敵人52）",
+        "nameConfidence": "UNKNOWN",
+        "behaviorByte": 0,
+        "hitByte": 192,
+        "source": {
+          "offset": 61194,
+          "length": 16,
+          "sha256": "0a57c5555a9c4bec4304d320ba29ed0692c5ea3b2d68479954c6277aceb4081c",
+          "module": 1,
+          "cpuAddress": 61178,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+        },
+        "loot": {
+          "category": "armor",
+          "itemId": "rom.armor.4",
+          "threshold": 10
+        }
+      },
+      {
+        "hp": 480,
+        "attack": 170,
+        "defense": 100,
+        "experienceReward": 485,
+        "moneyReward": 61,
+        "id": 53,
+        "name": "原名未核（敵人53）",
+        "nameConfidence": "UNKNOWN",
+        "behaviorByte": 0,
+        "hitByte": 190,
+        "source": {
+          "offset": 61210,
+          "length": 16,
+          "sha256": "24230b6dce304dbbd10aca25bcbb51d4d4d4ad75166e0def7ed5e9722b9fa1fc",
+          "module": 1,
+          "cpuAddress": 61194,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+        },
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.0",
+          "threshold": 0
+        }
+      },
+      {
+        "hp": 554,
+        "attack": 180,
+        "defense": 115,
+        "experienceReward": 630,
+        "moneyReward": 72,
+        "id": 56,
+        "name": "原名未核（敵人56）",
+        "nameConfidence": "UNKNOWN",
+        "behaviorByte": 0,
+        "hitByte": 204,
+        "source": {
+          "offset": 61258,
+          "length": 16,
+          "sha256": "ef57ebefb456f68b7a3ee7003458990f83fc8080f5bdf15ef7176730d122a257",
+          "module": 1,
+          "cpuAddress": 61242,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+        },
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.1",
+          "threshold": 10
+        }
+      },
+      {
+        "hp": 580,
+        "attack": 195,
+        "defense": 125,
+        "experienceReward": 678,
+        "moneyReward": 80,
+        "id": 57,
+        "name": "原名未核（敵人57）",
+        "nameConfidence": "UNKNOWN",
+        "behaviorByte": 7,
+        "hitByte": 212,
+        "source": {
+          "offset": 61274,
+          "length": 16,
+          "sha256": "8d03eb2ec030907d161895502ad06726dc6369711d31523426f04afced4c1f92",
+          "module": 1,
+          "cpuAddress": 61258,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+        },
+        "loot": {
+          "category": "medicine",
+          "itemId": "rom.medicine.9",
+          "threshold": 5
+        }
+      }
+    ],
+    "enemyAgility": {
+      "52": 46,
+      "53": 48,
+      "56": 53,
+      "57": 45
+    },
+    "graphics": [
+      {
+        "enemyId": 52,
+        "asset": "battle-enemy-52.png",
+        "origin": [
+          112,
+          72
+        ],
+        "width": 40,
+        "height": 32
+      },
+      {
+        "enemyId": 53,
+        "asset": "battle-enemy-53.png",
+        "origin": [
+          112,
+          72
+        ],
+        "width": 32,
+        "height": 48
+      },
+      {
+        "enemyId": 56,
+        "asset": "battle-enemy-56.png",
+        "origin": [
+          112,
+          72
+        ],
+        "width": 56,
+        "height": 48
+      },
+      {
+        "enemyId": 57,
+        "asset": "battle-enemy-57.png",
+        "origin": [
+          96,
+          72
+        ],
+        "width": 72,
+        "height": 56
+      }
+    ],
+    "zones": [
+      {
+        "id": 25,
+        "mapId": 100,
+        "randomGate": "HIGH",
+        "randomThreshold": 245,
+        "rectangles": [],
+        "groups": [
+          {
+            "id": 0,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 4,
+                "sourceType": 42,
+                "enemyId": 52
+              }
+            ],
+            "rawHex": "032a052a00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44509,
+              "length": 2,
+              "sha256": "e101b315f3b55655cf09cbfc60dd3715665a61024cbde620eea713d7ec81f792",
+              "module": 1,
+              "cpuAddress": 44493,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47267,
+              "length": 5,
+              "sha256": "98ea4c9b74a84e7fa5bb93d4ca27fc0fbe0ec1c0f63bf29b6b1089a814af9cc8",
+              "module": 1,
+              "cpuAddress": 47251,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 1,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 3,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 5,
+                "sourceType": 42,
+                "enemyId": 52
+              }
+            ],
+            "rawHex": "022a042a062a00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44511,
+              "length": 2,
+              "sha256": "e671300dfd07b38e522456c81be3707d0a8d8b5972e8e3ba7face7ed4fd1d1ec",
+              "module": 1,
+              "cpuAddress": 44495,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47272,
+              "length": 7,
+              "sha256": "71e834a07228f01cd53fdffb62c7fee31700ecb5f76654e73eea6c05329e4b87",
+              "module": 1,
+              "cpuAddress": 47256,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 2,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 4,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "032c052c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44513,
+              "length": 2,
+              "sha256": "0887ac8b5a8fbd3445d43b8079e68f785f63dd1c4aaabb4f357a75b35fe557a1",
+              "module": 1,
+              "cpuAddress": 44497,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47279,
+              "length": 5,
+              "sha256": "9e082782e6ddf07a9f61549b3139dafe027a9bca091b714fcb687cb7b32f5ffd",
+              "module": 1,
+              "cpuAddress": 47263,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 3,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 4,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 6,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "032c052c072c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44515,
+              "length": 2,
+              "sha256": "d4209ef3eade4e58827226982ae19b7cc480402b52eeb17f82c26da4af7a3ba7",
+              "module": 1,
+              "cpuAddress": 44499,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47284,
+              "length": 7,
+              "sha256": "769f9ebe1bf185467ef2164514256f47a3404b0c8e16d2c8281e421450fd75de",
+              "module": 1,
+              "cpuAddress": 47268,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 4,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 3,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 5,
+                "sourceType": 42,
+                "enemyId": 52
+              }
+            ],
+            "rawHex": "022a042c062a00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44517,
+              "length": 2,
+              "sha256": "52df00a0277197383f07ee55890f9c4e70e512f3afe8fb2364772c7249012d14",
+              "module": 1,
+              "cpuAddress": 44501,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47291,
+              "length": 7,
+              "sha256": "8371f9453e7b41c4264c881f450d05df621d7a345639ea837e44718c69adcb4c",
+              "module": 1,
+              "cpuAddress": 47275,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 5,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 2,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 4,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 6,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "022c032c052a072c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44519,
+              "length": 2,
+              "sha256": "750fa3b44b8bffffeebb24ec8a28d0be1fcc15830f702ab845d5647441812dcc",
+              "module": 1,
+              "cpuAddress": 44503,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47298,
+              "length": 9,
+              "sha256": "842052cdf51f71c021e2554862ec37253c2a7bec8c09313bb9f5c388879726ef",
+              "module": 1,
+              "cpuAddress": 47282,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 6,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 4,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "032a052c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44521,
+              "length": 2,
+              "sha256": "563b7d3cffae8fcb947b1b066ebbce6545efed715a0e6fbd7d7f049a21903565",
+              "module": 1,
+              "cpuAddress": 44505,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47307,
+              "length": 5,
+              "sha256": "6952e356022e9be8a5f4dd3f8e9924ac3fbf87deefc1b316f6c16751a4d0a005",
+              "module": 1,
+              "cpuAddress": 47291,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 7,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 3,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 5,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "022a042a062c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44523,
+              "length": 2,
+              "sha256": "e104dd14142bdaf0c1dd0b8c251ffc2cda130103310a830d1a00036a68e7c216",
+              "module": 1,
+              "cpuAddress": 44507,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47312,
+              "length": 7,
+              "sha256": "0c13592470baa3f7b2261c3bcc92e5a3d87d020485e7124566375f86f3f3caa0",
+              "module": 1,
+              "cpuAddress": 47296,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 8,
+            "entities": [
+              {
+                "slot": 0,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 2,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 4,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 6,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "012c032a052a072c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44525,
+              "length": 2,
+              "sha256": "d59c8d5bf2448c75a291cc411ebe5e3fa380afc2987ae654322630895fae3fe5",
+              "module": 1,
+              "cpuAddress": 44509,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47319,
+              "length": 9,
+              "sha256": "03247e7bcd877bf71ff59de28a8785d231a9fbbc09c9e7b56ff431d42394ad7f",
+              "module": 1,
+              "cpuAddress": 47303,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 9,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 42,
+                "enemyId": 52
+              },
+              {
+                "slot": 4,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 6,
+                "sourceType": 44,
+                "enemyId": 53
+              }
+            ],
+            "rawHex": "022a052c072c00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44527,
+              "length": 2,
+              "sha256": "eead37caf818d0fae6de8adfc9645ca50de4a3be6ff9756bbab0d0a139a801af",
+              "module": 1,
+              "cpuAddress": 44511,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47328,
+              "length": 7,
+              "sha256": "235ab7828f56647f35d0dba0da85df6308c4009a79233c5444a8faea63283003",
+              "module": 1,
+              "cpuAddress": 47312,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 10,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 2,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 3,
+                "sourceType": 44,
+                "enemyId": 53
+              },
+              {
+                "slot": 5,
+                "sourceType": 42,
+                "enemyId": 52
+              }
+            ],
+            "rawHex": "022c032c042c062a00",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44529,
+              "length": 2,
+              "sha256": "98b2a065071ea28fad031320c03c50f5be86884b95345a0f677abd51cb7e1ff7",
+              "module": 1,
+              "cpuAddress": 44513,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47335,
+              "length": 9,
+              "sha256": "90b95621c1875c9819ae213503883333aaa6cadd42364b83898c9377e8457dad",
+              "module": 1,
+              "cpuAddress": 47319,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          }
+        ],
+        "defaultSource": {
+          "offset": 28347,
+          "length": 1,
+          "sha256": "68aa2e2ee5dff96e3355e6c7ee373e3d6a4e17f75f9518d843709c0c9bc3e3d4",
+          "module": 0,
+          "cpuAddress": 61099,
+          "meaning": "Original local default encounter zone"
+        },
+        "mapTypeSource": {
+          "offset": 28155,
+          "length": 1,
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "module": 0,
+          "cpuAddress": 60907,
+          "meaning": "Actual high-byte encounter gate"
+        }
+      },
+      {
+        "id": 26,
+        "mapId": 74,
+        "randomGate": "HIGH",
+        "randomThreshold": 245,
+        "rectangles": [],
+        "groups": [
+          {
+            "id": 0,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 70,
+                "enemyId": 57
+              },
+              {
+                "slot": 5,
+                "sourceType": 70,
+                "enemyId": 57
+              }
+            ],
+            "rawHex": "0346064600",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44531,
+              "length": 2,
+              "sha256": "809a40de0281b1808764693c23615eeff224ef85173acc803e0a43828bd75d5f",
+              "module": 1,
+              "cpuAddress": 44515,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47344,
+              "length": 5,
+              "sha256": "6a8918892aae776506ab46e0b87a87b4f4a11e3e94f61fbcd037eb24e3ab0006",
+              "module": 1,
+              "cpuAddress": 47328,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 1,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 70,
+                "enemyId": 57
+              }
+            ],
+            "rawHex": "034600",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44533,
+              "length": 2,
+              "sha256": "84415346ee93babb1967b8b3e70acb612364e04c44071aaa4752e32b4f3d8180",
+              "module": 1,
+              "cpuAddress": 44517,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47349,
+              "length": 3,
+              "sha256": "0a926d55676fb250522742fdece8f5912b29924e4008912513b60f10c2a6ad0a",
+              "module": 1,
+              "cpuAddress": 47333,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 2,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 40,
+                "enemyId": 56
+              }
+            ],
+            "rawHex": "042800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44535,
+              "length": 2,
+              "sha256": "db0d44131c3e0c244e4c8c07bc917428152be2f75fbd5e554a38bf390e6e61b5",
+              "module": 1,
+              "cpuAddress": 44519,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47352,
+              "length": 3,
+              "sha256": "b94bc14b4e6d58729875f6f9c7925e6a7d01f9a70df4865881a16fe13c59c8fe",
+              "module": 1,
+              "cpuAddress": 47336,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 3,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 40,
+                "enemyId": 56
+              },
+              {
+                "slot": 4,
+                "sourceType": 40,
+                "enemyId": 56
+              }
+            ],
+            "rawHex": "0328052800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44537,
+              "length": 2,
+              "sha256": "a10d29ca9752ae55d89bfe57184655d95997d1fd3ed762d22e8100285a010223",
+              "module": 1,
+              "cpuAddress": 44521,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47355,
+              "length": 5,
+              "sha256": "d42319459e0f0dfb9659bc99f960d8f840e3cb0ff9d91800cecafd059250c627",
+              "module": 1,
+              "cpuAddress": 47339,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 4,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 70,
+                "enemyId": 57
+              }
+            ],
+            "rawHex": "044600",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44539,
+              "length": 2,
+              "sha256": "889366b12e561f93e09975f355bf9cb30c5761a1ec2cd73176174ab9d342abd6",
+              "module": 1,
+              "cpuAddress": 44523,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47360,
+              "length": 3,
+              "sha256": "baf9e5d161b387951f4c91c0bdd94f20e5f495e487349fe0690ff6c17e2d640c",
+              "module": 1,
+              "cpuAddress": 47344,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 5,
+            "entities": [
+              {
+                "slot": 1,
+                "sourceType": 70,
+                "enemyId": 57
+              },
+              {
+                "slot": 3,
+                "sourceType": 40,
+                "enemyId": 56
+              },
+              {
+                "slot": 5,
+                "sourceType": 40,
+                "enemyId": 56
+              }
+            ],
+            "rawHex": "02460428062800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44541,
+              "length": 2,
+              "sha256": "26749eeb6b35903a4b085fced47fe4a5041732aeb86ea3570b1ea3afb11a3ffa",
+              "module": 1,
+              "cpuAddress": 44525,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47363,
+              "length": 7,
+              "sha256": "6c11acdc69886bbad3b7bc24872cb940d024079b28f41cc22aed7c218dda8ce1",
+              "module": 1,
+              "cpuAddress": 47347,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 6,
+            "entities": [
+              {
+                "slot": 0,
+                "sourceType": 40,
+                "enemyId": 56
+              },
+              {
+                "slot": 2,
+                "sourceType": 40,
+                "enemyId": 56
+              },
+              {
+                "slot": 5,
+                "sourceType": 70,
+                "enemyId": 57
+              }
+            ],
+            "rawHex": "01280328064600",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44543,
+              "length": 2,
+              "sha256": "cdb4d57c0b1c92807cde0820c11081aa205a9941a3017549edea6ca6ef2cc844",
+              "module": 1,
+              "cpuAddress": 44527,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47370,
+              "length": 7,
+              "sha256": "bfcc736d11fc7342f16bc0fc49e960c43a6b705a104558b4dbcb577ec2265a3a",
+              "module": 1,
+              "cpuAddress": 47354,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 7,
+            "entities": [
+              {
+                "slot": 2,
+                "sourceType": 70,
+                "enemyId": 57
+              },
+              {
+                "slot": 5,
+                "sourceType": 40,
+                "enemyId": 56
+              }
+            ],
+            "rawHex": "0346062800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44545,
+              "length": 2,
+              "sha256": "d39b94587711196640659ec81855bcf397e419ff7ce97da9f67b5b4a4b0e587a",
+              "module": 1,
+              "cpuAddress": 44529,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47377,
+              "length": 5,
+              "sha256": "80b31a46e73dc0aa82bcc92248bd7c7416d2031d42d0ec06ada0ee016369953c",
+              "module": 1,
+              "cpuAddress": 47361,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          },
+          {
+            "id": 8,
+            "entities": [
+              {
+                "slot": 3,
+                "sourceType": 40,
+                "enemyId": 56
+              },
+              {
+                "slot": 5,
+                "sourceType": 40,
+                "enemyId": 56
+              }
+            ],
+            "rawHex": "0428062800",
+            "duplicateSlots": [],
+            "pointer": {
+              "offset": 44547,
+              "length": 2,
+              "sha256": "6667505b02bba3f185cecdbc318946f4ebeb2fcd9cd08ae5071e78f42ef5472c",
+              "module": 1,
+              "cpuAddress": 44531,
+              "meaning": "Original encounter group pointer"
+            },
+            "range": {
+              "offset": 47382,
+              "length": 5,
+              "sha256": "78d37945a23a8432ffdd9b27f941edc504189dab0cb9e74e897ccbab7bf0bbd6",
+              "module": 1,
+              "cpuAddress": 47366,
+              "meaning": "Original slot/source pairs, 00 terminated"
+            }
+          }
+        ],
+        "defaultSource": {
+          "offset": 28321,
+          "length": 1,
+          "sha256": "58f7b0780592032e4d8602a3e8690fb2c701b2e1dd546e703445aabd6469734d",
+          "module": 0,
+          "cpuAddress": 61073,
+          "meaning": "Original local default encounter zone"
+        },
+        "mapTypeSource": {
+          "offset": 28129,
+          "length": 1,
+          "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "module": 0,
+          "cpuAddress": 60881,
+          "meaning": "Actual high-byte encounter gate"
+        }
+      }
+    ],
+    "blackBackgroundEnemyIds": [
+      52,
+      53,
+      56,
+      57
+    ],
+    "bosses": []
+  },
+  "limitations": [
+    "New normal Android route/gift/night8/cold restart NOT_RUN",
+    "Teacher175/disciple178 graphics reuse existing observed original poses; exact local walking presentation remains provisional",
+    "Logical Android cold resume preserves the saved current scene/light state; original map reconstruction resets lighting, not an inferred NES manual save guarantee",
+    "Special13 name is provisional from actual group16 reference; its command/effect is NOT_IMPLEMENTED; no name-based binding use",
+    "No invented mandatory night8 ownership route gate; original dark cave can be entered before the gift",
+    "Two original FF/FF dark cave chest records preserved without inventing a reward",
+    "Effective full-world denominator UNKNOWN; three new packaged scenes do not prove all maps usable"
+  ]
+}

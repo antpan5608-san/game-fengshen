@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-# One isolated AVD for the existing build workflow; no publication credentials.
+# One isolated AVD per sequential stage of the existing workflow; no publication credentials.
 set -euo pipefail
+stage="${FENGSHEN_RUNTIME_STAGE:-all}"
+case "$stage" in all|base|world|continuation) ;; *) echo "Unknown runtime stage" >&2; exit 1;; esac
+export FENGSHEN_RUNTIME_STAGE="$stage"
 sdk="${ANDROID_HOME:?Existing runner SDK is required}"
 export ANDROID_SDK_ROOT="$sdk"
 export PATH="$sdk/platform-tools:$PATH"
@@ -31,7 +34,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry','world-island','world-village5','world-cave87','world-village6','world-night8','world-queen117'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -93,7 +96,9 @@ sleep 10
 base=(artifacts/runtime-base/*-release.apk)
 candidate=(artifacts/ci/*-release.apk)
 testapk=(artifacts/runtime-test/*.apk)
-[[ ${#base[@]} == 1 && ${#candidate[@]} == 1 && ${#testapk[@]} == 1 ]]
+[[ ${#candidate[@]} == 1 && ${#testapk[@]} == 1 ]]
+if [[ "$stage" == all || "$stage" == base ]]; then
+[[ ${#base[@]} == 1 ]]
 python - "${base[0]}" <<'PYBASE'
 import json,sys,hashlib
 from pathlib import Path
@@ -107,6 +112,7 @@ ci.content(apk,pin)
 Path('artifacts/town02-runtime/base.json').write_text(json.dumps(r,indent=2)+'\n')
 print('Trusted actual latest covering-upgrade baseline validated')
 PYBASE
+fi
 python tools/ci_apk.py verify --apk "${candidate[0]}" --output artifacts/town02-runtime/candidate.json
 python - "${testapk[0]}" <<'PY'
 import re,sys
@@ -124,17 +130,24 @@ run_test(){
         exit 1
     fi
 }
+if [[ "$stage" == all || "$stage" == base ]]; then
 adb install -r "${base[0]}"
 adb install -r "${testapk[0]}"
 # The reviewed base already has TOUCH-UX; preserve it rather than rerun its obsolete cursor baseline.
 run_test testExportCurrentSaveForUpgrade
 adb shell am force-stop org.fengshen.dev
 adb install -r "${candidate[0]}" # Same signature, actual covering install; never uninstall/clear.
+else
+# Fresh isolated AVD, exact same candidate; covering upgrade remains a mandatory base gate.
+adb install -r "${candidate[0]}"
+adb install -r "${testapk[0]}"
+fi
 # Validate the real bundled loader before a launch timeout can obscure the
 # precise content assertion. This isolated suite restores the upgrade fixture.
 timeout 600 adb shell am instrument -w -e class org.fengshen.dev.ContentTest org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/testContent.txt 2>&1
 cat artifacts/town02-runtime/testContent.txt
 grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
+if [[ "$stage" == all || "$stage" == base ]]; then
 run_test testUpgradeKeepsPreviousSave
 run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
@@ -142,6 +155,7 @@ run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
+run_test testControlledBindingItemSelectionCancelAndSingleActorCommand
 run_test testUnrestorableSaveCannotBeOverwritten
 run_test testWorldLegacyInteriorContextAndRestart
 run_test testControlledWorldAntidoteAndFieldPoison
@@ -176,10 +190,15 @@ python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerified
 python tools/record_app_audio.py world-west testNormalWorldWestPalaceFromVerifiedNanhaiSave --silent --cold-test testWorldWestColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-village1 testNormalWorldVillageOneServicesFromVerifiedNanhaiSave --silent --cold-test testWorldVillageOneColdStartMatchesNormalSave --budget-seconds 1800
 python tools/record_app_audio.py world-north-palace testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave --silent --cold-test testWorldNorthPalacePearlColdStartMatchesNormalSave --budget-seconds 3600
+fi
+if [[ "$stage" == world || "$stage" == continuation ]]; then
+python tools/runtime_handoff.py import --stage "$stage" --candidate artifacts/town02-runtime/candidate.json --directory artifacts/runtime-handoff-input --receipt artifacts/town02-runtime/previous-stage.json
+fi
+if [[ "$stage" == all || "$stage" == world ]]; then
 python tools/record_app_audio.py world-cave85 testNormalWorldCave85FromVerifiedNorthPalaceSave --silent --cold-test testWorldCave85ColdStartAndReentryMatchesNormalSave --budget-seconds 2400
 python tools/record_app_audio.py world-east-palace testNormalWorldEastPalacePartyFromVerifiedCaveSave --silent --cold-test testWorldEastPartyColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-hell-village2 testNormalWorldHellVillageServicesFromVerifiedEastPartySave --silent --cold-test testWorldHellVillageColdStartMatchesNormalSave --budget-seconds 1200
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 7200
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600
@@ -192,6 +211,15 @@ python tools/record_app_audio.py world-room171 testNormalRoom171GiftFromVerified
 python tools/record_app_audio.py world-yang-join testNormalYangJoinAndThreePartyFromVerifiedRoomSave --silent --cold-test testYangJoinColdRestartAndOriginalTreeReturn --budget-seconds 3600
 python tools/record_app_audio.py world-village4 testNormalVillageFourServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFourColdRestartAndOriginalReturn --budget-seconds 2400
 python tools/record_app_audio.py world-ferry testNormalFixedFerryAndIslandFromVerifiedVillageSave --silent --cold-test testFixedFerryIslandColdRestartAndOriginalReverse --budget-seconds 2400
+fi
+if [[ "$stage" == all || "$stage" == continuation ]]; then
+python tools/record_app_audio.py world-island testNormalIslandLayersFourVillainsAndChestsFromVerifiedFerrySave --silent --cold-test testIslandVictoryColdRestartChestsAndRealReturn --budget-seconds 3600
+python tools/record_app_audio.py world-village5 testNormalVillageFiveServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFiveColdRestartAndOriginalReturn --budget-seconds 2400
+python tools/record_app_audio.py world-cave87 testNormalCave87FlowerStoryFromVerifiedIslandSave --silent --cold-test testCave87DepartureColdRestartAndOriginalReturn --budget-seconds 2700
+python tools/record_app_audio.py world-village6 testNormalVillageSixServicesAndTalkFromVerifiedFlowerSave --silent --cold-test testVillageSixColdRestartAndOriginalReturn --budget-seconds 2400
+python tools/record_app_audio.py world-night8 testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave --silent --cold-test testNightEightColdRestartAndOriginalLightReset --budget-seconds 2400
+python tools/record_app_audio.py world-queen117 testNormalQueenRouteBindingAndHuangFromVerifiedNightEightSave --silent --cold-test testQueenHuangColdRestartAndOriginalReturn --budget-seconds 3600
+fi
 # Clinical sub-results are App-written evidence; pull before constructing receipt.
 pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
@@ -209,15 +237,30 @@ r.update(worldRoom171Normal='PASS',worldRoom171GiftColdRestart='PASS')
 r.update(worldYangJoinNormal='PASS',worldYangThreePartyAndColdRestart='PASS')
 r.update(worldVillageFourServicesTalkNormal='PASS',worldVillageFourColdRestart='PASS')
 r.update(worldFixedFerryIslandNormal='PASS',worldFixedFerryColdRestartAndReverse='PASS')
-medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
-for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
+r.update(worldIslandOriginalLayersAndFourVillainsNormal='PASS',worldIslandOnceChestsAndColdRestart='PASS')
+r.update(worldVillageFiveServicesTalkNormal='PASS',worldVillageFiveColdRestart='PASS')
+r.update(worldCave87FlowerNormal='PASS',worldCave87DepartureAndColdRestart='PASS')
+r.update(worldVillageSixServicesTalkNormal='PASS',worldVillageSixColdRestart='PASS')
+r.update(worldNightEightGiftAndCaveNormal='PASS',worldNightEightColdRestart='PASS')
+r.update(worldQueenRouteAndBindingNormal='PASS',worldQueenHuangOnceAndColdRestart='PASS')
+stage=os.environ['FENGSHEN_RUNTIME_STAGE']
+if stage in ('all','world'):
+    medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
+    for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
+from tools.runtime_handoff import finish_stage
+previous=json.loads(Path('artifacts/town02-runtime/previous-stage.json').read_text()) if stage in ('world','continuation') else None
+r=finish_stage(stage,r,previous)
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
 print(json.dumps(r))
 PY
+if [[ "$stage" == base || "$stage" == world ]]; then
+python tools/runtime_handoff.py pack --stage "$stage" --candidate artifacts/town02-runtime/candidate.json --directory artifacts/runtime-handoff
+fi
 
 # Keep two small copies of original raw clips for direct review; full unedited footage stays in the original artifact.
 # The state index lives in the App external directory until pulled; collect it before selecting clips.
 pull_evidence
+if [[ "$stage" == all || "$stage" == base ]]; then
 python - <<'PYCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
@@ -252,3 +295,4 @@ for segment in [normal[-1],cold]:
 # segment remains in the full runtime artifact, including segments not copied.
 
 PYCLIPS
+fi

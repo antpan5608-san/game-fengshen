@@ -1,0 +1,1957 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "optional-room116-original-actor41-event15-no-invented-gate",
+  "baseManifestSha256": "3f422cf6163d493db700e5dc6859027b9b5defad8f6b1e7fbc283ca6af86f04b",
+  "baseExport": {
+    "pinPath": "ci/golden-world-queen117-content.json",
+    "pinSha256": "74a55e2d2caefd3cf9721e7671549eb1d0cb93f800622de32319f5a7dead5122",
+    "provenanceSha256": "728aecfdea1f08ff26cb0e647b8008a4577568a59661c3b0a55abf7fc7e35326",
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK"
+  },
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "ruleRanges": [
+    {
+      "offset": 347434,
+      "length": 19,
+      "sha256": "9fe237e9fde8bb47b7d359b89a6029ffead1fb94d2616410e49f4092e48ee404",
+      "module": 10,
+      "cpuAddress": 52506,
+      "meaning": "Actual actor41 first bit and deferred event action"
+    },
+    {
+      "offset": 381510,
+      "length": 20,
+      "sha256": "38e092ebf5ac97c30e8ba08d56edd268a26498a063bb15f7ed81f6f3deced821",
+      "module": 11,
+      "cpuAddress": 53814,
+      "meaning": "Actual event15/script19 and context209"
+    },
+    {
+      "offset": 378344,
+      "length": 9,
+      "sha256": "d7892e44a13a7b5de76293524167805d6f14f22a6bbbd54a0bd236e297ecc73b",
+      "module": 11,
+      "cpuAddress": 50648,
+      "meaning": "NPC140 text8, direction and two steps; no player step"
+    },
+    {
+      "offset": 380330,
+      "length": 77,
+      "sha256": "ed1f387d367e45d8ab5c76bda8e355948a921ce932e50713f7211c1d1373c7cd",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Actual completion selects ordinary map128 for event15"
+    },
+    {
+      "offset": 346986,
+      "length": 2,
+      "sha256": "daa834243d41d6edfca22ecf28805a2d922bd368cd5321870dba28750b6b5a4a",
+      "module": 10,
+      "cpuAddress": 52058,
+      "meaning": "Actual actor41 handler pointer"
+    },
+    {
+      "offset": 379788,
+      "length": 2,
+      "sha256": "bacb894499dcb168ec4c9bde41bff850d680a3ae18e79d37298bdaebdff720c9",
+      "module": 11,
+      "cpuAddress": 52092,
+      "meaning": "Actual event15 pointer"
+    },
+    {
+      "offset": 377564,
+      "length": 2,
+      "sha256": "94ea8e0e78364e6e79896ded5c5e71a9cad6163e57a2e05bcc65f361c7a8b5d8",
+      "module": 11,
+      "cpuAddress": 49868,
+      "meaning": "Actual script19 pointer"
+    },
+    {
+      "offset": 283717,
+      "length": 14,
+      "sha256": "57a155bd3e6ccb156ca4e5279dfc622b870631deb9da6a54d17cd65aedb1fb3b",
+      "module": 8,
+      "cpuAddress": 54325,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283731,
+      "length": 14,
+      "sha256": "27b4db29f8322679955abe8c44dca391fa27dd08a40c2bee52f3b8798bb1c9c4",
+      "module": 8,
+      "cpuAddress": 54339,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283745,
+      "length": 14,
+      "sha256": "dbbd501d0656cdfd1a72dfcf6495979f285e108f7fd89dea401bc4bad6ea558e",
+      "module": 8,
+      "cpuAddress": 54353,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283759,
+      "length": 14,
+      "sha256": "1a813c1a1fc28c7bac66fa1b500ba89a342c2e5a61372b054a65c77c823e4161",
+      "module": 8,
+      "cpuAddress": 54367,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283773,
+      "length": 14,
+      "sha256": "dddfbab530c8749dd1e90bcbde17f332bf4963ebdf4f91ff24b2bdb676dbdbab",
+      "module": 8,
+      "cpuAddress": 54381,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283787,
+      "length": 14,
+      "sha256": "1cf24d19263328c02b9e5d65ca55f873e44a89265f22fefefd352939dd1a2901",
+      "module": 8,
+      "cpuAddress": 54395,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283802,
+      "length": 14,
+      "sha256": "0d56f1a14359a7470fc26f4a3043db19f33d7a0c34bb4be1d482a804844aec98",
+      "module": 8,
+      "cpuAddress": 54410,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283816,
+      "length": 14,
+      "sha256": "27b4db29f8322679955abe8c44dca391fa27dd08a40c2bee52f3b8798bb1c9c4",
+      "module": 8,
+      "cpuAddress": 54424,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283830,
+      "length": 14,
+      "sha256": "dbbd501d0656cdfd1a72dfcf6495979f285e108f7fd89dea401bc4bad6ea558e",
+      "module": 8,
+      "cpuAddress": 54438,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283844,
+      "length": 14,
+      "sha256": "aaa9144ce20a2a7bd104f745d5583c3020911f663ffeb0abe5576fe016b538ad",
+      "module": 8,
+      "cpuAddress": 54452,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283858,
+      "length": 14,
+      "sha256": "dddfbab530c8749dd1e90bcbde17f332bf4963ebdf4f91ff24b2bdb676dbdbab",
+      "module": 8,
+      "cpuAddress": 54466,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 283872,
+      "length": 14,
+      "sha256": "bd67c9c50889d2a875cfbdb823020129098ad7073bad99d9e984ee72324e1af2",
+      "module": 8,
+      "cpuAddress": 54480,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    {
+      "offset": 10799,
+      "length": 41,
+      "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+      "module": 0,
+      "cpuAddress": 43551,
+      "meaning": "Original reconstruction saves and restores current player facing"
+    }
+  ],
+  "maps": [
+    {
+      "mapId": 116,
+      "gridSha256": "24e5265de0f6c96be1217cacab5148c47e87d8dd6508cffde3dbddade1d9f09d",
+      "palette": [
+        14,
+        0,
+        16,
+        48,
+        25,
+        6,
+        38,
+        55,
+        25,
+        4,
+        20,
+        52,
+        25,
+        9,
+        25,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        5,
+        2
+      ],
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "room116CollisionEvidence": "game-data/provenance/world-room116-state.json",
+      "terrain": {
+        "tileset": 4,
+        "evidence": "game-data/provenance/world-terrain.json"
+      },
+      "npcCells": [
+        101,
+        250,
+        120,
+        180,
+        142,
+        238
+      ],
+      "limitations": [
+        "Cosmetic disguise/duration not claimed: script19 targets NPC140; no invented costume timer or mandatory gate",
+        "Transient NPC walking is not animated; completed presentation uses original context209 next-load positions, differs from immediate actor7,3",
+        "Ordinary prisoners movement/static sprites remain PROVISIONAL_ROM_STATIC",
+        "Queen context210 removes original actors; no optional talk made compulsory",
+        "Normal Android pending; original controlled state is not normal playable proof"
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "fromMapId": 141,
+      "trigger": [
+        3,
+        7
+      ],
+      "toMapId": 116,
+      "spawn": [
+        5,
+        2
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 288558,
+        "length": 5,
+        "sha256": "b7b1a7b4dedf1f4c7010a3ff72585a458af139455756818861005a2db1eedc20",
+        "module": 8,
+        "cpuAddress": 59166,
+        "meaning": "Independent original optional jail entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction saves and restores current player facing"
+      }
+    },
+    {
+      "fromMapId": 116,
+      "trigger": [
+        5,
+        2
+      ],
+      "toMapId": 141,
+      "spawn": [
+        3,
+        7
+      ],
+      "kind": "EXIT_RECORD",
+      "source": {
+        "offset": 287958,
+        "length": 5,
+        "sha256": "d4f26e7d355ef7cb00e604b4dbce136af19c2cabdd11cc2dc949c924e423d15e",
+        "module": 8,
+        "cpuAddress": 58566,
+        "meaning": "Independent original optional jail entrance or return"
+      },
+      "confidence": "VERIFIED",
+      "resetEncounterSteps": true,
+      "arrivalDirection": "DOWN",
+      "preserveArrivalDirection": true,
+      "arrivalDirectionSource": {
+        "offset": 10799,
+        "length": 41,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8",
+        "module": 0,
+        "cpuAddress": 43551,
+        "meaning": "Original reconstruction saves and restores current player facing"
+      }
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.116.0",
+      "mapId": 116,
+      "cell": [
+        5,
+        3
+      ],
+      "spriteId": 140,
+      "sprite": "npc-116-0-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.6",
+      "repeatDialogue": "rom.dialogue.126.8",
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283717,
+          "length": 14,
+          "sha256": "57a155bd3e6ccb156ca4e5279dfc622b870631deb9da6a54d17cd65aedb1fb3b",
+          "module": 8,
+          "cpuAddress": 54325,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      },
+      "originalTalk": {
+        "actionId": 41,
+        "mapFlagId": "rom.map.116.flag.1",
+        "witnessFlagId": "",
+        "itemId": "",
+        "evidence": "game-data/provenance/world-room116-state.json"
+      },
+      "stateVariant": {
+        "flagId": "rom.map.116.flag.128",
+        "cell": [
+          6,
+          3
+        ],
+        "firstDialogue": "rom.dialogue.126.8",
+        "repeatDialogue": "rom.dialogue.126.8",
+        "evidence": "game-data/provenance/world-room116-state.json"
+      }
+    },
+    {
+      "id": "rom.npc.116.1",
+      "mapId": 116,
+      "cell": [
+        26,
+        7
+      ],
+      "spriteId": 158,
+      "sprite": "npc-116-1-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.1",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283731,
+          "length": 14,
+          "sha256": "27b4db29f8322679955abe8c44dca391fa27dd08a40c2bee52f3b8798bb1c9c4",
+          "module": 8,
+          "cpuAddress": 54339,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.116.2",
+      "mapId": 116,
+      "cell": [
+        24,
+        3
+      ],
+      "spriteId": 159,
+      "sprite": "npc-116-2-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.2",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283745,
+          "length": 14,
+          "sha256": "dbbd501d0656cdfd1a72dfcf6495979f285e108f7fd89dea401bc4bad6ea558e",
+          "module": 8,
+          "cpuAddress": 54353,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.116.3",
+      "mapId": 116,
+      "cell": [
+        20,
+        5
+      ],
+      "spriteId": 157,
+      "sprite": "npc-116-3-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.3",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283759,
+          "length": 14,
+          "sha256": "1a813c1a1fc28c7bac66fa1b500ba89a342c2e5a61372b054a65c77c823e4161",
+          "module": 8,
+          "cpuAddress": 54367,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      },
+      "stateVariant": {
+        "flagId": "rom.map.116.flag.128",
+        "cell": [
+          16,
+          5
+        ],
+        "firstDialogue": "rom.dialogue.126.3",
+        "repeatDialogue": "rom.dialogue.126.3",
+        "evidence": "game-data/provenance/world-room116-state.json"
+      }
+    },
+    {
+      "id": "rom.npc.116.4",
+      "mapId": 116,
+      "cell": [
+        14,
+        4
+      ],
+      "spriteId": 156,
+      "sprite": "npc-116-4-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.4",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283773,
+          "length": 14,
+          "sha256": "dddfbab530c8749dd1e90bcbde17f332bf4963ebdf4f91ff24b2bdb676dbdbab",
+          "module": 8,
+          "cpuAddress": 54381,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      }
+    },
+    {
+      "id": "rom.npc.116.5",
+      "mapId": 116,
+      "cell": [
+        14,
+        7
+      ],
+      "spriteId": 160,
+      "sprite": "npc-116-5-original-observed.png",
+      "firstDialogue": "rom.dialogue.126.5",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "room116ResourceEvidence": "game-data/provenance/world-room116-state.json",
+      "removedFlagId": "rom.npccontext.116.210",
+      "automaticStoryEvidence": "game-data/provenance/world-room116-state.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 283787,
+          "length": 14,
+          "sha256": "1cf24d19263328c02b9e5d65ca55f873e44a89265f22fefefd352939dd1a2901",
+          "module": 8,
+          "cpuAddress": 54395,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "remainingUnknown": [
+          "Original OAM pose pixels matched; NPC walking/field choreography not fully restored",
+          "Normal Android pending"
+        ]
+      }
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.126.1",
+      "text": "『進來就別想出去了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108399,
+          "length": 12,
+          "sha256": "4fa650ea5a1e783050f1be1b66a37bcd26f5fb9b496adc960512ba6412362c8b",
+          "module": 3,
+          "cpuAddress": 42847,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101956,
+            "length": 2,
+            "sha256": "b54e795cc6c21ef50ff23208f5eb848eab6ac631cbf6fc2cae42108c7dc4a0e9",
+            "module": 3,
+            "cpuAddress": 36404,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.2",
+      "text": "『我不想就這樣死掉！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108411,
+          "length": 12,
+          "sha256": "b6c083441b18429478dc84b986f31059377c7e7259d4a32da54395dd3bea2511",
+          "module": 3,
+          "cpuAddress": 42859,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101958,
+            "length": 2,
+            "sha256": "774afb6bdb60a0eed910ef85fa3fb9a1057ebf848947e417bdb2eba9129976fb",
+            "module": 3,
+            "cpuAddress": 36406,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.3",
+      "text": "『只要是健康的男人，就別想活著走出去。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108423,
+          "length": 21,
+          "sha256": "07f272fe29269a5fdf355475520f2b4175afa4fa8e42dbe459461d95b120712a",
+          "module": 3,
+          "cpuAddress": 42871,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101960,
+            "length": 2,
+            "sha256": "be40d55c3e8c2f1a4e30d1c13a6faafac375e1eef407287a2dc7441227d03195",
+            "module": 3,
+            "cpuAddress": 36408,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.4",
+      "text": "『你們可以救我們出去嗎？太好了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108444,
+          "length": 18,
+          "sha256": "131c7cb62c6745eec287c6edcc11f7da599591de733fde2934fb6dd69c2cc954",
+          "module": 3,
+          "cpuAddress": 42892,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101962,
+            "length": 2,
+            "sha256": "80401a151b38b21eb133da90553920d223ca5d75f8a785b2b0c5e118558a7112",
+            "module": 3,
+            "cpuAddress": 36410,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.5",
+      "text": "『我一個在隔壁地牢的朋友會易容術。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108462,
+          "length": 19,
+          "sha256": "3eec321d0af7dd6c7fe507a5bb16f289b753fbeb589ec3b224a4806bfdc3b927",
+          "module": 3,
+          "cpuAddress": 42910,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101964,
+            "length": 2,
+            "sha256": "a4d58a72641137ec0d58b9c1826b3db8cff3e6ddaf8b93989d652aed610d0ef8",
+            "module": 3,
+            "cpuAddress": 36412,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.6",
+      "text": "『你們真的要去殺那女妖精？我幫你們易容為女生，一定可以混進去！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108481,
+          "length": 33,
+          "sha256": "79cad85dc5b751316a130c0b7416e3f08252343ced08ff2de3b849cd79fb21aa",
+          "module": 3,
+          "cpuAddress": 42929,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101966,
+            "length": 2,
+            "sha256": "0c9c8c1b0fae699ed9df92f85efc34154d66076f85beaa7c1b97e8a541265b29",
+            "module": 3,
+            "cpuAddress": 36414,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.7",
+      "text": "『我幫你們易容為女生，一定可以混進去！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108514,
+          "length": 21,
+          "sha256": "a250e63800504f58eaf49f5b7826608fff1ba00f1a9e37dd4b62d950f037a70c",
+          "module": 3,
+          "cpuAddress": 42962,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101968,
+            "length": 2,
+            "sha256": "ba8dbe6348d7a4f0f5b121c202ca81fc28a7d6f7fa1d3e4b28eb150bc46f3590",
+            "module": 3,
+            "cpuAddress": 36416,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.126.8",
+      "text": "『好了！一段時間後，就會恢復原樣，快去殺那女妖精。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108535,
+          "length": 27,
+          "sha256": "68323cafb6ae38c9d5277e3b17f3d0dd4cdccaa54f83528d507aa6987651e35c",
+          "module": 3,
+          "cpuAddress": 42983,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101230,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35678,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101970,
+            "length": 2,
+            "sha256": "f64123bffa5b348941635927b8989ea9f088388275765ec888dce1bc0be65565",
+            "module": 3,
+            "cpuAddress": 36418,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-room116-state.json",
+        "verificationScope": "Actual group126 font and original controlled menu text; not normal Android"
+      }
+    }
+  ],
+  "graphics": {
+    "npc-116-0-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 868912,
+          "length": 16,
+          "sha256": "db61333019e211161257f9f0914ec4ff6f7a32bf6b874564fdfe6419f60a7e52",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 5,
+          "observedTile": 34
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 868928,
+          "length": 16,
+          "sha256": "fc9787e11124e0d12a506ecfa9b23de4f4fa0e9fb2c395f86aeef2ba5da5e726",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 6,
+          "observedTile": 35
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 869168,
+          "length": 16,
+          "sha256": "375e65518436d67ce7af91d65383f604b162a5f57bbd121723a3c2d77207d037",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 7,
+          "observedTile": 50
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 869184,
+          "length": 16,
+          "sha256": "898d311bac65da25f5d44b0a4e5056393acb34d8da4d6afcef6d8c411fd6fbdb",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 8,
+          "observedTile": 51
+        }
+      ],
+      "rgbaSha256": "ba54b5386f13b87084fb26c587d56168a79d57eed321902c74da601604d98f0d",
+      "captureSha256": "d6f59efb33029a04434460e0528bfc9c95b5eb6e295c20006446d345badcbb2d",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 3549,
+        "length": 3,
+        "sha256": "6347a72d71f02c2ef474401477351c46c57f0617610aaa3ba1eea80cd6eb5825",
+        "module": 0,
+        "cpuAddress": 36301,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 3728,
+        "length": 5,
+        "sha256": "57faaa9c225401f723fc222fd46fb6212dd16445e757230ddba6f96846970522",
+        "module": 0,
+        "cpuAddress": 36480,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    },
+    "npc-116-1-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 867408,
+          "length": 16,
+          "sha256": "eaa21e1f08def8840b8bdfcd6954a8f42f5822d040f3fad3d6371d896759b0b2",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 5,
+          "observedTile": 196
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 867424,
+          "length": 16,
+          "sha256": "8f781674e46bd99aa1ba905f5b2282cc60a2f17a5faab45c808368fedbb2c4e0",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 6,
+          "observedTile": 197
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 867664,
+          "length": 16,
+          "sha256": "fc387f00330388b0c5e759751ca087bc950dd5a9c2b143742d2583f32405ce32",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 7,
+          "observedTile": 212
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 867680,
+          "length": 16,
+          "sha256": "cd2bb68575bb4547de12042f0fb4079f7e5beaac024d2e49fb796c97a1d693b0",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "observedOamIndex": 8,
+          "observedTile": 213
+        }
+      ],
+      "rgbaSha256": "d92d460cbb5d7020979983e59770f69719f05dd366d65bff821803bdf98b2685",
+      "captureSha256": "6bdcd7bd22597fa5906851dbe7e642a45d8ab8a15dd927722d4cf4b01398ae41",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 4353,
+        "length": 3,
+        "sha256": "940f452a44ff7a9bc409f895087e827aa5c389c2ac7db54bebd82e638c82bd73",
+        "module": 0,
+        "cpuAddress": 37105,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 4529,
+        "length": 5,
+        "sha256": "414866e06719c82634da81a0394fa48e5c87b469e89013e1c7ad7b820ce942e7",
+        "module": 0,
+        "cpuAddress": 37281,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    },
+    "npc-116-2-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        114,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 867968,
+          "length": 16,
+          "sha256": "8fb21966c6bc6381d8b043dda3c92c584847ef57a6fe9443097032def45b92f9",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 9,
+          "observedTile": 231
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 867952,
+          "length": 16,
+          "sha256": "f534cbf3c90f4fe5f43c66996aee4fd130b48c15c421846231ab2d72384e22f9",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 10,
+          "observedTile": 230
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 868224,
+          "length": 16,
+          "sha256": "c5b9c60a6a8dbd3a21e85172b9135bdaf32638d1e372cf321d795c7705cd1cbb",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 11,
+          "observedTile": 247
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 868208,
+          "length": 16,
+          "sha256": "ff403ceda14952f3410cc77a4510491911e9104e562c4b43fc7b7c3a674d0440",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 12,
+          "observedTile": 246
+        }
+      ],
+      "rgbaSha256": "841a1578bb23c433a17cbf8d4acfdac10a888a36449051cbc5e655bea3a05d88",
+      "captureSha256": "60122884338e57ccd6859ac0755c72364c885aec264b50ebee2c555712df3fef",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 4381,
+        "length": 3,
+        "sha256": "a1b1f1fc9824b0e76d913cc79614d9bce10241c9b8baf45dac260de5edfe1fa2",
+        "module": 0,
+        "cpuAddress": 37133,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 4569,
+        "length": 5,
+        "sha256": "f8b01dc690d41c047d0f31ef616093a26bd7dcc0e15414efb6ceb295488cab89",
+        "module": 0,
+        "cpuAddress": 37321,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    },
+    "npc-116-3-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        114,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866944,
+          "length": 16,
+          "sha256": "4d8d1e5b6f46c080dcd75648f59865f88467224de3f74f76ab50629be58f3111",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 13,
+          "observedTile": 167
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866928,
+          "length": 16,
+          "sha256": "db260746b983c1f439228dc8ece89c7db47b2dc65864252e2244ee55eb0d84b7",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 14,
+          "observedTile": 166
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 867200,
+          "length": 16,
+          "sha256": "9c6fa7ef8644c4c95128d519a3a91db723192d9bb8797f4d963dedc230a6a4f9",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 15,
+          "observedTile": 183
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 867184,
+          "length": 16,
+          "sha256": "b1e7197695c7d5af45f470d2d368095faa0a17e9fa2c1d984c10329bd67ad990",
+          "attribute": 67,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 16,
+          "observedTile": 182
+        }
+      ],
+      "rgbaSha256": "25f70c2c592e63a679a62644bf751a5dd786f96d097e41e93989c1b1c05ecb98",
+      "captureSha256": "dec4769c1c39001c166ba2b80d7b9aaa904af07a6afdbf37ed588d2e3a4d84ca",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 4325,
+        "length": 3,
+        "sha256": "78dd98e6be9f9d876ace83315f22c7e693ae7d3e7501302c472ae4c10be2dc97",
+        "module": 0,
+        "cpuAddress": 37077,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 4489,
+        "length": 5,
+        "sha256": "b2f2ace861e90985c8e729abc0fe09a88e9d21e6a95f567aa7b227eb7da2ced7",
+        "module": 0,
+        "cpuAddress": 37241,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    },
+    "npc-116-4-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        114,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 866432,
+          "length": 16,
+          "sha256": "20c8686a372ffe7e281a3a7649349ed6b0c17c411a95ed3c75dc23b6a74416b0",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 9,
+          "observedTile": 135
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 866416,
+          "length": 16,
+          "sha256": "45b6fe6544606fd3fba45df40b25294187a786a3646eda1364493bd7171fffff",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 10,
+          "observedTile": 134
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 866688,
+          "length": 16,
+          "sha256": "82697eddf046aefe736cacb3cf70679b8162c8647c290e1b675f6c10119ca3ea",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 11,
+          "observedTile": 151
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 866672,
+          "length": 16,
+          "sha256": "bf6ba06d113b3e08aad1b289fa9e52eba9a9e45fbda4984e8f64f5002c3fe07e",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 12,
+          "observedTile": 150
+        }
+      ],
+      "rgbaSha256": "01f743eb4956f3e37d00b23fb216050c872d9d5b0a9ce60d8c6cc9328de6fbf9",
+      "captureSha256": "6896ad741ae5d8cd0a8b8b0ad64a1c3639c5600b3e4f1cd666246f8a9dcd7a80",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 4297,
+        "length": 3,
+        "sha256": "3f3e1d84cafe821cecf38e530b335ce14e1398b6d2b52ca181cfc41827f13682",
+        "module": 0,
+        "cpuAddress": 37049,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 4449,
+        "length": 5,
+        "sha256": "77464f698c8157b34b89c6ce34ae25007e9a06972b7ef572c40ce2fee7c832b2",
+        "module": 0,
+        "cpuAddress": 37201,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    },
+    "npc-116-5-original-observed.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        114,
+        73,
+        16,
+        16
+      ],
+      "paletteCodes": {
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "0": [
+          0,
+          0,
+          0
+        ]
+      },
+      "transparentZero": true,
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 867072,
+          "length": 16,
+          "sha256": "8ee1a1638bf0c9d701d85a519aee04084b6ef2efd695abcb15c8d324fc5766ac",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 13,
+          "observedTile": 175
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 867056,
+          "length": 16,
+          "sha256": "57745abdd914dd0937d5de60dffa7ab7062808be536a31937fa993f325cf6052",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 14,
+          "observedTile": 174
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 867328,
+          "length": 16,
+          "sha256": "bca8ba2047d1411b459fd33f05b623de487f8a90b6c1a4eb878bb47cc4c2d0aa",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 15,
+          "observedTile": 191
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 867312,
+          "length": 16,
+          "sha256": "a10092d4ab1be6931e928462865ebb276a085cf204b4b0ab5fe684e988dda4c7",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false,
+          "observedOamIndex": 16,
+          "observedTile": 190
+        }
+      ],
+      "rgbaSha256": "d19ef52ea8a6514ef7f0414a05c3b1e9dac2b2ed2ebc7e0f16da5cc569bd80a4",
+      "captureSha256": "06563ff8e85788e3088731959fc6b7e48a9a65635f8d9ab65912a19d50b57e8a",
+      "captureKind": "CONTROLLED_ORIGINAL_NPC_POSITION_ONLY",
+      "normalPlayEvidence": false,
+      "animationSource": {
+        "offset": 4409,
+        "length": 3,
+        "sha256": "949fb8904a60ed996fbfe85da12592d2d03aa7edca39b8e75fb08c86ef445cc3",
+        "module": 0,
+        "cpuAddress": 37161,
+        "meaning": "Original NPC animation pointer"
+      },
+      "frameSource": {
+        "offset": 4609,
+        "length": 5,
+        "sha256": "9281ab91900d8f6a850ae82dae598d6e2b7d908295f821fbf71c383a48c82e8c",
+        "module": 0,
+        "cpuAddress": 37361,
+        "meaning": "Original record-linked frame; actual OAM supplies flips rather than guessing F1"
+      },
+      "patternBankSources": [
+        {
+          "offset": 892944,
+          "length": 1024,
+          "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+        },
+        {
+          "offset": 893968,
+          "length": 1024,
+          "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+        },
+        {
+          "offset": 946192,
+          "length": 1024,
+          "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+        },
+        {
+          "offset": 947216,
+          "length": 1024,
+          "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+        }
+      ]
+    }
+  },
+  "shops": [],
+  "inns": [],
+  "clinics": [],
+  "serviceBindings": [],
+  "items": [],
+  "limitations": [
+    "Cosmetic disguise/duration not claimed: script19 targets NPC140; no invented costume timer or mandatory gate",
+    "Transient NPC walking is not animated; completed presentation uses original context209 next-load positions, differs from immediate actor7,3",
+    "Ordinary prisoners movement/static sprites remain PROVISIONAL_ROM_STATIC",
+    "Queen context210 removes original actors; no optional talk made compulsory",
+    "Normal Android pending; original controlled state is not normal playable proof",
+    "DATA_AND_LOGIC_READY_ROUTE_NOT_VERIFIED: room116 not claimed as normally reachable or ALL_MAPS_USABLE"
+  ]
+}

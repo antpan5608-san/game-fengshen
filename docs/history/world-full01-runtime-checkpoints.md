@@ -1,7 +1,6 @@
-# WORLD-FULL-01历史运行检查点
+# WORLD-FULL-01历史检查点（不是当前任务入口）
 
-
-## 归档于2026-10-04T07:18Z（非当前状态）
+历史检查点、失败和授权原文保留；当前执行状态仅见docs/current-task.md。
 
 ## 当前有效运行检查点（2026-10-04T05:53Z）
 
@@ -12,40 +11,98 @@
 - 最新本轮inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289共3720事件，普通真机8会话/模拟器0/测试0/清理0；旧v26 apk_update ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。不拿历史日志证明新候选健康；一加13T和声音NOT_RUN。
 - 十类欠账权威仍docs/delivery-status.md，未关闭全地图、全部服务或独立岛内正常流程。
 
-## 当前有效运行修复（2026-10-04T02:49:28.031433+00:00）
 
-- 原v59/run37168134097签名构建PASS；真实Content及南海/北海/西海正常运行与冷启已执行，村1服务续跑失败于TouchTest:1763。购买蛛絲时余额76/实际80，正常拒绝交易；断言错误不是崩溃、赠款或改价依据。此run整体FAIL、不发布。
-- 正常服务备款改按原价格计算整条买卖的现金峰值220，而非只留武器200；仍自然遇敌赚差额/原客栈收费，买卖/选择/重复UP断言保留。本地仪器编译PASS，新同产物运行待验。
-- WORLD-FULL-01继续，显著可玩进展通过运行不崩溃、存档和既有审核门槛即阶段发布；旧非阻断问题不作为全部BUG清零等待，未知/严重故障不跳过。正式仍v27/c14；岛内WIP隔离，不改本候选来源。ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。
+## 局部离队/中毒规则补充（2026-10-04T06:29Z）
 
-## 当前有效候选检查点（2026-10-04T04:24Z）
+原0:BA30..BA7F逐角色中毒扣1，并不排除status40；毒到HP0直接写status20，可能清去离队位。已核实际未改ROM指令，复用既有OriginalStatus，不为新离队事件添加中毒免疫或私改原死亡写法。正常冷启驱动改检查原中毒状态下的合法HP/status结果与其余角色字段保持；不能无条件断言任何移动后离队位永不变。局部中毒/离队菜单可用性仍按具体实际证据，未验证原版目标选择部分继续保留欠账。新正常App仍NOT_RUN。
 
-- v60/run37172267100：签名build SUCCESS；实际runtime FAILURE。正常南海、三店触控、北海方向基础路线、西海与村庄1及其外部冷启通过；北海宫廷续跑在练级阶段正常战败，未发布。
-- 已取得该run的fengshen-world-north-palace-checkpoints实际索引/断言：源存档8级54/57HP、398两、药草2；64步时库存耗尽，8场战斗/2次用草后失败。无App异常或强制胜利证据，不把角色战败冒称客户端崩溃。
-- 本树最小驱动修复：练级前与正常返村时按既有15两药草价补至最多10，预留8两住宿；真实购买/扣款/背包与DEFEAT断言保留。业务规则、c41内容和签名不变。两项预算回归PASS，原Gradle wrapper仪器APK编译PASS。修后实际App NOT_RUN，不继承v60失败APK的通过结果。
-- 2026-10-04T04:31Z用户更新原安全连接后，实际gh api仓库返回成功且push权限true；不打印Token。此前401为历史阻塞，原Actions和自动审批权限仍须逐实际run核验，未绕过保护。
-- 独立work/world-island的9d6e9fc已保存c43/46图五龙山原守门context修复与301 JVM/严格恢复验证；实际Android NOT_RUN。继续佳东镇局部证据与服务接入，WORLD总任务PARTIAL、ALL_MAPS_USABLE=NO、有效分母UNKNOWN。
-- 下一可执行动作：凭据恢复后冻结新来源并沿原build workflow重新运行同产物正常流程；独立内容树继续当前镇服务。明显可玩增量实际运行/存档/签名审核门槛通过即阶段发布，不等非阻断欠账清零。
+## 当前有效正常驱动接续（2026-10-04T06:23Z，本地保存未发布）
 
-## 当前有效：修正原始入队存档测试（2026-10-04T01:26:26Z，未发布）
+- 独立c46/0435b35后接正常驱动：仅续同候选四恶人正常保存文件，原楼梯返回/固定渡船/真实村4补给→村5→87(1,7)/花狐貂→七段对白→离队保留→外部冷启/独立返回/再入；无人物、库存、flag注入或传送。原runtime录屏、同产物receipt/review和有界artifact白名单已薄扩展，Android实际NOT_RUN。
+- 首编译因既有normalWorldStoryContinuation超过Kotlin单方法64KiB失败，保留失败。抽取原渡船测试段为小函数，所有状态/自然遇敌/冷启/源存档断言保留；随后缺state第二参数修正，最终assembleDebugAndroidTest实际PASS(8秒)。此为测试编译问题，非App崩溃，不宣称新正常路线已通过。
+- 修正恢复记录：原CLI restore的--output仅用于verify回执，restore未使用该参数；首次实际严格恢复到了既有ignored assets，不是空目录。本次直接调用已存在ci_apk.restore(source,destination=新TemporaryDirectory/assets)，确认目标最初不存在，255文件/全部manifest entries/完整hash实际PASS。后续空目录恢复使用既有函数destination，不关闭校验、不新建提取器。
+- 同步v62已验证北海正常驱动的真实采购/西海无毒练级修正，2预算守卫PASS；原main仍a2b3ca3冻结run37180967103，不推独立WIP改来源。v62签名build已PASS；独立验签/hash/package/c41 PASS：APK3d130195dbc17165210055b9834e0be8919dff0f63c6e0588577113792944c91，runtime进行中。新内容c46不借其运行结果。
+- 下一动作：原v62实际正常/App/旧档门槛通过即原审批发布；独立树继续当前c46实际正常运行准备，不关闭全地图/花狐貂Android欠账。生产仍v27，WORLD总任务PARTIAL/ALL_MAPS_USABLE=NO/分母UNKNOWN。
 
-- WORLD-FULL-01继续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户已授权显著可玩增量实际App不崩溃且旧档/签名/同产物门禁通过后阶段发布；非阻断欠账保持真实状态，不等待全世界完成。
-- v58/run37166998991/source ee1b3e61d67b5be501cc9188d57f02d9cd827db9签名build SUCCESS；原KVM runtime在2026-10-04T01:21:27Z ContentTest 34方法/33通过/1失败/0错误。首错testVillageFourOriginalBridgeServicesNpcRulesAndPriorSave:73，隔离夹具用rom.original.npc.context.207错误键且漏玉佩used旗标；真实校验正确拒绝，非客户端崩溃证据。其他正常流程未运行，不拿v57旧片给v58背书。失败候选不发布。
-- 修正夹具复用OriginalYangJoin.CONTEXT_FLAG/USED_FLAG，原validate/context/库存保护不放宽；新增JVM验证缺真实context或used仍拒绝、无关flag保持。287 JVM/57 suites/0失败错误跳过、Android instrument编译PASS(3秒)。内容仍c41/225文件/41地图，manifest 7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f，不伪造内容变化。
-- v57实际低区准备失败与v58新增Content断言失败分别保留；zone4真实12,21↔12,22修正与6静态门禁保持。下一动作：提交修后代码/规则与现有文档，再原workflow新候选v59同产物实际运行，成功则原自动审批阶段发布，不中途推main。
-- 新只读巡检run37168013570已实际发起，当前尚未完成；最近完成仍37165465663/2026-10-04T00:37:03.5955350Z，可信27/26=1398/2289，普通真机7会话/模拟器0/测试0，精确旧v26更新ProtocolException1保持ISSUES_FOUND/root UNCONFIRMED。新查询未完成不写正常。
-- 独立work/world-island树继续原79→78→77→76/event7四恶人/六宝箱的有证据接入；未推main、不进入本次c41候选。ROM、回放、PPU与原日志不公开。声音/一加13T NOT_RUN。
-- 十类欠账权威清单仍docs/delivery-status.md原完整段；本轮未关闭正常App、全地图、全部服务或规则欠账。无reset/clean/真实存档覆盖/Language修改。
+## 当前有效局部实现检查点（2026-10-04T06:08Z，独立树未发布）
 
-## 当前有效检查点（2026-10-04T01:01Z）
+- WORLD-FULL-01继续，生产仍v27/c14；ALL_MAPS_USABLE=NO/有效原版分母UNKNOWN。原main a2b3ca386125b2f2ef4d6170b469c36ffb510e8e冻结，v62/run37180967103原签名构建进行中，不推独立树干扰同提交发布。用户原连接实际恢复；最近inspect37180842747于05:46:55Z查询可信27/26=1431/2289、普通真机8会话/测试0/模拟器0，旧v26 ProtocolException1/root UNCONFIRMED保留。
+- 本树c46严格继承c45，255文件/48地图；manifest eeb58f54250861e531e11a1b6c4f187873c4c1e97cb4422e8f6bd5275e0fb746。原图集/音乐逐字节复用，5(7,6)→87(19,13)及独立返回已接入，87真实32×15/zone24十敌群，敌50/51/156数值/行为/图形复用原工具。不是全地图完成。
+- 实际map87=$57/event6，不是$87(135)/event25。真实1,7自动触发、script37六玩家步至5,5、源170→花狐貂156；HP4500/攻294/防150/EXP2000/钱1600/behavior9，不降数值。script38组97消息11..17、两段玩家6/4步、终点4,6向右；胜后保留小龙女全记录，仅OR64离队，原战斗入口排除状态64，出口恢复完整顺序/HP并清08。七段持久进度与角色/位置校验，重启不重复移动/发奖；共享钱箱扩原550及六个物品箱，不发伪奖励/剧情门槛。
+- 原未改ROM CPU：3078事件边界、1536离队投影/出口恢复、35钱箱及42物品箱均零差异。胜后原版取证是受控人物HP/敌HP1实验，绝不当正常胜利/Android证据。真实Boss完整图形已核；field155初始图块组合为PROVISIONAL_ROM_STATIC，尚未原OAM对照，不声称实际App画面。
+- 确认并修正独立岛内加载器缺陷：钱箱不应要求普通对白；仍只接受两个有原版证据的钱箱身份/金额/开旗，不放宽其他NPC/来源检查。
+- 本地310 JVM/62 suites/零失败错误跳过、原instrument编译PASS；3局部导出方法75.077秒PASS，两次严格生成相同，原ci_apk.restore空目录255文件/完整目标hashPASS。新Content仪器覆盖剧情阶段存档/离队/钱箱，已编译未运行。正常Android佳东后山/Boss/冷启、旧档升级、声音及一加13T均NOT_RUN。
+- 最近可构建本地内容检查点c46；下一动作：保存本树及准确证据，继续接原正常四恶人→佳东→后山驱动；原v62实际门槛完成后阶段发布。不能把WIP内容混入冻结c41候选或拿旧APK运行给新内容背书。
+- 十类累计清单仍docs/delivery-status.md原完整权威段，未关闭花狐貂正常可玩、全地图/服务/完整战败等欠账。
 
-- WORLD-FULL-01连续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户授权显著可玩进展在实际不崩溃、存档与原签名/同产物/审批门禁通过后阶段发布；不等待非阻断欠账全部清零。
-- v57/run37159842651、来源909a8ec3694ef7376f40f0de1288e29fae90513b：签名build SUCCESS；2026-10-04T00:54:29Z runtime FAILURE。ContentTest32、覆盖及前段正常流程通过，北海准备5000步耗尽：246自然战斗后level11/EXP2424。实际旧39,40/41是zone1（敌4/5，EXP3/6），不是注释所称高经验区。未显示客户端崩溃；失败候选不发布。后续地府/神木/杨戬Android仍NOT_RUN，不能借前段录像闭账。
-- 当前独立c41检查点104451e/056c857：225文件/41地图、manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f，176世界方法、286 JVM/57 suites及严格恢复此前已PASS；村4/渡船正常Android尚NOT_RUN。此次只改北海正常驱动到真实可达zone4的12,21↔12,22并限定原矩形，保留等级12测试目标、5000边界、自然遇敌/原数值/补给，不发资源、不改原剧情前置。6静态方法PASS；首编译发现EncounterZone无id字段，改用既有真实矩形再编译，结果按实际日志记录。
-- 最新真实inspect37165465663于2026-10-04T00:37:03.5955350Z查可信27/26=1398/2289，共3687事件；普通真机7会话、模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/UNCONFIRMED；用户重试v27恢复。无新样本不能证明新候选健康。一加13T/声音NOT_RUN。
-- 原不可变v57 signed artifact经安装的GitHub连接器安全下载、原ci_apk.verify独立复核：APK fa6e5adda72c5b348bd05be63f0fd6dc6f66d06baa856d3141bd177db06dc391、包名/证书与c39 manifest81acc38879fcac6abd61eff723f8ba7704f52f39884a0bcb9f0fdce5207e402b一致。下载/验包不是运行通过或发布。直接gh blob403保持失败，不输出临时签名URL或绕过代理。
-- 独立work/world-island保留岛内76/77/78与event7未完实现：原1536碰撞、40胜后、35物品箱和35钱箱CPU案例均零差异；原触发12,12→四步移动9,11、中毒99→95、四段86.3..6、强制编组源169/组62/四敌152..155已核。匹配输入缓存复用，未把原版/CPU写成Android验收；未完成代码不混入c41候选。
-- 下一实际动作：定向门禁完成后保存/安全推原main并触发原下一签名候选，来源冻结；同时继续独立岛内局部导出与剧情。不是以41图结案，不启动第二workflow。累计十类权威仍docs/delivery-status.md。
+## 当前有效让路与候选检查点（2026-10-04T03:46Z，本地隔离未发布）
+
+- WORLD-FULL-01继续F3/F4；用户最新授权重大可玩进展通过实际不崩溃/存档/原审核门禁即阶段正式发布，已知非阻断BUG保留。公网实际读回仍v27/0.8.7-world-full01-f0；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。
+- main冻结fb5b85c94d8d7bc92c04b51e2c43ef562102457d；v60/run37172267100签名build SUCCESS、同候选KVM runtime仍进行。不可变APK独立ci_apk.verify PASS：SHA89a3cf7b87c2dad07bbb04b518bd9c76cae278947b0b1274b1eb44e3da6f36fb、23231145字节、225文件/c41 manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f、原包名签名一致；未发布。
+- 新环境gh实际`run view 37172267100 --repo antpan5608-san/game-fengshen --json status,conclusion,jobs`返回HTTP401 Bad credentials；连接器可继续只读查询，已启动CI不受影响。runtime skill实际状态observations_current=true、network unrestricted/enforced、无已绑定Secret或outbound identity；不得把env变量存在或旧审批当作当前API授权。用户安全连接更新问题已提出；发布触发受影响，其余独立本地工作继续。
+- 新c43仍242文件/46已打包地图；真实条件NPC增量后manifest35ad485c82dcf91c4ed8e4cdf367a0683233b5d50d347a427e65ba8bdcc82917。父c42 pin与可信v27APK不变，历史未变媒体逐字节复用。
+- 新真实路线测试发现静态163道童(7,10)阻断走廊。原idle/UP/完整交谈受控1200帧不让路，不能靠放墙/删NPC/传送通过。公开攻略277181提供“先访岛”线索；目标ROM0:A664真实条件为map79加载、party>=3、global7c6.bit16未置，选择163的NPC context219，原guard改到(7,9)/173.1“请进”。无需先谈两居民；原攻略推荐不新增剧情锁。四恶人原CEBA胜利清context7EA。1284原CPU零差异。
+- 原受控16→79→16→99→163输入实际保留context219；163入口(7,14)沿(7,10)/(8,10)/(8,5)/(7,5)正常按键绕过原NPC，到师父原菜单赠special9数量1、复谈3不重发。只外门定位受控，原房内无位置/flag写入；不是正常Android证据。实际原RAM物品包含19/129、11/129、9/1。
+- 最小接入：统一flags加载/胜后处理；同一Content场景状态更新NPC绘制/触摸/碰撞和173.1，保留原墙/商业/毒步/奖励规则。原npccontext稳定flag持久并在四恶人胜后清除。14定向JVM和instrument编译PASS；6局部导出60.827秒PASS，含前置阻断/真实条件后可达；新LFcheckout PASS。完整JVM301方法/59 suites/0失败错误跳过及instrument编译PASS；新显式空目录恢复242文件/目标manifest严格PASS。首次漏SDK环境变量被原工具拒绝，补既有SDK/JDK选择后重跑通过，未放宽校验。
+- 前一c43检查点完整世界Python189方法773.505秒PASS，不混称新6方法同次全量通过；新App正常岛内/取得/秘宝命令/胜后/冷启仍NOT_RUN。不能因CPU或构建通过覆盖公网APK。
+- 下一动作：保存c43已验证让路修复检查点；继续v60实际runtime审核，连接恢复且原门禁通过立即阶段发布；候选来源冻结期间不推岛内WIP。十类欠账仍docs/delivery-status.md权威清单；不关闭全地图/全商店。
+
+## 当前有效后山事件纠正与回归（2026-10-04T05:09:37.378738+00:00）
+
+- c45完整world回归实际179方法/834.049秒，4个setUpClass因开工命令未带已缓存的immutable基底路径而ERROR，其余已执行方法无失败。补FENGSHEN_WORLD_F0_BASE_APK=原v26缓存、FENGSHEN_CONTENT_BASE_APK=原v27缓存，只重跑这四组20方法/62.063秒PASS；不得写“单次全量全部通过”。未删测试、未放宽基底hash。
+- 修正前检查点把ROM literal $87/$86误读成十进制87/86：event25实际属于map135/134，不用于本次map87后山。实际map87=$57，11:D8B5分派event6，DA8D原trigger为(1,7)；前序目标墙坐标未实现成路线。
+- 原map87实际入口与内部联系受控取证（不是正常Android）：正常UP触发event6→script37玩家RIGHT4/UP2→source170→enemy156。真实原画面名称花狐貂，4500HP/294attack/150defense/2000EXP/1600money/behavior9；复用已有behavior9，不降级普通攻击。初始试走因真实普通遭遇中断/战败保留失败；受控内部门位不作为正常可玩证明。
+- 原event6胜后CPU：胜利7C1非零时删除source155、context07DB=201、global07BF.bit16置位；完成原script38后status0545 OR64，map87.bit128提交，保留原其他状态/角色数据。非胜利分支直接原CD9A，不自行发奖。脚本38有真实dialogue10..16及小龙女动态离场，尚缺逐阶段视觉/文本与Android事务。不能仅按攻略删除角色或丢失其装备。
+- v61原签名APK已从不可变artifact11293528934取回并用原ci_apk.verify独立PASS：23231145字节，ea09035a07cc605659f347c8677c7aa5674536a749749fc3fd6ae4f709a46d8c，原签名，c41/225/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。原runtime仍执行中，生产仍v27，不把c45本地结果给c41或App背书。
+- 下一动作：保存本检查点；限定核script38文字/原动态演员与离队投影、现有统一状态保留，再接map87/原宝箱/encounter。候选来源冻结不推独立树main；原完整App门槛通过立即阶段发布。
+
+## 当前有效隐藏调查检查点（2026-10-04T04:50:40.814034+00:00，本地未发布）
+
+- c45严格继承c44：249文件/47地图，manifest a127632d85a38b1be91743767a88c8fb63795117e19eb7dc2d29121417fd9718。不变图集/音频逐字节复用；WORLD-FULL-01持续，总体PARTIAL、ALL_MAPS_USABLE=NO/分母UNKNOWN。
+- 修正前轮取证笔记：map5(15,7)的C6原对象raw category0/id1取得的是參須（现有rom.medicine.1），不是药草。原截图、实际inventory0570=1、qty05B0=1一致；本轮没有推断参须效果或把它接成地图药草。
+- 原正常菜单键（起始位置受控）取得参须后map5 flag0705=1；原9CPU案例零差异核C6初次/复查、数量上限、满分类16格、新旧stack、成功才置flag。对原真实UP的两次独立试验表明取得前/后仍停15,8；保留原隐形阻挡，不删除对象、不开放一条假路。此前“取得后改变状态”指已取flag，不代表碰撞移除。
+- 复用WorldItems.categoryGrant和统一存档，新增稳定npc.5.5/透明原初始图形，按明确地图交互调查一次；隐形对象不参与随手点NPC命中，取消/重复UP/复查不会多发。原异态可见动画未核，不绘制假图标；合法物品数量/满栏失败沿用原事务。正常App尚NOT_RUN。
+- 修复潜在启动阻断：c43三只五龙山宝箱evidence路径未在ContentLoader原enum内，会被加载器拒绝。本次同业务pure scope检查仅放行真实map99三NPC/category，与map5隐藏单NPC/category；其他历史允许范围保留，无宽泛跳过验证。303 JVM/60 suites全通过含原CPU七个容量预期/复查和加载器scope正反例，仪器编译PASS，隐藏导出2方法PASS（67.066秒）；原ci_apk.restore空目录249文件严格hash PASS，真实LF checkout PASS。启动/实际App仍必须由候选runner验证，不能据JVM写已运行。
+- 正常map5驱动改用该店真实参须库存（map5不卖药草）；药草既有规则保留。同正常杨戬存档→实际镇服务→五人对话→按A调查/取消/防重复/仍阻挡→保存/外部冷启/正常原出口返回，已编译待原runtime。新增发现步骤曾令巨大私有续跑方法超过JVM64KiB，抽为局部函数后编译成功，不删验收/地图内容。所有生产/用户存档未动。
+- main来源950e4329a37214380282039b85c9e5709118ac8c继续冻结，v61/run37176778752签名build实际SUCCESS、runtime实际执行中；inspect37176776930与原自动reviewer成功，真实27/26巡检旧下载错误仍保留，生产仍v27/c14。独立树不得把本地c45的测试背书给c41候选。
+- 下一实际内容：map5(7,6)→87(19,13)、原event25和胜后队伍连续状态。已取得原map87 32×15/tileset3、独立返回87(19,13)→5(7,6)、八条actor/箱记录和event25分派/source201→enemy67；公开攻略仅作花狐貂/小龙女失踪线索，不拿攻略替代奖励/条件。尚缺本场取证、真实图形/行为及原胜后事务；保持未开放而不是假空房。
+
+## 当前有效佳东镇检查点（2026-10-04T04:33:11.256334+00:00，本地未发布）
+
+- WORLD-FULL-01持续实施；用户要求显著可玩增量在实际App不崩溃、旧档/原审核门槛通过后阶段发布，非阻断问题保留；ALL_MAPS_USABLE=NO，有效分母UNKNOWN。
+- main冻结950e4329a37214380282039b85c9e5709118ac8c，v61/run37176778752实际build执行中。原安全GitHub连接已恢复，实际仓库API成功/有push；inspect37176776930和其自动reviewer SUCCESS、publish SKIPPED。实际巡检2026-10-04T04:22:09.0223462Z可信27/26共3700事件（1411/2289），普通真机7会话/模拟器0/测试0/cleanup0；精确历史v26下载ProtocolException1仍ISSUES_FOUND、root UNCONFIRMED，不用旧真机证明新候选健康。
+- v60/run37172267100 build SUCCESS/runtime FAILURE，北海正常练级因源存档只剩两草、训练前不采购而战败；源8级54/57HP、398两、64步库存耗尽，8场战斗/2次用草。v61驱动改为正常采购/返村补给，未改玩家/敌人规则、价格或断言；修后App尚待实际run。
+- 独立本树c44：248文件/47地图，manifest eac9f8888fe00f03082f856ded2e23ad42eed58e3eba848e0e9cbb1282b5eec4，严格c43守门修复父pin和同一已审核v27字节；旧地图/图集/音频逐字节复用。新增map5佳东镇及两条原16入口/三条独立5→16返回（普通EXIT记录，不能套map4 EDGE）；三店实际stock、150两住宿、两位医生共享caller绑定；五名原普通NPC与group15真实文字/四种原图形。
+- 新商品stableID/价目来自目标ROM；未解原名、装备能力的六件商品维持PROVISIONAL_REFERENCE且nameConfidence UNKNOWN，不伪造原名或能力。无新增出村/补给/对话前置。
+- 原版取证仅控制外部门位后实际入室/正常按键，村内NPC图形从原入口真实步行捕获OAM/CHR/不透明像素，每种精灵唯一匹配；普通NPC动态与inn180三名辅助NPC仍欠账。字体复用既有glyph逐像素hash，再补当前缺字；不重录全部字库。发现异步savescreenshotas后立即切存档会画成下一场景，补一帧后真实防具商品画面匹配；保留失败试验，不算App黑屏。
+- 五项局部导出/拓扑/拒绝错误数据测试PASS（63.492秒）；301 JVM/59 suites/0失败错误跳过，仪器编译PASS；LF真实checkout新父pin/资源验证PASS；原ci_apk.restore在空目录248文件完整hash PASS。本地首轮因UNKNOWN不符现有来源enum、误把tile1当collision1导致1FAIL/1ERROR，改为诚实暂定来源、真实碰撞边界后通过，未放宽门禁。
+- 同一原正常续跑helper增加map5从已验证杨戬存档实际步行→三店买卖→150两住宿→医生查看→五人对话→保存/外部冷启/三条独立返回的驱动；已编译且接原runtime/同产物审核/有界artifact，实际Android NOT_RUN。本轮没有正式APK，不将本地/原版/编译当正常App PASS。
+- map5(7,6)→87及event25剧情、隐藏调查198(15,7)实际药草grant完整失败规则、inn overlay180三辅助NPC尚未接入；本树地图/店铺接续不是全镇、全地图已完成。下一具体动作核87/event25及198一次性grant；正式等待v61完整门禁，当前生产仍v27/c14。
+
+## 历史五龙山与四恶人检查点（2026-10-04T03:00:45.218233+00:00，本地未发布）
+
+- WORLD-FULL-01继续F3/F4。生产仍v27/c14；显著可玩进展按用户授权通过不崩溃/存档/原审核门槛即阶段发布，非阻断BUG如实保留。ALL_MAPS_USABLE=NO；完整有效原版分母UNKNOWN。
+- main冻结fb5b85c94d8d7bc92c04b51e2c43ef562102457d；v60/run37172267100重新签名构建与运行中。v59/run37168134097整体FAIL，村1原价80购买时只有76、测试漏算买卖现金峰值；改按真实目录计算220峰值，正常赚取资金，没改商店/存档/交易断言。v59南海/北海/西海实际运行与相应冷启通过不代表整个候选通过。
+- 本地c43：242文件/46已打包地图，manifest146f2dc82842235af06df146bbd19a1f2fcc68abb2411e33f12f8c5b2272189a；固定c42父pin，同一可信v27基底。新99/163原门四条、原zone20两矩形与8整组/zone21十一整组、43/44/45真实图形/原数据、三原箱（含既存返魂丹定义）接续；未变媒体字节不变。
+- 原teacher163 action1在正文前置flag2并赠special9；256 selector/5容量CPU零差异，满类别保留原失败flag，不造免费重试。实际合法7,5向UP，7,4墙的早期受控定位失败保留；真实group173字体/四段文本和特殊名遁龍樁已核。npc175/178复用同动画指针姿势，精确本房动画PROVISIONAL，未声称许可已确认。
+- 原战斗special9：菜单直接收集角色指令、不选目标、数量/已用位不变；原敏捷调度轮到角色才写6948=1，对四身份152..155解保护；更快敌人仍行动。统一OpeningBattle薄接BINDING命令，Body属性保跨APK构造ABI；不从UI先回血/置保护，不混成地图HerbUse，不新增持有物地图锁。
+- 实际本地：5五龙山导出方法60.060秒PASS、300 JVM/59 suites/0失败错误跳过、instrument编译PASS、真实autocrlf checkout1方法0.289秒PASS；原ci_apk.restore显式destination实际空目录242资源与目标manifest严格PASS。CLI restore的--output不选择destination，先前该命令只能证明原assets恢复；已纠正并独立跑空目录方法。完整世界Python本次仍在执行，最终数目待记录。
+- 新正常App驱动续同候选原渡船存档：真实返村/99/163取得/复谈→原90两客栈/买药→原渡船回岛/原层间连接→明确秘宝命令→四恶人→一次性箱/冷启；未注入资源/flag。隔离触控取消/重复UP/暂停fixture另标。只有编译，正常c42/c43运行与声音/一加13T NOT_RUN，不发布未实际验收的岛内WIP。
+- 最新真实inspect37172268951于2026-10-04T02:51:27.8277441Z：可信27/26=1407/2289，总3696事件，普通真机7会话/模拟器0/测试0/清理0；同一旧v26下载ProtocolException1仍ISSUES_FOUND/根因UNCONFIRMED。自动reviewer本次实际成功；publish未执行。
+- 下一动作：保存本地可构建c43检查点、完整回归收尾；继续v60实际运行问题诊断及原阶段交付，期间不推island改变其候选来源。十类欠账仍docs/delivery-status.md既有权威清单；本轮未关闭全岛正常App/全地图/全商店门槛。
+
+## 历史岛内检查点（2026-10-04T02:07:08.305365+00:00，本地未发布）
+
+- WORLD-FULL-01继续F3/F4；正式仍v27/c14，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。用户再次授权显著可玩增量实际运行不崩溃后按原同产物/存档/签名门禁阶段发布，非阻断问题如实保留。
+- 原main冻结de0b2e0482c5518f52789f87192acdadede029ee；v59/run37168134097签名build成功，KVM正常流程进行中。v58受控存档fixture错用NPC context且漏实际USED_FLAG，已修正确实的测试输入并保持SaveSnapshot校验；不写客户端崩溃或吞失败。
+- 本树c42/8c63c9c6f7578259f4bf7a93150cda75251b38b2b9cf912224bdcd63afc21050，235文件/44已打包地图，新增78/77/76原10连接、完整zone22、四恶人真实四实例图形/属性、四页开场及四步中毒成本、五物品/100两原一次性宝箱、两名78原NPC。派生保护标记接入，App正常胜利NOT_RUN，不能写全岛已可玩。
+- 实际验证：295 JVM/58 suites零失败错误跳过、instrument编译PASS；7项岛内导出81.624秒PASS；真实autocrlf checkout1项0.194秒PASS。原ci_apk.restore严格空目录恢复235文件/目标manifest已PASS。声音/一加13T NOT_RUN。
+- 原NPC callback31不是坐标world event31，原CCAC及1024 CPU案例/实际group88三段PPU字体已核；旧陷阱/传116猜测撤回。两个NPC说明遁龍樁/五龍山及胜后感谢，不新增持有物前置锁。
+- 关键原战斗保护：9:ABF3/AC32 marker6948!=1伤害归零；special9->8935仅四身份设置1。80伤害gate+32道具effect原CPU零差异，不代表道具指令/消耗或正常通关。尚未接对应战斗指令，不能发布未解保护的WIP。
+- 当前实际资源链：2:B481核map163/对白2在正文前赠special9，10:CB84先置map163.flag2；256 selector/5容量CPU零差异，满背包原flag仍置，不能私改免费重试。真实独立出口16(183,143)->99(8,51)，99(13,11)->163(7,14)及各自原返回已读取；正文/场景与可达路线、道具名称/指令/时机继续核。
+- 最新真实巡检37168013570/2026-10-04T01:26:54.2313018Z：可信27/26=1398/2289，总3687事件，普通真机7会话/模拟器0/测试0/清理0；精确旧v26下载ProtocolException1仍ISSUES_FOUND、根因UNCONFIRMED。发布需新巡检及独立历史非阻断评估，不伪造新版本样本。
+- 下一动作：核原99/163正常入口画面与实际对白、special9战斗命令/消耗，薄接统一内容/状态/回合；同时v59完成后审核实际产物，通过即原流程阶段发布。新岛内WIP不改变冻结候选来源。
+- 十类欠账继续以docs/delivery-status.md既有完整清单为权威，本轮未关闭全岛、全地图或全商店完整性门槛。
 
 ## 当前有效固定渡船与岛口检查点（2026-10-04T00:00:48.608781+00:00，本地未发布）
 
@@ -550,3 +607,116 @@ scope: 全部有效目标地图与原版交易/住宿服务可运行，保留真
 - 修正最初“每室3连接”的统计预期为ROM实际4条；仪器字段引用按EncounterGroup.zoneId修正，保持门槛/全组断言。本地243 JVM/零失败及instrument编译成功，新侧室3 Python方法PASS、旧第七殿golden3方法与6表真实LF checkout1方法PASS。实际Android正常进出/遭遇/对白/保存仍NOT_RUN。
 - 移动NPC159/index0实际交谈未成功，使用绑定ROM消息的PROVISIONAL_REFERENCE，初始静态姿态和动画欠账保留。移除先前7个未引用的猜测map67文字绑定，由真实侧室组别和画面对照替代；不将未知升级为已核。
 - 原转世受控按键和56个原CPU边界已查：事件2入口86(12,5)，脚本3、96组2–12对白、结束OR map86 flag128、下一16(238,160)/UP/计步0，不新增数值奖励。原ROM映射实际0/1/46/3，首次trace退出-11保留限制，清除hook写入关闭文件风险后两次真实返回0；此证据不是正常末殿胜利/Android验收。下一动作：复用原StoryContinuation薄接非战斗场景剧情及末殿68，再同候选正常验收。
+
+
+## 归档当前任务快照（2026-10-04T10:25Z；被新检查点替代）
+
+# 当前任务：WORLD-FULL-01
+
+task_id: WORLD-FULL-01
+
+任务：全部有效原版地图、交易商店与住宿可用，解除人为试玩边界。连续实施，不以5/10小时或一个小区段为终点；平台/权限中断时保存可复现检查点。原墙、地形、单向连接、剧情条件与交通/道具要求保留，不赠资源/改数值/关闭遇敌/强制胜利。不reset、clean或覆盖玩家存档。复用原两个Actions、reviewer、签名、同提交/同产物hash和既有两个Fengshen对象；Language不变。
+
+## 当前有效状态（2026-10-04T09:24Z）
+
+- task_id保持WORLD-FULL-01，原巡检需要该机器字段；本文件为唯一当前任务入口。
+- 生产仍v27/0.8.7-world-full01-f0/c14，APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，用户已安装。总体PARTIAL，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN；175几何缓存/259索引不是正常可用分母。
+- main冻结87df6cf836ec7d2106f2231f67f13c622272528c；v64/run37185539165原签名构建SUCCESS、真实Android runtime执行中，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。独立树不混入审核来源。
+- v62/run37180967103 build PASS/runtime FAILURE，TouchTest北海训练waypoint25(29,43)实际class1墙；真实源8级/EXP858/57HP/346两/药草1。仅修测试路径，原网格BFS去返39,42↔5,24均53节点、zone1无毒且无别的出口；7拓扑/3采购与task_id守卫、仪器编译PASS，修后App待v64。v61毒药不足失败保持历史，不混用源状态。
+- v63/run37185326471未完成即取消：精简任务文档漏task_id，inspect37185327792查询前失败UNAVAILABLE；已恢复必需行并测试实际正则，修后新来源重新构建v64，不放宽同源门禁。
+- 最新真实inspect37189846556/2026-10-04T08:44:02.1513945Z成功，可信27/26=1445/2289、3734事件、普通真机9会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。自动reviewer成功，publish SKIPPED，不拿旧生产样本证明v64健康。
+- 本独立work/world-island：c48/52图/276文件，manifestd53c9158facd29acb72421e7e0ebc6b258120b5e134fa014ee8e08d50c5ec721；固定c47父pin/golden与审核v27媒体。c46已保存e6803a5、202世界回归PASS、远端work/world-island-c46/a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4。c48未发布，全部新Android正常/覆盖/声音/一加13T NOT_RUN。
+
+## 当前女人国女王 WIP（尚未导出下一内容包）
+
+- 实际原门16→141→117及自动event14(7,5)已受控定位；141入口组件与宫殿组件不直连，必须经原115，不能制造外城捷径。真实115三条返回141已取得按键证据；140入口6,14及四邻全墙，暂不开放。141 FF/FF边界返回未实际触发，原因待核；不交换坐标伪造返程。
+- 女王为source171→enemy157/slot3，7000HP/372攻/178防/3000EXP/2400钱/behavior9，原受控真实菜单确认special13捆妖繩：直接收集命令、占行动、数量1/used位不变、轮到角色时marker2。没有关闭敌方行动或降低数值；另一个原目标174未启用。
+- 原script18只移动NPC并显示group127.13，玩家保持7,5且不加毒步成本；胜后group127.15结束才写map117.bit128/global7C6.bit64，删除170，context115=208/116=210/164=220/117=231。原NPC172为黄天化，后续action43/event43与攢心釘赠物是独立待接功能，不凭对白发物。
+- 原CPU1536绑定/1024完成/36城堡足行零差异；真实字体56字均核，原13/14/15正文已解；120完整女王图块与稳定帧RGBA校验成功。首取行动帧混入角色动画，改为稳定command帧后直接复用原工具；临时多palette扩展已移除。
+- 已薄扩展既有OpeningBattle/StoryFollowup/ContentLoader和同一物品面板，不另建战斗/库存/UI；special9旧调度保留。327 JVM/66 suites/0失败错误跳过、3来源正反校验/0失败、仪器编译PASS；新App仍NOT_RUN，当前目标pin继续c48/52图/276文件，没有伪造c49内容或发布新版本。原部分类别fixture漏growth和RNG0走状态攻击导致两项失败，修测试输入后实际通过，未改原AI。
+- 下一条实际动作：核141/115原返回条件和连通链、黄天化event43；把有据地图/女王/物品更新薄接原export_from_base，再做同候选正常App。main仍冻结v64；该原runtime通过即按原同产物保护阶段发布。
+
+## 当前清峰山与暗黑洞窟检查点（c48，未发布）
+
+- 实际100/164/74三图、独立真实入口/返回、完整原zone25/26及52/53/56/57真实图形与原属性/行为；不变旧地图/音频/图集逐字节复用。新定义走原export_from_base及ci_apk.restore，未创建导入器/工作流。
+- 清虚真君action1在正文前赠special8/夜明珠并先写flag2；256原selector/4容量案例无差异。复用既有teacher163同纯赠物事务，只放行明确164/8绑定；满分类保留原失败flag，取消/复谈不造赠物。
+- 原24576低层选择器/2库存案例核special8只在map74改变palette32、数量保留/used位。实际原正常菜单键与出入洞键（持有/外门定位受控）确认32→world16/16→74/52，数量raw129不变；不是正常Android证据。运行场景照明和原ownership/used分离；换图清照明、Android存档冷启恢复当前场景，未宣称NES手动存档等价。
+- 地图物品面板仅选择，明确使用夜明珠才统一提交/保存，先验证照明图集再提交；不加角色目标/持有物入洞锁，不在draw结算。七个物品箱49原CPU/钱箱120两35原CPU零差异；rope13名称基于目标村民线索暂定，使用规则未接，不能套遁龙樁。
+- 原100(1,43)结构返程处于全墙组件，和四邻都class1；仅保留inactiveExitRecords原来源，不开放假通道。原8,51独立返程可达。两个74的FF/FF原箱保留图形/阻挡及待核，不猜奖励。
+- 320 JVM/64 suites/0失败错误跳过，3局部导出75.113秒PASS，全新TemporaryDirectory/assets严格276文件/全manifest PASS，仪器编译8秒及22审批Bash fixture PASS。首次JVM JSON调用因Android stub失败，移至真实ContentTest仪器fixture；首轮导出路径断言抓到全墙记录，修原输出后通过，均保留失败日志。c48完整世界回归211方法/1136.741秒/0失败错误跳过PASS（/tmp/world-c48-full-world-regression.log）。安全远端work/world-island-c48/eca87de4a5c21a30052e5fbe07cb175f068cd56a与本地8d066d9精确tree37cfd0b1f17971424c799349ef2a259e68787312一致；main未变。
+- 同原runtime/review链新增已编译正常女儿村存档→真实清峰山→实际赠物→洞内使用→取得rope13→外部冷启/原返程/重入变暗/再使用的驱动、有界视频/截图/索引；实际Android仍NOT_RUN。原ContentTest新增真实加载器/JSON/照明variant fixture，只有编译，不冒称运行PASS。
+- 下一可执行：原v64同源门槛通过即阶段发布；独立c48回归收尾/安全检查点；限定查真实女人国路线/事件与special13调度，现有技能/地图可继续，来源/奖励/连接不能猜。
+
+## 已保留女儿村检查点（c47历史核验）
+
+- 目标ROM同SHA缓存，真实16(63/64,135)→6(15,29)，独立down-edge→16(63,135)。原受控入场后正常UP/DOWN键核独立返程，非Android主线证明；不会读错Reference map6为陈塘商店。
+- 6的真实地形/默认palette/桥方向规则/三店原stock和价格/200两客栈/两种医生复用ContentLoader与已有统一命令。7村民组16实际font/12段文本；action52仅真实global7C6.bit64+局部mask首复谈，不按攻略新增route gate/奖励。隐藏6.3是參須1/flag8，C6仍挡路；调查用真实可达17,5向RIGHT，18,6原墙不开放。
+- 原6144对白CPU/9容量与复查CPU案例零差异；字体河/謝等真实图形差异定向校正，保留原寂莫与捆妖繩文字。NPC图形从record-linked F8/F0与4个实际1KiB CHR银行重建，PROVISIONAL静帧、未匹配OAM/Android视觉，不伪造真人录像。
+- 四新商品id/类别/价格/容量有ROM来源；未解名称/能力仍nameConfidence UNKNOWN+PROVISIONAL_REFERENCE，不伪造GAMEPLAY_VERIFIED。仅使用原来源enum，不关闭hash验证。
+- 原export_from_base/ci_apk.restore在全新TemporaryDirectory/assets严格265文件及全manifest PASS；4局部导出/两个世界路径/全部NPC邻格/错价格旗标字体图形拒绝79.223秒PASS；314 JVM/63 suites/0失败错误跳过，仪器编译7秒PASS；22真实Bash审批隔离fixture PASS。c47完整世界回归208方法/1064.753秒/0失败错误跳过PASS；日志/tmp/world-c47-full-world-regression.log。安全远端WIP work/world-island-c47/1381cac3e248a299c20e8b5f6c8b1a2c4bb12d81与本地6fe1350精确tree ebcd7d8c1800c11e4154599471c6270efc39ceff一致，main未变。
+- 原TouchTest新增同候选后山存档→真实返镇→世界→6→三店买卖→200两住宿/医生取消→七村民→调查取消/防重复→保存/外部force-stop/独立原边界返程的驱动；原runtime/review receipt与有界原视频artifact接续。编译≠实际App验收。拆出既有village4/5测试helper避免64KiB，所有原断言保留；修正后山Boss测试误套240HP为实际4500，不改游戏数值。
+
+## 本独立内容树已实施
+
+- 79→78→77→76原层级/碰撞/敌群、四恶人event7/遁龍樁原调度、胜后旗与六宝箱；五龙山99/163条件guard和原赠物；复用统一状态、战斗/存档、出口和导出，不复制引擎。
+- 佳东镇5：真实三店商品/价格、共享室内、150两住宿/诊所、普通NPC与15,7隐藏參須1；隐藏物非药草，取后仍阻挡。原未变化媒体逐字节复用。
+- 5(7,6)→87(19,13)及独立返回；map87=$57/event6，不能误用$87(135)/event25。真实1,7自动触发/script37六玩家步至5,5/源170→花狐貂156。HP4500/攻294/防150/EXP2000/钱1600/behavior9为原值。
+- 原script38七段组97消息11..17、玩家6/4步、终点4,6向右；小龙女status OR64离队、保留全部角色记录，战斗投影排除64/退出恢复记录并清08。无额外剧情奖励/补给或出村前置。七段持久位置/阶段检查、一次性旗、550钱箱/六物品箱走现有统一事务。
+- 修正钱箱被普通NPC对白要求拒绝加载的确定缺陷，保留原身份/金额/开旗检查。field155初帧为有来源PROVISIONAL_ROM_STATIC，不是实际OAM/App截图；NPC移动/部分字形及药效欠账保留。
+- 原0:BA30..BA7F并不排除离队角色的中毒；HP0写20可能清去40，不能添加毒伤免疫。继续复用原状态步，菜单合法目标未核的部分不猜。
+
+## c46历史核验与限制（c47状态以顶部为准）
+
+- 开工inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289、总3720事件，普通真机8会话/模拟器0/测试0/清理0。旧v26 apk_update ProtocolException1仍ISSUES_FOUND/根因UNCONFIRMED；不拿旧版证明新候选健康。发布须新pre/post查询。
+- GH API、原Actions和原自动审批已实证恢复；Git HTTPS推送普通/命令级gh helper分别无用户名/HTTP401，不改全局认证；安全Git API备份work/world-island-c46成功，远端a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4/精确本地树443db5228afb59b05c5bf1373a62c5510ee49d9e，main未变。不输出Token或把runner Secrets当当前任务资源。
+- 原未改ROM CPU：3078事件边界、1536离队投影/恢复、35钱箱、42物品箱零差异。原胜利取证受控修改HP/敌HP1，绝不算正常胜利或Android证据；ROM/PPU/私有存档均忽略。
+- 本地310 JVM/62 suites/0失败错误跳过；3局部导出75.077秒PASS/严格两次相同/旧媒体不变。原ci_apk.restore(source,destination=全新TemporaryDirectory/assets)实际255文件/全manifest hash PASS。CLI restore忽略--output，首次只恢复已有assets，失败方法明确保留。
+- 原正常驱动已接同候选四恶人存档→渡船/真实补给→村5/后山→花狐貂/七对白→外部冷启/再入；仪器编译PASS。大方法64KiB及缺state参数两次编译失败后抽出原渡船段并修正参数，保留全部断言，不当App故障。22审批隔离fixture与2采购守卫PASS，sh语法PASS。
+- c46完整世界Python回归202项/985.546秒/0失败错误跳过PASS。新正常App、覆盖升级、真实手机、声音都NOT_RUN。
+
+## 下一条实际动作
+
+1. 读取v64同源候选实际运行结果；新失败读取断言并修受影响部分，全部原门禁通过即自动阶段发布同一APK/公网完整hash/真实postflight，不等待非阻断欠账清零。
+2. c47完整回归与安全WIP备份已通过；c48已实现且211完整世界回归通过，保存本次结果检查点；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
+3. 具体缺口：独立新内容Android尚待runner；class26住宅/客栈overlay181辅助事件未恢复；女儿村北方洞窟/女人国实际数据、能力和连续正常证据待接。缺口只阻塞依赖区段，不重启全量研究。
+
+累计权威清单：docs/delivery-status.md原十类完整段。路线：docs/original-playthrough-roadmap.md。历史授权/检查点/失败原文完整归档：docs/history/world-full01-runtime-checkpoints.md、原stage-publication.md。当前文件是唯一当前任务入口；历史中的“当前有效”标题不再作为当前状态。
+
+
+## c50接续前历史任务快照（2026-10-04T11:26:54Z，下文只作历史）
+
+# 当前任务：WORLD-FULL-01
+
+task_id: WORLD-FULL-01
+
+全部有效原版地图、商店与住宿可用，解除人为试玩边界。按用户授权连续实施；重大真实可玩进展通过App不崩溃、旧档、签名、同提交/同审核产物与原reviewer门禁即阶段发布。保留原规则/真实墙/单向连接，不reset/clean/清档，不修改Language；已记录非阻断BUG可单独评估，未知/阻断故障仍拒绝。
+
+## 当前有效检查点（2026-10-04T10:58Z）
+
+- 总体PARTIAL；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。175结构几何/259 Reference索引不是正常可用分母。正式仍v27/0.8.7-world-full01-f0/c14，用户重试已安装；APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353。
+- 发布树/workspace/game-fengshen-world-ferry，main冻结87df6cf836ec7d2106f2231f67f13c622272528c，v64/run37185539165 build SUCCESS、runtime进行中。APK ad519aeb98458c2448774efcf03ef07493d00ce63b2659c1b7b7865d7a02743d，原签名，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。未发布；独立树结果不背书该候选。
+- GH API/原Actions凭据实际恢复，environment_status connected/current、unrestricted/enforced；proxy:8080/TCP8088/TLS保留，不把配置可见或runner Secrets当本任务凭据。Git HTTPS先前实际401，既有安全Git API精确树备份可用；不改全局认证。
+- 最新实际inspect37195607468/2026-10-04T10:31:28.3517345Z成功：可信27/26=1445/2289，共3734事件，普通真机9会话/模拟器0/测试0/清理0。旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED；不拿旧生产样本证明候选健康。
+- 独立内容树/workspace/game-fengshen-world-island，work/world-island：新c50/56已打包地图/302文件，manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0；其中116正常路线未证明，不算新增可玩。c49稳定检查点f22502e/远端work/world-queen117-c49=132ca74cd6a7cadc9d1f5bd30a23410a591fd737/精确树b9455485319276732358520c4c7114539bdf015b。新增141/115/117，经原115连接宫殿，无外城捷径；116资源/局部对白事件已接但真实连续入口待核，140未开放。旧c48/52图/276文件严格作为父pin，iteration基底仍不可变v27，未变图集/音频逐字节复用。
+- 女王source171→enemy157/slot3，7000HP/372攻击/178防御/3000EXP/2400两/behavior9；special13捆妖繩直接收集命令、不耗数量、轮到角色marker2，敌方仍行动。script18只动NPC，不假加玩家步；对白15完成才提交117.bit128/global7c6.64/context115208/116210/164220/117231。
+- 黄天化action43实际进入event16/script20（不是旧笔记event43）；正文14前按原容量赠special18攢心釘，文本关闭后117.bit2/context117211/121215/global7fe.128。pending存档可恢复，不重赠，不移动玩家、不额外发奖。攢心釘后续使用未实现，不能按名称推断。
+- 原控制位置取证发现必须同步0406/0408和8E/90，并从141(15,28)正常DOWN接近边界；已实际117→141→16(91,134)、141→115及115→141。之前省略原坐标字段导致伪失败，保留失败方法；受控位置/HP/敌HP1实验不算正常游玩。
+- 原CPU：Queen1536绑定/1024完成/36城堡足行；黄天化5赠物/256选择/1024完成；115两箱14容量边界，全部零差异。公开仅数值TSV/provenance，ROM/PPU/回放/凭据忽略。
+- c49本地332 JVM/67 suites/0失败错误跳过PASS，4来源正反方法PASS；新增两箱14原容量JVM对照与黄天化6方法PASS，3局部导出66.154秒PASS，全新TemporaryDirectory/assets严格294文件/完整manifest恢复PASS。仪器ContentTest编译PASS；新增正常驱动编译8秒PASS（首次替换误及两个旧局部deadline导致编译失败，已限缩到本续段并通过，未改业务），实际Android/覆盖升级/声音/一加13T全部NOT_RUN。c48完整世界211方法/1136.741秒PASS为历史基底回归，不混称本次全量执行。
+- 115普通NPC静态图形PROVISIONAL_ROM_STATIC/移动未复刻；防具14原名与哪吒可装备性未核，名称UNKNOWN，不造装备能力。116 action41实际CD1A而非CB84，原256选择/512完成零差异；对白6前置flag1→8→flag128/context209，不赠物/移动玩家/造易容计时或宫殿锁。角色/背包受控未见改变；完整外观/时长未证明。六NPC原OAM逐像素唯一匹配、翻转由实际attr重建，NPC行走演出仍暂定。原script后即时7,3/下一载入6,3差异保留，当前展示采用原context209位置。140入口全墙inactive，不开假路。
+- 正常续段已接原TouchTest/原runtime/review和有界证据：同候选暗洞取得绳存档→真实路线→女王命令→胜后→黄天化→保存/外部冷启/原世界返程。仅编译不是App PASS。修暗洞wrapper east=true以符合真实前序85胜旗，原源存档断言不放宽。
+
+## c50地牢局部接续及明确边界
+
+- 复用原OriginalNpcTalk/统一状态/存档/对白和export_from_base，首次/第二页pending可冷启恢复，重复8不重开event15。原npc state-view copy现在保留body能力/可见性，已删除演员不会被variant重新加回碰撞；跨APK构造ABI不变。
+- 335 JVM/68 suites/0失败错误跳过PASS；仪器驱动编译8秒PASS。3局部导出90.597秒PASS，全新目录严格302文件/目标hash PASS；当前新App仍NOT_RUN。首次compile局部begun重名修正；初轮拓扑失败保留并撤下错误正常驱动，未改墙/遇敌/检查条件。
+- 原115中间入口32,28不能到左7,44，141入口15,29不能到3,7，无NPC阻挡时也不通；116入口5,2被原140(5,3)占据，仅可在入口朝下交谈后继续，不能假走穿NPC。c50有原独立门/资源/功能，不宣称世界到地牢正常路径已通过；该地区NOT_AVAILABLE_ROUTE_EVIDENCE，不用受控位置证明可玩。
+- 正常Queen驱动只走实际已核中部→右部→宫殿，不依赖可选地牢。原调度若更快敌人击倒秘宝施用者，可在实际呈现完回合后用下一笔真实指令重试，未改marker/AI/数值；只有编译，待App。
+
+## 下一条可执行动作
+
+1. 继续v64实际runtime：成功则按原同源同产物自动审批/公网完整SHA/真实postflight阶段发布；失败先取实际断言和状态，再最小修复/新来源构建。冻结期间不推独立内容main。
+2. 完成新正常驱动编译，保存本地与精确树远端WIP检查点；然后安全整合原CI运行已核主线候选，c50可选地牢边界单独记录，不能借v64 c41给新内容背书。
+3. 独立核116左侧区域真实连接/地图分派及下一真实区段；原KVM单job最多300分钟，新内容回归增加时须在原workflow内保留同候选正常checkpoint安全续跑，不删门禁或假PASS；缺口只阻塞相应入口，不重做已完成研究，不把55打包地图算全部可玩。
+
+累计权威欠账：docs/delivery-status.md原十类清单；路线：docs/original-playthrough-roadmap.md。已完成三店/药草/触控/南海/逃跑保留。历史任务快照和失败原文见docs/history/world-full01-runtime-checkpoints.md；历史“当前有效”标题不作为当前状态。

@@ -6,9 +6,9 @@ from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,valida
 
 class RecordingBoundaryTests(unittest.TestCase):
     def test_only_scoped_first_preparation_and_hall_batch_have_a_longer_bounded_budget(self):
-        for prefix,budget in [('world-first-hall',7200),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
+        for prefix,budget in [('world-first-hall',9000),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
             self.assertIsNone(validate_recording_budget(prefix,budget))
-        for prefix,budget in [('world-first-hall',7201),('world-west',7200),('town02',3601),('world-hall-batch',7201),('world-hall-batch',59)]:
+        for prefix,budget in [('world-first-hall',9001),('world-west',7200),('town02',3601),('world-hall-batch',7201),('world-hall-batch',59)]:
             with self.assertRaises(ValueError):validate_recording_budget(prefix,budget)
 
     def test_atomic_replacement_returns_only_the_actual_complete_save(self):

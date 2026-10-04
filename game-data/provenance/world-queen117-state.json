@@ -1,0 +1,5470 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "woman-region141-115-palace117-queen157-special13-event14",
+  "kind": "CONTROLLED_ORIGINAL_AND_UNCHANGED_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "rules": {
+    "mapId": 117,
+    "eventId": 14,
+    "triggerCell": [
+      7,
+      5
+    ],
+    "sourceType": 171,
+    "enemyId": 157,
+    "scriptId": 18,
+    "itemId": "rom.special.13",
+    "bindingMarker": 2,
+    "quantityRetained": true,
+    "consumesAction": true,
+    "chooseTarget": false,
+    "extraEventReward": false,
+    "removedFieldActor": 170,
+    "contextAfter": {
+      "map115": 208,
+      "map116": 210,
+      "map164": 220,
+      "map117": 231
+    }
+  },
+  "sources": [
+    {
+      "offset": 383322,
+      "length": 22,
+      "sha256": "e20f83093f2e202d97d67b6e59539f1c6bce9eadc4e5a4ff47d2b6894aa50020",
+      "module": 11,
+      "cpuAddress": 55626,
+      "meaning": "Actual map117 event14 dispatcher"
+    },
+    {
+      "offset": 383666,
+      "length": 3,
+      "sha256": "b969fb30d0c88348744855952426a6716b6e9b9db6d64d4794f7358c6471dfca",
+      "module": 11,
+      "cpuAddress": 55970,
+      "meaning": "Literal7,5,0 trigger"
+    },
+    {
+      "offset": 379786,
+      "length": 2,
+      "sha256": "1795e5f94d815e676b316834975d44a83f4ac32b6b62dd3a40e7ba9c51dcb6be",
+      "module": 11,
+      "cpuAddress": 52090,
+      "meaning": "Event14 script pointer"
+    },
+    {
+      "offset": 381036,
+      "length": 74,
+      "sha256": "48d374f5c7c9d7ce6690d556a3c7c892fcdbd98ace92fc18c80f86df6ea02042",
+      "module": 11,
+      "cpuAddress": 53340,
+      "meaning": "Actual four stages, script18, message15 and final state"
+    },
+    {
+      "offset": 381011,
+      "length": 13,
+      "sha256": "3ea0e0650826c0434e36f2392f7227a2abf14fc752e01da7fb7d230f8a60c0c5",
+      "module": 11,
+      "cpuAddress": 53315,
+      "meaning": "Wait for script then begin original battle"
+    },
+    {
+      "offset": 378337,
+      "length": 7,
+      "sha256": "55d81ce3d4093a9bfd389e612875909fb7931455393f9ada5de7468540f4c51e",
+      "module": 11,
+      "cpuAddress": 50641,
+      "meaning": "Original script18 NPC motion followed by message13; no player move"
+    },
+    {
+      "offset": 380330,
+      "length": 109,
+      "sha256": "e29a71fe12ad5f186dd38f8a605c0cca137c5633d453efb499f2012ec9cbe9d7",
+      "module": 11,
+      "cpuAddress": 52634,
+      "meaning": "Actual completion, map flag128"
+    },
+    {
+      "offset": 40798,
+      "length": 1,
+      "sha256": "9d277175737fb50041e75f641acf94d10df9b9721db8fffe874ab57f8ffb062e",
+      "module": 1,
+      "cpuAddress": 40782,
+      "meaning": "Original source171 maps Queen157"
+    },
+    {
+      "offset": 297268,
+      "length": 2,
+      "sha256": "a437ec91d4c7b65ab3a18c36da93f829129bcf284a16fa6515b9da14ad6d3ffc",
+      "module": 9,
+      "cpuAddress": 35108,
+      "meaning": "Actual special13 command pointer"
+    },
+    {
+      "offset": 297316,
+      "length": 23,
+      "sha256": "e3c978595fae467dc79477bb966f46578f3180d2e5252f2c016a43f2177c8fdd",
+      "module": 9,
+      "cpuAddress": 35156,
+      "meaning": "Special13 targets157/174 marker2"
+    },
+    {
+      "offset": 306104,
+      "length": 13,
+      "sha256": "60403861ac95433013fe6821f3702f94db1b5107fccd2afbf63f286166be3de6",
+      "module": 9,
+      "cpuAddress": 43944,
+      "meaning": "Original protected enemy identities"
+    },
+    {
+      "offset": 306229,
+      "length": 13,
+      "sha256": "c006dace47a02d0131b1b9c82d685541f976c7bd8cbcf7fb5af4e992611f221a",
+      "module": 9,
+      "cpuAddress": 44069,
+      "meaning": "Original corresponding binding markers"
+    },
+    {
+      "offset": 306179,
+      "length": 80,
+      "sha256": "6efd78bb61bab207fbf6fa6b6f8d7d8d794514f8e3fe610151dba55464bc05b3",
+      "module": 9,
+      "cpuAddress": 44019,
+      "meaning": "Original marker mismatch damage0"
+    },
+    {
+      "offset": 310849,
+      "length": 121,
+      "sha256": "f846209f6c76a874dd255e41b1db9faf41bad9ca9e457d1de08ef5c89446cd40",
+      "module": 9,
+      "cpuAddress": 48689,
+      "meaning": "Original direct special command collection"
+    },
+    {
+      "offset": 309769,
+      "length": 50,
+      "sha256": "e4b18b53aab8b9f97874387ac65e3b57794f003c184c21473ad6da2905a20ebd",
+      "module": 9,
+      "cpuAddress": 47609,
+      "meaning": "Collect next actor and original scheduler"
+    },
+    {
+      "offset": 92143,
+      "length": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+      "module": 2,
+      "cpuAddress": 59359,
+      "meaning": "Actual field reusable entry; not inferred battle consumption"
+    },
+    {
+      "offset": 22362,
+      "length": 2,
+      "sha256": "885cb9d106cfd7c7fea167ed538a7c86e0b46a8ccaa0d25d0cc8d6ed6a347f8d",
+      "module": 0,
+      "cpuAddress": 55114,
+      "meaning": "Original map NPC context byte address"
+    },
+    {
+      "offset": 22364,
+      "length": 2,
+      "sha256": "973c244312de982f3f32715b29ac0b51e700640f9e97603cb19098d75fce2384",
+      "module": 0,
+      "cpuAddress": 55116,
+      "meaning": "Original map NPC context byte address"
+    },
+    {
+      "offset": 22460,
+      "length": 2,
+      "sha256": "fa55f97df6b4aa5f7cf6d06e058eb46836ca682bce2704e995620ebfc663fa9c",
+      "module": 0,
+      "cpuAddress": 55212,
+      "meaning": "Original map NPC context byte address"
+    },
+    {
+      "offset": 22366,
+      "length": 2,
+      "sha256": "670201b067cddf8e4c4a6c4285b1be901d22c8353e5a53c23c48e3513bf64ec9",
+      "module": 0,
+      "cpuAddress": 55118,
+      "meaning": "Original map NPC context byte address"
+    }
+  ],
+  "font": {
+    "sources": [
+      {
+        "offset": 610320,
+        "length": 2048,
+        "sha256": "81376a680e06196a7ebad08123877bbebc9d37e69bcc206952284567614d2cf3",
+        "meaning": "Actual Queen group127 active font half"
+      },
+      {
+        "offset": 612368,
+        "length": 2048,
+        "sha256": "f127b2c2a429110f08b917cb285b8772db6b1f7a859e5fdd27dc8b42a9b1e721",
+        "meaning": "Actual Queen group127 active font half"
+      }
+    ],
+    "charset": {
+      "23": "啊",
+      "186": "來",
+      "58": "你",
+      "60": "們",
+      "187": "是",
+      "151": "對",
+      "59": "我",
+      "185": "的",
+      "25": "逃",
+      "182": "出",
+      "153": "手",
+      "47": "心",
+      "154": "黃",
+      "174": "天",
+      "27": "化",
+      "155": "哪",
+      "28": "吒",
+      "29": "楊",
+      "157": "戬",
+      "175": "謝",
+      "178": "救",
+      "166": "這",
+      "158": "攢",
+      "31": "釘",
+      "159": "趕",
+      "45": "快",
+      "32": "小",
+      "160": "龍",
+      "184": "女",
+      "46": "吧",
+      "179": "後",
+      "51": "會",
+      "177": "有",
+      "161": "王",
+      "167": "死",
+      "48": "石",
+      "56": "一",
+      "164": "過",
+      "183": "了",
+      "24": "付",
+      "26": "掌",
+      "30": "搭",
+      "33": "期",
+      "34": "變",
+      "35": "陣",
+      "36": "吹",
+      "37": "消",
+      "49": "琶",
+      "52": "原",
+      "54": "想",
+      "152": "休",
+      "156": "和",
+      "162": "成",
+      "163": "風",
+      "165": "失",
+      "176": "琵"
+    },
+    "glyphs": [
+      {
+        "code": 23,
+        "character": "啊",
+        "pixelsSha256": "c6bb6d4495525f83b19d56083d24ce08317b10a5e050f732e15b7fd76f3d865a"
+      },
+      {
+        "code": 24,
+        "character": "付",
+        "pixelsSha256": "9a8696869cbf1e4d82e537e745f7d514ea6352982185a08fa4f56d1bdbe0b383"
+      },
+      {
+        "code": 25,
+        "character": "逃",
+        "pixelsSha256": "b596c06dd64dd05734aebb92dc9c450454c33491ad5d78bceffad2c5087710cd"
+      },
+      {
+        "code": 26,
+        "character": "掌",
+        "pixelsSha256": "7c30992904bab5c9fe90901fae825d7c7081860c50127707d4b3375acf27dd51"
+      },
+      {
+        "code": 27,
+        "character": "化",
+        "pixelsSha256": "f4f176f666151fb06d9f3be0269a049b659187edd905601a100ae9851998eaab"
+      },
+      {
+        "code": 28,
+        "character": "吒",
+        "pixelsSha256": "d7d627e6511da4cd44a01f9d94baf176db2080f5b6e399d06a47df21d2783a1b"
+      },
+      {
+        "code": 29,
+        "character": "楊",
+        "pixelsSha256": "94f08be59b32c5e24a12a6911509fedd3f43caccedbb3bf654d5df255cc8eb20"
+      },
+      {
+        "code": 30,
+        "character": "搭",
+        "pixelsSha256": "071ea8ba6cb4613739fe0b5050e31d66badf75404fb8dca5501c4a1f05ffc08e"
+      },
+      {
+        "code": 31,
+        "character": "釘",
+        "pixelsSha256": "162162038b3ca3365bd763618f3f7f0e112958ffbd8513f5114d4bcddc650558"
+      },
+      {
+        "code": 32,
+        "character": "小",
+        "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856"
+      },
+      {
+        "code": 33,
+        "character": "期",
+        "pixelsSha256": "322aa245a21ed4dbcfd1a161c17381ba3176ddb5bad38dd0f901449ca6095964"
+      },
+      {
+        "code": 34,
+        "character": "變",
+        "pixelsSha256": "123d4b19cd7eb4ae8bfb6a930af7e9226fcafbc41c65fe8afa0075a14e205aa7"
+      },
+      {
+        "code": 35,
+        "character": "陣",
+        "pixelsSha256": "74593c07a109b50091002f815f0f568c7447c5063008a70bac299b54a32d5185"
+      },
+      {
+        "code": 36,
+        "character": "吹",
+        "pixelsSha256": "f0162a08cb5322a716b5bf3db797006367a2396003b39c3bcd6aaae8e33e1bde"
+      },
+      {
+        "code": 37,
+        "character": "消",
+        "pixelsSha256": "bdef279fa759731336903d095b71ab15e003923ae173ec6a7deb595c29968514"
+      },
+      {
+        "code": 45,
+        "character": "快",
+        "pixelsSha256": "9857f724c51496cac025edcaf959f21dc58c47468e77dbbf48bff36b0821c384"
+      },
+      {
+        "code": 46,
+        "character": "吧",
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+      },
+      {
+        "code": 47,
+        "character": "心",
+        "pixelsSha256": "6aafd097a47f1f90930d3222a17a33d4474c9f1f6c34037fd43e745b19807beb"
+      },
+      {
+        "code": 48,
+        "character": "石",
+        "pixelsSha256": "76cb7bc9b2e9cd4407c44bbd83378b03248930cd7f74a220d701f3e9182ed111"
+      },
+      {
+        "code": 49,
+        "character": "琶",
+        "pixelsSha256": "be514f1a09dfd036a1ff8059689566ee00fa28462734c0a95f765e255bb1f447"
+      },
+      {
+        "code": 51,
+        "character": "會",
+        "pixelsSha256": "db4fe0555411a09f4015deb42cf5ea949030c502c173d162fad20ea0f3740067"
+      },
+      {
+        "code": 52,
+        "character": "原",
+        "pixelsSha256": "d22354730fe2ab987f1574bb74b015853d018f7a7a29fba534b7cd81b4d59b77"
+      },
+      {
+        "code": 54,
+        "character": "想",
+        "pixelsSha256": "2a8b7936b9664bdf2c135cc8ed54696108314422adfd523459efb3eb3c17cb60"
+      },
+      {
+        "code": 56,
+        "character": "一",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "code": 58,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      },
+      {
+        "code": 59,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "code": 60,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "code": 151,
+        "character": "對",
+        "pixelsSha256": "9ecf2061c7587098a4589cc5c7014463e5b63b0c703b3de4e563c77975391b88"
+      },
+      {
+        "code": 152,
+        "character": "休",
+        "pixelsSha256": "845045864b9babd79af17fae76ba0f754da9804a6e8acc615051c335fa0d556c"
+      },
+      {
+        "code": 153,
+        "character": "手",
+        "pixelsSha256": "ec1d244dc49f33193378cece81016052f87fbb881d1f9d26507966131366a065"
+      },
+      {
+        "code": 154,
+        "character": "黃",
+        "pixelsSha256": "ea5860c94c4539db31a8a8b6a7b4a3ea47f9c8388a71621753db4e2b090df933"
+      },
+      {
+        "code": 155,
+        "character": "哪",
+        "pixelsSha256": "33730ccd49b417d33ab1510286017b263911cffde2a80afa27674e6930e61ac2"
+      },
+      {
+        "code": 156,
+        "character": "和",
+        "pixelsSha256": "5714745a4a840dd2b5db28573710a5057c4f0f9ab258fe9f4015079b7b1c0f98"
+      },
+      {
+        "code": 157,
+        "character": "戬",
+        "pixelsSha256": "c8658d3db6213fa7e9c9065a0399b5a7eabea8eff3713daf32852a7549f5139b"
+      },
+      {
+        "code": 158,
+        "character": "攢",
+        "pixelsSha256": "76052c90a519bf09cbf7c7c56c715080d56ed142bfdbad78a135bcf54c1b315a"
+      },
+      {
+        "code": 159,
+        "character": "趕",
+        "pixelsSha256": "d00051fb63caf63f6bff4f1a6c85fdc5a8539a10d9750c832e563495eaf5dad0"
+      },
+      {
+        "code": 160,
+        "character": "龍",
+        "pixelsSha256": "880c8f604cf13f170b483f290d5ceb3f30410cccf993356d27bc8d334dbaca9f"
+      },
+      {
+        "code": 161,
+        "character": "王",
+        "pixelsSha256": "784accdfa04086e7aaaa81fe91f8d0ad8f8513202f23ea450e82a17f8e3a37d6"
+      },
+      {
+        "code": 162,
+        "character": "成",
+        "pixelsSha256": "6ec560b01304085b4198af4aa81c8d66639c7724be13d7d71ab7490aca2f8d43"
+      },
+      {
+        "code": 163,
+        "character": "風",
+        "pixelsSha256": "2c09783e47bf425ff1df3ceac6672c2092bbbb9a6294a991920087a98665bc1a"
+      },
+      {
+        "code": 164,
+        "character": "過",
+        "pixelsSha256": "a1d1876b750a2c0888fb4d3cdf13f953159803cdafb9a5c7f79e0eb6592d45a2"
+      },
+      {
+        "code": 165,
+        "character": "失",
+        "pixelsSha256": "37a47c5452d223d1160353cca57a68417a663e63d9fe1619074094550fbbda5c"
+      },
+      {
+        "code": 166,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "code": 167,
+        "character": "死",
+        "pixelsSha256": "a6d538952cfbf50fbd09e82706b9ba4d71ac6178432dc8c6574051ae0bb7d921"
+      },
+      {
+        "code": 174,
+        "character": "天",
+        "pixelsSha256": "6d8ee8cf270d736f813151fb12e567ac3e431e4e2cf8981bf61a373e0fc537ac"
+      },
+      {
+        "code": 175,
+        "character": "謝",
+        "pixelsSha256": "81a0f5b31620454c2657201a7ce82ff61bc40e5b2ea9560240d79396575644cd"
+      },
+      {
+        "code": 176,
+        "character": "琵",
+        "pixelsSha256": "20e4ddf0bad6b528ba2f5dc881bbd9b072a45806bc5e76d89b0d2f1f34992f1d"
+      },
+      {
+        "code": 177,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "code": 178,
+        "character": "救",
+        "pixelsSha256": "2ec4f2d71e416f2159b3c180a80fe52520e1dca8c183b293b804291b12c1247e"
+      },
+      {
+        "code": 179,
+        "character": "後",
+        "pixelsSha256": "2b9b01654647256323e012db8c4be0299ee56491cfe236bd3e220a877a6aa552"
+      },
+      {
+        "code": 182,
+        "character": "出",
+        "pixelsSha256": "aff8fd1c19cf5eb13d22146991f778067f4a208d9d7e2095902be6a5895c2179"
+      },
+      {
+        "code": 183,
+        "character": "了",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "code": 184,
+        "character": "女",
+        "pixelsSha256": "f79325588ea291a6cd2719202f7bb5142d0874f970586852d3b3a9b0a4d2b6fb"
+      },
+      {
+        "code": 185,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 186,
+        "character": "來",
+        "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+      },
+      {
+        "code": 187,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      }
+    ]
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.127.13",
+      "text": "『啊！原來你們是來對付我的，休想逃出我的手掌心！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108609,
+          "length": 26,
+          "sha256": "3cd3231b90533dd7824249c82eba19b7c64a773dc9e2c6b220972f269ee03257",
+          "module": 3,
+          "cpuAddress": 43057,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101232,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35680,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101980,
+            "length": 2,
+            "sha256": "a88ed6a70a2b6505b658a3a47d18d78f91daa1e5e448fe07ddbfb32b099b964c",
+            "module": 3,
+            "cpuAddress": 36428,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-queen117-state.json",
+        "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+      }
+    },
+    {
+      "id": "rom.dialogue.127.14",
+      "text": "『我是黃天化，原來是哪吒和楊戬，謝謝你們搭救，這是攢心釘，趕快救小龍女吧！後會有期！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108635,
+          "length": 44,
+          "sha256": "ef8848b791c19c1bbc84e6306fe8919eed81ca2eb6e4cd2346de8859053a38ab",
+          "module": 3,
+          "cpuAddress": 43083,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101232,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35680,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101982,
+            "length": 2,
+            "sha256": "c14493588dd7d599ca8fe0c512ebacf65cb8250d2fe60ff6d9acdedc2f4d81b2",
+            "module": 3,
+            "cpuAddress": 36430,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-queen117-state.json",
+        "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+      }
+    },
+    {
+      "id": "rom.dialogue.127.15",
+      "text": "女王死後，變成石琵琶，一陣風吹過，石琵琶消失了！",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108679,
+          "length": 25,
+          "sha256": "f7137d1d506f6d63138558726f7ebeb090a47a82c75a9335ca380b9854c2ebd2",
+          "module": 3,
+          "cpuAddress": 43127,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101232,
+            "length": 2,
+            "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+            "module": 3,
+            "cpuAddress": 35680,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101984,
+            "length": 2,
+            "sha256": "5e66e7037171bf7f6e9b942767ddb76781b251ad3a605e3cc0d2c207f31eb6c4",
+            "module": 3,
+            "cpuAddress": 36432,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-queen117-state.json",
+        "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+      }
+    }
+  ],
+  "boss": {
+    "id": "rom.boss.157",
+    "npcId": "rom.npc.117.1",
+    "mapId": 117,
+    "eventId": 14,
+    "eventArgument": 0,
+    "sourceType": 171,
+    "enemyId": 157,
+    "group": {
+      "id": 0,
+      "entities": [
+        {
+          "slot": 3,
+          "enemyId": 157
+        }
+      ]
+    },
+    "flagId": "rom.map.117.flag.128",
+    "victoryDialogue": "rom.dialogue.127.15",
+    "commitAfterDialogue": true,
+    "entryTrigger": {
+      "mapId": 117,
+      "x": 7,
+      "y": 5,
+      "evidence": "game-data/provenance/world-queen117-state.json"
+    },
+    "intro": {
+      "dialogueIds": [
+        "rom.dialogue.127.13"
+      ],
+      "destinationCell": [
+        7,
+        5
+      ],
+      "completedSteps": 0,
+      "accumulateEncounterSteps": false,
+      "evidence": "game-data/provenance/world-queen117-state.json"
+    },
+    "continuation": {
+      "dialogueIds": [
+        "rom.dialogue.127.15"
+      ],
+      "completionFlags": [
+        "rom.map.117.flag.128",
+        "rom.global.7c6.64",
+        "rom.npccontext.115.208",
+        "rom.npccontext.116.210",
+        "rom.npccontext.164.220",
+        "rom.npccontext.117.231"
+      ],
+      "evidence": "game-data/provenance/world-queen117-state.json"
+    },
+    "npcSource": {
+      "offset": 283901,
+      "length": 14,
+      "sha256": "969562b7cf6beed2cba705ac9e66dc2ccf1733abb9f85d86f1b86d585ec4ed1b",
+      "module": 8,
+      "cpuAddress": 54509,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "ruleSources": [
+      {
+        "offset": 383322,
+        "length": 22,
+        "sha256": "e20f83093f2e202d97d67b6e59539f1c6bce9eadc4e5a4ff47d2b6894aa50020",
+        "module": 11,
+        "cpuAddress": 55626,
+        "meaning": "Actual map117 event14 dispatcher"
+      },
+      {
+        "offset": 383666,
+        "length": 3,
+        "sha256": "b969fb30d0c88348744855952426a6716b6e9b9db6d64d4794f7358c6471dfca",
+        "module": 11,
+        "cpuAddress": 55970,
+        "meaning": "Literal7,5,0 trigger"
+      },
+      {
+        "offset": 379786,
+        "length": 2,
+        "sha256": "1795e5f94d815e676b316834975d44a83f4ac32b6b62dd3a40e7ba9c51dcb6be",
+        "module": 11,
+        "cpuAddress": 52090,
+        "meaning": "Event14 script pointer"
+      },
+      {
+        "offset": 381036,
+        "length": 74,
+        "sha256": "48d374f5c7c9d7ce6690d556a3c7c892fcdbd98ace92fc18c80f86df6ea02042",
+        "module": 11,
+        "cpuAddress": 53340,
+        "meaning": "Actual four stages, script18, message15 and final state"
+      },
+      {
+        "offset": 381011,
+        "length": 13,
+        "sha256": "3ea0e0650826c0434e36f2392f7227a2abf14fc752e01da7fb7d230f8a60c0c5",
+        "module": 11,
+        "cpuAddress": 53315,
+        "meaning": "Wait for script then begin original battle"
+      },
+      {
+        "offset": 378337,
+        "length": 7,
+        "sha256": "55d81ce3d4093a9bfd389e612875909fb7931455393f9ada5de7468540f4c51e",
+        "module": 11,
+        "cpuAddress": 50641,
+        "meaning": "Original script18 NPC motion followed by message13; no player move"
+      },
+      {
+        "offset": 380330,
+        "length": 109,
+        "sha256": "e29a71fe12ad5f186dd38f8a605c0cca137c5633d453efb499f2012ec9cbe9d7",
+        "module": 11,
+        "cpuAddress": 52634,
+        "meaning": "Actual completion, map flag128"
+      },
+      {
+        "offset": 40798,
+        "length": 1,
+        "sha256": "9d277175737fb50041e75f641acf94d10df9b9721db8fffe874ab57f8ffb062e",
+        "module": 1,
+        "cpuAddress": 40782,
+        "meaning": "Original source171 maps Queen157"
+      },
+      {
+        "offset": 297268,
+        "length": 2,
+        "sha256": "a437ec91d4c7b65ab3a18c36da93f829129bcf284a16fa6515b9da14ad6d3ffc",
+        "module": 9,
+        "cpuAddress": 35108,
+        "meaning": "Actual special13 command pointer"
+      },
+      {
+        "offset": 297316,
+        "length": 23,
+        "sha256": "e3c978595fae467dc79477bb966f46578f3180d2e5252f2c016a43f2177c8fdd",
+        "module": 9,
+        "cpuAddress": 35156,
+        "meaning": "Special13 targets157/174 marker2"
+      },
+      {
+        "offset": 306104,
+        "length": 13,
+        "sha256": "60403861ac95433013fe6821f3702f94db1b5107fccd2afbf63f286166be3de6",
+        "module": 9,
+        "cpuAddress": 43944,
+        "meaning": "Original protected enemy identities"
+      },
+      {
+        "offset": 306229,
+        "length": 13,
+        "sha256": "c006dace47a02d0131b1b9c82d685541f976c7bd8cbcf7fb5af4e992611f221a",
+        "module": 9,
+        "cpuAddress": 44069,
+        "meaning": "Original corresponding binding markers"
+      },
+      {
+        "offset": 306179,
+        "length": 80,
+        "sha256": "6efd78bb61bab207fbf6fa6b6f8d7d8d794514f8e3fe610151dba55464bc05b3",
+        "module": 9,
+        "cpuAddress": 44019,
+        "meaning": "Original marker mismatch damage0"
+      },
+      {
+        "offset": 310849,
+        "length": 121,
+        "sha256": "f846209f6c76a874dd255e41b1db9faf41bad9ca9e457d1de08ef5c89446cd40",
+        "module": 9,
+        "cpuAddress": 48689,
+        "meaning": "Original direct special command collection"
+      },
+      {
+        "offset": 309769,
+        "length": 50,
+        "sha256": "e4b18b53aab8b9f97874387ac65e3b57794f003c184c21473ad6da2905a20ebd",
+        "module": 9,
+        "cpuAddress": 47609,
+        "meaning": "Collect next actor and original scheduler"
+      },
+      {
+        "offset": 92143,
+        "length": 1,
+        "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+        "module": 2,
+        "cpuAddress": 59359,
+        "meaning": "Actual field reusable entry; not inferred battle consumption"
+      },
+      {
+        "offset": 22362,
+        "length": 2,
+        "sha256": "885cb9d106cfd7c7fea167ed538a7c86e0b46a8ccaa0d25d0cc8d6ed6a347f8d",
+        "module": 0,
+        "cpuAddress": 55114,
+        "meaning": "Original map NPC context byte address"
+      },
+      {
+        "offset": 22364,
+        "length": 2,
+        "sha256": "973c244312de982f3f32715b29ac0b51e700640f9e97603cb19098d75fce2384",
+        "module": 0,
+        "cpuAddress": 55116,
+        "meaning": "Original map NPC context byte address"
+      },
+      {
+        "offset": 22460,
+        "length": 2,
+        "sha256": "fa55f97df6b4aa5f7cf6d06e058eb46836ca682bce2704e995620ebfc663fa9c",
+        "module": 0,
+        "cpuAddress": 55212,
+        "meaning": "Original map NPC context byte address"
+      },
+      {
+        "offset": 22366,
+        "length": 2,
+        "sha256": "670201b067cddf8e4c4a6c4285b1be901d22c8353e5a53c23c48e3513bf64ec9",
+        "module": 0,
+        "cpuAddress": 55118,
+        "meaning": "Original map NPC context byte address"
+      }
+    ],
+    "source": "game-data/provenance/world-queen117-state.json"
+  },
+  "queenGraphic": {
+    "width": 80,
+    "height": 96,
+    "observedRect": [
+      96,
+      32,
+      80,
+      96
+    ],
+    "transparentZero": false,
+    "paletteCodes": {
+      "0": [
+        0,
+        0,
+        0
+      ],
+      "1": [
+        0,
+        69,
+        0
+      ],
+      "3": [
+        199,
+        215,
+        255
+      ],
+      "2": [
+        255,
+        190,
+        178
+      ]
+    },
+    "tiles": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          16,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          24,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          32,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          40,
+          0
+        ],
+        "offset": 785965,
+        "length": 16,
+        "sha256": "2dea72593ff8c3135a44a73fcfcd5e1cddb2e7c12003838197179077ace02019"
+      },
+      {
+        "xy": [
+          48,
+          0
+        ],
+        "offset": 901168,
+        "length": 16,
+        "sha256": "b0cdd075b45653298d6639b2145163bbe9cb40e697eb9d645110d81e0f910227"
+      },
+      {
+        "xy": [
+          56,
+          0
+        ],
+        "offset": 901184,
+        "length": 16,
+        "sha256": "841f8a4b2d21f9ed4db56cb5f85e6219e49dfc6c4d9cb7e169528ff74f70bd3f"
+      },
+      {
+        "xy": [
+          64,
+          0
+        ],
+        "offset": 901200,
+        "length": 16,
+        "sha256": "ad245bc1f41b13898ad1ecd65ecb62320313f1e298a3b6191403594b5a5e98c4"
+      },
+      {
+        "xy": [
+          72,
+          0
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          8
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          8
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          16,
+          8
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          24,
+          8
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          32,
+          8
+        ],
+        "offset": 801440,
+        "length": 16,
+        "sha256": "532deabf88729cb43995ab5a9cd49bf9b90a079904dc0645ecda9e47ce7345a9"
+      },
+      {
+        "xy": [
+          40,
+          8
+        ],
+        "offset": 901232,
+        "length": 16,
+        "sha256": "5d60fa0114fb26bae0011d79fd5dd9fec23410a9f22fcd5c8d967f71eba03d23"
+      },
+      {
+        "xy": [
+          48,
+          8
+        ],
+        "offset": 901248,
+        "length": 16,
+        "sha256": "7f7d82196ee42d3df8b44fce62c7fccff4bea59fe912104f89386dbabde06f82"
+      },
+      {
+        "xy": [
+          56,
+          8
+        ],
+        "offset": 901264,
+        "length": 16,
+        "sha256": "09edde8ae18356b5309de7c7c27d987410b584cc91be20989b55521270ab3b54"
+      },
+      {
+        "xy": [
+          64,
+          8
+        ],
+        "offset": 901280,
+        "length": 16,
+        "sha256": "7c2cc8d4d9e25ae760755fc38ce8c71b7afbb83be59707c3f6664d99ea3bd3dd"
+      },
+      {
+        "xy": [
+          72,
+          8
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          16
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          16
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          16,
+          16
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          24,
+          16
+        ],
+        "offset": 901296,
+        "length": 16,
+        "sha256": "50edaac273b4ae09d059f7bada0d699b0bfda2c89485308ccf841522b555cd6f"
+      },
+      {
+        "xy": [
+          32,
+          16
+        ],
+        "offset": 901312,
+        "length": 16,
+        "sha256": "89d7a8bea44fb7060f73fb2caf936aed8270c95de73c7e77903e433eeeb0590e"
+      },
+      {
+        "xy": [
+          40,
+          16
+        ],
+        "offset": 817632,
+        "length": 16,
+        "sha256": "fde6030714349b2f24c98c7cd8fa3c6798c6769432aed7a197af1281364cd172"
+      },
+      {
+        "xy": [
+          48,
+          16
+        ],
+        "offset": 901344,
+        "length": 16,
+        "sha256": "bf73e6b26e966e819aaf802fd246b38647b02cac3d928dcf2cd8a5bed812f775"
+      },
+      {
+        "xy": [
+          56,
+          16
+        ],
+        "offset": 901360,
+        "length": 16,
+        "sha256": "88a62969c6535badd0e9b62239ca5fcb1c114a7797b44d68b7e6eb6efa3c043b"
+      },
+      {
+        "xy": [
+          64,
+          16
+        ],
+        "offset": 901376,
+        "length": 16,
+        "sha256": "f2580cb7287b99c16f663d0d4682973611abd1832fd936761a5989703fe13e6f"
+      },
+      {
+        "xy": [
+          72,
+          16
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          24
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          24
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          16,
+          24
+        ],
+        "offset": 790208,
+        "length": 16,
+        "sha256": "8a5f16f43d7be9d5da1bb71656fa69fcc035482b234cfd571954d046f0ca954a"
+      },
+      {
+        "xy": [
+          24,
+          24
+        ],
+        "offset": 901408,
+        "length": 16,
+        "sha256": "221c0695451042e2f95e14c8348b9e848237d04c57e5fd0a68dfe6e2bea05751"
+      },
+      {
+        "xy": [
+          32,
+          24
+        ],
+        "offset": 901424,
+        "length": 16,
+        "sha256": "aae0b93c45aa9199c8876a217abc9305874b3923268a9722308f5d74b989cbac"
+      },
+      {
+        "xy": [
+          40,
+          24
+        ],
+        "offset": 901440,
+        "length": 16,
+        "sha256": "05935ddfdcc670da77772220e5a32d11f2a6e881b7539c1a666b69827b462809"
+      },
+      {
+        "xy": [
+          48,
+          24
+        ],
+        "offset": 901456,
+        "length": 16,
+        "sha256": "f3135042fe663b7943efbf9f8daee1b835bbc67d6fe8420defb43e55e08a4551"
+      },
+      {
+        "xy": [
+          56,
+          24
+        ],
+        "offset": 901472,
+        "length": 16,
+        "sha256": "bd7c47c6eb6760451e08ed4f9e97720592dc370c09ff4e5020fec672447eb4d2"
+      },
+      {
+        "xy": [
+          64,
+          24
+        ],
+        "offset": 901488,
+        "length": 16,
+        "sha256": "866e7cbd1f230486ac6c5260d7605eae3e94f8c8ea94c6867f38f9a0c79486d8"
+      },
+      {
+        "xy": [
+          72,
+          24
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          32
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          32
+        ],
+        "offset": 901504,
+        "length": 16,
+        "sha256": "0fb16eca82b1dd907a1d9a36cf7f2bc3b271b597f3ea1fa6403d69750642703a"
+      },
+      {
+        "xy": [
+          16,
+          32
+        ],
+        "offset": 901520,
+        "length": 16,
+        "sha256": "36348489d527b1e2766576ed2057fa0c4668422505d0621153faa9261cff0b8e"
+      },
+      {
+        "xy": [
+          24,
+          32
+        ],
+        "offset": 901536,
+        "length": 16,
+        "sha256": "4088361daf70ce73df37266bea8f76a951b90bb5f44d82e7651ea366c2b2206e"
+      },
+      {
+        "xy": [
+          32,
+          32
+        ],
+        "offset": 901552,
+        "length": 16,
+        "sha256": "e633225f00b58a81434cdb820ff59907ec17f20e37babe5f2e433cf3d603a2c2"
+      },
+      {
+        "xy": [
+          40,
+          32
+        ],
+        "offset": 901568,
+        "length": 16,
+        "sha256": "ffe328bcf68c3b20a1fe91b57ed46646883e124da5d7b1e75e42d4c55a5a7ed7"
+      },
+      {
+        "xy": [
+          48,
+          32
+        ],
+        "offset": 901584,
+        "length": 16,
+        "sha256": "0bcdc5e58934707d5875be8c70d58d35a5c9fa97cb3c76bc4436ed40e0a5d701"
+      },
+      {
+        "xy": [
+          56,
+          32
+        ],
+        "offset": 901600,
+        "length": 16,
+        "sha256": "c483415b4c35f03ad34e35c0af6c9e9faf7b0e7fe25abf9e5af265a6cc186a23"
+      },
+      {
+        "xy": [
+          64,
+          32
+        ],
+        "offset": 901616,
+        "length": 16,
+        "sha256": "ee84fcc21b563b88b2644df1744eb551cfac6154ad8de99bac63d5cae3b05011"
+      },
+      {
+        "xy": [
+          72,
+          32
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          40
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          40
+        ],
+        "offset": 901632,
+        "length": 16,
+        "sha256": "4a45666fc5d6fa44a0bfde7f5607780a54a4ca8579ecd3953cb5b3968722b319"
+      },
+      {
+        "xy": [
+          16,
+          40
+        ],
+        "offset": 901648,
+        "length": 16,
+        "sha256": "8457b41f4977085774d75373293d2dbe246d078f609421c5f1c8a25db0968771"
+      },
+      {
+        "xy": [
+          24,
+          40
+        ],
+        "offset": 901664,
+        "length": 16,
+        "sha256": "e34d6b81c78455edec503954f75b7711e84367e8d922fe04745684b7fdd25328"
+      },
+      {
+        "xy": [
+          32,
+          40
+        ],
+        "offset": 901680,
+        "length": 16,
+        "sha256": "c7d80aa6aeedb83559967aba1a31785ebd9cce23f0b1db6f6d6320d22b5be588"
+      },
+      {
+        "xy": [
+          40,
+          40
+        ],
+        "offset": 901696,
+        "length": 16,
+        "sha256": "0300da59ecbfffb0c6d7acd7c5dd7014957901cd6496724105920c0453b43c4a"
+      },
+      {
+        "xy": [
+          48,
+          40
+        ],
+        "offset": 901712,
+        "length": 16,
+        "sha256": "da4ff49455a2949103cac09e55161173fbdbc5de61150fb29cf885b5aeecad3d"
+      },
+      {
+        "xy": [
+          56,
+          40
+        ],
+        "offset": 901728,
+        "length": 16,
+        "sha256": "cd3cc4b7d395b4ff2ae424ea6a8521e8ffb47ddafe5fb58f2858a821b03ec4a4"
+      },
+      {
+        "xy": [
+          64,
+          40
+        ],
+        "offset": 901744,
+        "length": 16,
+        "sha256": "70aa97028b2ed7b7ec81d346516eccde518bfdb8cdfc19c0557e2364bc610246"
+      },
+      {
+        "xy": [
+          72,
+          40
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          48
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          48
+        ],
+        "offset": 901760,
+        "length": 16,
+        "sha256": "50e627ce0e0ad1efb423c4d8de5eab8c3a1423b474ffb084e1552e8f4f1a9665"
+      },
+      {
+        "xy": [
+          16,
+          48
+        ],
+        "offset": 901776,
+        "length": 16,
+        "sha256": "d939d7030ff3b02c1eaae3c11e71a52d1cb23186fbe4ec7c2eb1d7feea5d2d95"
+      },
+      {
+        "xy": [
+          24,
+          48
+        ],
+        "offset": 901792,
+        "length": 16,
+        "sha256": "b8ec71021f8bcb5ee9d927b0e24b66fa8bcb8f9df39533c38cb904818dd46a2f"
+      },
+      {
+        "xy": [
+          32,
+          48
+        ],
+        "offset": 901808,
+        "length": 16,
+        "sha256": "d77384d2a8b7edb19323f07060ef9454b9240b6cabe7d394aa9de02f0c15bda1"
+      },
+      {
+        "xy": [
+          40,
+          48
+        ],
+        "offset": 901824,
+        "length": 16,
+        "sha256": "91cd1512a111b4a295bf725282a80fa5ab627d8a867dd26af6735661c39da0bd"
+      },
+      {
+        "xy": [
+          48,
+          48
+        ],
+        "offset": 901840,
+        "length": 16,
+        "sha256": "0ae6677f75f231f7486770b72457e841a5aa6f90759a6a8213bbd1d6fb684acc"
+      },
+      {
+        "xy": [
+          56,
+          48
+        ],
+        "offset": 901856,
+        "length": 16,
+        "sha256": "5265ee6da0166d51ab227d9cb73b609df29db5e770a44cbbaff7c6d9afac4280"
+      },
+      {
+        "xy": [
+          64,
+          48
+        ],
+        "offset": 901872,
+        "length": 16,
+        "sha256": "2dabd46fc6ded12fd8629dff9603644eaa36f847a20e4cc8c32ff9d169e7e2c8"
+      },
+      {
+        "xy": [
+          72,
+          48
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          56
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          56
+        ],
+        "offset": 882496,
+        "length": 16,
+        "sha256": "0fec49e5cb80c80f848a00237963650b3d777cd7a75e6fadc16db41e7b6b92e1"
+      },
+      {
+        "xy": [
+          16,
+          56
+        ],
+        "offset": 901904,
+        "length": 16,
+        "sha256": "30661963ac69d0c2a74518e77a5ed5ae531c1c4bf9897e6bbf65f516cbdabdb6"
+      },
+      {
+        "xy": [
+          24,
+          56
+        ],
+        "offset": 901920,
+        "length": 16,
+        "sha256": "91c4913580913d39f425015990ba6398aec6da9309d25ba0ee3dd752a19cd9ae"
+      },
+      {
+        "xy": [
+          32,
+          56
+        ],
+        "offset": 901936,
+        "length": 16,
+        "sha256": "71e845a1ef70445aea7591ec4d026e58b9d080bcd806752d1f650cca2a4294cf"
+      },
+      {
+        "xy": [
+          40,
+          56
+        ],
+        "offset": 901952,
+        "length": 16,
+        "sha256": "536d45514b7e9a776ca16c1b51c80a13fde4501f87d158039f428f5e5c95f4e7"
+      },
+      {
+        "xy": [
+          48,
+          56
+        ],
+        "offset": 901968,
+        "length": 16,
+        "sha256": "85d62c5c7179034d62a9663e765d8920f74fe0504e4a5d070d84af7297b55d1b"
+      },
+      {
+        "xy": [
+          56,
+          56
+        ],
+        "offset": 901984,
+        "length": 16,
+        "sha256": "8763be23153f2b858673108e4abb5667350990662d8cd3a901bc242a9d0b00e8"
+      },
+      {
+        "xy": [
+          64,
+          56
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          72,
+          56
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          64
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          64
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          16,
+          64
+        ],
+        "offset": 902000,
+        "length": 16,
+        "sha256": "dc541bcca4024708264673f2c028c843a8dc639f67480a42b95059333b948256"
+      },
+      {
+        "xy": [
+          24,
+          64
+        ],
+        "offset": 902016,
+        "length": 16,
+        "sha256": "1cbe2601612fd53410cd1e2c378aad5e3b31b0230313e2b3952e8ae0b879a953"
+      },
+      {
+        "xy": [
+          32,
+          64
+        ],
+        "offset": 902032,
+        "length": 16,
+        "sha256": "96fd2144a9688d3c2b5489df1115a777f59c6c2679686e7af156a4bbe6e3f744"
+      },
+      {
+        "xy": [
+          40,
+          64
+        ],
+        "offset": 902048,
+        "length": 16,
+        "sha256": "aafa4aad0342169aa84b4269101f0431ab211de8e34b4038a2c80875aa14201f"
+      },
+      {
+        "xy": [
+          48,
+          64
+        ],
+        "offset": 902064,
+        "length": 16,
+        "sha256": "b18a9014b1b7e743312d42310fe2c3389eaf27e8ec8114dc2c1e331038538a11"
+      },
+      {
+        "xy": [
+          56,
+          64
+        ],
+        "offset": 902080,
+        "length": 16,
+        "sha256": "c9a563374a2c9350d4b9c5ee40227cb2b057d1d962426197091b31ec587f9690"
+      },
+      {
+        "xy": [
+          64,
+          64
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          72,
+          64
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          72
+        ],
+        "offset": 902096,
+        "length": 16,
+        "sha256": "0d9b327f2e3e4fe32990c6339803c5311da3859675ef4437dfef286cfbde20e6"
+      },
+      {
+        "xy": [
+          8,
+          72
+        ],
+        "offset": 902112,
+        "length": 16,
+        "sha256": "c02e71dbcbfdb49897abfb01ce647b84461dbc7261e79f9cd95cc2d87688f50c"
+      },
+      {
+        "xy": [
+          16,
+          72
+        ],
+        "offset": 886592,
+        "length": 16,
+        "sha256": "7e7ae3fb85652cc94cbd7174c12f5239030e6fc26a8d26399e9477ddf5bbdce9"
+      },
+      {
+        "xy": [
+          24,
+          72
+        ],
+        "offset": 902144,
+        "length": 16,
+        "sha256": "49c76aea1a3974c141e2a54eba12ab216fa5e1c27f6b8f2e841cc7ba2f20dd46"
+      },
+      {
+        "xy": [
+          32,
+          72
+        ],
+        "offset": 902160,
+        "length": 16,
+        "sha256": "12129ed5cdb0a0e7fc70f293a65fc80ba864f78ae5ef1c620c612581c08da7ee"
+      },
+      {
+        "xy": [
+          40,
+          72
+        ],
+        "offset": 902176,
+        "length": 16,
+        "sha256": "59685771d6ded9c43353d251bb1f90e76a543b414ae753534be2b08afe25e691"
+      },
+      {
+        "xy": [
+          48,
+          72
+        ],
+        "offset": 902192,
+        "length": 16,
+        "sha256": "98f12c0634871b194a4dd48415da830cd3827c81aa7505dfc03c191d1e6c1f9c"
+      },
+      {
+        "xy": [
+          56,
+          72
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          64,
+          72
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          72,
+          72
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          80
+        ],
+        "offset": 902208,
+        "length": 16,
+        "sha256": "16c4f9598da1d877c618391187c0e7b959f72c28bb5fb6700450e908bb659ea9"
+      },
+      {
+        "xy": [
+          8,
+          80
+        ],
+        "offset": 902224,
+        "length": 16,
+        "sha256": "7cc1add4c3a78affa3ec31c4fd4151b4e4924747a53e9b373e6c3a40a46ab4d1"
+      },
+      {
+        "xy": [
+          16,
+          80
+        ],
+        "offset": 902240,
+        "length": 16,
+        "sha256": "0502ab629495ddf1951a47f1e77c3480d41397171965a6cdfa9ac05fe8d77a48"
+      },
+      {
+        "xy": [
+          24,
+          80
+        ],
+        "offset": 902256,
+        "length": 16,
+        "sha256": "ccaf6adea2453d7caee897731ed5021ba8a75231687a1d14617ddc85a4c78cdc"
+      },
+      {
+        "xy": [
+          32,
+          80
+        ],
+        "offset": 902272,
+        "length": 16,
+        "sha256": "9034df980fc781d14241ba2faf688cde17a7d27259e9cabfdeb571eb4c8bda4f"
+      },
+      {
+        "xy": [
+          40,
+          80
+        ],
+        "offset": 882480,
+        "length": 16,
+        "sha256": "41689be19be49a64f911f0b83a4384abe988132acd8776f1aa247811ed0b299f"
+      },
+      {
+        "xy": [
+          48,
+          80
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          56,
+          80
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          64,
+          80
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          72,
+          80
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          0,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          8,
+          88
+        ],
+        "offset": 902304,
+        "length": 16,
+        "sha256": "567a7365c140452e824adf0f2849a0d86b425608e902c213ca0ed04434553335"
+      },
+      {
+        "xy": [
+          16,
+          88
+        ],
+        "offset": 902320,
+        "length": 16,
+        "sha256": "13487cde5886baef89cf1841e41b943fcf4e4364a43cd266d44b30feaba6b659"
+      },
+      {
+        "xy": [
+          24,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          32,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          40,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          48,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          56,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          64,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      },
+      {
+        "xy": [
+          72,
+          88
+        ],
+        "offset": 528166,
+        "length": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    ],
+    "rgbaSha256": "ccd6ceb3c6571d0cee03e4900bc7fe577b9e3026c147652fc495e0eb0e02339a",
+    "captureSha256": "7cb7c8a9d96032ce336df87ed7915df830f9271425fae93dfec7f07ad673e54a",
+    "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+    "normalPlayEvidence": false
+  },
+  "enemy": {
+    "id": "rom.enemy.157",
+    "romEnemyId": 157,
+    "hp": 7000,
+    "attack": 372,
+    "defense": 178,
+    "experienceReward": 3000,
+    "moneyReward": 2400,
+    "remainingBytes": [
+      110,
+      9,
+      230,
+      10,
+      2,
+      5
+    ],
+    "remainingFieldSemantics": "UNKNOWN",
+    "pointer": {
+      "offset": 60322,
+      "length": 2,
+      "sha256": "e716b0b40ac4abf502ff147b0f40f1a13575330d718d8be6788da919e8cd883d",
+      "module": 1,
+      "cpuAddress": 60306,
+      "meaning": "Enemy stat pointer"
+    },
+    "range": {
+      "offset": 62874,
+      "length": 16,
+      "sha256": "9831d4ba5805964ba0d0f574abbc803fe85027366ab685a00b1f81d6cc5cc2ab",
+      "module": 1,
+      "cpuAddress": 62858,
+      "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes"
+    },
+    "confidence": "HIGH",
+    "rawHex": "581b7401b200b80b60096e09e60a0205"
+  },
+  "cpu": [
+    {
+      "path": "android/app/src/test/resources/queen13-binding-original.tsv",
+      "caseCount": 1536,
+      "failures": 0,
+      "sha256": "73726542be6d96b2b0b61d715a246da14c195ba2a442c92caeaf8385bb15a5f1"
+    },
+    {
+      "path": "android/app/src/test/resources/queen117-completion-original.tsv",
+      "caseCount": 1024,
+      "failures": 0,
+      "sha256": "3235a9c800b09f008eb858160470ffffa5907ad82acf6e298c24791bd9b47580"
+    },
+    {
+      "path": "android/app/src/test/resources/queen-castle6-foot-original.tsv",
+      "caseCount": 36,
+      "failures": 0,
+      "sha256": "5a448c14c94a5f47daddf81dd32d5e62f08154745236f48bfcc2e27eb46d5ce7"
+    },
+    {
+      "path": "android/app/src/test/resources/queen117-huang-gift-original.tsv",
+      "caseCount": 5,
+      "failures": 0,
+      "sha256": "148e3e20fdcacbc425baa2f08809fe0bcbc98c8f56b26ea70fc8749d8b1194ed"
+    },
+    {
+      "path": "android/app/src/test/resources/queen117-huang-selector-original.tsv",
+      "caseCount": 256,
+      "failures": 0,
+      "sha256": "0c18b7975aebf38876018a241d101639bf1873ee9f4f5954877693da941633a5"
+    },
+    {
+      "path": "android/app/src/test/resources/queen117-huang-event16-finish-original.tsv",
+      "caseCount": 1024,
+      "failures": 0,
+      "sha256": "e86e7d38da32d19b2fa9d14209b7c3ce0541c541dde7f99d98df57398c711a24"
+    }
+  ],
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-queen117.py",
+    "sha256": "dcf5854e99d50eb21aa3bc57458430ca9374eb6dc61ed01c008f00765c20dd14"
+  },
+  "itemCapabilityUpdates": [
+    {
+      "id": "rom.special.13",
+      "baseDefinitionSha256": "c99eb61edef4efa81f500f50e52bdd4a9ef7f3a1c9538a79f275a7411fc32ebb",
+      "fields": {
+        "name": "捆妖繩",
+        "description": "在已支持女王战斗中按角色行动顺序解除原伤害保护；占用行动、保留数量。",
+        "source": {
+          "confidence": "PROVISIONAL_REFERENCE",
+          "evidence": "game-data/provenance/world-night8-resources.json",
+          "nameConfidence": "ORIGINAL_MENU_VERIFIED",
+          "nameRange": {
+            "cpuAddress": 59468,
+            "length": 5,
+            "meaning": "Actual stable special item name bytes",
+            "module": 2,
+            "offset": 92252,
+            "sha256": "58e6dfbf773006122bd800fd1752ee2bf835ceb1518dd2f88eb98f6333af9b07"
+          },
+          "verifiedFields": [
+            "battleSelection",
+            "category",
+            "consumesAction",
+            "maxCount",
+            "name",
+            "queenProtection",
+            "reusable",
+            "stableId"
+          ],
+          "useEvidence": "game-data/provenance/world-queen117-state.json",
+          "nameEvidence": {
+            "captureSha256": "069354aaab1ab24d93f1f8d8e92a9f615a43a3bdc1fb0aff76411ff7b4d55bdf",
+            "kind": "CONTROLLED_ORIGINAL_SPECIAL13_LIST_REAL_KEYS"
+          }
+        },
+        "battleBindingUse": {
+          "target": "queen-current-battle",
+          "bindingMarker": 2,
+          "chooseTarget": false,
+          "reusable": true,
+          "consumesAction": true,
+          "evidence": "game-data/provenance/world-queen117-state.json"
+        }
+      }
+    }
+  ],
+  "maps": [
+    {
+      "mapId": 141,
+      "gridSha256": "9a03092fed54130a71f3a1f3257aaf1953b1118499d62879b8ef18479222bb33",
+      "tilesetId": 6,
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "palette": [
+        14,
+        22,
+        25,
+        54,
+        25,
+        16,
+        23,
+        4,
+        25,
+        4,
+        20,
+        36,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "paletteSources": [
+        {
+          "offset": 25069,
+          "length": 2,
+          "sha256": "913da1f8df6f8fd47593840d533ba0458cc9873996bf310460abb495b34c232a",
+          "module": 0,
+          "cpuAddress": 57821,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25626,
+          "length": 2,
+          "sha256": "1d9767d294e1fe2ba672bfc7d7beb11932f79bec6a84424e97074990d27e8e27",
+          "module": 0,
+          "cpuAddress": 58378,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26458,
+          "length": 16,
+          "sha256": "2890d0ffaf63cc593688f5f686b371be2b02ddf8158a40320f160f5906a92a9a",
+          "module": 0,
+          "cpuAddress": 59210,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ]
+    },
+    {
+      "mapId": 115,
+      "gridSha256": "3568c340d15b5f17d3ea21d4683bd9e6da28ee8ea0ae410802c3505e0c8acaab",
+      "tilesetId": 4,
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "palette": [
+        14,
+        4,
+        20,
+        48,
+        25,
+        4,
+        20,
+        60,
+        25,
+        22,
+        39,
+        56,
+        25,
+        58,
+        20,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "paletteSources": [
+        {
+          "offset": 25017,
+          "length": 2,
+          "sha256": "075d3ddf5a3a826e13a92288e853bc4b2cb17fb05367ae865f401a4bb11f05ce",
+          "module": 0,
+          "cpuAddress": 57769,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25618,
+          "length": 2,
+          "sha256": "59359587ff245575c3438f273450c4aaeb82913dda61019f52c4a4e7dc6f0a77",
+          "module": 0,
+          "cpuAddress": 58370,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26394,
+          "length": 16,
+          "sha256": "22fc9737a81e628eabdfe31c8b8491cb6ffd7d6fb3bfc991fe2fc12b3541a5f4",
+          "module": 0,
+          "cpuAddress": 59146,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ]
+    },
+    {
+      "mapId": 116,
+      "gridSha256": "24e5265de0f6c96be1217cacab5148c47e87d8dd6508cffde3dbddade1d9f09d",
+      "tilesetId": 4,
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "palette": [
+        14,
+        0,
+        16,
+        48,
+        25,
+        6,
+        38,
+        55,
+        25,
+        4,
+        20,
+        52,
+        25,
+        9,
+        25,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "paletteSources": [
+        {
+          "offset": 25019,
+          "length": 2,
+          "sha256": "206014a4266c2082b9433011fb2991059f972d570a8b3c976e5b2b8dfcfbfc8d",
+          "module": 0,
+          "cpuAddress": 57771,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25612,
+          "length": 2,
+          "sha256": "ca4b0e2454ba814569175b3552370303810c441486d4f40316506291bed3c90e",
+          "module": 0,
+          "cpuAddress": 58364,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26346,
+          "length": 16,
+          "sha256": "cf14eb75c33281c7d6a46305f059259e8395f3eaf0ffa14aeace5c6f948ed1e5",
+          "module": 0,
+          "cpuAddress": 59098,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ]
+    },
+    {
+      "mapId": 117,
+      "gridSha256": "372949160323138a2b41a9dfbda643278ab3c8e7dd270c1828ee37a97d94a903",
+      "tilesetId": 4,
+      "walkableClasses": [
+        0,
+        2
+      ],
+      "palette": [
+        14,
+        0,
+        16,
+        48,
+        25,
+        6,
+        38,
+        55,
+        25,
+        4,
+        20,
+        52,
+        25,
+        9,
+        25,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "paletteSources": [
+        {
+          "offset": 25021,
+          "length": 2,
+          "sha256": "206014a4266c2082b9433011fb2991059f972d570a8b3c976e5b2b8dfcfbfc8d",
+          "module": 0,
+          "cpuAddress": 57773,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25612,
+          "length": 2,
+          "sha256": "ca4b0e2454ba814569175b3552370303810c441486d4f40316506291bed3c90e",
+          "module": 0,
+          "cpuAddress": 58364,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26346,
+          "length": 16,
+          "sha256": "cf14eb75c33281c7d6a46305f059259e8395f3eaf0ffa14aeace5c6f948ed1e5",
+          "module": 0,
+          "cpuAddress": 59098,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Actual normal Android route/Boss/cold restart NOT_RUN",
+    "Controlled original victory set enemy HP1 for text only; real enemy remains7000HP",
+    "Queen field actor motion not fully animated; no invented player steps or poison costs",
+    "Special13 other original target174 NOT_IMPLEMENTED",
+    "Original action43 schedules event16/script20; gift/status code tested, full Android story NOT_RUN",
+    "Controlled spatial fixture must synchronize both original coordinates; real exit keys proven, not normal Android route"
+  ],
+  "battleObservation": {
+    "kind": "CONTROLLED_ORIGINAL_OWNED_ITEM_HP_FIXTURE_REAL_MENU_KEYS_NOT_NORMAL_PLAY",
+    "quantityBefore": 1,
+    "quantityAfter": 1,
+    "usedBitAfter": false,
+    "markerBefore": 0,
+    "markerAfter": 2,
+    "realTargetSlot": 3,
+    "realTargetEnemyId": 157,
+    "traceSha256": "34124e1b3c8e3a8c23eb8313d618a38a0ed5a2d3b98505fe439e6f75c03a1474",
+    "stableGraphicCaptureSha256": "7cb7c8a9d96032ce336df87ed7915df830f9271425fae93dfec7f07ad673e54a",
+    "introCaptureSha256": "9b9c7d57c46e18709a9919882311c57aa750ca0653d3a457969cea91ec768d3f",
+    "victoryTextCaptureSha256": "6992e47dbecf94d8886cce039713a32071f1622ddbe0f4a85f83fc41a071d155"
+  },
+  "huang": {
+    "mapId": 117,
+    "npcId": "rom.npc.117.0",
+    "npcCell": [
+      7,
+      3
+    ],
+    "actionId": 43,
+    "eventId": 16,
+    "scriptId": 20,
+    "firstDialogue": "rom.dialogue.127.14",
+    "rawRepeatMessage": 255,
+    "mapFlagId": "rom.map.117.flag.2",
+    "witnessFlagId": "",
+    "itemId": "rom.special.18",
+    "grantBeforeDialogue": true,
+    "completionAfterDialogue": true,
+    "noPlayerSteps": true,
+    "quantityRetainedIfOwned": true,
+    "fullCategoryNoGift": true,
+    "contextAfter": {
+      "map117": 211,
+      "map121": 215
+    },
+    "completionGlobalFlag": "rom.global.7fe.128",
+    "npcSource": {
+      "offset": 283887,
+      "length": 14,
+      "sha256": "2fa699a5ed9c72a9409107663828f2df3cee21dc6b1aef9a1fa6562333ab1402",
+      "module": 8,
+      "cpuAddress": 54495,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "sources": [
+      {
+        "offset": 79197,
+        "length": 21,
+        "sha256": "9a6632a8075d932136d8ce3277b80845566d2868e003f7b6367eb82281c2e4fd",
+        "module": 2,
+        "cpuAddress": 46413,
+        "meaning": "Exact map117 message14 before-text special18 gift"
+      },
+      {
+        "offset": 79390,
+        "length": 9,
+        "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe",
+        "module": 2,
+        "cpuAddress": 46606,
+        "meaning": "Original special category grant via capacity"
+      },
+      {
+        "offset": 73979,
+        "length": 117,
+        "sha256": "078e6ddea6f9c838d101a486af3d7dce8bfdf3fe088f5875aa0a2b809f6e92a9",
+        "module": 2,
+        "cpuAddress": 41195,
+        "meaning": "Original shared capacity stage"
+      },
+      {
+        "offset": 347040,
+        "length": 12,
+        "sha256": "7ea4fa820e11ce45ec2af95c3243acf6cc659d092158ae49942f68936abdb0da",
+        "module": 10,
+        "cpuAddress": 52112,
+        "meaning": "Actual action43 pending, no flag before text"
+      },
+      {
+        "offset": 347955,
+        "length": 6,
+        "sha256": "7ba6946845ac173017d6fa8b929511377b25a2f62c6c4253fa5ddff70333c467",
+        "module": 10,
+        "cpuAddress": 53027,
+        "meaning": "Actor action43 dispatch marker"
+      },
+      {
+        "offset": 347961,
+        "length": 9,
+        "sha256": "6ebc971cbb1ab6fea467209f9e071d5b11464137289df863e3cb6e087ffc49ba",
+        "module": 10,
+        "cpuAddress": 53033,
+        "meaning": "After text actor flag OR mask"
+      },
+      {
+        "offset": 379790,
+        "length": 2,
+        "sha256": "434673b0668d4c7cdbd27f655cdb5d8dfb4f81c37cdd4de13d64ada4819a85be",
+        "module": 11,
+        "cpuAddress": 52094,
+        "meaning": "Actual event16 pointer; action is not event identity"
+      },
+      {
+        "offset": 381530,
+        "length": 29,
+        "sha256": "82808627247a47af6b5044ea13e3734037cb38c8b8d452c82a943f7326bffc9e",
+        "module": 11,
+        "cpuAddress": 53834,
+        "meaning": "Event16 two stages and context117/121"
+      },
+      {
+        "offset": 377566,
+        "length": 2,
+        "sha256": "e0109adda86a3a13279a37d7a1cbd9dce2a5555f70a8c3e8726d26ccea233b12",
+        "module": 11,
+        "cpuAddress": 49870,
+        "meaning": "Actual script20 pointer"
+      },
+      {
+        "offset": 378353,
+        "length": 21,
+        "sha256": "5946e9cf98813f076ecf3f8ed09fe7051be5c4987af2ffa12d94cb26af15d663",
+        "module": 11,
+        "cpuAddress": 50657,
+        "meaning": "NPC172 motion then removal, no player motion"
+      },
+      {
+        "offset": 380330,
+        "length": 109,
+        "sha256": "e29a71fe12ad5f186dd38f8a605c0cca137c5633d453efb499f2012ec9cbe9d7",
+        "module": 11,
+        "cpuAddress": 52634,
+        "meaning": "Event16 completion global7FE128, not Queen map bit"
+      }
+    ],
+    "cpuNames": [
+      "queen117-huang-gift-original.tsv",
+      "queen117-huang-selector-original.tsv",
+      "queen117-huang-event16-finish-original.tsv"
+    ],
+    "item": {
+      "id": "rom.special.18",
+      "category": "special",
+      "originalId": 18,
+      "maxCount": 1,
+      "name": "攢心釘",
+      "description": "黄天化原版赠物；本次保留取得与存档，不推断其他战斗的用法。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "ORIGINAL_DIALOGUE_FONT_VERIFIED",
+        "nameRange": {
+          "offset": 92277,
+          "length": 5,
+          "sha256": "4b5f2898d2d6cad1230a42653bbd333801474768343fb7fca45791ae92dd4a88",
+          "module": 2,
+          "cpuAddress": 59493,
+          "meaning": "Actual stable special18 name bytes"
+        },
+        "evidence": "game-data/provenance/world-queen117-state.json",
+        "verifiedFields": [
+          "stableId",
+          "category",
+          "maxCount",
+          "nameFromGiftDialogue",
+          "giftCapacity"
+        ]
+      }
+    }
+  },
+  "routeObservation": {
+    "kind": "CONTROLLED_POSITION_SYNCHRONIZED_ORIGINAL_COORDINATES_THEN_REAL_EXIT_KEYS_NOT_NORMAL_ROUTE",
+    "traceSha256": "a6a94936a58efa2c774ee7036d61ebdc8f7ce77789c0a1664ed038b0dad8666a",
+    "independentReturn": {
+      "fromMapId": 141,
+      "trigger": [
+        15,
+        29
+      ],
+      "direction": "DOWN",
+      "toMapId": 16,
+      "spawn": [
+        91,
+        134
+      ]
+    },
+    "originalMethods": [
+      "Synchronize0406/0408 and8E/90 for controlled fixture; do not alter ROM/collision",
+      "Approach edge from15,28 so original controller sets its own exit sentinel"
+    ],
+    "failedProbe": "Old fixture omitted8E/90 and started on last cell with uncleared transition; cannot prove conditional exit failure",
+    "postQueen115Return": {
+      "trigger": [
+        56,
+        44
+      ],
+      "toMapId": 141,
+      "spawn": [
+        24,
+        19
+      ]
+    }
+  },
+  "teacherContextUpdates": [
+    {
+      "id": "rom.npc.164.0",
+      "baseDefinitionSha256": "360add4b6bc35cc1785a63aa22743bdb8a452da5a1f3143c10626a78c387ea84",
+      "fields": {
+        "stateVariant": {
+          "flagId": "rom.npccontext.164.220",
+          "cell": [
+            7,
+            10
+          ],
+          "firstDialogue": "rom.dialogue.174.0",
+          "repeatDialogue": "rom.dialogue.174.0",
+          "evidence": "game-data/provenance/world-queen117-state.json"
+        }
+      }
+    }
+  ],
+  "region": {
+    "font": {
+      "sources": [
+        {
+          "offset": 610320,
+          "length": 2048,
+          "sha256": "81376a680e06196a7ebad08123877bbebc9d37e69bcc206952284567614d2cf3",
+          "meaning": "Actual Queen group127 active font half"
+        },
+        {
+          "offset": 612368,
+          "length": 2048,
+          "sha256": "f127b2c2a429110f08b917cb285b8772db6b1f7a859e5fdd27dc8b42a9b1e721",
+          "meaning": "Actual Queen group127 active font half"
+        }
+      ],
+      "charset": {
+        "180": "男",
+        "53": "人",
+        "186": "來",
+        "183": "了",
+        "55": "好",
+        "58": "你",
+        "60": "們",
+        "187": "是",
+        "185": "的",
+        "46": "吧",
+        "174": "天",
+        "21": "下",
+        "149": "沒",
+        "177": "有",
+        "56": "一",
+        "169": "個",
+        "22": "東",
+        "150": "西",
+        "18": "外",
+        "19": "少",
+        "20": "聊",
+        "146": "面",
+        "147": "無",
+        "148": "新",
+        "173": "越"
+      },
+      "glyphs": [
+        {
+          "code": 18,
+          "character": "外",
+          "pixelsSha256": "5912a837b65089216a46b6661a89cae2d682f4e1b7c0f8f99abed8beef31f427"
+        },
+        {
+          "code": 19,
+          "character": "少",
+          "pixelsSha256": "bfa3515b771d80f615bc96911125bb3e9aa7aa87bd1a90c2f655bce8e26455ac"
+        },
+        {
+          "code": 20,
+          "character": "聊",
+          "pixelsSha256": "260818e4ee6c5f7e0a783c5f14d91e9253503a5fb1209824d5eb4f9678819bc9"
+        },
+        {
+          "code": 21,
+          "character": "下",
+          "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+        },
+        {
+          "code": 22,
+          "character": "東",
+          "pixelsSha256": "bec9897f1252a88f54ab051701efb6ccb6031cb723da4b1107ddfe0dff6445f6"
+        },
+        {
+          "code": 46,
+          "character": "吧",
+          "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+        },
+        {
+          "code": 53,
+          "character": "人",
+          "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+        },
+        {
+          "code": 55,
+          "character": "好",
+          "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+        },
+        {
+          "code": 56,
+          "character": "一",
+          "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+        },
+        {
+          "code": 58,
+          "character": "你",
+          "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+        },
+        {
+          "code": 60,
+          "character": "們",
+          "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+        },
+        {
+          "code": 146,
+          "character": "面",
+          "pixelsSha256": "b8e23b79aff778b51c5b495edb9ba5094445953a68ad3deba19be0b0d64ace2b"
+        },
+        {
+          "code": 147,
+          "character": "無",
+          "pixelsSha256": "ceeb98b47f68d60f349ef2a90acee1f7dbdf7969373d85c9b234faaa25c044ad"
+        },
+        {
+          "code": 148,
+          "character": "新",
+          "pixelsSha256": "4077f927f858cc9c4fd1fa7dd09781e97c975494c2c73cb2b6368664ddcbe786"
+        },
+        {
+          "code": 149,
+          "character": "沒",
+          "pixelsSha256": "82e6ce68b9cfb446d0d3b108dfe8cc0943e17cb5d32e3b3458210005ad5afc24"
+        },
+        {
+          "code": 150,
+          "character": "西",
+          "pixelsSha256": "d7cdf6ae61e67249117469b0a2b00b7148da8732861a46e53a96e591f5551e5c"
+        },
+        {
+          "code": 169,
+          "character": "個",
+          "pixelsSha256": "1bdd0eb73cdf08ade0e8586f9dae68a32f425e480fdf5cba31ec974abbbebfe8"
+        },
+        {
+          "code": 173,
+          "character": "越",
+          "pixelsSha256": "819f43543d33ffa7ffeecd390fed86901c43e3359665d72d4a7cf611f4265861"
+        },
+        {
+          "code": 174,
+          "character": "天",
+          "pixelsSha256": "6d8ee8cf270d736f813151fb12e567ac3e431e4e2cf8981bf61a373e0fc537ac"
+        },
+        {
+          "code": 177,
+          "character": "有",
+          "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+        },
+        {
+          "code": 180,
+          "character": "男",
+          "pixelsSha256": "fed1d7e41f1d15f1e4b5e98674f789601ac7f69213ee60189ff889bc397bdffc"
+        },
+        {
+          "code": 183,
+          "character": "了",
+          "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+        },
+        {
+          "code": 185,
+          "character": "的",
+          "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+        },
+        {
+          "code": 186,
+          "character": "來",
+          "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+        },
+        {
+          "code": 187,
+          "character": "是",
+          "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+        }
+      ]
+    },
+    "dialogues": [
+      {
+        "id": "rom.dialogue.125.9",
+        "text": "『外面男人越來越少了！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108562,
+            "length": 13,
+            "sha256": "148797f8a6128a8a2aceef761355d942672429c2c64b351470f36abcb5180f1e",
+            "module": 3,
+            "cpuAddress": 43010,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101228,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35676,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101972,
+              "length": 2,
+              "sha256": "334ee889b879f9b3fef7962d0a4068c0418baffe7a10c25892ddfd4f76eaa97f",
+              "module": 3,
+              "cpuAddress": 36420,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual group125 shared font; original controlled scene talk, not normal Android"
+        }
+      },
+      {
+        "id": "rom.dialogue.125.10",
+        "text": "『好無聊！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108575,
+            "length": 7,
+            "sha256": "9bdae2586fdabcaea677ae9ae2b5176b6401f3a1ebd9d4780eeb3c1c8c9f43d8",
+            "module": 3,
+            "cpuAddress": 43023,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101228,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35676,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101974,
+              "length": 2,
+              "sha256": "10debb0bb897c528bc9297c1002c996fec9e1649001ef9cf26b995341230c809",
+              "module": 3,
+              "cpuAddress": 36422,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual group125 shared font; original controlled scene talk, not normal Android"
+        }
+      },
+      {
+        "id": "rom.dialogue.125.11",
+        "text": "『你們是新來的吧！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108582,
+            "length": 11,
+            "sha256": "d9f43cc4eec4edf0bff82a1ea05c0f23f96f30077ac731c52f56cee44629e611",
+            "module": 3,
+            "cpuAddress": 43030,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101228,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35676,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101976,
+              "length": 2,
+              "sha256": "1423e5421f4a53e90225c9c746b1316d626d870b3ee98e06656e1159c6933389",
+              "module": 3,
+              "cpuAddress": 36424,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual group125 shared font; original controlled scene talk, not normal Android"
+        }
+      },
+      {
+        "id": "rom.dialogue.125.12",
+        "text": "『天下男人沒有一個是好東西！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108593,
+            "length": 16,
+            "sha256": "5ea04905df88c1f533926336b0a2ff3ad90adf34347ecabec46177fb532b2ac6",
+            "module": 3,
+            "cpuAddress": 43041,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101228,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35676,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101978,
+              "length": 2,
+              "sha256": "2c4f31483d97573cb65a1814345c761a0d0f666e040c1f5854836badee7a176a",
+              "module": 3,
+              "cpuAddress": 36426,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual group125 shared font; original controlled scene talk, not normal Android"
+        }
+      },
+      {
+        "id": "rom.dialogue.127.13",
+        "text": "『啊！原來你們是來對付我的，休想逃出我的手掌心！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108609,
+            "length": 26,
+            "sha256": "3cd3231b90533dd7824249c82eba19b7c64a773dc9e2c6b220972f269ee03257",
+            "module": 3,
+            "cpuAddress": 43057,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101232,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35680,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101980,
+              "length": 2,
+              "sha256": "a88ed6a70a2b6505b658a3a47d18d78f91daa1e5e448fe07ddbfb32b099b964c",
+              "module": 3,
+              "cpuAddress": 36428,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+        }
+      },
+      {
+        "id": "rom.dialogue.127.14",
+        "text": "『我是黃天化，原來是哪吒和楊戬，謝謝你們搭救，這是攢心釘，趕快救小龍女吧！後會有期！』",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108635,
+            "length": 44,
+            "sha256": "ef8848b791c19c1bbc84e6306fe8919eed81ca2eb6e4cd2346de8859053a38ab",
+            "module": 3,
+            "cpuAddress": 43083,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101232,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35680,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101982,
+              "length": 2,
+              "sha256": "c14493588dd7d599ca8fe0c512ebacf65cb8250d2fe60ff6d9acdedc2f4d81b2",
+              "module": 3,
+              "cpuAddress": 36430,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+        }
+      },
+      {
+        "id": "rom.dialogue.127.15",
+        "text": "女王死後，變成石琵琶，一陣風吹過，石琵琶消失了！",
+        "source": {
+          "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+          "record": {
+            "offset": 108679,
+            "length": 25,
+            "sha256": "f7137d1d506f6d63138558726f7ebeb090a47a82c75a9335ca380b9854c2ebd2",
+            "module": 3,
+            "cpuAddress": 43127,
+            "meaning": "C3-terminated text byte stream"
+          },
+          "pointerEvidence": [
+            {
+              "offset": 101232,
+              "length": 2,
+              "sha256": "05fbb7f615a49295207592d209a4e3997526fb448a34c60ac3f14e3bc7d625d9",
+              "module": 3,
+              "cpuAddress": 35680,
+              "meaning": "Text group pointer"
+            },
+            {
+              "offset": 101984,
+              "length": 2,
+              "sha256": "5e66e7037171bf7f6e9b942767ddb76781b251ad3a605e3cc0d2c207f31eb6c4",
+              "module": 3,
+              "cpuAddress": 36432,
+              "meaning": "Message pointer"
+            }
+          ],
+          "originalVerified": true,
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "verificationScope": "Actual target font/glyphs and controlled keys; victory HP1 is NOT normal App or original playable proof"
+        }
+      }
+    ],
+    "npcs": [
+      {
+        "id": "rom.npc.115.0",
+        "mapId": 115,
+        "cell": [
+          32,
+          22
+        ],
+        "spriteId": 170,
+        "sprite": "npc-115-0-original-static.png",
+        "firstDialogue": "rom.dialogue.125.10",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283618,
+            "length": 14,
+            "sha256": "a1f2a93ad630dceae2ac4a9abdb02239e089a0875669cc9027f761bc14429c58",
+            "module": 8,
+            "cpuAddress": 54226,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.npccontext.115.208",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      },
+      {
+        "id": "rom.npc.115.1",
+        "mapId": 115,
+        "cell": [
+          6,
+          19
+        ],
+        "spriteId": 170,
+        "sprite": "npc-115-1-original-static.png",
+        "firstDialogue": "rom.dialogue.125.9",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283632,
+            "length": 14,
+            "sha256": "9c614045232e1eb23afcef8a913a5faf864591d66719847ae4ea3d500588ea07",
+            "module": 8,
+            "cpuAddress": 54240,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.npccontext.115.208",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      },
+      {
+        "id": "rom.npc.115.2",
+        "mapId": 115,
+        "cell": [
+          1,
+          19
+        ],
+        "spriteId": 170,
+        "sprite": "npc-115-2-original-static.png",
+        "firstDialogue": "rom.dialogue.125.10",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283646,
+            "length": 14,
+            "sha256": "d13cac99e8b49677271d5d2817addee3482b4ec808b7752bd85ac5a13637f55b",
+            "module": 8,
+            "cpuAddress": 54254,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.npccontext.115.208",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      },
+      {
+        "id": "rom.npc.115.3",
+        "mapId": 115,
+        "cell": [
+          12,
+          31
+        ],
+        "spriteId": 170,
+        "sprite": "npc-115-3-original-static.png",
+        "firstDialogue": "rom.dialogue.125.11",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283660,
+            "length": 14,
+            "sha256": "ede05f304ae9a5c02b4a9822bcd5566c17303aa2cdac8966c0fb12fbf0f8301d",
+            "module": 8,
+            "cpuAddress": 54268,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.npccontext.115.208",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      },
+      {
+        "id": "rom.npc.115.4",
+        "mapId": 115,
+        "cell": [
+          18,
+          6
+        ],
+        "spriteId": 170,
+        "sprite": "npc-115-4-original-static.png",
+        "firstDialogue": "rom.dialogue.125.12",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283674,
+            "length": 14,
+            "sha256": "1e80b75f3d54f01e4df25cefce74111b4559ad39233a00f6194592d964ff4bba",
+            "module": 8,
+            "cpuAddress": 54282,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.npccontext.115.208",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      },
+      {
+        "id": "rom.npc.115.5",
+        "mapId": 115,
+        "cell": [
+          41,
+          7
+        ],
+        "spriteId": 198,
+        "sprite": "npc-115-5-original-static.png",
+        "firstDialogue": "",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283688,
+            "length": 14,
+            "sha256": "7b7742fe9ed21de4623760ecf4c245efbe66ec739752d8c3bf4c15765f0b9e88",
+            "module": 8,
+            "cpuAddress": 54296,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "openedSprite": "npc-115-5-original-static.png",
+        "hiddenInvestigation": true,
+        "treasure": {
+          "itemId": "rom.weapon.23",
+          "flagId": "rom.map.115.flag.2",
+          "amount": 1,
+          "categoryGrant": 2,
+          "evidence": "game-data/provenance/world-queen117-state.json"
+        }
+      },
+      {
+        "id": "rom.npc.115.6",
+        "mapId": 115,
+        "cell": [
+          45,
+          16
+        ],
+        "spriteId": 144,
+        "sprite": "npc-115-6-original-static.png",
+        "firstDialogue": "",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283702,
+            "length": 14,
+            "sha256": "61e8be955332335f737982ae9d2ff7a0d3c9a3ba9fa74fe7a963e84e348497bf",
+            "module": 8,
+            "cpuAddress": 54310,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "openedSprite": "chest-144-open.png",
+        "hiddenInvestigation": false,
+        "treasure": {
+          "itemId": "rom.armor.14",
+          "flagId": "rom.map.115.flag.4",
+          "amount": 1,
+          "categoryGrant": 3,
+          "evidence": "game-data/provenance/world-queen117-state.json"
+        }
+      },
+      {
+        "id": "rom.npc.117.0",
+        "mapId": 117,
+        "cell": [
+          7,
+          3
+        ],
+        "spriteId": 172,
+        "sprite": "npc-117-0-original-static.png",
+        "firstDialogue": "rom.dialogue.127.14",
+        "repeatDialogue": "rom.dialogue.127.14",
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283887,
+            "length": 14,
+            "sha256": "2fa699a5ed9c72a9409107663828f2df3cee21dc6b1aef9a1fa6562333ab1402",
+            "module": 8,
+            "cpuAddress": 54495,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.map.117.flag.2",
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json",
+        "originalTalk": {
+          "actionId": 43,
+          "mapFlagId": "rom.map.117.flag.2",
+          "witnessFlagId": "",
+          "itemId": "rom.special.18",
+          "evidence": "game-data/provenance/world-queen117-state.json"
+        }
+      },
+      {
+        "id": "rom.npc.117.1",
+        "mapId": 117,
+        "cell": [
+          7,
+          4
+        ],
+        "spriteId": 170,
+        "sprite": "npc-117-1-original-static.png",
+        "firstDialogue": "rom.dialogue.127.13",
+        "repeatDialogue": null,
+        "firstEffects": [],
+        "queen117ResourceEvidence": "game-data/provenance/world-queen117-state.json",
+        "source": {
+          "confidence": "PROVISIONAL_ROM_STATIC",
+          "record": {
+            "offset": 283901,
+            "length": 14,
+            "sha256": "969562b7cf6beed2cba705ac9e66dc2ccf1733abb9f85d86f1b86d585ec4ed1b",
+            "module": 8,
+            "cpuAddress": 54509,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "evidence": "game-data/provenance/world-queen117-state.json",
+          "remainingUnknown": [
+            "Original NPC animation/movement not fully restored; static frame provisional",
+            "New normal Android NOT_RUN"
+          ]
+        },
+        "removedFlagId": "rom.map.117.flag.128",
+        "automaticStoryOnly": true,
+        "automaticStoryEvidence": "game-data/provenance/world-queen117-state.json"
+      }
+    ],
+    "graphics": {
+      "npc-115-0-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-1-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-2-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-3-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-4-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-5-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 894976,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 894976,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 894976,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 894976,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        ],
+        "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 3682,
+          "length": 3,
+          "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e",
+          "module": 0,
+          "cpuAddress": 36434,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 3923,
+          "length": 5,
+          "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8",
+          "module": 0,
+          "cpuAddress": 36675,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-115-6-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 894640,
+            "length": 16,
+            "sha256": "dadda651143c1f2666f168e2a48dea55ba32627a88b52a4c2e68c57404c2007a"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 894656,
+            "length": 16,
+            "sha256": "cec71f1f905f3f366a535a8b65265311bfc2fc9d509c7ab00af946c417eeb0c3"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 894896,
+            "length": 16,
+            "sha256": "5663e57bcc05fa9b8033b0554c2205c4cf6d61d9ea6aa556502ff68de67e0233"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 894912,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        ],
+        "rgbaSha256": "9074b75d1374e0c998c3b0f8ecf59e096267eaab8624c6fd97464f92af5ff445",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 3661,
+          "length": 3,
+          "sha256": "0f5522b259aa450908667167ce94e9200f47d3fb60ee690c4271035bc0715b79",
+          "module": 0,
+          "cpuAddress": 36413,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 3888,
+          "length": 5,
+          "sha256": "a9567dde8577f407e2d11fda93f5329b405a32f03548f265ad6eb21c8f7d3ce4",
+          "module": 0,
+          "cpuAddress": 36640,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-117-0-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            148,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            88,
+            248,
+            152
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 946384,
+            "length": 16,
+            "sha256": "7344d056150e793738ea3c01ba7c2ed8adc337a8d61efd1c3c63cec9825904e8"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 946400,
+            "length": 16,
+            "sha256": "0ba90691b208335f8d999252072457bc9a4b92ea8482fdddfc1f155ac5adfd23"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 946640,
+            "length": 16,
+            "sha256": "ef46d3b9755e7549d6ac3525147acb26800012c364ec782fc14eb0ea332a000e"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 946656,
+            "length": 16,
+            "sha256": "372935bb48d3233e8c93a579cb495d62233573b469e28ce08e73d56e2ac8052f"
+          }
+        ],
+        "rgbaSha256": "1f223ad41c91bd26f39b6ea19ec2e6f268d77fc2665316555479d609fe2dd537",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5101,
+          "length": 3,
+          "sha256": "baa87754c5bcd64bdd55a2739842bb08151aab7ba0bd404e3a5112f6c066f127",
+          "module": 0,
+          "cpuAddress": 37853,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5223,
+          "length": 5,
+          "sha256": "e03b9d9ac368c5366f6b6671e46c92afca8dbc3c9644d40260c74ffefb2cca6b",
+          "module": 0,
+          "cpuAddress": 37975,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      },
+      "npc-117-1-original-static.png": {
+        "width": 16,
+        "height": 16,
+        "transparentZero": true,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            0,
+            0
+          ],
+          "2": [
+            252,
+            188,
+            176
+          ],
+          "3": [
+            216,
+            40,
+            0
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 947216,
+            "length": 16,
+            "sha256": "7c464cc5e911669593fa2ab5ffd559516dc9c3f5d28908a11742b503e80d2016"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 947232,
+            "length": 16,
+            "sha256": "e4859d1cad8e3be1739a2c7500c565c3011bac77e5b69146067f2eefe4d113e9"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 947472,
+            "length": 16,
+            "sha256": "e8f1f5534d0329df63a90b5a19a46cc398b7bd6a187c97040d409cc17053cc89"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 947488,
+            "length": 16,
+            "sha256": "7633807ad031c91c61c1ffb56059fac8a563789ca69fab80da59d025b88867b2"
+          }
+        ],
+        "rgbaSha256": "61a656411d01c065d18af18538c9a7ad88eee099564f0aa46f98cab187b297a4",
+        "captureKind": "PROVISIONAL_ROM_RECORD_STATIC_FRAME_NOT_OAM_MATCHED",
+        "normalPlayEvidence": false,
+        "animationSource": {
+          "offset": 5045,
+          "length": 3,
+          "sha256": "12a33c7e75e49ecf7c7daa234e4b7f175e33887dc7b817817b8c5e1d58c2ee5c",
+          "module": 0,
+          "cpuAddress": 37797,
+          "meaning": "Original NPC animation initial frame pointer"
+        },
+        "frameSource": {
+          "offset": 5183,
+          "length": 5,
+          "sha256": "1de1884d172b0044ad81bbdbb78c16cfe99919a67baded1379a58f015a4ff66a",
+          "module": 0,
+          "cpuAddress": 37935,
+          "meaning": "Original initial still frame"
+        },
+        "patternBankSources": [
+          {
+            "offset": 892944,
+            "length": 1024,
+            "sha256": "7f611236d777a0eb9774fc963c3e2b3b40b3ede6afc3284e42703842c8f7e3ab"
+          },
+          {
+            "offset": 893968,
+            "length": 1024,
+            "sha256": "475d0f6aad279692d8e6679b2ba7ed7e191aeea517554c02ac4fef91086ac965"
+          },
+          {
+            "offset": 946192,
+            "length": 1024,
+            "sha256": "8ec7a6f397eccaa2faed7c8c6b3c79aec0016131901751e2a529e82ccacd3d38"
+          },
+          {
+            "offset": 947216,
+            "length": 1024,
+            "sha256": "48395b4c3216d3eec88c0f5e9b008a7c5573fec95452d6f79565dff64ec66013"
+          }
+        ]
+      }
+    },
+    "pickups": [
+      {
+        "npcId": "rom.npc.115.5",
+        "mapId": 115,
+        "npcIndex": 5,
+        "spriteId": 198,
+        "categoryId": 2,
+        "originalId": 23,
+        "maxCount": 10,
+        "flagMask": 2,
+        "source": {
+          "offset": 283688,
+          "length": 14,
+          "sha256": "7b7742fe9ed21de4623760ecf4c245efbe66ec739752d8c3bf4c15765f0b9e88",
+          "module": 8,
+          "cpuAddress": 54296,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "animationSource": {
+          "offset": 3682,
+          "length": 7,
+          "sha256": "a8d830045f13a65962562bfa3f6969cd7c2c3ecb3155dfde7f8be1e6a5588340",
+          "module": 0,
+          "cpuAddress": 36434,
+          "meaning": "Actual same original pickup animation"
+        }
+      },
+      {
+        "npcId": "rom.npc.115.6",
+        "mapId": 115,
+        "npcIndex": 6,
+        "spriteId": 144,
+        "categoryId": 3,
+        "originalId": 14,
+        "maxCount": 10,
+        "flagMask": 4,
+        "source": {
+          "offset": 283702,
+          "length": 14,
+          "sha256": "61e8be955332335f737982ae9d2ff7a0d3c9a3ba9fa74fe7a963e84e348497bf",
+          "module": 8,
+          "cpuAddress": 54310,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "animationSource": {
+          "offset": 3661,
+          "length": 7,
+          "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+          "module": 0,
+          "cpuAddress": 36413,
+          "meaning": "Actual same original pickup animation"
+        }
+      }
+    ],
+    "ordinaryEnemyGraphics": {
+      "58": {
+        "width": 40,
+        "height": 72,
+        "observedRect": [
+          112,
+          56,
+          40,
+          72
+        ],
+        "transparentZero": false,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            65,
+            44,
+            0
+          ],
+          "3": [
+            178,
+            255,
+            207
+          ],
+          "2": [
+            255,
+            190,
+            178
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 804960,
+            "length": 16,
+            "sha256": "472ef793bba6e14f73663688d9151ff78ab2fb4c2679e39ca4cbaabbf83c4a58"
+          },
+          {
+            "xy": [
+              16,
+              0
+            ],
+            "offset": 804976,
+            "length": 16,
+            "sha256": "2a4edae59e1887cc5e0da9553040057e9b5da16cbb6b69468b4b190063c30bd0"
+          },
+          {
+            "xy": [
+              24,
+              0
+            ],
+            "offset": 804992,
+            "length": 16,
+            "sha256": "43873dd5cb49f0e8b04078e9a02511ece40d392e854492e914f457ebb2c87922"
+          },
+          {
+            "xy": [
+              32,
+              0
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 805072,
+            "length": 16,
+            "sha256": "8ef7cbf2e37c7c7bd31d53c40d9364246da31dbd8498a77eb357d004413a9a0b"
+          },
+          {
+            "xy": [
+              16,
+              8
+            ],
+            "offset": 805088,
+            "length": 16,
+            "sha256": "6e5f137e086e532e2b30fcc2d90b864f161a1c3756f073d64eafa84e559cde76"
+          },
+          {
+            "xy": [
+              24,
+              8
+            ],
+            "offset": 805104,
+            "length": 16,
+            "sha256": "afd4975a15c407eb25274beb095fe9ebd9e48e48f52bc562526091d65e1df086"
+          },
+          {
+            "xy": [
+              32,
+              8
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              16
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              16
+            ],
+            "offset": 805184,
+            "length": 16,
+            "sha256": "50509f1ac520239d8bc95586a1093ab510c7847b0fe743139182b2686917e826"
+          },
+          {
+            "xy": [
+              16,
+              16
+            ],
+            "offset": 805200,
+            "length": 16,
+            "sha256": "3441609bc0df77ce919a3d6054208eb1b9fa2a29ef6ed8616f64686314a3b67a"
+          },
+          {
+            "xy": [
+              24,
+              16
+            ],
+            "offset": 805216,
+            "length": 16,
+            "sha256": "2fba5dcf6811e70e0e0e44989775ae7000dee8d555884e29ca1d2617b032754f"
+          },
+          {
+            "xy": [
+              32,
+              16
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              24
+            ],
+            "offset": 755856,
+            "length": 16,
+            "sha256": "8d330668d44bfe714a25bde42905d8dbb5cf38a9b53fc979dbef298aef5bca1f"
+          },
+          {
+            "xy": [
+              8,
+              24
+            ],
+            "offset": 805312,
+            "length": 16,
+            "sha256": "e58e8fa4d410e4a7d8569bba4919efd68b46e0fc5cae0aabf07b64c60e2a575a"
+          },
+          {
+            "xy": [
+              16,
+              24
+            ],
+            "offset": 805328,
+            "length": 16,
+            "sha256": "d51a5b6f5a1afe2b9ecf2930ad66350d83d922da0c8431cb5ab26d546f4914b0"
+          },
+          {
+            "xy": [
+              24,
+              24
+            ],
+            "offset": 805344,
+            "length": 16,
+            "sha256": "c76d0b9222bc43f4c58970efeebd5d592cea8382f0a128390c4d9b6fa72ecddd"
+          },
+          {
+            "xy": [
+              32,
+              24
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              32
+            ],
+            "offset": 805424,
+            "length": 16,
+            "sha256": "5a3734b85ca09c76e1ece338e648b99a25955492a208f2d1215d8b47701e9550"
+          },
+          {
+            "xy": [
+              8,
+              32
+            ],
+            "offset": 805440,
+            "length": 16,
+            "sha256": "923a9b70dc818e2bb7b4832c5e484641c1f220189605bac74ceea861bb515ce3"
+          },
+          {
+            "xy": [
+              16,
+              32
+            ],
+            "offset": 805456,
+            "length": 16,
+            "sha256": "cd8b8125cc31880a809f567a2683e3619d27fe91882e5c20be7d8ab872ea113f"
+          },
+          {
+            "xy": [
+              24,
+              32
+            ],
+            "offset": 805472,
+            "length": 16,
+            "sha256": "c0d6f3ae3cd365cde8c91f03e62d754758334f58bdc5c4a4e39ab269217bcd5b"
+          },
+          {
+            "xy": [
+              32,
+              32
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              40
+            ],
+            "offset": 805536,
+            "length": 16,
+            "sha256": "31866d05318aaf3deb1fd5bae199f8f9e598ccdc57dd6bc185e1fc035dd888cb"
+          },
+          {
+            "xy": [
+              8,
+              40
+            ],
+            "offset": 805552,
+            "length": 16,
+            "sha256": "375c727fd185dce7a63344a404d85ffb70979af47e1365b2c52d34f9099499d0"
+          },
+          {
+            "xy": [
+              16,
+              40
+            ],
+            "offset": 805568,
+            "length": 16,
+            "sha256": "cb6a1e0d3acaeee1607c3406519b42776e3fae2350fbb2142d7cd96c7993a34b"
+          },
+          {
+            "xy": [
+              24,
+              40
+            ],
+            "offset": 805584,
+            "length": 16,
+            "sha256": "178f42fa367da6051da000810e2944162b325716d52f6f47cd8eb61205919944"
+          },
+          {
+            "xy": [
+              32,
+              40
+            ],
+            "offset": 805600,
+            "length": 16,
+            "sha256": "7b8cd27e23858dc8877233686d154f625c5684874307d6b134410545f536f772"
+          },
+          {
+            "xy": [
+              0,
+              48
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              48
+            ],
+            "offset": 805679,
+            "length": 16,
+            "sha256": "292afde3b64e6636d68f1120d9242f1f85e38ef7bf306e4407c2303eb63791ef"
+          },
+          {
+            "xy": [
+              16,
+              48
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              24,
+              48
+            ],
+            "offset": 805696,
+            "length": 16,
+            "sha256": "72d0ee8b32a12a8b98cb1eb5df3ecd87a0720a4136fe655c2e26b05fc91174eb"
+          },
+          {
+            "xy": [
+              32,
+              48
+            ],
+            "offset": 805712,
+            "length": 16,
+            "sha256": "f6a5a3150a7757bdf8cccd5dfb61362086c23a68bef4066d2dffc72f1e5dedad"
+          },
+          {
+            "xy": [
+              0,
+              56
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              56
+            ],
+            "offset": 805888,
+            "length": 16,
+            "sha256": "98f70ddb803cdbe8d2f80eb1a6956d0d9ee05c0b27fb528c91a18b131a21493e"
+          },
+          {
+            "xy": [
+              16,
+              56
+            ],
+            "offset": 805904,
+            "length": 16,
+            "sha256": "2972d76e1489b117fc2463e7a8330194402ca210f40ce383f4c953d731e9e00b"
+          },
+          {
+            "xy": [
+              24,
+              56
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              32,
+              56
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              64
+            ],
+            "offset": 806080,
+            "length": 16,
+            "sha256": "fc116ca59682cbfb4989b4bb29c68a5a138b9afb85df235edaf5ecfed6b14fe4"
+          },
+          {
+            "xy": [
+              16,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              24,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              32,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        ],
+        "rgbaSha256": "985402ebc0fb8125878fa0f626dd3d0e1d914b89ac7c1f12d4e8f756345460d8",
+        "captureSha256": "4b627768b899dfedf39eb8014663de8a2f31030363e48386d670e15de540f86d",
+        "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+        "normalPlayEvidence": false
+      },
+      "59": {
+        "width": 48,
+        "height": 72,
+        "observedRect": [
+          112,
+          64,
+          48,
+          72
+        ],
+        "transparentZero": false,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ],
+          "1": [
+            0,
+            69,
+            0
+          ],
+          "3": [
+            199,
+            215,
+            255
+          ],
+          "2": [
+            255,
+            190,
+            178
+          ]
+        },
+        "tiles": [
+          {
+            "xy": [
+              0,
+              0
+            ],
+            "offset": 570273,
+            "length": 16,
+            "sha256": "7c3ccd10bb7ec37b46d37926ae6274267f007a34aeaf15c882a715a7f3300529"
+          },
+          {
+            "xy": [
+              8,
+              0
+            ],
+            "offset": 805808,
+            "length": 16,
+            "sha256": "fcf67d7462507e60c805d8e4616785375b7455ae18802cbe4e4aa27bb8c04587"
+          },
+          {
+            "xy": [
+              16,
+              0
+            ],
+            "offset": 805824,
+            "length": 16,
+            "sha256": "3d322e04c8897dbeb525903021a82fdbaa7b720b6104cb66c6a1c00a54189097"
+          },
+          {
+            "xy": [
+              24,
+              0
+            ],
+            "offset": 805840,
+            "length": 16,
+            "sha256": "b41b4b275bd0f345a93527727227b79315706e45f95e24adab64f9d3a0943e37"
+          },
+          {
+            "xy": [
+              32,
+              0
+            ],
+            "offset": 805856,
+            "length": 16,
+            "sha256": "f2d7fe5e03edb8e70e51653b724be5fff7b7d30a6718433f3bf05b1f13a48482"
+          },
+          {
+            "xy": [
+              40,
+              0
+            ],
+            "offset": 805872,
+            "length": 16,
+            "sha256": "58fc40658162cbd8dc936af69f6dda0fea007a6e6f29d909fa60704b9d775e17"
+          },
+          {
+            "xy": [
+              0,
+              8
+            ],
+            "offset": 805984,
+            "length": 16,
+            "sha256": "af941516c9a82ee76e060bbe61b54167a2f60fb3ff566010e54e5cc849156ff6"
+          },
+          {
+            "xy": [
+              8,
+              8
+            ],
+            "offset": 806000,
+            "length": 16,
+            "sha256": "996f26791a2844c94ee0cc41346a8a9cec292ad7bdd63a8cf06019b4acf78ca4"
+          },
+          {
+            "xy": [
+              16,
+              8
+            ],
+            "offset": 806016,
+            "length": 16,
+            "sha256": "6f9bc3a919162926643df2c1af7588eeaabd1417bc8e5935e590972d2552b204"
+          },
+          {
+            "xy": [
+              24,
+              8
+            ],
+            "offset": 806032,
+            "length": 16,
+            "sha256": "8f9983b9db77eb326f26323268bfe6fe3958689694306d0771b1d559dbbf336f"
+          },
+          {
+            "xy": [
+              32,
+              8
+            ],
+            "offset": 806048,
+            "length": 16,
+            "sha256": "452ef9fa29e876113bf733dfb6701aab41fc3481b5fead400e770d162d72dd6d"
+          },
+          {
+            "xy": [
+              40,
+              8
+            ],
+            "offset": 806064,
+            "length": 16,
+            "sha256": "0ff4741de267cf54be7c387b2c0fa043885f7682c3fce2eb7a4d01a4d3d68c0d"
+          },
+          {
+            "xy": [
+              0,
+              16
+            ],
+            "offset": 806144,
+            "length": 16,
+            "sha256": "723da508cbe72ef4b50119ee3437c532277ea68690f470029cf3f78e7c4628ba"
+          },
+          {
+            "xy": [
+              8,
+              16
+            ],
+            "offset": 806160,
+            "length": 16,
+            "sha256": "46a1d08685a35ce7ee32868cc5344f1e55c3f7986c6870e132edc253f1deebce"
+          },
+          {
+            "xy": [
+              16,
+              16
+            ],
+            "offset": 806176,
+            "length": 16,
+            "sha256": "a58deb15df0afe7da48b6a20841c9b7ccbd1987bd218f8aedef3b788daa73077"
+          },
+          {
+            "xy": [
+              24,
+              16
+            ],
+            "offset": 806192,
+            "length": 16,
+            "sha256": "dfae13260a95c34b1059a649fec3d6b47dabf5850de4514c27784b7412a3861b"
+          },
+          {
+            "xy": [
+              32,
+              16
+            ],
+            "offset": 806208,
+            "length": 16,
+            "sha256": "f7f1e51f413b94adb7194f4965d2efeb03b9315fd8996dd56f51e0e0666212f1"
+          },
+          {
+            "xy": [
+              40,
+              16
+            ],
+            "offset": 806224,
+            "length": 16,
+            "sha256": "2ddd61bc2cc70a284f55ef9675a2cca9c9112651aa800a14b93b52645059450a"
+          },
+          {
+            "xy": [
+              0,
+              24
+            ],
+            "offset": 806304,
+            "length": 16,
+            "sha256": "f616620950c4139db66ec7b7c82d2ae0acf39f4817a29b8c7bd335099b12783d"
+          },
+          {
+            "xy": [
+              8,
+              24
+            ],
+            "offset": 806320,
+            "length": 16,
+            "sha256": "eb7bc19281fe08b763725bbb707189774df6362493509f4d5876c3f18519ad6a"
+          },
+          {
+            "xy": [
+              16,
+              24
+            ],
+            "offset": 806336,
+            "length": 16,
+            "sha256": "1f42a6beb75c6aa33b13337a95dd40f0351bbcede784c038bc268b670f3eab87"
+          },
+          {
+            "xy": [
+              24,
+              24
+            ],
+            "offset": 806352,
+            "length": 16,
+            "sha256": "a2adb52e4c00d17bb069108478d3923a928562da6803ef62240e72c1fcb87d6d"
+          },
+          {
+            "xy": [
+              32,
+              24
+            ],
+            "offset": 806368,
+            "length": 16,
+            "sha256": "5f5d54067e70cbabee2b72c954c7fc318e704dd7815687e04e30b3c031cf0d60"
+          },
+          {
+            "xy": [
+              40,
+              24
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              32
+            ],
+            "offset": 801760,
+            "length": 16,
+            "sha256": "7870ae5e93a8f294fe5c23da7321f84495bc2dab9d4eee1a395c9f56f2a2d503"
+          },
+          {
+            "xy": [
+              8,
+              32
+            ],
+            "offset": 806448,
+            "length": 16,
+            "sha256": "d1adefe26595c55c56545787d8668c82317d1eaf68e866995afa883f858f101e"
+          },
+          {
+            "xy": [
+              16,
+              32
+            ],
+            "offset": 806464,
+            "length": 16,
+            "sha256": "a3332c47a7ba65b135454ee475bf706f944edb16b8b09cd4c981e8e5a3092d77"
+          },
+          {
+            "xy": [
+              24,
+              32
+            ],
+            "offset": 806480,
+            "length": 16,
+            "sha256": "fdd89fd6a5949225a2aa8f884fc21999f81be531b29c5793c0974a0dc255f933"
+          },
+          {
+            "xy": [
+              32,
+              32
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              40,
+              32
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              40
+            ],
+            "offset": 806496,
+            "length": 16,
+            "sha256": "173ba9a210fc6e78576ee1f9f9dc3e2667c621776c1a34a10d13b2e3a9bda932"
+          },
+          {
+            "xy": [
+              8,
+              40
+            ],
+            "offset": 806512,
+            "length": 16,
+            "sha256": "ce124946a8d9d5819dfab55f08f051cb6461ff4716ab6f6f97baf02d4ad031d0"
+          },
+          {
+            "xy": [
+              16,
+              40
+            ],
+            "offset": 806528,
+            "length": 16,
+            "sha256": "8067a2e46767682d8e97632081ba26936628a45bfdfa90256fb991622167ea1f"
+          },
+          {
+            "xy": [
+              24,
+              40
+            ],
+            "offset": 806544,
+            "length": 16,
+            "sha256": "24cc18b06bffb458449f5955e5f5f874362eedced260b7717b208ff57ac6afa9"
+          },
+          {
+            "xy": [
+              32,
+              40
+            ],
+            "offset": 806560,
+            "length": 16,
+            "sha256": "810eb4480b17c5d1913cb1b1b11d6bf9bf4e2250051e99652995cd499b0436c0"
+          },
+          {
+            "xy": [
+              40,
+              40
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              48
+            ],
+            "offset": 806576,
+            "length": 16,
+            "sha256": "64f30f427e4ff3da22e59818ebe10d871630942014a230d7817f3f528206e4de"
+          },
+          {
+            "xy": [
+              8,
+              48
+            ],
+            "offset": 806592,
+            "length": 16,
+            "sha256": "d6677c2225c5137e93a571f5afc4f00ed126e3e2de6201e761433f330ca05d3e"
+          },
+          {
+            "xy": [
+              16,
+              48
+            ],
+            "offset": 806608,
+            "length": 16,
+            "sha256": "bcb0578b96be18a0578c24c75409c25cfc18b315fe395cd69c25013bf9750d3c"
+          },
+          {
+            "xy": [
+              24,
+              48
+            ],
+            "offset": 806624,
+            "length": 16,
+            "sha256": "b6e83e1ba5afc265a3d118b097a201b21b43f386baa03a1a1380370ba398beda"
+          },
+          {
+            "xy": [
+              32,
+              48
+            ],
+            "offset": 806640,
+            "length": 16,
+            "sha256": "6a59d2b197bbf1bbffa2629ef8e44f2bb464f84b0e290d31dd815275c3ffc4b2"
+          },
+          {
+            "xy": [
+              40,
+              48
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              56
+            ],
+            "offset": 783501,
+            "length": 16,
+            "sha256": "09a0d69bcedd82b708ff4d1b83c47bef9e7c71d19497a588be7f2c0bbb48ee0b"
+          },
+          {
+            "xy": [
+              8,
+              56
+            ],
+            "offset": 806672,
+            "length": 16,
+            "sha256": "0db318004090cb8653cee341a7fee2cc022af5fd7aac9fbf1a2ae37461fac4fc"
+          },
+          {
+            "xy": [
+              16,
+              56
+            ],
+            "offset": 806688,
+            "length": 16,
+            "sha256": "f527caf8719d9c168da97dacbf5ef95b20b5df15b8a1a675ed85642d6608de43"
+          },
+          {
+            "xy": [
+              24,
+              56
+            ],
+            "offset": 806704,
+            "length": 16,
+            "sha256": "17a0bfb15685dab5c6ef2eeb1b9399985527b4378c7e717424a8b5c36bf88d5b"
+          },
+          {
+            "xy": [
+              32,
+              56
+            ],
+            "offset": 806720,
+            "length": 16,
+            "sha256": "edf2f3d96c02bfb17e785e8ee8a74f95a8879514c2cca3211b21a4527fd3d034"
+          },
+          {
+            "xy": [
+              40,
+              56
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              0,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              8,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              16,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          },
+          {
+            "xy": [
+              24,
+              64
+            ],
+            "offset": 798607,
+            "length": 16,
+            "sha256": "bdc8351e1b616bd11a7dcf146623b721921745822b1974ceeaaae80018dd9617"
+          },
+          {
+            "xy": [
+              32,
+              64
+            ],
+            "offset": 806752,
+            "length": 16,
+            "sha256": "319a55b8892fe55ec6184d4c326b9559326c88b1853cdf7191867869f8fa0987"
+          },
+          {
+            "xy": [
+              40,
+              64
+            ],
+            "offset": 528166,
+            "length": 16,
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+          }
+        ],
+        "rgbaSha256": "05ce9bdb76906bcc52d859ee1730592fe3aaef07035f14d52ededcedafc5f465",
+        "captureSha256": "d307acc7e087b38b87b79ceaa0fa87c183db370cfd32b4881de891a837f7e9d4",
+        "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+        "normalPlayEvidence": false
+      }
+    },
+    "pickupCpu": {
+      "path": "android/app/src/test/resources/queen115-chests-original.tsv",
+      "caseCount": 14,
+      "sha256": "c07e63af304612d144f0295fd58e034b6699221b25b07ac0fdfbd34d9d9fe6bf"
+    },
+    "pickupSources": [
+      {
+        "offset": 337744,
+        "length": 92,
+        "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+        "module": 10,
+        "cpuAddress": 42816,
+        "meaning": "Original chest reads category/item/mask and current map flag"
+      },
+      {
+        "offset": 73424,
+        "length": 249,
+        "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+        "module": 2,
+        "cpuAddress": 40640,
+        "meaning": "Original granted inventory branch and success-only map-flag OR"
+      },
+      {
+        "offset": 73967,
+        "length": 12,
+        "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+        "module": 2,
+        "cpuAddress": 41183,
+        "meaning": "Original category/item inventory dispatcher"
+      },
+      {
+        "offset": 73979,
+        "length": 173,
+        "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+        "module": 2,
+        "cpuAddress": 41195,
+        "meaning": "Original existing stack increment and 16-slot insertion"
+      },
+      {
+        "offset": 74144,
+        "length": 12,
+        "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+        "module": 2,
+        "cpuAddress": 41360,
+        "meaning": "Original four category limits and inventory base pointers"
+      }
+    ],
+    "limitations": [
+      "NPC115 initial locations are original record-linked; ordinary wandering remains a presentation debt",
+      "Optional room116 action41/event15 disguise recorded but not connected in this c49 main-route batch",
+      "115(6,14)->140 is an all-wall source record, not a currently proven door; no wall opened"
+    ]
+  }
+}

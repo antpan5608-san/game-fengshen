@@ -8,6 +8,7 @@ $receipt=Get-Content (Join-Path $root 'artifacts/ci/apk-receipt.json') -Raw|Conv
 if($receipt.sourceCommit -ne $env:GITHUB_SHA -or $receipt.buildRunID -ne $BuildRunID -or $receipt.sha256 -ne $ExpectedSha256 -or (Get-FileHash $apks[0].FullName).Hash.ToLowerInvariant() -ne $ExpectedSha256){throw 'Review provenance or APK bytes mismatch'}
 $runtime=Get-Content (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json') -Raw|ConvertFrom-Json
 if($runtime.sourceCommit -ne $env:GITHUB_SHA -or $runtime.buildRunID -ne $BuildRunID -or $runtime.sha256 -ne $ExpectedSha256 -or $runtime.contentHash -ne $receipt.contentHash -or $runtime.runtime -ne 'PASS' -or $runtime.upgrade -ne 'PASS' -or $runtime.normalHerbSupply -ne 'PASS' -or $runtime.touchUx -ne 'PASS' -or $runtime.phoneSizedLayout -ne 'PASS'){throw 'Runtime receipt must verify the same reviewed APK/source/content'}
+if(($runtime.completedStages -join ',') -ne 'base,world,continuation'){throw 'All same-candidate normal runtime stages must pass'}
 $verified=Join-Path $root 'artifacts/ci/reverified.json'
 & python (Join-Path $root 'tools/ci_apk.py') verify --apk $apks[0].FullName --output $verified --code $receipt.versionCode --name $receipt.versionName
 if($LASTEXITCODE -ne 0){throw 'Reviewed signature/content/version failed revalidation'}
@@ -49,4 +50,14 @@ if($runtime.worldRoom171Normal -ne 'PASS' -or $runtime.worldRoom171GiftColdResta
 if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndColdRestart -ne 'PASS'){throw 'Actual teacher signal, Yang use/dialogues, original third-actor battle and cold restart must verify this exact APK'}
 
 if($runtime.worldVillageFourServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFourColdRestart -ne 'PASS'){throw 'Actual village4 bridges, caller services, original NPC text/conditions and cold return must verify this exact APK'}
+if($runtime.worldVillageFiveServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFiveColdRestart -ne 'PASS'){throw 'Actual village5 caller stocks, services, NPC dialogue and original return must verify this exact APK'}
 if($runtime.worldFixedFerryIslandNormal -ne 'PASS' -or $runtime.worldFixedFerryColdRestartAndReverse -ne 'PASS'){throw 'Actual fixed boat, complete island encounters, cold save and independent reverse must verify this exact APK'}
+
+if($runtime.worldIslandOriginalLayersAndFourVillainsNormal -ne 'PASS' -or $runtime.worldIslandOnceChestsAndColdRestart -ne 'PASS'){throw 'Actual island layers, original composite fight/flags/chests and cold return must verify this exact APK'}
+
+if($runtime.worldCave87FlowerNormal -ne 'PASS' -or $runtime.worldCave87DepartureAndColdRestart -ne 'PASS'){throw 'Actual cave87 route/flower Boss/seven dialogues/away actor and cold return must verify this exact APK'}
+
+if($runtime.worldVillageSixServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageSixColdRestart -ne 'PASS'){throw 'Actual village6 normal route, caller prices/services/dialogues/hidden medicine and cold return must verify this exact APK'}
+if($runtime.worldNightEightGiftAndCaveNormal -ne 'PASS' -or $runtime.worldNightEightColdRestart -ne 'PASS'){throw 'Actual teacher164 gift, original dark cave, reusable light, rope chest and external cold restart must verify this exact APK'}
+
+if($runtime.worldQueenRouteAndBindingNormal -ne 'PASS' -or $runtime.worldQueenHuangOnceAndColdRestart -ne 'PASS'){throw 'Actual original Queen route, binding actor order, Huang gift and external cold restart must verify this exact APK'}

@@ -141,3 +141,12 @@ v24/0.8.4-touch-ux-01已发布，来源ef29edb9192bb299ed493b767c52b23c450b2094�
 ## 当前阶段发布规则修订（2026-10-04 北京时间）
 
 有显著可玩增量、实际运行不崩溃及既有审核门槛通过时阶段发布，不以全部非阻断缺陷清零为前提。原安全投影与ISSUES_FOUND/ERROR不改；原runtime-summary模块新增独立release decision，ci/runtime-nonblocking-issues.json只接受已经精确核对并有用户恢复反馈的旧版本下载中断。新时间/计数/类别、当前版本故障、崩溃/丢档/未知错误、不可用巡检或不可信版本保留均阻断。publish前与直接publisher均调用同一评估，postflight再执行；同源提交、签名、审核APK、reviewer和两对象不变。详见docs/history/world-full01-stage-publication.md。本地真实Node/安全摘要及隔离API已测，PowerShell新增入口仍需原Windows runner实际运行，不冒称生产上传完成。
+
+
+## 连续世界回归的同候选分段（当前源码，runner接续待实际验证）
+
+仍只有原android-build.yml和android-publish.yml。原runtime脚本由FENGSHEN_RUNTIME_STAGE选择base/world/continuation，每段一个隔离AOSP AVD，下载同一次build的签名APK和仪器APK；29条正常/冷启流程不删。base承担真实覆盖升级和原回归，经北海正常保存产生仅限JSON的fengshen-normal-checkpoint-base；runtime-world验证同提交/run/APK SHA/签名/内容与正常事件/冷启边界，原样复制到隔离外部文件目录，原仪器从完整正常快照继续；中段同样输出渡船与杨戬正常检查点供最后一段使用。
+
+tools/runtime_handoff.py不生成/修改角色、钱、库存、flag或真实玩家偏好，拒绝不同来源/版本/hash、篡改/超限/额外路径、失败或缺失前段、非ranchu设备。前两段回执runtime=PARTIAL，最终回执合并此前实际门禁且completedStages必须为base,world,continuation。原approve与publish均要求runtime/runtime-world/runtime-continuation三个成功job；check-reviewed-apk再核同审核APK及全部原门槛。不把各段截图/fixture或单元测试代替正常App。
+
+每段原始正常录像保留在对应isolated evidence artifact，已有有界review artifact继续按区段输出。最终审核下载仍为fengshen-town02-runtime-evidence；失败assertion诊断只读入口可匹配三段runtime evidence，继续不触发发布或保留原始生产日志。当前本地传输拒绝/正例、真实Bash分派、审批脚本及旧候选实际北海JSON校验已运行；跨runner复制和后续App实际运行尚待该源码的真实候选结果，不宣称已通过。

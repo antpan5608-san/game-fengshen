@@ -13,6 +13,237 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual loader and controlled JSON/variant fixtures, separate from normal optional talk. */
+    fun testRoom116OriginalEventAndPreservedVariantCapabilitiesFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(32,c.scenes.getValue(116).width);assertEquals(15,c.scenes.getValue(116).height)
+        val n=c.npcs.single{it.id=="rom.npc.116.0"};assertEquals(41,n.originalTalk!!.actionId)
+        val before=SaveSnapshot(c.scene.version,116,88,72,Key.UP,listOf(c.initialPlayer),
+            mapOf(HerbUse.ID to 2),emptyMap(),money=89,encounterSteps=17)
+        assertTrue(before.validate(c))
+        val first=OriginalNpcTalk.begin(before,n.originalTalk!!);assertTrue(first.applied);assertTrue(first.snapshot.validate(c))
+        assertEquals(first.snapshot,SaveSnapshot.parse(first.snapshot.json().toString()))
+        val second=OriginalNpcTalk.advanceRoom116(first.snapshot,n.originalTalk!!,first.nextDialogue!!)
+        assertTrue(second.applied);assertTrue(second.snapshot.validate(c))
+        assertEquals(second.snapshot,SaveSnapshot.parse(second.snapshot.json().toString()))
+        val completed=OriginalNpcTalk.advanceRoom116(second.snapshot,n.originalTalk!!,second.nextDialogue!!)
+        assertTrue(completed.applied);assertTrue(completed.snapshot.validate(c))
+        assertEquals(before.copy(flags=completed.snapshot.flags),completed.snapshot)
+        val actors=c.npcsForState(116,completed.snapshot.flags)
+        val variant=actors.single{it.id==n.id};assertEquals(6 to 3,variant.x to variant.y)
+        assertSame(n.originalTalk,variant.originalTalk);assertEquals(n.removedFlagId,variant.removedFlagId)
+        assertEquals(16 to 5,actors.single{it.id=="rom.npc.116.3"}.let{it.x to it.y})
+        val removed=completed.snapshot.flags+("rom.npccontext.116.210" to true)
+        assertTrue(c.npcsForState(116,removed).none{c.npcVisible(it,removed)})
+        val dynamic=c.sceneForState(116,removed)!!.dynamicObjectCells
+        assertFalse(3*32+6 in dynamic);assertFalse(5*32+16 in dynamic)
+        assertFalse(first.snapshot.copy(mapId=141).validate(c))
+        assertTrue(before.copy(contentVersion="opening-segment-001-c49").validate(c))
+    }
+
+    /** Bundled Queen resources + controlled save round trips; not a normal win. */
+    fun testQueenOriginalResourcesAndDurableHuangGiftFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for((mid,w,h)in listOf(Triple(141,32,30),Triple(115,64,45),Triple(117,16,15))){
+            assertEquals(w,c.scenes.getValue(mid).width);assertEquals(h,c.scenes.getValue(mid).height)
+        }
+        val rules=c.battle!!;val queen=rules.enemies.getValue(157)
+        assertEquals(7000,queen.hp);assertEquals(372,queen.attack);assertEquals(178,queen.defense)
+        assertEquals(3000,queen.experienceReward);assertEquals(2400,queen.moneyReward)
+        assertEquals(2,queen.requiredBindingMarker)
+        val rope=c.itemDefinitions.getValue("rom.special.13");assertEquals("捆妖繩",rope.name)
+        assertEquals(2,rope.battleBindingUse!!.bindingMarker)
+        for(id in listOf(58,59,157))assertNotNull(c.enemyGraphics[id])
+        val boss=rules.storyBattles.getValue("rom.npc.117.1")
+        assertEquals(StoryEntryTrigger(117,7,5),boss.entryTrigger);assertEquals(0,boss.intro!!.openingMovement.completedSteps)
+        assertTrue(boss.commitAfterDialogue)
+        val before=SaveSnapshot(c.scene.version,117,120,72,Key.UP,listOf(c.initialPlayer),
+            mapOf(rope.id to 1),mapOf("rom.map.117.flag.128" to true,"rom.npccontext.117.231" to true),money=73)
+        assertTrue(before.validate(c));val npc=c.npcs.single{it.id=="rom.npc.117.0"};val item=c.itemDefinitions.getValue("rom.special.18")
+        val first=OriginalNpcTalk.begin(before,npc.originalTalk!!,item);assertTrue(first.applied)
+        assertTrue(first.snapshot.validate(c));assertEquals(1,first.snapshot.inventory[item.id])
+        val restored=SaveSnapshot.parse(first.snapshot.json().toString());assertEquals(first.snapshot,restored)
+        assertTrue(restored.validate(c));assertEquals(restored,OriginalNpcTalk.begin(restored,npc.originalTalk!!,item).snapshot)
+        val closed=OriginalNpcTalk.finishHuang(restored,npc.originalTalk!!,"rom.dialogue.127.14")
+        assertTrue(closed.applied);assertTrue(closed.snapshot.validate(c));assertFalse(c.npcVisible(npc,closed.snapshot.flags))
+        assertEquals(first.snapshot.inventory,closed.snapshot.inventory);assertEquals(before.characters,closed.snapshot.characters)
+        assertEquals(closed.snapshot,SaveSnapshot.parse(closed.snapshot.json().toString()))
+        assertFalse(OriginalNpcTalk.begin(closed.snapshot,npc.originalTalk!!,item).applied)
+        assertFalse(restored.copy(mapId=16).validate(c));assertTrue(before.copy(contentVersion="opening-segment-001-c48").validate(c))
+        assertFalse(before.copy(contentVersion="opening-segment-001-c51").validate(c))
+        val women=c.npcs.filter{it.mapId==115&&it.id.substringAfterLast('.').toInt()<5}
+        assertTrue(women.all{c.npcVisible(it,emptyMap())});assertTrue(women.none{c.npcVisible(it,mapOf("rom.npccontext.115.208" to true))})
+        assertEquals(7 to 10,c.npcsForState(164,mapOf("rom.npccontext.164.220" to true)).first{it.id=="rom.npc.164.0"}.let{it.x to it.y})
+        assertEquals("rom.dialogue.174.0",c.npcsForState(164,mapOf("rom.npccontext.164.220" to true)).first{it.id=="rom.npc.164.0"}.firstDialogue)
+    }
+
+    /** Real loader/JSON fixtures; actual normal gift/use remains a separate recorded route. */
+    fun testNightEightOriginalMapAtlasGiftAndColdSaveFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(48,c.scenes.getValue(100).width);assertEquals(75,c.scenes.getValue(100).height)
+        assertEquals(16,c.scenes.getValue(164).width);assertEquals(48,c.scenes.getValue(74).width)
+        val item=c.itemDefinitions.getValue(WorldItems.NIGHT_LIGHT_ID);assertEquals("夜明珠",item.name)
+        assertNotNull(item.nightLightUse);assertNull(c.itemDefinitions.getValue("rom.special.13").nightLightUse)
+        val before=SaveSnapshot(c.scene.version,164,120,88,Key.UP,listOf(c.initialPlayer),emptyMap(),emptyMap(),money=123)
+        assertTrue(before.validate(c));val n=c.npcs.single{it.id=="rom.npc.164.1"}
+        val first=OriginalNpcTalk.begin(before,n.originalTalk!!,item);assertTrue(first.applied)
+        assertEquals(1,first.snapshot.inventory[item.id]);assertTrue(first.snapshot.validate(c))
+        assertEquals(first.snapshot,OriginalNpcTalk.begin(first.snapshot,n.originalTalk!!,item).snapshot)
+        assertTrue(c.dialogues.getValue(first.nextDialogue!!).text.contains("夜明珠"))
+        val cave=first.snapshot.copy(mapId=74,x=56,y=440);assertTrue(cave.validate(c))
+        val used=WorldItems.useNightLight(cave,item,true);assertTrue(used.applied)
+        val saved=cave.copy(inventory=used.inventory,flags=used.flags);assertTrue(saved.validate(c))
+        assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+        val dark=c.atlasForState(74,emptyMap());val lit=c.atlasForState(74,saved.flags)
+        assertEquals(256,dark.width);assertEquals(256,lit.width)
+        val a=IntArray(256*256);val b=IntArray(a.size);dark.getPixels(a,0,256,0,0,256,256);lit.getPixels(b,0,256,0,0,256,256)
+        assertFalse(a.contentEquals(b));assertEquals(saved,cave.copy(inventory=used.inventory,flags=used.flags))
+        val reset=WorldItems.fieldFlagsAfterStep(saved.flags,CompletedStep(74,3,28,true))
+        assertFalse(WorldItems.NIGHT_LIGHT_FLAG in reset);assertEquals(true,reset[WorldItems.NIGHT_LIGHT_USED_FLAG])
+        assertSame(dark,c.atlasForState(74,reset))
+        val oldVillage=cave.copy(mapId=6,x=248,y=456,contentVersion="opening-segment-001-c47")
+        assertTrue(oldVillage.validate(c));assertEquals(oldVillage,SaveSnapshot.parse(oldVillage.json().toString()))
+        for(id in listOf(52,53,56,57))assertNotNull(c.enemyGraphics[id])
+        val chest=c.npcs.single{it.id=="rom.npc.74.5"};assertEquals("rom.special.13",chest.treasure!!.itemId)
+        val grant=WorldItems.openTreasure(saved,chest.treasure!!,c.itemDefinitions.getValue("rom.special.13"));assertTrue(grant.applied)
+        val after=saved.copy(inventory=grant.inventory,flags=grant.flags);assertTrue(after.validate(c))
+        assertEquals(after,SaveSnapshot.parse(after.json().toString()));assertFalse(WorldItems.openTreasure(after,chest.treasure!!,c.itemDefinitions.getValue("rom.special.13")).applied)
+    }
+
+    /** Real bundled loader/JSON fixtures; separate from normal route recording. */
+    fun testVillageSixOriginalServicesTalkAndHiddenSaveRoundTrip(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(6);assertEquals(32,scene.width);assertEquals(30,scene.height)
+        val girls=c.npcs.filter{it.mapId==6};assertEquals(8,girls.size)
+        for((room,ids)in listOf(17 to listOf(9,24,36),18 to listOf(5,13,19,31,39),19 to listOf(1,2,4,6,7,10,12))){
+            assertEquals(ids,c.shops.getValue("rom.shop.6.$room").items.map{it.substringAfterLast('.').toInt()})
+        }
+        assertEquals(200,c.inns.getValue("rom.inn.6").price)
+        val hidden=girls.single{it.id=="rom.npc.6.3"};assertTrue(hidden.hiddenInvestigation)
+        assertEquals("rom.medicine.1",hidden.treasure!!.itemId);assertEquals("rom.map.6.flag.8",hidden.treasure!!.flagId)
+        val hero=c.initialPlayer;val girl=c.joinCharacters.getValue("xiaolongnv").copy(statusMask=64)
+        val yang=c.joinCharacters.getValue("yangjian")
+        val start=SaveSnapshot(c.scene.version,6,15*16+8,28*16+8,Key.UP,listOf(hero,girl,yang),
+            mapOf(OriginalYangJoin.ITEM_ID to 1),mapOf("rom.map.110.flag.128" to true,
+                OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),money=1000)
+        assertTrue(start.validate(c));assertTrue(start.copy(contentVersion="opening-segment-001-c46").validate(c))
+        val npc=girls.single{it.id=="rom.npc.6.2"};val rule=npc.originalTalk!!
+        val first=OriginalNpcTalk.begin(start,rule);assertEquals(start,first.snapshot)
+        assertEquals("rom.dialogue.16.9",first.nextDialogue)
+        assertTrue(c.dialogues.getValue(first.nextDialogue!!).text.contains("捆妖繩"))
+        val witnessed=start.copy(flags=start.flags+(rule.witnessFlagId to true))
+        val result=OriginalNpcTalk.begin(witnessed,rule)
+        assertEquals("rom.dialogue.16.10",result.nextDialogue);assertTrue(result.snapshot.validate(c))
+        assertEquals(result.snapshot,SaveSnapshot.parse(result.snapshot.json().toString()))
+        assertEquals(start.characters,result.snapshot.characters);assertEquals(start.inventory,result.snapshot.inventory)
+        assertEquals(start.money,result.snapshot.money)
+        val grant=WorldItems.openTreasure(result.snapshot,hidden.treasure!!,c.itemDefinitions.getValue("rom.medicine.1"))
+        assertTrue(grant.applied);val after=result.snapshot.copy(flags=grant.flags,inventory=grant.inventory)
+        assertTrue(after.validate(c));assertEquals(after,SaveSnapshot.parse(after.json().toString()))
+        assertFalse(WorldItems.openTreasure(after,hidden.treasure!!,c.itemDefinitions.getValue("rom.medicine.1")).applied)
+        assertTrue(5*32+18 in scene.dynamicObjectCells)
+    }
+    /** Scoped loader/save fixtures; these do not claim a normal flower Boss win. */
+    fun testCave87ActualEventSixDepartureAndMoneyChestLoader(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(87);assertEquals(32,scene.width);assertEquals(15,scene.height)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.87.0");val chain=boss.continuation!!
+        assertEquals(StoryEntryTrigger(87,1,7),boss.entryTrigger)
+        assertEquals((11..17).map{"rom.dialogue.97.$it"},chain.dialogueIds)
+        assertEquals("xiaolongnv",chain.departureCharacterId);assertEquals(setOf(3,5),chain.movementsBeforeDialogue.keys)
+        val girl=c.joinCharacters.getValue("xiaolongnv");val yang=c.joinCharacters.getValue("yangjian")
+        val before=SaveSnapshot(c.scene.version,87,1*16+8,7*16+8,Key.UP,
+            listOf(c.initialPlayer,girl,yang),mapOf(HerbUse.ID to 8,OriginalYangJoin.ITEM_ID to 1),
+            mapOf("rom.map.110.flag.128" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),money=5000)
+        assertTrue(before.validate(c))
+        var s=StoryFollowup.approachBattle(before,boss).snapshot
+        assertTrue(s.validate(c));assertEquals(s,SaveSnapshot.parse(s.json().toString()))
+        // Isolated already-won fixture, not normal player victory or reward.
+        s=s.copy(flags=boss.rewardFlags(s.flags));assertTrue(s.validate(c))
+        for(id in chain.dialogueIds){
+            s=StoryFollowup.advance(s,boss,id,c.joinCharacters).snapshot
+            assertTrue(s.validate(c));assertEquals(s,SaveSnapshot.parse(s.json().toString()))
+        }
+        assertEquals(girl.copy(statusMask=girl.statusMask or 64),s.characters[1])
+        assertEquals(listOf("nezha","yangjian"),OriginalPartyRules.battleCharacters(s.characters).map{it.id})
+        assertEquals(before.inventory,s.inventory);assertEquals(before.money,s.money)
+        assertFalse(c.npcsForState(87,s.flags).any{it.id=="rom.npc.87.0"})
+        val chest=c.npcs.single{it.id=="rom.npc.87.4"}.moneyTreasure!!
+        val grant=WorldItems.openMoneyTreasure(s,chest);assertTrue(grant.applied)
+        assertEquals(s.money+550,grant.snapshot.money);assertTrue(grant.snapshot.validate(c))
+        assertFalse(WorldItems.openMoneyTreasure(grant.snapshot,chest).applied)
+        assertEquals("rom.medicine.0",c.npcs.single{it.id=="rom.npc.87.6"}.treasure!!.itemId)
+    }
+    /** Controlled loader/gift/scheduler fixture, not a normal route recording. */
+    fun testFiveDragonOriginalGiftAndReusableBattleItem(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(48,c.scenes.getValue(99).width);assertEquals(75,c.scenes.getValue(99).height)
+        assertEquals(16,c.scenes.getValue(163).width)
+        val teacher=c.npcs.single{it.id=="rom.npc.163.1"}
+        val gate=OriginalNpcTalk.flagsAfterMapLoad(79,3,emptyMap())
+        val baseRoom=c.sceneForState(163,emptyMap())!!;val openRoom=c.sceneForState(163,gate)!!
+        assertTrue(10*16+7 in baseRoom.dynamicObjectCells);assertFalse(10*16+7 in openRoom.dynamicObjectCells)
+        assertTrue(9*16+7 in openRoom.dynamicObjectCells)
+        assertEquals(baseRoom.collision.toList(),openRoom.collision.toList())
+        assertEquals(baseRoom.enabled,openRoom.enabled)
+        val disciple=c.npcsForState(163,gate).single{it.id=="rom.npc.163.0"}
+        assertEquals(7 to 9,disciple.x to disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
+        assertEquals(10,c.npcsForState(163,emptyMap()).single{it.id==disciple.id}.y)
+        assertEquals(7 to 5,teacher.interactionCell);assertEquals(Key.UP,teacher.interactionDirection)
+        val item=c.itemDefinitions.getValue("rom.special.9")
+        assertEquals(9,item.originalId);assertEquals(1,item.maxCount)
+        assertNotNull(item.battleBindingUse);assertNull(item.herbUse);assertNull(item.buyPrice)
+        val initial=SaveSnapshot(c.scene.version,163,7*16+8,5*16+8,Key.UP,
+            listOf(c.initialPlayer),emptyMap(),money=100)
+        assertTrue(initial.validate(c))
+        val gift=OriginalNpcTalk.begin(initial,teacher.originalTalk!!,item)
+        assertTrue(gift.applied);assertEquals(1,gift.snapshot.inventory[item.id])
+        assertEquals(initial.money,gift.snapshot.money);assertEquals(initial.characters,gift.snapshot.characters)
+        assertTrue(gift.snapshot.validate(c));assertEquals(gift.snapshot,SaveSnapshot.parse(gift.snapshot.json().toString()))
+        val repeat=OriginalNpcTalk.begin(gift.snapshot,teacher.originalTalk!!,item)
+        assertEquals("rom.dialogue.173.3",repeat.nextDialogue);assertEquals(gift.snapshot,repeat.snapshot)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.76.0")
+        val fight=OpeningBattle(boss.group,c.battle!!,c.initialPlayer.copy(hp=1000,maxHp=1000),0,0)
+        assertTrue(fight.bindingAvailable(1,item));assertFalse(fight.bindingAvailable(0,item))
+        assertNotNull(fight.useBinding(1,item,false){0})
+        assertEquals(gift.snapshot.inventory,fight.inventoryAfterBattle(gift.snapshot.inventory))
+    }
+    /** Bundled event7/load/save fixtures; actual island play is separately recorded. */
+    fun testIslandCompositeIntroChestAndOnceFinalization(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in listOf(76,77,78))assertEquals(16,c.scenes.getValue(mid).width)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.76.0");val intro=boss.intro!!
+        assertEquals(listOf(0,2,4,6),boss.group.members.map{it.slot})
+        assertEquals(listOf(152,153,154,155),boss.group.members.map{it.enemyId})
+        assertTrue(boss.finalizeWithoutDialogue)
+        val hero=c.initialPlayer.copy(hp=100,maxHp=100,statusMask=OriginalStatus.POISON)
+        val old=SaveSnapshot("opening-segment-001-c41",76,12*16+8,12*16+8,Key.UP,
+            listOf(hero),mapOf(HerbUse.ID to 4),money=1019,encounterSteps=1)
+        assertTrue(old.validate(c));var pending=StoryFollowup.begin(old,intro).snapshot
+        assertEquals(96,pending.characters.single().hp);assertEquals(5,pending.encounterSteps)
+        assertEquals(9,pending.x/16);assertEquals(11,pending.y/16)
+        for(id in intro.continuation.dialogueIds){
+            assertTrue(pending.validate(c));pending=SaveSnapshot.parse(pending.json().toString())
+            assertEquals(id,intro.pendingDialogue(pending.flags))
+            pending=StoryFollowup.advance(pending,intro,id).snapshot
+        }
+        assertTrue(pending.validate(c));assertTrue(boss.triggersAt(76,9,11,pending.flags))
+        val final=pending.copy(flags=boss.rewardFlags(pending.flags))
+        assertTrue(final.validate(c));assertFalse(boss.triggersAt(76,12,12,final.flags))
+        assertFalse(final.flags[boss.pendingFlag]==true)
+        assertEquals(final.flags,boss.rewardFlags(final.flags))
+        val beforeScene=c.sceneForState(76,emptyMap())!!;val afterScene=c.sceneForState(76,final.flags)!!
+        for(npc in c.npcs.filter{it.mapId==76&&it.automaticStoryOnly}){
+            assertTrue(c.npcVisible(npc,emptyMap()));assertFalse(c.npcVisible(npc,final.flags))
+            assertNotNull(beforeScene.check(npc.x,npc.y));assertNull(afterScene.check(npc.x,npc.y))
+        }
+        val money=c.npcs.single{it.id=="rom.npc.76.6"}.moneyTreasure!!
+        val opened=WorldItems.openMoneyTreasure(final,money)
+        assertTrue(opened.applied);assertEquals(final.money+100,opened.snapshot.money)
+        assertTrue(opened.snapshot.validate(c));assertEquals(opened.snapshot,SaveSnapshot.parse(opened.snapshot.json().toString()))
+        assertEquals(opened.snapshot,WorldItems.openMoneyTreasure(opened.snapshot,money).snapshot)
+        assertEquals(final.inventory,opened.snapshot.inventory);assertEquals(final.characters,opened.snapshot.characters)
+    }
     /** Isolated original contact/poison snapshots; not a normal-route recording. */
     fun testOriginalFerryEverySavedStageAndExactDockScope(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

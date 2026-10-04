@@ -9,6 +9,14 @@ class TreeChestGrantTest {
     @Test fun threeChestsMatchAllOriginalCapacityCasesAndRepeatDoesNotGrantAgain(){
         val rows=javaClass.getResourceAsStream("/world-tree-chest-original-cpu.tsv")!!.bufferedReader().use{it.readLines()}.drop(1)
         assertEquals(21,rows.size)
+        checkOriginalRows(rows)
+    }
+    @Test fun queenCityTwoChestsKeepAllOriginalCapacityAndRepeatRules(){
+        val rows=javaClass.getResourceAsStream("/queen115-chests-original.tsv")!!.bufferedReader().use{it.readLines()}.drop(1)
+        assertEquals(14,rows.size);assertEquals(setOf("115"),rows.map{it.substringBefore('\t')}.toSet())
+        checkOriginalRows(rows)
+    }
+    private fun checkOriginalRows(rows:List<String>){
         for(line in rows){
             val r=line.split('\t');val category=r[2].toInt();val original=r[3].toInt()
             fun id(n:Int)="rom.${names[category]}.$n"

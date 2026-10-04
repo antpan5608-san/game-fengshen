@@ -14,7 +14,7 @@ class SavedBoundaryUnavailable(RuntimeError):
 def validate_recording_budget(prefix,budget):
     # Only the scoped first-hall preparation and multi-hall continuation has a larger normal
     # budget. The old single-flow limits and all failure/restore checks stay.
-    maximum=7200 if prefix in ('world-hall-batch','world-first-hall') else 3600
+    maximum=9000 if prefix=='world-first-hall' else 7200 if prefix=='world-hall-batch' else 3600
     if not 60<=budget<=maximum:
         raise ValueError('Isolated recording budget outside the scoped bound')
 

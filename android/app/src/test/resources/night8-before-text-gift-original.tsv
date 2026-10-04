@@ -1,0 +1,5 @@
+case	quantityAfter	itemAfter	grantFailed
+empty	1	8	0
+existing	1	8	1
+used	129	8	1
+full	0	8	1
