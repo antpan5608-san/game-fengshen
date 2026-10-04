@@ -2115,14 +2115,15 @@ class TouchTest:IsolatedGameTestCase(){
         fun enterTrainingArea(){
             assertEquals(0,v.world.mapId);walkTo(0,14);step(Key.LEFT);walkTo(199,130)
             assertEquals(25,v.world.mapId)
-            // Real zone1 waypoints avoid the poison-zone shortcut chosen by BFS.
-            walkTo(29,43);walkTo(29,24);walkTo(5,24);assertEquals(96,v.world.mapId)
+            // The actual shortest entrance-to-entrance path is entirely in zone1.
+            // Do not invent intermediate waypoints: 29,43 is an original wall.
+            walkTo(5,24);assertEquals(96,v.world.mapId)
             walkTo(15,24)
             assertTrue(v.content.battle!!.zones.any{it.mapId==96&&it.contains(96,15,24)})
         }
         fun returnFromTraining(){
             assertEquals(96,v.world.mapId);walkTo(15,29);assertEquals(25,v.world.mapId)
-            walkTo(29,24);walkTo(29,43);walkTo(39,42);assertEquals(16,v.world.mapId)
+            walkTo(39,42);assertEquals(16,v.world.mapId)
             walkTo(202,130);assertEquals(0,v.world.mapId)
         }
         state("verified-normal-source-loaded")
