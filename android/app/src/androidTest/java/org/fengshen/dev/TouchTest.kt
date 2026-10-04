@@ -2463,6 +2463,81 @@ class TouchTest:IsolatedGameTestCase(){
             }
     }
     /** Exact same-candidate flower save, then ordinary movement/services; no witness injection. */
+    fun testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave()=normalWorldStoryContinuation(false,false,night8=true)
+    fun testNightEightColdRestartAndOriginalLightReset()=normalWorldStoryContinuation(true,false,night8=true)
+
+    private fun normalNightEightStage(v:GameView,cold:Boolean,source:SaveSnapshot,
+        walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,dialogue:()->Unit,persist:()->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val item=v.content.itemDefinitions.getValue(WorldItems.NIGHT_LIGHT_ID)
+        fun npcTap(n:StoryNpc){
+            val ui=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+            tap(v,ui.worldToScreen((n.x*16+8).toFloat(),(n.y*16+8).toFloat(),v.world.camera(ui.viewWidth,ui.viewHeight)))
+        }
+        fun useNight(){
+            val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,item.id)
+            tap(v,center(v.panelItemBounds(item.id)));assertEquals(before,v.currentSnapshot())
+            val action=center(v.panelPrimaryBounds());send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+            assertEquals(before,v.currentSnapshot());tap(v,action)
+            val expected=WorldItems.useNightLight(before,item,true);assertTrue(expected.applied)
+            assertEquals(before.copy(inventory=expected.inventory,flags=expected.flags),v.currentSnapshot())
+            val used=v.currentSnapshot();send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(used,v.currentSnapshot())
+            instrumentation.runOnMainSync{v.handleBack()};assertEquals(GameView.Layer.MAP,v.layer)
+            assertEquals(1,v.currentSnapshot().inventory[item.id]);assertEquals(true,v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG])
+        }
+        assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.87.flag.128"])
+        state(if(cold)"cold-exact-earned-night8-and-rope-save"else"verified-village6-source-no-grants",true)
+        if(!cold){
+            assertEquals(6,v.world.mapId);walk(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+            walk(78,158);assertEquals(100,v.world.mapId);state("normal-original-clear-peak-entry",true)
+            walk(20,11);assertEquals(164,v.world.mapId);state("normal-original-teacher164-door",true)
+            walk(7,5);val teacher=v.content.npcs.single{it.id=="rom.npc.164.1"};val before=v.currentSnapshot()
+            assertEquals(0,before.inventory[item.id]?:0);assertTrue(InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category))
+            npcTap(teacher);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+            val faced=before.copy(direction=Key.UP);val gift=OriginalNpcTalk.begin(faced,teacher.originalTalk!!,item)
+            assertTrue(gift.applied);assertEquals(gift.snapshot,v.currentSnapshot());assertEquals(1,v.currentSnapshot().inventory[item.id])
+            state("normal-original-teacher164-earned-night8-dialogue",true);dialogue()
+            val paid=v.currentSnapshot();npcTap(teacher);dialogue();assertEquals(paid,v.currentSnapshot())
+            state("normal-original-teacher164-repeat-no-second-gift",true)
+            walk(7,14);assertEquals(100,v.world.mapId);walk(8,51);assertEquals(16,v.world.mapId)
+            walk(70,105);assertEquals(74,v.world.mapId);state("normal-original-dark74-before-light",true)
+            assertTrue(v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG]!=true);useNight()
+            state("normal-original-dark74-night8-no-consumption",true)
+            val chest=v.content.npcs.single{it.id=="rom.npc.74.5"};val s=v.world.scene
+            val q=java.util.ArrayDeque<Pair<Int,Int>>();val seen=mutableSetOf(v.world.x/16 to v.world.y/16);q.add(seen.single())
+            while(q.isNotEmpty()){
+                val at=q.removeFirst()
+                for(key in listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT)){
+                    if(s.probeFrom(at.first,at.second,key)!=null)continue
+                    val delta=when(key){Key.UP->0 to -1;Key.DOWN->0 to 1;Key.LEFT->-1 to 0;else->1 to 0}
+                    val next=at.first+delta.first to at.second+delta.second
+                    if(next.first !in 0 until s.width||next.second !in 0 until s.height)continue
+                    if(seen.add(next))q.add(next)
+                }
+            }
+            val side=listOf(chest.x to chest.y+1,chest.x+1 to chest.y,chest.x-1 to chest.y,chest.x to chest.y-1).firstOrNull{it in seen}
+            assertNotNull("Original rope chest must have an actually reachable side",side);walk(side!!.first,side.second)
+            val beforeChest=v.currentSnapshot();assertTrue(beforeChest.flags[chest.treasure!!.flagId]!=true)
+            npcTap(chest);val after=v.currentSnapshot();val expected=WorldItems.openTreasure(beforeChest,chest.treasure!!,v.content.itemDefinitions.getValue("rom.special.13"))
+            assertTrue(expected.applied);assertEquals(expected.inventory,after.inventory);assertEquals(expected.flags,after.flags)
+            assertEquals(beforeChest.money,after.money);assertEquals(beforeChest.characters,after.characters)
+            state("normal-original-dark74-rope13-once",true);npcTap(chest);assertEquals(after,v.currentSnapshot())
+            persist();File(root,"world-night8-expected-save.json").writeText(v.currentSnapshot().json().toString())
+            state("normal-original-dark74-night8-rope-and-save",true)
+        }else{
+            assertEquals(74,v.world.mapId);assertEquals(true,source.flags[WorldItems.NIGHT_LIGHT_FLAG]);assertEquals(1,source.inventory[item.id])
+            assertEquals(1,source.inventory["rom.special.13"]);assertEquals(true,source.flags["rom.map.74.flag.64"])
+            state("cold-original-dark74-lit-scene-and-owned-items",true)
+            walk(3,28);assertEquals(16,v.world.mapId);assertEquals(70 to 105,v.world.x/16 to v.world.y/16)
+            assertTrue(WorldItems.NIGHT_LIGHT_FLAG !in v.currentSnapshot().flags)
+            assertEquals(true,v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_USED_FLAG]);state("cold-original-dark74-left-retains-night8",true)
+            step(Key.DOWN);walk(70,105);assertEquals(74,v.world.mapId);assertTrue(v.currentSnapshot().flags[WorldItems.NIGHT_LIGHT_FLAG]!=true)
+            state("cold-original-dark74-reentry-dark-no-second-rope",true);useNight();assertEquals(1,v.currentSnapshot().inventory["rom.special.13"])
+            assertEquals(true,v.currentSnapshot().flags["rom.map.74.flag.64"]);persist();state("cold-original-dark74-reused-night8-and-continue",true)
+        }
+    }
+
     private fun normalVillageSixStage(v:GameView,cold:Boolean,source:SaveSnapshot,
         walk:(Int,Int)->Unit,step:(Key)->Unit,state:(String,Boolean)->Unit,
         enter:(Int,Int,String?)->MapExit,leave:(MapExit)->Unit,
@@ -2672,11 +2747,11 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2731,7 +2806,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0&&OriginalPartyRules.present(it)}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -3016,6 +3091,11 @@ class TouchTest:IsolatedGameTestCase(){
                 .firstOrNull{treeRouteTo(it)!=null}
             assertNotNull("Original NPC must have a reachable adjacent cell",goal)
             treeWalkTo(goal!!);talk()
+        }
+        if(night8){
+            normalNightEightStage(v,cold,source,::walkTo,::step,::state,::dialogue,::persistChecked)
+            checkSourceUnchanged();assertEquals(0,bossEntries)
+            instrumentation.runOnMainSync{activity.finish()};return
         }
         if(village6){
             normalVillageSixStage(v,cold,source,::walkTo,::step,::state,

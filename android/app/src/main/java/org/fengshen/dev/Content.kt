@@ -49,6 +49,7 @@ data class ItemDefinition(val id:String,val name:String,val description:String?,
     val worldUse:WorldItemUseDefinition?=null) {
     // Body property preserves the published cross-APK constructor signature.
     var fieldProtectionUse:WorldFieldProtectionDefinition?=null;internal set
+    var nightLightUse:WorldFieldProtectionDefinition?=null;internal set
     var battleBindingUse:BattleBindingUseDefinition?=null;internal set
 }
 data class BattleBindingUseDefinition(val evidence:String)
@@ -89,6 +90,10 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     var clinics:Map<String,ClinicDefinition> = emptyMap();internal set
     var ferries:Map<String,FerryDefinition> = emptyMap();internal set
     var ferrySprites:Map<String,Bitmap> = emptyMap();internal set
+    var nightLightAtlas:(()->Bitmap)?=null;internal set
+    fun atlasForState(mapId:Int,flags:Map<String,Boolean>):Bitmap =
+        if(mapId==74&&flags[WorldItems.NIGHT_LIGHT_FLAG]==true)nightLightAtlas?.invoke()
+            ?:error("Verified cave light atlas unavailable") else atlases.getValue(mapId)
     // One state-dependent scene view. Arrays and atlases stay in the existing
     // bounded loader; this never holds every visited map alive.
     var joinCharacters:Map<String,CharacterState> = emptyMap()
@@ -292,7 +297,10 @@ object ContentLoader {
                     val cave=npc.id=="rom.npc.87.4"&&npc.mapId==87&&npc.x==8&&npc.y==4&&
                         t.getString("flagId")=="rom.map.87.flag.8"&&t.getInt("amount")==550&&
                         t.getString("evidence")=="game-data/provenance/world-cave87-chests.json"
-                    require((island||cave)&&t.getInt("moneyCap")==999999&&npc.openedSprite!=null&&
+                    val dark=npc.id=="rom.npc.74.4"&&npc.mapId==74&&npc.x==40&&npc.y==18&&
+                        t.getString("flagId")=="rom.map.74.flag.32"&&t.getInt("amount")==120&&
+                        t.getString("evidence")=="game-data/provenance/world-night8-chests.json"
+                    require((island||cave||dark)&&t.getInt("moneyCap")==999999&&npc.openedSprite!=null&&
                         npc.treasure==null&&npc.firstEffects.isEmpty())
                     npc.moneyTreasure=MoneyTreasureDefinition(t.getString("flagId"),t.getInt("amount"),t.getInt("moneyCap"),t.getString("evidence"))
                 }
@@ -318,10 +326,14 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
-                        1->require(t.getString("evidence")=="game-data/provenance/world-teacher163-binding.json"&&
-                            npc.id=="rom.npc.163.1"&&npc.mapId==163&&rule.mapFlagId=="rom.map.163.flag.2"&&
-                            rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.9"&&
-                            rule.firstDialogue=="rom.dialogue.173.2"&&rule.repeatDialogue=="rom.dialogue.173.3")
+                        1->{
+                            val gift=when(npc.mapId){163->9;164->8;else->error("Unknown original teacher")}
+                            val proof=if(npc.mapId==163)"world-teacher163-binding" else "world-night8-resources"
+                            require(t.getString("evidence")=="game-data/provenance/$proof.json"&&
+                                npc.id=="rom.npc.${npc.mapId}.1"&&rule.mapFlagId=="rom.map.${npc.mapId}.flag.2"&&
+                                rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.$gift"&&
+                                rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.2"&&rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.3")
+                        }
                         17->require(t.getString("evidence")=="game-data/provenance/world-tree107-talk.json"&&
                             npc.id=="rom.npc.110.0"&&npc.mapId==110&&rule.mapFlagId=="rom.map.110.flag.2"&&
                             rule.witnessFlagId=="rom.global.7c8.1"&&rule.itemId=="rom.special.19"&&
@@ -446,6 +458,12 @@ object ContentLoader {
                     item.herbUse==null&&item.antidoteUse==null&&use.getInt("mapId")==67&&
                     use.getBoolean("reusable")&&use.getString("evidence")=="game-data/provenance/world-field67-item12.json")
                 item.fieldProtectionUse=WorldFieldProtectionDefinition(use.getString("evidence"))
+            }
+            o.optJSONObject("nightLightUse")?.let{use->
+                require(item.id==WorldItems.NIGHT_LIGHT_ID&&item.category=="special"&&item.originalId==8&&item.maxCount==1&&
+                    use.getInt("mapId")==74&&use.getInt("paletteSelector")==32&&use.getBoolean("reusable")&&
+                    use.getString("evidence")=="game-data/provenance/world-night8-resources.json")
+                item.nightLightUse=WorldFieldProtectionDefinition(use.getString("evidence"))
             }
             o.optJSONObject("battleBindingUse")?.let{use->
                 require(item.id=="rom.special.9"&&item.category=="special"&&item.originalId==9&&item.maxCount==1&&
@@ -849,6 +867,13 @@ object ContentLoader {
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 content.clinics=clinics
+                data.optJSONObject("nightLightAtlas")?.let{v->
+                    require(v.getInt("mapId")==74&&v.getString("activeFlag")==WorldItems.NIGHT_LIGHT_FLAG&&
+                        v.getString("evidence")=="game-data/provenance/world-night8-resources.json"&&74 in scenes)
+                    val name=checkedName(v.getString("asset"));require(name=="tiles74-lit.png")
+                    val resource=ResourceMap(listOf(name),1){bitmap(it,256,256)}
+                    content.nightLightAtlas={resource.getValue(name)}
+                }
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers

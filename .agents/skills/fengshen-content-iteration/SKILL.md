@@ -333,3 +333,10 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 复用world-village-batch-resources.json及原export_from_base：固定实际几何、caller价目/商品表、桥矩阵、当前font与action selector，只加新增定义；旧媒体逐字节复用。源NPC的四个1KiB CHR银行可能不连续，不以4KiB整段搜索失败推断资源不存在。静态frame未匹配OAM时标PROVISIONAL，不写原版运行画面已验证。
 - 原来源enum仍只接受PROVISIONAL_REFERENCE/GAMEPLAY_VERIFIED；实际有id/价格来源但名字未解时保留nameConfidence UNKNOWN/referenceKind，不把UNKNOWN整个对象塞入已存在加载契约，也不放宽校验。局部四方法、6144对白/9容量原CPU、空目录ci_apk.restore及JVM/仪器编译已运行；正常App仍须当前候选原runner。
 - 精简current-task必须保留独立task_id行，check-runtime.ps1先解析该字段；历史正文归档而非删除。遗漏曾使inspect查询前失败，修后真实原inspect成功，不能把查询前失败写健康。
+
+## 已验证的局部光照和赠物接续
+
+- 原probe-world-night8.py复用既有py65 call，核当前目标选择器、重复使用数量、before-text赠物和实际forest class2完整分派；probe-world-tree-chests.py的--map-id只增加已取证调用域，仍执行相同原库存/成功flag路径。已在当前Linux缓存匹配ROM执行；各TSV与来源跨度受原export_development严格校验，原ROM/PPU/回放不公开。
+- 原validate_world_night8_resources/export_from_base的局部图集使用同一metatile/CHR，仅改变原palette；旧媒体不变。test_world_night8_export.py、NightLightTest和实际空目录ci_apk.restore已通过。低层CPU不能证明菜单持有/目标，须结合真实按键实验；原退出再入洞实验将临时照明与永久ownership/used区分。
+- 原结构出口可能落全墙且无可达邻格。先核真实grid/源记录，保留inactive来源、不开放假墙；初轮路径断言失败曾发现此问题。Android JSONObject在普通JVM为stub，真实JSON冷启断言放原ContentTest仪器，不把该编译写运行PASS。
+- 新正常光照/赠物/冷启驱动已编译并接原CI，实际App仍以任务记录为准；编译、受控实验和派生atlas不是正常路线或手机证据。

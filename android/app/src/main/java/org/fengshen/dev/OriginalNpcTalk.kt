@@ -50,14 +50,16 @@ object OriginalNpcTalk {
 
     private fun teacher163(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
-        if(rule.mapId!=163||rule.mapFlagId!="rom.map.163.flag.2"||rule.witnessFlagId.isNotEmpty()||
-            rule.itemId!="rom.special.9"||rule.firstDialogue!="rom.dialogue.173.2"||rule.repeatDialogue!="rom.dialogue.173.3")
-            return reject("文殊赠予规则未核验")
+        val gift=when(rule.mapId){163->9;164->8;else->return reject("师父赠予规则未核验")}
+        val group=rule.mapId+10
+        if(rule.mapFlagId!="rom.map.${rule.mapId}.flag.2"||rule.witnessFlagId.isNotEmpty()||
+            rule.itemId!="rom.special.$gift"||rule.firstDialogue!="rom.dialogue.$group.2"||rule.repeatDialogue!="rom.dialogue.$group.3")
+            return reject("师父赠予规则未核验")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("秘宝数量异常")
         if(before.flags[rule.mapFlagId]==true)return StoryFollowup.Result(before,rule.repeatDialogue,true)
-        if(item?.id!=rule.itemId||item.originalId!=9||item.category!="special"||item.maxCount!=1)
-            return reject("遁龙樁取得定义未接入")
+        if(item?.id!=rule.itemId||item.originalId!=gift||item.category!="special"||item.maxCount!=1)
+            return reject("秘宝取得定义未接入")
         // Actual action1 writes the flag BEFORE B481's gift. A full category
         // keeps that flag and the original text; it cannot invent a retry gift.
         val next=before.copy(flags=before.flags+(rule.mapFlagId to true),

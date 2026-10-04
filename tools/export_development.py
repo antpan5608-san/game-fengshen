@@ -766,7 +766,8 @@ def validate_world_chest_grant(reader,npc):
             'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
             'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35),
             'game-data/provenance/world-five-dragon-chests.json':('five-dragon99-three-original-item-chests',21),
-            'game-data/provenance/world-cave87-chests.json':('cave87-six-original-item-chests-and-money550',42)}
+            'game-data/provenance/world-cave87-chests.json':('cave87-six-original-item-chests-and-money550',42),
+            'game-data/provenance/world-night8-chests.json':('clear-peak100-dark74-seven-original-item-chests-and-money120',49)}
     if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
@@ -785,6 +786,10 @@ def validate_world_chest_grant(reader,npc):
                 proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
                 [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(99,0,2,2),(99,1,3,30),(99,2,0,9)]:
             raise ValueError('Five-dragon chests require actual three records and capacity cases')
+    elif path=='game-data/provenance/world-night8-chests.json':
+        raw=(ROOT/proof['cpuExpectedPath']).read_bytes();reuse=proof['ruleReuse']
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or len(raw.splitlines())!=50 or proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768))or [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(100,0,2,9),(100,1,0,2),(100,2,0,9),(74,0,0,0),(74,1,0,4),(74,5,1,13),(74,6,2,4)]:
+            raise ValueError('Night8 chests require actual seven records/capacity cases')
     elif path=='game-data/provenance/world-cave87-chests.json':
         reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
         if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or \
@@ -1369,6 +1374,61 @@ def validate_world_teacher163_gate(reader):
     return p
 
 
+def validate_world_night8_resources(reader):
+    """Exact local maps/teacher/use; reuses room, forest and inventory dispatch."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-night8-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='clear-peak100-teacher164-reusable-night8-dark74':
+        raise ValueError('Night8 target version/scope differs')
+    required={(2,0xe540,28),(2,0xa22c,108),(2,0xe7da,1),(2,0xb496,21),(10,0xa160,42),(10,0xcb84,12),(10,0xcf29,15),
+        (2,0xb60e,9),(2,0xa0eb,169),(2,0xa190,12),(0,0xa7f9,40),(0,0xca98,29),(0,0xcdc0,41),(0,0xce35,29),(0,0xd197,60),(0,0xd257,18)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:raise ValueError('Night8 missing original branches')
+    for s in p['sources']:checked_span(reader,s)
+    counts=[24576,2,4,196,256]
+    hashes=['3c05dce6974aec960d317367b7d16cf99f2a431f190ca2f1b6111bc500b65791','026a3706da9190b37e9159b2e444be5edb3162ec5a80f596e617668d9e1e53d9','351b9c5d4c6043c95ab6e715e8f05956e92dd42d31cb2ab61017964bda837c84','e6c25297c2bff21444010e82ff75749f079cc389254b25fc9f26fe6510230dde','5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b']
+    if len(p['cpu'])!=5 or p['probe']['path']!='tools/rom-extractor/probe-world-night8.py' or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Night8 original CPU probe identity differs')
+    for row,count,sha in zip(p['cpu'],counts,hashes):
+        raw=(ROOT/row['path']).read_bytes()
+        if (row['caseCount'],row['failures'],row['sha256'],digest(raw),len(raw.splitlines()))!=(count,0,sha,sha,count+1):raise ValueError('Night8 original CPU expectations differ')
+    f=p['font'];data=b''.join(checked_span(reader,s)for s in f['sources']);cs={int(k):v for k,v in f['charset'].items()}
+    if len(data)!=4096 or {g['code']for g in f['glyphs']}!=set(cs):raise ValueError('Night8 incomplete active font')
+    for g in f['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(data,0,g['code'])for v in row))!=g['pixelsSha256']:raise ValueError('Night8 original glyph differs')
+    if len(p['dialogues'])!=4:raise ValueError('Night8 teacher messages incomplete')
+    for i,d in enumerate(p['dialogues']):
+        t=extract_text(reader,174,i)
+        if d['id']!=f'rom.dialogue.174.{i}'or d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or d['text']!=decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']:raise ValueError('Night8 actual teacher message differs')
+    if p['rules']!=dict(npcId='rom.npc.164.1',mapId=164,npcCell=[7,3],normalTalkCell=[7,5],normalTalkDirection='UP'):raise ValueError('Night8 actual teacher interaction differs')
+    records=extract_npcs(reader,164)['records']
+    if len(p['npcs'])!=2:raise ValueError('Night8 teacher actor count differs')
+    for i,(n,rec)in enumerate(zip(p['npcs'],records)):
+        b=bytes.fromhex(rec['rawHex']);repeat=b[2]if b[2]!=255 else b[1]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstDialogue'],n['repeatDialogue'],n['firstEffects'])!=(f'rom.npc.164.{i}',164,[(rec[k]-120)//16 for k in ['xCandidate','yCandidate']],b[0],rec['range'],f'rom.dialogue.174.{b[1]}',f'rom.dialogue.174.{repeat}',[]):raise ValueError('Night8 original teacher actor differs')
+        if i==1 and n['originalTalk']!=dict(actionId=1,mapFlagId='rom.map.164.flag.2',witnessFlagId='',itemId='rom.special.8',evidence=path):raise ValueError('Night8 cannot infer another prerequisite or gift')
+        if i==0 and(n.get('originalTalk')or n.get('stateVariant')):raise ValueError('Night8 disciple has no new guard condition')
+    identities=[(100,5,[0,2,3,7,8,9],{0,1,2,3,7,8,9}),(164,2,[0,2],{0,1,2}),(74,3,[0],{0,1})]
+    if len(p['maps'])!=3:raise ValueError('Night8 map scope differs')
+    for m,(mid,tiles,allowed,classes)in zip(p['maps'],identities):
+        original=extract_map(reader,mid);c=original['collisionCandidate'];actual={reader.read(c['module'],c['cpuAddress']+v,1)[0]for row in original['grid']for v in row}
+        if(m['mapId'],m['tilesetId'],m['gridSha256'],m['walkableClasses'],actual)!=(mid,tiles,original['gridSha256'],allowed,classes)or m['sourceEdges']!=({'3':['LEFT','RIGHT']}if mid==100 else{})or m['targetEdges']!={}:raise ValueError('Night8 cannot open walls or alter original movement')
+        for s in m['staticPalette']['source']:checked_span(reader,s)
+        if any(m['palette'][i]!=m['staticPalette']['palette'][i]for i in range(32)if i%4):raise ValueError('Night8 default scene palette differs')
+        if mid==164:
+            reuse=m['ruleReuse'];validate_world_room171_resources(reader)
+            if reuse['path']!='game-data/provenance/world-room171-resources.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']:raise ValueError('Night8 room cannot invent movement')
+    light=p['lighting'];expected=dict(mapId=74,itemId='rom.special.8',paletteSelector=32,reusable=True,usedFlag='rom.inventory.special.8.used',activeFlag='runtime.map74.light.active',resetOnMapLoad=True,characterTarget=False,asset='tiles74-lit.png',evidence=path)
+    if any(light[k]!=v for k,v in expected.items())or light['paletteSource']['cpuAddress']!=reader.word(0,0xe3a6+64):raise ValueError('Night8 scene/use scope differs')
+    actual=checked_span(reader,light['paletteSource'])
+    if len(light['palette'])!=32 or any(light['palette'][i]!=actual[i]for i in range(16)if i%4)or any(light['palette'][i]!=p['maps'][2]['palette'][i]for i in range(16,32)if i%4):raise ValueError('Night8 light must change actual background palette only')
+    if len(p['items'])!=2:raise ValueError('Night8 item scope differs')
+    for item,oid in zip(p['items'],[8,13]):
+        ptr=reader.word(2,reader.word(2,0xe610)+oid*2);raw=reader.read(2,ptr,32);raw=raw[:raw.index(255)+1]
+        if(item['id'],item['category'],item['originalId'],item['maxCount'])!=(f'rom.special.{oid}','special',oid,1)or item['source']['nameRange']['cpuAddress']!=ptr or checked_span(reader,item['source']['nameRange'])!=raw or any(k in item for k in ['buyPrice','sellPrice','battleBindingUse','worldUse','herbUse']):raise ValueError('Night8 item cannot infer price, medicine or another command')
+        if oid==8 and(item['name']!='夜明珠'or item['nightLightUse']!=dict(mapId=74,paletteSelector=32,reusable=True,evidence=path)):raise ValueError('Night8 actual name/use differs')
+        if oid==13 and item.get('nightLightUse'):raise ValueError('Special13 use still unsupported')
+    return p
+
 def validate_world_teacher163_binding(reader):
     from forensics.fengshen246 import extract_npcs,extract_map,extract_text,decode_tokens,glyph_pixels
     path='game-data/provenance/world-teacher163-binding.json';p=load(ROOT/path)
@@ -1559,7 +1619,8 @@ def validate_world_island_money(reader,npc):
     from forensics.fengshen246 import extract_npcs
     path=npc['moneyTreasure']['evidence']
     identity={'game-data/provenance/world-island-chests.json':(76,6,4,8,100,'island76-five-original-item-chests-and-money100','tools/rom-extractor/probe-world-island-money.py'),
-        'game-data/provenance/world-cave87-chests.json':(87,4,8,5,550,'cave87-six-original-item-chests-and-money550','tools/rom-extractor/probe-world-cave87-state.py')}
+        'game-data/provenance/world-cave87-chests.json':(87,4,8,5,550,'cave87-six-original-item-chests-and-money550','tools/rom-extractor/probe-world-cave87-state.py'),
+        'game-data/provenance/world-night8-chests.json':(74,4,32,10,120,'clear-peak100-dark74-seven-original-item-chests-and-money120','tools/rom-extractor/probe-world-night8-money.py')}
     if path not in identity:raise ValueError('Unknown original money chest scope')
     mid,index,mask,item,amount,scope,probe=identity[path];p=load(ROOT/path);m=p['money'];record=extract_npcs(reader,mid)['records'][index]
     raw=checked_span(reader,record['range']);t=npc['moneyTreasure'];cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
@@ -1672,6 +1733,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
                     original['tilesetId']!=2 or set(collision)!={0,1,2}or allowed!=[0,2]or recipe['palette']!=room['map']['palette']:
                 raise ValueError('Room171 collision scope or reviewed palette differs')
+        night=recipe.get('night8CollisionEvidence')
+        if night:
+            proof=validate_world_night8_resources(reader);binding=next((m for m in proof['maps']if m['mapId']==mid),None)
+            if night!='game-data/provenance/world-night8-resources.json'or binding is None or allowed!=binding['walkableClasses']or recipe['palette']!=binding['palette']or recipe.get('directionalCollision')or recipe.get('forestCollisionEvidence'):
+                raise ValueError('Night8 map collision/palette differs')
         if recipe.get('teacher163CollisionEvidence'):
             room=validate_world_teacher163_binding(reader)
             if recipe['teacher163CollisionEvidence']!='game-data/provenance/world-teacher163-binding.json' or mid!=163 or \
@@ -1719,6 +1785,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             'spawn':recipe['spawn'],'dynamicObjectCells':recipe.get('npcCells',[]),
             'source':{'romSha256':SHA256,'mapGridSha256':original['gridSha256'],'evidence':provenance_path},
             'limitations':recipe.get('limitations',[])}
+        if night:
+            data['sourceEdges']=binding['sourceEdges'];data['targetEdges']=binding['targetEdges']
         if forest:
             data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
         if recipe.get('unavailableRegions'):
@@ -2125,6 +2193,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item['id']in ('rom.special.8','rom.special.13'):
+                    proof=validate_world_night8_resources(reader)
+                    if item not in proof['items']:raise ValueError('Night8 special definitions differ')
+                    continue
                 if item['id']=='rom.special.9':
                     proof=validate_world_teacher163_binding(reader)
                     if item!=proof['items'][0]:raise ValueError('Teacher163 special9 differs from actual gift/command')
@@ -2249,6 +2321,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
                     any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
                 raise ValueError('Village batch actor/dialogue/graphic differs')
+        elif npc['mapId']==164:
+            proof=validate_world_night8_resources(reader)
+            if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Night8 teacher actor/dialogue differs')
         elif npc['mapId']==163:
             proof=validate_world_teacher163_binding(reader)
             expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
@@ -2381,6 +2456,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('Treasure differs from original category, item or grant flag')
         if not overlay or not any(b['npcId']==npc['id'] and b.get('entryTrigger') for b in overlay.get('bosses',[])):
             raise ValueError('Guarded treasure requires its original coordinate story')
+    if evidence.get('nightLightAtlas'):
+        proof=validate_world_night8_resources(reader);light=proof['lighting']
+        expected=dict(mapId=74,activeFlag=light['activeFlag'],asset=light['asset'],evidence='game-data/provenance/world-night8-resources.json')
+        if evidence['nightLightAtlas']!=expected or 74 not in known:raise ValueError('Night8 atlas lacks actual current cave definition')
+        result[light['asset']]=scoped_map_atlas(reader,extract_map(reader,74),light['palette'],evidence['emulatorRgb']);scene['nightLightAtlas']=expected
     for obj in evidence.get('mapObjects',[]):
         raw=checked_span(reader,obj['recordSource']);mid=obj['mapId']
         cell=[(int.from_bytes(raw[i:i+2],'little')-120)//16 for i in (4,6)]

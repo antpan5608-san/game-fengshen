@@ -1,3 +1,7 @@
+## WORLD-FULL-01清峰山与暗黑洞窟局部实现（2026-10-04T08:30Z，c48未发布）
+
+新增原100/164/74、清虚真君原赠夜明珠、暗黑洞窟可重复使用照明/离洞重置、七原物品箱和120两钱箱、完整zone25/26与四敌原属性/真实图形；52图/276文件，manifest d53c9158facd29acb72421e7e0ebc6b258120b5e134fa014ee8e08d50c5ec721。原before-text赠物/容量与局部CPU证据、真实菜单/进出键受控证据见world-night8-resources.json和world-night8-chests.json。320 JVM/64 suites、3导出75.113秒、全新空目录严格恢复、原仪器编译和22审批fixture PASS；完整world回归执行中，所有新增Android正常/冷启/覆盖/声音/真机NOT_RUN。special13仅取得/名称暂定，未实现使用；两FF/FF箱待核，全墙结构返程保留记录不开放假路。生产仍v27，v64/run37185539165原c41运行中，不能拿其结果背书c48。总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN；十类欠账原权威清单完整保留。
+
 ## WORLD-FULL-01本地增量（2026-10-04T07:32Z，c47未发布）
 
 女儿村实际地图6、独立世界连接、三店/200两客栈/双医生、7村民原文字和action52、隐藏參須1已接原统一内容/存档/命令。4局部导出/路径方法79.223秒、314 JVM/63 suites、全新目录265文件严格恢复、原仪器编译与22审批fixture PASS；完整世界回归208方法/1064.753秒PASS，安全WIP work/world-island-c47/1381cac3已验证精确树且main未变；Android正常续段、覆盖升级、声音和一加13T均NOT_RUN。十类欠账原权威完整段保持，未关闭全地图/全商店/全量canonical或新图正常可玩验收。

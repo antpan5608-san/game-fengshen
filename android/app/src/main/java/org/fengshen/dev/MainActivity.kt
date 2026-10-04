@@ -1093,6 +1093,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 result==null->"当前装备条件不满足";else->""}
             return ItemAction("equip","装备给${heroName(hero.id)}",result!=null,reason,hero.id)
         }
+        item.nightLightUse?.let{
+            val reason=WorldItems.nightLightUnavailable(currentSnapshot(),item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+            return ItemAction("night-light","使用${item.name}",reason==null,reason?:"","field-map-74")
+        }
         item.fieldProtectionUse?.let{
             val reason=WorldItems.fieldProtectionUnavailable(currentSnapshot(),item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
             return ItemAction("field-use","使用${item.name}",reason==null,reason?:"","field-map-67")
@@ -1162,6 +1166,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
             "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
             "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
+            "night-light"->{
+                val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return
+                val current=itemAction()
+                if(selectedItemId!=id||current.kind!="night-light"||!current.enabled||cmd.targetId!=current.target)return
+                val before=currentSnapshot()
+                val result=WorldItems.useNightLight(before,item,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                // Verify/decode before committing state; draw never changes the effect.
+                try{content.atlasForState(world.mapId,result.flags)}catch(e:Exception){
+                    Diagnostics.record("night_light_atlas","ERROR",code=e.javaClass.simpleName,stack=e.stackTrace.take(12).joinToString("\n"));feedback("照明素材加载失败，物品和状态已保留");return
+                }
+                inventory=result.inventory;flags=result.flags;commitModal(before,"已使用${item.name}")
+            }
             "field-use"->{
                 val id=cmd.itemId?:return;val item=content.itemDefinitions[id]?:return
                 val current=itemAction()
@@ -1666,10 +1683,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.translate(ui.game.x,ui.game.y);c.scale(ui.scale,ui.scale);c.translate(-cam.x,-cam.y)
         val firstX=max(0,floor(cam.x/16).toInt());val lastX=min(scene.width-1,ceil((cam.x+cam.viewWidth)/16).toInt())
         val firstY=max(0,floor(cam.y/16).toInt());val lastY=min(scene.height-1,ceil((cam.y+cam.viewHeight)/16).toInt())
+        val mapAtlas=content.atlasForState(world.mapId,flags)
         for(ty in firstY..lastY)for(tx in firstX..lastX){
             val i=ty*scene.width+tx;val t=scene.grid[i];val x=tx*16f;val y=ty*16f
             paint.color=Color.WHITE;paint.alpha=255
-            c.drawBitmap(content.atlases.getValue(world.mapId),Rect(t%16*16,t/16*16,t%16*16+16,t/16*16+16),RectF(x,y,x+16,y+16),paint)
+            c.drawBitmap(mapAtlas,Rect(t%16*16,t/16*16,t%16*16+16,t/16*16+16),RectF(x,y,x+16,y+16),paint)
             if(debug){
                 if(i !in scene.enabled){paint.color=0x55000000;c.drawRect(x,y,x+16,y+16,paint)}
                 else {paint.color=0xffc56cff.toInt();paint.strokeWidth=.4f

@@ -57,3 +57,4 @@ if($runtime.worldIslandOriginalLayersAndFourVillainsNormal -ne 'PASS' -or $runti
 if($runtime.worldCave87FlowerNormal -ne 'PASS' -or $runtime.worldCave87DepartureAndColdRestart -ne 'PASS'){throw 'Actual cave87 route/flower Boss/seven dialogues/away actor and cold return must verify this exact APK'}
 
 if($runtime.worldVillageSixServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageSixColdRestart -ne 'PASS'){throw 'Actual village6 normal route, caller prices/services/dialogues/hidden medicine and cold return must verify this exact APK'}
+if($runtime.worldNightEightGiftAndCaveNormal -ne 'PASS' -or $runtime.worldNightEightColdRestart -ne 'PASS'){throw 'Actual teacher164 gift, original dark cave, reusable light, rope chest and external cold restart must verify this exact APK'}

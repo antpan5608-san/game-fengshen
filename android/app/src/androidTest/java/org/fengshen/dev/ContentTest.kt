@@ -13,6 +13,39 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Real loader/JSON fixtures; actual normal gift/use remains a separate recorded route. */
+    fun testNightEightOriginalMapAtlasGiftAndColdSaveFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(48,c.scenes.getValue(100).width);assertEquals(75,c.scenes.getValue(100).height)
+        assertEquals(16,c.scenes.getValue(164).width);assertEquals(48,c.scenes.getValue(74).width)
+        val item=c.itemDefinitions.getValue(WorldItems.NIGHT_LIGHT_ID);assertEquals("夜明珠",item.name)
+        assertNotNull(item.nightLightUse);assertNull(c.itemDefinitions.getValue("rom.special.13").nightLightUse)
+        val before=SaveSnapshot(c.scene.version,164,120,88,Key.UP,listOf(c.initialPlayer),emptyMap(),emptyMap(),money=123)
+        assertTrue(before.validate(c));val n=c.npcs.single{it.id=="rom.npc.164.1"}
+        val first=OriginalNpcTalk.begin(before,n.originalTalk!!,item);assertTrue(first.applied)
+        assertEquals(1,first.snapshot.inventory[item.id]);assertTrue(first.snapshot.validate(c))
+        assertEquals(first.snapshot,OriginalNpcTalk.begin(first.snapshot,n.originalTalk!!,item).snapshot)
+        assertTrue(c.dialogues.getValue(first.nextDialogue!!).text.contains("夜明珠"))
+        val cave=first.snapshot.copy(mapId=74,x=56,y=440);assertTrue(cave.validate(c))
+        val used=WorldItems.useNightLight(cave,item,true);assertTrue(used.applied)
+        val saved=cave.copy(inventory=used.inventory,flags=used.flags);assertTrue(saved.validate(c))
+        assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+        val dark=c.atlasForState(74,emptyMap());val lit=c.atlasForState(74,saved.flags)
+        assertEquals(256,dark.width);assertEquals(256,lit.width)
+        val a=IntArray(256*256);val b=IntArray(a.size);dark.getPixels(a,0,256,0,0,256,256);lit.getPixels(b,0,256,0,0,256,256)
+        assertFalse(a.contentEquals(b));assertEquals(saved,cave.copy(inventory=used.inventory,flags=used.flags))
+        val reset=WorldItems.fieldFlagsAfterStep(saved.flags,CompletedStep(74,3,28,true))
+        assertFalse(WorldItems.NIGHT_LIGHT_FLAG in reset);assertEquals(true,reset[WorldItems.NIGHT_LIGHT_USED_FLAG])
+        assertSame(dark,c.atlasForState(74,reset))
+        val oldVillage=cave.copy(mapId=6,x=248,y=456,contentVersion="opening-segment-001-c47")
+        assertTrue(oldVillage.validate(c));assertEquals(oldVillage,SaveSnapshot.parse(oldVillage.json().toString()))
+        for(id in listOf(52,53,56,57))assertNotNull(c.enemyGraphics[id])
+        val chest=c.npcs.single{it.id=="rom.npc.74.5"};assertEquals("rom.special.13",chest.treasure!!.itemId)
+        val grant=WorldItems.openTreasure(saved,chest.treasure!!,c.itemDefinitions.getValue("rom.special.13"));assertTrue(grant.applied)
+        val after=saved.copy(inventory=grant.inventory,flags=grant.flags);assertTrue(after.validate(c))
+        assertEquals(after,SaveSnapshot.parse(after.json().toString()));assertFalse(WorldItems.openTreasure(after,chest.treasure!!,c.itemDefinitions.getValue("rom.special.13")).applied)
+    }
+
     /** Real bundled loader/JSON fixtures; separate from normal route recording. */
     fun testVillageSixOriginalServicesTalkAndHiddenSaveRoundTrip(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

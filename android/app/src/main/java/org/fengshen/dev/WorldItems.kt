@@ -29,6 +29,9 @@ object WorldItems {
             "game-data/provenance/world-cave87-chests.json"->mapId==87&&
                 mapOf("rom.npc.87.1" to 0,"rom.npc.87.2" to 0,"rom.npc.87.3" to 0,
                     "rom.npc.87.5" to 2,"rom.npc.87.6" to 0,"rom.npc.87.7" to 2)[npcId]==category
+            "game-data/provenance/world-night8-chests.json"->
+                (mapId==100&&mapOf("rom.npc.100.0" to 2,"rom.npc.100.1" to 0,"rom.npc.100.2" to 0)[npcId]==category)||
+                (mapId==74&&mapOf("rom.npc.74.0" to 0,"rom.npc.74.1" to 0,"rom.npc.74.5" to 1,"rom.npc.74.6" to 2)[npcId]==category)
             "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
             "game-data/provenance/world-village-batch-resources.json"->mapId==6&&npcId=="rom.npc.6.3"&&category==0
             else->false
@@ -39,6 +42,9 @@ object WorldItems {
     const val FIELD_PENDING_FLAG="runtime.field67.protection.pending"
     const val FIELD_ACTIVE_FLAG="runtime.field67.protection.active"
     const val FIELD_USED_FLAG="rom.inventory.special.12.used"
+    const val NIGHT_LIGHT_ID="rom.special.8"
+    const val NIGHT_LIGHT_FLAG="runtime.map74.light.active"
+    const val NIGHT_LIGHT_USED_FLAG="rom.inventory.special.8.used"
     private const val TARGET_SPRITE=226
     data class Result(val inventory:Map<String,Int>,val flags:Map<String,Boolean>,
         val applied:Boolean,val error:String?=null)
@@ -49,8 +55,10 @@ object WorldItems {
             treasure.evidence=="game-data/provenance/world-island-chests.json"
         val cave=treasure.flagId=="rom.map.87.flag.8"&&treasure.amount==550&&
             treasure.evidence=="game-data/provenance/world-cave87-chests.json"
-        if((!island&&!cave)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
-        if(snapshot.mapId!=if(island)76 else 87)return reject("当前场景不可用")
+        val dark=treasure.flagId=="rom.map.74.flag.32"&&treasure.amount==120&&
+            treasure.evidence=="game-data/provenance/world-night8-chests.json"
+        if((!island&&!cave&&!dark)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
+        if(snapshot.mapId!=when{island->76;cave->87;else->74})return reject("当前场景不可用")
         if(snapshot.flags[treasure.flagId]==true)return reject("已经取过了")
         if(snapshot.money !in 0..treasure.moneyCap)return reject("当前银两超出原版钱箱可核范围，原状态已保留")
         return MoneyResult(snapshot.copy(money=minOf(treasure.moneyCap,snapshot.money+treasure.amount),
@@ -78,6 +86,22 @@ object WorldItems {
         fieldProtectionUnavailable(snapshot,item,inMapMenu)?.let{return reject(snapshot,it)}
         return Result(snapshot.inventory,snapshot.flags+mapOf(FIELD_PENDING_FLAG to true,FIELD_USED_FLAG to true),true)
     }
+    /** Actual E540 map74 selector and A22C reusable bookkeeping. The original
+     * map reconstruction resets the palette; ownership and used marker remain. */
+    fun nightLightUnavailable(snapshot:SaveSnapshot,item:ItemDefinition,inMapMenu:Boolean):String? {
+        if(item.id!=NIGHT_LIGHT_ID||item.category!="special"||item.originalId!=8||item.maxCount!=1||
+            item.nightLightUse?.evidence!="game-data/provenance/world-night8-resources.json")return "物品使用规则尚未核验"
+        if(!inMapMenu)return "只能在地图菜单使用"
+        val count=snapshot.inventory[item.id]?:0
+        if(count<=0)return "没有此物"
+        if(count!=1)return "物品数量异常"
+        if(snapshot.mapId!=74)return "原版仅在暗黑洞窟使用"
+        return null
+    }
+    fun useNightLight(snapshot:SaveSnapshot,item:ItemDefinition,inMapMenu:Boolean):Result {
+        nightLightUnavailable(snapshot,item,inMapMenu)?.let{return reject(snapshot,it)}
+        return Result(snapshot.inventory,snapshot.flags+mapOf(NIGHT_LIGHT_FLAG to true,NIGHT_LIGHT_USED_FLAG to true),true)
+    }
     /** BA85..BA92 promotes pending at a SOURCE-map67 completed step; original
      * 858E clears pending on map reconstruction, not the already active bit.
      * New-game/defeat reset uses the existing whole-state reset. */
@@ -85,6 +109,7 @@ object WorldItems {
         var next=flags
         if(step.mapId==67&&flags[FIELD_PENDING_FLAG]==true)next=next+(FIELD_ACTIVE_FLAG to true)
         if(step.transitioned)next=next-FIELD_PENDING_FLAG
+        if(step.transitioned)next=next-NIGHT_LIGHT_FLAG
         return next
     }
 
