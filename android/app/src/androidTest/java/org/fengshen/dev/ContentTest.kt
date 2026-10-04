@@ -14,6 +14,34 @@ import org.json.JSONObject
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
     /** Actual loader and controlled JSON/variant fixtures, separate from normal optional talk. */
+    /** R1 dependencies, original services and isolated save rules; not normal route evidence. */
+    fun testPlayableR1FrozenDependenciesAndMedicalPartySave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(setOf(0,1,2,16,17,18,19,20,22,23,25,85,95,96,97,98,114,139),c.scenes.keys)
+        assertEquals("opening-segment-001-c51-r1",c.scene.version)
+        assertEquals(setOf("xiaolongnv"),c.joinCharacters.keys)
+        assertEquals(setOf("rom.clinic.1.revival","rom.clinic.1.care","rom.clinic.2.revival","rom.clinic.2.care"),c.clinics.keys)
+        val room=c.scenes.getValue(20)
+        assertEquals(setOf(0,2,5),room.walkableClasses)
+        assertTrue(room.sourceEdges.isEmpty());assertTrue(room.targetEdges.isEmpty())
+        assertEquals(2,c.npcs.count{it.mapId==20&&it.clinicId!=null})
+        for(caller in listOf(1,2)){
+            assertEquals(2,c.serviceBindings.count{it.callerMapId==caller&&it.interiorMapId==20})
+            assertTrue(ClinicRevival.valid(c.clinics.getValue("rom.clinic.$caller.revival")))
+            assertTrue(ClinicCare.valid(c.clinics.getValue("rom.clinic.$caller.care")))
+        }
+        val base=SaveSnapshot(c.scene.version,20,7*16+8,12*16+8,Key.DOWN,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv").copy(hp=0,statusMask=32)),
+            mapOf(HerbUse.ID to 2),mapOf("unrelated" to true),887,interiorContext=InteriorContext(2,22,26))
+        assertTrue(base.validate(c))
+        val result=ClinicRevival.apply(base.money,base.characters,"xiaolongnv",c.clinics.getValue("rom.clinic.2.revival"))
+        assertTrue(result.applied)
+        val saved=base.copy(money=result.money,characters=result.characters)
+        assertTrue(saved.validate(c));assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+        assertEquals(base.characters.first(),saved.characters.first())
+        assertEquals(base.inventory,saved.inventory);assertEquals(base.flags,saved.flags)
+    }
+
     fun testRoom116OriginalEventAndPreservedVariantCapabilitiesFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         assertEquals(32,c.scenes.getValue(116).width);assertEquals(15,c.scenes.getValue(116).height)

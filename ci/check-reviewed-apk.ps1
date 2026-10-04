@@ -13,6 +13,13 @@ $verified=Join-Path $root 'artifacts/ci/reverified.json'
 & python (Join-Path $root 'tools/ci_apk.py') verify --apk $apks[0].FullName --output $verified --code $receipt.versionCode --name $receipt.versionName
 if($LASTEXITCODE -ne 0){throw 'Reviewed signature/content/version failed revalidation'}
 
+# The exact R1 dependency manifest requires all shared and stage-specific gates; full gates remain below.
+if($runtime.runtimeScope -eq 'PLAYABLE-R1'){
+    & python (Join-Path $root 'tools/runtime_handoff.py') review --receipt (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json')
+    if($LASTEXITCODE -ne 0){throw 'Frozen R1 same-candidate scope review failed'}
+    return
+}
+
 # A Nanhai candidate must prove the actual continuous route and the exact Boss/victory artifact.
 if($runtime.nanhaiNormalRoute -ne 'PASS' -or $runtime.nanhaiBossVictory -ne 'PASS' -or $runtime.nanhaiOnceAndColdRestart -ne 'PASS'){
     throw 'Nanhai normal App route/Boss/once-and-restart gates are required'

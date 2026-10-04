@@ -1,5 +1,5 @@
 """C6 hidden discovery remains a real blocked actor, without fake visible art."""
-import copy,json,sys,unittest
+import copy,json,os,sys,unittest
 from pathlib import Path
 from unittest.mock import patch
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
@@ -9,7 +9,7 @@ class HiddenVillage5Test(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.path='game-data/provenance/world-village5-hidden-content.json';cls.p=ex.load(ci.ROOT/cls.path);cls.parent=ex.load(ci.ROOT/cls.p['baseExport']['pinPath']);cls.pin=copy.deepcopy(cls.parent);cls.pin['contentVersion']='opening-segment-001-c45';cls.pin['iteration']['provenance']=cls.path
-  cls.base=ci.content(Path('/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk'),cls.pin['iteration']['base']);cls.old=ex.export_from_base(cls.base,cls.parent['iteration']['provenance'],cls.parent)
+  cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base']);cls.old=ex.export_from_base(cls.base,cls.parent['iteration']['provenance'],cls.parent)
   cls.out=ex.export_from_base(cls.base,cls.path,cls.pin,verify_target=False);cls.pin['manifestSha256']=ci.sha(cls.out['manifest.json']);cls.scene=json.loads(cls.out['scene.json'])
  def test_exact_repeatable_original_material_and_hidden_actor(self):
   self.assertEqual(self.out,ex.export_from_base(self.base,self.path,self.pin));ci.validate_item_sources(self.out)

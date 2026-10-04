@@ -1,3 +1,9 @@
+## PLAYABLE-R1收敛（2026-10-04T12:29:56Z，未发布）
+
+当前任务按用户新授权冻结至东海胜后小龙女入队/地府村2服务、双人战斗、冷启动继续。18张依赖地图/120文件由原村2+医生配方生成，c51-r1 manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805；这是打包/本地验证，不是App验收。c50/56地图/302文件及所有后续源码/取证保留开发线，未关闭十殿/重生/女人国/全有效地图欠账。
+
+v67 build失败为测试硬编码Linux基底路径，当前已按原runner环境变量修正；App未执行，不能发布。R1原三job/签名/同源/同hash/reviewer继续必需，原全开发29正常路径仍保留，scope外不写PASS。335 JVM、仪器编译、严格干净内容恢复及28审批fixture已执行；本轮原inspect37202401403实际成功（12:32:02Z/27+26/3740事件/9真机会话/旧26 ProtocolException1），32运行fixture/2基底路径导出和最终仪器编译通过；实际新App待原同候选Actions，正式仍v27。完整当前状态和命令仅在current-task。
+
 ## WORLD-FULL-01 Windows门禁修正（2026-10-04T11:43:03Z，未发布）
 
 v65/run37199054406/sourcece5bebaf build在新脚本分派fixture退出1，后续三段App作业未执行；没有APK或发布PASS。保留失败，显式定位已有Git Bash替代默认bash/WSL入口，新增缺Git Bash拒绝与选择测试并输出真实stderr。Linux runtime相关31方法PASS；Windows修正和跨runner接续仍待下一候选。当前c50内容/玩家代码/原版数值不变，正式仍v27/c14，总体PARTIAL，原十类欠账保持。
