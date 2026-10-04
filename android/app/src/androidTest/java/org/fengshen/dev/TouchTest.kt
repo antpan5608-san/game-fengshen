@@ -1950,14 +1950,19 @@ class TouchTest:IsolatedGameTestCase(){
         val fixture=JSONObject(instrumentation.context.assets.open("north-repeat-before-optional-herb.json")
             .bufferedReader(Charsets.UTF_8).use{it.readText()})
         assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_APP_CHECKPOINT",fixture.getString("kind"))
-        val source=SaveSnapshot.parse(fixture.getJSONObject("snapshot").toString())
+        val recorded=SaveSnapshot.parse(fixture.getJSONObject("snapshot").toString())
+        // 46 is the unmodified normal source; 4 is an explicit isolated boundary.
+        // At max109, one herb from4 leaves54 and the automatic supply helper
+        // would use another on the next step. Reentry must isolate movement.
+        fun verify(hp:Int){
+        val source=if(hp==46)recorded else recorded.copy(characters=recorded.characters.map{it.copy(hp=hp)})
         val(activity,v)=launch()
         assertTrue("Historical normal checkpoint must validate against actual content",source.validate(v.content))
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         val before=v.currentSnapshot();assertEquals(139,before.mapId)
         assertEquals(true,before.flags["rom.map.139.flag.128"])
         assertEquals(true,before.flags["rom.map.139.flag.2"])
-        assertEquals(46,before.characters.single().hp);assertEquals(109,before.characters.single().maxHp)
+        assertEquals(hp,before.characters.single().hp);assertEquals(109,before.characters.single().maxHp)
         val expected=HerbUse.apply(before.characters,before.inventory,"nezha",
             v.content.itemDefinitions.getValue(HerbUse.ID),true)
         assertTrue(expected.applied)
@@ -1967,7 +1972,7 @@ class TouchTest:IsolatedGameTestCase(){
         val supplied=v.currentSnapshot()
         assertEquals(expected.characters,supplied.characters);assertEquals(expected.inventory,supplied.inventory)
         assertEquals(before.money,supplied.money);assertEquals(before.flags,supplied.flags)
-        assertEquals(96,supplied.characters.single().hp)
+        assertEquals(hp+50,supplied.characters.single().hp)
         assertEquals((before.inventory[HerbUse.ID]?:0)-1,supplied.inventory[HerbUse.ID]?:0)
         instrumentation.runOnMainSync{v.handleBack()}
         stickStep(v,Key.DOWN);stickStep(v,Key.UP)
@@ -1978,8 +1983,10 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(supplied.money,repeated.money);assertEquals(supplied.flags,repeated.flags)
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
         assertEquals(repeated,v.currentSnapshot());assertEquals(GameView.Layer.MAP,v.layer)
-        screenshot(v,"controlled-north-repeat-after-optional-herb")
+        screenshot(v,"controlled-north-repeat-after-optional-herb-hp$hp")
         instrumentation.runOnMainSync{activity.finish()}
+        }
+        verify(46);verify(4)
     }
     /** Normal continuation: no fixture mutation beyond byte-exact same-candidate source load. */
     fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave(){
@@ -2266,7 +2273,10 @@ class TouchTest:IsolatedGameTestCase(){
         // A legal map herb can be needed after the real boss. Separate that
         // explicit normal supply from the no-second-reward comparison.
         supply();val beforeReentry=v.currentSnapshot();state("optional-normal-supply-before-trigger-reentry")
-        step(Key.DOWN);walkTo(2,4);assertEquals(GameView.Layer.MAP,v.layer)
+        // These two original interior moves must not also call the optional
+        // field supply helper; otherwise low HP can legally consume a second herb.
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP);assertEquals(GameView.Layer.MAP,v.layer)
+        assertEquals(139,v.world.mapId);assertEquals(2 to 4,v.world.x/16 to v.world.y/16)
         assertEquals(beforeReentry.characters,v.currentSnapshot().characters)
         assertEquals(beforeReentry.inventory,v.currentSnapshot().inventory);assertEquals(beforeReentry.money,v.currentSnapshot().money)
         assertEquals(beforeReentry.flags,v.currentSnapshot().flags);state("trigger-reentered-no-battle-or-reward")

@@ -24,8 +24,9 @@ status: PARTIAL
 - 不可变artifact11304251460/fengshen-signed-apk已下载；v68/0.8.10-playable-r1，16632525字节，SHA553839d32b6c78680fe2e49bc3a5d0d29e18756426f57cf67237c83662705592；原Signer5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6。原ci_apk.verify独立验版本/签名/120文件/c51-r1 manifest全部PASS。
 - v68/base job111442185011于14:27:31Z失败，world/continuation SKIPPED，总run FAILURE/NOT_PUBLISHED。实际北宫Boss胜利、珍珠首次领取与立即复查通过；重进触发点时正常补给药草将HP46→96、数量7→6，钱946/EXP2566/剧情位未变，驱动却与补给前状态比较（TouchTest原2231行）。分类TEST_HARNESS，不声称游戏崩溃或重复发奖。
 - 最小修复：正常药草补给后再捕获重进比较状态，保留所有角色/库存/钱/flag断言；新增隔离复现使用v68真实normal-index中的原值，明确CONTROLLED，不替代新候选主线。复现放在原base长路线之前。医疗normal/cold索引与截图分名，避免冷启覆盖正常来源。窄补已知c51-r1存档标记，场景/引用/位置校验保留，未来升级仅纯逻辑核对，不能写实际覆盖PASS。
-- 修复后本地335 JVM/68 suites/0失败错误跳过与仪器APK编译30秒PASS；runtime handoff13方法与scope5方法PASS，Bash语法/diff PASS。新隔离Android复现与完整新候选正常/冷启仍待原Actions。
-- 下一动作：提交已验证最小修复并用原main非强制集成，按实际已分配68/正式27使用下一候选69；内容仍c51-r1/同manifest，原三job/原审批不变。新候选须从正常新游戏同APK完成R1全路线，不能借v68录像写新候选PASS。
+- 修复后本地335 JVM/68 suites/0失败错误跳过与仪器APK编译PASS；全部runtime相关32方法与scope5方法PASS，Bash语法/diff PASS。新增4HP受控边界明确不是正常存档原值；新隔离Android复现与完整新候选正常/冷启仍待原Actions。
+- v69/run37210639485/source7b13487d触发14:48:46Z；构建期间静态复查发现一次补给后HP仍低于半血时，step helper会再次合法用药（如4→54→104/max109），仍可能错误比较。未进入App前申请取消原run，不冒称新AppFAILURE。修为明确普通触控DOWN/UP原两格重进，保留地图/落点/钱/物品/角色/flag断言，补4HP隔离边界，与原46HP来源区分。
+- 下一动作：保存最小修正、非强制集成并构建下一候选70。内容仍c51-r1/同manifest，原三job/原审批不变。新候选须从正常新游戏同APK完成R1全路线，不能借v68录像写新候选PASS。
 - 三job实际通过后：原自动审批/publish同来源同SHA→公网完整字节/签名/内容复核→实际postflight→完整R1阶段报告。任一P0/P1最小定位修复、新产物重验，不把旧候选证据给新候选背书。
 - R1报告后才安全同步必要修复到现有c50开发线，固定下一终点继续地府必要流程→重生入队→已有山洞/村/女人国接入验证。WORLD-FULL-01总体PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。
 
