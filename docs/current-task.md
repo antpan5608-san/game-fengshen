@@ -22,11 +22,11 @@
 ## 本轮实际核验与限制
 
 - 开工inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289、总3720事件，普通真机8会话/模拟器0/测试0/清理0。旧v26 apk_update ProtocolException1仍ISSUES_FOUND/根因UNCONFIRMED；不拿旧版证明新候选健康。发布须新pre/post查询。
-- GH API、原Actions和原自动审批已实证恢复；Git HTTPS推送普通/命令级gh helper分别无用户名/HTTP401，不改全局认证；安全Git API方法仍可用。不输出Token或把runner Secrets当当前任务资源。
+- GH API、原Actions和原自动审批已实证恢复；Git HTTPS推送普通/命令级gh helper分别无用户名/HTTP401，不改全局认证；安全Git API备份work/world-island-c46成功，远端a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4/精确本地树443db5228afb59b05c5bf1373a62c5510ee49d9e，main未变。不输出Token或把runner Secrets当当前任务资源。
 - 原未改ROM CPU：3078事件边界、1536离队投影/恢复、35钱箱、42物品箱零差异。原胜利取证受控修改HP/敌HP1，绝不算正常胜利或Android证据；ROM/PPU/私有存档均忽略。
 - 本地310 JVM/62 suites/0失败错误跳过；3局部导出75.077秒PASS/严格两次相同/旧媒体不变。原ci_apk.restore(source,destination=全新TemporaryDirectory/assets)实际255文件/全manifest hash PASS。CLI restore忽略--output，首次只恢复已有assets，失败方法明确保留。
 - 原正常驱动已接同候选四恶人存档→渡船/真实补给→村5/后山→花狐貂/七对白→外部冷启/再入；仪器编译PASS。大方法64KiB及缺state参数两次编译失败后抽出原渡船段并修正参数，保留全部断言，不当App故障。22审批隔离fixture与2采购守卫PASS，sh语法PASS。
-- c46完整世界Python回归进行中，结果尚未计PASS。新正常App、覆盖升级、真实手机、声音都NOT_RUN。
+- c46完整世界Python回归202项/985.546秒/0失败错误跳过PASS。新正常App、覆盖升级、真实手机、声音都NOT_RUN。
 
 ## 下一条实际动作
 
