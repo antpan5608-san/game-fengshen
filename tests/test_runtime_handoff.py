@@ -234,7 +234,8 @@ sleep(){ :; }
         self.assertEqual(observed['all'], sum((observed[s] for s in handoff.STAGES), []))
         self.assertEqual(29, len(observed['all']))
         self.assertEqual(29, len(set(observed['all'])))
-        self.assertEqual('world-north-palace', observed['base'][-1])
+        self.assertEqual('world-village1', observed['base'][-1])
+        self.assertLess(observed['base'].index('world-north-palace'), observed['base'].index('world-north'))
         self.assertEqual('world-cave85', observed['world'][0])
         self.assertEqual('world-ferry', observed['world'][-1])
         self.assertEqual('world-island', observed['continuation'][0])
@@ -269,12 +270,18 @@ sleep(){ :; }
                 if line.startswith('PY tools/record_app_audio.py world-') and 'world-f0 ' not in line:
                     self.assertIn('--cold-test', line)
             if stage == 'base':
+                self.assertIn('TEST testControlledNorthTravelFromVerifiedPalaceSave', lines)
+                for label, method in [('world-north','testNormalWorldSeaNorthFromVerifiedNorthPalaceSave'),
+                                      ('world-village1','testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave')]:
+                    self.assertTrue(any(line.startswith('PY tools/record_app_audio.py '+label+' '+method+' ') for line in lines))
                 for test in ['testUpgradeKeepsPreviousSave','testTouchUxTradeGesturesAndResultEquivalence',
                              'testControlledMedicalCommandsCancellationGestureAndSave',
                              'testControlledWholly08PartyAdvancesWithoutTouchCommand',
                              'testInput01RealMapWallSlidesAndMenuCancellation']:
                     self.assertIn('TEST '+test, lines)
         self.assertEqual(7,len(observed['base']))
+        self.assertLess(observed['base'].index('world-north-palace'), observed['base'].index('world-north'))
+        self.assertLess(observed['base'].index('world-north-palace'), observed['base'].index('world-village1'))
         self.assertEqual(['world-cave85','world-east-palace','world-hell-village2'],observed['world'])
         self.assertEqual(['world-r1-medical'],observed['continuation'])
         self.assertNotIn('world-first-hall',sum(observed.values(),[]))

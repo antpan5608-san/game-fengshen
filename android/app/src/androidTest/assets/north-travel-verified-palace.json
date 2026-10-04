@@ -1,0 +1,12 @@
+{
+  "kind": "CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",
+  "sourceCommit": "374cfc362fa5cfbc7a84b4c35608cd1ab20b4f59",
+  "sourceBuildRunID": "37211528686",
+  "sourceAPKsha256": "f04bf40300b4067269b96e4f77ff77799009f1805f32de57bfddce7ff1d24683",
+  "sourceArtifactId": 11308864610,
+  "sourceSaveSha256": "db3048adcda0170662567fe85c1d2a1f8eab9058b84017a10a296d74859f27ab",
+  "contentVersion": "opening-segment-001-c51-r1",
+  "contentManifestSha256": "427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805",
+  "savedJson": "{\"saveSchemaVersion\":1,\"contentVersion\":\"opening-segment-001-c51-r1\",\"mapId\":25,\"x\":776,\"y\":648,\"direction\":\"RIGHT\",\"characters\":[{\"id\":\"nezha\",\"level\":12,\"experience\":2583,\"hp\":85,\"maxHp\":109,\"mp\":0,\"strength\":33,\"stamina\":15,\"agility\":13,\"spirit\":9,\"maxMp\":0,\"equipment\":{\"rightHand\":2,\"leftHand\":-1,\"body\":1,\"feet\":28}}],\"terrainMode\":0,\"inventory\":{\"rom.armor.0\":1,\"rom.item.0\":2,\"rom.medicine.0\":3,\"rom.medicine.2\":1,\"rom.medicine.6\":10,\"rom.special.11\":1,\"rom.weapon.2\":1},\"flags\":{\"opening.intro.seen\":true,\"rom.event.97.39.1\":true,\"rom.inventory.special.11.used\":true,\"rom.map.139.flag.128\":true,\"rom.map.139.flag.2\":true,\"rom.map.25.flag.1\":true,\"rom.map.25.flag.128\":true,\"rom.npc.114.1\":true,\"rom.npc.114.2\":true,\"rom.npc.97.2\":true},\"money\":996,\"encounterSteps\":9}",
+  "verification": "Original same-candidate handoff.validate_checkpoint and cold boundary passed; isolated replay is not a new candidate normal route"
+}

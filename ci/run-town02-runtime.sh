@@ -159,6 +159,7 @@ run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledNorthRepeatAfterOptionalMapSupply
+if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledNorthTravelFromVerifiedPalaceSave; fi
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
 if [[ "$scope_id" != PLAYABLE-R1 ]]; then run_test testControlledBindingItemSelectionCancelAndSingleActorCommand; fi
@@ -192,10 +193,12 @@ run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
 python tools/record_app_audio.py touch-ux-after testNormalTouchUxSupplyAndEquipment --silent
 python tools/record_app_audio.py world-f0 testNormalWorldFullCurrentServices --silent
 python tools/record_app_audio.py nanhai-ci testNormalNanhaiRouteBossAndVictory --silent --cold-test testNanhaiColdStartMatchesNormalSave --budget-seconds 3600
-python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerifiedNanhaiSave --silent --cold-test testWorldNorthColdStartMatchesNormalSave --budget-seconds 1800
+# Same candidate normal preparation already earns every level/coin. Reuse that
+# legitimate checkpoint for optional northern regressions; no new player gate.
 python tools/record_app_audio.py world-west testNormalWorldWestPalaceFromVerifiedNanhaiSave --silent --cold-test testWorldWestColdStartMatchesNormalSave --budget-seconds 3600
-python tools/record_app_audio.py world-village1 testNormalWorldVillageOneServicesFromVerifiedNanhaiSave --silent --cold-test testWorldVillageOneColdStartMatchesNormalSave --budget-seconds 1800
 python tools/record_app_audio.py world-north-palace testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave --silent --cold-test testWorldNorthPalacePearlColdStartMatchesNormalSave --budget-seconds 3600
+python tools/record_app_audio.py world-north testNormalWorldSeaNorthFromVerifiedNorthPalaceSave --silent --cold-test testWorldNorthColdStartMatchesNormalSave --budget-seconds 1800
+python tools/record_app_audio.py world-village1 testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave --silent --cold-test testWorldVillageOneColdStartMatchesNormalSave --budget-seconds 1800
 fi
 if [[ "$stage" == world || "$stage" == continuation ]]; then
 python tools/runtime_handoff.py import --stage "$stage" --candidate artifacts/town02-runtime/candidate.json --directory artifacts/runtime-handoff-input --receipt artifacts/town02-runtime/previous-stage.json
