@@ -21,7 +21,7 @@ task_id: WORLD-FULL-01
 - 原24576低层选择器/2库存案例核special8只在map74改变palette32、数量保留/used位。实际原正常菜单键与出入洞键（持有/外门定位受控）确认32→world16/16→74/52，数量raw129不变；不是正常Android证据。运行场景照明和原ownership/used分离；换图清照明、Android存档冷启恢复当前场景，未宣称NES手动存档等价。
 - 地图物品面板仅选择，明确使用夜明珠才统一提交/保存，先验证照明图集再提交；不加角色目标/持有物入洞锁，不在draw结算。七个物品箱49原CPU/钱箱120两35原CPU零差异；rope13名称基于目标村民线索暂定，使用规则未接，不能套遁龙樁。
 - 原100(1,43)结构返程处于全墙组件，和四邻都class1；仅保留inactiveExitRecords原来源，不开放假通道。原8,51独立返程可达。两个74的FF/FF原箱保留图形/阻挡及待核，不猜奖励。
-- 320 JVM/64 suites/0失败错误跳过，3局部导出75.113秒PASS，全新TemporaryDirectory/assets严格276文件/全manifest PASS，仪器编译8秒及22审批Bash fixture PASS。首次JVM JSON调用因Android stub失败，移至真实ContentTest仪器fixture；首轮导出路径断言抓到全墙记录，修原输出后通过，均保留失败日志。c48完整世界回归执行中，不写通过总数。
+- 320 JVM/64 suites/0失败错误跳过，3局部导出75.113秒PASS，全新TemporaryDirectory/assets严格276文件/全manifest PASS，仪器编译8秒及22审批Bash fixture PASS。首次JVM JSON调用因Android stub失败，移至真实ContentTest仪器fixture；首轮导出路径断言抓到全墙记录，修原输出后通过，均保留失败日志。c48完整世界回归211方法/1136.741秒/0失败错误跳过PASS（/tmp/world-c48-full-world-regression.log）。安全远端work/world-island-c48/78af3cb2f7173c2e25f7723b7b035b41358dc4d4与本地f3bcc05精确tree744b14552877d384baf492eed8b09da6a0c8af7d一致；main未变。
 - 同原runtime/review链新增已编译正常女儿村存档→真实清峰山→实际赠物→洞内使用→取得rope13→外部冷启/原返程/重入变暗/再使用的驱动、有界视频/截图/索引；实际Android仍NOT_RUN。原ContentTest新增真实加载器/JSON/照明variant fixture，只有编译，不冒称运行PASS。
 - 下一可执行：原v64同源门槛通过即阶段发布；独立c48回归收尾/安全检查点；限定查真实女人国路线/事件与special13调度，现有技能/地图可继续，来源/奖励/连接不能猜。
 
@@ -55,7 +55,7 @@ task_id: WORLD-FULL-01
 ## 下一条实际动作
 
 1. 读取v64同源候选实际运行结果；新失败读取断言并修受影响部分，全部原门禁通过即自动阶段发布同一APK/公网完整hash/真实postflight，不等待非阻断欠账清零。
-2. c47完整回归与安全WIP备份已通过；c48已实现并等待完整回归结果，保存本次结果检查点；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
+2. c47完整回归与安全WIP备份已通过；c48已实现且211完整世界回归通过，保存本次结果检查点；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
 3. 具体缺口：独立新内容Android尚待runner；class26住宅/客栈overlay181辅助事件未恢复；女儿村北方洞窟/女人国实际数据、能力和连续正常证据待接。缺口只阻塞依赖区段，不重启全量研究。
 
 累计权威清单：docs/delivery-status.md原十类完整段。路线：docs/original-playthrough-roadmap.md。历史授权/检查点/失败原文完整归档：docs/history/world-full01-runtime-checkpoints.md、原stage-publication.md。当前文件是唯一当前任务入口；历史中的“当前有效”标题不再作为当前状态。
