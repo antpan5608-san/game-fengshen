@@ -359,3 +359,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原ci/run-town02-runtime.sh的阶段分派经隔离Bash函数执行验证，保留全部原normal recorder/cold-test；tools/runtime_handoff.py只验证/原样搬运App-written JSON，部分阶段不能声明全部PASS。Linux执行`python -m unittest discover -s tests -p test_runtime_handoff.py`实际覆盖同候选/正常与冷启边界、不同run/hash/版本/签名、改数据/缺阶段/真机拒绝和完整分派；此传输fixture不是正常App。
 - 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow三段AVD导入和继续须等同候选实际runner，不把脚本存在当成功。
 - 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。
+
+- 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，Windows真实运行仍待当前CI。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。

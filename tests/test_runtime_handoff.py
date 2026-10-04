@@ -1,12 +1,30 @@
 """Isolated transport/receipt rejection tests; these are not Android gameplay."""
 import copy
 import json
+import os
+import shutil
 import tempfile
 import unittest
 import subprocess
 from pathlib import Path
 from unittest.mock import patch
 from tools import runtime_handoff as handoff
+
+
+def existing_bash(platform=None):
+    """Use the runner's Git Bash on Windows, never its WSL launcher shim."""
+    if (platform or os.name) != 'nt':
+        selected = shutil.which('bash')
+        if not selected:
+            raise RuntimeError('Existing Bash is required for runtime dispatch validation')
+        return selected
+    git = shutil.which('git')
+    candidates = [Path(git).resolve().parent.parent / 'bin/bash.exe'] if git else []
+    candidates += [Path(os.environ.get('ProgramFiles', 'C:/Program Files')) / 'Git/bin/bash.exe']
+    for candidate in candidates:
+        if candidate.is_file():
+            return str(candidate)
+    raise RuntimeError('Existing Git Bash required; do not substitute the WSL launcher')
 
 
 class RuntimeHandoffTest(unittest.TestCase):
@@ -163,8 +181,9 @@ sleep(){ :; }
 '''
         observed = {}
         for stage in (*handoff.STAGES, 'all'):
-            result = subprocess.run(['bash', '-c', prefix + block, 'dispatch-fixture', stage],
-                cwd=self.root, capture_output=True, text=True, check=True, timeout=10)
+            result = subprocess.run([existing_bash(), '-c', prefix + block, 'dispatch-fixture', stage],
+                cwd=self.root, capture_output=True, text=True, timeout=10)
+            self.assertEqual(0, result.returncode, result.stderr[:2000])
             lines = result.stdout.splitlines()
             flows = [line.split()[2] for line in lines if line.startswith('PY tools/record_app_audio.py ')]
             observed[stage] = flows
@@ -181,6 +200,22 @@ sleep(){ :; }
         self.assertEqual('world-ferry', observed['world'][-1])
         self.assertEqual('world-island', observed['continuation'][0])
         self.assertEqual('world-queen117', observed['continuation'][-1])
+
+    def test_windows_selects_existing_git_bash_instead_of_wsl_shim(self):
+        git = self.root / 'Git/cmd/git.exe'
+        git.parent.mkdir(parents=True)
+        git.touch()
+        bash = self.root / 'Git/bin/bash.exe'
+        bash.parent.mkdir()
+        bash.touch()
+        with patch.object(shutil, 'which', return_value=str(git)):
+            self.assertEqual(str(bash), existing_bash('nt'))
+
+    def test_windows_missing_git_bash_is_not_silently_substituted(self):
+        with patch.object(shutil, 'which', return_value=None), \
+                patch.dict(os.environ, {'ProgramFiles': str(self.root / 'no-git')}):
+            with self.assertRaisesRegex(RuntimeError, 'WSL launcher'):
+                existing_bash('nt')
 
 
 if __name__ == '__main__':
