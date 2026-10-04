@@ -291,3 +291,18 @@ NPC首谈action与一次性seen分开；原action17在对白前写见面旗标�
 - 独立出口落点不是可任意离开的空地：真实runtime曾在23(55,91)固定向下撞55,92墙，原拓扑也核55,93墙。test_world_hell_route_driver新增实际落点西侧离开/返门与54,93↔54,94自然zone8邻格反例，4方法已运行；保留失败run，新正常App须重新审核，不放宽地形。
 
 - 新角色成长配方必须输出ContentLoader实际要求的limitEvidence，不能只有原ROM levelCapSource。签名候选曾在真实Content仪器门禁报JSONException；原extend_world_characters增加来源路径早期拒绝，局部导出测试缺字段反例及原restore已运行。更新旧仪器断言时仍核真实目标/只读双手能力，不吞加载错误；修后实际App须新候选重跑。
+
+
+## 已验证的共享村庄定向恢复（新App另验）
+
+原NPC记录第3字节不是文本组号；先从真实对话RAM/PPU核文本组，再复用extract_text/原字体图块hash转写。目标ROM两段2048字节font匹配、15段文本decode及三张原OAM/RGBArecipe已执行，Reference不能按未经核对的map/NPC序号套用。action50的原首谈/repeat selector与post-action分开，probe-world-village4.py实际运行576桥矩阵/3584对话案例，保留特殊repeat反例，不用通用NPC-seen新增剧情门槛。
+
+caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导出器只新增本村桥类别10/11边，不改历史父hash。原ci_apk.restore严格恢复220文件与局部4方法/282 JVM及仪器编译已运行；新增正常UI与冷启驱动未执行前须NOT_RUN，不能将原版/CPU/编译写正常Android可玩。
+
+- 静态可站的NPC邻格未必在当前桥的连通分量；本次村4驱动first邻格13,14反例实际失败，改只读probeFrom方向搜索选14,13，不放宽墙。5局部方法与282 JVM/仪器重新执行、真实LF checkout含新父pin及576/3584派生表通过；正常App仍待同产物门禁。
+
+- 原固定交通不得套门出口免费传送：先用现有Reader/ROM movement stream及实际接触按键核每个状态步、扣血/死亡位置、独立返程。跟踪probe-world-ferry.lua在官方FCEUX/Xvfb有界重跑、受控派生TSV一致；原回放仍受控缓存，不要求迁整目录。复用原局部export验证route/既存稳定对象hash/完整敌群，严格restore和4导出/完整世界回归/LFcheckout已运行。动作由统一状态持久、渲染不结算；JSON/真实正常路线/外部冷启须同候选仪器另验，未执行标NOT_RUN。初轮把整份旧地图JSON固定会漏掉合法的新出口格，应只核有证据的exact delta，禁止借此开放其他墙/海面。
+
+## 已验证的不可变artifact连接器回退
+
+直接gh artifact下载遇到blob403时，安装的GitHub连接器download_workflow_artifact可取得同仓库指定artifact的file_id，再由download_file取回ZIP。本轮已实际成功。只输出artifact身份和本地文件，不打印临时签名URL；解包前限制总大小与路径必须处于指定目录，随后仍调用原ci_apk.py verify检查receipt、APK完整SHA、签名、包名和内容pin。连接器成功不代表运行或发布成功，超过传输上限仍使用原受限证据入口；不删除代理或重写解包/验包平台。

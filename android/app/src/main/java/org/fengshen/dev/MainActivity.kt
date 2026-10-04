@@ -142,6 +142,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     var menuSelection=0;private set
     private var surface=false
     private var posted=false
+    private var ferryLastStepMs=0L
+    private var ferryPaused=false
     private var ui=layout(1,1,1f,safe,mode,config,world.scene.width*16,world.scene.height*16)
     private val paint=Paint().apply{isFilterBitmap=false;isAntiAlias=false}
     private val overlayPaint=Paint(Paint.ANTI_ALIAS_FLAG)
@@ -272,8 +274,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun doFrame(time:Long){
         posted=false
         if(!surface)return
-        if(active&&focused&&layer==Layer.MAP)clock.advance(time){
-            if(layer==Layer.MAP){world.tickIntent(input.movementIntent());processContactTransition();processCompletedStep()}
+        if(active&&focused&&layer==Layer.MAP&&OriginalFerry.pending(flags,content.ferries.values)!=null){
+            clock.reset();advanceFerryIfDue(time/1000000L)
+        } else if(active&&focused&&layer==Layer.MAP)clock.advance(time){
+            if(layer==Layer.MAP&&OriginalFerry.pending(flags,content.ferries.values)==null){
+                if(!beginFerryIfRequested(time/1000000L)){
+                    world.tickIntent(input.movementIntent());processContactTransition();processCompletedStep()
+                }
+            }
         } else if(active&&focused&&layer==Layer.BATTLE)clock.advance(time){
             if(!battleInfoOpen&&!battleItemsOpen){
                 if(battlePresentation.tick(16))finishBattlePresentation()
@@ -296,6 +304,59 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         var canvas:Canvas?=null
         try {canvas=holder.lockCanvas();if(canvas!=null)render(canvas)} finally {if(canvas!=null){holder.unlockCanvasAndPost(canvas);if(active&&focused)activity.firstInteractiveFrame()}}
         schedule()
+    }
+    private fun commitFerry(before:SaveSnapshot,result:OriginalFerry.Result):Boolean {
+        if(!result.applied||!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+            ferryPaused=true;input.clear();clock.reset()
+            Diagnostics.record("ferry_transition","ERROR",code="invalid_ferry_proposal")
+            showNotice("渡船状态未能恢复，原状态已保留");return false
+        }
+        if(!persistStateResult()){
+            if(!applySnapshotState(before))localSaveProtected=true
+            ferryPaused=true;input.clear();clock.reset()
+            showNotice("保存失败，此前状态已保留，请重新打开游戏重试");return false
+        }
+        npcTouch.clear();hudTouch.clear();dialogueTouch.clear();clearUxGesture()
+        if(OriginalStatus.allDisabled(characters)){
+            flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState()
+        }
+        return true
+    }
+    private fun beginFerryIfRequested(now:Long):Boolean {
+        if(world.remaining!=0)return false
+        val key=input.movementIntent()?.primary?:return false
+        val before=currentSnapshot()
+        val rule=content.ferries.values.firstOrNull{OriginalFerry.matchesContact(before,it,key)}?:return false
+        input.clear();clock.reset()
+        if(localSaveProtected){showNotice("原存档受保护，不能提交渡船");return true}
+        ferryPaused=false
+        if(commitFerry(before,OriginalFerry.begin(before,rule,key,content.ferries.values))){
+            ferryLastStepMs=now
+            Diagnostics.record("ferry_start",details=JSONObject().put("eventId",rule.eventId).put("mapId",world.mapId))
+        }
+        return true
+    }
+    private fun advanceFerryIfDue(now:Long){
+        if(ferryPaused)return
+        val rule=OriginalFerry.pending(flags,content.ferries.values)?:return
+        val before=currentSnapshot()
+        if(OriginalStatus.allDisabled(before.characters)){
+            flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
+        }
+        val stage=rule.stage(flags)
+        if(stage==null){ferryPaused=true;Diagnostics.record("ferry_transition","ERROR",code="invalid_ferry_stage");return}
+        // Time advances presentation; only this durable command pays a step.
+        // Returning from background resumes one step, never elapsed-time catchup.
+        if(ferryLastStepMs==0L){ferryLastStepMs=now;return}
+        val delay=if(rule.eventId==45&&stage==0)750L else 150L
+        if(now-ferryLastStepMs<delay)return
+        if(commitFerry(before,OriginalFerry.advance(before,rule,stage,content.ferries.values))){
+            ferryLastStepMs=now
+            if(OriginalFerry.pending(flags,content.ferries.values)==null){
+                Diagnostics.record("ferry_complete",details=JSONObject().put("eventId",rule.eventId).put("mapId",world.mapId)
+                    .put("x",world.x/16).put("y",world.y/16))
+            }
+        }
     }
     private fun processContactTransition(){
         if(processedContactSeq==world.contactTransitionSeq)return
@@ -853,7 +914,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openMenu(){if(layer!=Layer.MAP || finishPendingStep())return;input.clear();menuTouch.clear();hudTouch.clear();npcTouch.clear();clock.reset();menuSelection=0;layer=Layer.MENU}
     private fun closeMenu(){if(layer!=Layer.MENU)return;layer=Layer.MAP;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
     private fun returnToMenu(){layer=Layer.MENU;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()}
-    fun handleBack():Boolean {when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
+    fun handleBack():Boolean {if(OriginalFerry.pending(flags,content.ferries.values)!=null)return true;when(layer){Layer.FIELD_FAILURE->Unit;Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.SETTINGS->modalDialog?.dismiss();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();Layer.SHOP->shopBack();Layer.INN->closeInn()};return true}
     private fun confirmMenu(){
         when(menuSelection){0->closeMenu();1->openPanel(Layer.CHARACTER);2->openPanel(Layer.INVENTORY);3->settings()}
     }
@@ -1421,6 +1482,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
+        if(OriginalFerry.pending(flags,content.ferries.values)!=null){input.clear();npcTouch.clear();hudTouch.clear();return true}
         if(layer==Layer.FIELD_FAILURE)return true
         if(layer==Layer.BATTLE)return battleTouchEvent(e)
         if(layer in listOf(Layer.SHOP,Layer.INN) || (layer in listOf(Layer.CHARACTER,Layer.INVENTORY)&&directPanel()))return modalTouch(e)
@@ -1499,6 +1561,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     override fun performClick():Boolean {super.performClick();return true}
     override fun onKeyDown(code:Int,event:KeyEvent):Boolean {
+        if(OriginalFerry.pending(flags,content.ferries.values)!=null){input.clear();return true}
         val key=hardwareKey(code)?:return super.onKeyDown(code,event)
         if(layer==Layer.SETTINGS)return false
         if(layer==Layer.SHOP&&key in listOf(Key.UP,Key.DOWN)){if(event.repeatCount==0)runShopAction(if(key==Key.UP)7 else 8);return true}
@@ -1565,7 +1628,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         for(obj in objects.filter{it.y*16+8<=world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8<=world.y})
             c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
-        c.drawBitmap(content.sprites.getValue(world.direction),(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
+        val ferry=OriginalFerry.pending(flags,content.ferries.values)
+        if(world.mapId==16&&flags[OriginalFerry.PARKED_FLAG]==true&&ferry==null)
+            content.ferrySprites["rom.ferry.46"]?.let{c.drawBitmap(it,150*16f,136*16f,paint)}
+        val actor=if(ferry!=null&&world.mapId==16&&(ferry.stage(flags)?:0)>0)
+            content.ferrySprites.getValue(ferry.id)else content.sprites.getValue(world.direction)
+        c.drawBitmap(actor,(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
         for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)
         for(npc in actors.filter{it.y*16+8>world.y})
             c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
@@ -1574,7 +1642,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)
         }
         c.restore()
-        when(layer){Layer.FIELD_FAILURE->drawHud(c);Layer.MAP->{drawControls(c);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
+        when(layer){Layer.FIELD_FAILURE->drawHud(c);Layer.MAP->{if(ferry==null)drawControls(c)else label(c,"乘船中",ui.safe.x+ui.safe.w/2,ui.safe.y+24*resources.displayMetrics.density,14f);drawHud(c)};Layer.MENU->drawMenu(c);Layer.SETTINGS->Unit;Layer.DIALOGUE->drawDialogue(c);
             Layer.CHARACTER,Layer.INVENTORY->drawInfoPanel(c);Layer.BATTLE->drawBattle(c);Layer.SHOP->drawShop(c);Layer.INN->drawInn(c)}
         if(world.message!=previousMessage){previousMessage=world.message;if(world.message.startsWith("开发边界")){mapNotice=world.message;noticeUntil=SystemClock.uptimeMillis()+1800}}
         if(layer==Layer.MAP&&SystemClock.uptimeMillis()<noticeUntil){

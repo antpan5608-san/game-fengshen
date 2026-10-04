@@ -98,6 +98,43 @@ class TouchTest:IsolatedGameTestCase(){
         }
         instrumentation.runOnMainSync{assertEquals("Unfinished normal touch step",0,v.world.remaining)}
     }
+
+    /** Isolated acquired contact fixture; actual lifecycle, not normal supply proof. */
+    fun testControlledFerryPauseSavedStageAndActivityRestart(){
+        val(activity,v)=launch();val c=v.content;val rule=c.ferries.getValue("rom.ferry.45")
+        val initial=SaveSnapshot(c.scene.version,4,11*16+8,3*16+8,Key.LEFT,
+            listOf(c.initialPlayer.copy(hp=100,maxHp=100,statusMask=OriginalStatus.POISON)),emptyMap(),money=81,encounterSteps=60)
+        instrumentation.runOnMainSync{v.active=false;assertTrue(v.restoreSnapshot(initial));v.active=true}
+        val stick=layoutFor(v).stick;val middle=center(stick);val point=Pair(stick.x+2f,middle.second)
+        send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
+        val deadline=SystemClock.elapsedRealtime()+12000;var paused:SaveSnapshot?=null
+        while(paused==null){
+            assertTrue(SystemClock.elapsedRealtime()<deadline)
+            instrumentation.runOnMainSync{
+                val s=v.currentSnapshot();val stage=rule.stage(s.flags)
+                if(stage!=null&&stage in 2..15){
+                    dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));v.active=false;v.persistState();paused=v.currentSnapshot()
+                }
+            }
+            if(paused==null)SystemClock.sleep(15)
+        }
+        screenshot(v,"world-ferry-controlled-paused-durable-stage")
+        SystemClock.sleep(250);assertEquals(paused,v.currentSnapshot())
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        assertEquals(paused,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        instrumentation.runOnMainSync{activity.finish()};val(a2,v2)=launch()
+        val settleDeadline=SystemClock.elapsedRealtime()+12000;var done=false
+        while(!done){
+            assertTrue(SystemClock.elapsedRealtime()<settleDeadline)
+            instrumentation.runOnMainSync{done=OriginalFerry.pending(v2.currentSnapshot().flags,c.ferries.values)==null}
+            if(!done)SystemClock.sleep(15)
+        }
+        var expected=OriginalFerry.begin(initial,rule,Key.LEFT,c.ferries.values).snapshot
+        for(i in rule.legs.indices)expected=OriginalFerry.advance(expected,rule,i,c.ferries.values).snapshot
+        assertEquals(expected,v2.currentSnapshot());assertEquals(82,v2.currentSnapshot().characters.single().hp)
+        assertEquals(GameView.Layer.MAP,v2.layer);screenshot(v2,"world-ferry-controlled-resumed-exact-cost-no-double-charge")
+        instrumentation.runOnMainSync{a2.finish()}
+    }
     /** Explicit isolated pending-story fixture, not the normal final-hall recording. */
     fun testControlledRebirthCancelPendingRestartAndOnceOnlyCompletion(){
         var (activity,v)=launch()
@@ -2060,30 +2097,31 @@ class TouchTest:IsolatedGameTestCase(){
         // is this recording's chosen safety margin, not a North access condition.
         if(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
             training=true;state("normal-training-start")
-            // Use the already-playable southern sea's original encounters,
-            // rather than thousands of opening-zone fights worth 1..3 EXP.
+            // Use the actual reachable original zone4 at 12,21/22.
+            // The old 39,40/41 loop is zone1 (3/6 EXP), not zone4.
             // This is a player's training route, never an encounter/EXP override.
             inn();walkTo(0,14);step(Key.LEFT);walkTo(199,130)
-            assertEquals(25,v.world.mapId);walkTo(39,41)
+            assertEquals(25,v.world.mapId);walkTo(12,22)
+            assertTrue(v.content.battle!!.zones.any{it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains(25,v.world.x/16,v.world.y/16)})
             var trainingSteps=0
             while(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
-                assertTrue("Bounded normal preparation exhausted; no resource grants",trainingSteps++<5000)
+                assertTrue("Bounded normal preparation exhausted at map=${v.world.mapId} cell=${v.world.x/16},${v.world.y/16} level=${v.currentSnapshot().characters.first().level} EXP=${v.currentSnapshot().characters.first().experience}; no resource grants",trainingSteps++<5000)
                 if(trainingSteps%64==0)state("normal-training-progress-$trainingSteps")
                 if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
                     walkTo(39,42);assertEquals(16,v.world.mapId)
                     walkTo(202,130);assertEquals(0,v.world.mapId);inn()
                     walkTo(0,14);step(Key.LEFT);walkTo(199,130)
-                    assertEquals(25,v.world.mapId);walkTo(39,41)
+                    assertEquals(25,v.world.mapId);walkTo(12,22)
                 }
                 var trainingDirection:Key?=null
                 instrumentation.runOnMainSync{
                     val x=v.world.x/16;val y=v.world.y/16
-                    val preferred=if(y>41)Key.UP else Key.DOWN
+                    val preferred=if(y>21)Key.UP else Key.DOWN
                     trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                         v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
-                            inExistingEncounterRegion(v.content.battle!!,v.world.mapId,nx,ny)&&
+                            v.content.battle!!.zones.any{it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains(v.world.mapId,nx,ny)}&&
                             v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
                     }
                 }
@@ -2252,11 +2290,15 @@ class TouchTest:IsolatedGameTestCase(){
     fun testRoom171GiftColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,room171=true)}
     fun testNormalYangJoinAndThreePartyFromVerifiedRoomSave(){normalWorldStoryContinuation(false,true,yangJoin=true)}
     fun testYangJoinColdRestartAndOriginalTreeReturn(){normalWorldStoryContinuation(true,true,yangJoin=true)}
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false){
+    fun testNormalVillageFourServicesAndTalkFromVerifiedYangSave(){normalWorldStoryContinuation(false,true,village4=true)}
+    fun testVillageFourColdRestartAndOriginalReturn(){normalWorldStoryContinuation(true,true,village4=true)}
+    fun testNormalFixedFerryAndIslandFromVerifiedVillageSave(){normalWorldStoryContinuation(false,true,ferry=true)}
+    fun testFixedFerryIslandColdRestartAndOriginalReverse(){normalWorldStoryContinuation(true,true,ferry=true)}
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val label=if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
         val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
-            if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
+            if(ferry)"world-village4-expected-save.json"else if(village4)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
@@ -2311,7 +2353,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin){
+            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -2539,6 +2581,154 @@ class TouchTest:IsolatedGameTestCase(){
                 .firstOrNull{treeRouteTo(it)!=null}
             assertNotNull("Original NPC must have a reachable adjacent cell",goal)
             treeWalkTo(goal!!);talk()
+        }
+        if(ferry){
+            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+            state(if(cold)"cold-exact-normal-island-save"else"verified-village-source-no-state-grants")
+            fun fixedFerry(event:Int){
+                val rule=v.content.ferries.getValue("rom.ferry.$event");val before=v.currentSnapshot()
+                assertEquals(rule.start.mapId,before.mapId)
+                assertEquals(rule.start.x to rule.start.y,before.x/16 to before.y/16)
+                val expectedBegin=OriginalFerry.begin(before,rule,rule.start.direction,v.content.ferries.values)
+                assertTrue(expectedBegin.applied)
+                var expected=expectedBegin.snapshot
+                for(i in rule.legs.indices){
+                    val next=OriginalFerry.advance(expected,rule,i,v.content.ferries.values)
+                    assertTrue(next.applied);expected=next.snapshot
+                }
+                assertFalse("Normal supply must survive original boat costs without state repair",OriginalStatus.allDisabled(expected.characters))
+                val stick=layoutFor(v).stick;val middle=center(stick)
+                val point=if(rule.start.direction==Key.LEFT)Pair(stick.x+2f,middle.second)else Pair(middle.first,stick.y+stick.h-2f)
+                send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(point))
+                val deadline=SystemClock.elapsedRealtime()+15000;var begun=false;var released=false;var done=false;var captured=false
+                while(!done){
+                    assertTrue("Actual fixed boat command did not settle",SystemClock.elapsedRealtime()<deadline)
+                    var observed:SaveSnapshot?=null
+                    instrumentation.runOnMainSync{
+                        observed=v.currentSnapshot();val pending=OriginalFerry.pending(observed!!.flags,v.content.ferries.values)
+                        if(pending!=null){begun=true
+                            if(!released){dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(point));released=true}}
+                        done=begun&&pending==null
+                    }
+                    if(begun&&!captured){state("normal-event$event-actual-boat-stage");captured=true}
+                    assertEquals(GameView.Layer.MAP,v.layer)
+                    if(!done)SystemClock.sleep(15)
+                }
+                if(!released)send(v,MotionEvent.ACTION_UP,listOf(point))
+                assertEquals(expected,v.currentSnapshot())
+                state("normal-event$event-exact-original-landing-no-free-heal")
+            }
+            if(!cold){
+                assertEquals(4,v.world.mapId);walkTo(11,3);fixedFerry(45)
+                assertEquals(16,v.world.mapId);assertEquals(150 to 135,v.world.x/16 to v.world.y/16)
+                for(key in listOf(Key.UP,Key.UP,Key.RIGHT,Key.UP,Key.UP,Key.UP,Key.UP,Key.UP,Key.RIGHT,Key.RIGHT))step(key)
+                assertEquals(79,v.world.mapId);assertEquals(7 to 12,v.world.x/16 to v.world.y/16)
+                state("normal-original-island79-door-and-complete-zone22")
+                walkTo(7,11)
+                var steps=0
+                while(threeActorBattles==0){
+                    assertTrue("Island actual encounter must occur without forcing RNG",steps++<200)
+                    walkTo(7,10);walkTo(7,11)
+                }
+                assertEquals(79,v.world.mapId);assertTrue(threeActorBattles>0)
+                walkTo(7,11);checkSourceUnchanged();persistChecked()
+                File(root,"world-ferry-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-island-natural-three-party-encounter-and-save")
+            }else{
+                assertEquals(79,v.world.mapId);assertEquals(true,source.flags[OriginalFerry.PARKED_FLAG])
+                walkTo(7,12);assertEquals(16,v.world.mapId);assertEquals(153 to 128,v.world.x/16 to v.world.y/16)
+                state("cold-independent-island-original-return")
+                walkTo(150,135);fixedFerry(46)
+                assertEquals(4,v.world.mapId);assertEquals(11 to 3,v.world.x/16 to v.world.y/16)
+                assertTrue(v.currentSnapshot().flags[OriginalFerry.PARKED_FLAG]!=true)
+                for((flag,value)in source.flags.filterKeys{it!=OriginalFerry.PARKED_FLAG})assertEquals(value,v.currentSnapshot().flags[flag])
+                checkSourceUnchanged();persistChecked();state("cold-original-fixed-reverse-and-village-continue")
+            }
+            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
+        }
+        if(village4){
+            assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
+            assertEquals(true,source.flags["rom.map.110.flag.128"])
+            state(if(cold)"cold-exact-normal-village-save"else"verified-yang-three-party-source-no-grants")
+            if(!cold){
+                assertEquals(110,v.world.mapId);treeWalkTo(Triple(107,7,13));step(Key.DOWN)
+                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                walkTo(146,150);assertEquals(4,v.world.mapId);assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                state("normal-original-west-village-entry-no-optional-talk-lock")
+                for((room,id)in listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)){
+                    val entry=enterService(4,room);state("normal-original-shop-$room-open")
+                    trade(id,true);state("normal-original-shop-$room-bought")
+                    trade(id,false);state("normal-original-shop-$room-sold");leaveService(entry)
+                }
+                // Actual 90-tael command, same three-owner business result.
+                val innEntry=enterService(4,22);val beforeRest=v.currentSnapshot()
+                val expectedRest=InnStay.apply(beforeRest.money,beforeRest.characters,v.content.inns.getValue(v.activeInnId!!))
+                assertNull("Only normal earned money may pay the actual inn",expectedRest.error)
+                tap(v,center(v.innStayBounds()));assertEquals(expectedRest.money,v.currentSnapshot().money)
+                assertEquals(expectedRest.characters,v.currentSnapshot().characters)
+                assertEquals(beforeRest.inventory,v.currentSnapshot().inventory);assertEquals(beforeRest.flags,v.currentSnapshot().flags)
+                state("normal-original90-inn-three-owner-result");leaveService(innEntry)
+                for(id in listOf("rom.npc.20.0","rom.npc.20.1")){
+                    val entry=enterService(4,20,id);val before=v.currentSnapshot()
+                    state("normal-original-clinic-${id.substringAfterLast('.')}-view")
+                    instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
+                }
+                for(index in listOf(1,2,3,4,5,6,7,8)){
+                    val npc=v.content.npcs.single{it.id=="rom.npc.4.$index"}
+                    val candidates=listOf(0 to 1,1 to 0,-1 to 0,0 to -1).map{npc.x+it.first to npc.y+it.second}
+                    // An individually legal tile can be on the other bridge bank.
+                    // Read-only component search follows actual directional edges and
+                    // avoids accidentally entering a shared room on the way to talk.
+                    val scene=v.world.scene;val reachable=mutableSetOf(v.world.x/16 to v.world.y/16)
+                    val queue=java.util.ArrayDeque<Pair<Int,Int>>();queue.add(reachable.single())
+                    while(queue.isNotEmpty()){
+                        val (x,y)=queue.removeFirst()
+                        for((key,d)in listOf(Key.UP to(0 to -1),Key.DOWN to(0 to 1),Key.LEFT to(-1 to 0),Key.RIGHT to(1 to 0))){
+                            val next=x+d.first to y+d.second
+                            if(scene.probeFrom(x,y,key,v.world.terrainMode)!=MovementBlock.NONE||next in reachable||
+                                v.content.exits.any{it.fromMapId==4&&it.triggerX==next.first&&it.triggerY==next.second&&it.edgeDirection==null})continue
+                            reachable.add(next);queue.add(next)
+                        }
+                    }
+                    val at=candidates.firstOrNull{it in reachable}
+                    assertNotNull("Original NPC must have a reachable interaction side",at)
+                    walkTo(at!!.first,at.second)
+                    val face=when{npc.x<at.first->Key.LEFT;npc.x>at.first->Key.RIGHT;npc.y<at.second->Key.UP;else->Key.DOWN}
+                    assertEquals(at,v.world.x/16 to v.world.y/16)
+                    val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                    val screen=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
+                    val before=v.currentSnapshot();tap(v,screen)
+                    assertEquals(GameView.Layer.DIALOGUE,v.layer)
+                    // Actual NPC tap faces its stable actor before the pure talk proposal.
+                    val faced=before.copy(direction=face)
+                    val expected=npc.originalTalk?.let{OriginalNpcTalk.begin(faced,it)}
+                    if(expected!=null){assertTrue(expected.applied);assertEquals(expected.snapshot,v.currentSnapshot())}
+                    else assertEquals(faced,v.currentSnapshot())
+                    state("normal-original-resident-$index-first");dialogue()
+                    val again=v.currentSnapshot();tap(v,screen);dialogue()
+                    val repeat=npc.originalTalk?.let{OriginalNpcTalk.begin(again,it)}
+                    assertEquals(repeat?.snapshot?:again,v.currentSnapshot())
+                    assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
+                    assertEquals(before.characters,v.currentSnapshot().characters)
+                }
+                walkTo(13,3);state("normal-original-north-bank-without-claimed-ferry")
+                checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+                state("normal-original-services-residents-and-save")
+            }else{
+                assertEquals(4,v.world.mapId);assertNull(v.currentSnapshot().interiorContext)
+                val entry=enterService(4,22);val before=v.currentSnapshot()
+                instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot());leaveService(entry)
+                state("cold-real-inn-reentry-cancel-no-charge")
+                walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
+                assertEquals(146 to 150,v.world.x/16 to v.world.y/16);state("cold-independent-original-south-return")
+                step(Key.DOWN);assertEquals(16,v.world.mapId)
+                walkTo(146,150);assertEquals(4,v.world.mapId)
+                assertEquals(15 to 29,v.world.x/16 to v.world.y/16)
+                for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
+                assertEquals(1,v.currentSnapshot().characters.count{it.id=="yangjian"})
+                checkSourceUnchanged();persistChecked();state("cold-real-village-reentry-legacy-flags-kept")
+            }
+            assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
         if(yangJoin){
             assertEquals(1,source.inventory[OriginalYangJoin.ITEM_ID]);assertEquals(true,source.flags["rom.global.7c8.1"])

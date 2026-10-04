@@ -13,6 +13,66 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Isolated original contact/poison snapshots; not a normal-route recording. */
+    fun testOriginalFerryEverySavedStageAndExactDockScope(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(setOf("rom.ferry.45","rom.ferry.46"),c.ferries.keys)
+        val forward=c.ferries.getValue("rom.ferry.45");val reverse=c.ferries.getValue("rom.ferry.46")
+        val hero=c.initialPlayer.copy(hp=100,maxHp=100,statusMask=OriginalStatus.POISON)
+        val old=SaveSnapshot("opening-segment-001-c40",4,11*16+8,3*16+8,Key.LEFT,listOf(hero),emptyMap(),money=81,encounterSteps=60)
+        assertTrue(old.validate(c));var current=old.copy(contentVersion=c.scene.version)
+        for(rule in listOf(forward,reverse)){
+            val start=OriginalFerry.begin(current,rule,rule.start.direction,c.ferries.values)
+            assertTrue(start.applied);current=start.snapshot;assertTrue(current.validate(c))
+            for(i in rule.legs.indices){
+                current=SaveSnapshot.parse(current.json().toString());assertTrue(current.validate(c))
+                val applied=OriginalFerry.advance(current,rule,i,c.ferries.values)
+                assertTrue(applied.applied);assertTrue(applied.snapshot.validate(c))
+                assertFalse(OriginalFerry.advance(applied.snapshot,rule,i,c.ferries.values).applied)
+                assertEquals(current.money,applied.snapshot.money);assertEquals(current.inventory,applied.snapshot.inventory)
+                current=applied.snapshot
+            }
+            assertNull(OriginalFerry.pending(current.flags,c.ferries.values))
+        }
+        assertEquals(64,current.characters.single().hp);assertEquals(4,current.mapId)
+        assertEquals(11*16+8,current.x);assertEquals(3*16+8,current.y)
+        val deadStart=old.copy(characters=listOf(hero.copy(hp=1)))
+        val begin=OriginalFerry.begin(deadStart,forward,Key.LEFT,c.ferries.values)
+        val dead=OriginalFerry.advance(begin.snapshot,forward,0,c.ferries.values).snapshot
+        assertEquals(0,dead.characters.single().hp);assertEquals(16,dead.mapId)
+        assertEquals(10*16+8,dead.x);assertEquals(3*16+8,dead.y);assertTrue(dead.validate(c))
+        assertEquals(dead,SaveSnapshot.parse(dead.json().toString()))
+        assertFalse(dead.copy(x=11*16+8).validate(c))
+        val world=c.sceneForState(16,emptyMap())!!
+        assertNull(world.check(150,135));assertNotNull(world.check(150,136))
+    }
+    /** Bundled map4 and isolated old save; normal service recording is separate. */
+    fun testVillageFourOriginalBridgeServicesNpcRulesAndPriorSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val m=c.scenes.getValue(4)
+        assertEquals(32,m.width);assertEquals(30,m.height)
+        assertEquals(setOf(Key.UP,Key.DOWN),m.sourceEdges.getValue(10))
+        assertEquals(setOf(Key.LEFT,Key.RIGHT),m.sourceEdges.getValue(11))
+        assertFalse(m.targetEdges.containsKey(10));assertFalse(m.targetEdges.containsKey(11))
+        assertNotNull(m.check(10,3));assertEquals(8,c.npcs.count{it.mapId==4})
+        val seven=c.npcs.single{it.id=="rom.npc.4.7"}.originalTalk!!
+        assertEquals(50,seven.actionId);assertEquals("rom.map.4.flag.64",seven.mapFlagId)
+        assertEquals("rom.dialogue.14.20",seven.firstDialogue);assertEquals("rom.dialogue.14.14",seven.repeatDialogue)
+        assertNull(c.npcs.single{it.id=="rom.npc.4.8"}.originalTalk)
+        assertEquals("『我把船借給你們。』",c.dialogues.getValue("rom.dialogue.14.15").text)
+        assertEquals(listOf(7,22,34),c.shops.getValue("rom.shop.4.17").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(listOf(4,12,18,30,39),c.shops.getValue("rom.shop.4.18").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(listOf(1,2,4,6,7,11,12),c.shops.getValue("rom.shop.4.19").items.map{c.itemDefinitions.getValue(it).originalId})
+        assertEquals(90,c.inns.getValue("rom.inn.4").price)
+        assertEquals(6,c.serviceBindings.count{it.callerMapId==4})
+        val back=c.exits.single{it.fromMapId==4&&it.toMapId==16}
+        assertEquals(15 to 29,back.triggerX to back.triggerY);assertEquals(Key.DOWN,back.edgeDirection)
+        assertEquals(146 to 150,back.spawnX to back.spawnY);assertTrue(back.preserveArrivalDirection)
+        val old=SaveSnapshot("opening-segment-001-c39",110,7*16+8,6*16+8,Key.LEFT,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
+            mapOf("rom.special.19" to 1),mapOf("rom.map.110.flag.128" to true,"rom.original.npc.context.207" to true),1019)
+        assertTrue(old.validate(c));assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+    }
+
     fun testOriginalYangSignalPendingSaveCollisionAndOwnBattleContent(){
         // Isolated definition/save fixture; never a normal-route claim.
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -340,8 +400,8 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals(MovementBlock.PHYSICAL,room.probeFrom(12,7,Key.UP))
         assertEquals(MovementBlock.PHYSICAL,room.probeFrom(13,5,Key.UP))
         assertEquals(2,c.npcs.count{it.mapId==20&&it.clinicId!=null})
-        assertEquals(6,c.clinics.size)
-        for(caller in listOf(1,2,3)){
+        assertEquals(8,c.clinics.size)
+        for(caller in listOf(1,2,3,4)){
             val bindings=c.serviceBindings.filter{it.callerMapId==caller&&it.interiorMapId==20}
             assertEquals(2,bindings.size);assertEquals(setOf("rom.clinic.$caller.revival","rom.clinic.$caller.care"),bindings.map{it.clinicId}.toSet())
             assertTrue(ClinicRevival.valid(c.clinics.getValue("rom.clinic.$caller.revival")))

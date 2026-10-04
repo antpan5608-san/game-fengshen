@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c41",
-  "manifestSha256": "7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f",
+  "contentVersion": "opening-segment-001-c40",
+  "manifestSha256": "ec4a2a3e1acf5b180cee36c346ec5ef0c775340583a2dde91cb8654349f3d3f7",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-ferry-content.json"
+    "provenance": "game-data/provenance/world-village4-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

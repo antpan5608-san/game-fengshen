@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "original-fixed-ferry45-46-eighteen-status-steps-not-free-sea-walking",
+  "licenseStatus": "UNKNOWN",
+  "kind": "SCOPED_ORIGINAL_CONTROLLED_EXPECTATIONS_NOT_NORMAL_ANDROID_OR_NEW_GAME",
+  "sources": [
+    {
+      "offset": 379848,
+      "length": 4,
+      "sha256": "90cba5c09be79218707c576146f51813c6c5ade5e53677c1704614b92911776f",
+      "module": 11,
+      "cpuAddress": 52152,
+      "meaning": "Original event45/46 script dispatch"
+    },
+    {
+      "offset": 382012,
+      "length": 162,
+      "sha256": "a259642b520ab7f6c7cbaf4151e2b9eeb1ab4ef0cb246132f3012482877e96ac",
+      "module": 11,
+      "cpuAddress": 54316,
+      "meaning": "Original forward and reverse fixed ferry stages"
+    },
+    {
+      "offset": 377440,
+      "length": 86,
+      "sha256": "f46914c5c2b6a61c6d0f8b22480d829669e60baaf48335b38e716929df929763",
+      "module": 11,
+      "cpuAddress": 49744,
+      "meaning": "Original two-byte movement script parser"
+    },
+    {
+      "offset": 18516,
+      "length": 59,
+      "sha256": "fab2966331cefbd6d9242922cc1ca68362e76f95e720b3837694137458909102",
+      "module": 0,
+      "cpuAddress": 51268,
+      "meaning": "Original foot contact with parked boat event46"
+    }
+  ],
+  "scripts": [
+    {
+      "scriptId": 52,
+      "pointer": {
+        "offset": 377630,
+        "length": 2,
+        "sha256": "aa25021a4976ca0fc71f58ac354066e9117441283cf52359547e749a8555b412",
+        "module": 11,
+        "cpuAddress": 49934,
+        "meaning": "Original scoped ferry script pointer"
+      },
+      "source": {
+        "offset": 379390,
+        "length": 15,
+        "sha256": "f9ef59cbd41f395d2b0fac6262259020c6ed3d0c62bb69dafbb89d041d2a8552",
+        "module": 11,
+        "cpuAddress": 51694,
+        "meaning": "Original scoped ferry movement stream"
+      },
+      "rawHex": "da00060700060907030406070006ff"
+    },
+    {
+      "scriptId": 53,
+      "pointer": {
+        "offset": 377632,
+        "length": 2,
+        "sha256": "76edb02d3ced1c936260bfca79173e856d420b11f862ea2b87e0f53949cf0524",
+        "module": 11,
+        "cpuAddress": 49936,
+        "meaning": "Original scoped ferry script pointer"
+      },
+      "source": {
+        "offset": 379405,
+        "length": 15,
+        "sha256": "3f5c697b0ed9ffbbda85755dcc43811a6b3ad86ac5ba61d1b86c7c63968aa1c2",
+        "module": 11,
+        "cpuAddress": 51709,
+        "meaning": "Original scoped ferry movement stream"
+      },
+      "rawHex": "da00070701060807020407070106ff"
+    },
+    {
+      "scriptId": 54,
+      "pointer": {
+        "offset": 377634,
+        "length": 2,
+        "sha256": "9fd305f4e9a0ce188f63c86086d5c21776428d36b25b9f8781bbfcaddc48259e",
+        "module": 11,
+        "cpuAddress": 49938,
+        "meaning": "Original scoped ferry script pointer"
+      },
+      "source": {
+        "offset": 379420,
+        "length": 7,
+        "sha256": "1ae8699d87c5ff7d5d031090c3981f81ea4e960e01207924cba1234a6aeb45d3",
+        "module": 11,
+        "cpuAddress": 51724,
+        "meaning": "Original scoped ferry movement stream"
+      },
+      "rawHex": "800006070001ff"
+    },
+    {
+      "scriptId": 55,
+      "pointer": {
+        "offset": 377636,
+        "length": 2,
+        "sha256": "392e6c35c04be7be9df27ee8d5b23d5581ae95a4d94d83a90e54f04d483ca78a",
+        "module": 11,
+        "cpuAddress": 49940,
+        "meaning": "Original scoped ferry script pointer"
+      },
+      "source": {
+        "offset": 379427,
+        "length": 7,
+        "sha256": "85b12ac4c859c524e656c3d9c844c32bb3174a3db573b540dcefd22faa4cdcc2",
+        "module": 11,
+        "cpuAddress": 51731,
+        "meaning": "Original scoped ferry movement stream"
+      },
+      "rawHex": "800009070301ff"
+    }
+  ],
+  "boatRecord": {
+    "offset": 276726,
+    "length": 14,
+    "sha256": "eff82ebe5373cf492a4b6270c5b4e25ec5043ebe315b8ce188286b81bac8e6fc",
+    "module": 8,
+    "cpuAddress": 47334,
+    "meaning": "Fixed 14-byte NPC source record"
+  },
+  "rules": [
+    {
+      "id": "rom.ferry.45",
+      "eventId": 45,
+      "start": {
+        "mapId": 4,
+        "x": 11,
+        "y": 3,
+        "direction": "LEFT"
+      },
+      "contactX": 10,
+      "contactY": 3,
+      "legs": [
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 148,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 147,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 146,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 145,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 144,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 143,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 142,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 147,
+          "y": 142,
+          "direction": "RIGHT"
+        },
+        {
+          "mapId": 16,
+          "x": 148,
+          "y": 142,
+          "direction": "RIGHT"
+        },
+        {
+          "mapId": 16,
+          "x": 149,
+          "y": 142,
+          "direction": "RIGHT"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 142,
+          "direction": "RIGHT"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 141,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 140,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 139,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 138,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 137,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 136,
+          "direction": "UP"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 135,
+          "direction": "UP"
+        }
+      ],
+      "spriteAsset": "actor-218-ferry.png",
+      "evidence": "game-data/provenance/world-ferry-original.json"
+    },
+    {
+      "id": "rom.ferry.46",
+      "eventId": 46,
+      "start": {
+        "mapId": 16,
+        "x": 150,
+        "y": 135,
+        "direction": "DOWN"
+      },
+      "contactX": 150,
+      "contactY": 136,
+      "legs": [
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 136,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 137,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 138,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 139,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 140,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 141,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 150,
+          "y": 142,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 149,
+          "y": 142,
+          "direction": "LEFT"
+        },
+        {
+          "mapId": 16,
+          "x": 148,
+          "y": 142,
+          "direction": "LEFT"
+        },
+        {
+          "mapId": 16,
+          "x": 147,
+          "y": 142,
+          "direction": "LEFT"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 142,
+          "direction": "LEFT"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 143,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 144,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 145,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 146,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 147,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 16,
+          "x": 146,
+          "y": 148,
+          "direction": "DOWN"
+        },
+        {
+          "mapId": 4,
+          "x": 11,
+          "y": 3,
+          "direction": "RIGHT"
+        }
+      ],
+      "spriteAsset": "actor-218-ferry.png",
+      "evidence": "game-data/provenance/world-ferry-original.json"
+    }
+  ],
+  "graphic": {
+    "width": 16,
+    "height": 16,
+    "observedRect": [
+      112,
+      105,
+      16,
+      16
+    ],
+    "paletteCodes": {
+      "1": [
+        0,
+        0,
+        0
+      ],
+      "2": [
+        255,
+        190,
+        178
+      ],
+      "3": [
+        219,
+        40,
+        0
+      ],
+      "0": [
+        0,
+        0,
+        0
+      ]
+    },
+    "transparentZero": true,
+    "tiles": [
+      {
+        "xy": [
+          0,
+          0
+        ],
+        "offset": 1033872,
+        "length": 16,
+        "sha256": "a27f7a21a0dad56a3e54103f67e675e665527b2a2b515d96dbfe3311f21e7448",
+        "attribute": 0,
+        "flipX": false,
+        "flipY": false,
+        "observedOamIndex": 1,
+        "observedTile": 104
+      },
+      {
+        "xy": [
+          8,
+          0
+        ],
+        "offset": 1033888,
+        "length": 16,
+        "sha256": "7084d3e3c3adc78ee115eee3d88d391eff0ccbc6fa5ef4d12c25a5c4cc74bb83",
+        "attribute": 0,
+        "flipX": false,
+        "flipY": false,
+        "observedOamIndex": 2,
+        "observedTile": 105
+      },
+      {
+        "xy": [
+          0,
+          8
+        ],
+        "offset": 1034128,
+        "length": 16,
+        "sha256": "a88f5ff303ed54183744a0fa98f14328cbaa0b4e7a3ecd2c829f2981951854c1",
+        "attribute": 0,
+        "flipX": false,
+        "flipY": false,
+        "observedOamIndex": 3,
+        "observedTile": 120
+      },
+      {
+        "xy": [
+          8,
+          8
+        ],
+        "offset": 1034144,
+        "length": 16,
+        "sha256": "06967a9acee512171dd7a697989fc8c582df3f0ecd62f4bb63b5da4d4d2a6f2d",
+        "attribute": 0,
+        "flipX": false,
+        "flipY": false,
+        "observedOamIndex": 4,
+        "observedTile": 121
+      }
+    ],
+    "rgbaSha256": "1787dde930016aefaaf4423678945d4fe9b9c539ca9b6ac0c6bd4c855947ca69",
+    "captureSha256": "32704caff05e2b2b6a06740551d401f98ce68eef8794b62416df4bc2b3514d39",
+    "captureKind": "ORIGINAL_EVENT45_CONTROLLER_TRANSFER_REAL_OAM_AND_PPU",
+    "normalPlayEvidence": false
+  },
+  "expected": {
+    "path": "android/app/src/test/resources/world-ferry-original-steps.tsv",
+    "sha256": "b2f5c24cf3cd8c6ef0c3f5af1f24b5cd8b26456d7e969f2ceac3989ea41a1c02",
+    "command": "Original FCEUX --loadlua tools/rom-extractor/probe-world-ferry.lua with matched cached ROM and indicated contact savestates",
+    "probe": "tools/rom-extractor/probe-world-ferry.lua",
+    "probeSha256": "d6895a89f9b3de65ec61b35ceac3dbaad78263463b0083c6309a1266b12853ca"
+  },
+  "healthyForward": {
+    "completedCosts": 18,
+    "firstDurablePoint": [
+      16,
+      146,
+      148
+    ],
+    "final": [
+      16,
+      150,
+      135
+    ],
+    "finalDirection": "UP",
+    "finalStepCounter": 0
+  },
+  "healthyReverse": {
+    "completedCosts": 18,
+    "final": [
+      4,
+      11,
+      3
+    ],
+    "finalDirection": "RIGHT",
+    "finalStepCounter": 0
+  },
+  "failedFirst": {
+    "allPoisonHp1": true,
+    "mapId": 16,
+    "cell": [
+      10,
+      3
+    ],
+    "counterBefore": 60,
+    "counterAfter": 61,
+    "hpAfter": [
+      0,
+      0,
+      0
+    ],
+    "statusAfter": [
+      32,
+      32,
+      32
+    ],
+    "eventStill45": true,
+    "observationFrames": 3200
+  },
+  "limitations": [
+    "Actual original contact keys from controlled acquired-route sources; no Android or new-game claim.",
+    "The first living forward cost precedes map reconstruction; durable position recorded after reconstruction, dead first cost preserves transient original point.",
+    "Existing App field-failure/new-game branch reused. Original cartridge manual-save defeat restoration remains a separate debt.",
+    "Borrow-boat NPC text is optional and changes no ferry availability.",
+    "Boat218 graphic is one actually observed pose; exact directional animation remains unverified."
+  ]
+}
