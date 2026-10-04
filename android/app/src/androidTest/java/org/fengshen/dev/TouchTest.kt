@@ -1945,6 +1945,42 @@ class TouchTest:IsolatedGameTestCase(){
         File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
         state("persisted-for-external-cold-restart",false);instrumentation.runOnMainSync{activity.finish()}
     }
+    /** Isolated replay of a real normal checkpoint, not this candidate's main route. */
+    fun testControlledNorthRepeatAfterOptionalMapSupply(){
+        val fixture=JSONObject(instrumentation.context.assets.open("north-repeat-before-optional-herb.json")
+            .bufferedReader(Charsets.UTF_8).use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_APP_CHECKPOINT",fixture.getString("kind"))
+        val source=SaveSnapshot.parse(fixture.getJSONObject("snapshot").toString())
+        val(activity,v)=launch()
+        assertTrue("Historical normal checkpoint must validate against actual content",source.validate(v.content))
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
+        val before=v.currentSnapshot();assertEquals(139,before.mapId)
+        assertEquals(true,before.flags["rom.map.139.flag.128"])
+        assertEquals(true,before.flags["rom.map.139.flag.2"])
+        assertEquals(46,before.characters.single().hp);assertEquals(109,before.characters.single().maxHp)
+        val expected=HerbUse.apply(before.characters,before.inventory,"nezha",
+            v.content.itemDefinitions.getValue(HerbUse.ID),true)
+        assertTrue(expected.applied)
+        tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,HerbUse.ID)
+        tap(v,center(v.panelItemBounds(HerbUse.ID)));assertEquals(before,v.currentSnapshot())
+        tap(v,center(v.panelPrimaryBounds()))
+        val supplied=v.currentSnapshot()
+        assertEquals(expected.characters,supplied.characters);assertEquals(expected.inventory,supplied.inventory)
+        assertEquals(before.money,supplied.money);assertEquals(before.flags,supplied.flags)
+        assertEquals(96,supplied.characters.single().hp)
+        assertEquals((before.inventory[HerbUse.ID]?:0)-1,supplied.inventory[HerbUse.ID]?:0)
+        instrumentation.runOnMainSync{v.handleBack()}
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP)
+        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(139,v.world.mapId)
+        assertEquals(2 to 4,v.world.x/16 to v.world.y/16)
+        val repeated=v.currentSnapshot()
+        assertEquals(supplied.characters,repeated.characters);assertEquals(supplied.inventory,repeated.inventory)
+        assertEquals(supplied.money,repeated.money);assertEquals(supplied.flags,repeated.flags)
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+        assertEquals(repeated,v.currentSnapshot());assertEquals(GameView.Layer.MAP,v.layer)
+        screenshot(v,"controlled-north-repeat-after-optional-herb")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     /** Normal continuation: no fixture mutation beyond byte-exact same-candidate source load. */
     fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave(){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
@@ -2227,10 +2263,13 @@ class TouchTest:IsolatedGameTestCase(){
         state("pearl-investigated-and-claimed")
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
         assertEquals(claimed,v.currentSnapshot());state("repeat-chest-no-grant")
+        // A legal map herb can be needed after the real boss. Separate that
+        // explicit normal supply from the no-second-reward comparison.
+        supply();val beforeReentry=v.currentSnapshot();state("optional-normal-supply-before-trigger-reentry")
         step(Key.DOWN);walkTo(2,4);assertEquals(GameView.Layer.MAP,v.layer)
-        assertEquals(claimed.characters,v.currentSnapshot().characters)
-        assertEquals(claimed.inventory,v.currentSnapshot().inventory);assertEquals(claimed.money,v.currentSnapshot().money)
-        assertEquals(claimed.flags,v.currentSnapshot().flags);state("trigger-reentered-no-battle-or-reward")
+        assertEquals(beforeReentry.characters,v.currentSnapshot().characters)
+        assertEquals(beforeReentry.inventory,v.currentSnapshot().inventory);assertEquals(beforeReentry.money,v.currentSnapshot().money)
+        assertEquals(beforeReentry.flags,v.currentSnapshot().flags);state("trigger-reentered-no-battle-or-reward")
         walkTo(11,25);assertEquals(98,v.world.mapId);walkTo(7,29);assertEquals(25,v.world.mapId)
         state("north-palace-return")
         walkTo(45,40);step(Key.RIGHT);assertEquals(25,v.world.mapId);supply()
@@ -2335,10 +2374,11 @@ class TouchTest:IsolatedGameTestCase(){
             val snapshot=v.currentSnapshot()
             events.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.uptimeMillis()).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("snapshot",snapshot.json()))
-            File(root,"world-$label-normal-index.json").writeText(org.json.JSONObject()
-                .put("kind","CONTINUATION_FROM_VERIFIED_SAVE").put("sourceSha256",hash)
+            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
+                .put("kind",if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE")
+                .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
                 .put("stateChangesAtLoad",false).put("normalInputsOnly",true).put("events",events).toString())
-            screenshot(v,"world-$label-$name")
+            screenshot(v,"world-$label-${if(cold)"cold-" else ""}$name")
         }
         fun walk(tx:Int,ty:Int){
             val map=v.world.mapId;var tries=0

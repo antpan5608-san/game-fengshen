@@ -360,7 +360,7 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow三段AVD导入和继续须等同候选实际runner，不把脚本存在当成功。
 - 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。
 
-- 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，Windows真实运行仍待当前CI。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。
+- 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，原Windows runner实际门禁已通过；其成功不等于Android路线通过。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。
 
 ## 已执行的阶段收敛检查（App结果另核）
 
@@ -369,3 +369,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 失败先按实际错误分BUILD_ENV/TEST_HARNESS/GAME_BUG/CONTENT_GAP/ENV_LIMIT；测试基底路径使用runner已有FENGSHEN_CONTENT_BASE_APK，硬编码/workspace在Windows实际失败。先执行相关fixture/原审批回归/仪器编译，再跑最终同候选长流程；范围外训练耗时不作为阶段前置，更不成为玩家门槛。
 
 原runtime_handoff只搬真实正常JSON，scope依赖清单由内容pin固定SHA，原三job、同源/同签名/同hash/reviewer保留。全开发29条正常路径仍保留；R1分派和内容局部门禁已本地执行，新跨runner/最终App尚待实际结果，不能写已发布或Android已通过。修复交付后同步回既有开发线，避免从头重做。
+
+- 长路线无奖励重进比较前，先定位normal-index中合法补给：HP/库存因真实用药变化不能与补给前快照作全等比较。已实际取得原App证据并保留全部经济/角色/剧情断言修复驱动；从真实索引截取小型来源明确的CONTROLLED回归fixture，先编译再在原runner早期复现。新复现/修正后正常App成功仍须当前任务实际回执，不能提前写可靠运行PASS。正常与cold索引/截图分名以免覆盖，具体运行结果另核。
