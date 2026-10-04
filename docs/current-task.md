@@ -47,3 +47,9 @@ world111483083692于16:50:26Z开始、16:52:11Z FAILURE：85洞段第一步读�
 当前修复：原runtime_handoff保留来源/同APK/normal-cold/hash检查，改由隔离仪器在App自身externalFilesDir写原字节并实际读回，禁止触碰GameState/真实存档；增加原base长路线前的原生存储探针，明确CONTROLLED。本地验证后新来源/新候选重验原三段，旧v70前段不能给新APK背书。
 
 存储修复本地检查：runtime相关35方法与scope5方法PASS；仪器编译25秒PASS，既有JVM任务UP-TO-DATE（不能新增计335执行）。未改游戏数值/内容pin/包名/签名/reviewer，原生App文件探针和新候选三段仍待原Actions。
+
+## 当前冻结候选（2026-10-04T17:25:35Z）
+
+main/sourceff5f3cfa727978738aafbce1d3ccbedb603689e4（tree9d00d40c84d7bc984c5ee7a1147394d49d8bb871，本地dd79a13同树）；work/world-ff5f3cfa。v71/run37220463729已触发原build一次，build111489577406实际IN_PROGRESS。新增App-owned存储探针在base长流程之前；新三段正常路线均待本次候选实际执行，不能借v70结果写PASS。正式仍v27/c14；本文件现场状态仅本地，不推main改变候选来源。
+
+v71 build于17:26:26Z FAILURE，35 runtime相关门禁中2个Windows分派fixture失败：Git Bash -c的长块末尾fi未到达，unexpected EOF；其余33方法通过。无APK、所有App job SKIPPED/NOT_PUBLISHED，分类BUILD_ENV。原8007字符块改为临时UTF-8/LF脚本文件执行；保留29全开发/11 R1正常分派、共享/冷启断言。不能把夹具模拟EACCES文本当第二次Android故障。
