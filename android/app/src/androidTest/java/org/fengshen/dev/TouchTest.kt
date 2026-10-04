@@ -1781,7 +1781,19 @@ class TouchTest:IsolatedGameTestCase(){
             val saved=v.currentSnapshot()
             val pills=((if(west)6 else 3)-(saved.inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0)*20
             val herbs=(10-(saved.inventory[HerbUse.ID]?:0)).coerceAtLeast(0)*15
-            return pills+herbs+if(west)0 else 200
+            // Budget the peak real cost of the whole buy/equip/restore/sell path,
+            // not only the initial weapon. Original random earnings vary.
+            val serviceBudget=if(west)0 else run {
+                val weapon=v.content.itemDefinitions.getValue("rom.weapon.3")
+                val armor=v.content.itemDefinitions.getValue("rom.armor.1")
+                val medicine=v.content.itemDefinitions.getValue("rom.medicine.12")
+                val inn=v.content.inns.getValue("rom.inn.1").price
+                val afterWeapon=weapon.buyPrice!!-weapon.sellPrice!!
+                val afterArmor=afterWeapon+armor.buyPrice!!-armor.sellPrice!!
+                maxOf(weapon.buyPrice,afterWeapon+armor.buyPrice,
+                    afterArmor+medicine.buyPrice!!,afterArmor+medicine.buyPrice-medicine.sellPrice!!+inn)
+            }
+            return pills+herbs+serviceBudget
         }
         if(v.currentSnapshot().money<neededSupplyMoney()){
             state("normal-earned-supply-start")

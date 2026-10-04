@@ -110,6 +110,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original side-room geometry, returns, groups and visible NPC gates failed'}
     & python -m unittest discover -s tests -p test_world_final_hall_export.py
     if($LASTEXITCODE -ne 0){throw 'Original final hall and durable rebirth content gates failed'}
+    & python -m unittest discover -s tests -p test_world_trade_driver.py
+    if($LASTEXITCODE -ne 0){throw 'Normal trade route funding gates failed'}
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
     Push-Location (Join-Path $root 'android')
