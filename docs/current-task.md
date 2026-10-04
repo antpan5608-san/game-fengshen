@@ -10,6 +10,15 @@
 - 前一c43检查点完整世界Python189方法773.505秒PASS，不混称新6方法同次全量通过；新App正常岛内/取得/秘宝命令/胜后/冷启仍NOT_RUN。不能因CPU或构建通过覆盖公网APK。
 - 下一动作：保存c43已验证让路修复检查点；继续v60实际runtime审核，连接恢复且原门禁通过立即阶段发布；候选来源冻结期间不推岛内WIP。十类欠账仍docs/delivery-status.md权威清单；不关闭全地图/全商店。
 
+## 当前有效后山事件纠正与回归（2026-10-04T05:09:37.378738+00:00）
+
+- c45完整world回归实际179方法/834.049秒，4个setUpClass因开工命令未带已缓存的immutable基底路径而ERROR，其余已执行方法无失败。补FENGSHEN_WORLD_F0_BASE_APK=原v26缓存、FENGSHEN_CONTENT_BASE_APK=原v27缓存，只重跑这四组20方法/62.063秒PASS；不得写“单次全量全部通过”。未删测试、未放宽基底hash。
+- 修正前检查点把ROM literal $87/$86误读成十进制87/86：event25实际属于map135/134，不用于本次map87后山。实际map87=$57，11:D8B5分派event6，DA8D原trigger为(1,7)；前序目标墙坐标未实现成路线。
+- 原map87实际入口与内部联系受控取证（不是正常Android）：正常UP触发event6→script37玩家RIGHT4/UP2→source170→enemy156。真实原画面名称花狐貂，4500HP/294attack/150defense/2000EXP/1600money/behavior9；复用已有behavior9，不降级普通攻击。初始试走因真实普通遭遇中断/战败保留失败；受控内部门位不作为正常可玩证明。
+- 原event6胜后CPU：胜利7C1非零时删除source155、context07DB=201、global07BF.bit16置位；完成原script38后status0545 OR64，map87.bit128提交，保留原其他状态/角色数据。非胜利分支直接原CD9A，不自行发奖。脚本38有真实dialogue10..16及小龙女动态离场，尚缺逐阶段视觉/文本与Android事务。不能仅按攻略删除角色或丢失其装备。
+- v61原签名APK已从不可变artifact11293528934取回并用原ci_apk.verify独立PASS：23231145字节，ea09035a07cc605659f347c8677c7aa5674536a749749fc3fd6ae4f709a46d8c，原签名，c41/225/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。原runtime仍执行中，生产仍v27，不把c45本地结果给c41或App背书。
+- 下一动作：保存本检查点；限定核script38文字/原动态演员与离队投影、现有统一状态保留，再接map87/原宝箱/encounter。候选来源冻结不推独立树main；原完整App门槛通过立即阶段发布。
+
 ## 当前有效隐藏调查检查点（2026-10-04T04:50:40.814034+00:00，本地未发布）
 
 - c45严格继承c44：249文件/47地图，manifest a127632d85a38b1be91743767a88c8fb63795117e19eb7dc2d29121417fd9718。不变图集/音频逐字节复用；WORLD-FULL-01持续，总体PARTIAL、ALL_MAPS_USABLE=NO/分母UNKNOWN。
