@@ -5,6 +5,7 @@ data class TreasureDefinition(val itemId:String,val flagId:String,val amount:Int
     // original scoped category-grant evidence, not a name-based item effect.
     var categoryGrant:Int?=null;internal set
 }
+data class MoneyTreasureDefinition(val flagId:String,val amount:Int,val moneyCap:Int,val evidence:String)
 data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val spriteId:Int,
     val removedFlagId:String,val completionFlagId:String)
 data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String) {
@@ -17,6 +18,22 @@ data class WorldFieldProtectionDefinition(val evidence:String)
  * Original quantity bit 7 is a flag here, never an extra 128 inventory units.
  */
 object WorldItems {
+    fun categoryGrantEvidenceSupported(evidence:String,mapId:Int,npcId:String,category:Int):Boolean {
+        if(category !in 0..3)return false
+        return when(evidence){
+            "game-data/provenance/world-hell-chest-grants.json",
+            "game-data/provenance/world-tree107-chests.json",
+            "game-data/provenance/world-island-chests.json"->true
+            "game-data/provenance/world-five-dragon-chests.json"->mapId==99&&
+                mapOf("rom.npc.99.0" to 2,"rom.npc.99.1" to 3,"rom.npc.99.2" to 0)[npcId]==category
+            "game-data/provenance/world-cave87-chests.json"->mapId==87&&
+                mapOf("rom.npc.87.1" to 0,"rom.npc.87.2" to 0,"rom.npc.87.3" to 0,
+                    "rom.npc.87.5" to 2,"rom.npc.87.6" to 0,"rom.npc.87.7" to 2)[npcId]==category
+            "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
+            "game-data/provenance/world-village-batch-resources.json"->mapId==6&&npcId=="rom.npc.6.3"&&category==0
+            else->false
+        }
+    }
     const val ID="rom.special.11"
     const val FIELD_PROTECTION_ID="rom.special.12"
     const val FIELD_PENDING_FLAG="runtime.field67.protection.pending"
@@ -25,6 +42,20 @@ object WorldItems {
     private const val TARGET_SPRITE=226
     data class Result(val inventory:Map<String,Int>,val flags:Map<String,Boolean>,
         val applied:Boolean,val error:String?=null)
+    data class MoneyResult(val snapshot:SaveSnapshot,val applied:Boolean,val error:String?=null)
+    fun openMoneyTreasure(snapshot:SaveSnapshot,treasure:MoneyTreasureDefinition):MoneyResult {
+        fun reject(reason:String)=MoneyResult(snapshot,false,reason)
+        val island=treasure.flagId=="rom.map.76.flag.4"&&treasure.amount==100&&
+            treasure.evidence=="game-data/provenance/world-island-chests.json"
+        val cave=treasure.flagId=="rom.map.87.flag.8"&&treasure.amount==550&&
+            treasure.evidence=="game-data/provenance/world-cave87-chests.json"
+        if((!island&&!cave)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
+        if(snapshot.mapId!=if(island)76 else 87)return reject("当前场景不可用")
+        if(snapshot.flags[treasure.flagId]==true)return reject("已经取过了")
+        if(snapshot.money !in 0..treasure.moneyCap)return reject("当前银两超出原版钱箱可核范围，原状态已保留")
+        return MoneyResult(snapshot.copy(money=minOf(treasure.moneyCap,snapshot.money+treasure.amount),
+            flags=snapshot.flags+(treasure.flagId to true)),true)
+    }
 
     private fun supported(item:ItemDefinition)=item.id==ID&&item.category=="special"&&
         item.originalId==11&&item.maxCount==1

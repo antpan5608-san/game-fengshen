@@ -49,4 +49,11 @@ if($runtime.worldRoom171Normal -ne 'PASS' -or $runtime.worldRoom171GiftColdResta
 if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndColdRestart -ne 'PASS'){throw 'Actual teacher signal, Yang use/dialogues, original third-actor battle and cold restart must verify this exact APK'}
 
 if($runtime.worldVillageFourServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFourColdRestart -ne 'PASS'){throw 'Actual village4 bridges, caller services, original NPC text/conditions and cold return must verify this exact APK'}
+if($runtime.worldVillageFiveServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFiveColdRestart -ne 'PASS'){throw 'Actual village5 caller stocks, services, NPC dialogue and original return must verify this exact APK'}
 if($runtime.worldFixedFerryIslandNormal -ne 'PASS' -or $runtime.worldFixedFerryColdRestartAndReverse -ne 'PASS'){throw 'Actual fixed boat, complete island encounters, cold save and independent reverse must verify this exact APK'}
+
+if($runtime.worldIslandOriginalLayersAndFourVillainsNormal -ne 'PASS' -or $runtime.worldIslandOnceChestsAndColdRestart -ne 'PASS'){throw 'Actual island layers, original composite fight/flags/chests and cold return must verify this exact APK'}
+
+if($runtime.worldCave87FlowerNormal -ne 'PASS' -or $runtime.worldCave87DepartureAndColdRestart -ne 'PASS'){throw 'Actual cave87 route/flower Boss/seven dialogues/away actor and cold return must verify this exact APK'}
+
+if($runtime.worldVillageSixServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageSixColdRestart -ne 'PASS'){throw 'Actual village6 normal route, caller prices/services/dialogues/hidden medicine and cold return must verify this exact APK'}

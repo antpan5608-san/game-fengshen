@@ -1,0 +1,1056 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "five-dragon163-before-text-special9-and-original-battle-command",
+  "licenseStatus": "UNKNOWN",
+  "kind": "CONTROLLED_ORIGINAL_KEYS_AND_CPU_NOT_NORMAL_ANDROID",
+  "font": {
+    "sources": [
+      {
+        "offset": 589840,
+        "length": 2048,
+        "sha256": "f6e877cb2b267237053a0f7f0d8149dbc187e84ac0780c3639acc9f624148499",
+        "meaning": "Actual group173 original font CHR half"
+      },
+      {
+        "offset": 591888,
+        "length": 2048,
+        "sha256": "68eba3894cfc7e047bc25e9c4691445674f8774ce96cdae575f9fba40d26cb94",
+        "meaning": "Actual group173 original font CHR half"
+      }
+    ],
+    "charset": {
+      "1": "行",
+      "138": "了",
+      "55": "他",
+      "162": "五",
+      "35": "山",
+      "165": "有",
+      "166": "我",
+      "39": "文",
+      "167": "殊",
+      "40": "天",
+      "168": "尊",
+      "59": "人",
+      "186": "的",
+      "41": "去",
+      "169": "吧",
+      "52": "打",
+      "180": "秘",
+      "53": "寶",
+      "181": "遁",
+      "184": "這",
+      "57": "是",
+      "185": "你",
+      "54": "樁",
+      "60": "龍",
+      "188": "們",
+      "58": "四",
+      "182": "惡",
+      "42": "先",
+      "172": "如",
+      "45": "要",
+      "173": "就",
+      "0": "裏",
+      "2": "擾",
+      "3": "進",
+      "4": "剋",
+      "5": "拿",
+      "6": "著",
+      "7": "鬥",
+      "8": "將",
+      "9": "倒",
+      "10": "難",
+      "36": "父",
+      "37": "請",
+      "38": "事",
+      "43": "用",
+      "44": "住",
+      "128": "修",
+      "129": "勿",
+      "130": "找",
+      "131": "乃",
+      "132": "星",
+      "133": "記",
+      "134": "戰",
+      "135": "中",
+      "136": "此",
+      "137": "非",
+      "163": "師",
+      "164": "正",
+      "170": "使",
+      "171": "困",
+      "179": "在"
+    },
+    "glyphs": [
+      {
+        "code": 0,
+        "character": "裏",
+        "pixelsSha256": "f6ed5c1534cab367bc8c7c83067591a895ff95775dd6eb04549e8487c404b49a"
+      },
+      {
+        "code": 1,
+        "character": "行",
+        "pixelsSha256": "d60569f080a488966b0625a306fea135ad49de63315b1f82ebee15405d6528df"
+      },
+      {
+        "code": 2,
+        "character": "擾",
+        "pixelsSha256": "0e70477c823515c7aca356b61c979e5d197ec2d0636ec8fc4f84688e7694b3dd"
+      },
+      {
+        "code": 3,
+        "character": "進",
+        "pixelsSha256": "c70cd6e525dc85979cecbb301b2d1f26e25b353c6fe7d3f51bc19f2b2331cbf4"
+      },
+      {
+        "code": 4,
+        "character": "剋",
+        "pixelsSha256": "c9884b039e8f3893e0ff384a664a94810ec1df7762eaa979cadae817d65d31aa"
+      },
+      {
+        "code": 5,
+        "character": "拿",
+        "pixelsSha256": "ed23ce773e16991d12189155a23fdfba05b6b5f699b943a89ebc5460c62309fd"
+      },
+      {
+        "code": 6,
+        "character": "著",
+        "pixelsSha256": "0d73d8d51ee6950651e41c0c75dd82ba600345719ba9cef74927d2b704bd2e6a"
+      },
+      {
+        "code": 7,
+        "character": "鬥",
+        "pixelsSha256": "1c20b6941403517c0a197d2126d30719b1091c132b85c675bd537d30602bc83c"
+      },
+      {
+        "code": 8,
+        "character": "將",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82"
+      },
+      {
+        "code": 9,
+        "character": "倒",
+        "pixelsSha256": "e9fd8a6351c8cc709d4c6f6c570aa7beb1c972c158a52db0aa945e39492eb4e7"
+      },
+      {
+        "code": 10,
+        "character": "難",
+        "pixelsSha256": "6a916517f2a2a982a97624b00ee80fcc62de7f3efe9ee86474c8582cf3cada70"
+      },
+      {
+        "code": 35,
+        "character": "山",
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "code": 36,
+        "character": "父",
+        "pixelsSha256": "c7d1efe6efe4fff46987567c40ec5e5e68b8c37525598d1640b3525d15ef4656"
+      },
+      {
+        "code": 37,
+        "character": "請",
+        "pixelsSha256": "0fe980e424a061baad1c4efac717f75f3ff2ebd08a67c8bda27a87f02d17d71b"
+      },
+      {
+        "code": 38,
+        "character": "事",
+        "pixelsSha256": "aed72a64c4f0ce975ff1a41d2d299fd1e2e83a9cbf338b507296b817e8107304"
+      },
+      {
+        "code": 39,
+        "character": "文",
+        "pixelsSha256": "667251e3d73a6ba2c523e932fb6a6df9df1434a971a33d3a63ef355e35a6690a"
+      },
+      {
+        "code": 40,
+        "character": "天",
+        "pixelsSha256": "6d8ee8cf270d736f813151fb12e567ac3e431e4e2cf8981bf61a373e0fc537ac"
+      },
+      {
+        "code": 41,
+        "character": "去",
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "code": 42,
+        "character": "先",
+        "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+      },
+      {
+        "code": 43,
+        "character": "用",
+        "pixelsSha256": "81c15569f0fea61b36262acba55b2d754ce0bb808e4e1c0e074e7046bd2140e9"
+      },
+      {
+        "code": 44,
+        "character": "住",
+        "pixelsSha256": "1712e96aa9699c729d5f5d8e177645db58323ee85c89d97c6b14422b871052b7"
+      },
+      {
+        "code": 45,
+        "character": "要",
+        "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+      },
+      {
+        "code": 52,
+        "character": "打",
+        "pixelsSha256": "3a038bee24015ff307807b122453db1a862a94ef31220fea9f1b76903b43a92c"
+      },
+      {
+        "code": 53,
+        "character": "寶",
+        "pixelsSha256": "870f367d82c8fe72bac9c0945e47782e03b0aa7ecb2dcaffe52a5e0a4dcf73bb"
+      },
+      {
+        "code": 54,
+        "character": "樁",
+        "pixelsSha256": "a0d8c92bce647bd93a4feb7eb8ea2e59b68ea4821bc3541fe77345d383a98d34"
+      },
+      {
+        "code": 55,
+        "character": "他",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+      },
+      {
+        "code": 57,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      },
+      {
+        "code": 58,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724"
+      },
+      {
+        "code": 59,
+        "character": "人",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "code": 60,
+        "character": "龍",
+        "pixelsSha256": "880c8f604cf13f170b483f290d5ceb3f30410cccf993356d27bc8d334dbaca9f"
+      },
+      {
+        "code": 128,
+        "character": "修",
+        "pixelsSha256": "b1cd70b02f8375ffc030f35a867b6b3a8fd36a4b120716f2fa1a448585c48a4e"
+      },
+      {
+        "code": 129,
+        "character": "勿",
+        "pixelsSha256": "3c1eb754ed304c3f904054d5f3d483e7a9e70d07420ad634bd34538297710630"
+      },
+      {
+        "code": 130,
+        "character": "找",
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "code": 131,
+        "character": "乃",
+        "pixelsSha256": "3902fd53f416089d0c0811892869d60f074407d75d05a7717ff9c6dc7c7c6406"
+      },
+      {
+        "code": 132,
+        "character": "星",
+        "pixelsSha256": "4f798c8afb4e7a1c6702fcf2652cc6e0e6cf7acdcb0ce1593cc1a845887c6d4c"
+      },
+      {
+        "code": 133,
+        "character": "記",
+        "pixelsSha256": "69b45add34d77505294abf5752a9fb1a2fec6e90671284213af2f36264ae9e9d"
+      },
+      {
+        "code": 134,
+        "character": "戰",
+        "pixelsSha256": "51953936ccb081f7366ebd27256d61a4f8fb4f03fc1908fe5452a3c4bcbbe8e3"
+      },
+      {
+        "code": 135,
+        "character": "中",
+        "pixelsSha256": "3c3f250e8d8868d909c01444db51f736bfbd6bb0195877a0623c489d886fb83f"
+      },
+      {
+        "code": 136,
+        "character": "此",
+        "pixelsSha256": "dd722d654357683909c0da88653f5d6315c91dd83257d9030978c11b1fa10ce0"
+      },
+      {
+        "code": 137,
+        "character": "非",
+        "pixelsSha256": "c0c0cc380988df90aa55d7f420fc7656b2cf43d0f7a08a96ca6d53460ff5b215"
+      },
+      {
+        "code": 138,
+        "character": "了",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "code": 162,
+        "character": "五",
+        "pixelsSha256": "281ea3c11ff3363d8609d259c54be86c5991be0576527fb6c9a9a7ef74b907bb"
+      },
+      {
+        "code": 163,
+        "character": "師",
+        "pixelsSha256": "477a1233e39a4a2057d13ac782bcb421940adff6ca4e47fc884041902569d74c"
+      },
+      {
+        "code": 164,
+        "character": "正",
+        "pixelsSha256": "6bef33663c64896d0cca4821b2dd5d59897748e440545b080eb686ed328d0c3d"
+      },
+      {
+        "code": 165,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "code": 166,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "code": 167,
+        "character": "殊",
+        "pixelsSha256": "163f7cb532f1064a2a58af0cd877beffaa721ff2944a971a15a45ecdc160d4ba"
+      },
+      {
+        "code": 168,
+        "character": "尊",
+        "pixelsSha256": "9755eac76ba9dac7a87c8cbbb98e941927354289d3d0a2ed9ebf638ff4d4e7a4"
+      },
+      {
+        "code": 169,
+        "character": "吧",
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+      },
+      {
+        "code": 170,
+        "character": "使",
+        "pixelsSha256": "31afb0290028a32356d9fdb3a5d0e81ae0401e92edfaf68dc9920356021759c9"
+      },
+      {
+        "code": 171,
+        "character": "困",
+        "pixelsSha256": "c9795f9bc73cec5ec28974fa5e1197f9b293282ba819a5e4ae853ffed08c1eb2"
+      },
+      {
+        "code": 172,
+        "character": "如",
+        "pixelsSha256": "f0202b68db7539901dd0af33c491ac158e261e280c80649d9700bd074fc32c96"
+      },
+      {
+        "code": 173,
+        "character": "就",
+        "pixelsSha256": "9c58ddff3a4bd6d887acd03ca3875d4ef7d9410dba54dc2d1a1f99460ccd4cb5"
+      },
+      {
+        "code": 179,
+        "character": "在",
+        "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb"
+      },
+      {
+        "code": 180,
+        "character": "秘",
+        "pixelsSha256": "5cf47fb2d7b43e74b2e9effd21e5d172c296cc746a2f900c45f90cc0a5b800e3"
+      },
+      {
+        "code": 181,
+        "character": "遁",
+        "pixelsSha256": "1e3f87b8f452a14c476d78a669a5fd88f7e58c8a3635df78127eb11db9bc07d3"
+      },
+      {
+        "code": 182,
+        "character": "惡",
+        "pixelsSha256": "82b595ffe1ee2e93bf51c6068e6c29da2c10ea244a734a8de15ded3e52b029c7"
+      },
+      {
+        "code": 184,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "code": 185,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      },
+      {
+        "code": 186,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "code": 188,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      }
+    ],
+    "capturePpuSha256": "6cc1d5ab374fc797f88560ac88fa1d390f190d83a44f3497ad7db2c6f571ddb6"
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.173.0",
+      "text": "『這裏是五龍山，師父正在修行，請勿打擾。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 106828,
+          "length": 22,
+          "sha256": "b41fd06f156b20a6e03e211ffe722918cce4ca6bf8bee8c6558f4cac45aa76ed",
+          "module": 3,
+          "cpuAddress": 41276,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101324,
+            "length": 2,
+            "sha256": "2984e378b2c4d61b03de890275bfb6f1b47746c3298c48d97d4a5bf996af9798",
+            "module": 3,
+            "cpuAddress": 35772,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101794,
+            "length": 2,
+            "sha256": "f867ff50ca747bfe8af9cb800926973571dbe01356aa7454a33947e010b6837c",
+            "module": 3,
+            "cpuAddress": 36242,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-teacher163-binding.json",
+        "originalVerified": true,
+        "verificationScope": "Matched original bytes and active group173 glyphs; controlled legal stand not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.173.1",
+      "text": "『你們有事找師父，請進！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 106850,
+          "length": 14,
+          "sha256": "28016263b20cbc32a9c4e3e7f1be00813cb25eee2b072a74cb2dda114b44a622",
+          "module": 3,
+          "cpuAddress": 41298,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101324,
+            "length": 2,
+            "sha256": "2984e378b2c4d61b03de890275bfb6f1b47746c3298c48d97d4a5bf996af9798",
+            "module": 3,
+            "cpuAddress": 35772,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101796,
+            "length": 2,
+            "sha256": "678ca3a9adce410634eade9fc336b77ca4d89f3ee9c81903588d16fb2c887159",
+            "module": 3,
+            "cpuAddress": 36244,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-teacher163-binding.json",
+        "originalVerified": true,
+        "verificationScope": "Matched original bytes and active group173 glyphs; controlled legal stand not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.173.2",
+      "text": "『我乃文殊天尊，這秘寶遁龍樁正是四惡人的剋星，你們拿去吧！』\n『記著，在戰鬥中先使用秘寶將他們困住，如此要打倒四惡人就非難事了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 106864,
+          "length": 66,
+          "sha256": "4ecd23c127392e3ba29316e1f5ce8ea97a7fa8e2784ec10245ff66064dd5f5d0",
+          "module": 3,
+          "cpuAddress": 41312,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101324,
+            "length": 2,
+            "sha256": "2984e378b2c4d61b03de890275bfb6f1b47746c3298c48d97d4a5bf996af9798",
+            "module": 3,
+            "cpuAddress": 35772,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101798,
+            "length": 2,
+            "sha256": "54974befdcaaa9e40ab3b6d6182e80b94a209351af96b1b62ad9f98880f1f9ee",
+            "module": 3,
+            "cpuAddress": 36246,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-teacher163-binding.json",
+        "originalVerified": true,
+        "verificationScope": "Matched original bytes and active group173 glyphs; controlled legal stand not normal Android"
+      }
+    },
+    {
+      "id": "rom.dialogue.173.3",
+      "text": "『記著，在戰鬥中先使用秘寶將他們困住，如此要打倒四惡人就非難事了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 106930,
+          "length": 35,
+          "sha256": "9c67a6ef863e3c68a441196ff13f5bb818cd5640301d66fcbc3d89b7de3313bb",
+          "module": 3,
+          "cpuAddress": 41378,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101324,
+            "length": 2,
+            "sha256": "2984e378b2c4d61b03de890275bfb6f1b47746c3298c48d97d4a5bf996af9798",
+            "module": 3,
+            "cpuAddress": 35772,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101800,
+            "length": 2,
+            "sha256": "0553f7e05701e84fdc133d07ccca68244604b454ecbffdad1846e7704f1369b3",
+            "module": 3,
+            "cpuAddress": 36248,
+            "meaning": "Message pointer"
+          }
+        ],
+        "evidence": "game-data/provenance/world-teacher163-binding.json",
+        "originalVerified": true,
+        "verificationScope": "Matched original bytes and active group173 glyphs; controlled legal stand not normal Android"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first/repeat NPC selector"
+    },
+    {
+      "offset": 347028,
+      "length": 12,
+      "sha256": "4ae7ebfb14eb1e9b44a367a9bb28598fba64cc9735d125430de1262b5d92dbd1",
+      "module": 10,
+      "cpuAddress": 52100,
+      "meaning": "Original action1 flag before gift"
+    },
+    {
+      "offset": 347961,
+      "length": 15,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb",
+      "module": 10,
+      "cpuAddress": 53033,
+      "meaning": "Original current map flag OR"
+    },
+    {
+      "offset": 78993,
+      "length": 21,
+      "sha256": "98b6330b4cf857f2da17812b3e905439f505e855302ad6bc5aefc3a1448ccc95",
+      "module": 2,
+      "cpuAddress": 46209,
+      "meaning": "Actual map163 dialogue2 special9 before-text gift"
+    },
+    {
+      "offset": 79390,
+      "length": 9,
+      "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe",
+      "module": 2,
+      "cpuAddress": 46606,
+      "meaning": "Original special category grant dispatch"
+    },
+    {
+      "offset": 73979,
+      "length": 169,
+      "sha256": "dbe4dc6c7e546cabe99df068b2bc4e23db2af0fad2cee705d61e80de2b867c08",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original inventory grant and capacity"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original category cap and base tables"
+    },
+    {
+      "offset": 310849,
+      "length": 121,
+      "sha256": "f846209f6c76a874dd255e41b1db9faf41bad9ca9e457d1de08ef5c89446cd40",
+      "module": 9,
+      "cpuAddress": 48689,
+      "meaning": "Original item list confirmation and special direct command"
+    },
+    {
+      "offset": 309769,
+      "length": 50,
+      "sha256": "e4b18b53aab8b9f97874387ac65e3b57794f003c184c21473ad6da2905a20ebd",
+      "module": 9,
+      "cpuAddress": 47609,
+      "meaning": "Original collect next actor then scheduler stage5"
+    },
+    {
+      "offset": 308882,
+      "length": 12,
+      "sha256": "a5feb6e98db528399eab1e17078b199ea48e2ad7cf4837d0231c2f07eed97538",
+      "module": 9,
+      "cpuAddress": 46722,
+      "meaning": "Original reset reserved item pointers"
+    },
+    {
+      "offset": 297260,
+      "length": 2,
+      "sha256": "9bd979312f65dbd33e42e8f30e80a596a13746a0e29edb591c4d78f3d1efc920",
+      "module": 9,
+      "cpuAddress": 35100,
+      "meaning": "Original special9 dispatcher"
+    },
+    {
+      "offset": 297285,
+      "length": 31,
+      "sha256": "8ba6f8b0cd97d4e36b27c0a004d3e76d6ee66d46d3c4f2c604aa8d64c529ddad",
+      "module": 9,
+      "cpuAddress": 35125,
+      "meaning": "Original four-villain current-battle marker1"
+    },
+    {
+      "offset": 306179,
+      "length": 80,
+      "sha256": "6efd78bb61bab207fbf6fa6b6f8d7d8d794514f8e3fe610151dba55464bc05b3",
+      "module": 9,
+      "cpuAddress": 44019,
+      "meaning": "Original marker-mismatched damage zero"
+    }
+  ],
+  "rules": {
+    "npcId": "rom.npc.163.1",
+    "mapId": 163,
+    "npcCell": [
+      7,
+      3
+    ],
+    "normalTalkCell": [
+      7,
+      5
+    ],
+    "normalTalkDirection": "UP",
+    "actionId": 1,
+    "mapFlagId": "rom.map.163.flag.2",
+    "itemId": "rom.special.9",
+    "giftMessage": 2,
+    "giftBeforeText": true,
+    "flagBeforeGift": true,
+    "fullCategoryRetainsFlag": true,
+    "repeatMessage": 3
+  },
+  "cpuExpected": [
+    {
+      "path": "android/app/src/test/resources/world-teacher163-selector.tsv",
+      "caseCount": 256,
+      "failures": 0,
+      "sha256": "5c9b55aba6a1328c09990430e0ec36b6598781ecb8802a0ea10167d701c37c9b"
+    },
+    {
+      "path": "android/app/src/test/resources/world-teacher163-gift.tsv",
+      "caseCount": 5,
+      "failures": 0,
+      "sha256": "b0cd0432abb46c65aded0ef47e61513bb5dc7a930dcb1544ba8eeec7f35da46b"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "rom.npc.163.0",
+      "mapId": 163,
+      "cell": [
+        7,
+        10
+      ],
+      "spriteId": 178,
+      "sprite": "npc-disciple-178.png",
+      "firstDialogue": "rom.dialogue.173.0",
+      "repeatDialogue": "rom.dialogue.173.0",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 284961,
+          "length": 14,
+          "sha256": "232ed678d7c1156554c1ed6d7e3e850cd24b01401af847579579c7821ec66e28",
+          "module": 8,
+          "cpuAddress": 55569,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-teacher163-binding.json"
+      },
+      "stateVariant": {
+        "flagId": "rom.npccontext.163.219",
+        "cell": [
+          7,
+          9
+        ],
+        "firstDialogue": "rom.dialogue.173.1",
+        "repeatDialogue": "rom.dialogue.173.1",
+        "evidence": "game-data/provenance/world-teacher163-gate.json"
+      }
+    },
+    {
+      "id": "rom.npc.163.1",
+      "mapId": 163,
+      "cell": [
+        7,
+        3
+      ],
+      "spriteId": 175,
+      "sprite": "npc-teacher-175.png",
+      "firstDialogue": "rom.dialogue.173.2",
+      "repeatDialogue": "rom.dialogue.173.3",
+      "firstEffects": [],
+      "source": {
+        "confidence": "ORIGINAL_ROM_AND_CONTROLLED_DIALOGUE",
+        "record": {
+          "offset": 284975,
+          "length": 14,
+          "sha256": "50fd2122bd4a6820b00edac490187c3468534760431981315c22ec06a82b1509",
+          "module": 8,
+          "cpuAddress": 55583,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-teacher163-binding.json"
+      },
+      "interactionCell": [
+        7,
+        5
+      ],
+      "interactionDirection": "UP",
+      "interactionEvidence": "game-data/provenance/world-teacher163-binding.json",
+      "originalTalk": {
+        "actionId": 1,
+        "mapFlagId": "rom.map.163.flag.2",
+        "witnessFlagId": "",
+        "itemId": "rom.special.9",
+        "evidence": "game-data/provenance/world-teacher163-binding.json"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "rom.special.9",
+      "category": "special",
+      "originalId": 9,
+      "maxCount": 1,
+      "name": "遁龍樁",
+      "description": "文殊天尊的秘宝；本场四恶人中按角色行动顺序解除伤害保护，数量保留。",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "verifiedFields": [
+          "name",
+          "stableId",
+          "teacherGift",
+          "battleSelection",
+          "reusable",
+          "consumesAction",
+          "fourVillainProtection"
+        ],
+        "nameRange": {
+          "offset": 92232,
+          "length": 5,
+          "sha256": "82b8589a97821eda894dc7327b6c2a29fecfb2f5e1640a34666f40002c123bdb",
+          "module": 2,
+          "cpuAddress": 59448,
+          "meaning": "Original special9 menu name"
+        },
+        "nameEvidence": {
+          "captureSha256": "d4d9704e3745669311d05dba829045718e76c3ce01530dfa119d5bc73a863b32"
+        },
+        "evidence": "game-data/provenance/world-teacher163-binding.json",
+        "verificationScope": "Scoped target-ROM name/gift and controlled battle behavior verified; normal Android route still NOT_RUN"
+      },
+      "battleBindingUse": {
+        "target": "four-villains-current-battle",
+        "bindingMarker": 1,
+        "chooseTarget": false,
+        "reusable": true,
+        "consumesAction": true,
+        "evidence": "game-data/provenance/world-teacher163-binding.json"
+      }
+    }
+  ],
+  "terrain": {
+    "mapId": 163,
+    "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+    "tilesetId": 2,
+    "walkableClasses": [
+      0,
+      2
+    ],
+    "palette": [
+      14,
+      7,
+      23,
+      55,
+      25,
+      7,
+      38,
+      22,
+      25,
+      33,
+      23,
+      22,
+      25,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      25,
+      14,
+      54,
+      43,
+      25,
+      14,
+      38,
+      34,
+      25,
+      14,
+      38,
+      32
+    ],
+    "ruleReuse": {
+      "path": "game-data/provenance/world-room171-resources.json",
+      "sha256": "48947ce4008315d0775f3843b30a743b9bd0b04c59fd8cc998a1258035ce2af8",
+      "cpuExpected": {
+        "path": "android/app/src/test/resources/world-room171-terrain-original-cpu.tsv",
+        "caseCount": 36,
+        "failures": 0,
+        "sha256": "692dbec65361873934fc84432a432c606ae6b5c863f045dee8f43b974aeb518e"
+      }
+    },
+    "staticPalette": {
+      "mapId": 163,
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "backgroundSelector": 28,
+      "spriteSelector": 0,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "source": [
+        {
+          "offset": 25113,
+          "length": 2,
+          "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04",
+          "module": 0,
+          "cpuAddress": 57865,
+          "meaning": "Map background/sprite palette selector pair"
+        },
+        {
+          "offset": 25582,
+          "length": 2,
+          "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567",
+          "module": 0,
+          "cpuAddress": 58334,
+          "meaning": "Background palette pointer"
+        },
+        {
+          "offset": 25672,
+          "length": 2,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a",
+          "module": 0,
+          "cpuAddress": 58424,
+          "meaning": "Sprite palette pointer"
+        },
+        {
+          "offset": 26074,
+          "length": 16,
+          "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9",
+          "module": 0,
+          "cpuAddress": 58826,
+          "meaning": "Original default background colors"
+        },
+        {
+          "offset": 25882,
+          "length": 16,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde",
+          "module": 0,
+          "cpuAddress": 58634,
+          "meaning": "Original sprite colors"
+        }
+      ],
+      "routineEvidence": [
+        {
+          "offset": 10249,
+          "length": 44,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478",
+          "module": 0,
+          "cpuAddress": 43001,
+          "meaning": "Signed map ID selector dispatch"
+        },
+        {
+          "offset": 9120,
+          "length": 110,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d",
+          "module": 0,
+          "cpuAddress": 41872,
+          "meaning": "Original queued background then sprite palette writes"
+        }
+      ]
+    }
+  },
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-teacher163.py",
+    "sha256": "1029675c01d013654f3ab2ee0249fca785f4a380abc314322719184d150f9fcb"
+  },
+  "battleObservation": {
+    "kind": "CONTROLLED_ORIGINAL_ITEM9_HP_FIXTURE_NOT_NORMAL_PLAY",
+    "selection": {
+      "commandKind": 2,
+      "itemId": 9,
+      "nextActor": 1,
+      "quantityBefore": 1,
+      "quantityAfter": 1,
+      "usedBitAfter": false
+    },
+    "effect": {
+      "markerBefore": 0,
+      "markerAfter": 1,
+      "quantityAfter": 1
+    },
+    "frames": [
+      {
+        "label": "command",
+        "ramSha256": "7ad9209470a1f8b99b13a723e959367ff386648fefdc152ed3a1d21c17c601e1",
+        "sramSha256": "804fed8e5f7b3c3adb866784e66175081702d988fecea9f8a8a21936ef0f4a92",
+        "captureSha256": "41e79b00d14b62cacab312160651b6e3275221b9ec63ec0f30e27d87b06a285b",
+        "actor": 0,
+        "phase": 4,
+        "commandBytes": "00000000",
+        "quantity": 1,
+        "marker": 0
+      },
+      {
+        "label": "special-list",
+        "ramSha256": "0cf941c3984028253522aefbd0ae7c86327da8227cac585905e74253b22de4ee",
+        "sramSha256": "159fce72abc5300e63c2d17b140ac63d536757e587c78e17225350febf2c0a55",
+        "captureSha256": "d4d9704e3745669311d05dba829045718e76c3ce01530dfa119d5bc73a863b32",
+        "actor": 0,
+        "phase": 4,
+        "commandBytes": "02000000",
+        "quantity": 1,
+        "marker": 0
+      },
+      {
+        "label": "special-target",
+        "ramSha256": "dc5b5debc63c6c256f23af8dbf443b8a00431d3a6f20c647bd839da087995292",
+        "sramSha256": "33afba0bd76ed3e420066772385d3323232a4c72372753629fca9d78eb51a2db",
+        "captureSha256": "13853a7f45028b01e8307de72296e1789106c9b77acb47b472331eed1cc56fc3",
+        "actor": 1,
+        "phase": 4,
+        "commandBytes": "02090000",
+        "quantity": 1,
+        "marker": 0
+      },
+      {
+        "label": "later5",
+        "ramSha256": "eaff6f6066560c450f981f0a0456059397b6e54b363d3da0761dc2c61b4c77e0",
+        "sramSha256": "086b396f53f01d678811a1ea67ec9601b049a7036d9dd3cd3e1fd90d4a5beeac",
+        "captureSha256": "8ad190f7d3658423b9782d195fb1b7a88db6b94d0f22cdd6dc1cd2d2c2d46040",
+        "actor": 0,
+        "phase": 7,
+        "commandBytes": "02090000",
+        "quantity": 1,
+        "marker": 0
+      },
+      {
+        "label": "later6",
+        "ramSha256": "04b55fb97946a7154cb7b1c229d8fa8aa20c85269a6c0fefdf770a77c78ade0f",
+        "sramSha256": "0a1ffa36f1ecfebac2e216c354ab159633e8d26598e6624077252d31cd061b71",
+        "captureSha256": "63dd7bc4dd065c99fb3fa1c4dd6403033c0e202d5e6bff4784402c0ab98a3f3d",
+        "actor": 0,
+        "phase": 4,
+        "commandBytes": "02090000",
+        "quantity": 1,
+        "marker": 1
+      }
+    ]
+  },
+  "controllerObservation": {
+    "legalStand": [
+      7,
+      5
+    ],
+    "talkDirection": "UP",
+    "kind": "CONTROLLED_POSITION_REAL_KEYS_AND_ORIGINAL_DOORS_NOT_NORMAL_ANDROID",
+    "captureSha256": "c0c50d7d297402843b083119910e2a3bb93f91a3c9df25b969c38a461b89a269",
+    "ramSha256": "5f966913c8a491642a6de961db1efc2c8a3c0e81b185c563cc1bd8dd89061e5f"
+  },
+  "graphicReuse": {
+    "path": "game-data/provenance/world-room171-resources.json",
+    "assets": [
+      "npc-teacher-175.png",
+      "npc-disciple-178.png"
+    ],
+    "scope": "Same original sprite identities/animation pointer and existing observed pose. Exact map163 walk/directional presentation remains PROVISIONAL."
+  },
+  "remainingUnknown": [
+    "Normal Android acquisition route, item use and four-villain victory NOT_RUN",
+    "Exact NPC movement/directional pose is reused provisionally; no whole original presentation claim",
+    "Original special9 use in other enemy formations is not enabled by this scoped implementation"
+  ]
+}
