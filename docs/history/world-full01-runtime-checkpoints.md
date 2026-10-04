@@ -725,3 +725,8 @@ task_id: WORLD-FULL-01
 ## v65真实构建失败与最小续跑（2026-10-04T11:43:03Z）
 
 v65/run37199054406/sourcece5bebafad6d03bfd972d810cfc7d761e97b288b于11:33:01Z在Windows runtime Python门禁失败：隔离脚本分派fixture默认bash退出1、原未显示stderr；3段App作业全部SKIPPED，NOT_PUBLISHED。当前改用已安装Git Bash明确路径，不改全局PATH/认证、不删测试；新增选取与缺失拒绝两例、Linux31相关方法通过，Windows实际下一run待核。原候选65保留，不将其叫运行成功或版本已发布。
+
+
+## Windows路径身份修正（2026-10-04T11:47:06Z）
+
+v66/run37199750312/source571cb812在Windows31相关方法中，真实Bash分派通过，只有选择fixture将同一Git Bash路径的短名与长名作为不同字符串而失败。保留选择断言并规范化预期Path.resolve；30项通过不冒充31全过，全部Android作业SKIPPED/NOT_PUBLISHED。

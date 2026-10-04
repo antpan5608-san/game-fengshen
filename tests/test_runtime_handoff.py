@@ -209,7 +209,7 @@ sleep(){ :; }
         bash.parent.mkdir()
         bash.touch()
         with patch.object(shutil, 'which', return_value=str(git)):
-            self.assertEqual(str(bash), existing_bash('nt'))
+            self.assertEqual(str(bash.resolve()), existing_bash('nt'))
 
     def test_windows_missing_git_bash_is_not_silently_substituted(self):
         with patch.object(shutil, 'which', return_value=None), \

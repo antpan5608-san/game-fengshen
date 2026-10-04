@@ -6,6 +6,7 @@ task_id: WORLD-FULL-01
 
 ## 当前有效检查点（2026-10-04T11:26:54Z）
 
+- v66/run37199750312/source571cb812be8b092ea1cf2eb22597c10c5077d214 build FAILURE（11:45:35Z）：Windows真实Bash分派已通过，31相关方法只有Git Bash路径fixture字符串比较失败；实际同一文件的RUNNER~1短路径/runneradmin长路径不同。现在仅规范化预期路径，不删除选择/缺失拒绝断言。Android作业未执行，NOT_PUBLISHED；新App仍待下一同候选。
 - 最新候选v65/run37199054406/sourcece5bebafad6d03bfd972d810cfc7d761e97b288b：build FAILURE（11:33:01Z），三段runtime SKIPPED，NOT_PUBLISHED。失败是新隔离Bash分派测试在Windows默认bash执行退出1，stderr原先未呈现，不算App故障。当前最小修正显式定位runner自带Git Bash，不使用WSL入口，不安装平台；保留原测试及失败诊断。Linux runtime相关31方法PASS，Windows真实结果待下一候选，不伪称跨runner已成功。
 - 工作树/workspace/game-fengshen-world-next、work/world-next-ce5从精确main来源继续，旧c50/发布树成果全部保留。代码/内容c50不变；下一候选只修测试shell选择，实际来源/run以触发结果更新；不能用v64局部PASS背书。
 - 总体PARTIAL；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。175结构几何/259 Reference索引不是正常可用分母。正式仍v27/0.8.7-world-full01-f0/c14，APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353。任何下列未验候选不能冒充生产。
@@ -19,7 +20,7 @@ task_id: WORLD-FULL-01
 
 ## 下一条可执行动作
 
-1. 保存本次原CI分段/正常预算修正与状态，原main已无成功待发布冻结候选。安全核maince5bebaf未变后按精确树非强制整合，构建实际递增版本的新候选；记录真正APK来源提交，不用文档提交替代。
+1. 保存本次原CI分段/正常预算修正与状态，原main已无成功待发布冻结候选。安全核main571cb812未变后按精确树非强制整合，构建实际递增版本的新候选；记录真正APK来源提交，不用文档提交替代。
 2. 原runner执行完整同候选三段，任何失败取实际断言/末尾正常状态最小修复，不删路径或赠资源。三段通过后自动按原两工作流/同签名/审核hash/公网完整字节/pre-post巡检发布，不等待非阻断欠账清零。
 3. 等待独立CI时继续116真实左区连接及下一原版区段的局部取证；无证连接只阻塞该入口，不能把56打包地图算全部可玩，不重做已完成商店/药草/逃跑/触控或整个研究。
 
