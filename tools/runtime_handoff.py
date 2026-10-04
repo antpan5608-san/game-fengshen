@@ -38,6 +38,45 @@ CONTINUATION_KEYS = (
 BINDING_KEYS = ('sourceCommit', 'buildRunID', 'sha256', 'contentHash',
                 'contentVersion', 'versionCode', 'versionName', 'signerSha256')
 MAX_JSON_BYTES = 8 * 1024 * 1024
+SCOPE_PATH = Path(__file__).resolve().parents[1] / 'ci/runtime-scope.json'
+R1_BASE_KEYS = ('upgrade normalHerbSupply controlledBoundaries shopEquipmentInputRegression '
+    'touchUx phoneSizedLayout nanhaiNormalRoute nanhaiBossVictory nanhaiOnceAndColdRestart '
+    'mobileGrowth mobileEnemyInformation mobileDirectTouch mobileActionSnapshots battleHerb '
+    'worldCurrentServices worldSeaNorth worldStatusAndAntidote worldSaveProtection worldWestPalace '
+    'worldSharedVillageServices worldTerrainRestore worldNorthPalace worldPearlUseAndColdRestart '
+    'worldWholly08Controller worldMedicalControlledCommands').split()
+R1_WORLD_KEYS = WORLD_KEYS[:6]
+R1_CONTINUATION_KEYS = ['playableR1MedicalNormal', 'playableR1MedicalColdRestart']
+R1_STAGE_GATES = dict(base=R1_BASE_KEYS, world=R1_WORLD_KEYS, continuation=R1_CONTINUATION_KEYS)
+
+
+def active_scope(candidate=None):
+    """A hash-bound dependency/test manifest, never a skip-validation flag."""
+    if not SCOPE_PATH.exists():
+        return None
+    scope = read_json(SCOPE_PATH)
+    pin = read_json(SCOPE_PATH.parent / 'content-source.json')
+    reference = pin.get('runtimeScope', {})
+    if (reference != dict(path='ci/runtime-scope.json', sha256=digest(SCOPE_PATH))
+            or scope.get('id') != 'PLAYABLE-R1'
+            or scope.get('requiredJobs') != ['runtime', 'runtime-world', 'runtime-continuation']
+            or scope.get('completedStages') != list(STAGES)
+            or scope.get('contentVersion') != pin['contentVersion']
+            or scope.get('manifestSha256') != pin['manifestSha256']
+            or scope.get('mapIds') != [0,1,2,16,17,18,19,20,22,23,25,85,95,96,97,98,114,139]
+            or scope.get('endpoint') != dict(mapId=2, party=['nezha','xiaolongnv'], bossFlag='rom.map.95.flag.128')
+            or scope.get('stageGates') != R1_STAGE_GATES
+            or scope.get('checkpoints') != {'base':['north-palace'], 'world':['hell-village2']}):
+        raise ValueError('Frozen R1 scope differs from its dependency, endpoint or content pin')
+    if candidate is not None and (candidate['contentHash'] != scope['manifestSha256']
+            or candidate['contentVersion'] != scope['contentVersion']):
+        raise ValueError('Runtime scope does not describe this exact candidate content')
+    return scope
+
+
+def checkpoints(candidate=None):
+    scope = active_scope(candidate)
+    return scope['checkpoints'] if scope else CHECKPOINTS
 
 
 def read_json(path):
@@ -69,6 +108,9 @@ def current_candidate(path):
 
 def finish_stage(stage, proposed, previous=None):
     """Keep only gates actually reached by this stage; never pre-approve later flows."""
+    scope = active_scope(proposed)
+    if stage == 'all' and scope is not None:
+        raise ValueError('Frozen R1 requires all three actual same-candidate stages')
     if stage == 'all':
         return proposed
     if stage not in STAGES:
@@ -79,16 +121,26 @@ def finish_stage(stage, proposed, previous=None):
             raise ValueError('Previous stage is not the exact same candidate')
         if previous.get('runtime') != 'PARTIAL' or previous.get('completedStages') != list(STAGES[:index]):
             raise ValueError('Missing or incomplete preceding runtime stages')
+        if scope and (previous.get('runtimeScope') != scope['id'] or
+                previous.get('runtimeScopeSha256') != digest(SCOPE_PATH)):
+            raise ValueError('Previous stage has a different frozen runtime scope')
     own_keys = set(WORLD_KEYS if stage == 'world' else CONTINUATION_KEYS if index == 2 else proposed)
     if stage == 'base':
         own_keys -= set(WORLD_KEYS + CONTINUATION_KEYS)
+    if scope:
+        own_keys = set(scope['stageGates'][stage])
     result = dict(previous or {})
     for key in own_keys:
         if key not in proposed:
             raise ValueError('Missing actual stage gate: ' + key)
         result[key] = proposed[key]
+        if scope and proposed[key] != 'PASS':
+            raise ValueError('Frozen R1 gate did not actually pass: ' + key)
     result.update(binding(proposed), completedStages=list(STAGES[:index + 1]),
                   runtime='PASS' if stage == 'continuation' else 'PARTIAL')
+    if scope:
+        result.update(runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
+            deferredFullWorldGates=scope['deferredFullWorldGates'], audio='NOT_RUN', onePlus13T='NOT_RUN')
     return result
 
 
@@ -115,7 +167,8 @@ def validate_checkpoint(root, label, candidate=None):
 
 
 def pack(stage, evidence, receipt_path, output, candidate):
-    if stage not in CHECKPOINTS or output.exists():
+    points = checkpoints(candidate)
+    if stage not in points or output.exists():
         raise ValueError('Invalid stage or existing handoff destination')
     receipt = read_json(receipt_path)
     if binding(receipt) != binding(candidate) or receipt.get('runtime') != 'PARTIAL':
@@ -124,7 +177,7 @@ def pack(stage, evidence, receipt_path, output, candidate):
         raise ValueError('Incomplete runtime checkpoint chain')
     # Validate everything before writing or copying a single byte.
     files = [receipt_path]
-    for label in CHECKPOINTS[stage]:
+    for label in points[stage]:
         sources = validate_checkpoint(evidence, label, candidate)
         files.extend(sources)
     manifest = {p.name: digest(p) for p in files}
@@ -140,11 +193,12 @@ def verify(input_dir, stage, candidate):
     if input_dir.is_symlink() or not input_dir.is_dir():
         raise ValueError('Checkpoint transport must be a real isolated directory')
     parent = STAGES[STAGES.index(stage) - 1] if stage in STAGES[1:] else None
-    if parent not in CHECKPOINTS:
+    points = checkpoints(candidate)
+    if parent not in points:
         raise ValueError('This stage does not accept a checkpoint import')
     handoff = read_json(input_dir / 'handoff.json')
     expected = {'runtime-receipt.json'} | {f'world-{label}-{suffix}.json'
-        for label in CHECKPOINTS[parent] for suffix in ('expected-save', 'normal-index', 'recording')}
+        for label in points[parent] for suffix in ('expected-save', 'normal-index', 'recording')}
     if (handoff.get('schema') != 1 or handoff.get('stage') != parent
             or handoff.get('candidate') != binding(candidate)
             or handoff.get('kind') != 'EXACT_NORMAL_APP_CHECKPOINT_SAME_CANDIDATE'
@@ -160,7 +214,11 @@ def verify(input_dir, stage, candidate):
             or receipt.get('completedStages') != list(STAGES[:STAGES.index(stage)])
             or handoff.get('completedStages') != receipt.get('completedStages')):
         raise ValueError('Runtime stage receipt mismatch')
-    for label in CHECKPOINTS[parent]:
+    scope = active_scope(candidate)
+    if scope and (receipt.get('runtimeScope') != scope['id'] or
+            receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH)):
+        raise ValueError('Checkpoint receipt belongs to another frozen runtime scope')
+    for label in points[parent]:
         validate_checkpoint(input_dir, label, candidate)
     return receipt
 
@@ -179,7 +237,7 @@ def import_to_isolated_avd(input_dir, stage, candidate, output_receipt):
     base = '/sdcard/Android/data/org.fengshen.dev/files/'
     subprocess.run(adb + ['shell', 'mkdir', '-p', base], check=True, capture_output=True, timeout=10)
     parent = STAGES[STAGES.index(stage) - 1]
-    for label in CHECKPOINTS[parent]:
+    for label in checkpoints(candidate)[parent]:
         name = f'world-{label}-expected-save.json'
         subprocess.run(adb + ['push', str(input_dir / name), base + name], check=True, capture_output=True, timeout=10)
         actual = subprocess.check_output(adb + ['shell', 'sha256sum', base + name], timeout=10).decode().split()[0]
@@ -191,13 +249,38 @@ def import_to_isolated_avd(input_dir, stage, candidate, output_receipt):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=('pack', 'import'))
-    parser.add_argument('--stage', required=True, choices=STAGES)
-    parser.add_argument('--candidate', type=Path, required=True)
-    parser.add_argument('--directory', type=Path, required=True)
+    parser.add_argument('mode', choices=('pack', 'import', 'scope', 'review'))
+    parser.add_argument('--stage', choices=STAGES)
+    parser.add_argument('--candidate', type=Path)
+    parser.add_argument('--directory', type=Path)
+    parser.add_argument('--field', choices=('id', 'contentTests'))
     parser.add_argument('--evidence', type=Path, default=Path('artifacts/checkpoint-ui'))
     parser.add_argument('--receipt', type=Path, default=Path('artifacts/town02-runtime/runtime-receipt.json'))
     args = parser.parse_args()
+    if args.mode == 'scope':
+        scope = active_scope()
+        print((scope['id'] if scope else 'WORLD-FULL-01') if args.field == 'id' else
+            ','.join('org.fengshen.dev.ContentTest#' + n for n in scope['contentTests']) if scope else
+            'org.fengshen.dev.ContentTest')
+        return
+    if args.mode == 'review':
+        scope = active_scope()
+        receipt = read_json(args.receipt)
+        if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):
+            raise ValueError('Missing exact frozen R1 scope receipt')
+        active_scope(receipt)
+        if receipt.get('runtime') != 'PASS' or receipt.get('completedStages') != list(STAGES):
+            raise ValueError('All three R1 runtime stages must actually pass')
+        for keys in scope['stageGates'].values():
+            for key in keys:
+                if receipt.get(key) != 'PASS':
+                    raise ValueError('R1 actual runtime gate missing: ' + key)
+        if any(receipt.get(key) == 'PASS' for key in scope['deferredFullWorldGates']):
+            raise ValueError('Stage-excluded world content must not be reported as verified')
+        print('Exact frozen R1 same-candidate runtime scope verified')
+        return
+    if not args.stage or not args.candidate or not args.directory:
+        parser.error('Checkpoint pack/import requires stage, candidate and directory')
     candidate = current_candidate(args.candidate)
     if args.mode == 'import':
         import_to_isolated_avd(args.directory, args.stage, candidate, args.receipt)
@@ -207,7 +290,7 @@ def main():
         import tempfile
         with tempfile.TemporaryDirectory(prefix='fengshen-normal-handoff-') as td:
             source = Path(td)
-            for label in CHECKPOINTS[args.stage]:
+            for label in checkpoints(candidate)[args.stage]:
                 for suffix in ('expected-save', 'normal-index', 'recording'):
                     name = f'world-{label}-{suffix}.json'
                     original = args.evidence / (name if suffix == 'recording' else 'touch-ux-' + name)

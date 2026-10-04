@@ -32,6 +32,9 @@ class RuntimeHandoffTest(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
         self.root = Path(self.tmp.name)
+        scope_patch = patch.object(handoff, "SCOPE_PATH", self.root / "no-scope.json")
+        scope_patch.start()
+        self.addCleanup(scope_patch.stop)
         self.candidate = dict(sourceCommit='c' * 40, buildRunID='123', sha256='a' * 64,
             contentHash='b' * 64, contentVersion='test-content', versionCode=1,
             versionName='test-only', signerSha256='d' * 64)
@@ -173,6 +176,7 @@ class RuntimeHandoffTest(unittest.TestCase):
         block = script[start:script.index('# Clinical sub-results', start)]
         prefix = '''set -euo pipefail
 stage="$1"
+scope_id="WORLD-FULL-01"
 mkdir -p artifacts/town02-runtime
 python(){ printf 'PY %s\\n' "$*"; }
 run_test(){ printf 'TEST %s\\n' "$*"; }
@@ -200,6 +204,41 @@ sleep(){ :; }
         self.assertEqual('world-ferry', observed['world'][-1])
         self.assertEqual('world-island', observed['continuation'][0])
         self.assertEqual('world-queen117', observed['continuation'][-1])
+
+    def test_actual_r1_dispatch_freezes_endpoint_keeps_shared_tests_and_cold_paths(self):
+        root = Path(__file__).resolve().parents[1]
+        script = (root / 'ci/run-town02-runtime.sh').read_text()
+        start = script.index('if [[ "$stage" == all || "$stage" == base ]]; then\nrun_test testUpgradeKeepsPreviousSave')
+        block = script[start:script.index('# Clinical sub-results', start)]
+        prefix = '''set -euo pipefail
+stage="$1"
+scope_id="PLAYABLE-R1"
+mkdir -p artifacts/town02-runtime
+python(){ printf 'PY %s\\n' "$*"; }
+run_test(){ printf 'TEST %s\\n' "$*"; }
+adb(){ :; }
+sleep(){ :; }
+'''
+        observed = {}
+        for stage in handoff.STAGES:
+            result = subprocess.run([existing_bash(), '-c', prefix + block, 'r1-dispatch-fixture', stage],
+                cwd=self.root, capture_output=True, text=True, timeout=10)
+            self.assertEqual(0, result.returncode, result.stderr[:2000])
+            lines = result.stdout.splitlines()
+            observed[stage] = [line.split()[2] for line in lines if line.startswith('PY tools/record_app_audio.py ')]
+            for line in lines:
+                if line.startswith('PY tools/record_app_audio.py world-') and 'world-f0 ' not in line:
+                    self.assertIn('--cold-test', line)
+            if stage == 'base':
+                for test in ['testUpgradeKeepsPreviousSave','testTouchUxTradeGesturesAndResultEquivalence',
+                             'testControlledMedicalCommandsCancellationGestureAndSave',
+                             'testControlledWholly08PartyAdvancesWithoutTouchCommand',
+                             'testInput01RealMapWallSlidesAndMenuCancellation']:
+                    self.assertIn('TEST '+test, lines)
+        self.assertEqual(7,len(observed['base']))
+        self.assertEqual(['world-cave85','world-east-palace','world-hell-village2'],observed['world'])
+        self.assertEqual(['world-r1-medical'],observed['continuation'])
+        self.assertNotIn('world-first-hall',sum(observed.values(),[]))
 
     def test_windows_selects_existing_git_bash_instead_of_wsl_shim(self):
         git = self.root / 'Git/cmd/git.exe'

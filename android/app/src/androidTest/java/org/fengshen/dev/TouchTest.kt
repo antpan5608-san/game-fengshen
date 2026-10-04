@@ -704,6 +704,8 @@ class TouchTest:IsolatedGameTestCase(){
     /** Isolated real UI gestures; not normal acquisition, death or poison evidence. */
     fun testControlledMedicalCommandsCancellationGestureAndSave(){
         val(activity,v)=launch();val baseline=v.currentSnapshot()
+        val caller=if(v.content.scenes.containsKey(3))3 else 2
+        val door=if(caller==3)7 to 18 else 22 to 26
         fun fixture(role:String,status:Int,hp:Int=0,money:Int=887){
             instrumentation.runOnMainSync{
                 if(v.layer!=GameView.Layer.MAP)v.handleBack()
@@ -711,10 +713,10 @@ class TouchTest:IsolatedGameTestCase(){
                 val point=if(role=="revival")3 to 7 else 13 to 5
                 assertTrue(v.restoreSnapshot(baseline.copy(mapId=20,x=point.first*16+8,y=point.second*16+8,
                     money=money,characters=listOf(v.content.initialPlayer.copy(hp=minOf(5,v.content.initialPlayer.maxHp)),girl),
-                    interiorContext=InteriorContext(3,7,18))))
+                    interiorContext=InteriorContext(caller,door.first,door.second))))
             }
             tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
-            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.3.$role",v.activeClinicId)
+            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.$caller.$role",v.activeClinicId)
         }
         fixture("revival",32);val before=v.currentSnapshot()
         tap(v,center(v.clinicTargetBounds("xiaolongnv")));assertEquals(before,v.currentSnapshot())
@@ -728,7 +730,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(before,v.currentSnapshot())
         instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
         fixture("revival",32);tap(v,center(v.clinicTargetBounds("xiaolongnv")))
-        val expected=ClinicRevival.apply(v.currentSnapshot().money,v.currentSnapshot().characters,"xiaolongnv",v.content.clinics.getValue("rom.clinic.3.revival"))
+        val expected=ClinicRevival.apply(v.currentSnapshot().money,v.currentSnapshot().characters,"xiaolongnv",v.content.clinics.getValue("rom.clinic.$caller.revival"))
         tap(v,center(v.clinicReviveBounds()));assertEquals(GameView.Layer.MAP,v.layer)
         assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.characters,v.currentSnapshot().characters)
         val saved=v.currentSnapshot();send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(saved,v.currentSnapshot())
@@ -2312,6 +2314,85 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldEastPartyColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true)}
     fun testNormalWorldHellVillageServicesFromVerifiedEastPartySave(){normalWorldStoryContinuation(false,true,true)}
     fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
+    fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}
+    fun testPlayableR1MedicalColdStartMatchesNormalSave(){normalPlayableR1Medical(true)}
+
+    /** Exact same-candidate village checkpoint, original door and normal touch only. */
+    private fun normalPlayableR1Medical(cold:Boolean){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val label="r1-medical"
+        val file=File(root,if(cold)"world-$label-expected-save.json"else"world-hell-village2-expected-save.json")
+        assertTrue(file.exists());val bytes=file.readBytes();val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
+        val hash=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
+        val(activity,v)=launch()
+        assertEquals(v.content.scene.version,source.contentVersion)
+        assertEquals(2,source.mapId);assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.95.flag.128"])
+        if(!cold)instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
+        assertEquals(source,v.currentSnapshot())
+        val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
+        fun state(name:String){
+            val snapshot=v.currentSnapshot()
+            events.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.uptimeMillis()).put("elapsedMs",SystemClock.elapsedRealtime()-started)
+                .put("snapshot",snapshot.json()))
+            File(root,"world-$label-normal-index.json").writeText(org.json.JSONObject()
+                .put("kind","CONTINUATION_FROM_VERIFIED_SAVE").put("sourceSha256",hash)
+                .put("stateChangesAtLoad",false).put("normalInputsOnly",true).put("events",events).toString())
+            screenshot(v,"world-$label-$name")
+        }
+        fun walk(tx:Int,ty:Int){
+            val map=v.world.mapId;var tries=0
+            while(v.world.mapId==map&&(v.world.x/16!=tx||v.world.y/16!=ty)){
+                assertTrue("R1 original medical path must converge without position edits",tries++<512)
+                val scene=v.world.scene;val start=v.world.y/16*scene.width+v.world.x/16;val goal=ty*scene.width+tx
+                val queue=java.util.ArrayDeque<Int>();queue.add(start)
+                val parents=mutableMapOf<Int,Pair<Int,Key>>();parents[start]=start to Key.UP
+                while(queue.isNotEmpty()&&goal !in parents){
+                    val at=queue.removeFirst();val x=at%scene.width;val y=at/scene.width
+                    for((key,d)in listOf(Key.UP to (0 to -1),Key.DOWN to (0 to 1),Key.LEFT to (-1 to 0),Key.RIGHT to (1 to 0))){
+                        if(scene.probeFrom(x,y,key)!=MovementBlock.NONE)continue
+                        val nx=x+d.first;val ny=y+d.second;val next=ny*scene.width+nx
+                        if(next in parents||(next!=goal&&v.content.exits.any{it.fromMapId==map&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null}))continue
+                        parents[next]=at to key;queue.add(next)
+                    }
+                }
+                assertTrue("Original R1 medical target not reachable: $map $tx,$ty",goal in parents)
+                var next=goal
+                while(parents.getValue(next).first!=start)next=parents.getValue(next).first
+                stickStep(v,parents.getValue(next).second)
+                assertEquals("No normal field battle exists in this village/medical room",GameView.Layer.MAP,v.layer)
+            }
+        }
+        state(if(cold)"cold-exact-normal-state"else"verified-village-source")
+        for((role,id)in listOf("revival" to "rom.npc.20.1","care" to "rom.npc.20.0")){
+            walk(22,26);assertEquals(20,v.world.mapId)
+            assertEquals(InteriorContext(2,22,26),v.currentSnapshot().interiorContext)
+            val npc=v.content.npcs.single{it.id==id};val cell=npc.interactionCell!!
+            walk(cell.first,cell.second)
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.2.$role",v.activeClinicId)
+            state("$role-real-entry-service")
+            val before=v.currentSnapshot()
+            tap(v,center(v.clinicTargetBounds("xiaolongnv")))
+            assertEquals(before,v.currentSnapshot());state("$role-target-selected-no-side-effect")
+            instrumentation.runOnMainSync{v.handleBack()}
+            assertEquals(before,v.currentSnapshot());assertEquals(GameView.Layer.MAP,v.layer)
+            walk(7,12);assertEquals(2,v.world.mapId)
+            assertEquals(22 to 26,v.world.x/16 to v.world.y/16);assertNull(v.currentSnapshot().interiorContext)
+            state("$role-original-return-no-charge")
+        }
+        assertEquals(source.money,v.currentSnapshot().money)
+        assertEquals(source.inventory,v.currentSnapshot().inventory)
+        assertEquals(source.flags,v.currentSnapshot().flags)
+        assertEquals(source.characters.map{it.id},v.currentSnapshot().characters.map{it.id})
+        assertTrue(file.readBytes().contentEquals(bytes))
+        instrumentation.runOnMainSync{v.persistState()}
+        assertEquals(v.currentSnapshot(),SaveSnapshot.parse(instrumentation.targetContext
+            .getSharedPreferences("opening-local-save",0).getString("saveJson",null)!!))
+        if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+        state(if(cold)"cold-medical-reentry-and-continue"else"normal-medical-doors-and-cancel-saved")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     // Both routes share the same real touch/service/BFS driver. Only their
     // verified source checkpoints and scenario assertions differ.
     fun testNormalWorldFirstHallFromVerifiedHellVillageSave(){normalWorldStoryContinuation(false,true,false,true)}

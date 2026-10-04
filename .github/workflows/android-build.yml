@@ -679,6 +679,7 @@ jobs:
         with:
           name: fengshen-town02-runtime-evidence
           path: |
+            artifacts/checkpoint-ui/*world-r1-medical*
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
             artifacts/checkpoint-ui/world-*-recording.json

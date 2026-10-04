@@ -361,3 +361,11 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。
 
 - 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，Windows真实运行仍待当前CI。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。
+
+## 已执行的阶段收敛检查（App结果另核）
+
+将已实现、已打包、同候选App已验证、已发布分开记。阶段候选先冻结真实依赖/终点/测试集合，以原golden配方和局部已有服务复用导出；原ci_apk.restore在全新临时目录严格验120文件和原签名基底已执行，不手删素材或放宽hash。更远配方/源码保留开发线，不能整个后续内容照包却省其验收。
+
+失败先按实际错误分BUILD_ENV/TEST_HARNESS/GAME_BUG/CONTENT_GAP/ENV_LIMIT；测试基底路径使用runner已有FENGSHEN_CONTENT_BASE_APK，硬编码/workspace在Windows实际失败。先执行相关fixture/原审批回归/仪器编译，再跑最终同候选长流程；范围外训练耗时不作为阶段前置，更不成为玩家门槛。
+
+原runtime_handoff只搬真实正常JSON，scope依赖清单由内容pin固定SHA，原三job、同源/同签名/同hash/reviewer保留。全开发29条正常路径仍保留；R1分派和内容局部门禁已本地执行，新跨runner/最终App尚待实际结果，不能写已发布或Android已通过。修复交付后同步回既有开发线，避免从头重做。
