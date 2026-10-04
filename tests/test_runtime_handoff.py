@@ -270,6 +270,7 @@ sleep(){ :; }
                 if line.startswith('PY tools/record_app_audio.py world-') and 'world-f0 ' not in line:
                     self.assertIn('--cold-test', line)
             if stage == 'base':
+                self.assertIn('TEST testControlledPlayableR1MedicalDoorReentryFromVerifiedSave', lines)
                 self.assertIn('TEST testControlledNorthTravelFromVerifiedPalaceSave', lines)
                 for label, method in [('world-north','testNormalWorldSeaNorthFromVerifiedNorthPalaceSave'),
                                       ('world-village1','testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave')]:
