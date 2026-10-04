@@ -33,6 +33,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var removedFlagId:String?=null;internal set
     var moneyTreasure:MoneyTreasureDefinition?=null;internal set
     var stateVariant:NpcStateVariant?=null;internal set
+    var hiddenInvestigation:Boolean=false;internal set
 }
 data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String)
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
@@ -259,13 +260,17 @@ object ContentLoader {
                     require(t.getString("evidence").isNotBlank()&&t.getInt("amount")==1)
                     TreasureDefinition(t.getString("itemId"),t.getString("flagId"),t.getInt("amount")).also{treasure->
                         if(t.has("categoryGrant")){
-                            require(t.getString("evidence") in setOf("game-data/provenance/world-hell-chest-grants.json",
-                                "game-data/provenance/world-tree107-chests.json","game-data/provenance/world-island-chests.json"))
+                            require(WorldItems.categoryGrantEvidenceSupported(t.getString("evidence"),mapId,n.getString("id"),t.getInt("categoryGrant")))
                             treasure.categoryGrant=t.getInt("categoryGrant").also{require(it in 0..3)}
                         }
                     }
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
+                npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
+                if(npc.hiddenInvestigation)require(npc.id=="rom.npc.5.5"&&npc.mapId==5&&npc.x==15&&npc.y==7&&
+                    npc.treasure?.itemId=="rom.medicine.1"&&npc.treasure.flagId=="rom.map.5.flag.1"&&
+                    npc.treasure.categoryGrant==0&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
+                    npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
                 if(npc.automaticStoryOnly||npc.removedFlagId!=null){

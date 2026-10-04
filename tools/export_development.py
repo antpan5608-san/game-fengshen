@@ -755,6 +755,8 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/world-village5-hidden.json':
+        return validate_world_village5_hidden(reader,npc)
     path=npc['treasure']['evidence'];proof=load(ROOT/path)
     scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
             'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
@@ -1153,6 +1155,38 @@ def validate_world_village5_resources(reader):
         raise ValueError('Village5 reviewed actor graphics missing')
     for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
     return p
+
+
+def validate_world_village5_hidden(reader,npc):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-village5-hidden.json';p=load(ROOT/path)
+    record=extract_npcs(reader,5)['records'][5];raw=checked_span(reader,record['range'])
+    required={(10,0xa740,233),(2,0x9ec0,249),(2,0xa0df,12),(2,0xa0eb,173),(2,0xa190,12),(0,0xd49d,2),(0,0x8e52,20)}
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map5-c6-investigation-medicine1-success-only-local-flag' or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            raw!=bytes.fromhex('c60001006801e800528e01020001')or p['originalRecord']!=record['range']or npc!=p['npc']:
+        raise ValueError('Hidden investigation identity, scene or source differs')
+    for span in p['sources']:checked_span(reader,span)
+    reuse=p['ruleReuse'];proof=load(ROOT/reuse['path'])
+    if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or p['rules']!=proof['rules']:
+        raise ValueError('Hidden pickup cannot invent another inventory policy')
+    expected=dict(itemId='rom.medicine.1',flagId='rom.map.5.flag.1',amount=1,categoryGrant=0,evidence=path)
+    if npc['id']!='rom.npc.5.5'or npc['mapId']!=5 or npc['cell']!=[15,7]or npc['spriteId']!=198 or \
+            npc['source']['record']!=record['range']or npc['treasure']!=expected or npc.get('hiddenInvestigation')is not True or \
+            npc['firstDialogue']!=''or npc['repeatDialogue']is not None or npc['firstEffects']or \
+            npc['sprite']!='npc-198-village5-hidden.png'or npc['openedSprite']!=npc['sprite']or npc.get('removedFlagId'):
+        raise ValueError('Hidden pickup must retain invisible pose, no dialogue and no removal')
+    cpu=p['cpu'];table=(ROOT/cpu['path']).read_bytes()
+    if (cpu['caseCount'],cpu['failures'])!=(9,0)or len(table.splitlines())!=10 or digest(table)!=cpu['sha256']or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-village5-hidden.py'or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Hidden pickup original selector/capacity cases differ')
+    if p['blocking']!=dict(beforeCell=[15,8],afterUpCell=[15,8],beforePickupFlag=0,afterPickupFlag=1,remainsBlockingAfterPickup=True):
+        raise ValueError('Hidden actor must still block after successful pickup')
+    graphic=p['graphic'];png=scoped_observed_graphic(reader,graphic)
+    if graphic['opaquePixelCount']!=0 or graphic['completeGraphic']is not False or \
+            any(Image.open(io.BytesIO(png)).convert('RGBA').getchannel('A').getdata()):
+        raise ValueError('Do not invent a visible hidden-item icon')
+    return expected
 
 
 def validate_world_island_event7(reader):
@@ -2045,6 +2079,15 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc!=expected or any(d not in evidence['dialogues'] and d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
                 raise ValueError('Village4 actor/dialogue/graphic differs')
+        elif npc.get('hiddenInvestigation'):
+            validate_world_village5_hidden(reader,npc)
+            proof=load(ROOT/'game-data/provenance/world-village5-hidden.json')
+            if evidence['graphics'].get(npc['sprite'])!=proof['graphic']:
+                raise ValueError('Hidden actor graphic differs')
+            name=next(m['scene']for m in scene['maps']if m['id']==5);data=json.loads(result[name]);cell=7*data['width']+15
+            if data['collision'][cell]!=0 or cell not in data['enabledCells']:
+                raise ValueError('Hidden actor collision parent differs')
+            data['dynamicObjectCells']=sorted(set(data['dynamicObjectCells'])|{cell});result[name]=encoded(data)
         elif npc['mapId']==5:
             proof=validate_world_village5_resources(reader)
             expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)

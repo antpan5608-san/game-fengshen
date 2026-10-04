@@ -18,6 +18,18 @@ data class WorldFieldProtectionDefinition(val evidence:String)
  * Original quantity bit 7 is a flag here, never an extra 128 inventory units.
  */
 object WorldItems {
+    fun categoryGrantEvidenceSupported(evidence:String,mapId:Int,npcId:String,category:Int):Boolean {
+        if(category !in 0..3)return false
+        return when(evidence){
+            "game-data/provenance/world-hell-chest-grants.json",
+            "game-data/provenance/world-tree107-chests.json",
+            "game-data/provenance/world-island-chests.json"->true
+            "game-data/provenance/world-five-dragon-chests.json"->mapId==99&&
+                mapOf("rom.npc.99.0" to 2,"rom.npc.99.1" to 3,"rom.npc.99.2" to 0)[npcId]==category
+            "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
+            else->false
+        }
+    }
     const val ID="rom.special.11"
     const val FIELD_PROTECTION_ID="rom.special.12"
     const val FIELD_PENDING_FLAG="runtime.field67.protection.pending"

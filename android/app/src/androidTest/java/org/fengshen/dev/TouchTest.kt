@@ -2849,7 +2849,7 @@ class TouchTest:IsolatedGameTestCase(){
         if(village4||village5){
             val caller=if(village5)5 else 4
             val worldDoor=if(village5)107 to 157 else 146 to 150
-            val stock=if(village5)listOf(17 to "rom.weapon.8",18 to "rom.armor.13",19 to HerbUse.ID)else listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)
+            val stock=if(village5)listOf(17 to "rom.weapon.8",18 to "rom.armor.13",19 to "rom.medicine.1")else listOf(17 to "rom.weapon.7",18 to "rom.armor.4",19 to HerbUse.ID)
             assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
             assertEquals(true,source.flags["rom.map.110.flag.128"])
             state(if(cold)"cold-exact-normal-village-save"else"verified-yang-three-party-source-no-grants")
@@ -2914,6 +2914,28 @@ class TouchTest:IsolatedGameTestCase(){
                     assertEquals(before.money,v.currentSnapshot().money);assertEquals(before.inventory,v.currentSnapshot().inventory)
                     assertEquals(before.characters,v.currentSnapshot().characters)
                 }
+                fun discoverHiddenMedicine(){
+                    val hidden=v.content.npcs.single{it.id=="rom.npc.5.5"};val item=v.content.itemDefinitions.getValue("rom.medicine.1")
+                    if((v.currentSnapshot().inventory[item.id]?:0)>=item.maxCount){
+                        val store=enterService(5,19);trade(item.id,false);leaveService(store)
+                    }
+                    walkTo(15,8)
+                    val stick=layoutFor(v).stick;val middle=center(stick);val up=Pair(middle.first,stick.y+2f)
+                    val at=v.currentSnapshot();send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_MOVE,listOf(up))
+                    SystemClock.sleep(120);send(v,MotionEvent.ACTION_UP,listOf(up))
+                    assertEquals(at.x,v.world.x);assertEquals(at.y,v.world.y);assertEquals(Key.UP,v.world.direction)
+                    val before=v.currentSnapshot();assertTrue(before.flags["rom.map.5.flag.1"]!=true)
+                    val action=center(layoutFor(v).buttons.getValue(Key.A))
+                    send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action));assertEquals(before,v.currentSnapshot())
+                    tap(v,action);val after=v.currentSnapshot();val expected=WorldItems.openTreasure(before,hidden.treasure!!,item)
+                    assertTrue(expected.applied);assertEquals(before.copy(inventory=expected.inventory,flags=expected.flags),after)
+                    assertEquals(before.money,after.money);assertEquals(before.characters,after.characters)
+                    send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(after,v.currentSnapshot())
+                    tap(v,action);assertEquals(after,v.currentSnapshot())
+                    assertEquals(MovementBlock.PHYSICAL,v.world.scene.probeFrom(15,8,Key.UP))
+                    state("normal-original-hidden-medicine1-once-still-blocking")
+                }
+                if(village5)discoverHiddenMedicine()
                 if(!village5){walkTo(13,3);state("normal-original-north-bank-without-claimed-ferry")}
                 checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
                 state("normal-original-services-residents-and-save")

@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c45",
-  "manifestSha256": "a127632d85a38b1be91743767a88c8fb63795117e19eb7dc2d29121417fd9718",
+  "contentVersion": "opening-segment-001-c44",
+  "manifestSha256": "eac9f8888fe00f03082f856ded2e23ad42eed58e3eba848e0e9cbb1282b5eec4",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-village5-hidden-content.json"
+    "provenance": "game-data/provenance/world-village5-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,

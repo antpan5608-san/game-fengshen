@@ -716,7 +716,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
         if(!ui.game.contains(x,y))return null
         val camera=world.camera(ui.viewWidth,ui.viewHeight)
-        val candidates=nearbyNpcs().map{npc->
+        val candidates=nearbyNpcs().filter{!it.hiddenInvestigation}.map{npc->
             val (sx,sy)=ui.worldToScreen(npc.x*16f,npc.y*16f,camera)
             val size=16*ui.scale;val pad=min(12*resources.displayMetrics.density,size*.24f)
             npc to Box(sx-pad,sy-pad,size+pad*2,size+pad*2)

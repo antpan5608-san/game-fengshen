@@ -116,6 +116,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Original five-dragon teacher, special command and clean export evidence gates failed'}
     & python -m unittest discover -s tests -p test_world_village5_export.py
     if ($LASTEXITCODE -ne 0) { throw "Village5 export regression failed" }
+    & python -m unittest discover -s tests -p test_world_village5_hidden_export.py
+    if ($LASTEXITCODE -ne 0) { throw "Village5 hidden pickup export regression failed" }
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
     Push-Location (Join-Path $root 'android')

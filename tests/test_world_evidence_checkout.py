@@ -15,7 +15,7 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json','world-ferry-content.json','world-island-content.json','world-five-dragon-content.json','world-village5-content.json'):
+        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json','world-ferry-content.json','world-island-content.json','world-five-dragon-content.json','world-village5-content.json','world-village5-hidden-content.json'):
             p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
             pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
             self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
@@ -30,6 +30,9 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 raw=(ROOT/group['path']).read_bytes()
                 self.assertEqual(group['sha256'],hashlib.sha256(raw).hexdigest())
                 tables[group['path']]=raw
+        hidden=json.loads((ROOT/'game-data/provenance/world-village5-hidden.json').read_text(encoding='utf-8'))['cpu']
+        for path,sha in [(hidden['path'],hidden['sha256']),(hidden['probePath'],hidden['probeSha256'])]:
+            raw=(ROOT/path).read_bytes();self.assertEqual(sha,hashlib.sha256(raw).hexdigest());tables[path]=raw
         village5_path='game-data/provenance/world-village5-resources.json'
         tables[village5_path]=(ROOT/village5_path).read_bytes()
         gate=json.loads((ROOT/'game-data/provenance/world-teacher163-gate.json').read_text(encoding='utf-8'))['cpu']
