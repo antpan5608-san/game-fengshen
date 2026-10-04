@@ -4,6 +4,7 @@ No game-state generation or edits: copy exact App-written JSON bytes, validate
 the recorder's cold-start boundary, and bind every stage to one reviewed APK.
 """
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -38,6 +39,9 @@ CONTINUATION_KEYS = (
 BINDING_KEYS = ('sourceCommit', 'buildRunID', 'sha256', 'contentHash',
                 'contentVersion', 'versionCode', 'versionName', 'signerSha256')
 MAX_JSON_BYTES = 8 * 1024 * 1024
+MAX_SAVE_BYTES = 64 * 1024
+IMPORT_NAMES = {f'world-{label}-expected-save.json' for label in
+                ('north-palace', 'hell-village2', 'ferry', 'yang-join', 'runtime-storage-probe')}
 SCOPE_PATH = Path(__file__).resolve().parents[1] / 'ci/runtime-scope.json'
 R1_BASE_KEYS = ('upgrade normalHerbSupply controlledBoundaries shopEquipmentInputRegression '
     'touchUx phoneSizedLayout nanhaiNormalRoute nanhaiBossVictory nanhaiOnceAndColdRestart '
@@ -223,8 +227,7 @@ def verify(input_dir, stage, candidate):
     return receipt
 
 
-def import_to_isolated_avd(input_dir, stage, candidate, output_receipt):
-    receipt = verify(input_dir, stage, candidate)
+def isolated_adb():
     # Never access an attached phone, production preferences, or a cloud save.
     adb = ['adb', '-s', 'emulator-5554']
     hardware = subprocess.check_output(adb + ['shell', 'getprop', 'ro.hardware'], timeout=10).strip()
@@ -234,22 +237,60 @@ def import_to_isolated_avd(input_dir, stage, candidate, output_receipt):
     # scoped-storage access must not be assumed from an unprivileged shell.
     subprocess.run(adb + ['root'], check=True, capture_output=True, timeout=10)
     subprocess.run(adb + ['wait-for-device'], check=True, capture_output=True, timeout=10)
+    return adb
+
+
+def write_checkpoint_as_app(adb, name, data, candidate):
+    """Test-only App UID writes/reads exact bytes; never imports a GameState."""
+    if name not in IMPORT_NAMES or not 0 < len(data) <= MAX_SAVE_BYTES:
+        raise ValueError('Checkpoint transport name or size is not permitted')
+    sha = hashlib.sha256(data).hexdigest()
+    command = adb + ['shell', 'am', 'instrument', '-w',
+        '-e', 'class', 'org.fengshen.dev.TouchTest#testImportVerifiedCheckpointBytes',
+        '-e', 'checkpointName', name,
+        '-e', 'checkpointBytesBase64', base64.b64encode(data).decode('ascii'),
+        '-e', 'checkpointSha256', sha,
+        '-e', 'checkpointVersionCode', str(candidate['versionCode']),
+        '-e', 'checkpointContentVersion', candidate['contentVersion'],
+        'org.fengshen.dev.test/android.test.InstrumentationTestRunner']
+    # Do not include the command/payload in a CalledProcessError or public log.
+    try:
+        result = subprocess.run(command, check=False, capture_output=True, timeout=120)
+    except subprocess.TimeoutExpired:
+        raise ValueError('App-owned checkpoint write/read timed out: ' + name) from None
+    if result.returncode or b'OK (1 test)' not in result.stdout:
+        # The test asserts only filename/version/hash/validity, never save JSON.
+        print(result.stdout.decode('utf-8', errors='replace')[-8000:])
+        raise ValueError('App-owned checkpoint write/read failed: ' + name)
     base = '/sdcard/Android/data/org.fengshen.dev/files/'
-    subprocess.run(adb + ['shell', 'mkdir', '-p', base], check=True, capture_output=True, timeout=10)
+    actual = subprocess.check_output(adb + ['shell', 'sha256sum', base + name], timeout=10).decode().split()[0]
+    if actual != sha:
+        raise ValueError('Isolated checkpoint copy changed bytes')
+
+
+def import_to_isolated_avd(input_dir, stage, candidate, output_receipt):
+    receipt = verify(input_dir, stage, candidate)
+    adb = isolated_adb()
     parent = STAGES[STAGES.index(stage) - 1]
     for label in checkpoints(candidate)[parent]:
         name = f'world-{label}-expected-save.json'
-        subprocess.run(adb + ['push', str(input_dir / name), base + name], check=True, capture_output=True, timeout=10)
-        actual = subprocess.check_output(adb + ['shell', 'sha256sum', base + name], timeout=10).decode().split()[0]
-        if actual != digest(input_dir / name):
-            raise ValueError('Isolated checkpoint copy changed bytes')
+        write_checkpoint_as_app(adb, name, (input_dir / name).read_bytes(), candidate)
     output_receipt.parent.mkdir(parents=True, exist_ok=True)
     output_receipt.write_text(json.dumps(receipt, indent=2) + '\n')
 
 
+def probe_app_storage(candidate):
+    # Historical verified normal snapshot, CONTROLLED storage-only probe.
+    # No launch, restoreSnapshot, preferences update, HP grant or normal-flow claim.
+    fixture = Path(__file__).resolve().parents[1] / 'android/app/src/androidTest/assets/north-repeat-before-optional-herb.json'
+    data = json.dumps(read_json(fixture)['snapshot'], ensure_ascii=False).encode('utf-8')
+    write_checkpoint_as_app(isolated_adb(), 'world-runtime-storage-probe-expected-save.json', data, candidate)
+    print('CONTROLLED native App-owned storage probe PASS; no game state imported')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('mode', choices=('pack', 'import', 'scope', 'review'))
+    parser.add_argument('mode', choices=('pack', 'import', 'scope', 'review', 'probe'))
     parser.add_argument('--stage', choices=STAGES)
     parser.add_argument('--candidate', type=Path)
     parser.add_argument('--directory', type=Path)
@@ -278,6 +319,11 @@ def main():
         if any(receipt.get(key) == 'PASS' for key in scope['deferredFullWorldGates']):
             raise ValueError('Stage-excluded world content must not be reported as verified')
         print('Exact frozen R1 same-candidate runtime scope verified')
+        return
+    if args.mode == 'probe':
+        if not args.candidate:
+            parser.error('Storage probe requires the verified candidate')
+        probe_app_storage(current_candidate(args.candidate))
         return
     if not args.stage or not args.candidate or not args.directory:
         parser.error('Checkpoint pack/import requires stage, candidate and directory')

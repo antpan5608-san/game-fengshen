@@ -11,6 +11,30 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Bounded CI transport only: App-owned bytes, no launch or state restore. */
+    fun testImportVerifiedCheckpointBytes(){
+        val args=(instrumentation as android.test.InstrumentationTestRunner).arguments
+        val names=setOf("north-palace","hell-village2","ferry","yang-join","runtime-storage-probe")
+            .map{"world-$it-expected-save.json"}.toSet()
+        val name=args.getString("checkpointName")!!;assertTrue(name in names)
+        val encoded=args.getString("checkpointBytesBase64")!!;assertTrue(encoded.length<=87384)
+        val bytes=android.util.Base64.decode(encoded,android.util.Base64.DEFAULT)
+        assertTrue(bytes.size in 1..65536)
+        fun hash(value:ByteArray)=java.security.MessageDigest.getInstance("SHA-256")
+            .digest(value).joinToString(""){"%02x".format(it)}
+        val expected=args.getString("checkpointSha256")!!
+        assertTrue(expected.matches(Regex("[a-f0-9]{64}")));assertEquals(expected,hash(bytes))
+        val ctx=instrumentation.targetContext
+        assertEquals(args.getString("checkpointVersionCode")!!.toInt(),ctx.packageManager.getPackageInfo(ctx.packageName,0).versionCode)
+        val content=ContentLoader.load(AssetSource(ctx.assets))
+        assertEquals(args.getString("checkpointContentVersion"),content.scene.version)
+        val snapshot=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))!!
+        assertTrue(snapshot.validate(content))
+        val root=ctx.getExternalFilesDir(null)!!.canonicalFile
+        val file=File(root,name);assertEquals(root,file.canonicalFile.parentFile)
+        file.writeBytes(bytes)
+        assertEquals(expected,hash(file.readBytes()))
+    }
     // The opening zone is a separate original root, not an entry in the later
     // zones array. A normal training driver must query both existing domains.
     private fun inExistingEncounterRegion(content:BattleContent,mapId:Int,x:Int,y:Int)=

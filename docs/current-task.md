@@ -8,7 +8,7 @@ status: PARTIAL
 
 ## 当前有效状态（2026-10-04；时间标为UTC，用户展示北京时间+8）
 
-- 执行工作树：/workspace/game-fengshen-world-next，work/world-fbfe0a64；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。上次候选来源fbfe0a64bfe05f992e3dc3d76edfc607c240b9a8，tree d75816bb94e7c0d258ee90f689e22d7ccfdc7b31（本地检查点545a78e7067665b2f68529cf73f461fd8a1b8d36同树）。v68运行已失败，当前最小修复将形成新来源；新候选开始后继续冻结来源。
+- 执行工作树：/workspace/game-fengshen-world-next，work/world-374cfc36；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源374cfc362fa5cfbc7a84b4c35608cd1ab20b4f59/treec2e379b22d8b0f9c8daebd8929ee130309b7db1b（本地97574d8同树）。v68失败/v69构建前取消的证据与修复见下方；本文件现场状态仅本地更新，不能推动main改变候选来源。
 - 独立公网读取：正式仍v27/0.8.7-world-full01-f0/c14，SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，原签名保留。
 - v67/run37199961466/source7747010d build于12:08:15Z FAILURE：BUILD_ENV，村5隐藏物导出测试硬编码Linux基底APK路径。真实Windows原Bash/路径相关门禁已过，此失败发生在后续导出；所有App job SKIPPED/NOT_PUBLISHED。修正测试读取已有FENGSHEN_CONTENT_BASE_APK，保留所有断言。
 - 冻结R1：正常新游戏→南海/西北龙宫→85洞→东海胜后小龙女实际加入→地府村2买卖/住宿/双人战斗→医疗室实际入口/取消/原返程→保存/外部停止/冷启继续。购物/住店/等级不是剧情门槛。第一殿/十殿/重生/女人国不作为R1终点。
@@ -26,8 +26,24 @@ status: PARTIAL
 - 最小修复：正常药草补给后再捕获重进比较状态，保留所有角色/库存/钱/flag断言；新增隔离复现使用v68真实normal-index中的原值，明确CONTROLLED，不替代新候选主线。复现放在原base长路线之前。医疗normal/cold索引与截图分名，避免冷启覆盖正常来源。窄补已知c51-r1存档标记，场景/引用/位置校验保留，未来升级仅纯逻辑核对，不能写实际覆盖PASS。
 - 修复后本地335 JVM/68 suites/0失败错误跳过与仪器APK编译PASS；全部runtime相关32方法与scope5方法PASS，Bash语法/diff PASS。新增4HP受控边界明确不是正常存档原值；新隔离Android复现与完整新候选正常/冷启仍待原Actions。
 - v69/run37210639485/source7b13487d触发14:48:46Z；构建期间静态复查发现一次补给后HP仍低于半血时，step helper会再次合法用药（如4→54→104/max109），仍可能错误比较。未进入App前申请取消原run，不冒称新AppFAILURE。修为明确普通触控DOWN/UP原两格重进，保留地图/落点/钱/物品/角色/flag断言，补4HP隔离边界，与原46HP来源区分。
-- 下一动作：保存最小修正、非强制集成并构建下一候选70。内容仍c51-r1/同manifest，原三job/原审批不变。新候选须从正常新游戏同APK完成R1全路线，不能借v68录像写新候选PASS。
+- 修正已非强制集成main374cfc362fa5cfbc7a84b4c35608cd1ab20b4f59/treec2e379b22d8b0f9c8daebd8929ee130309b7db1b（本地97574d8同树）；原v70/run37211528686于15:02:43Z触发一次。下一动作：跟进实际构建与早期受控复现，通过后继续原三段同APK路线。内容仍c51-r1/同manifest，原三job/原审批不变。新候选须从正常新游戏同APK完成R1全路线，不能借v68录像写新候选PASS。
 - 三job实际通过后：原自动审批/publish同来源同SHA→公网完整字节/签名/内容复核→实际postflight→完整R1阶段报告。任一P0/P1最小定位修复、新产物重验，不把旧候选证据给新候选背书。
 - R1报告后才安全同步必要修复到现有c50开发线，固定下一终点继续地府必要流程→重生入队→已有山洞/村/女人国接入验证。WORLD-FULL-01总体PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。
 
 累计欠账唯一权威：docs/delivery-status.md原十类清单；当前路线：docs/original-playthrough-roadmap.md。失败及旧快照在既有history保留，不关闭未验项目。
+
+## v70实际构建检查点（2026-10-04T15:28:44Z，未发布）
+
+原build job111463534162 SUCCESS，实际Windows255 Python方法执行/48组，release JVM335/68 suites/0失败错误跳过。不可变artifact11307526410的v70 APK16632573字节/SHAf04bf40300b4067269b96e4f77ff77799009f1805f32de57bfddce7ff1d24683；原ci_apk.verify独立签名/包名/版本/120文件/c51-r1 manifest PASS，内容120文件与v68逐字节相同。runtime/base111468210069从15:28:46Z实际运行中，Android复现/最终正常路线尚待回执，world/continuation未完成。来源继续冻结，正式仍v27。
+
+最近现场状态16:22:55Z：原runtime/base仍IN_PROGRESS，world/continuation未完成，尚无v70正常全路线PASS回执；正式NOT_PUBLISHED/v27不变。继续等待真实base结果并按原链路接续，不另触发重复候选。
+
+## v70实际base检查点（16:50:24Z，整体仍未发布）
+
+原runtime/base111468210069 SUCCESS；25 base门禁PASS、upgrade PASS、runtime receipt仍PARTIAL/completedStages=[base]。七条同候选正常路径及各自外部cold源均PASS，北宫末尾含重新触发不发奖、珍珠不耗数量、实际穿过漩涡、保存；原handoff.verify下一world入口严格验证PASS。新4HP/原46HP隔离方法已实际通过（1方法/2场景，不能算正常路线）。artifact11308864610原handoff、11308699985北宫截图及两个未改原片、11309181692南海胜后原片、11309098578新游戏开头原片已取得并核SHA。
+
+world111483083692于16:50:26Z开始、16:52:11Z FAILURE：85洞段第一步读取world-north-palace-expected-save.json报EACCES（TouchTest2953行），root推送/hash通过不能证明App UID可读；continuation SKIPPED。分类TEST_HARNESS存储权限，不把仪器FileNotFound当游戏崩溃；早停后mp4拉取也失败，不能宣称录像成功。整体v70 FAILURE/NOT_PUBLISHED，正式仍v27。一加13T/声音NOT_RUN。
+
+当前修复：原runtime_handoff保留来源/同APK/normal-cold/hash检查，改由隔离仪器在App自身externalFilesDir写原字节并实际读回，禁止触碰GameState/真实存档；增加原base长路线前的原生存储探针，明确CONTROLLED。本地验证后新来源/新候选重验原三段，旧v70前段不能给新APK背书。
+
+存储修复本地检查：runtime相关35方法与scope5方法PASS；仪器编译25秒PASS，既有JVM任务UP-TO-DATE（不能新增计335执行）。未改游戏数值/内容pin/包名/签名/reviewer，原生App文件探针和新候选三段仍待原Actions。
