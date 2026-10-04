@@ -1,3 +1,12 @@
+## 当前有效运行检查点（2026-10-04T05:53Z）
+
+- WORLD-FULL-01继续；生产仍v27/c14，ALL_MAPS_USABLE=NO，有效分母UNKNOWN。最新gh api实际恢复，原自动审批/inspect成功；不绕过reviewer。独立island内容WIP不混入本候选。
+- v61/run37176778752/source950e4329签名build SUCCESS、runtime FAILURE：真实源8级/314两/药草2/牛黄丸0，买药草后练级2场，药草未战斗使用即遭毒，TouchTest:1966的无库存解毒断言失败。不是已确认App崩溃；失败候选绝不发布。已独立验其APK/hash/签名/c41，验包不算运行通过。
+- 修正正常驱动：按实际余额、15/20原价通过药店补最多8药草/4牛黄丸，留8两住宿；西海96原zone3敌8/9、behavior0、EXP11/13为正常练级地点，海面经真实低区waypoint避开毒区。HP<=75%或草<=3真实返村补给/住宿；无赠款/注入库存/改值/关闭遇敌，原5000步和战败/重复UP/交易断言保留。等级12只是验收操作策略，不是游戏门槛。内容仍c41/225文件/41图/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。
+- 本地2项正常采购/敌行为守卫PASS、6项原北海导出回归PASS；原wrapper assembleDebugAndroidTest PASS(7秒)。修后实际App NOT_RUN，下一动作冻结修后来源并原workflow生成新候选，运行及原发布门槛通过后阶段发布。
+- 最新本轮inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289共3720事件，普通真机8会话/模拟器0/测试0/清理0；旧v26 apk_update ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。不拿历史日志证明新候选健康；一加13T和声音NOT_RUN。
+- 十类欠账权威仍docs/delivery-status.md，未关闭全地图、全部服务或独立岛内正常流程。
+
 ## 当前有效运行修复（2026-10-04T02:49:28.031433+00:00）
 
 - 原v59/run37168134097签名构建PASS；真实Content及南海/北海/西海正常运行与冷启已执行，村1服务续跑失败于TouchTest:1763。购买蛛絲时余额76/实际80，正常拒绝交易；断言错误不是崩溃、赠款或改价依据。此run整体FAIL、不发布。

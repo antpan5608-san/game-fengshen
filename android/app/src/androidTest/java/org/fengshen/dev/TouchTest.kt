@@ -2096,21 +2096,34 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.flags,v.currentSnapshot().flags)
             leaveService(entry)
         }
-        fun replenishTrainingHerbs(){
-            // Actual v60 recording entered training with only two herbs and
-            // exhausted them before level 9. Buy normal supplies BEFORE fighting;
-            // this is the driver's choice, never an access or game-rule change.
-            val bag=v.currentSnapshot().inventory
-            if((bag[HerbUse.ID]?:0)>=8)return
-            val price=v.content.itemDefinitions.getValue(HerbUse.ID).buyPrice!!
-            val count=minOf((10-(bag[HerbUse.ID]?:0)).coerceAtLeast(0),
-                ((v.currentSnapshot().money-8)/price).coerceAtLeast(0))
-            if(count>0){
-                val entry=enterService(0,19);trade(HerbUse.ID,true,count)
-                state("normal-training-herbs-purchased");leaveService(entry)
+        fun replenishTrainingSupplies(){
+            // v61's actual normal source had 314 liang, two herbs and no pills.
+            // Eight herbs + four pills fit that real budget with original prices;
+            // buy through the shop, preserving at least two original inn stays.
+            val items=listOf(HerbUse.ID to 8,AntidoteUse.ID to 4)
+            val entry=enterService(0,19)
+            for((id,target)in items){
+                val current=v.currentSnapshot();val price=v.content.itemDefinitions.getValue(id).buyPrice!!
+                val count=minOf((target-(current.inventory[id]?:0)).coerceAtLeast(0),
+                    ((current.money-8)/price).coerceAtLeast(0))
+                if(count>0)trade(id,true,count)
             }
+            state("normal-training-supplies-purchased");leaveService(entry)
             assertTrue("Normal earnings must fund training herbs; no inventory grants",
                 (v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)
+        }
+        fun enterTrainingArea(){
+            assertEquals(0,v.world.mapId);walkTo(0,14);step(Key.LEFT);walkTo(199,130)
+            assertEquals(25,v.world.mapId)
+            // Real zone1 waypoints avoid the poison-zone shortcut chosen by BFS.
+            walkTo(29,43);walkTo(29,24);walkTo(5,24);assertEquals(96,v.world.mapId)
+            walkTo(15,24)
+            assertTrue(v.content.battle!!.zones.any{it.mapId==96&&it.contains(96,15,24)})
+        }
+        fun returnFromTraining(){
+            assertEquals(96,v.world.mapId);walkTo(15,29);assertEquals(25,v.world.mapId)
+            walkTo(29,24);walkTo(29,43);walkTo(39,42);assertEquals(16,v.world.mapId)
+            walkTo(202,130);assertEquals(0,v.world.mapId)
         }
         state("verified-normal-source-loaded")
         walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
@@ -2125,39 +2138,33 @@ class TouchTest:IsolatedGameTestCase(){
         // is this recording's chosen safety margin, not a North access condition.
         if(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
             training=true;state("normal-training-start")
-            // Use the actual reachable original zone4 at 12,21/22.
-            // The old 39,40/41 loop is zone1 (3/6 EXP), not zone4.
-            // This is a player's training route, never an encounter/EXP override.
-            replenishTrainingHerbs();inn();walkTo(0,14);step(Key.LEFT);walkTo(199,130)
-            assertEquals(25,v.world.mapId);walkTo(12,22)
-            assertTrue(v.content.battle!!.zones.any{it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains(25,v.world.x/16,v.world.y/16)})
+            // Actual West palace zone3 enemies 8/9 have behavior0 (no poison),
+            // 11/13 EXP. This normal player's route preserves all enemy rules.
+            replenishTrainingSupplies();inn();enterTrainingArea()
             var trainingSteps=0
             while(v.currentSnapshot().characters.first().level<12||v.currentSnapshot().money<supplyCost()+8){
                 assertTrue("Bounded normal preparation exhausted at map=${v.world.mapId} cell=${v.world.x/16},${v.world.y/16} level=${v.currentSnapshot().characters.first().level} EXP=${v.currentSnapshot().characters.first().experience}; no resource grants",trainingSteps++<5000)
                 if(trainingSteps%64==0)state("normal-training-progress-$trainingSteps")
-                if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
-                    walkTo(39,42);assertEquals(16,v.world.mapId)
-                    walkTo(202,130);assertEquals(0,v.world.mapId);replenishTrainingHerbs();inn()
-                    walkTo(0,14);step(Key.LEFT);walkTo(199,130)
-                    assertEquals(25,v.world.mapId);walkTo(12,22)
+                if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4||
+                    (v.currentSnapshot().inventory[HerbUse.ID]?:0)<=3){
+                    returnFromTraining();replenishTrainingSupplies();inn();enterTrainingArea()
                 }
                 var trainingDirection:Key?=null
                 instrumentation.runOnMainSync{
                     val x=v.world.x/16;val y=v.world.y/16
-                    val preferred=if(y>21)Key.UP else Key.DOWN
+                    val preferred=if(y>23)Key.UP else Key.DOWN
                     trainingDirection=(listOf(preferred)+listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).filter{it!=preferred}).firstOrNull{key->
                         val nx=x+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                         val ny=y+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
                         v.world.scene.probeFrom(x,y,key,v.world.terrainMode)==MovementBlock.NONE&&
-                            v.content.battle!!.zones.any{it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains(v.world.mapId,nx,ny)}&&
+                            v.content.battle!!.zones.any{it.mapId==96&&it.contains(v.world.mapId,nx,ny)}&&
                             v.content.exits.none{it.fromMapId==v.world.mapId&&it.triggerX==nx&&it.triggerY==ny}
                     }
                 }
                 assertNotNull("No legal normal training step; no collision bypass",trainingDirection)
                 step(trainingDirection!!)
             }
-            walkTo(39,42);assertEquals(16,v.world.mapId)
-            walkTo(202,130);assertEquals(0,v.world.mapId);training=false;state("normal-training-complete")
+            returnFromTraining();training=false;state("normal-training-complete")
         }
         val store=enterService(0,19)
         val pills=(10-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0)
