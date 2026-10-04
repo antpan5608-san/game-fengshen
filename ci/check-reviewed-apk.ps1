@@ -49,3 +49,4 @@ if($runtime.worldRoom171Normal -ne 'PASS' -or $runtime.worldRoom171GiftColdResta
 if($runtime.worldYangJoinNormal -ne 'PASS' -or $runtime.worldYangThreePartyAndColdRestart -ne 'PASS'){throw 'Actual teacher signal, Yang use/dialogues, original third-actor battle and cold restart must verify this exact APK'}
 
 if($runtime.worldVillageFourServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageFourColdRestart -ne 'PASS'){throw 'Actual village4 bridges, caller services, original NPC text/conditions and cold return must verify this exact APK'}
+if($runtime.worldFixedFerryIslandNormal -ne 'PASS' -or $runtime.worldFixedFerryColdRestartAndReverse -ne 'PASS'){throw 'Actual fixed boat, complete island encounters, cold save and independent reverse must verify this exact APK'}

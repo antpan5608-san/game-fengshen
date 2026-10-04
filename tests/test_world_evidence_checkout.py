@@ -15,7 +15,7 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 tables[definition['cpuExpectedPath']]=raw
         # The scoped checkpoint recipes use raw JSON-file checksums as well as
         # CPU-table checksums; exercise their real Windows-style checkout too.
-        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json'):
+        for proof_name in ('world-village3-content.json','world-clinic-content.json','world-continent-bridge-content.json','world-continent-barrier-content.json','world-forest101-content.json','world-forest101-direction-content.json','world-tree107-content.json','world-room171-content.json','world-yang-join-content.json','world-village4-content.json','world-ferry-content.json'):
             p=json.loads((ROOT/'game-data/provenance'/proof_name).read_text(encoding='utf-8'))
             pin_path=p['baseExport']['pinPath'];raw=(ROOT/pin_path).read_bytes()
             self.assertEqual(p['baseExport']['pinSha256'],hashlib.sha256(raw).hexdigest());tables[pin_path]=raw
@@ -31,6 +31,9 @@ class EvidenceCheckoutTests(unittest.TestCase):
                 self.assertEqual(group['sha256'],hashlib.sha256(raw).hexdigest())
                 tables[group['path']]=raw
         village=json.loads((ROOT/'game-data/provenance/world-village4-resources.json').read_text(encoding='utf-8'))
+        ferry=json.loads((ROOT/'game-data/provenance/world-ferry-original.json').read_text(encoding='utf-8'))
+        for path,sha in [(ferry['expected']['path'],ferry['expected']['sha256']),(ferry['expected']['probe'],ferry['expected']['probeSha256'])]:
+            raw=(ROOT/path).read_bytes();self.assertEqual(sha,hashlib.sha256(raw).hexdigest());tables[path]=raw
         for kind in ('bridge','talk'):
             definition=village[kind];raw=(ROOT/definition['cpuExpectedPath']).read_bytes()
             self.assertEqual(definition['cpuExpectedSha256'],hashlib.sha256(raw).hexdigest())

@@ -13,6 +13,39 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Isolated original contact/poison snapshots; not a normal-route recording. */
+    fun testOriginalFerryEverySavedStageAndExactDockScope(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(setOf("rom.ferry.45","rom.ferry.46"),c.ferries.keys)
+        val forward=c.ferries.getValue("rom.ferry.45");val reverse=c.ferries.getValue("rom.ferry.46")
+        val hero=c.initialPlayer.copy(hp=100,maxHp=100,statusMask=OriginalStatus.POISON)
+        val old=SaveSnapshot("opening-segment-001-c40",4,11*16+8,3*16+8,Key.LEFT,listOf(hero),emptyMap(),money=81,encounterSteps=60)
+        assertTrue(old.validate(c));var current=old.copy(contentVersion=c.scene.version)
+        for(rule in listOf(forward,reverse)){
+            val start=OriginalFerry.begin(current,rule,rule.start.direction,c.ferries.values)
+            assertTrue(start.applied);current=start.snapshot;assertTrue(current.validate(c))
+            for(i in rule.legs.indices){
+                current=SaveSnapshot.parse(current.json().toString());assertTrue(current.validate(c))
+                val applied=OriginalFerry.advance(current,rule,i,c.ferries.values)
+                assertTrue(applied.applied);assertTrue(applied.snapshot.validate(c))
+                assertFalse(OriginalFerry.advance(applied.snapshot,rule,i,c.ferries.values).applied)
+                assertEquals(current.money,applied.snapshot.money);assertEquals(current.inventory,applied.snapshot.inventory)
+                current=applied.snapshot
+            }
+            assertNull(OriginalFerry.pending(current.flags,c.ferries.values))
+        }
+        assertEquals(64,current.characters.single().hp);assertEquals(4,current.mapId)
+        assertEquals(11*16+8,current.x);assertEquals(3*16+8,current.y)
+        val deadStart=old.copy(characters=listOf(hero.copy(hp=1)))
+        val begin=OriginalFerry.begin(deadStart,forward,Key.LEFT,c.ferries.values)
+        val dead=OriginalFerry.advance(begin.snapshot,forward,0,c.ferries.values).snapshot
+        assertEquals(0,dead.characters.single().hp);assertEquals(16,dead.mapId)
+        assertEquals(10*16+8,dead.x);assertEquals(3*16+8,dead.y);assertTrue(dead.validate(c))
+        assertEquals(dead,SaveSnapshot.parse(dead.json().toString()))
+        assertFalse(dead.copy(x=11*16+8).validate(c))
+        val world=c.sceneForState(16,emptyMap())!!
+        assertNull(world.check(150,135));assertNotNull(world.check(150,136))
+    }
     /** Bundled map4 and isolated old save; normal service recording is separate. */
     fun testVillageFourOriginalBridgeServicesNpcRulesAndPriorSave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val m=c.scenes.getValue(4)

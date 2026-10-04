@@ -31,7 +31,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -148,6 +148,7 @@ run_test testControlledWorldAntidoteAndFieldPoison
 run_test testControlledInnTransactionsAndGestureSafety
 run_test testControlledMedicalCommandsCancellationGestureAndSave
 run_test testControlledWholly08PartyAdvancesWithoutTouchCommand
+run_test testControlledFerryPauseSavedStageAndActivityRestart
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
 adb shell wm density 480
@@ -190,6 +191,7 @@ python tools/record_app_audio.py world-tree107 testNormalTree107FromVerifiedCont
 python tools/record_app_audio.py world-room171 testNormalRoom171GiftFromVerifiedTreeSave --silent --cold-test testRoom171GiftColdRestartAndOriginalReturn --budget-seconds 2400
 python tools/record_app_audio.py world-yang-join testNormalYangJoinAndThreePartyFromVerifiedRoomSave --silent --cold-test testYangJoinColdRestartAndOriginalTreeReturn --budget-seconds 3600
 python tools/record_app_audio.py world-village4 testNormalVillageFourServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFourColdRestartAndOriginalReturn --budget-seconds 2400
+python tools/record_app_audio.py world-ferry testNormalFixedFerryAndIslandFromVerifiedVillageSave --silent --cold-test testFixedFerryIslandColdRestartAndOriginalReverse --budget-seconds 2400
 # Clinical sub-results are App-written evidence; pull before constructing receipt.
 pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
@@ -206,6 +208,7 @@ r.update(worldTree107Normal='PASS',worldTree107ColdRestart='PASS')
 r.update(worldRoom171Normal='PASS',worldRoom171GiftColdRestart='PASS')
 r.update(worldYangJoinNormal='PASS',worldYangThreePartyAndColdRestart='PASS')
 r.update(worldVillageFourServicesTalkNormal='PASS',worldVillageFourColdRestart='PASS')
+r.update(worldFixedFerryIslandNormal='PASS',worldFixedFerryColdRestartAndReverse='PASS')
 medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
 for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

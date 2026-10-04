@@ -1081,6 +1081,47 @@ def validate_world_village4_resources(reader):
     return p
 
 
+def validate_world_ferry_resources(reader):
+    """Two fixed original scripts and current island encounter inputs, not sea travel."""
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-ferry-original.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='original-fixed-ferry45-46-eighteen-status-steps-not-free-sea-walking':
+        raise ValueError('Ferry source scope or target ROM differs')
+    required={(11,0xcb5e+90,4),(11,0xd42c,0xd4ce-0xd42c),(11,0xc250,0xc2a6-0xc250),(0,0xc844,0xc87f-0xc844)}
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!=required:raise ValueError('Ferry script source differs')
+    for span in p['sources']:checked_span(reader,span)
+    streams={52:'da00060700060907030406070006ff',53:'da00070701060807020407070106ff',54:'800006070001ff',55:'800009070301ff'}
+    if len(p['scripts'])!=4:raise ValueError('Missing original ferry movement stream')
+    for script in p['scripts']:
+        i=script['scriptId'];actual=checked_span(reader,script['source'])
+        if i not in streams or script['pointer']!=reader.span(11,0xc2a6+2*i,2,'Original scoped ferry script pointer')or \
+                reader.word(11,0xc2a6+2*i)!=script['source']['cpuAddress']or actual.hex()!=streams[i]or script['rawHex']!=actual.hex():
+            raise ValueError('Ferry original command stream differs')
+    record=extract_npcs(reader,4)['records'][0]
+    if p['boatRecord']!=record['range']or bytes.fromhex(record['rawHex'])[0]!=149:raise ValueError('Original village boat identity differs')
+    point=lambda m,x,y,d:dict(mapId=m,x=x,y=y,direction=d)
+    f=[point(16,146,148,'UP')]+[point(16,146,y,'UP')for y in range(147,141,-1)]+[point(16,x,142,'RIGHT')for x in range(147,151)]+[point(16,150,y,'UP')for y in range(141,135,-1)]+[point(16,150,135,'UP')]
+    r=[point(16,150,136,'DOWN')]+[point(16,150,y,'DOWN')for y in range(137,143)]+[point(16,x,142,'LEFT')for x in range(149,145,-1)]+[point(16,146,y,'DOWN')for y in range(143,149)]+[point(4,11,3,'RIGHT')]
+    expected=[dict(id=f'rom.ferry.{i}',eventId=i,start=start,contactX=c[0],contactY=c[1],legs=legs,spriteAsset='actor-218-ferry.png',evidence=path)for i,start,c,legs in [(45,point(4,11,3,'LEFT'),[10,3],f),(46,point(16,150,135,'DOWN'),[150,136],r)]]
+    if p['rules']!=expected:raise ValueError('Ferry cannot replace its original route/cost/landing')
+    table=p['expected'];raw=(ROOT/table['path']).read_bytes()
+    if table['path']!='android/app/src/test/resources/world-ferry-original-steps.tsv'or digest(raw)!=table['sha256']or \
+            table['probe']!='tools/rom-extractor/probe-world-ferry.lua'or digest((ROOT/table['probe']).read_bytes())!=table['probeSha256']:
+        raise ValueError('Original controlled ferry expectation or executed probe differs')
+    rows=[line.split('\t')for line in raw.decode('ascii').splitlines()[1:]]
+    for name,mid,x,y in [('forward',16,150,135),('reverse',4,11,3)]:
+        final=next(v for v in rows if v[0]==name+'-after')
+        if [int(final[i])for i in [2,3,4,7,8,9]]!=[mid,x,y,0,82,2]:raise ValueError('Original ferry final/cost mismatch')
+        changes=[v for v in rows if v[0]==name+'-hp-change'and int(v[8])<100]
+        if [int(v[8])for v in changes]!=list(range(99,81,-1)):raise ValueError('Ferry has incomplete original step costs')
+    dead=next(v for v in rows if v[0]=='all-poison-low-after')
+    if [int(dead[i])for i in [2,3,4,5,7,8,9,10,11]]!=[16,10,3,45,61,0,32,0,32]:
+        raise ValueError('Ferry must retain original interrupted poison-death state')
+    if p['graphic']['width']!=16 or p['graphic']['height']!=16 or p['graphic']['transparentZero']is not True:
+        raise ValueError('Boat graphic cannot be a fabricated transport icon')
+    scoped_observed_graphic(reader,p['graphic'])
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -1124,6 +1165,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if evidence.get('ferries')and mid==79:
+            if original['tilesetId']!=3 or original['width']!=16 or original['height']!=15 or \
+                    set(collision)!={0,1}or allowed!=[0]or recipe.get('directionalCollision'):
+                raise ValueError('Original ferry island cannot open its cave walls or alter collision scope')
         if recipe.get('room171CollisionEvidence'):
             room=validate_world_room171_resources(reader)
             if recipe['room171CollisionEvidence']!='game-data/provenance/world-room171-resources.json' or mid!=171 or \
@@ -1786,6 +1831,30 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if not 0<=cell[0]<data['width'] or not 0<=cell[1]<data['height']:raise ValueError('Map object outside grid')
         data['dynamicObjectCells']=sorted(set(data.get('dynamicObjectCells',[]))|{cell[1]*data['width']+cell[0]})
         result[name]=encoded(data)
+    if evidence.get('ferries'):
+        proof=validate_world_ferry_resources(reader)
+        if scene.get('ferries')or evidence['ferries']!=proof['rules']or \
+                evidence['graphics'].get('actor-218-ferry.png')!=proof['graphic']:
+            raise ValueError('Ferry rules/graphic must match the actual scoped original input')
+        updates=evidence.get('existingObjectInteractionUpdates',[])
+        if len(updates)!=1:raise ValueError('Ferry requires its one existing village boat update')
+        update=updates[0];objects=[v for v in scene.get('mapObjects',[])if v['id']==update['id']]
+        if len(objects)!=1:raise ValueError('Ferry cannot substitute another map object')
+        obj=objects[0]
+        if update['id']!='rom.object.4.0'or update['baseDefinitionSha256']!=digest(encoded(obj))or \
+                obj['recordSource']!=proof['boatRecord']or obj['mapId']!=4 or obj['cell']!=[10,3]or obj['spriteId']!=149 or \
+                update['interaction']!='FERRY_CONTACT'or update['ferryId']!='rom.ferry.45'or \
+                update['evidence']!='game-data/provenance/world-ferry-original.json':
+            raise ValueError('Ferry object update lacks stable original identity')
+        obj.update({k:update[k]for k in ('interaction','ferryId','evidence')});scene['ferries']=proof['rules']
+        # This new cave has real zone22. A fixed ferry is not permission to disable it.
+        overlay=evidence.get('combatOverlay',{})
+        zones=overlay.get('zones',[])
+        if len(zones)!=1 or (zones[0]['mapId'],zones[0]['id'])!=(79,22)or \
+                set(e['id']for e in overlay.get('enemies',[]))!={46,47}:
+            raise ValueError('Actual island entry requires the complete enabled original encounter zone22')
+    elif evidence.get('existingObjectInteractionUpdates'):
+        raise ValueError('Object operation update lacks original ferry rules')
     for barrier in evidence.get('sceneBarriers',[]):
         if barrier.get('kind')=='CONTINENT_ACTOR_FILTER':
             from forensics.fengshen246 import extract_npcs

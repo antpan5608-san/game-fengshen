@@ -79,6 +79,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap(),
     val serviceBindings:List<ServiceBinding> = emptyList()) {
     var clinics:Map<String,ClinicDefinition> = emptyMap();internal set
+    var ferries:Map<String,FerryDefinition> = emptyMap();internal set
+    var ferrySprites:Map<String,Bitmap> = emptyMap();internal set
     // One state-dependent scene view. Arrays and atlases stay in the existing
     // bounded loader; this never holds every visited map alive.
     var joinCharacters:Map<String,CharacterState> = emptyMap()
@@ -102,6 +104,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
         for(mechanism in mechanisms)result=mechanism.apply(result,flags)
+        result=OriginalFerry.sceneView(result,flags,ferries.values)
         stateScene=result;stateFlags=flags;return result
     }
 }
@@ -306,7 +309,7 @@ object ContentLoader {
         }
         val mapObjects=data.optJSONArray("mapObjects")?.let{a->(0 until a.length()).map{i->
             val o=a.getJSONObject(i);val cell=ints(o,"cell");val mid=o.getInt("mapId")
-            require(o.getString("interaction") in setOf("NOT_IMPLEMENTED","WORLD_ITEM_TARGET")&&mid in scenes&&cell.size==2&&
+            require(o.getString("interaction") in setOf("NOT_IMPLEMENTED","WORLD_ITEM_TARGET","FERRY_CONTACT")&&mid in scenes&&cell.size==2&&
                 cell[0] in 0 until scenes.getValue(mid).width&&cell[1] in 0 until scenes.getValue(mid).height)
             MapObject(o.getString("id"),mid,cell[0],cell[1],bitmap(o.getString("sprite"),16,16),
                 if(o.getString("interaction")=="WORLD_ITEM_TARGET")o.getJSONObject("itemTarget").let{t->
@@ -317,6 +320,12 @@ object ContentLoader {
         }}?:emptyList()
         require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         require(npcs.all{it.originalTalk?.messageDialogues?.values?.all{id->id in dialogues}!=false})
+        data.optJSONArray("mapObjects")?.let{a->for(i in 0 until a.length()){
+            val o=a.getJSONObject(i)
+            if(o.getString("interaction")=="FERRY_CONTACT")require(o.getString("id")=="rom.object.4.0"&&
+                o.getInt("mapId")==4&&ints(o,"cell").contentEquals(intArrayOf(10,3))&&o.getInt("spriteId")==149&&
+                o.getString("ferryId")=="rom.ferry.45"&&data.has("ferries"))
+        }}
         val itemArray=data.getJSONArray("items")
         require((0 until itemArray.length()).map{itemArray.getJSONObject(it).getString("id")}.distinct().size==itemArray.length()){"重复的稳定物品ID"}
         val itemDefinitions=(0 until itemArray.length()).associate{i->
@@ -699,7 +708,30 @@ object ContentLoader {
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
-                data.optJSONArray("mechanisms")?.let{a->
+                data.optJSONArray("ferries")?.let{a->
+                require(a.length()==2)
+                val rules=(0 until a.length()).map{i->
+                    val o=a.getJSONObject(i)
+                    fun leg(v:JSONObject)=FerryLeg(v.getInt("mapId"),v.getInt("x"),v.getInt("y"),Key.valueOf(v.getString("direction")))
+                    val legs=o.getJSONArray("legs")
+                    FerryDefinition(o.getString("id"),o.getInt("eventId"),leg(o.getJSONObject("start")),
+                        o.getInt("contactX"),o.getInt("contactY"),(0 until legs.length()).map{leg(legs.getJSONObject(it))},
+                        o.getString("spriteAsset"),o.getString("evidence")).also{rule->
+                        require(OriginalFerry.verified(rule))
+                        require(rule.legs.all{p->val m=scenes[p.mapId];m!=null&&p.x in 0 until m.width&&p.y in 0 until m.height})
+                    }
+                }
+                require(rules.map{it.eventId}.toSet()==setOf(45,46))
+                require(mapObjects.any{it.id=="rom.object.4.0"&&it.x==10&&it.y==3})
+                require(data.getJSONArray("mapObjects").let{objects->(0 until objects.length()).any{i->
+                    val boat=objects.getJSONObject(i)
+                    boat.getString("id")=="rom.object.4.0"&&boat.getString("interaction")=="FERRY_CONTACT"
+                }})
+                val world=scenes.getValue(16);require(world.collision[135*world.width+150]==25)
+                content.ferries=rules.associateBy{it.id}
+                content.ferrySprites=rules.associate{it.id to bitmap(it.spriteAsset,16,16)}
+            }
+            data.optJSONArray("mechanisms")?.let{a->
                     content.mechanisms=(0 until a.length()).map{i->
                         val o=a.getJSONObject(i);val cells=o.getJSONArray("changes")
                         require(o.getString("evidence").isNotBlank())
