@@ -2,6 +2,18 @@
 
 三人及以上、四恶人胜标未置时，原map79加载选择map163 NPC context219：道童(7,9)，对白173.1；未满足时base道童(7,10)阻路。两居民对白是可选指引，不由攻略新增门槛。原teacher赠物和岛内层间连接已局部接入；受控原版房内实际正常走到师父，本地CPU/导出/JVM通过，同候选Android正常流程NOT_RUN。四恶人胜后原context清零，不编造重复赠物。详见world-teacher163-gate.json。生产仍v27，main候选v60/c41。
 
+## 当前有效佳东镇检查点（2026-10-04T04:33:11.256334+00:00，本地未发布）
+
+- WORLD-FULL-01持续实施；用户要求显著可玩增量在实际App不崩溃、旧档/原审核门槛通过后阶段发布，非阻断问题保留；ALL_MAPS_USABLE=NO，有效分母UNKNOWN。
+- main冻结950e4329a37214380282039b85c9e5709118ac8c，v61/run37176778752实际build执行中。原安全GitHub连接已恢复，实际仓库API成功/有push；inspect37176776930和其自动reviewer SUCCESS、publish SKIPPED。实际巡检2026-10-04T04:22:09.0223462Z可信27/26共3700事件（1411/2289），普通真机7会话/模拟器0/测试0/cleanup0；精确历史v26下载ProtocolException1仍ISSUES_FOUND、root UNCONFIRMED，不用旧真机证明新候选健康。
+- v60/run37172267100 build SUCCESS/runtime FAILURE，北海正常练级因源存档只剩两草、训练前不采购而战败；源8级54/57HP、398两、64步库存耗尽，8场战斗/2次用草。v61驱动改为正常采购/返村补给，未改玩家/敌人规则、价格或断言；修后App尚待实际run。
+- 独立本树c44：248文件/47地图，manifest eac9f8888fe00f03082f856ded2e23ad42eed58e3eba848e0e9cbb1282b5eec4，严格c43守门修复父pin和同一已审核v27字节；旧地图/图集/音频逐字节复用。新增map5佳东镇及两条原16入口/三条独立5→16返回（普通EXIT记录，不能套map4 EDGE）；三店实际stock、150两住宿、两位医生共享caller绑定；五名原普通NPC与group15真实文字/四种原图形。
+- 新商品stableID/价目来自目标ROM；未解原名、装备能力的六件商品维持PROVISIONAL_REFERENCE且nameConfidence UNKNOWN，不伪造原名或能力。无新增出村/补给/对话前置。
+- 原版取证仅控制外部门位后实际入室/正常按键，村内NPC图形从原入口真实步行捕获OAM/CHR/不透明像素，每种精灵唯一匹配；普通NPC动态与inn180三名辅助NPC仍欠账。字体复用既有glyph逐像素hash，再补当前缺字；不重录全部字库。发现异步savescreenshotas后立即切存档会画成下一场景，补一帧后真实防具商品画面匹配；保留失败试验，不算App黑屏。
+- 五项局部导出/拓扑/拒绝错误数据测试PASS（63.492秒）；301 JVM/59 suites/0失败错误跳过，仪器编译PASS；LF真实checkout新父pin/资源验证PASS；原ci_apk.restore在空目录248文件完整hash PASS。本地首轮因UNKNOWN不符现有来源enum、误把tile1当collision1导致1FAIL/1ERROR，改为诚实暂定来源、真实碰撞边界后通过，未放宽门禁。
+- 同一原正常续跑helper增加map5从已验证杨戬存档实际步行→三店买卖→150两住宿→医生查看→五人对话→保存/外部冷启/三条独立返回的驱动；已编译且接原runtime/同产物审核/有界artifact，实际Android NOT_RUN。本轮没有正式APK，不将本地/原版/编译当正常App PASS。
+- map5(7,6)→87及event25剧情、隐藏调查198(15,7)实际药草grant完整失败规则、inn overlay180三辅助NPC尚未接入；本树地图/店铺接续不是全镇、全地图已完成。下一具体动作核87/event25及198一次性grant；正式等待v61完整门禁，当前生产仍v27/c14。
+
 ## 当前有效路线增量：原固定渡船、五龙山和四恶人（本地App仍待验）
 
 | 真实节点 | 原门/条件/落点 | 当前接入与核验边界 |

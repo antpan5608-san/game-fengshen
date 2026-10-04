@@ -311,3 +311,9 @@ NPC callback表、world坐标event表和正文赠物selector是独立命名空�
 
 
 - 新NPC堵路先核完整原加载状态，不能仅用静态base context判原路线不可达。原map79加载按真实party数与胜标切换map163 context219；原NPC指针、位置/文本及1284 CPU边界已执行，受控原版房内按键走到师父成功。公开攻略只提供定位线索，推荐对话不成为虚构前置；同一variant必须同时影响碰撞、绘制和交谈。新App流程仍须同候选另验，原版/CPU不代替Android通过。
+
+## 已验证的后续村庄资源复用
+
+按真实caller一次批次复用库存/价目、共享室内与医生，不按村庄复制地图。仅相同tileset0复用已核576条桥方向矩阵，分别固定当前格网、独立入口/返回记录、原NPC和当前文字组；不要把普通EXIT套成另一村的EDGE。用已观察活跃字体glyph像素hash匹配既有字形，只定向补缺字。原OAM图形须逐不透明像素匹配且唯一；按真实按键步行取得图形，不依赖写camera后未刷新的假截图。
+
+FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source/save，已在原防具菜单观察到错误图/修后原商品画面。原版/受控资源不算Android正常流程。本轮现有导出器的局部父pin、旧媒体字节、全新空目录严格restore、来源enum和拓扑拒绝测试实际通过；新增商品未核名字时沿用PROVISIONAL_REFERENCE并明确nameConfidence UNKNOWN，不发明名称或关闭来源检查。

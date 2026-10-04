@@ -1108,6 +1108,53 @@ def validate_world_village4_resources(reader):
     return p
 
 
+def validate_world_village5_resources(reader):
+    """Reuse the actual town profile; preserve this caller's independent actors/text."""
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_map,extract_default_map_palette
+    path='game-data/provenance/world-village5-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map5-original-shared-services-static-npcs-group15':
+        raise ValueError('Village5 resource scope differs')
+    required={(0,0xcb6c,17),(0,0xcbda,8),(0,0xced3,17),(0,0xd257,18),(0,0xcf43,1)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Village5 shared bridge dispatch differs')
+    for span in p['sources']:checked_span(reader,span)
+    if p['bridge']!=validate_world_village4_resources(reader)['bridge']:
+        raise ValueError('Village5 cannot invent a second bridge profile')
+    original=extract_map(reader,5);palette=extract_default_map_palette(reader,5)['palette']
+    if p['map']!=dict(mapId=5,width=32,height=30,tilesetId=0,gridSha256=original['gridSha256'],palette=palette):
+        raise ValueError('Village5 geometry/palette differs')
+    font=p['font'];data=b''.join(checked_span(reader,s)for s in font['sources'])
+    if len(data)!=4096:raise ValueError('Village5 active font banks missing')
+    charset={int(k):v for k,v in font['charset'].items()}
+    for glyph in font['glyphs']:
+        pixels=glyph_pixels(data,0,glyph['code'])
+        if charset[glyph['code']]!=glyph['character'] or digest(bytes(v for row in pixels for v in row))!=glyph['pixelsSha256']:
+            raise ValueError('Village5 original glyph differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:
+        raise ValueError('Village5 character evidence incomplete')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.15.{i}'for i in (0,3,5,6,10)]:
+        raise ValueError('Village5 ordinary actor messages differ')
+    for d in p['dialogues']:
+        t=extract_text(reader,15,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Village5 text differs from target bytes and actual font')
+    records=extract_npcs(reader,5)['records']
+    if len(records)!=6 or len(p['npcs'])!=5:raise ValueError('Village5 ordinary actor count differs')
+    for npc,record in zip(p['npcs'],records[:5]):
+        raw=checked_span(reader,record['range']);cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        first=f'rom.dialogue.15.{raw[1]}'
+        if raw[2]!=255 or raw[12]!=0 or npc['id']!=f'rom.npc.5.{record["index"]}'or npc['mapId']!=5 or \
+                npc['cell']!=cell or npc['spriteId']!=raw[0]or npc['source']['record']!=record['range']or \
+                npc['firstDialogue']!=first or npc['repeatDialogue']!=first or npc['firstEffects']or npc.get('originalTalk'):
+            raise ValueError('Village5 must not reinterpret hidden investigation as ordinary dialogue')
+        if npc['sprite']!=f'npc-{raw[0]}-village5.png':raise ValueError('Village5 actor pose identity differs')
+    if set(p['graphics'])!={f'npc-{i}-village5.png'for i in (142,161,162,163)}:
+        raise ValueError('Village5 reviewed actor graphics missing')
+    for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
+    return p
+
+
 def validate_world_island_event7(reader):
     """The actual composite story loader and its post-battle boundary, not an ordinary encounter."""
     from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels
@@ -1482,10 +1529,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             town=extract_town_shops(reader)
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
             if recipe.get('townBridgeCollisionEvidence'):
-                if mid!=4 or recipe['townBridgeCollisionEvidence']!='game-data/provenance/world-village4-resources.json':
+                expected={4:'game-data/provenance/world-village4-resources.json',5:'game-data/provenance/world-village5-resources.json'}
+                if mid not in expected or recipe['townBridgeCollisionEvidence']!=expected[mid]:
                     raise ValueError('Unreviewed town bridge extension')
-                proof=validate_world_village4_resources(reader)
-                if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Village4 walking classes differ')
+                proof=validate_world_village4_resources(reader)if mid==4 else validate_world_village5_resources(reader)
+                if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Town walking classes differ')
                 data['sourceEdges']={**data['sourceEdges'],**{int(k):v for k,v in proof['bridge']['sourceEdges'].items()}}
         if recipe.get('terrain'):
             terrain=recipe['terrain'];proof=load(ROOT/terrain['evidence'])
@@ -1997,6 +2045,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if npc!=expected or any(d not in evidence['dialogues'] and d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
                 raise ValueError('Village4 actor/dialogue/graphic differs')
+        elif npc['mapId']==5:
+            proof=validate_world_village5_resources(reader)
+            expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
+            if npc!=expected or any(d not in scene['dialogues']for d in proof['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=v for n,v in proof['graphics'].items()):
+                raise ValueError('Village5 actor/dialogue/graphic differs')
         elif npc.get('originalTalk') and npc['mapId']==78:
             proof=validate_world_island_talk(reader,npc)
             if any(d not in scene['dialogues']for d in proof['dialogues']):raise ValueError('Island resident dialogue missing')
