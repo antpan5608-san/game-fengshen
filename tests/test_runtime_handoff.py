@@ -1,5 +1,6 @@
 """Isolated transport/receipt rejection tests; these are not Android gameplay."""
 import copy
+import base64
 import json
 import os
 import shutil
@@ -139,22 +140,52 @@ class RuntimeHandoffTest(unittest.TestCase):
                 handoff.import_to_isolated_avd(output, 'world', self.candidate, self.root / 'previous.json')
             adb.assert_not_called()
 
-    def test_isolated_import_pushes_only_byte_exact_normal_json(self):
+    def test_isolated_import_uses_app_uid_and_preserves_exact_normal_bytes(self):
         _, output = self.make_bundle()
         save = output / 'world-north-palace-expected-save.json'
         sha = handoff.digest(save)
         with patch.object(handoff.subprocess, 'check_output', side_effect=[b'ranchu', (sha + ' file').encode()]), \
-                patch.object(handoff.subprocess, 'run') as adb:
+                patch.object(handoff.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, b'OK (1 test)', b'')) as adb:
             receipt = self.root / 'previous.json'
             handoff.import_to_isolated_avd(output, 'world', self.candidate, receipt)
             calls = [call.args[0] for call in adb.call_args_list]
-            pushes = [call for call in calls if 'push' in call]
-            self.assertEqual(1, len(pushes))
-            self.assertEqual(str(save), pushes[0][-2])
-            self.assertEqual('/sdcard/Android/data/org.fengshen.dev/files/' + save.name, pushes[0][-1])
+            imports = [call for call in calls if 'instrument' in call]
+            self.assertEqual(1, len(imports))
+            command = imports[0]
+            self.assertEqual(save.read_bytes(), base64.b64decode(command[command.index('checkpointBytesBase64') + 1]))
+            self.assertEqual(sha, command[command.index('checkpointSha256') + 1])
+            self.assertEqual(save.name, command[command.index('checkpointName') + 1])
+            self.assertFalse(any('push' in call or 'mkdir' in call or 'chmod' in call or 'chown' in call for call in calls))
             self.assertTrue(all(call[:3] == ['adb', '-s', 'emulator-5554'] for call in calls))
             self.assertFalse(any('shared_prefs' in str(call) or 'clear' in call for call in calls))
             self.assertEqual(['base'], handoff.read_json(receipt)['completedStages'])
+
+    def test_app_read_failure_cannot_issue_successful_handoff_receipt(self):
+        _, output = self.make_bundle()
+        failed = subprocess.CompletedProcess([], 0, b'FAILURES!!! EACCES', b'')
+        with patch.object(handoff.subprocess, 'check_output', return_value=b'ranchu'), \
+                patch.object(handoff.subprocess, 'run', return_value=failed):
+            receipt = self.root / 'previous.json'
+            with self.assertRaisesRegex(ValueError, 'App-owned checkpoint'):
+                handoff.import_to_isolated_avd(output, 'world', self.candidate, receipt)
+            self.assertFalse(receipt.exists())
+
+    def test_transport_rejects_oversize_and_traversal_before_adb(self):
+        with patch.object(handoff.subprocess, 'run') as adb:
+            for name, data in [('world-north-palace-expected-save.json', b'x' * 65537),
+                               ('../world-north-palace-expected-save.json', b'{}'),
+                               ('world-runtime-storage-probe-expected-save.json', b'')]:
+                with self.assertRaisesRegex(ValueError, 'name or size'):
+                    handoff.write_checkpoint_as_app(['adb', '-s', 'emulator-5554'], name, data, self.candidate)
+            adb.assert_not_called()
+
+    def test_app_success_with_changed_readback_bytes_still_fails(self):
+        _, output = self.make_bundle()
+        with patch.object(handoff.subprocess, 'check_output', side_effect=[b'ranchu', b'0' * 64 + b' file']), \
+                patch.object(handoff.subprocess, 'run', return_value=subprocess.CompletedProcess([], 0, b'OK (1 test)', b'')):
+            with self.assertRaisesRegex(ValueError, 'changed bytes'):
+                handoff.import_to_isolated_avd(output, 'world', self.candidate, self.root / 'previous.json')
+            self.assertFalse((self.root / 'previous.json').exists())
 
     def test_failed_cold_restart_cannot_create_handoff(self):
         source, _ = self.make_bundle()

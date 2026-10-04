@@ -370,4 +370,6 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 原runtime_handoff只搬真实正常JSON，scope依赖清单由内容pin固定SHA，原三job、同源/同签名/同hash/reviewer保留。全开发29条正常路径仍保留；R1分派和内容局部门禁已本地执行，新跨runner/最终App尚待实际结果，不能写已发布或Android已通过。修复交付后同步回既有开发线，避免从头重做。
 
-- 长路线无奖励重进比较前，先定位normal-index中的合法补给：真实用药可改变HP/库存，比较点须在补给后；原两格室内重进使用普通触控，不混入自动补给field helper。半血区可能再次合法用药，不能假设一次恢复就足够。实际索引46HP来源逐值/SHA核对，新增4HP明确隔离边界，保留全部角色/物品/钱/flag断言；编译/相关fixture已通过，新Android复现仍待实际回执。正常/cold索引与截图分名防覆盖，运行结果另核。
+- 长路线无奖励重进比较前，先定位normal-index中的合法补给：真实用药可改变HP/库存，比较点须在补给后；原两格室内重进使用普通触控，不混入自动补给field helper。半血区可能再次合法用药，不能假设一次恢复就足够。实际索引46HP来源逐值/SHA核对，新增4HP明确隔离边界，保留全部角色/物品/钱/flag断言；编译/相关fixture及原Android两例隔离复现、正常北宫重进已通过；它们不替代新候选整段主线。正常/cold索引与截图分名防覆盖，医疗分名实际路径仍待验。
+
+- 跨runner交接曾仅root推送/hash成功，但App读取实际EACCES；不能把主机读回当App可读。原runtime_handoff的来源/cold/hash验证继续保留。新增App-owned字节写入/读回及64KiB/文件名边界已通过Linux主机35相关方法、5scope方法和仪器编译；原生存储探针/下一段接续仍待实际runner，不写已成功。探针只搬隔离历史snapshot原值、不启动或restore GameState，不计正常流程。

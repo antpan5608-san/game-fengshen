@@ -153,6 +153,7 @@ cat artifacts/town02-runtime/testContent.txt
 grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 if [[ "$stage" == all || "$stage" == base ]]; then
 run_test testUpgradeKeepsPreviousSave
+python tools/runtime_handoff.py probe --candidate artifacts/town02-runtime/candidate.json
 run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
