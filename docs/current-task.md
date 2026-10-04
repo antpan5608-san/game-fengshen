@@ -8,7 +8,7 @@ status: PARTIAL
 
 ## 当前有效状态（2026-10-04；时间标为UTC，用户展示北京时间+8）
 
-- 执行工作树：/workspace/game-fengshen-world-next，work/world-62313454；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源623134547d38591679d21de8ddaf57887aa715d5/treee0d22ae3dcdef429a04e5b52a9d31c30657cdd57（本地fb05cde同树），v73/run37226014658已触发；此前候选记录均为历史，正式仍v27。v68失败/v69构建前取消的证据与修复见下方；本文件现场状态仅本地更新，不能推动main改变候选来源。
+- 执行工作树：/workspace/game-fengshen-world-next，work/world-14f1e214；起始main7747010d2cd71ab78c6e1a459440b54530e8ea9d。当前冻结来源14f1e2143fe87ef35d8bf16cad90b2dfb4f26778/treec1e53895bd45cc3651991259f9f4604fd79a2500（本地955796e同树），v74/run37234225583已触发；v73 base/world PASS、末医疗第二次进门驱动FAIL，未发布。此前候选记录均为历史，正式仍v27；本文件现场状态仅本地更新，不推main改变候选来源。
 - 独立公网读取：正式仍v27/0.8.7-world-full01-f0/c14，SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，原签名保留。
 - v67/run37199961466/source7747010d build于12:08:15Z FAILURE：BUILD_ENV，村5隐藏物导出测试硬编码Linux基底APK路径。真实Windows原Bash/路径相关门禁已过，此失败发生在后续导出；所有App job SKIPPED/NOT_PUBLISHED。修正测试读取已有FENGSHEN_CONTENT_BASE_APK，保留所有断言。
 - 冻结R1：正常新游戏→南海/西北龙宫→85洞→东海胜后小龙女实际加入→地府村2买卖/住宿/双人战斗→医疗室实际入口/取消/原返程→保存/外部停止/冷启继续。购物/住店/等级不是剧情门槛。第一殿/十殿/重生/女人国不作为R1终点。
@@ -89,3 +89,13 @@ v73 base111509681871实际20:25:51Z SUCCESS；七条正常及对应外部cold/�
 v73 world111523702966于20:49:41Z SUCCESS；85洞/东海/小龙女入队/双人村2及各自外部cold均PASS，原handoff.verify对下一continuation独立PASS，末map2/哪吒13 HP128/小龙女12 HP92。continuation111528197664于20:51Z FAILURE：医疗revival首次真实进入20/选目标/取消/返回2(22,26)均通过；care次轮walk同一个门口无输入，expected20/actual2。原索引1701字节存档SHA8b27094e9a1bc2f5f1e5d9a1f72e55c615f4bb0835ec4174d7667b6d970ffc70及失败原片已取得。分类TEST_HARNESS，整体v73 FAILURE/NOT_PUBLISHED；不是App-owned文件故障或地图20首次不可进。最小修复为真实合法离门一步后重新走入，原断言不删；提前复用原v73同候选normal/cold已核的双人原值做CONTROLLED/Activity重启，最终新候选仍完整新游戏/三段/外部cold。
 
 医疗最小修复本地验证：runtime_handoff实际16独立方法/16执行PASS，R1 scope5/5 PASS，仪器编译24秒PASS，Bash语法/diff PASS；只改测试普通触控接续/提前有源隔离检查与相关skill，没有游戏数值/内容/UI变化。早期医疗Activity复现和新同APK完整三段仍待实际runner，不能把编译写App PASS。
+
+## 当前冻结v74（20:59:23Z）
+
+原run37234225583/source14f1e2143fe87ef35d8bf16cad90b2dfb4f26778，74/0.8.10-playable-r1。原base在长路线之前新增原v73双人normal/cold核过的1701原字节CONTROLLED医疗入门/离门重进/Activity重启；不是本候选主线或外部冷启证明。医疗正常helper只补实际合法离门一步，原状态断言保持。内容c51-r1/120文件/hash427、原三job/29全开发/11 R1路径/reviewer不变。正式公网20:59再次读回仍v27/594hash，新候选未验证/未发布。
+
+v74 build111530043722于21:25:38Z SUCCESS，原Windows48组/258 Python方法执行，immutable XML335 JVM/68 suites/0失败错误跳过；原ci_apk.receipt独立验证74/0.8.10-playable-r1/同原Signer/120文件/c51-r1 PASS，APK16632573字节/SHA7d9115260aaf816a7107f27817800af1d53d394a86acf49ecb58b83578c1a3b6；内容120字节文件与v73一致。签名仪器APK内医疗fixture与提交字节/原1701B存档完全一致。base111535222898从21:25:40Z运行，早期医疗复现和完整三段实际结果尚待回执；来源14f1e214保持冻结，正式v27不变。
+
+v74 base111535222898于21:27:48Z FAILURE，后两段SKIPPED/NOT_PUBLISHED。实际native storage PASS，新增有源医疗双人normal/Activity复现28.214秒 PASS（21:27:45Z）；随后testTouchUxSelectionScrollAndAtomicEquipment在600行unequip小刀结果!! NPE。新医疗隔离源已装备長劍2，原run_test一律keepFixtureForRestart=true保留该源，污染下一个预期小刀0的fixture。分类TEST_HARNESS，不是医疗进店失败/客户端崩溃；不能把这次28秒受控通过当完整主线。最小修复：原run_test增可校验的可选retention参数，仅此提前医疗复现传false，复用IsolatedGameTestCase已有backup/restore；真实覆盖/录屏的保留方式不改。16相关方法及语法/diff已本地PASS，真实下一测试不受污染仍待runner。
+
+夹具保留参数相关真实shell测试：17独立方法/17执行PASS，包含直接执行原run_test函数验证默认true、局部false实际传到adb及非法值在调用adb前拒绝。Kotlin/药草/装备/内容未再修改，原仪器已实际医疗PASS；下一候选须证明局部复现后原装备回归不受污染，再完整同APK三段。

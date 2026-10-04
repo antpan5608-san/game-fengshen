@@ -124,7 +124,9 @@ cert=ci.command([ci.tool('apksigner'),'verify','--print-certs',sys.argv[1]])
 assert re.findall(r'Signer #\d+ certificate SHA-256 digest: ([a-f0-9]+)',cert)==[ci.CONFIG['signerSha256']], 'Test APK must have the existing signature'
 PY
 run_test(){
-    if ! timeout 1200 adb shell am instrument -w -e keepFixtureForRestart true -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1; then
+    local keep_fixture="${2:-true}"
+    case "$keep_fixture" in true|false) ;; *) echo "Invalid isolated fixture retention mode" >&2; exit 1;; esac
+    if ! timeout 1200 adb shell am instrument -w -e keepFixtureForRestart "$keep_fixture" -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1; then
         cat "artifacts/town02-runtime/$1.txt"; exit 1
     fi
     cat "artifacts/town02-runtime/$1.txt"
@@ -154,7 +156,7 @@ grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 if [[ "$stage" == all || "$stage" == base ]]; then
 run_test testUpgradeKeepsPreviousSave
 python tools/runtime_handoff.py probe --candidate artifacts/town02-runtime/candidate.json
-if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave; fi
+if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false; fi
 run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
