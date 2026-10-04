@@ -51,6 +51,29 @@ class WorldNorthExportTests(unittest.TestCase):
         driver=source.split('fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave()',1)[1].split('fun testWorldNorthPalacePearlColdStartMatchesNormalSave()',1)[0]
         self.assertIn('walkTo(15,24)',driver);self.assertIn('if(y>23)Key.UP else Key.DOWN',driver)
         self.assertIn('it.mapId==96&&it.contains(v.world.mapId,nx,ny)',driver)
+    def test_training_palace_transit_is_real_and_avoids_poison_in_both_directions(self):
+        m=json.loads(self.result['scene25.json']);world=json.loads(self.result['scene.json'])
+        zone=next(z for z in json.loads(self.result['combat.json'])['zones'] if z['mapId']==25 and z['id']==4)
+        poisoned=lambda p:any(l<p[0]<=r and t<p[1]<=b for l,t,r,b in zone['rectangles'])
+        exits={tuple(e['trigger']) for e in world['exits'] if e['fromMapId']==25}
+        allowed=set(m['enabledCells'])-set(m['dynamicObjectCells']);w=m['width']
+        self.assertEqual(1,m['collision'][43*w+29]);self.assertNotIn(43*w+29,allowed)
+        for start,target in [((39,42),(5,24)),((5,24),(39,42))]:
+            q=collections.deque([start]);parents={start:None}
+            while q:
+                x,y=q.popleft()
+                if (x,y)==target:break
+                # Same order and legal cells as the normal App driver's BFS.
+                for p in [(x,y-1),(x,y+1),(x-1,y),(x+1,y)]:
+                    nx,ny=p
+                    if not(0<=nx<w and 0<=ny<m['height']) or ny*w+nx not in allowed or p in parents or (p in exits and p!=target):continue
+                    parents[p]=(x,y);q.append(p)
+            self.assertIn(target,parents)
+            path=[];p=target
+            while p is not None:path.append(p);p=parents[p]
+            self.assertEqual(53,len(path));self.assertFalse(any(poisoned(p) for p in path))
+            self.assertTrue(all(p not in exits for p in path[1:-1]))
+
     def test_true_northwest_records_caller_and_exact_antidote_definition(self):
         scene=json.loads(self.result['scene.json']);edges={(e['fromMapId'],tuple(e['trigger']),e['toMapId'],tuple(e['spawn']))for e in scene['exits']}
         self.assertIn((25,(26,14),16,(186,102)),edges);self.assertIn((16,(186,102),25,(26,14)),edges)
