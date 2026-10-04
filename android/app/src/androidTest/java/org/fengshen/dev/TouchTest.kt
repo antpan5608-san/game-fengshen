@@ -2096,6 +2096,22 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.flags,v.currentSnapshot().flags)
             leaveService(entry)
         }
+        fun replenishTrainingHerbs(){
+            // Actual v60 recording entered training with only two herbs and
+            // exhausted them before level 9. Buy normal supplies BEFORE fighting;
+            // this is the driver's choice, never an access or game-rule change.
+            val bag=v.currentSnapshot().inventory
+            if((bag[HerbUse.ID]?:0)>=8)return
+            val price=v.content.itemDefinitions.getValue(HerbUse.ID).buyPrice!!
+            val count=minOf((10-(bag[HerbUse.ID]?:0)).coerceAtLeast(0),
+                ((v.currentSnapshot().money-8)/price).coerceAtLeast(0))
+            if(count>0){
+                val entry=enterService(0,19);trade(HerbUse.ID,true,count)
+                state("normal-training-herbs-purchased");leaveService(entry)
+            }
+            assertTrue("Normal earnings must fund training herbs; no inventory grants",
+                (v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)
+        }
         state("verified-normal-source-loaded")
         walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
         walkTo(202,130);assertEquals(0,v.world.mapId)
@@ -2112,7 +2128,7 @@ class TouchTest:IsolatedGameTestCase(){
             // Use the actual reachable original zone4 at 12,21/22.
             // The old 39,40/41 loop is zone1 (3/6 EXP), not zone4.
             // This is a player's training route, never an encounter/EXP override.
-            inn();walkTo(0,14);step(Key.LEFT);walkTo(199,130)
+            replenishTrainingHerbs();inn();walkTo(0,14);step(Key.LEFT);walkTo(199,130)
             assertEquals(25,v.world.mapId);walkTo(12,22)
             assertTrue(v.content.battle!!.zones.any{it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains(25,v.world.x/16,v.world.y/16)})
             var trainingSteps=0
@@ -2121,7 +2137,7 @@ class TouchTest:IsolatedGameTestCase(){
                 if(trainingSteps%64==0)state("normal-training-progress-$trainingSteps")
                 if(v.currentSnapshot().characters.first().hp<=v.currentSnapshot().characters.first().maxHp*3/4){
                     walkTo(39,42);assertEquals(16,v.world.mapId)
-                    walkTo(202,130);assertEquals(0,v.world.mapId);inn()
+                    walkTo(202,130);assertEquals(0,v.world.mapId);replenishTrainingHerbs();inn()
                     walkTo(0,14);step(Key.LEFT);walkTo(199,130)
                     assertEquals(25,v.world.mapId);walkTo(12,22)
                 }
