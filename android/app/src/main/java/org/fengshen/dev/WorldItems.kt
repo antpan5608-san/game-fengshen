@@ -26,6 +26,9 @@ object WorldItems {
             "game-data/provenance/world-island-chests.json"->true
             "game-data/provenance/world-five-dragon-chests.json"->mapId==99&&
                 mapOf("rom.npc.99.0" to 2,"rom.npc.99.1" to 3,"rom.npc.99.2" to 0)[npcId]==category
+            "game-data/provenance/world-cave87-chests.json"->mapId==87&&
+                mapOf("rom.npc.87.1" to 0,"rom.npc.87.2" to 0,"rom.npc.87.3" to 0,
+                    "rom.npc.87.5" to 2,"rom.npc.87.6" to 0,"rom.npc.87.7" to 2)[npcId]==category
             "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
             else->false
         }
@@ -41,9 +44,12 @@ object WorldItems {
     data class MoneyResult(val snapshot:SaveSnapshot,val applied:Boolean,val error:String?=null)
     fun openMoneyTreasure(snapshot:SaveSnapshot,treasure:MoneyTreasureDefinition):MoneyResult {
         fun reject(reason:String)=MoneyResult(snapshot,false,reason)
-        if(treasure.flagId!="rom.map.76.flag.4"||treasure.amount!=100||treasure.moneyCap!=999999||
-            treasure.evidence!="game-data/provenance/world-island-chests.json")return reject("钱箱规则尚未核验")
-        if(snapshot.mapId!=76)return reject("当前场景不可用")
+        val island=treasure.flagId=="rom.map.76.flag.4"&&treasure.amount==100&&
+            treasure.evidence=="game-data/provenance/world-island-chests.json"
+        val cave=treasure.flagId=="rom.map.87.flag.8"&&treasure.amount==550&&
+            treasure.evidence=="game-data/provenance/world-cave87-chests.json"
+        if((!island&&!cave)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
+        if(snapshot.mapId!=if(island)76 else 87)return reject("当前场景不可用")
         if(snapshot.flags[treasure.flagId]==true)return reject("已经取过了")
         if(snapshot.money !in 0..treasure.moneyCap)return reject("当前银两超出原版钱箱可核范围，原状态已保留")
         return MoneyResult(snapshot.copy(money=minOf(treasure.moneyCap,snapshot.money+treasure.amount),

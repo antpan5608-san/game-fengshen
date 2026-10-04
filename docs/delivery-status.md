@@ -1,3 +1,7 @@
+## WORLD-FULL-01 佳东后山局部实现（2026-10-04T06:08Z，PARTIAL/未发布）
+
+独立c46新增真实map87/event6、普通敌群/花狐貂与七段战后事件、550钱箱/六物品箱；48图/255文件，manifest eeb58f54250861e531e11a1b6c4f187873c4c1e97cb4422e8f6bd5275e0fb746。实际目标map87是$57，不是历史误读$87/event25；原字段/CPU证据记录于game-data/provenance/world-cave87-state.json及world-cave87-chests.json。3078事件/1536投影恢复/35钱箱/42物品箱原CPU零差异；310 JVM、3局部导出、严格空目录恢复与仪器编译PASS。原版受控胜利不作为正常路线；field155仅暂定原图块静态组合；新Android全部NOT_RUN。原main v62/run37180967103冻结c41，不能拿其App结果给c46背书；正式仍v27。已修独立岛内钱箱无普通对白被拒绝的加载器缺陷，新App验证待原runner。累计权威欠账完整保留，WORLD总状态PARTIAL/ALL_MAPS_USABLE=NO/分母UNKNOWN，不关闭正常花狐貂、全服务和原战败等项。
+
 ## 当前有效让路与候选检查点（2026-10-04T03:46Z，本地隔离未发布）
 
 - WORLD-FULL-01继续F3/F4；用户最新授权重大可玩进展通过实际不崩溃/存档/原审核门禁即阶段正式发布，已知非阻断BUG保留。公网实际读回仍v27/0.8.7-world-full01-f0；ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN。

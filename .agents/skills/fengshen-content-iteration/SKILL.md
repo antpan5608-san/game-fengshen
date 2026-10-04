@@ -317,3 +317,11 @@ NPC callback表、world坐标event表和正文赠物selector是独立命名空�
 按真实caller一次批次复用库存/价目、共享室内与医生，不按村庄复制地图。仅相同tileset0复用已核576条桥方向矩阵，分别固定当前格网、独立入口/返回记录、原NPC和当前文字组；不要把普通EXIT套成另一村的EDGE。用已观察活跃字体glyph像素hash匹配既有字形，只定向补缺字。原OAM图形须逐不透明像素匹配且唯一；按真实按键步行取得图形，不依赖写camera后未刷新的假截图。
 
 FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source/save，已在原防具菜单观察到错误图/修后原商品画面。原版/受控资源不算Android正常流程。本轮现有导出器的局部父pin、旧媒体字节、全新空目录严格restore、来源enum和拓扑拒绝测试实际通过；新增商品未核名字时沿用PROVISIONAL_REFERENCE并明确nameConfidence UNKNOWN，不发明名称或关闭来源检查。
+
+## 已验证的局部脚本与离队接续（Android待当前runner）
+
+- 原ROM字面量先区分十六进制与地图十进制ID；仅以实际map dispatcher/coordinate table确认事件。已因$87误读87调查错误事件，保留失败，纠正后只核所需script流/消息与结算。
+- 复用probe-world-cave87-state.py运行未改ROM CPU的胜后、保留离队记录/战斗投影/出口恢复和钱箱边界；受控HP1胜利不是正常Boss证据。公开仅受控数值TSV/provenance；ROM/PPU/原存档继续忽略。
+- 原export_from_base父pin固定、scoped ROM tile/glyph及ci_apk.restore在空目录严格核验新场景；test_world_cave87_export.py已执行两次一致/旧媒体不变/错误坐标、对白、离队身份、额外奖励、像素与CPU表拒绝。计算新目标hash仅用于初次生成审查，随后必须完整严格重生成/restore，不能关最终目标pin校验。
+- 完整Boss矩形须包含实际边缘像素；过小矩形即便图块全匹配也可能裁图。普通敌框不可含玩家红点造成混palette。ROM静态初帧组合明确PROVISIONAL，未OAM观察不得标成截图匹配或正常App画面。
+- 无普通对白的钱箱须按已证身份/金额/旗标加载，不能因复用普通NPC校验导致新包全局拒绝。JVM/导出/编译通过后仍必须原runtime验证正常路线、存档及真实画面；本局部Android目前未运行。

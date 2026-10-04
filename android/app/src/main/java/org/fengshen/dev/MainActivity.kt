@@ -496,7 +496,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     loot.acquired.joinToString(""){"  获得 ${content.itemNames[it]?:it}"}+
                     if(loot.skipped.isEmpty())"" else "  物品数量/格数已满，掉落未取得"
                 battleResultLines=listOf("胜利！", "总经验 ${reward.experience} · 银两 +${current.enemies.sumOf{it.definition.moneyReward}}")+
-                    reward.characters.flatMap{player->val before=partyBefore.getValue(player.id);listOf(
+                    reward.characters.filter{it.id in partyBefore}.flatMap{player->val before=partyBefore.getValue(player.id);listOf(
                         "${heroName(player.id)} EXP +${reward.experienceByCharacter.getValue(player.id)} · 累计 ${before.experience} → ${player.experience}",
                         if(before.level==player.level)"等级 ${player.level}" else "升级 ${before.level} → ${player.level}",growthProgress(player).summary)}+
                     loot.acquired.map{"获得 ${content.itemNames[it]?:it}"}+loot.skipped.map{"${content.itemNames[it]?:it}：数量/格数已满，未取得"}
@@ -811,6 +811,23 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
             if(flags[intro.flagId]==true){startStoryBattle(story);return true}
             val before=currentSnapshot();commitStoryFollowup(before,StoryFollowup.begin(before,intro),npc);return true
+        }
+        story.approach?.let{
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
+            if(flags[story.approachFlag]!=true){
+                val before=currentSnapshot();val result=StoryFollowup.approachBattle(before,story)
+                if(!result.applied||!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+                    showNotice(result.error?:"剧情前行状态不可恢复");return true
+                }
+                if(!persistStateResult()){
+                    if(!applySnapshotState(before))localSaveProtected=true
+                    showNotice("保存失败，剧情前行未提交");return true
+                }
+                if(OriginalStatus.allDisabled(characters)){
+                    flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return true
+                }
+            }
+            startStoryBattle(story);return true
         }
         openDialogue(content.dialogues.getValue(npc.firstDialogue),npc)
         return true

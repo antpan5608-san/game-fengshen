@@ -13,6 +13,37 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Scoped loader/save fixtures; these do not claim a normal flower Boss win. */
+    fun testCave87ActualEventSixDepartureAndMoneyChestLoader(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(87);assertEquals(32,scene.width);assertEquals(15,scene.height)
+        val boss=c.battle!!.storyBattles.getValue("rom.npc.87.0");val chain=boss.continuation!!
+        assertEquals(StoryEntryTrigger(87,1,7),boss.entryTrigger)
+        assertEquals((11..17).map{"rom.dialogue.97.$it"},chain.dialogueIds)
+        assertEquals("xiaolongnv",chain.departureCharacterId);assertEquals(setOf(3,5),chain.movementsBeforeDialogue.keys)
+        val girl=c.joinCharacters.getValue("xiaolongnv");val yang=c.joinCharacters.getValue("yangjian")
+        val before=SaveSnapshot(c.scene.version,87,1*16+8,7*16+8,Key.UP,
+            listOf(c.initialPlayer,girl,yang),mapOf(HerbUse.ID to 8,OriginalYangJoin.ITEM_ID to 1),
+            mapOf("rom.map.110.flag.128" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),money=5000)
+        assertTrue(before.validate(c))
+        var s=StoryFollowup.approachBattle(before,boss).snapshot
+        assertTrue(s.validate(c));assertEquals(s,SaveSnapshot.parse(s.json().toString()))
+        // Isolated already-won fixture, not normal player victory or reward.
+        s=s.copy(flags=boss.rewardFlags(s.flags));assertTrue(s.validate(c))
+        for(id in chain.dialogueIds){
+            s=StoryFollowup.advance(s,boss,id,c.joinCharacters).snapshot
+            assertTrue(s.validate(c));assertEquals(s,SaveSnapshot.parse(s.json().toString()))
+        }
+        assertEquals(girl.copy(statusMask=girl.statusMask or 64),s.characters[1])
+        assertEquals(listOf("nezha","yangjian"),OriginalPartyRules.battleCharacters(s.characters).map{it.id})
+        assertEquals(before.inventory,s.inventory);assertEquals(before.money,s.money)
+        assertFalse(c.npcsForState(87,s.flags).any{it.id=="rom.npc.87.0"})
+        val chest=c.npcs.single{it.id=="rom.npc.87.4"}.moneyTreasure!!
+        val grant=WorldItems.openMoneyTreasure(s,chest);assertTrue(grant.applied)
+        assertEquals(s.money+550,grant.snapshot.money);assertTrue(grant.snapshot.validate(c))
+        assertFalse(WorldItems.openMoneyTreasure(grant.snapshot,chest).applied)
+        assertEquals("rom.medicine.0",c.npcs.single{it.id=="rom.npc.87.6"}.treasure!!.itemId)
+    }
     /** Controlled loader/gift/scheduler fixture, not a normal route recording. */
     fun testFiveDragonOriginalGiftAndReusableBattleItem(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

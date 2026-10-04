@@ -761,7 +761,8 @@ def validate_world_chest_grant(reader,npc):
     scopes={'game-data/provenance/world-hell-chest-grants.json':('hell-halls61-through68-actual-ordinary-chest-grant',72),
             'game-data/provenance/world-tree107-chests.json':('tree107-108-three-actual-ordinary-chest-grants',21),
             'game-data/provenance/world-island-chests.json':('island76-five-original-item-chests-and-money100',35),
-            'game-data/provenance/world-five-dragon-chests.json':('five-dragon99-three-original-item-chests',21)}
+            'game-data/provenance/world-five-dragon-chests.json':('five-dragon99-three-original-item-chests',21),
+            'game-data/provenance/world-cave87-chests.json':('cave87-six-original-item-chests-and-money550',42)}
     if path not in scopes or proof['romSha256']!=SHA256 or (proof['scopeRevision'],proof['testCount'])!=scopes[path] or \
             proof['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID' or proof['failures']!=0:
         raise ValueError('Chest grant lacks original scoped evidence')
@@ -780,6 +781,13 @@ def validate_world_chest_grant(reader,npc):
                 proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768)) or \
                 [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=[(99,0,2,2),(99,1,3,30),(99,2,0,9)]:
             raise ValueError('Five-dragon chests require actual three records and capacity cases')
+    elif path=='game-data/provenance/world-cave87-chests.json':
+        reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if reuse['path']!='game-data/provenance/world-hell-chest-grants.json'or \
+                digest((ROOT/reuse['path']).read_bytes())!=reuse['sha256']or len(raw.splitlines())!=43 or \
+                proof['activeCpuSha256']!=digest(reader.read(2,0x8000,32768))or \
+                [(b['mapId'],b['npcIndex'],b['categoryId'],b['originalId'])for b in proof['bindings']]!=                [(87,1,0,10),(87,2,0,11),(87,3,0,1),(87,5,2,8),(87,6,0,0),(87,7,2,22)]:
+            raise ValueError('Cave87 six item chests require actual records/capacity cases')
     elif path=='game-data/provenance/world-island-chests.json':
         reuse=proof['ruleReuse'];raw=(ROOT/proof['cpuExpectedPath']).read_bytes()
         if reuse['path']!='game-data/provenance/world-hell-chest-grants.json' or \
@@ -1385,24 +1393,95 @@ def validate_world_island_talk(reader,npc):
     return p
 
 
+def validate_world_cave87_state(reader):
+    """Bounded event6 scripts/actor preservation; never substitutes CPU for App play."""
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens,glyph_pixels,extract_default_map_palette
+    path='game-data/provenance/world-cave87-state.json';p=load(ROOT/path)
+    expected_rules=dict(mapId=87,eventId=6,triggerCell=[1,7],sourceType=170,enemyId=156,
+        sourceFieldActor=155,overlayContext=201,departureCharacterId='xiaolongnv',departureStatusOr=64,
+        preservesFullActorRecord=True,extraEventReward=False)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='map87-event6-flower-boss-script37-38-retained-away-actor' or p['rules']!=expected_rules:
+        raise ValueError('Cave87 identity/departure differs; hexadecimal87 is another map')
+    required={(11,0xd8b5,22),(11,0xda8d,3),(11,0xcb6a,2),(11,0xce31,0xce9f-0xce31),
+        (11,0xc872,11),(11,0xc87d,95),(1,0x9ea3+170,1),(1,0x8b0e,0x8b47-0x8b0e),
+        (9,0x927c,0x92a8-0x927c),(0,0xf349,14),(0,0x8faf,5),(0,0x9077,5)}
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!=required:
+        raise ValueError('Cave87 requires actual dispatch/scripts/actor preservation spans')
+    for span in p['sources']:checked_span(reader,span)
+    if reader.read(11,0xda8d,3)!=bytes([1,7,0])or reader.word(11,0xcb6a)!=0xce31 or \
+            reader.read(11,0xc872,11)!=bytes.fromhex('80000907030406070002ff')or \
+            reader.read(11,0xc87d,95)!=bytes.fromhex('8000040b822c060700010707040c040d8000070701010807020407070101040e080709070707822c090703010607000109070302040f0607070709070807020207070103080702018000060700010907030304100411822c080702010582ff'):
+        raise ValueError('Cave87 normal player movements/message timing differs')
+    boss=p['boss'];ids=[f'rom.dialogue.97.{i}'for i in range(11,18)]
+    expected=dict(id='rom.boss.156',npcId='rom.npc.87.0',mapId=87,eventId=6,eventArgument=0,sourceType=170,
+        enemyId=156,group=dict(id=0,entities=[dict(slot=3,enemyId=156)]),flagId='rom.map.87.flag.128',
+        victoryDialogue=ids[0],commitAfterDialogue=True,entryTrigger=dict(mapId=87,x=1,y=7,evidence=path),
+        approach=dict(destination=dict(mapId=87,x=5,y=5,direction='UP',terrainMode=0),completedSteps=6,
+            accumulateEncounterSteps=True,evidence=path),
+        continuation=dict(dialogueIds=ids,departureCharacterId='xiaolongnv',destination=dict(mapId=87,x=4,y=6,
+            direction='RIGHT',terrainMode=0,encounterSteps=0),completionFlags=['rom.map.87.flag.128','rom.global.7bf.16'],
+            movementsBeforeDialogue=[dict(index=i,destination=dict(mapId=87,x=x,y=y,direction=d,terrainMode=0),
+                completedSteps=n,accumulateEncounterSteps=True)for i,x,y,d,n in [(3,1,7,'DOWN',6),(5,4,6,'RIGHT',4)]],evidence=path),
+        npcSource=extract_npcs(reader,87)['records'][0]['range'],ruleSources=p['sources'],source=path)
+    if boss!=expected:raise ValueError('Cave87 must not invent rewards/gates/actor deletion or omit dialogue')
+    tables={'world-cave87-state-original.tsv':(3078,'cec5073c119d3bb9d39aae7e1fd000da3e08094309eb97f280f14fd23c696c8d'),
+        'world-party-unavailable-original.tsv':(1536,'5ab8da346305e9adec063fe448608332e05b2eaee1b3186bf167ea5602fbb8ce'),
+        'world-cave87-money-original.tsv':(35,'e66789e0b4f636d3d20c06efbaaaa8861a8a77d9d76756b4cbe97aeef840fd44')}
+    if len(p['cpu'])!=3:raise ValueError('Cave87 original CPU expectations missing')
+    for c in p['cpu']:
+        name=Path(c['path']).name;raw=(ROOT/c['path']).read_bytes()
+        if name not in tables or (c['caseCount'],c['sha256'])!=tables[name]or c['failures']!=0 or \
+                c['path']!='android/app/src/test/resources/'+name or len(raw.splitlines())!=c['caseCount']+1 or \
+                digest(raw)!=c['sha256']or c['probePath']!='tools/rom-extractor/probe-world-cave87-state.py'or \
+                digest((ROOT/c['probePath']).read_bytes())!=c['probeSha256']:
+            raise ValueError('Cave87 CPU preservation/once boundaries differ')
+    if {Path(c['path']).name for c in p['cpu']}!=set(tables):raise ValueError('Duplicate/missing CPU table')
+    font=p['font'];data=b''.join(checked_span(reader,v)for v in font['sources']);charset={int(k):v for k,v in font['charset'].items()}
+    if len(data)!=4096 or [d['id']for d in p['dialogues']]!=ids:raise ValueError('Cave87 seven original messages/font missing')
+    for glyph in font['glyphs']:
+        pixels=glyph_pixels(data,0,glyph['code'])
+        if charset[glyph['code']]!=glyph['character']or digest(bytes(v for row in pixels for v in row))!=glyph['pixelsSha256']:
+            raise ValueError('Cave87 original glyph differs')
+    if {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:raise ValueError('Cave87 font scope incomplete')
+    for d in p['dialogues']:
+        t=extract_text(reader,97,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Cave87 text differs from actual original font and stream')
+    field=p['fieldGraphic'];scoped_observed_graphic(reader,field)
+    if field['captureKind']!='PROVISIONAL_ROM_STATIC_ANIMATION_FRAME_NOT_OBSERVED'or field['normalPlayEvidence']is not False or \
+            (field['width'],field['height'],field['rgbaSha256'])!=(16,16,'83939d68555d6b05138f5f14ba9d726e56723604d5955612534bb581224346d5')or \
+            checked_span(reader,field['frameSource'])!=bytes.fromhex('00acadbcbd'):
+        raise ValueError('Field155 initial pose must remain a labelled ROM-static composition')
+    for eid,sha in [(50,'e3731abd6cb9354ecff2a3a81dc1910f4c9962c282e3c3e4813a9c991aeb93ef'),
+            (51,'d732bfdc460198ffac69fedfeba6404a8e4c491cb19e97b8c6552d382f9a2ef1'),
+            (156,'aa45626415ffbb214b5fbc2ddf2ece2efa03b57cb97590267219fd47ca5d26fd')]:
+        graphic=p['graphics'][str(eid)];scoped_observed_graphic(reader,graphic)
+        if graphic['rgbaSha256']!=sha:raise ValueError('Cave87 complete observed battle graphic differs')
+    return p
+
+
 def validate_world_island_money(reader,npc):
     from forensics.fengshen246 import extract_npcs
-    path='game-data/provenance/world-island-chests.json';p=load(ROOT/path);m=p['money'];record=extract_npcs(reader,76)['records'][6]
-    raw=checked_span(reader,record['range']);t=npc['moneyTreasure']
-    required={(10,0xa740,92),(2,0x9fb5,58),(2,0xc530,32),(2,0x86cd,41),(2,0xe616,2)}
-    table=(ROOT/m['tablePath']).read_bytes()
-    if p['romSha256']!=SHA256 or p['scopeRevision']!='island76-five-original-item-chests-and-money100' or \
-            (m['testCount'],m['failures'],m['categoryId'],m['originalId'],m['amount'],m['moneyCap'])!=(35,0,4,8,100,999999) or \
-            npc['id']!='rom.npc.76.6' or npc['mapId']!=76 or npc['cell']!=[2,5] or not npc.get('openedSprite') or npc.get('treasure') or \
-            npc['source']['record']!=record['range'] or m['npcSource']!=record['range'] or list(raw[:3])!=[144,4,8] or raw[13]!=4 or \
-            t!=dict(flagId='rom.map.76.flag.4',amount=100,moneyCap=999999,evidence=path) or \
-            digest(table)!=m['tableSha256'] or len(table.splitlines())!=36 or \
-            m['probePath']!='tools/rom-extractor/probe-world-island-money.py' or digest((ROOT/m['probePath']).read_bytes())!=m['probeSha256'] or \
-            {(s['module'],s['cpuAddress'],s['length'])for s in m['sources']}!=required:
-        raise ValueError('Money chest lacks its original distinct once/amount/cap boundary')
+    path=npc['moneyTreasure']['evidence']
+    identity={'game-data/provenance/world-island-chests.json':(76,6,4,8,100,'island76-five-original-item-chests-and-money100','tools/rom-extractor/probe-world-island-money.py'),
+        'game-data/provenance/world-cave87-chests.json':(87,4,8,5,550,'cave87-six-original-item-chests-and-money550','tools/rom-extractor/probe-world-cave87-state.py')}
+    if path not in identity:raise ValueError('Unknown original money chest scope')
+    mid,index,mask,item,amount,scope,probe=identity[path];p=load(ROOT/path);m=p['money'];record=extract_npcs(reader,mid)['records'][index]
+    raw=checked_span(reader,record['range']);t=npc['moneyTreasure'];cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+    required={(10,0xa740,92),(2,0x9fb5,58),(2,0xc530,32),(2,0x86cd,41),(2,0xe616,2)};table=(ROOT/m['tablePath']).read_bytes()
+    if p['romSha256']!=SHA256 or p['scopeRevision']!=scope or \
+            (m['testCount'],m['failures'],m['categoryId'],m['originalId'],m['amount'],m['moneyCap'])!=(35,0,4,item,amount,999999)or \
+            npc['id']!=f'rom.npc.{mid}.{index}'or npc['mapId']!=mid or npc['cell']!=cell or not npc.get('openedSprite')or npc.get('treasure')or \
+            npc['source']['record']!=record['range']or m['npcSource']!=record['range']or list(raw[:3])!=[144,4,item]or raw[13]!=mask or \
+            t!=dict(flagId=f'rom.map.{mid}.flag.{mask}',amount=amount,moneyCap=999999,evidence=path)or \
+            digest(table)!=m['tableSha256']or len(table.splitlines())!=36 or m['probePath']!=probe or \
+            digest((ROOT/m['probePath']).read_bytes())!=m['probeSha256']or \
+            {(v['module'],v['cpuAddress'],v['length'])for v in m['sources']}!=required:
+        raise ValueError('Money chest lacks original distinct once/amount/cap boundary')
     for span in m['sources']:checked_span(reader,span)
-    if checked_span(reader,m['amountSource'])!=bytes([100,0])or reader.word(2,reader.word(2,0xe616)+16)!=100:
-        raise ValueError('Money100 must use actual category4/id8 amount table')
+    if checked_span(reader,m['amountSource'])!=amount.to_bytes(2,'little')or reader.word(2,reader.word(2,0xe616)+2*item)!=amount:
+        raise ValueError('Money chest must retain actual category4/id amount table')
     return m
 
 
@@ -1809,6 +1888,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                         raise ValueError('Cave story source/trigger differs')
                     raw=checked_span(reader,boss['actorScriptSource'])
                     if raw!=reader.read(11,0xc4b6,9):raise ValueError('Original cave actor script differs')
+                elif trigger['evidence']=='game-data/provenance/world-cave87-state.json':
+                    if boss!=validate_world_cave87_state(reader)['boss']:
+                        raise ValueError('Cave87 event6 differs from actual script/actor state')
                 elif trigger['evidence']=='game-data/provenance/world-island-event7.json':
                     original=validate_world_island_event7(reader)
                     if boss!=original['boss']:raise ValueError('Island composite story differs from verified scoped definition')
@@ -2161,7 +2243,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
-        if npc.get('automaticStoryOnly') or npc.get('removedFlagId'):
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-cave87-state.json':
+            proof=validate_world_cave87_state(reader)
+            from forensics.fengshen246 import extract_npcs
+            record=extract_npcs(reader,87)['records'][0]
+            if npc['id']!='rom.npc.87.0'or npc['mapId']!=87 or npc['cell']!=[5,4]or npc['spriteId']!=155 or \
+                    npc['source']['record']!=record['range']or npc['firstEffects']or npc.get('repeatDialogue')or \
+                    npc['firstDialogue']!=proof['boss']['victoryDialogue']or npc.get('automaticStoryOnly')is not True or \
+                    npc.get('removedFlagId')!='rom.map.87.flag.128'or evidence['graphics'].get(npc['sprite'])!=proof['fieldGraphic']:
+                raise ValueError('Cave87 actor identity/removal/static pose differs')
+        elif npc.get('automaticStoryOnly') or npc.get('removedFlagId'):
             from forensics.fengshen246 import extract_npcs
             proof=validate_world_island_event7(reader)
             index=next((i for i in range(4)if npc['id']==f'rom.npc.76.{i}'),None)

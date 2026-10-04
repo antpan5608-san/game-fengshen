@@ -237,6 +237,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(content.battle?.storyBattles?.values?.any{story->story.intro?.let{i->
             !i.validPending(this)||(flags[i.pendingFlag]==true&&
                 (x/16!=i.openingMovement.destination.x||y/16!=i.openingMovement.destination.y))}==true}==true)return false
+        if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
         if(!OriginalFerry.validPending(this,content.ferries.values))return false
         val scene=content.sceneForState(mapId,flags)?:return false

@@ -274,15 +274,23 @@ object ContentLoader {
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
                 if(npc.automaticStoryOnly||npc.removedFlagId!=null){
-                    require(npc.mapId==76&&npc.id in (0..3).map{"rom.npc.76.$it"}&&
-                        npc.automaticStoryOnly&&npc.removedFlagId=="rom.map.76.flag.128"&&
-                        n.getString("automaticStoryEvidence")=="game-data/provenance/world-island-event7.json"&&npc.firstEffects.isEmpty())
+                    val island=npc.mapId==76&&npc.id in (0..3).map{"rom.npc.76.$it"}&&
+                        npc.removedFlagId=="rom.map.76.flag.128"&&
+                        n.getString("automaticStoryEvidence")=="game-data/provenance/world-island-event7.json"
+                    val cave=npc.mapId==87&&npc.id=="rom.npc.87.0"&&npc.x==5&&npc.y==4&&
+                        npc.removedFlagId=="rom.map.87.flag.128"&&
+                        n.getString("automaticStoryEvidence")=="game-data/provenance/world-cave87-state.json"
+                    require((island||cave)&&npc.automaticStoryOnly&&npc.firstEffects.isEmpty())
                 }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("moneyTreasure")?.let{t->
-                    require(npc.id=="rom.npc.76.6"&&npc.mapId==76&&npc.x==2&&npc.y==5&&
-                        t.getString("flagId")=="rom.map.76.flag.4"&&t.getInt("amount")==100&&t.getInt("moneyCap")==999999&&
-                        t.getString("evidence")=="game-data/provenance/world-island-chests.json"&&npc.openedSprite!=null&&
+                    val island=npc.id=="rom.npc.76.6"&&npc.mapId==76&&npc.x==2&&npc.y==5&&
+                        t.getString("flagId")=="rom.map.76.flag.4"&&t.getInt("amount")==100&&
+                        t.getString("evidence")=="game-data/provenance/world-island-chests.json"
+                    val cave=npc.id=="rom.npc.87.4"&&npc.mapId==87&&npc.x==8&&npc.y==4&&
+                        t.getString("flagId")=="rom.map.87.flag.8"&&t.getInt("amount")==550&&
+                        t.getString("evidence")=="game-data/provenance/world-cave87-chests.json"
+                    require((island||cave)&&t.getInt("moneyCap")==999999&&npc.openedSprite!=null&&
                         npc.treasure==null&&npc.firstEffects.isEmpty())
                     npc.moneyTreasure=MoneyTreasureDefinition(t.getString("flagId"),t.getInt("amount"),t.getInt("moneyCap"),t.getString("evidence"))
                 }
@@ -376,7 +384,7 @@ object ContentLoader {
                         t.getString("removedFlagId"),t.getString("completionFlagId"))
                 }else null)
         }}?:emptyList()
-        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
+        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.moneyTreasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         require(npcs.all{it.originalTalk?.messageDialogues?.values?.all{id->id in dialogues}!=false})
         require(npcs.all{it.stateVariant?.let{v->v.firstDialogue in dialogues&&v.repeatDialogue in dialogues}!=false})
         data.optJSONArray("mapObjects")?.let{a->for(i in 0 until a.length()){
@@ -626,6 +634,16 @@ object ContentLoader {
                             boss.intro=SceneStoryDefinition("rom.scene-story.76.four-villains-intro",boss.npcId,flag,
                                 boss.entryTrigger!!,StoryContinuation(ids,null,destination,setOf(flag)),movement,emptyMap())
                         }
+                        b.optJSONObject("approach")?.let{v->
+                            require(boss.id=="rom.boss.156"&&boss.npcId=="rom.npc.87.0"&&
+                                boss.entryTrigger==StoryEntryTrigger(87,1,7)&&
+                                v.getString("evidence")=="game-data/provenance/world-cave87-state.json"&&
+                                v.getInt("completedSteps")==6&&v.getBoolean("accumulateEncounterSteps"))
+                            val d=v.getJSONObject("destination")
+                            require(d.getInt("mapId")==87&&d.getInt("x")==5&&d.getInt("y")==5&&
+                                d.getString("direction")=="UP"&&d.getInt("terrainMode")==0)
+                            boss.approach=StoryMovement(StoryDestination(87,5,5,Key.UP,0,null),6).also{it.accumulateEncounterSteps=true}
+                        }
                         boss.finalizeWithoutDialogue=b.optBoolean("finalizeWithoutDialogue",false)
                         if(boss.finalizeWithoutDialogue)require(boss.intro!=null&&!b.optBoolean("commitAfterDialogue",false)&&
                             boss.flagId=="rom.map.76.flag.128"&&members==listOf(EncounterMember(0,152),EncounterMember(2,153),
@@ -652,7 +670,28 @@ object ContentLoader {
                                 d
                             }
                             val fs=c.getJSONArray("completionFlags").let{v->(0 until v.length()).map{v.getString(it)}.toSet()}
-                            StoryContinuation(ids,joins,target,fs)
+                            StoryContinuation(ids,joins,target,fs).also{chain->
+                                if(c.has("departureCharacterId")||c.has("movementsBeforeDialogue")){
+                                    require(boss.id=="rom.boss.156"&&boss.npcId=="rom.npc.87.0"&&boss.approach!=null&&
+                                        c.getString("evidence")=="game-data/provenance/world-cave87-state.json"&&joins==null&&
+                                        c.getString("departureCharacterId")=="xiaolongnv"&&
+                                        ids==(11..17).map{"rom.dialogue.97.$it"}&&
+                                        fs==setOf("rom.map.87.flag.128","rom.global.7bf.16")&&
+                                        target==StoryDestination(87,4,6,Key.RIGHT,0,0))
+                                    val moves=c.getJSONArray("movementsBeforeDialogue")
+                                    require(moves.length()==2)
+                                    val expected=mapOf(3 to (StoryDestination(87,1,7,Key.DOWN,0,null) to 6),
+                                        5 to (StoryDestination(87,4,6,Key.RIGHT,0,null) to 4))
+                                    val parsed=(0 until moves.length()).associate{i->
+                                        val m=moves.getJSONObject(i);val index=m.getInt("index");val d=m.getJSONObject("destination")
+                                        val destination=StoryDestination(d.getInt("mapId"),d.getInt("x"),d.getInt("y"),Key.valueOf(d.getString("direction")),d.getInt("terrainMode"),null)
+                                        require(expected[index]==(destination to m.getInt("completedSteps"))&&m.getBoolean("accumulateEncounterSteps"))
+                                        index to StoryMovement(destination,m.getInt("completedSteps")).also{it.accumulateEncounterSteps=true}
+                                    }
+                                    require(parsed.keys==expected.keys);chain.movementsBeforeDialogue=parsed
+                                    chain.departureCharacterId="xiaolongnv"
+                                }
+                            }
                         }
                         require(!boss.commitAfterDialogue||boss.entryTrigger!=null)
                         require(boss.id.matches(Regex("rom\\.boss\\.\\d+"))&&(boss.flagId.matches(Regex("rom\\.event\\.\\d+\\.\\d+\\.\\d+"))||boss.flagId.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+")))&&
