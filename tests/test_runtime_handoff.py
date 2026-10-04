@@ -200,6 +200,32 @@ class RuntimeHandoffTest(unittest.TestCase):
                          self.root / 'failed-bundle', self.candidate)
         self.assertFalse((self.root / 'failed-bundle').exists())
 
+    def test_actual_single_test_runner_passes_restore_mode_and_rejects_invalid_mode(self):
+        script = (Path(__file__).resolve().parents[1] / 'ci/run-town02-runtime.sh').read_text()
+        start = script.index('run_test(){')
+        block = script[start:script.index('\nif [[ "$stage" == all || "$stage" == base ]]; then\nadb install', start)]
+        prefix = '''set -euo pipefail
+mkdir -p artifacts/town02-runtime
+timeout(){ shift; "$@"; }
+adb(){ printf '%s\\n' "$*" >> adb-calls.txt; printf 'OK (1 test)\\n'; }
+'''
+        fixture = self.root / 'fixture-retention.sh'
+        fixture.write_text(prefix + block + '\nrun_test fixtureDefault\nrun_test fixtureReplay false\n',
+                           encoding='utf-8', newline='\n')
+        run = subprocess.run([existing_bash(), fixture.as_posix()], cwd=self.root,
+                             capture_output=True, text=True, timeout=10)
+        self.assertEqual(0, run.returncode, run.stderr)
+        calls = (self.root / 'adb-calls.txt').read_text().splitlines()
+        self.assertEqual(2, len(calls))
+        self.assertIn('-e keepFixtureForRestart true -e class org.fengshen.dev.TouchTest#fixtureDefault', calls[0])
+        self.assertIn('-e keepFixtureForRestart false -e class org.fengshen.dev.TouchTest#fixtureReplay', calls[1])
+        (self.root / 'adb-calls.txt').unlink()
+        fixture.write_text(prefix + block + '\nrun_test fixtureInvalid unknown\n', encoding='utf-8', newline='\n')
+        run = subprocess.run([existing_bash(), fixture.as_posix()], cwd=self.root,
+                             capture_output=True, text=True, timeout=10)
+        self.assertNotEqual(0, run.returncode)
+        self.assertFalse((self.root / 'adb-calls.txt').exists())
+
     def test_actual_shell_stage_dispatch_keeps_every_normal_and_cold_test(self):
         # Execute the actual dispatch block against harmless shell functions;
         # no SDK/AVD/GitHub or App state is accessed by this transport test.
@@ -270,7 +296,7 @@ sleep(){ :; }
                 if line.startswith('PY tools/record_app_audio.py world-') and 'world-f0 ' not in line:
                     self.assertIn('--cold-test', line)
             if stage == 'base':
-                self.assertIn('TEST testControlledPlayableR1MedicalDoorReentryFromVerifiedSave', lines)
+                self.assertIn('TEST testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false', lines)
                 self.assertIn('TEST testControlledNorthTravelFromVerifiedPalaceSave', lines)
                 for label, method in [('world-north','testNormalWorldSeaNorthFromVerifiedNorthPalaceSave'),
                                       ('world-village1','testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave')]:
