@@ -7,7 +7,8 @@ class ContentSaveVersionTest {
         for(i in 1..33)assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c$i","opening-segment-001-c34"))
         assertTrue(SaveSnapshot.compatibleContentVersion("opening-to-world-b1","opening-segment-001-c34"))
         assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c34","opening-segment-001-c34"))
-        for(id in listOf("opening-segment-001-c0","opening-segment-001-c99","opening-segment-001-c025","unknown"))
+        assertTrue(SaveSnapshot.compatibleContentVersion("opening-segment-001-c51-r1","opening-segment-001-c52"))
+        for(id in listOf("opening-segment-001-c0","opening-segment-001-c99","opening-segment-001-c025","opening-segment-001-c51-r2","unknown"))
             assertFalse(SaveSnapshot.compatibleContentVersion(id,"opening-segment-001-c34"))
     }
 }

@@ -157,6 +157,7 @@ run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
+run_test testControlledNorthRepeatAfterOptionalMapSupply
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
 if [[ "$scope_id" != PLAYABLE-R1 ]]; then run_test testControlledBindingItemSelectionCancelAndSingleActorCommand; fi
