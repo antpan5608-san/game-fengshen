@@ -1,0 +1,2525 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "original-village-shared-profile-evidenced-callers",
+  "kind": "TARGET_ROM_AND_CONTROLLED_CPU_KEYS_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "sharedSources": [
+    {
+      "offset": 19324,
+      "length": 17,
+      "sha256": "ccedf7b2bc4f9f9a42060b233e36e5af3bc5d37facbef30d9b264fce0f3a9936",
+      "module": 0,
+      "cpuAddress": 52076,
+      "meaning": "Shared original source collision dispatch"
+    },
+    {
+      "offset": 19434,
+      "length": 8,
+      "sha256": "e832dc6ae9b4cedd6f6cf998fa00b402f4ff955b704b8c05b2a75a7d1015c2a0",
+      "module": 0,
+      "cpuAddress": 52186,
+      "meaning": "Shared class10/11 source branches"
+    },
+    {
+      "offset": 20195,
+      "length": 17,
+      "sha256": "2ab3e9bb4916e24ebb1bd6119d5f14a976be072e6c119cc0afa6c541a7a4bae3",
+      "module": 0,
+      "cpuAddress": 52947,
+      "meaning": "Shared original target collision dispatch"
+    },
+    {
+      "offset": 21095,
+      "length": 18,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc",
+      "module": 0,
+      "cpuAddress": 53847,
+      "meaning": "Shared bridge directional source restrictions"
+    },
+    {
+      "offset": 20307,
+      "length": 1,
+      "sha256": "8d33f520a3c4cef80d2453aef81b612bfe1cb44c8b2025630ad38662763f13d3",
+      "module": 0,
+      "cpuAddress": 53059,
+      "meaning": "Shared bridge target return"
+    }
+  ],
+  "bridge": {
+    "sourceEdges": {
+      "10": [
+        "UP",
+        "DOWN"
+      ],
+      "11": [
+        "LEFT",
+        "RIGHT"
+      ]
+    },
+    "walkableClasses": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "cpuExpectedPath": "android/app/src/test/resources/world-town-bridges-original-cpu.tsv",
+    "cpuCaseCount": 576,
+    "cpuFailures": 0,
+    "cpuExpectedSha256": "4659284c278da00c998eef81727552f8edabfa18f68b1df2422dabd1e86cdb54"
+  },
+  "villages": [
+    {
+      "mapId": 6,
+      "textGroup": 16,
+      "map": {
+        "mapId": 6,
+        "width": 32,
+        "height": 30,
+        "tilesetId": 0,
+        "gridSha256": "6cfa9426f9e33eade0d0e52b37aed57a0c5a144d2d4557697b6d07f592294c2c",
+        "palette": [
+          14,
+          37,
+          53,
+          25,
+          25,
+          33,
+          50,
+          48,
+          25,
+          22,
+          9,
+          25,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ]
+      },
+      "sources": [
+        {
+          "offset": 347008,
+          "length": 2,
+          "sha256": "baf3fc076a05d7a8c6648a50c539fd727c3b4a4987699a82365806bae70f96dc",
+          "module": 10,
+          "cpuAddress": 52080,
+          "meaning": "Actual action52 dispatch pointerCE32"
+        },
+        {
+          "offset": 347714,
+          "length": 24,
+          "sha256": "c1ff4f7703b89e4523ad2702d2610ed91058f9f841a39dd3676f66c1abf876f2",
+          "module": 10,
+          "cpuAddress": 52786,
+          "meaning": "Actual global7C6 bit64 first+1/local flag/clear event"
+        },
+        {
+          "offset": 336240,
+          "length": 42,
+          "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+          "module": 10,
+          "cpuAddress": 41312,
+          "meaning": "Actual raw first/repeat selector precedes action52"
+        },
+        {
+          "offset": 21679,
+          "length": 2,
+          "sha256": "4e399d0536e9eb556ea05e7c19f52034fc44dc7eea2f3b5af2da5336ca9c9cf1",
+          "module": 0,
+          "cpuAddress": 54431,
+          "meaning": "Actual map6 local RAM flags pointer706"
+        },
+        {
+          "offset": 337744,
+          "length": 233,
+          "sha256": "1c0157a2f7d60788c87e42fbface3923d95044cb8b77b8e39e8628dcf9ed7805",
+          "module": 10,
+          "cpuAddress": 42816,
+          "meaning": "Actual C6 investigate selector/category/id/repeat"
+        },
+        {
+          "offset": 73424,
+          "length": 249,
+          "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+          "module": 2,
+          "cpuAddress": 40640,
+          "meaning": "Shared investigate grant and success-only flag"
+        },
+        {
+          "offset": 73967,
+          "length": 12,
+          "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+          "module": 2,
+          "cpuAddress": 41183,
+          "meaning": "Actual category grant dispatch"
+        },
+        {
+          "offset": 73979,
+          "length": 173,
+          "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+          "module": 2,
+          "cpuAddress": 41195,
+          "meaning": "Actual inventory capacity transaction"
+        },
+        {
+          "offset": 74144,
+          "length": 12,
+          "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+          "module": 2,
+          "cpuAddress": 41360,
+          "meaning": "Original category limits and rows"
+        }
+      ],
+      "font": {
+        "sources": [
+          {
+            "offset": 606224,
+            "length": 2048,
+            "sha256": "e20c549c3eaf901e9bc14f1d186d9941a7304244aad35207b37222703bd0f0e9",
+            "meaning": "Observed original group16 village6 font CHR half"
+          },
+          {
+            "offset": 608272,
+            "length": 2048,
+            "sha256": "bbc90964bccb7be6462e25530851ae2f5562579298f14792759cb8963d6ce392",
+            "meaning": "Observed original group16 village6 font CHR half"
+          }
+        ],
+        "charset": {
+          "2": "快",
+          "4": "身",
+          "7": "激",
+          "8": "些",
+          "14": "方",
+          "21": "他",
+          "25": "河",
+          "29": "呢",
+          "34": "兒",
+          "35": "裏",
+          "36": "被",
+          "37": "子",
+          "39": "好",
+          "42": "是",
+          "44": "謝",
+          "45": "大",
+          "46": "來",
+          "47": "為",
+          "49": "一",
+          "51": "人",
+          "52": "的",
+          "53": "你",
+          "130": "吧",
+          "134": "感",
+          "135": "前",
+          "148": "到",
+          "151": "藏",
+          "152": "請",
+          "156": "麼",
+          "161": "這",
+          "162": "村",
+          "163": "都",
+          "164": "捉",
+          "165": "有",
+          "166": "王",
+          "167": "洞",
+          "168": "可",
+          "170": "在",
+          "173": "個",
+          "175": "了",
+          "179": "女",
+          "180": "我",
+          "181": "們",
+          "0": "兩",
+          "1": "嘛",
+          "3": "答",
+          "5": "許",
+          "6": "遠",
+          "9": "又",
+          "10": "輕",
+          "11": "吸",
+          "12": "氣",
+          "13": "拜",
+          "15": "寂",
+          "16": "從",
+          "17": "出",
+          "18": "多",
+          "19": "手",
+          "20": "聽",
+          "22": "捆",
+          "23": "繩",
+          "24": "黑",
+          "26": "股",
+          "27": "代",
+          "28": "什",
+          "33": "男",
+          "38": "國",
+          "40": "窟",
+          "41": "怕",
+          "43": "下",
+          "48": "報",
+          "50": "兄",
+          "128": "幹",
+          "129": "趕",
+          "131": "願",
+          "132": "相",
+          "133": "永",
+          "136": "日",
+          "137": "年",
+          "138": "專",
+          "139": "陽",
+          "140": "崇",
+          "141": "北",
+          "142": "得",
+          "143": "莫",
+          "144": "逃",
+          "145": "很",
+          "146": "死",
+          "147": "偷",
+          "149": "最",
+          "150": "妖",
+          "153": "游",
+          "154": "強",
+          "155": "表",
+          "169": "陪",
+          "171": "仇",
+          "172": "流",
+          "174": "走",
+          "176": "以",
+          "177": "暗",
+          "178": "弟"
+        },
+        "glyphs": [
+          {
+            "code": 0,
+            "character": "兩",
+            "pixelsSha256": "e7792561626cf06fb0c02c68609ece432ab5e4c786177cb258d699da58b2d705"
+          },
+          {
+            "code": 1,
+            "character": "嘛",
+            "pixelsSha256": "1ec397fb2675ba84576bba3b16e01e8c223a4d6b3db0b032b0c0f58978738a7e"
+          },
+          {
+            "code": 2,
+            "character": "快",
+            "pixelsSha256": "9857f724c51496cac025edcaf959f21dc58c47468e77dbbf48bff36b0821c384"
+          },
+          {
+            "code": 3,
+            "character": "答",
+            "pixelsSha256": "e2b10676b8f0a016a8b7897833cb78e5bc6bf6a2dc032c1c88444840217032c0"
+          },
+          {
+            "code": 4,
+            "character": "身",
+            "pixelsSha256": "67909ca7f5f353fd32ef8b0ca525e19f34ad4c4d0e942f9a4717e7b213edbe67"
+          },
+          {
+            "code": 5,
+            "character": "許",
+            "pixelsSha256": "1b6bdb0a4d4e669001262a59f98d6fbc45538abf3c33edfa3531a63aa3fbeb99"
+          },
+          {
+            "code": 6,
+            "character": "遠",
+            "pixelsSha256": "ff9330656df97b88b4235093deec7e46332f7c2f2ef02f17f0dae29e598e9144"
+          },
+          {
+            "code": 7,
+            "character": "激",
+            "pixelsSha256": "dd5392e4a26ae0f9e26dc32254be272fdf5da1d76155547331cf273d1fd6fce7"
+          },
+          {
+            "code": 8,
+            "character": "些",
+            "pixelsSha256": "02af8bc9807ca43cb2480d3b403e6c9704c480789d1b183664efd320c792f558"
+          },
+          {
+            "code": 9,
+            "character": "又",
+            "pixelsSha256": "1924c019fb749a397b21df610c0ca9e62575a51033f97b2b050e783f34bc4896"
+          },
+          {
+            "code": 10,
+            "character": "輕",
+            "pixelsSha256": "d9c3309b852b96be1c867de3f722c799efdfe04c50dd8028302ae827ddeb7d65"
+          },
+          {
+            "code": 11,
+            "character": "吸",
+            "pixelsSha256": "09a1782e9a73ac1ae2c1825e5537b2010be3c466a63a726d2e5a2dbf1a3a238a"
+          },
+          {
+            "code": 12,
+            "character": "氣",
+            "pixelsSha256": "b302eee9dec80db23886461cc9c24bd2d5c0e1d376eb6720f32d3e658cb4d39f"
+          },
+          {
+            "code": 13,
+            "character": "拜",
+            "pixelsSha256": "e7e99b8034edff2d162de0f313ea42ca0994caf3b4b2c87e7916108fce0f3377"
+          },
+          {
+            "code": 14,
+            "character": "方",
+            "pixelsSha256": "8ca28957a1b3ed46ef036b2a9282fbae3ec81334da0b88bafb03920b6ddadbd7"
+          },
+          {
+            "code": 15,
+            "character": "寂",
+            "pixelsSha256": "dc52b07211906c8caeec680622b00de576204535e0a26c4307cfdcc9e9a30168"
+          },
+          {
+            "code": 16,
+            "character": "從",
+            "pixelsSha256": "0f68a42967ad40a1559a04278db7a46faa3e134b0cba3b0f07eedc81086abe00"
+          },
+          {
+            "code": 17,
+            "character": "出",
+            "pixelsSha256": "aff8fd1c19cf5eb13d22146991f778067f4a208d9d7e2095902be6a5895c2179"
+          },
+          {
+            "code": 18,
+            "character": "多",
+            "pixelsSha256": "6ab2e8752586d11d30506aca5434a14482c0d66a1abbb01415a589526d216e4b"
+          },
+          {
+            "code": 19,
+            "character": "手",
+            "pixelsSha256": "ec1d244dc49f33193378cece81016052f87fbb881d1f9d26507966131366a065"
+          },
+          {
+            "code": 20,
+            "character": "聽",
+            "pixelsSha256": "62bb9b0717c2ea10918e2f70f6ed386e129ae471061f6247282a511daa67f324"
+          },
+          {
+            "code": 21,
+            "character": "他",
+            "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+          },
+          {
+            "code": 22,
+            "character": "捆",
+            "pixelsSha256": "0ba2420ef020329e7f26e144302673be2d13b96024de4ea778eb9a7a005aa661"
+          },
+          {
+            "code": 23,
+            "character": "繩",
+            "pixelsSha256": "43ec373dfdf30f35c966da556bdef0426701eade788f1ae23de9c6e728f9dc8b"
+          },
+          {
+            "code": 24,
+            "character": "黑",
+            "pixelsSha256": "40e62fcc7d4110ba8337eb6cd2ac159b52e78a0d138f41a0df9e7b059214b2ef"
+          },
+          {
+            "code": 25,
+            "character": "河",
+            "pixelsSha256": "0ba4411ed6627b6d3d991f1439fee716a9a251a1fca33ed600da5b48f3e434a3"
+          },
+          {
+            "code": 26,
+            "character": "股",
+            "pixelsSha256": "2ee283c22aae0df48e4bb8d0273663f21001b658f15bca77e84a3aa0d484408a"
+          },
+          {
+            "code": 27,
+            "character": "代",
+            "pixelsSha256": "6fc6328502f108acaa19878fa0e7964dd82d5be24d5d188291ab1b1fa8138249"
+          },
+          {
+            "code": 28,
+            "character": "什",
+            "pixelsSha256": "710ba8f5bb3b7a449cd0c6ebc8c2011f185e4bf648b3f0bac9c06354c91149d5"
+          },
+          {
+            "code": 29,
+            "character": "呢",
+            "pixelsSha256": "dee9182f439e5b7f78673465f74d5bb16c077c45119bddf3d16a663e034e31d3"
+          },
+          {
+            "code": 33,
+            "character": "男",
+            "pixelsSha256": "fed1d7e41f1d15f1e4b5e98674f789601ac7f69213ee60189ff889bc397bdffc"
+          },
+          {
+            "code": 34,
+            "character": "兒",
+            "pixelsSha256": "4aab53f06653becf505e9e3933cb399dc66190d9532cf17c8c58922fd1b8a186"
+          },
+          {
+            "code": 35,
+            "character": "裏",
+            "pixelsSha256": "f6ed5c1534cab367bc8c7c83067591a895ff95775dd6eb04549e8487c404b49a"
+          },
+          {
+            "code": 36,
+            "character": "被",
+            "pixelsSha256": "7453bfc4fb13bbdab80a49466515f92f3354920f803bff53c649c6b1db7abd63"
+          },
+          {
+            "code": 37,
+            "character": "子",
+            "pixelsSha256": "9e72153187ef49d6425b95c2455c3d74c94a6c3cb9035fd37061b57ef3c631d8"
+          },
+          {
+            "code": 38,
+            "character": "國",
+            "pixelsSha256": "f61edba2d527adc88825452a26a2b99e51299f1cfe3c5e820b46fd58b91a9b30"
+          },
+          {
+            "code": 39,
+            "character": "好",
+            "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+          },
+          {
+            "code": 40,
+            "character": "窟",
+            "pixelsSha256": "32ceb1ab8e05574ab303bc1f031e21a208c9156658647e25de04909c94f2b5b6"
+          },
+          {
+            "code": 41,
+            "character": "怕",
+            "pixelsSha256": "da69202b679f446260fa916d854edb06fef9678740f52466393c81f9e82e026c"
+          },
+          {
+            "code": 42,
+            "character": "是",
+            "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+          },
+          {
+            "code": 43,
+            "character": "下",
+            "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+          },
+          {
+            "code": 44,
+            "character": "謝",
+            "pixelsSha256": "81a0f5b31620454c2657201a7ce82ff61bc40e5b2ea9560240d79396575644cd"
+          },
+          {
+            "code": 45,
+            "character": "大",
+            "pixelsSha256": "18b5668cc28938c7131e9fccb189c81bc2becee1d79e37135260922e3ac517ba"
+          },
+          {
+            "code": 46,
+            "character": "來",
+            "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+          },
+          {
+            "code": 47,
+            "character": "為",
+            "pixelsSha256": "03b8800a631857dd24fcbf182dd8197105fbd265fb10f1ed1b7376df3358f6a1"
+          },
+          {
+            "code": 48,
+            "character": "報",
+            "pixelsSha256": "937c2ec4d9c4b3285d30e62aadb84cf3f944f0c64f5f6bb819e8bebd888516d6"
+          },
+          {
+            "code": 49,
+            "character": "一",
+            "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+          },
+          {
+            "code": 50,
+            "character": "兄",
+            "pixelsSha256": "70501c2905b9b2b86b98b3fb09d60963fd80074cb0f2a64121f5a87acf454195"
+          },
+          {
+            "code": 51,
+            "character": "人",
+            "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+          },
+          {
+            "code": 52,
+            "character": "的",
+            "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+          },
+          {
+            "code": 53,
+            "character": "你",
+            "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+          },
+          {
+            "code": 128,
+            "character": "幹",
+            "pixelsSha256": "96a41eeba62c198c85c3b33d07680d167d9d8b774f3a48cd9dd93e49cfb9310b"
+          },
+          {
+            "code": 129,
+            "character": "趕",
+            "pixelsSha256": "d00051fb63caf63f6bff4f1a6c85fdc5a8539a10d9750c832e563495eaf5dad0"
+          },
+          {
+            "code": 130,
+            "character": "吧",
+            "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+          },
+          {
+            "code": 131,
+            "character": "願",
+            "pixelsSha256": "556cbff543c40141e80adc2730511bbbb1527bc91e6a7ea8f32b2618fad51737"
+          },
+          {
+            "code": 132,
+            "character": "相",
+            "pixelsSha256": "9aaa0cd8598ffe8087944a02dd5986563ce591b652cf4f720c56d4dbe656cbd8"
+          },
+          {
+            "code": 133,
+            "character": "永",
+            "pixelsSha256": "c734e1294690933dcfe7397c28953d533da8bedb9847ce67c4bbadf96ff82b11"
+          },
+          {
+            "code": 134,
+            "character": "感",
+            "pixelsSha256": "d5cbd427f3ae21961f5dfd043ca4b0b859b031cf71cb51b5f07db81181a1af87"
+          },
+          {
+            "code": 135,
+            "character": "前",
+            "pixelsSha256": "49fe334ded7c4ddf1c5de31b9faabb1d58823c925dbf38d9fd608ab07c1491bc"
+          },
+          {
+            "code": 136,
+            "character": "日",
+            "pixelsSha256": "3411e7fc49b9ec86640d569bfecf8347a4958369e3b060d2f4a26370fd0fc109"
+          },
+          {
+            "code": 137,
+            "character": "年",
+            "pixelsSha256": "d1d36085ded909c8a20b50073b5d4c725c8756e6ff5833d204292c07e3c23c38"
+          },
+          {
+            "code": 138,
+            "character": "專",
+            "pixelsSha256": "04830673c2596b0e70752490cff8b73599e7b5dac34bb7b9d9487dd4c6fe0467"
+          },
+          {
+            "code": 139,
+            "character": "陽",
+            "pixelsSha256": "5e513b67abc50a5291fdfced56507599f107e56d438a834a29ebf121d4daa269"
+          },
+          {
+            "code": 140,
+            "character": "崇",
+            "pixelsSha256": "cd993edcdd8282b04cc1011502b1938b75ee0afbb599dc6210b9eea0f9747345"
+          },
+          {
+            "code": 141,
+            "character": "北",
+            "pixelsSha256": "d634d76054f9969985f1792db01ec366d234d50946118e35062dd4d85b060172"
+          },
+          {
+            "code": 142,
+            "character": "得",
+            "pixelsSha256": "c8a72a252ee65db7db0bd3e40df2196e87feae4993e7113fd2eaa1f53e6241c1"
+          },
+          {
+            "code": 143,
+            "character": "莫",
+            "pixelsSha256": "ae31e86f6e41f174c4412c8bfb61ad02fbcf3e99fc579b0546e4434bdf747f14"
+          },
+          {
+            "code": 144,
+            "character": "逃",
+            "pixelsSha256": "b596c06dd64dd05734aebb92dc9c450454c33491ad5d78bceffad2c5087710cd"
+          },
+          {
+            "code": 145,
+            "character": "很",
+            "pixelsSha256": "e0df8da78f9e9352c56225d7ccba239dfc287fb8ade46f21e0443c9f01d20afb"
+          },
+          {
+            "code": 146,
+            "character": "死",
+            "pixelsSha256": "a6d538952cfbf50fbd09e82706b9ba4d71ac6178432dc8c6574051ae0bb7d921"
+          },
+          {
+            "code": 147,
+            "character": "偷",
+            "pixelsSha256": "0b2b88355f7af01e00d6b75b82f169b0e7f93283c6b89538ded9e8fd1884f3fa"
+          },
+          {
+            "code": 148,
+            "character": "到",
+            "pixelsSha256": "dbe2fd48836acf4b7e5e58806298026177e3d52ebf08ec6214876ec0f7cc0f64"
+          },
+          {
+            "code": 149,
+            "character": "最",
+            "pixelsSha256": "ecb416874f0eec7edfdc2c1365dc3c2c2afea7a8eec8d5e54ba080cb844d96df"
+          },
+          {
+            "code": 150,
+            "character": "妖",
+            "pixelsSha256": "464ab9f2f093365db0a899a469e6730ee3557da9d9b67fde7cc028ee66914d9a"
+          },
+          {
+            "code": 151,
+            "character": "藏",
+            "pixelsSha256": "dd63ceaf90b9978140955c5245625ba6d6b55cf399d0f2386a9047189d7d6b3f"
+          },
+          {
+            "code": 152,
+            "character": "請",
+            "pixelsSha256": "0fe980e424a061baad1c4efac717f75f3ff2ebd08a67c8bda27a87f02d17d71b"
+          },
+          {
+            "code": 153,
+            "character": "游",
+            "pixelsSha256": "dac2b2ff6f05b282b76df6030be5b4f932fafa1485719d161764399eaa225647"
+          },
+          {
+            "code": 154,
+            "character": "強",
+            "pixelsSha256": "17aeceb4679962956a863fc5a79eb358b9803bfcd879850c894646e0a6e62b9d"
+          },
+          {
+            "code": 155,
+            "character": "表",
+            "pixelsSha256": "57099e9ed92dfc74461200053ab5828cc6fe1332da6982f577c87c4b78667b30"
+          },
+          {
+            "code": 156,
+            "character": "麼",
+            "pixelsSha256": "f877f417ccb9ec18c483e6296d97c97949cb76bc5edf52fae09cf8d8a6103e4a"
+          },
+          {
+            "code": 161,
+            "character": "這",
+            "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+          },
+          {
+            "code": 162,
+            "character": "村",
+            "pixelsSha256": "c22b89d0b782927c4918265ae432b417e109e88b6b32ed794089d48b0732da02"
+          },
+          {
+            "code": 163,
+            "character": "都",
+            "pixelsSha256": "80ef4a92fb130173bbbf1b51b5897fd670c48c92c714a450c4803e2f4c591b0d"
+          },
+          {
+            "code": 164,
+            "character": "捉",
+            "pixelsSha256": "1cd2c19d4fa911362e072c1f888838945a7037fc47b986ee81581e5ddbe1474b"
+          },
+          {
+            "code": 165,
+            "character": "有",
+            "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+          },
+          {
+            "code": 166,
+            "character": "王",
+            "pixelsSha256": "784accdfa04086e7aaaa81fe91f8d0ad8f8513202f23ea450e82a17f8e3a37d6"
+          },
+          {
+            "code": 167,
+            "character": "洞",
+            "pixelsSha256": "484ecc016fb7fb1d2d29b4e80608621c6cca356633b5187aadd58b664c5dd62f"
+          },
+          {
+            "code": 168,
+            "character": "可",
+            "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8"
+          },
+          {
+            "code": 169,
+            "character": "陪",
+            "pixelsSha256": "3d0fb680e9caf521da4761c8ad7441ea8cf3185beff20dfe3a29c761dec50dfa"
+          },
+          {
+            "code": 170,
+            "character": "在",
+            "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb"
+          },
+          {
+            "code": 171,
+            "character": "仇",
+            "pixelsSha256": "e82643aa9789a0374513f95c3458b4233aca0812801f034c6c9c1171657c7615"
+          },
+          {
+            "code": 172,
+            "character": "流",
+            "pixelsSha256": "09913dc0963a2204aa211ddd98db3bf2cdabfff9787c8002c551560693fd26c6"
+          },
+          {
+            "code": 173,
+            "character": "個",
+            "pixelsSha256": "1bdd0eb73cdf08ade0e8586f9dae68a32f425e480fdf5cba31ec974abbbebfe8"
+          },
+          {
+            "code": 174,
+            "character": "走",
+            "pixelsSha256": "ebe1dc28cadb5a1feacea2377297d7525101790d201a2e069e3301d212a2b26e"
+          },
+          {
+            "code": 175,
+            "character": "了",
+            "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+          },
+          {
+            "code": 176,
+            "character": "以",
+            "pixelsSha256": "00ed0121affda5e65e1914608b9740ed5347823b417d28a747a97c6a55261aa5"
+          },
+          {
+            "code": 177,
+            "character": "暗",
+            "pixelsSha256": "56c412ee8df31b7fe6cfe60fe1817087bff937ddd4ce7cc9e03172a44d5fc18b"
+          },
+          {
+            "code": 178,
+            "character": "弟",
+            "pixelsSha256": "d9f9146e93851a8c001eebad6bf8e1080a3e2ca47e7422c15147c25efaa97e7f"
+          },
+          {
+            "code": 179,
+            "character": "女",
+            "pixelsSha256": "f79325588ea291a6cd2719202f7bb5142d0874f970586852d3b3a9b0a4d2b6fb"
+          },
+          {
+            "code": 180,
+            "character": "我",
+            "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+          },
+          {
+            "code": 181,
+            "character": "們",
+            "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+          }
+        ],
+        "capturePpuSha256": "4ad700d3c360f02828fddd428cd3283e6c210c5cc5e50ba8ce9c4118e7154fbd",
+        "verification": "Every current code visually reviewed against full target group16 glyph sheet and settled original conversation; prior cached semantic matches corrected for 河/謝, no force-space assumption"
+      },
+      "dialogues": [
+        {
+          "id": "rom.dialogue.16.0",
+          "text": "『你們兩個男人來這兒幹嘛！趕快走吧！』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108127,
+              "length": 20,
+              "sha256": "670d8ec3fc5f55566abfcae6bfe9c06c076162d9fcf8584c99244851f3b423ed",
+              "module": 3,
+              "cpuAddress": 42575,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101926,
+                "length": 2,
+                "sha256": "941f1e2329eac5892a799a7738dbc11c125257096dd6196de9b7549f6985c99b",
+                "module": 3,
+                "cpuAddress": 36374,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.1",
+          "text": "『為了報答你，願以身相許！』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108147,
+              "length": 15,
+              "sha256": "c410775af81bdcca7fb5efbb44545e537a0aaaf6871354df8bd88eea4e183e89",
+              "module": 3,
+              "cpuAddress": 42595,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101928,
+                "length": 2,
+                "sha256": "718280404c524cab0192a828db4f50875f06083d489f44d0cbe11c4bb01eb1e0",
+                "module": 3,
+                "cpuAddress": 36376,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.2",
+          "text": "『女兒村裏的男人都被捉走了。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108162,
+              "length": 16,
+              "sha256": "3ca821827fd3b04c33b740b828b706b3f3c558b3cbdac1d6421fc93ec8f1279a",
+              "module": 3,
+              "cpuAddress": 42610,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101930,
+                "length": 2,
+                "sha256": "474dc78acb96a6569c94ba84743983db5a5a944eabd6e7e030c57c30589ff971",
+                "module": 3,
+                "cpuAddress": 36378,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.3",
+          "text": "『我們永遠感激你們！』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108178,
+              "length": 12,
+              "sha256": "29981a2ce710b0cdc34e252ffa894336a947c7658b11506dbd50b4ca8a9c0b0f",
+              "module": 3,
+              "cpuAddress": 42626,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101932,
+                "length": 2,
+                "sha256": "73945857e82acfea50bd0959b925e05bd6fcd6feefa716fe79d8ec2fbf0b3379",
+                "module": 3,
+                "cpuAddress": 36380,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.4",
+          "text": "『前些日子又有一個年輕人被捉走。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108190,
+              "length": 18,
+              "sha256": "6865397363047a709ce6deb3cadb0e3d2b035dbd69c0143ed0447452223cfa79",
+              "module": 3,
+              "cpuAddress": 42638,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101934,
+                "length": 2,
+                "sha256": "e4c17fbda14a1cad3cc9aa535f15ff877b1e565a6b25bd60859e0b1e5b17e824",
+                "module": 3,
+                "cpuAddress": 36382,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.5",
+          "text": "『女人國的女王專吸陽氣。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108208,
+              "length": 14,
+              "sha256": "d33bdd5f202280f50e99a9689e46c7d59d306b9c60a767f556dd5d2da3e48c86",
+              "module": 3,
+              "cpuAddress": 42656,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101936,
+                "length": 2,
+                "sha256": "4279e8a39ad28427360922c6096e79c5da22dc47ffc59620442ae1ccbc3bf98f",
+                "module": 3,
+                "cpuAddress": 36384,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.6",
+          "text": "『我好崇拜你們！』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108222,
+              "length": 10,
+              "sha256": "35c34aa653d47ed00acc0f1f0b5ce074f341b6b6d3b212fe415006fde5ebfac3",
+              "module": 3,
+              "cpuAddress": 42670,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101938,
+                "length": 2,
+                "sha256": "356353b0ee5aaf2e1425624defb0204235225d22e826d8e34fba9a18fbc6d357",
+                "module": 3,
+                "cpuAddress": 36386,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.7",
+          "text": "『村子北方的洞窟暗得可怕。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108232,
+              "length": 15,
+              "sha256": "ec70508549eda57d97aabc00d6a155e3e1a6189aad63f119e55b538f0c991fc1",
+              "module": 3,
+              "cpuAddress": 42680,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101940,
+                "length": 2,
+                "sha256": "81c4e30030de2f0abc8cae93aa62a5186ada12f0dbb7cbe36188208eebe93984",
+                "module": 3,
+                "cpuAddress": 36388,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.8",
+          "text": "『我好寂莫！你們來陪陪我！』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108247,
+              "length": 15,
+              "sha256": "ebdf748746e26844e6c5b265846a7c73e26b5702439bcd031263351a5f12bb44",
+              "module": 3,
+              "cpuAddress": 42695,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101942,
+                "length": 2,
+                "sha256": "2ad3256909f4cdcdc3fc2b6ac8cc510ac4a7743e08fba96cbac728dfd3269226",
+                "module": 3,
+                "cpuAddress": 36390,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.9",
+          "text": "『我是從女人國逃出來的，很多兄弟都死在女王手下，我偷聽到他最怕的捆妖繩藏在一個黑暗洞窟裏，請你們為兄弟們報仇。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108262,
+              "length": 57,
+              "sha256": "868e096d8352f2873e81a5524a88e9cb2643e5ec048b8126965e678b69e71857",
+              "module": 3,
+              "cpuAddress": 42710,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101944,
+                "length": 2,
+                "sha256": "f6d406bbf7584610f1d4195b6a3d521794ab8ae32ad7f61d3d9aebe32b6a0093",
+                "module": 3,
+                "cpuAddress": 36392,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.10",
+          "text": "『謝謝你們為兄弟們報仇。』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108319,
+              "length": 14,
+              "sha256": "48f071fea664b4c4b2ea752b04ca29dbea7b0be9b81356717c933a9b6fe236e2",
+              "module": 3,
+              "cpuAddress": 42767,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101946,
+                "length": 2,
+                "sha256": "babe2b2acb341252749020146f0dd946bf94c4c2662c4e1d5ad1ca28ee904b5d",
+                "module": 3,
+                "cpuAddress": 36394,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        },
+        {
+          "id": "rom.dialogue.16.11",
+          "text": "『河流的下游，有一股強大暗流，這代表什麼呢？』",
+          "source": {
+            "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+            "originalVerified": true,
+            "record": {
+              "offset": 108333,
+              "length": 24,
+              "sha256": "47016bf97cea2452b6014276ca792415c000016ff8d8b6c79debfc6a25c2ed18",
+              "module": 3,
+              "cpuAddress": 42781,
+              "meaning": "C3-terminated text byte stream"
+            },
+            "pointerEvidence": [
+              {
+                "offset": 101010,
+                "length": 2,
+                "sha256": "6a805da891a71ba68fc628b26be0ef1aca1a751b5dd6ec5b410500fbc731a5ff",
+                "module": 3,
+                "cpuAddress": 35458,
+                "meaning": "Text group pointer"
+              },
+              {
+                "offset": 101948,
+                "length": 2,
+                "sha256": "7663e979dc6aed8fa89e74e771c96585444cb2b172bf93f0df38bbf37a2c8121",
+                "module": 3,
+                "cpuAddress": 36396,
+                "meaning": "Message pointer"
+              }
+            ],
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "originalEvidenceKind": "TARGET_GROUP16_ACTUAL_ACTIVE_FONT_AND_SETTLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID"
+          }
+        }
+      ],
+      "npcs": [
+        {
+          "id": "rom.npc.6.0",
+          "mapId": 6,
+          "cell": [
+            6,
+            20
+          ],
+          "spriteId": 141,
+          "sprite": "npc-141-village6-0.png",
+          "firstDialogue": "rom.dialogue.16.2",
+          "repeatDialogue": "rom.dialogue.16.3",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277139,
+              "length": 14,
+              "sha256": "e9e518035b59f8b97b40368c08e0ec6886168faa6becd6c6e25dec285eda9827",
+              "module": 8,
+              "cpuAddress": 47747,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          },
+          "originalTalk": {
+            "actionId": 52,
+            "mapFlagId": "rom.map.6.flag.1",
+            "witnessFlagId": "rom.global.7c6.64",
+            "itemId": "",
+            "messageDialogues": {
+              "0": "rom.dialogue.16.2",
+              "1": "rom.dialogue.16.3",
+              "2": "rom.dialogue.16.3"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json"
+          }
+        },
+        {
+          "id": "rom.npc.6.1",
+          "mapId": 6,
+          "cell": [
+            13,
+            8
+          ],
+          "spriteId": 171,
+          "sprite": "npc-171-village6-1.png",
+          "firstDialogue": "rom.dialogue.16.5",
+          "repeatDialogue": "rom.dialogue.16.6",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277153,
+              "length": 14,
+              "sha256": "8a2c892c8fe0d13decdca24e3a2ec9130c61a33b80ee1307e9f3bbac27c60387",
+              "module": 8,
+              "cpuAddress": 47761,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          },
+          "originalTalk": {
+            "actionId": 52,
+            "mapFlagId": "rom.map.6.flag.2",
+            "witnessFlagId": "rom.global.7c6.64",
+            "itemId": "",
+            "messageDialogues": {
+              "0": "rom.dialogue.16.5",
+              "1": "rom.dialogue.16.6",
+              "2": "rom.dialogue.16.6"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json"
+          }
+        },
+        {
+          "id": "rom.npc.6.2",
+          "mapId": 6,
+          "cell": [
+            0,
+            6
+          ],
+          "spriteId": 173,
+          "sprite": "npc-173-village6-2.png",
+          "firstDialogue": "rom.dialogue.16.9",
+          "repeatDialogue": "rom.dialogue.16.10",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277167,
+              "length": 14,
+              "sha256": "48bff9b565156399a1842f5435602057305c88e7c0d24fa506a68c66915046ea",
+              "module": 8,
+              "cpuAddress": 47775,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          },
+          "originalTalk": {
+            "actionId": 52,
+            "mapFlagId": "rom.map.6.flag.4",
+            "witnessFlagId": "rom.global.7c6.64",
+            "itemId": "",
+            "messageDialogues": {
+              "0": "rom.dialogue.16.9",
+              "1": "rom.dialogue.16.10",
+              "2": "rom.dialogue.16.10"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json"
+          }
+        },
+        {
+          "id": "rom.npc.6.3",
+          "mapId": 6,
+          "cell": [
+            18,
+            5
+          ],
+          "spriteId": 198,
+          "sprite": "npc-198-village6-3.png",
+          "firstDialogue": "",
+          "repeatDialogue": null,
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277181,
+              "length": 14,
+              "sha256": "d1799087a378bd527098e8f57dfc29afa2ef135cea14e77e1017ccd8a09c5d2b",
+              "module": 8,
+              "cpuAddress": 47789,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          },
+          "hiddenInvestigation": true,
+          "openedSprite": "npc-198-village6-3.png",
+          "treasure": {
+            "itemId": "rom.medicine.1",
+            "flagId": "rom.map.6.flag.8",
+            "amount": 1,
+            "categoryGrant": 0,
+            "evidence": "game-data/provenance/world-village-batch-resources.json"
+          }
+        },
+        {
+          "id": "rom.npc.6.4",
+          "mapId": 6,
+          "cell": [
+            24,
+            13
+          ],
+          "spriteId": 141,
+          "sprite": "npc-141-village6-4.png",
+          "firstDialogue": "rom.dialogue.16.4",
+          "repeatDialogue": "rom.dialogue.16.4",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277195,
+              "length": 14,
+              "sha256": "b040a56c18d1f0fc89798f7733eb000f885b192ba303eafc4d1af41d190fd50a",
+              "module": 8,
+              "cpuAddress": 47803,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          }
+        },
+        {
+          "id": "rom.npc.6.5",
+          "mapId": 6,
+          "cell": [
+            22,
+            3
+          ],
+          "spriteId": 171,
+          "sprite": "npc-171-village6-5.png",
+          "firstDialogue": "rom.dialogue.16.7",
+          "repeatDialogue": "rom.dialogue.16.7",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277209,
+              "length": 14,
+              "sha256": "b2a6a0e92b9d06e420716cd8bcb37c87c9adf75f00f3cb0394025649e321fa09",
+              "module": 8,
+              "cpuAddress": 47817,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          }
+        },
+        {
+          "id": "rom.npc.6.6",
+          "mapId": 6,
+          "cell": [
+            12,
+            18
+          ],
+          "spriteId": 170,
+          "sprite": "npc-170-village6-6.png",
+          "firstDialogue": "rom.dialogue.16.8",
+          "repeatDialogue": "rom.dialogue.16.8",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277223,
+              "length": 14,
+              "sha256": "ce5000153e4122b1a2d4da970387f5ae0e592e2c70ccc4fb0268ff6a7f98146e",
+              "module": 8,
+              "cpuAddress": 47831,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          }
+        },
+        {
+          "id": "rom.npc.6.7",
+          "mapId": 6,
+          "cell": [
+            28,
+            18
+          ],
+          "spriteId": 169,
+          "sprite": "npc-169-village6-7.png",
+          "firstDialogue": "rom.dialogue.16.11",
+          "repeatDialogue": "rom.dialogue.16.11",
+          "firstEffects": [],
+          "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "record": {
+              "offset": 277237,
+              "length": 14,
+              "sha256": "50b71bdd411db2db5d8b95678c13bcee7ea5c5ee1150d62208ea3047b125820f",
+              "module": 8,
+              "cpuAddress": 47845,
+              "meaning": "Fixed 14-byte NPC source record"
+            },
+            "evidence": "game-data/provenance/world-village-batch-resources.json",
+            "remainingUnknown": [
+              "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+              "Android normal visual acceptance NOT_RUN"
+            ]
+          }
+        }
+      ],
+      "graphics": {
+        "npc-141-village6-0.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 869456,
+              "length": 16,
+              "sha256": "5379d87eadcfcf5b457e85f97c16933e98f9fcf8fe7c9e0616af4d4d76ff79e3"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 869472,
+              "length": 16,
+              "sha256": "dc2443036b020fbb1e123ccdea3b7b940925567ec8ebb61d0d13bdfa8c590e0b"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 869712,
+              "length": 16,
+              "sha256": "0237ee5d4846409d7e6ee28b0f8ce8e9a47c96d1a3963fe35ed12cf68d7d38f8"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 869728,
+              "length": 16,
+              "sha256": "424a7adc888dfc3681f726bb33d047e6fe9f651576ed0b5aeb9fb986643817dd"
+            }
+          ],
+          "rgbaSha256": "40940bdc0331efd93932df2ce5f07fc6a70ed4872b60fc6e78b5179b4ba5cbbd",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 3584,
+            "length": 3,
+            "sha256": "7319f9902e44fc7399a1dabb691c15f0918bd772ee6d0d0363f7b57bd0577f1c",
+            "module": 0,
+            "cpuAddress": 36336,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 3778,
+            "length": 5,
+            "sha256": "bd28a7f56751be5b4443124bf50b19daa9a5ed14cca38856e1075f4101bcea59",
+            "module": 0,
+            "cpuAddress": 36530,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277195,
+            "length": 14,
+            "sha256": "b040a56c18d1f0fc89798f7733eb000f885b192ba303eafc4d1af41d190fd50a",
+            "module": 8,
+            "cpuAddress": 47803,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-171-village6-1.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              148,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              116,
+              96
+            ],
+            "3": [
+              92,
+              148,
+              252
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 876176,
+              "length": 16,
+              "sha256": "d36a916d6d49b6b24bf770984f7ae4d6693404f55dad91295f511b1c90f9c8d9"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 876192,
+              "length": 16,
+              "sha256": "2956783c5388cde9bcdcad637c737539f1d4ca1d388c285d87f73082cacbb4cd"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 876432,
+              "length": 16,
+              "sha256": "fd9c92586a448295dad8c8d2a85657a8cb6cbacc30da4556b908a9a889311f2f"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 876448,
+              "length": 16,
+              "sha256": "749d5aaa6cc324ddd3d82c963d1a0d490d8323825382c207a87ec22a2e07697d"
+            }
+          ],
+          "rgbaSha256": "2f002b8ee4231f674deca9b37481bd0cf2b85b3e7b3c6e51aca4e678a82b202e",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 5087,
+            "length": 3,
+            "sha256": "d6a40c687721a9edc6e71b3db8e0c85e324303e0a14c197da983a6105e319559",
+            "module": 0,
+            "cpuAddress": 37839,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 4914,
+            "length": 5,
+            "sha256": "297bc722155dc9f9fd7dbd83573cf9a85a2e50e6e41f06574d08929f694da346",
+            "module": 0,
+            "cpuAddress": 37666,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277153,
+            "length": 14,
+            "sha256": "8a2c892c8fe0d13decdca24e3a2ec9130c61a33b80ee1307e9f3bbac27c60387",
+            "module": 8,
+            "cpuAddress": 47761,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-173-village6-2.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              148,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              88,
+              248,
+              152
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 876256,
+              "length": 16,
+              "sha256": "36e737e475357c1f281cc9803573558a4fadf0de5cbdff663783b69e5b0d31e1"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 876272,
+              "length": 16,
+              "sha256": "b459a23907acda360a6d2d5b85f91a1c30838da93aa7f4acb79056aec456e50a"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 876512,
+              "length": 16,
+              "sha256": "745a45811ca73a12e9d091d6df5e4103260a881191203d75a32501a2f8f249b8"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 876528,
+              "length": 16,
+              "sha256": "eec128348a12701c0fe3f3a06f4a04f248897cd3b81160097803ead2fd9024b5"
+            }
+          ],
+          "rgbaSha256": "9e7d207ec432d622a3625791684020daf6b0b3371e424a48db43fb0591a393b9",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 5129,
+            "length": 3,
+            "sha256": "dd509086e86a1fd5a10d8ce5fd797c1ec11a0c079a3cb17acbfd9dd31682bcc8",
+            "module": 0,
+            "cpuAddress": 37881,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 5263,
+            "length": 5,
+            "sha256": "f56ad41cbddfa5799426797944f6e17430041625cc38349b11cbafd356f5fed1",
+            "module": 0,
+            "cpuAddress": 38015,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277167,
+            "length": 14,
+            "sha256": "48bff9b565156399a1842f5435602057305c88e7c0d24fa506a68c66915046ea",
+            "module": 8,
+            "cpuAddress": 47775,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-198-village6-3.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 870400,
+              "length": 16,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 870400,
+              "length": 16,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 870400,
+              "length": 16,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 870400,
+              "length": 16,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+            }
+          ],
+          "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 3682,
+            "length": 3,
+            "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e",
+            "module": 0,
+            "cpuAddress": 36434,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 3923,
+            "length": 5,
+            "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8",
+            "module": 0,
+            "cpuAddress": 36675,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277181,
+            "length": 14,
+            "sha256": "d1799087a378bd527098e8f57dfc29afa2ef135cea14e77e1017ccd8a09c5d2b",
+            "module": 8,
+            "cpuAddress": 47789,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-141-village6-4.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 869456,
+              "length": 16,
+              "sha256": "5379d87eadcfcf5b457e85f97c16933e98f9fcf8fe7c9e0616af4d4d76ff79e3"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 869472,
+              "length": 16,
+              "sha256": "dc2443036b020fbb1e123ccdea3b7b940925567ec8ebb61d0d13bdfa8c590e0b"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 869712,
+              "length": 16,
+              "sha256": "0237ee5d4846409d7e6ee28b0f8ce8e9a47c96d1a3963fe35ed12cf68d7d38f8"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 869728,
+              "length": 16,
+              "sha256": "424a7adc888dfc3681f726bb33d047e6fe9f651576ed0b5aeb9fb986643817dd"
+            }
+          ],
+          "rgbaSha256": "40940bdc0331efd93932df2ce5f07fc6a70ed4872b60fc6e78b5179b4ba5cbbd",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 3584,
+            "length": 3,
+            "sha256": "7319f9902e44fc7399a1dabb691c15f0918bd772ee6d0d0363f7b57bd0577f1c",
+            "module": 0,
+            "cpuAddress": 36336,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 3778,
+            "length": 5,
+            "sha256": "bd28a7f56751be5b4443124bf50b19daa9a5ed14cca38856e1075f4101bcea59",
+            "module": 0,
+            "cpuAddress": 36530,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277195,
+            "length": 14,
+            "sha256": "b040a56c18d1f0fc89798f7733eb000f885b192ba303eafc4d1af41d190fd50a",
+            "module": 8,
+            "cpuAddress": 47803,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-171-village6-5.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              148,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              116,
+              96
+            ],
+            "3": [
+              92,
+              148,
+              252
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 876112,
+              "length": 16,
+              "sha256": "1131e63cff0b3dec9a36583e1ea70d9e1f0f06bf867d79f9d811e15b877e9f71"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 876128,
+              "length": 16,
+              "sha256": "93c7e6986e0b9d4cb0f4662aa9d0595a5f32a73e2256ced7a8daa804afc9640f"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 876368,
+              "length": 16,
+              "sha256": "4e63603b412c81b903de8505bbb92bdecd2a514cec67684bbaa00a282a8efa77"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 876384,
+              "length": 16,
+              "sha256": "81e077c3dd744c39b93c07a0ee3e207c541f9895ac42a5a0f6e8762d1e0c9da3"
+            }
+          ],
+          "rgbaSha256": "a1ca0eed4621bedc6ee0802c4f5041b0c663263581ee69d68cc0da9df17a1d37",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 5080,
+            "length": 3,
+            "sha256": "3d310a3a0c438f5191a8c9f0061cb0477f983f0522e723c4ccac1c8233ff661b",
+            "module": 0,
+            "cpuAddress": 37832,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 4904,
+            "length": 5,
+            "sha256": "540190e476123cb674272237bdd1318df8ae66a09910ab2b52db8cf4c78ff29e",
+            "module": 0,
+            "cpuAddress": 37656,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277209,
+            "length": 14,
+            "sha256": "b2a6a0e92b9d06e420716cd8bcb37c87c9adf75f00f3cb0394025649e321fa09",
+            "module": 8,
+            "cpuAddress": 47817,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-170-village6-6.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 875600,
+              "length": 16,
+              "sha256": "8969bfa5712d7f5ace68737574e617f4950d177992c295b0128b60f1b246e727"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 875616,
+              "length": 16,
+              "sha256": "e9c750ab2a2ae0d48e200d39ffc726d22604b756e17be6c5d751b648821b3ba4"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 875856,
+              "length": 16,
+              "sha256": "33a05092235067b5ef3e6b355c19d9ee0850fa49b2c82e3411efa3f66564c44f"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 875872,
+              "length": 16,
+              "sha256": "87dcfc0494e2e850f47e7916cc8580a8758822012239e9003f1a3b3aa5beeb97"
+            }
+          ],
+          "rgbaSha256": "9299d5fab0d0539ca73e76716863dbdac8eaaf35c147c8bdde828e54f3c48408",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 5052,
+            "length": 3,
+            "sha256": "f25f2932c70f3b6b70214853ef622f5c5266bc41657d47053a153ea7243b7a93",
+            "module": 0,
+            "cpuAddress": 37804,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 5193,
+            "length": 5,
+            "sha256": "02fdd4da2fb09be020576c93a1b78e3d9ef7f7bb3fb6bc43c014cc7ecd7ad968",
+            "module": 0,
+            "cpuAddress": 37945,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277223,
+            "length": 14,
+            "sha256": "ce5000153e4122b1a2d4da970387f5ae0e592e2c70ccc4fb0268ff6a7f98146e",
+            "module": 8,
+            "cpuAddress": 47831,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        },
+        "npc-169-village6-7.png": {
+          "width": 16,
+          "height": 16,
+          "transparentZero": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              148,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              88,
+              248,
+              152
+            ]
+          },
+          "tiles": [
+            {
+              "xy": [
+                0,
+                0
+              ],
+              "offset": 875088,
+              "length": 16,
+              "sha256": "e663c153079cb1f00d6b05fdec056a289ada9260be34ba0356dd89d2ed796b45"
+            },
+            {
+              "xy": [
+                8,
+                0
+              ],
+              "offset": 875104,
+              "length": 16,
+              "sha256": "8bd57a952c323022415f812d622deb768d6356c8e73faf82be415e2cb3688fce"
+            },
+            {
+              "xy": [
+                0,
+                8
+              ],
+              "offset": 875344,
+              "length": 16,
+              "sha256": "0237ee5d4846409d7e6ee28b0f8ce8e9a47c96d1a3963fe35ed12cf68d7d38f8"
+            },
+            {
+              "xy": [
+                8,
+                8
+              ],
+              "offset": 875360,
+              "length": 16,
+              "sha256": "67944a5d7924802b5dd025c70dbc9413afb759672d24cd90ab3a7e08c00f5d87"
+            }
+          ],
+          "rgbaSha256": "817b420155f738e515a5e893ca3616df8877b542a2cd3ee0e76c247b934d3552",
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "normalPlayEvidence": false,
+          "patternBankSources": [
+            {
+              "offset": 868368,
+              "length": 1024,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "offset": 869392,
+              "length": 1024,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "offset": 874512,
+              "length": 1024,
+              "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+            },
+            {
+              "offset": 875536,
+              "length": 1024,
+              "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+            }
+          ],
+          "animationSource": {
+            "offset": 5024,
+            "length": 3,
+            "sha256": "cec9c1bbba7d38b7dc65b83802961d978cba7cb6d7e0b1064b53882c346c12ae",
+            "module": 0,
+            "cpuAddress": 37776,
+            "meaning": "Actual record-linked initial animation transport"
+          },
+          "frameSource": {
+            "offset": 5153,
+            "length": 5,
+            "sha256": "c46160625e714c7534ea79ab4afc46d3bc5f03e5956b291fb6e7a9dca91a5c55",
+            "module": 0,
+            "cpuAddress": 37905,
+            "meaning": "Actual original still-frame palette selector and four CHR tiles"
+          },
+          "frameRecordSource": {
+            "offset": 277237,
+            "length": 14,
+            "sha256": "50b71bdd411db2db5d8b95678c13bcee7ea5c5ee1150d62208ea3047b125820f",
+            "module": 8,
+            "cpuAddress": 47845,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "remainingUnknown": [
+            "Original moving pose/facing and settled original OAM match; bounded captures did not produce usable field OAM",
+            "Android normal visual acceptance NOT_RUN"
+          ]
+        }
+      },
+      "cpu": [
+        {
+          "path": "android/app/src/test/resources/world-village6-talk-original.tsv",
+          "sha256": "cdcb8037445429c9f13ddd688b0d0ea57f0b13cf6888d2e2f25d6fb43764fe46",
+          "caseCount": 6144,
+          "failures": 0,
+          "probePath": "tools/rom-extractor/probe-world-village6.py",
+          "probeSha256": "24181f61f321d3419f8d73911f6f047a03f7590daa41c58746148e0d6b176ad1"
+        },
+        {
+          "path": "android/app/src/test/resources/world-village6-hidden-original.tsv",
+          "sha256": "596239f595a976faec7a0a61601c8d2356a3576b77151998e7bb39af2abf5dd4",
+          "caseCount": 9,
+          "failures": 0,
+          "probePath": "tools/rom-extractor/probe-world-village6.py",
+          "probeSha256": "24181f61f321d3419f8d73911f6f047a03f7590daa41c58746148e0d6b176ad1"
+        }
+      ],
+      "licenseStatus": "UNKNOWN",
+      "originalEntry": {
+        "path": "private-derived/world-village6-entry-talk/entry6-ram.bin",
+        "sha256": "4990e8f5dad2f182e3072523afd04bde09e7d0b2cb9c920fdf03022adf4a2d78",
+        "kind": "CONTROLLED_POSITION_THEN_ACTUAL_ORIGINAL_ENTRY_KEYS"
+      },
+      "normalAndroid": "NOT_RUN",
+      "limitations": [
+        "Original ordinary NPC moving paths not restored; initial ROM still-frame provisional",
+        "Shared indoor overlay181 auxiliary NPCs and nonservice house class26 not restored",
+        "Android normal route/services/cold-start NOT_RUN"
+      ]
+    }
+  ]
+}

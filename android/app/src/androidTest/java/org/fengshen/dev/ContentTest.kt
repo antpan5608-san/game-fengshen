@@ -13,6 +13,39 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Real bundled loader/JSON fixtures; separate from normal route recording. */
+    fun testVillageSixOriginalServicesTalkAndHiddenSaveRoundTrip(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val scene=c.scenes.getValue(6);assertEquals(32,scene.width);assertEquals(30,scene.height)
+        val girls=c.npcs.filter{it.mapId==6};assertEquals(8,girls.size)
+        for((room,ids)in listOf(17 to listOf(9,24,36),18 to listOf(5,13,19,31,39),19 to listOf(1,2,4,6,7,10,12))){
+            assertEquals(ids,c.shops.getValue("rom.shop.6.$room").items.map{it.substringAfterLast('.').toInt()})
+        }
+        assertEquals(200,c.inns.getValue("rom.inn.6").price)
+        val hidden=girls.single{it.id=="rom.npc.6.3"};assertTrue(hidden.hiddenInvestigation)
+        assertEquals("rom.medicine.1",hidden.treasure!!.itemId);assertEquals("rom.map.6.flag.8",hidden.treasure!!.flagId)
+        val hero=c.initialPlayer;val girl=c.joinCharacters.getValue("xiaolongnv").copy(statusMask=64)
+        val yang=c.joinCharacters.getValue("yangjian")
+        val start=SaveSnapshot(c.scene.version,6,15*16+8,28*16+8,Key.UP,listOf(hero,girl,yang),
+            mapOf(OriginalYangJoin.ITEM_ID to 1),mapOf("rom.map.110.flag.128" to true,
+                OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true),money=1000)
+        assertTrue(start.validate(c));assertTrue(start.copy(contentVersion="opening-segment-001-c46").validate(c))
+        val npc=girls.single{it.id=="rom.npc.6.2"};val rule=npc.originalTalk!!
+        val first=OriginalNpcTalk.begin(start,rule);assertEquals(start,first.snapshot)
+        assertEquals("rom.dialogue.16.9",first.nextDialogue)
+        assertTrue(c.dialogues.getValue(first.nextDialogue!!).text.contains("捆妖繩"))
+        val witnessed=start.copy(flags=start.flags+(rule.witnessFlagId to true))
+        val result=OriginalNpcTalk.begin(witnessed,rule)
+        assertEquals("rom.dialogue.16.10",result.nextDialogue);assertTrue(result.snapshot.validate(c))
+        assertEquals(result.snapshot,SaveSnapshot.parse(result.snapshot.json().toString()))
+        assertEquals(start.characters,result.snapshot.characters);assertEquals(start.inventory,result.snapshot.inventory)
+        assertEquals(start.money,result.snapshot.money)
+        val grant=WorldItems.openTreasure(result.snapshot,hidden.treasure!!,c.itemDefinitions.getValue("rom.medicine.1"))
+        assertTrue(grant.applied);val after=result.snapshot.copy(flags=grant.flags,inventory=grant.inventory)
+        assertTrue(after.validate(c));assertEquals(after,SaveSnapshot.parse(after.json().toString()))
+        assertFalse(WorldItems.openTreasure(after,hidden.treasure!!,c.itemDefinitions.getValue("rom.medicine.1")).applied)
+        assertTrue(5*32+18 in scene.dynamicObjectCells)
+    }
     /** Scoped loader/save fixtures; these do not claim a normal flower Boss win. */
     fun testCave87ActualEventSixDepartureAndMoneyChestLoader(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

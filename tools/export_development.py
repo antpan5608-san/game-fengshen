@@ -755,6 +755,10 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/world-village-batch-resources.json':
+        v,_=validate_world_village_batch_resources(reader,npc['mapId'])
+        if npc not in v['npcs']:raise ValueError('Village hidden record differs')
+        return v
     if npc['treasure']['evidence']=='game-data/provenance/world-village5-hidden.json':
         return validate_world_village5_hidden(reader,npc)
     path=npc['treasure']['evidence'];proof=load(ROOT/path)
@@ -1116,6 +1120,96 @@ def validate_world_village4_resources(reader):
             raise ValueError('Original lender conversation does not unlock the boat')
     for graphic in p['graphics'].values():scoped_observed_graphic(reader,graphic)
     return p
+
+
+def validate_world_village_batch_resources(reader,map_id):
+    """Shared village profile with each caller's actual records and evidenced actions.
+
+    New callers extend one bounded data batch, not a second village importer.
+    No NPC side effect is inferred from the shared visual/collision profile.
+    """
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
+    path='game-data/provenance/world-village-batch-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='original-village-shared-profile-evidenced-callers':
+        raise ValueError('Village batch resource scope differs')
+    if len({m['mapId']for m in p['villages']})!=len(p['villages']):raise ValueError('Duplicate village caller')
+    matches=[m for m in p['villages']if m['mapId']==map_id]
+    if len(matches)!=1 or map_id not in range(16):raise ValueError('Village caller lacks local evidence')
+    v=matches[0];original=extract_map(reader,map_id)
+    if original['tilesetId']!=0 or v['map']!=dict(mapId=map_id,width=original['width'],height=original['height'],
+            tilesetId=0,gridSha256=original['gridSha256'],palette=extract_default_map_palette(reader,map_id)['palette']):
+        raise ValueError('Village caller geometry/palette differs')
+    required={(0,0xcb6c,17),(0,0xcbda,8),(0,0xced3,17),(0,0xd257,18),(0,0xcf43,1)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sharedSources']}!=required:
+        raise ValueError('Village batch shared collision dispatch differs')
+    for span in p['sharedSources']+v['sources']:checked_span(reader,span)
+    bridge=p['bridge'];old=load(ROOT/'game-data/provenance/world-village4-resources.json')['bridge']
+    if bridge!=old or digest((ROOT/bridge['cpuExpectedPath']).read_bytes())!=bridge['cpuExpectedSha256']:
+        raise ValueError('Village batch must reuse actual original bridge matrix')
+    font=v['font'];raw=b''.join(checked_span(reader,s)for s in font['sources'])
+    if len(raw)!=4096:raise ValueError('Village font CHR missing')
+    charset={int(k):ch for k,ch in font['charset'].items()}
+    if {g['code']for g in font['glyphs']}!=set(charset):raise ValueError('Village font coverage incomplete')
+    for g in font['glyphs']:
+        if charset[g['code']]!=g['character']or digest(bytes(n for row in glyph_pixels(raw,0,g['code'])for n in row))!=g['pixelsSha256']:
+            raise ValueError('Village original glyph differs')
+    for d in v['dialogues']:
+        group,msg=map(int,d['id'].split('.')[-2:]);t=extract_text(reader,group,msg)
+        if group!=v['textGroup']or d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Village text differs from original stream/font')
+    for table in v['cpu']:
+        data=(ROOT/table['path']).read_bytes()
+        if digest(data)!=table['sha256']or len(data.splitlines())-1!=table['caseCount']or table['failures']!=0 or \
+                digest((ROOT/table['probePath']).read_bytes())!=table['probeSha256']:
+            raise ValueError('Village original CPU cases differ')
+    records=extract_npcs(reader,map_id)['records']
+    if len(records)!=len(v['npcs']):raise ValueError('Village actor count differs')
+    for n,record in zip(v['npcs'],records):
+        raw=checked_span(reader,record['range']);idx=record['index']
+        cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstEffects'])!= \
+                (f'rom.npc.{map_id}.{idx}',map_id,cell,raw[0],record['range'],[]):
+            raise ValueError('Village original actor identity differs')
+        if raw[0]==198:
+            # Only this actual category0/id1 C6 behavior has been exercised here.
+            t=n.get('treasure',{})
+            if (map_id,idx,raw[1],raw[2],raw[12],raw[13])!=(6,3,0,1,0,8)or \
+                    t!=dict(itemId='rom.medicine.1',flagId='rom.map.6.flag.8',amount=1,categoryGrant=0,evidence=path)or \
+                    n.get('hiddenInvestigation')is not True or n['firstDialogue']!=''or n['repeatDialogue']is not None or \
+                    n.get('removedFlagId')or n.get('openedSprite')!=n['sprite']:
+                raise ValueError('Village hidden pickup cannot invent an effect or remove collision')
+        else:
+            first=f'rom.dialogue.{v["textGroup"]}.{raw[1]}';repeat=f'rom.dialogue.{v["textGroup"]}.{raw[2] if raw[2]!=255 else raw[1]}'
+            if n['firstDialogue']!=first or n['repeatDialogue']!=repeat:raise ValueError('Village actor message differs')
+            if raw[12]==52:
+                expected=dict(actionId=52,mapFlagId=f'rom.map.{map_id}.flag.{raw[13]}',witnessFlagId='rom.global.7c6.64',itemId='',
+                    messageDialogues={'0':first,'1':f'rom.dialogue.{v["textGroup"]}.{raw[1]+1}','2':repeat},evidence=path)
+                if map_id!=6 or idx not in range(3)or raw[13]!=1<<idx or n.get('originalTalk')!=expected:
+                    raise ValueError('Village action52 lacks actual original selector evidence')
+            elif raw[12]!=0 or raw[2]!=255 or n.get('originalTalk'):
+                raise ValueError('Village side effect is not supported by the local evidence')
+        g=v['graphics'][n['sprite']]
+        frames=[rec for rec in records if rec['range']==g['frameRecordSource']]
+        if len(frames)!=1 or frames[0]['entityByte']!=raw[0]:raise ValueError('Village still-frame belongs to another original actor')
+        frame_record=frames[0];address=frame_record['animationProgramPointer']
+        transport=checked_span(reader,g['animationSource'])
+        if g['animationSource']['module']!=0 or g['animationSource']['cpuAddress']!=address or \
+                len(transport)!=3 or transport[0]not in (0xf0,0xf8):raise ValueError('Village initial frame transport differs')
+        frame_address=int.from_bytes(transport[1:],'little');frame=checked_span(reader,g['frameSource'])
+        if g['frameSource']['module']!=0 or g['frameSource']['cpuAddress']!=frame_address or len(frame)!=5 or frame[0]not in (0,1,2):
+            raise ValueError('Village static frame is not supported by original bytes')
+        banks=g['patternBankSources']
+        if len(banks)!=4 or any(len(checked_span(reader,b))!=1024 for b in banks):raise ValueError('Village original sprite CHR banks missing')
+        if len(g['tiles'])!=4:raise ValueError('Village original four-tile frame incomplete')
+        for q,(tile,code)in enumerate(zip(g['tiles'],frame[1:])):
+            if tile['xy']!=[q%2*8,q//2*8]or tile['offset']!=banks[code//64]['offset']+(code%64)*16 or tile['length']!=16:
+                raise ValueError('Village still-frame tile identity differs')
+        if g['captureKind']!='PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED'or g['normalPlayEvidence']is not False:
+            raise ValueError('Unobserved village pose must remain provisional')
+        rgba=Image.open(io.BytesIO(scoped_observed_graphic(reader,g))).convert('RGBA')
+        if raw[0]==198 and any(rgba.getchannel('A').getdata()):raise ValueError('Original hidden actor cannot become a fake icon')
+    return v,p['bridge']
 
 
 def validate_world_village5_resources(reader):
@@ -1642,10 +1736,16 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             town=extract_town_shops(reader)
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
             if recipe.get('townBridgeCollisionEvidence'):
-                expected={4:'game-data/provenance/world-village4-resources.json',5:'game-data/provenance/world-village5-resources.json'}
-                if mid not in expected or recipe['townBridgeCollisionEvidence']!=expected[mid]:
-                    raise ValueError('Unreviewed town bridge extension')
-                proof=validate_world_village4_resources(reader)if mid==4 else validate_world_village5_resources(reader)
+                if recipe['townBridgeCollisionEvidence']=='game-data/provenance/world-village-batch-resources.json':
+                    v,bridge=validate_world_village_batch_resources(reader,mid)
+                    if recipe['palette']!=v['map']['palette']or recipe['npcCells']!=[n['cell'][1]*original['width']+n['cell'][0]for n in v['npcs']]:
+                        raise ValueError('Village batch map/actor profile differs')
+                    proof={'bridge':bridge}
+                else:
+                    expected={4:'game-data/provenance/world-village4-resources.json',5:'game-data/provenance/world-village5-resources.json'}
+                    if mid not in expected or recipe['townBridgeCollisionEvidence']!=expected[mid]:
+                        raise ValueError('Unreviewed town bridge extension')
+                    proof=validate_world_village4_resources(reader)if mid==4 else validate_world_village5_resources(reader)
                 if allowed!=proof['bridge']['walkableClasses']:raise ValueError('Town walking classes differ')
                 data['sourceEdges']={**data['sourceEdges'],**{int(k):v for k,v in proof['bridge']['sourceEdges'].items()}}
         if recipe.get('terrain'):
@@ -2144,7 +2244,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc['mapId']==163:
+        if npc.get('villageResourceEvidence')=='game-data/provenance/world-village-batch-resources.json':
+            proof,_=validate_world_village_batch_resources(reader,npc['mapId'])
+            if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
+                    any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
+                raise ValueError('Village batch actor/dialogue/graphic differs')
+        elif npc['mapId']==163:
             proof=validate_world_teacher163_binding(reader)
             expected=next((n for n in proof['npcs']if n['id']==npc['id']),None)
             if npc!=expected or any(d not in scene['dialogues']for d in proof['dialogues']):

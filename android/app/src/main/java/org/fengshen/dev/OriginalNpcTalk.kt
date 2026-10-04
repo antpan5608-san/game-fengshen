@@ -35,6 +35,7 @@ object OriginalNpcTalk {
         }
         if(rule.actionId==12)return teacher(before,rule,item)
         if(rule.actionId==50)return villageFour(before,rule)
+        if(rule.actionId==52)return villageSix(before,rule)
         if(rule.actionId==31)return islandResidents(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
@@ -93,6 +94,23 @@ object OriginalNpcTalk {
         }
         val next=if(message==1)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
         return StoryFollowup.Result(next,rule.messageDialogues.getValue(message),true)
+    }
+
+    /** Actual 10:CE32 selects first+1 and writes this actor's bit only after
+     * global7C6 bit64. Raw first/repeat selection runs before this action.
+     * It does not grant an item, move the party, or make talking a route lock.
+     */
+    private fun villageSix(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val mask=rule.mapFlagId.removePrefix("rom.map.6.flag.").toIntOrNull()
+        val first=mapOf(1 to 2,2 to 5,4 to 9)[mask]
+        if(rule.mapId!=6||first==null||rule.witnessFlagId!="rom.global.7c6.64"||rule.itemId.isNotEmpty()||
+            rule.firstDialogue!="rom.dialogue.16.$first"||rule.repeatDialogue!="rom.dialogue.16.${first+1}"||
+            rule.messageDialogues!=mapOf(0 to rule.firstDialogue,1 to rule.repeatDialogue,2 to rule.repeatDialogue))
+            return StoryFollowup.Result(before,null,false,"当前村民对白规则未核验")
+        val repeat=before.flags[rule.mapFlagId]==true
+        val witnessed=before.flags[rule.witnessFlagId]==true
+        val next=if(!repeat&&witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,if(repeat||witnessed)rule.repeatDialogue else rule.firstDialogue,true)
     }
 
     private fun teacher(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {

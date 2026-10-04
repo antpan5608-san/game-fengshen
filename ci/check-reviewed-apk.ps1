@@ -55,3 +55,5 @@ if($runtime.worldFixedFerryIslandNormal -ne 'PASS' -or $runtime.worldFixedFerryC
 if($runtime.worldIslandOriginalLayersAndFourVillainsNormal -ne 'PASS' -or $runtime.worldIslandOnceChestsAndColdRestart -ne 'PASS'){throw 'Actual island layers, original composite fight/flags/chests and cold return must verify this exact APK'}
 
 if($runtime.worldCave87FlowerNormal -ne 'PASS' -or $runtime.worldCave87DepartureAndColdRestart -ne 'PASS'){throw 'Actual cave87 route/flower Boss/seven dialogues/away actor and cold return must verify this exact APK'}
+
+if($runtime.worldVillageSixServicesTalkNormal -ne 'PASS' -or $runtime.worldVillageSixColdRestart -ne 'PASS'){throw 'Actual village6 normal route, caller prices/services/dialogues/hidden medicine and cold return must verify this exact APK'}

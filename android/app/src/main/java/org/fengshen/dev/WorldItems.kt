@@ -30,6 +30,7 @@ object WorldItems {
                 mapOf("rom.npc.87.1" to 0,"rom.npc.87.2" to 0,"rom.npc.87.3" to 0,
                     "rom.npc.87.5" to 2,"rom.npc.87.6" to 0,"rom.npc.87.7" to 2)[npcId]==category
             "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
+            "game-data/provenance/world-village-batch-resources.json"->mapId==6&&npcId=="rom.npc.6.3"&&category==0
             else->false
         }
     }

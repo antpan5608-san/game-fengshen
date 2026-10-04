@@ -1,14 +1,27 @@
 # 当前任务：WORLD-FULL-01
 
+task_id: WORLD-FULL-01
+
 任务：全部有效原版地图、交易商店与住宿可用，解除人为试玩边界。连续实施，不以5/10小时或一个小区段为终点；平台/权限中断时保存可复现检查点。原墙、地形、单向连接、剧情条件与交通/道具要求保留，不赠资源/改数值/关闭遇敌/强制胜利。不reset、clean或覆盖玩家存档。复用原两个Actions、reviewer、签名、同提交/同产物hash和既有两个Fengshen对象；Language不变。
 
-## 当前有效状态（2026-10-04T06:34Z）
+## 当前有效状态（2026-10-04T07:32Z）
 
-- 生产：v27/0.8.7-world-full01-f0，c14；独立公网sha5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353。用户已安装，历史v26下载失败重试恢复。
-- 总体PARTIAL，ALL_MAPS_USABLE=NO，有效原版集合分母UNKNOWN。175物理几何缓存/259索引不是全部有效运行地图。保持十类累计欠账，不将局部CPU/构建当正常App。
-- 原main冻结a2b3ca386125b2f2ef4d6170b469c36ffb510e8e，v62/run37180967103签名build PASS、runtime进行中；41图/225文件/c41，manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f，独立APK hash3d130195dbc17165210055b9834e0be8919dff0f63c6e0588577113792944c91。来源冻结，不把本独立树的新内容混入旧候选审核。
-- v61/run37176778752失败：正常源314两/药草2/牛黄丸0，练级遇毒而缺库存断言失败，未发布；不是已确认App崩溃。v62真实采购按原15/20价、原收费住宿、西海96 zone3无毒敌8/9练级，未改游戏条件/原规则/原5000步或战败断言。
-- 独立work/world-island：c46/48图/255文件，manifest eeb58f54250861e531e11a1b6c4f187873c4c1e97cb4422e8f6bd5275e0fb746。已保存c45的8d71a68、c46局部0435b35、正常驱动2a0362e、原毒伤保持cb43409；未发布，佳东/四恶人/后山Android正常运行均NOT_RUN。
+- task_id保持WORLD-FULL-01，原巡检需要该机器字段；本文件为唯一当前任务入口。
+- 生产仍v27/0.8.7-world-full01-f0/c14，APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，用户已安装。总体PARTIAL，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN；175几何缓存/259索引不是正常可用分母。
+- main冻结87df6cf836ec7d2106f2231f67f13c622272528c；v64/run37185539165原签名构建执行中，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。独立树不混入审核来源。
+- v62/run37180967103 build PASS/runtime FAILURE，TouchTest北海训练waypoint25(29,43)实际class1墙；真实源8级/EXP858/57HP/346两/药草1。仅修测试路径，原网格BFS去返39,42↔5,24均53节点、zone1无毒且无别的出口；7拓扑/3采购与task_id守卫、仪器编译PASS，修后App待v64。v61毒药不足失败保持历史，不混用源状态。
+- v63/run37185326471未完成即取消：精简任务文档漏task_id，inspect37185327792查询前失败UNAVAILABLE；已恢复必需行并测试实际正则，修后新来源重新构建v64，不放宽同源门禁。
+- 最新真实inspect37185540769/2026-10-04T07:22:03.5547836Z成功，可信27/26=1445/2289、3734事件、普通真机9会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。自动reviewer成功，publish SKIPPED，不拿旧生产样本证明v64健康。
+- 本独立work/world-island：c47/49图/265文件，manifest42d0015ac3da6e10b684b72fc8917fb761b057f835c7f241b248dd300d2a303f；固定c46父pin/golden与审核v27媒体。c46已保存e6803a5、202世界回归PASS、远端work/world-island-c46/a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4。c47未发布，全部新Android正常/覆盖/声音/一加13T NOT_RUN。
+
+## 新增女儿村实现与当前验证
+
+- 目标ROM同SHA缓存，真实16(63/64,135)→6(15,29)，独立down-edge→16(63,135)。原受控入场后正常UP/DOWN键核独立返程，非Android主线证明；不会读错Reference map6为陈塘商店。
+- 6的真实地形/默认palette/桥方向规则/三店原stock和价格/200两客栈/两种医生复用ContentLoader与已有统一命令。7村民组16实际font/12段文本；action52仅真实global7C6.bit64+局部mask首复谈，不按攻略新增route gate/奖励。隐藏6.3是參須1/flag8，C6仍挡路；调查用真实可达17,5向RIGHT，18,6原墙不开放。
+- 原6144对白CPU/9容量与复查CPU案例零差异；字体河/謝等真实图形差异定向校正，保留原寂莫与捆妖繩文字。NPC图形从record-linked F8/F0与4个实际1KiB CHR银行重建，PROVISIONAL静帧、未匹配OAM/Android视觉，不伪造真人录像。
+- 四新商品id/类别/价格/容量有ROM来源；未解名称/能力仍nameConfidence UNKNOWN+PROVISIONAL_REFERENCE，不伪造GAMEPLAY_VERIFIED。仅使用原来源enum，不关闭hash验证。
+- 原export_from_base/ci_apk.restore在全新TemporaryDirectory/assets严格265文件及全manifest PASS；4局部导出/两个世界路径/全部NPC邻格/错价格旗标字体图形拒绝79.223秒PASS；314 JVM/63 suites/0失败错误跳过，仪器编译7秒PASS；22真实Bash审批隔离fixture PASS。c47完整世界回归正在执行，尚无总数/通过结论。
+- 原TouchTest新增同候选后山存档→真实返镇→世界→6→三店买卖→200两住宿/医生取消→七村民→调查取消/防重复→保存/外部force-stop/独立原边界返程的驱动；原runtime/review receipt与有界原视频artifact接续。编译≠实际App验收。拆出既有village4/5测试helper避免64KiB，所有原断言保留；修正后山Boss测试误套240HP为实际4500，不改游戏数值。
 
 ## 本独立内容树已实施
 
@@ -19,7 +32,7 @@
 - 修正钱箱被普通NPC对白要求拒绝加载的确定缺陷，保留原身份/金额/开旗检查。field155初帧为有来源PROVISIONAL_ROM_STATIC，不是实际OAM/App截图；NPC移动/部分字形及药效欠账保留。
 - 原0:BA30..BA7F并不排除离队角色的中毒；HP0写20可能清去40，不能添加毒伤免疫。继续复用原状态步，菜单合法目标未核的部分不猜。
 
-## 本轮实际核验与限制
+## c46历史核验与限制（c47状态以顶部为准）
 
 - 开工inspect37180842747/2026-10-04T05:46:55.3577520Z：可信27/26=1431/2289、总3720事件，普通真机8会话/模拟器0/测试0/清理0。旧v26 apk_update ProtocolException1仍ISSUES_FOUND/根因UNCONFIRMED；不拿旧版证明新候选健康。发布须新pre/post查询。
 - GH API、原Actions和原自动审批已实证恢复；Git HTTPS推送普通/命令级gh helper分别无用户名/HTTP401，不改全局认证；安全Git API备份work/world-island-c46成功，远端a8fe6932afb3adbb0b23a662ea6cdeb8da1d45f4/精确本地树443db5228afb59b05c5bf1373a62c5510ee49d9e，main未变。不输出Token或把runner Secrets当当前任务资源。
@@ -30,8 +43,8 @@
 
 ## 下一条实际动作
 
-1. 读取v62实际runtime结果；失败立即取真实断言/索引修正，成功且原发布门槛通过即按用户重大进展授权，原自动审批发布同一个APK并完整公网/hash/版本/巡检验证。只保留最近两个发布日志版本，不等待全部非阻断欠账清零。
-2. 独立c46保存所有修改/证据与完整回归结果；正常驱动/原CI已接，不拿v62 c41结果给c46背书。原候选发布完成后再安全整合独立树、冻结新来源、原workflow验证。继续下一个真实地图/服务节点，不自动结案。
-3. 当前最近阻塞：已打包新内容实际Android流程尚待runner；佳东客栈overlay180等辅助事件未接；后山后下一区的真实连接/必要事件/能力未接。缺口只阻塞依赖内容，不重启全量研究。
+1. 读取v64同源候选实际运行结果；新失败读取断言并修受影响部分，全部原门禁通过即自动阶段发布同一APK/公网完整hash/真实postflight，不等待非阻断欠账清零。
+2. c47完整回归后保存本地与安全WIP备份；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
+3. 具体缺口：独立新内容Android尚待runner；class26住宅/客栈overlay181辅助事件未恢复；女儿村北方洞窟/女人国实际数据、能力和连续正常证据待接。缺口只阻塞依赖区段，不重启全量研究。
 
 累计权威清单：docs/delivery-status.md原十类完整段。路线：docs/original-playthrough-roadmap.md。历史授权/检查点/失败原文完整归档：docs/history/world-full01-runtime-checkpoints.md、原stage-publication.md。当前文件是唯一当前任务入口；历史中的“当前有效”标题不再作为当前状态。

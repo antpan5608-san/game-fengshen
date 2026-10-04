@@ -267,8 +267,10 @@ object ContentLoader {
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
-                if(npc.hiddenInvestigation)require(npc.id=="rom.npc.5.5"&&npc.mapId==5&&npc.x==15&&npc.y==7&&
-                    npc.treasure?.itemId=="rom.medicine.1"&&npc.treasure.flagId=="rom.map.5.flag.1"&&
+                if(npc.hiddenInvestigation)require(((npc.id=="rom.npc.5.5"&&npc.mapId==5&&npc.x==15&&npc.y==7&&
+                    npc.treasure?.flagId=="rom.map.5.flag.1")||
+                    (npc.id=="rom.npc.6.3"&&npc.mapId==6&&npc.x==18&&npc.y==5&&npc.treasure?.flagId=="rom.map.6.flag.8"))&&
+                    npc.treasure?.itemId=="rom.medicine.1"&&
                     npc.treasure.categoryGrant==0&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
                     npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
@@ -359,6 +361,17 @@ object ContentLoader {
                             require(rule.messageDialogues.keys==setOf(0,1,2)&&rule.messageDialogues[0]==rule.firstDialogue&&
                                 rule.messageDialogues[2]==rule.repeatDialogue&&
                                 rule.messageDialogues.values.all{it.startsWith("rom.dialogue.14.")})
+                        }
+                        52->{
+                            val index=npc.id.substringAfterLast('.').toInt()
+                            val first=mapOf(0 to 2,1 to 5,2 to 9)[index]
+                            require(t.getString("evidence")=="game-data/provenance/world-village-batch-resources.json"&&
+                                npc.mapId==6&&npc.id=="rom.npc.6.$index"&&first!=null&&
+                                rule.mapFlagId=="rom.map.6.flag.${1 shl index}"&&rule.witnessFlagId=="rom.global.7c6.64"&&rule.itemId.isEmpty()&&
+                                rule.firstDialogue=="rom.dialogue.16.$first"&&rule.repeatDialogue=="rom.dialogue.16.${first+1}")
+                            val messages=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=messages.keys().asSequence().associate{k->k.toInt() to messages.getString(k)}
+                            require(rule.messageDialogues==mapOf(0 to rule.firstDialogue,1 to rule.repeatDialogue,2 to rule.repeatDialogue))
                         }
                         else->error("Original actor action has no scoped implementation")
                     }

@@ -553,6 +553,11 @@ jobs:
             artifacts/checkpoint-ui/world-cave87-*.json
             artifacts/checkpoint-ui/world-cave87-*-test.txt
             artifacts/world-cave87-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-village6-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village6-*.json
+            artifacts/checkpoint-ui/world-village6-*.json
+            artifacts/checkpoint-ui/world-village6-*-test.txt
+            artifacts/world-village6-review-clips/*
           if-no-files-found: ignore
           retention-days: 14
 

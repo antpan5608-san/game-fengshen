@@ -327,3 +327,9 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 无普通对白的钱箱须按已证身份/金额/旗标加载，不能因复用普通NPC校验导致新包全局拒绝。JVM/导出/编译通过后仍必须原runtime验证正常路线、存档及真实画面；本局部Android目前未运行。
 
 - 空目录恢复必须调用原ci_apk.restore(source,destination=...)：当前CLI restore忽略--output（该参数只供verify回执），曾错误认为写入指定临时目录；随后在新TemporaryDirectory/assets实际复核完整目标文件/hash成功。不是更换导入器或关闭pin。仅编译正常驱动不代表App正常胜利/外部冷启已执行。
+
+## 已验证的共享村庄局部批次
+
+- 复用world-village-batch-resources.json及原export_from_base：固定实际几何、caller价目/商品表、桥矩阵、当前font与action selector，只加新增定义；旧媒体逐字节复用。源NPC的四个1KiB CHR银行可能不连续，不以4KiB整段搜索失败推断资源不存在。静态frame未匹配OAM时标PROVISIONAL，不写原版运行画面已验证。
+- 原来源enum仍只接受PROVISIONAL_REFERENCE/GAMEPLAY_VERIFIED；实际有id/价格来源但名字未解时保留nameConfidence UNKNOWN/referenceKind，不把UNKNOWN整个对象塞入已存在加载契约，也不放宽校验。局部四方法、6144对白/9容量原CPU、空目录ci_apk.restore及JVM/仪器编译已运行；正常App仍须当前候选原runner。
+- 精简current-task必须保留独立task_id行，check-runtime.ps1先解析该字段；历史正文归档而非删除。遗漏曾使inspect查询前失败，修后真实原inspect成功，不能把查询前失败写健康。

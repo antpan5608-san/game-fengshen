@@ -3,8 +3,8 @@
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
   "package": "org.fengshen.dev",
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c47",
-  "manifestSha256": "42d0015ac3da6e10b684b72fc8917fb761b057f835c7f241b248dd300d2a303f",
+  "contentVersion": "opening-segment-001-c46",
+  "manifestSha256": "eeb58f54250861e531e11a1b6c4f187873c4c1e97cb4422e8f6bd5275e0fb746",
   "iteration": {
     "base": {
       "buildRunId": 36995827962,
@@ -14,7 +14,7 @@
       "contentVersion": "opening-segment-001-c14",
       "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
     },
-    "provenance": "game-data/provenance/world-village6-content.json"
+    "provenance": "game-data/provenance/world-cave87-content.json"
   },
   "runtimeBaseline": {
     "buildRunId": 36995827962,
