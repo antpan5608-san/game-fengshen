@@ -17,6 +17,22 @@ data class EnemyDefinition(val id:Int,val name:String,val hp:Int,val attack:Int,
     val iceBaseDamage:Int?=null,val loot:BattleLoot?=null) {
     // Behavior1 name is not transcribed; keep it distinct from verified ice.
     var specialBaseDamage:Int?=null;internal set
+    var requiredBindingMarker:Int=0;internal set
+}
+/** Original 9:AC32 marker comparison. A victory flag is never an immunity bypass. */
+fun originalBoundTargetDamage(requiredMarker:Int,battleMarker:Int,computed:Int):Int {
+    require(requiredMarker in 0..5&&battleMarker in 0..255&&computed in 0..65535)
+    return if(requiredMarker!=0&&battleMarker!=requiredMarker)0 else computed
+}
+/** Original special13 dispatcher 9:8954. The marker is local to this battle;
+ * matching a name, owning the item or a past victory never applies the effect. */
+fun originalSpecialBindingMarker(itemId:Int,targetEnemyId:Int,before:Int):Int {
+    require(itemId in 0..255&&targetEnemyId in 0..255&&before in 0..255)
+    return when {
+        itemId==9&&targetEnemyId in 152..155->1
+        itemId==13&&targetEnemyId in setOf(157,174)->2
+        else->before
+    }
 }
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
@@ -36,6 +52,9 @@ data class StoryDestination(val mapId:Int,val x:Int,val y:Int,val direction:Key?
     val encounterSteps:Int?)
 data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:String?,
     val destination:StoryDestination?,val completionFlags:Set<String>) {
+    // Optional scoped event6 fields keep the existing constructor ABI.
+    var departureCharacterId:String?=null;internal set
+    var movementsBeforeDialogue:Map<Int,StoryMovement> = emptyMap();internal set
     init {
         require(dialogueIds.isNotEmpty()&&dialogueIds.size<=64&&dialogueIds.all{it.isNotBlank()})
         require(dialogueIds.distinct().size==dialogueIds.size)
@@ -50,7 +69,8 @@ data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:St
 /** Original scene scripts use the same durable dialogue continuation as Boss followup.
  * Cutscene movement proposals retain the witnessed completed-step poison costs. */
 data class StoryMovement(val destination:StoryDestination,val completedSteps:Int) {
-    init {require(completedSteps in 1..32)}
+    init {require(completedSteps in 0..32)}
+    var accumulateEncounterSteps:Boolean=false;internal set
 }
 data class SceneStoryDefinition(val id:String,val npcId:String,val flagId:String,
     val entryTrigger:StoryEntryTrigger,val continuation:StoryContinuation,
@@ -73,7 +93,18 @@ object StoryFollowup {
     fun advance(before:SaveSnapshot,story:StoryBattleDefinition,currentDialogue:String,
         templates:Map<String,CharacterState>):Result {
         val chain=story.continuation?:return Result(before,null,false,"当前剧情没有后续阶段")
-        return advance(before,story.id,story.pendingFlag,chain,currentDialogue,templates,story::completeDialogue)
+        if(!story.validScopedContinuation(before))return Result(before,null,false,"剧情存档阶段不一致")
+        val result=advance(before,story.id,story.pendingFlag,chain,currentDialogue,templates,story::completeDialogue)
+        if(!result.applied||result.nextDialogue==null)return result
+        val index=chain.stage(story.id,result.snapshot.flags)?:return result
+        return chain.movementsBeforeDialogue[index]?.let{result.copy(snapshot=move(result.snapshot,it))}?:result
+    }
+    fun approachBattle(before:SaveSnapshot,story:StoryBattleDefinition):Result {
+        val movement=story.approach?:return Result(before,null,false,"剧情没有前行阶段")
+        if(before.flags[story.approachFlag]==true||story.alreadyWon(before.flags)||
+            story.entryTrigger!=StoryEntryTrigger(before.mapId,before.x/16,before.y/16))
+            return Result(before,null,false,"剧情前行状态已变化")
+        return Result(move(before.copy(flags=before.flags+(story.approachFlag to true)),movement),null,true)
     }
     fun begin(before:SaveSnapshot,story:SceneStoryDefinition):Result {
         if(!story.triggersAt(before)||story.continuation.dialogueIds.indices.any{
@@ -96,15 +127,18 @@ object StoryFollowup {
             (it+("rom.map.110.flag.128" to true))-rule.pendingFlag}
     }
     private fun move(before:SaveSnapshot,movement:StoryMovement):SaveSnapshot {
-        // Original map86 has no encounter region. This is a traced scene-script
-        // move, not a playable shortcut or an instruction to draw/award.
-        require(before.mapId==86&&movement.destination.mapId==86)
+        // Original witnessed cutscenes on these maps; no cross-map shortcut.
+        require(before.mapId in setOf(86,76,87,117)&&movement.destination.mapId==before.mapId)
+        if(movement.completedSteps==0)require(before.mapId==117&&before.x/16==movement.destination.x&&
+            before.y/16==movement.destination.y) // Script18 moves an NPC, not the player.
+        if(before.mapId==117)require(movement.completedSteps==0)
         var party=before.characters
-        repeat(movement.completedSteps){party=OriginalStatus.step(party,86)}
+        repeat(movement.completedSteps){party=OriginalStatus.step(party,before.mapId)}
         val d=movement.destination
         return before.copy(x=d.x*16+8,y=d.y*16+8,direction=d.direction?:before.direction,
             characters=party,terrainMode=d.terrainMode?:before.terrainMode,
-            encounterSteps=d.encounterSteps?:before.encounterSteps)
+            encounterSteps=if(movement.accumulateEncounterSteps)(before.encounterSteps+movement.completedSteps) and 255
+                else d.encounterSteps?:before.encounterSteps)
     }
     private fun advance(before:SaveSnapshot,storyId:String,pendingFlag:String,chain:StoryContinuation,
         currentDialogue:String,templates:Map<String,CharacterState>,complete:(Map<String,Boolean>)->Map<String,Boolean>):Result {
@@ -120,6 +154,12 @@ object StoryFollowup {
             val actor=templates[id]?:return reject("入队角色数据未接入")
             if(characters.any{it.id==id}||characters.size>=4)return reject("当前队伍与入队剧情不一致")
             characters.add(actor)
+        }
+        chain.departureCharacterId?.let{id->
+            val index=characters.indexOfFirst{it.id==id}
+            if(index<0)return reject("离队角色记录缺失")
+            // Original CE91..CE98 retains all actor data, ORs bit40 only.
+            characters[index]=characters[index].copy(statusMask=characters[index].statusMask or 64)
         }
         val completed=complete(progressed)+chain.completionFlags.associateWith{true}
         val next=before.copy(characters=characters,flags=completed)
@@ -137,15 +177,41 @@ data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:Strin
     var commitAfterDialogue:Boolean=false;internal set
     var continuation:StoryContinuation?=null;internal set
     var victoryFlags:Set<String> = emptySet();internal set
+    var intro:SceneStoryDefinition?=null;internal set
+    var approach:StoryMovement?=null;internal set
+    val approachFlag get()="runtime.story.$id.approach.complete"
+    var finalizeWithoutDialogue:Boolean=false;internal set
     val pendingFlag get()=flagId+".dialogue.pending"
     fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
-        entryTrigger==StoryEntryTrigger(mapId,x,y)&&!alreadyWon(flags)
-    fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> =
-        (if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+(pendingFlag to true)
+        !alreadyWon(flags)&&(entryTrigger==StoryEntryTrigger(mapId,x,y)||intro?.let{i->
+            flags[i.flagId]==true&&i.continuation.destination?.let{it.mapId==mapId&&it.x==x&&it.y==y}==true}==true||
+            approach?.destination?.let{flags[approachFlag]==true&&it.mapId==mapId&&it.x==x&&it.y==y}==true)
+    fun validScopedContinuation(snapshot:SaveSnapshot):Boolean {
+        if(approach==null)return true // Existing story definitions retain their policy.
+        if(snapshot.flags[approachFlag]==true&&!alreadyWon(snapshot.flags)){
+            val d=approach!!.destination
+            if(snapshot.mapId!=d.mapId||snapshot.x/16!=d.x||snapshot.y/16!=d.y)return false
+        }
+        if(snapshot.flags[pendingFlag]!=true)return true
+        val chain=continuation?:return false
+        if(snapshot.flags[flagId]==true||snapshot.mapId!=entryTrigger?.mapId)return false
+        val index=chain.stage(id,snapshot.flags)?:return false
+        if(chain.dialogueIds.indices.drop(index).any{snapshot.flags[chain.stageKey(id,it)]==true})return false
+        val expected=chain.movementsBeforeDialogue.filterKeys{it<=index}.maxByOrNull{it.key}?.value?.destination
+            ?:approach!!.destination
+        return snapshot.x/16==expected.x&&snapshot.y/16==expected.y&&
+            chain.departureCharacterId?.let{actor->snapshot.characters.any{it.id==actor}}!=false
+    }
+    fun rewardFlags(flags:Map<String,Boolean>):Map<String,Boolean> {
+        val next=(if(commitAfterDialogue)flags else flags+(flagId to true))+victoryFlags.associateWith{true}+
+            (if(finalizeWithoutDialogue)emptyMap()else mapOf(pendingFlag to true))
+        return if(id=="rom.boss.152"&&flagId=="rom.map.76.flag.128"&&"rom.global.7c6.16" in victoryFlags)
+            OriginalNpcTalk.flagsAfterIslandVictory(next)else next
+    }
     fun completeDialogue(flags:Map<String,Boolean>):Map<String,Boolean> =
-        if(alreadyWon(flags))(flags+(flagId to true))-pendingFlag else flags
+        if(alreadyWon(flags))((flags+(flagId to true))-pendingFlag)-approachFlag else flags
 }
 /** Structural/implemented-behavior checks; witnessed opening sizes belong in golden tests. */
 fun validEncounterGroup(group:EncounterGroup,enemies:Map<Int,EnemyDefinition>):Boolean =
@@ -223,6 +289,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         BattleEnemy(m.slot,definition,definition.hp)
     }
     private var partyStates=listOf(hero)
+    private var rosterStates=listOf(hero)
     var hero:CharacterState
         get()=partyStates.first()
         private set(value){partyStates=partyStates.toMutableList().also{it[0]=value}}
@@ -231,8 +298,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var weaponBonuses=mapOf(hero.id to weaponBonus)
     private var armorBonuses:Map<String,Int> = equippedArmorBonus?.let{mapOf(hero.id to it)}?:emptyMap()
     private var configured=false
-    private enum class CommandKind { ATTACK, HERB, ESCAPE, ESCAPED }
-    private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null)
+    // Original6948 is local to the current battle and resets on exit.
+    private var bindingMarker=0
+    private enum class CommandKind { ATTACK, HERB, BINDING, ESCAPE, ESCAPED }
+    private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null,
+        val bindingName:String="",val bindingTarget:String="",val bindingOriginalId:Int=-1)
     private val commands=linkedMapOf<String,QueuedCommand>()
     var inputRevision=0;private set
     private fun originalActors()=partyStates.mapIndexed{slot,p->OriginalPartyRules.Actor(originalIndices.getValue(p.id),slot,p.hp,p.statusMask,p.agility)}
@@ -244,7 +314,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         require(characters.map{it.id}.distinct().size==characters.size&&characters.all{it.id in indices&&it.id in weapons&&it.id in armors})
         require(characters.map{indices.getValue(it.id)}.toSet().size==characters.size&&characters.all{indices.getValue(it.id) in 0..2})
         require(characters.size==1||characters.all{content.physicalFor(it.id)!=null&&content.growthFor(it.id).isNotEmpty()})
-        partyStates=characters.toList();originalIndices=indices.toMap();weaponBonuses=weapons.toMap();armorBonuses=armors.toMap();configured=true
+        val active=OriginalPartyRules.battleCharacters(characters)
+        require(active.isNotEmpty()&&active.first()==hero){"Current controlled character is unavailable"}
+        rosterStates=characters.toList();partyStates=active;originalIndices=indices.toMap();weaponBonuses=weapons.toMap();armorBonuses=armors.toMap();configured=true
     }
     private fun setCharacter(id:String,character:CharacterState){
         val index=partyStates.indexOfFirst{it.id==id};check(index>=0&&character.id==id)
@@ -268,6 +340,30 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
+    fun bindingAvailable(count:Int,item:ItemDefinition,alreadyUsed:Boolean=false):Boolean {
+        if(phase!=BattlePhase.TARGET||content.physicalRules==null||(inputHero?.hp?:0)<=0||count!=1||alreadyUsed||
+            item.category!="special"||item.maxCount!=1)return false
+        val use=item.battleBindingUse?:return false
+        return when(item.id) {
+            "rom.special.9"->item.originalId==9&&use.bindingMarker==1&&
+                use.evidence=="game-data/provenance/world-teacher163-binding.json"&&
+                enemies.size==4&&enemies.map{it.definition.id}.toSet()==setOf(152,153,154,155)&&
+                enemies.all{it.definition.requiredBindingMarker==1}
+            "rom.special.13"->item.originalId==13&&use.bindingMarker==2&&
+                use.evidence=="game-data/provenance/world-queen117-state.json"&&
+                enemies.size==1&&enemies.single().definition.id==157&&enemies.single().definition.requiredBindingMarker==2
+            else->false
+        }
+    }
+    fun useBinding(count:Int,item:ItemDefinition,alreadyUsed:Boolean,nextByte:()->Int):BattleTurn? {
+        if(!bindingAvailable(count,item,alreadyUsed))return null
+        // Original BE6E->BE9D collects the special directly, no target screen,
+        // quantity decrement or used bit write. Its ordinary scheduler slot
+        // executes 8935; faster enemy actions are not skipped or refunded.
+        val use=item.battleBindingUse!!
+        return submit(QueuedCommand(CommandKind.BINDING,
+            bindingName=item.name,bindingTarget=use.targetLabel,bindingOriginalId=item.originalId),nextByte)
+    }
     fun herbAvailable(targetId:String,count:Int,item:ItemDefinition):Boolean =
         phase==BattlePhase.TARGET && content.physicalRules!=null && (inputHero?.hp?:0)>0 &&
         partyStates.any{it.id==targetId&&it.hp>=0&&it.hp<=it.maxHp&&it.maxHp>0} && count>herbsConsumed &&
@@ -287,7 +383,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
      * normal status domain; status04, poison02 and death are not cured by leaving battle. */
     fun charactersAfterBattle():List<CharacterState> {
         check(phase in setOf(BattlePhase.VICTORY,BattlePhase.ESCAPED))
-        return partyStates.map{it.copy(statusMask=it.statusMask and 0xf7)}
+        return OriginalPartyRules.restoreBattleCharacters(rosterStates,partyStates)
     }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
         delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null)=
@@ -342,6 +438,12 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(!OriginalPartyRules.canAct(originalActors().first{it.originalActorIndex==actor}))continue
                 val command=commands[player.id]?:continue
                 if(command.kind==CommandKind.ESCAPED)continue
+                if(command.kind==CommandKind.BINDING){
+                    val target=enemies.firstOrNull{it.hp>0}?:continue
+                    bindingMarker=originalSpecialBindingMarker(command.bindingOriginalId,target.definition.id,bindingMarker)
+                    steps.add(frame("${command.bindingName}困住${command.bindingTarget} · 数量保留",kind=BattleActionKind.SPECIAL,actorId=player.id))
+                    continue
+                }
                 if(command.kind==CommandKind.HERB){
                     val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
                     if(target.statusMask and OriginalStatus.DEAD!=0){
@@ -384,7 +486,8 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     steps.add(frame("攻击未命中",target=slot,kind=BattleActionKind.MISS,actorId=player.id));continue
                 }
                 val computed=rules.damage(player.strength+weaponBonuses.getValue(player.id),target.definition.defense,player.level,random)
-                val damage=OriginalStatus.outgoingPhysicalDamage(computed,player.statusMask)
+                val damage=originalBoundTargetDamage(target.definition.requiredBindingMarker,bindingMarker,
+                    OriginalStatus.outgoingPhysicalDamage(computed,player.statusMask))
                 val actual=minOf(damage,target.hp);target.hp-=actual;dealt+=actual
                 steps.add(frame("${target.definition.name} 受到 $actual 点伤害",target=slot,kind=BattleActionKind.DAMAGE,
                     delta=-actual,beforeEnemy=target.hp+actual,actorId=player.id))
@@ -470,7 +573,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         val money=enemies.sumOf{it.definition.moneyReward}
         val shares=OriginalPartyRules.experienceShares(enemies.map{it.definition.experienceReward},originalActors())
         val levels=mutableMapOf<String,List<Int>>();val gained=mutableMapOf<String,Int>()
-        partyStates=charactersAfterBattle().map{player->
+        partyStates=partyStates.map{it.copy(statusMask=it.statusMask and 0xf7)}.map{player->
             val amount=shares[originalIndices.getValue(player.id)]?:0;gained[player.id]=amount
             var grown=player.copy(experience=(player.experience+amount).coerceAtMost(0xffffff))
             val actorLevels=mutableListOf<Int>()
@@ -485,7 +588,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         }
         settled=true
         return BattleSettlement(hero,(currentMoney+money).coerceAtMost(9999999),exp,levels.getValue(hero.id)).also{
-            it.characters=partyStates;it.levelsByCharacter=levels;it.experienceByCharacter=gained
+            it.characters=charactersAfterBattle();it.levelsByCharacter=levels;it.experienceByCharacter=gained
         }
     }
 

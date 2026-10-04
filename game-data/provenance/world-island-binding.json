@@ -1,0 +1,82 @@
+{
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_BRANCH_CPU_NOT_NORMAL_BATTLE",
+  "enemyIds": [
+    152,
+    153,
+    154,
+    155
+  ],
+  "requiredMarker": 1,
+  "itemOriginalId": 9,
+  "damageCases": 80,
+  "damageFailures": 0,
+  "damageSha256": "ed38617f09e42093e0a7bff399880b0e2a3b04db097a670be087c9f6a8589bdd",
+  "effectCases": 32,
+  "effectFailures": 0,
+  "effectSha256": "5ef6145ac615441ebf94bcf2f8223143258743a2d6b90614c7dcefdfa90cc464",
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "four-villains-original-marker1-and-special9-not-free-damage",
+  "licenseStatus": "UNKNOWN",
+  "sources": [
+    {
+      "offset": 306104,
+      "length": 13,
+      "sha256": "60403861ac95433013fe6821f3702f94db1b5107fccd2afbf63f286166be3de6",
+      "module": 9,
+      "cpuAddress": 43944,
+      "meaning": "Actual protected target identity table"
+    },
+    {
+      "offset": 306229,
+      "length": 13,
+      "sha256": "c006dace47a02d0131b1b9c82d685541f976c7bd8cbcf7fb5af4e992611f221a",
+      "module": 9,
+      "cpuAddress": 44069,
+      "meaning": "Actual required binding marker table"
+    },
+    {
+      "offset": 306179,
+      "length": 80,
+      "sha256": "6efd78bb61bab207fbf6fa6b6f8d7d8d794514f8e3fe610151dba55464bc05b3",
+      "module": 9,
+      "cpuAddress": 44019,
+      "meaning": "Original target identity scan and zero-damage branch"
+    },
+    {
+      "offset": 297260,
+      "length": 2,
+      "sha256": "9bd979312f65dbd33e42e8f30e80a596a13746a0e29edb591c4d78f3d1efc920",
+      "module": 9,
+      "cpuAddress": 35100,
+      "meaning": "Original special9 battle dispatcher pointer"
+    },
+    {
+      "offset": 297285,
+      "length": 31,
+      "sha256": "8ba6f8b0cd97d4e36b27c0a004d3e76d6ee66d46d3c4f2c604aa8d64c529ddad",
+      "module": 9,
+      "cpuAddress": 35125,
+      "meaning": "Only four-villain target enables current battle marker1"
+    },
+    {
+      "offset": 299648,
+      "length": 18,
+      "sha256": "e7050fd43eec99339a3caab00bf4c4e8af12714e5d2fa21803ad602d6921edb7",
+      "module": 9,
+      "cpuAddress": 37488,
+      "meaning": "Actual per-battle cleanup, not persistent victory state"
+    }
+  ],
+  "damageTablePath": "android/app/src/test/resources/world-island-damage-gate.tsv",
+  "effectTablePath": "android/app/src/test/resources/world-island-item9-binding.tsv",
+  "probePath": "tools/rom-extractor/probe-world-island-protection.py",
+  "probeSha256": "ce91dcba332ce865cee522b165971c41d7e708bdd58af9df164e153fd9023823",
+  "remainingUnknown": [
+    "Normal special9 acquisition route/teacher",
+    "Battle command selection and target legality",
+    "Order and consumption/used marker",
+    "Normal Android item9/Boss victory NOT_RUN"
+  ]
+}

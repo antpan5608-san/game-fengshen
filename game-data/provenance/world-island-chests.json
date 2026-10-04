@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "grantAmount": 1,
+    "categoryLimits": [
+      10,
+      1,
+      10,
+      10
+    ],
+    "categorySlotCount": 16,
+    "fullExistingStackCanIncrease": true,
+    "failureDoesNotSetOpenedFlag": true,
+    "repeatDoesNotGrant": true,
+    "quantityMask": 127,
+    "worldUseRuleInferred": false
+  },
+  "sources": [
+    {
+      "offset": 337744,
+      "length": 92,
+      "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+      "module": 10,
+      "cpuAddress": 42816,
+      "meaning": "Original chest reads category/item/mask and current map flag"
+    },
+    {
+      "offset": 73424,
+      "length": 249,
+      "sha256": "ac292588bbb12f4da0917f2c97fbe87f5ff03d1fbf886c3060bed93699b115be",
+      "module": 2,
+      "cpuAddress": 40640,
+      "meaning": "Original granted inventory branch and success-only map-flag OR"
+    },
+    {
+      "offset": 73967,
+      "length": 12,
+      "sha256": "45c26f49d686e44320c3ff4ceb4f5d16b5edc99a03995ed13706b77b85578586",
+      "module": 2,
+      "cpuAddress": 41183,
+      "meaning": "Original category/item inventory dispatcher"
+    },
+    {
+      "offset": 73979,
+      "length": 173,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a",
+      "module": 2,
+      "cpuAddress": 41195,
+      "meaning": "Original existing stack increment and 16-slot insertion"
+    },
+    {
+      "offset": 74144,
+      "length": 12,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c",
+      "module": 2,
+      "cpuAddress": 41360,
+      "meaning": "Original four category limits and inventory base pointers"
+    }
+  ],
+  "scopeRevision": "island76-five-original-item-chests-and-money100",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "bindings": [
+    {
+      "mapId": 76,
+      "npcIndex": 4,
+      "spriteId": 144,
+      "categoryId": 2,
+      "originalId": 7,
+      "maxCount": 10,
+      "flagMask": 1,
+      "source": {
+        "offset": 281466,
+        "length": 14,
+        "sha256": "8a56fdb613c19c222fd72ba6fd2b7973aea3a1bb3926e03b537347d2394c3ada",
+        "module": 8,
+        "cpuAddress": 52074,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused actual open pose"
+      }
+    },
+    {
+      "mapId": 76,
+      "npcIndex": 5,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 1,
+      "maxCount": 10,
+      "flagMask": 2,
+      "source": {
+        "offset": 281480,
+        "length": 14,
+        "sha256": "6366c831e89cc8b0897fb5b98447efee2cdc0f75a7d89e48c824ba60088cb9f8",
+        "module": 8,
+        "cpuAddress": 52088,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused actual open pose"
+      }
+    },
+    {
+      "mapId": 76,
+      "npcIndex": 7,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 14,
+      "maxCount": 10,
+      "flagMask": 8,
+      "source": {
+        "offset": 281508,
+        "length": 14,
+        "sha256": "a9d3e52251639f76f45197dad20824952b007428ab36b653d5de859e628fd0d8",
+        "module": 8,
+        "cpuAddress": 52116,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused actual open pose"
+      }
+    },
+    {
+      "mapId": 76,
+      "npcIndex": 8,
+      "spriteId": 144,
+      "categoryId": 2,
+      "originalId": 21,
+      "maxCount": 10,
+      "flagMask": 16,
+      "source": {
+        "offset": 281522,
+        "length": 14,
+        "sha256": "72914812ecbc851928cd44dc529103d555f8ddc7726349f9068215479f6fe3a0",
+        "module": 8,
+        "cpuAddress": 52130,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused actual open pose"
+      }
+    },
+    {
+      "mapId": 76,
+      "npcIndex": 9,
+      "spriteId": 144,
+      "categoryId": 0,
+      "originalId": 4,
+      "maxCount": 10,
+      "flagMask": 32,
+      "source": {
+        "offset": 281536,
+        "length": 14,
+        "sha256": "a821d8f9da72d49af35b6a826c60e26dea960954055415ab0f72d7be3c85a470",
+        "module": 8,
+        "cpuAddress": 52144,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "animationSource": {
+        "offset": 3661,
+        "length": 7,
+        "sha256": "d37f6778f6026a44e977f6fc298d9c85abc1eb6c9e4b7cca1acce91093da1cf6",
+        "module": 0,
+        "cpuAddress": 36413,
+        "meaning": "Same original chest animation, reused actual open pose"
+      }
+    }
+  ],
+  "testCount": 35,
+  "failures": 0,
+  "cpuExpectedPath": "android/app/src/test/resources/world-island-item-grant-cpu.tsv",
+  "activeCpuSha256": "a06fb647d89a7de8787cb83ba006639373a0969d9b5618c3e87f8f22c0e2cf24",
+  "ruleReuse": {
+    "path": "game-data/provenance/world-hell-chest-grants.json",
+    "sha256": "cc0ad87e6f01bd7e9cbbdba6e6d9800fbabd47bb55b0f9c3ccf88bd7f9f30e69"
+  },
+  "normalAndroid": "NOT_RUN",
+  "cpuExpectedSha256": "5778a71b85643c1dec9efce0990d55c8a4095a6f95aaa814444bcd66df7929d2",
+  "money": {
+    "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+    "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+    "testCount": 35,
+    "failures": 0,
+    "categoryId": 4,
+    "originalId": 8,
+    "amount": 100,
+    "moneyCap": 999999,
+    "npcSource": {
+      "offset": 281494,
+      "length": 14,
+      "sha256": "250a9b208f79c7de7c20541b9898b6e1bd5f5e623787a062a0bd821aa7fdff54",
+      "module": 8,
+      "cpuAddress": 52102,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "amountSource": {
+      "offset": 93766,
+      "length": 2,
+      "sha256": "4658d6abbbaf7748c172ed5a3e003cdb8997648f88724834e41f75e54520e142",
+      "module": 2,
+      "cpuAddress": 60982,
+      "meaning": "Original category4/id8 money chest amount100"
+    },
+    "tablePath": "android/app/src/test/resources/world-island-money-grant-cpu.tsv",
+    "tableSha256": "0db16b5545a46a44972bb9fbc523f489869c27b97756a4c06056ce192da5dc94",
+    "probePath": "tools/rom-extractor/probe-world-island-money.py",
+    "probeSha256": "fbecd3b9853d4b7afc59f398c811a38e38e432f21d19d258a4901ec75409988e",
+    "sources": [
+      {
+        "offset": 337744,
+        "length": 92,
+        "sha256": "446963bd795a5cc45ddd0d0706416a065a03e6561353b71ef4e56ff5078c9f0e",
+        "module": 10,
+        "cpuAddress": 42816,
+        "meaning": "Original chest once selector"
+      },
+      {
+        "offset": 73669,
+        "length": 58,
+        "sha256": "ec675821489e981c6cd17c757e1314ac5dbd40378f11b27461e3d4f1edd4e0c5",
+        "module": 2,
+        "cpuAddress": 40885,
+        "meaning": "Actual category4 money amount and map flag"
+      },
+      {
+        "offset": 83264,
+        "length": 32,
+        "sha256": "0fe6b2800d4ac0fb9eb9c595fac1a25d4e92026d31fb6c03fef9ea40a6339173",
+        "module": 2,
+        "cpuAddress": 50480,
+        "meaning": "Original uint24 money grant"
+      },
+      {
+        "offset": 67293,
+        "length": 41,
+        "sha256": "5d0d4804daf52767fda88570a3fdf0c9edd2b34b8e2e8a61c006bca5a656cddb",
+        "module": 2,
+        "cpuAddress": 34509,
+        "meaning": "Original999999 saturation"
+      },
+      {
+        "offset": 91686,
+        "length": 2,
+        "sha256": "10cdd43e3da7117a0c592b94437e323bb62f375da31640d40e456a82c6c0fce9",
+        "module": 2,
+        "cpuAddress": 58902,
+        "meaning": "Money amount table pointer"
+      }
+    ]
+  }
+}

@@ -31,7 +31,7 @@ retain_world_clips(){
 python - <<'PYWORLDCLIPS'
 import json,shutil,hashlib
 from pathlib import Path
-for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry'):
+for flow in ('world-west','world-village1','world-north-palace','world-cave85','world-east-palace','world-hell-village2','world-first-hall','world-second-hall','world-hall-batch','world-rebirth','world-village3','world-medical','world-continent-bridge','world-forest101','world-tree107','world-room171','world-yang-join','world-village4','world-ferry','world-island','world-village5','world-cave87','world-village6','world-night8','world-queen117'):
     recording_path=Path(f'artifacts/checkpoint-ui/{flow}-recording.json')
     index_path=Path(f'artifacts/checkpoint-ui/touch-ux-{flow}-normal-index.json')
     if not recording_path.exists() or not index_path.exists():continue # This flow has not completed.
@@ -142,6 +142,7 @@ run_test testControlledHerbBoundariesAndSaveCompatibility
 run_test testControlledNanhaiVictoryFlagAndResumeOnce
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
+run_test testControlledBindingItemSelectionCancelAndSingleActorCommand
 run_test testUnrestorableSaveCannotBeOverwritten
 run_test testWorldLegacyInteriorContextAndRestart
 run_test testControlledWorldAntidoteAndFieldPoison
@@ -192,6 +193,12 @@ python tools/record_app_audio.py world-room171 testNormalRoom171GiftFromVerified
 python tools/record_app_audio.py world-yang-join testNormalYangJoinAndThreePartyFromVerifiedRoomSave --silent --cold-test testYangJoinColdRestartAndOriginalTreeReturn --budget-seconds 3600
 python tools/record_app_audio.py world-village4 testNormalVillageFourServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFourColdRestartAndOriginalReturn --budget-seconds 2400
 python tools/record_app_audio.py world-ferry testNormalFixedFerryAndIslandFromVerifiedVillageSave --silent --cold-test testFixedFerryIslandColdRestartAndOriginalReverse --budget-seconds 2400
+python tools/record_app_audio.py world-island testNormalIslandLayersFourVillainsAndChestsFromVerifiedFerrySave --silent --cold-test testIslandVictoryColdRestartChestsAndRealReturn --budget-seconds 3600
+python tools/record_app_audio.py world-village5 testNormalVillageFiveServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFiveColdRestartAndOriginalReturn --budget-seconds 2400
+python tools/record_app_audio.py world-cave87 testNormalCave87FlowerStoryFromVerifiedIslandSave --silent --cold-test testCave87DepartureColdRestartAndOriginalReturn --budget-seconds 2700
+python tools/record_app_audio.py world-village6 testNormalVillageSixServicesAndTalkFromVerifiedFlowerSave --silent --cold-test testVillageSixColdRestartAndOriginalReturn --budget-seconds 2400
+python tools/record_app_audio.py world-night8 testNormalNightEightGiftAndDarkCaveFromVerifiedVillageSixSave --silent --cold-test testNightEightColdRestartAndOriginalLightReset --budget-seconds 2400
+python tools/record_app_audio.py world-queen117 testNormalQueenRouteBindingAndHuangFromVerifiedNightEightSave --silent --cold-test testQueenHuangColdRestartAndOriginalReturn --budget-seconds 3600
 # Clinical sub-results are App-written evidence; pull before constructing receipt.
 pull_evidence
 # Existing recorder checks external force-stop/restart and restores original preferences.
@@ -209,6 +216,12 @@ r.update(worldRoom171Normal='PASS',worldRoom171GiftColdRestart='PASS')
 r.update(worldYangJoinNormal='PASS',worldYangThreePartyAndColdRestart='PASS')
 r.update(worldVillageFourServicesTalkNormal='PASS',worldVillageFourColdRestart='PASS')
 r.update(worldFixedFerryIslandNormal='PASS',worldFixedFerryColdRestartAndReverse='PASS')
+r.update(worldIslandOriginalLayersAndFourVillainsNormal='PASS',worldIslandOnceChestsAndColdRestart='PASS')
+r.update(worldVillageFiveServicesTalkNormal='PASS',worldVillageFiveColdRestart='PASS')
+r.update(worldCave87FlowerNormal='PASS',worldCave87DepartureAndColdRestart='PASS')
+r.update(worldVillageSixServicesTalkNormal='PASS',worldVillageSixColdRestart='PASS')
+r.update(worldNightEightGiftAndCaveNormal='PASS',worldNightEightColdRestart='PASS')
+r.update(worldQueenRouteAndBindingNormal='PASS',worldQueenHuangOnceAndColdRestart='PASS')
 medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
 for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

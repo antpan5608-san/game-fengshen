@@ -303,6 +303,49 @@ caller村庄复用现有17/18/19/20/22室内、stock/InnStay/Clinic命令，导�
 
 - 原固定交通不得套门出口免费传送：先用现有Reader/ROM movement stream及实际接触按键核每个状态步、扣血/死亡位置、独立返程。跟踪probe-world-ferry.lua在官方FCEUX/Xvfb有界重跑、受控派生TSV一致；原回放仍受控缓存，不要求迁整目录。复用原局部export验证route/既存稳定对象hash/完整敌群，严格restore和4导出/完整世界回归/LFcheckout已运行。动作由统一状态持久、渲染不结算；JSON/真实正常路线/外部冷启须同候选仪器另验，未执行标NOT_RUN。初轮把整份旧地图JSON固定会漏掉合法的新出口格，应只核有证据的exact delta，禁止借此开放其他墙/海面。
 
-## 已验证的不可变artifact连接器回退
+## 已验证的原NPC与特殊战斗资源定位（正常App另验）
 
-直接gh artifact下载遇到blob403时，安装的GitHub连接器download_workflow_artifact可取得同仓库指定artifact的file_id，再由download_file取回ZIP。本轮已实际成功。只输出artifact身份和本地文件，不打印临时签名URL；解包前限制总大小与路径必须处于指定目录，随后仍调用原ci_apk.py verify检查receipt、APK完整SHA、签名、包名和内容pin。连接器成功不代表运行或发布成功，超过传输上限仍使用原受限证据入口；不删除代理或重写解包/验包平台。
+NPC callback表、world坐标event表和正文赠物selector是独立命名空间，不能按相同数字推成同一效果。局部teacher/森林/箱配方复用原Reader、已核RTS方向矩阵和既存物品定义；目标ROM受控按键/原字体hash与CPU表可复用，不推成正常Android通关。秘宝命令需核原菜单收集、目标、数量/used位及调度执行时机，不能套地图药草或在选择时先置效果。定向JVM/导出/实际LF checkout已执行；新App路径仅编译时继续NOT_RUN。
+
+需要证明干净目标恢复时直接调用现有ci_apk.restore(source,destination=空目录)，核完整manifest与文件集合。CLI restore的--output不会改变assets目的地；曾误用后已通过显式destination重跑纠正，不把同assets覆盖写成空目录验证。
+
+
+- 新NPC堵路先核完整原加载状态，不能仅用静态base context判原路线不可达。原map79加载按真实party数与胜标切换map163 context219；原NPC指针、位置/文本及1284 CPU边界已执行，受控原版房内按键走到师父成功。公开攻略只提供定位线索，推荐对话不成为虚构前置；同一variant必须同时影响碰撞、绘制和交谈。新App流程仍须同候选另验，原版/CPU不代替Android通过。
+
+## 已验证的后续村庄资源复用
+
+按真实caller一次批次复用库存/价目、共享室内与医生，不按村庄复制地图。仅相同tileset0复用已核576条桥方向矩阵，分别固定当前格网、独立入口/返回记录、原NPC和当前文字组；不要把普通EXIT套成另一村的EDGE。用已观察活跃字体glyph像素hash匹配既有字形，只定向补缺字。原OAM图形须逐不透明像素匹配且唯一；按真实按键步行取得图形，不依赖写camera后未刷新的假截图。
+
+FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source/save，已在原防具菜单观察到错误图/修后原商品画面。原版/受控资源不算Android正常流程。本轮现有导出器的局部父pin、旧媒体字节、全新空目录严格restore、来源enum和拓扑拒绝测试实际通过；新增商品未核名字时沿用PROVISIONAL_REFERENCE并明确nameConfidence UNKNOWN，不发明名称或关闭来源检查。
+
+## 已验证的局部脚本与离队接续（Android待当前runner）
+
+- 原ROM字面量先区分十六进制与地图十进制ID；仅以实际map dispatcher/coordinate table确认事件。已因$87误读87调查错误事件，保留失败，纠正后只核所需script流/消息与结算。
+- 复用probe-world-cave87-state.py运行未改ROM CPU的胜后、保留离队记录/战斗投影/出口恢复和钱箱边界；受控HP1胜利不是正常Boss证据。公开仅受控数值TSV/provenance；ROM/PPU/原存档继续忽略。
+- 原export_from_base父pin固定、scoped ROM tile/glyph及ci_apk.restore在空目录严格核验新场景；test_world_cave87_export.py已执行两次一致/旧媒体不变/错误坐标、对白、离队身份、额外奖励、像素与CPU表拒绝。计算新目标hash仅用于初次生成审查，随后必须完整严格重生成/restore，不能关最终目标pin校验。
+- 完整Boss矩形须包含实际边缘像素；过小矩形即便图块全匹配也可能裁图。普通敌框不可含玩家红点造成混palette。ROM静态初帧组合明确PROVISIONAL，未OAM观察不得标成截图匹配或正常App画面。
+- 无普通对白的钱箱须按已证身份/金额/旗标加载，不能因复用普通NPC校验导致新包全局拒绝。JVM/导出/编译通过后仍必须原runtime验证正常路线、存档及真实画面；本局部Android目前未运行。
+
+- 空目录恢复必须调用原ci_apk.restore(source,destination=...)：当前CLI restore忽略--output（该参数只供verify回执），曾错误认为写入指定临时目录；随后在新TemporaryDirectory/assets实际复核完整目标文件/hash成功。不是更换导入器或关闭pin。仅编译正常驱动不代表App正常胜利/外部冷启已执行。
+
+## 已验证的共享村庄局部批次
+
+- 复用world-village-batch-resources.json及原export_from_base：固定实际几何、caller价目/商品表、桥矩阵、当前font与action selector，只加新增定义；旧媒体逐字节复用。源NPC的四个1KiB CHR银行可能不连续，不以4KiB整段搜索失败推断资源不存在。静态frame未匹配OAM时标PROVISIONAL，不写原版运行画面已验证。
+- 原来源enum仍只接受PROVISIONAL_REFERENCE/GAMEPLAY_VERIFIED；实际有id/价格来源但名字未解时保留nameConfidence UNKNOWN/referenceKind，不把UNKNOWN整个对象塞入已存在加载契约，也不放宽校验。局部四方法、6144对白/9容量原CPU、空目录ci_apk.restore及JVM/仪器编译已运行；正常App仍须当前候选原runner。
+- 精简current-task必须保留独立task_id行，check-runtime.ps1先解析该字段；历史正文归档而非删除。遗漏曾使inspect查询前失败，修后真实原inspect成功，不能把查询前失败写健康。
+
+## 已验证的局部光照和赠物接续
+
+- 原probe-world-night8.py复用既有py65 call，核当前目标选择器、重复使用数量、before-text赠物和实际forest class2完整分派；probe-world-tree-chests.py的--map-id只增加已取证调用域，仍执行相同原库存/成功flag路径。已在当前Linux缓存匹配ROM执行；各TSV与来源跨度受原export_development严格校验，原ROM/PPU/回放不公开。
+- 原validate_world_night8_resources/export_from_base的局部图集使用同一metatile/CHR，仅改变原palette；旧媒体不变。test_world_night8_export.py、NightLightTest和实际空目录ci_apk.restore已通过。低层CPU不能证明菜单持有/目标，须结合真实按键实验；原退出再入洞实验将临时照明与永久ownership/used区分。
+- 原结构出口可能落全墙且无可达邻格。先核真实grid/源记录，保留inactive来源、不开放假墙；初轮路径断言失败曾发现此问题。Android JSONObject在普通JVM为stub，真实JSON冷启断言放原ContentTest仪器，不把该编译写运行PASS。
+- 新正常光照/赠物/冷启驱动已编译并接原CI，实际App仍以任务记录为准；编译、受控实验和派生atlas不是正常路线或手机证据。
+
+## 已验证的女王局部取证（正常App待验）
+
+- probe-world-queen117.py继续原py65 call：校完整ROM并执行1536目标/既有marker、1024完成位/context、36原tileset6足行。派生数值TSV及当前探针hash受原export_development的局部validator审核；原回放/PPU仍忽略。字段和源码地址实际验证后复用，不以名称猜绑定目标或凭对白猜赠物。
+- 原行动中的画面可能有角色OAM覆盖Boss，导致palette/图块匹配失败。先找同敌稳定指令等待帧；本次原observed_graphic_recipe重建全部120图块及RGBA成功，未扩展成另一导入器。失败瞬时帧保留私有来源限制，不当原静态图形。
+- CPU/纯业务/仪器编译只证明局部数据与代码；最新实际inspect脱敏计数单独记录，不借旧版日志给新候选健康背书。局部原CPU/纯逻辑、来源拒绝、原export_from_base重复导出/旧媒体逐字节和全新ci_apk.restore已实际通过；真实Android仍须同产物原runtime，不把编译当运行。
+
+- 原受控位置实验须同步0406/0408与8E/90原坐标字段，边界从前一真实格按键接近，不能在未完成transition上猜返程失败。遗漏曾导致假失败；补齐后原宫殿/内城/世界独立返程实际通过。所有位置/HP fixture仍不是正常路线。
+- 同一provenance局部事件按实际action→dispatcher→event/script逐段核，action编号不等于event编号。赠物before-text与文本后完成分开纯proposal和pending存档，原容量/已有物/used位/复谈边界用现有py65 probe和JVM核；静态actor F0属性未解时复用同原身份已知姿势且明确PROVISIONAL，不猜动画。
