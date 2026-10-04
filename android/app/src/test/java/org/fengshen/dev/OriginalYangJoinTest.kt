@@ -13,6 +13,14 @@ class OriginalYangJoinTest {
     private val yang=CharacterState("yangjian",24,26000,495,495,54,96,60,28,69,maxMp=54,equipment=EquipmentState(33,33,18,29))
     private fun before()=SaveSnapshot("fixture",110,7*16+8,6*16+8,Key.LEFT,listOf(hero,girl),
         mapOf(item.id to 1,HerbUse.ID to 7),mapOf("old" to true),money=83,encounterSteps=17)
+    @Test fun completedJoinedSaveUsesRealContextAndRetainedItemUseFlag(){
+        val base=before().copy(characters=listOf(hero,girl,yang),
+            flags=mapOf("rom.map.110.flag.128" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true))
+        assertTrue(rule.validPending(base))
+        assertFalse(rule.validPending(base.copy(flags=base.flags-OriginalYangJoin.USED_FLAG)))
+        assertFalse(rule.validPending(base.copy(flags=(base.flags-OriginalYangJoin.CONTEXT_FLAG)+("rom.original.npc.context.207" to true))))
+        assertTrue(rule.validPending(base.copy(flags=base.flags+("unrelated" to true))))
+    }
     @Test fun firstSubmitJoinsBeforeFirstTextRetainsQuantityAndOnlyOriginalEventEffects(){
         val s=before();assertTrue(WorldItems.available(s,item,item.worldUse!!,target,true))
         val result=OriginalYangJoin.begin(s,item,target,yang,true)
