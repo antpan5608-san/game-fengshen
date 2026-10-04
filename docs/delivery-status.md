@@ -1,3 +1,15 @@
+## WORLD-FULL-01 原回归分段与v64实际结果（2026-10-04T11:26:54Z）
+
+总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN，正式仍v27/c14。v64/run37185539165签名build成功但runtime失败，不能发布：实际正常北海与85洞/东海/地府村2通过后，第一殿练级准备7000输入预算耗尽。末尾355正常胜利，哪吒EXP22406/23级，未到原T25=27750，两人存活/装备已取得，没有Boss胜利或App崩溃结论。仅扩大该仪器输入/录制预算，不改玩家规则/目标/断言。
+
+c50/56打包地图/302文件/manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0已本地及精确树WIP备份（5b5fb9f/dd9a14e8、work/world-room116-c50）。335 JVM/3局部导出/严格全新恢复是本轮已有执行结果；新Android尚NOT_RUN，116世界连续入口未证明，不关闭相应欠账。已接女王主线及地牢局部代码不等于新功能已实际验收。
+
+原构建workflow/运行脚本现在保留29条正常及冷启路径，分三个同候选job以避免单job时间上限；只传真实正常App JSON和严格来源/hash/冷启证明，前两段PARTIAL，原审批/发布同时要求三个成功job与最终回执。同候选跨runner实际接续待新CI验证；10隔离传输/真实Bash分派、29runtime相关、28审批、4录制边界、16CI校验与仪器编译PASS。未新建workflow或改环境保护，未把工具测试写App PASS。
+
+最新inspect37198432575/11:21:30Z为可信27/26、3737事件、普通真机9会话/模拟器0/测试0/清理0；旧v26下载ProtocolException仍ISSUES_FOUND/根因UNCONFIRMED。权威十类欠账保留，历史段不作为当前任务。下一候选来源/编号以current-task实际run记录为准。
+
+下方均为历史检查点，当前有效状态以顶部及唯一current-task为准。
+
 ## WORLD-FULL-01 地牢资源/局部事件检查点（2026-10-04T10:58Z，c50未发布）
 
 c50通过原export_from_base生成：56已打包地图/302文件/manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0；新增116六NPC真实OAM、组126对白及action41→event15/script19局部持久流程。256选择/512完成原CPU零差异，335 JVM/68 suites、3导出90.597秒、严格全新目标恢复及仪器驱动编译PASS。未变媒体逐字节保留；原body能力在NPC variant view继续保留，已移除NPC不被重新塞进碰撞。

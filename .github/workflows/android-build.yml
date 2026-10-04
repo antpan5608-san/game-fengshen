@@ -239,6 +239,7 @@ jobs:
           print('ANDROID_CAPABILITY: '+json.dumps(dict(adb=pathlib.Path(adb).is_file(),emulator=emulator.is_file(),avds=avds,kvmReadable=os.access('/dev/kvm',os.R_OK),kvmWritable=os.access('/dev/kvm',os.W_OK))))
           PY
 
+
   runtime:
     if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
     needs: build
@@ -271,6 +272,8 @@ jobs:
           github-token: ${{ github.token }}
       - name: Verify and run the exact candidate in one isolated AVD
         shell: bash
+        env:
+          FENGSHEN_RUNTIME_STAGE: base
         run: |
           python -m pip install Pillow==11.3.0
           bash ci/run-town02-runtime.sh
@@ -278,10 +281,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: fengshen-town02-runtime-evidence
+          name: fengshen-town02-runtime-base-evidence
           path: |
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
+            artifacts/checkpoint-ui/world-*-recording.json
+            artifacts/checkpoint-ui/world-*-normal-*.mp4
+            artifacts/checkpoint-ui/world-*-cold-restart.mp4
+            artifacts/checkpoint-ui/world-*-test.txt
             artifacts/checkpoint-ui/world-f0-*
             artifacts/checkpoint-ui/world-north-*
             artifacts/checkpoint-ui/world-west-*
@@ -291,6 +298,14 @@ jobs:
             artifacts/checkpoint-ui/nanhai-*
             artifacts/checkpoint-ui/mobile-*
           if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain exact normal checkpoint for the next same-candidate stage
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-normal-checkpoint-base
+          path: artifacts/runtime-handoff/*
+          if-no-files-found: error
           retention-days: 14
 
       - name: Retain small Nanhai screenshot and state index for review
@@ -402,6 +417,73 @@ jobs:
             artifacts/checkpoint-ui/world-north-palace-*.json
             artifacts/checkpoint-ui/world-north-palace-normal-test.txt
           if-no-files-found: ignore
+          retention-days: 14
+
+
+  runtime-world:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
+    needs: [build, runtime]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/ci
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-runtime-test-apk
+          path: artifacts/runtime-test
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-normal-checkpoint-base
+          path: artifacts/runtime-handoff-input
+      - name: Verify and run the exact candidate in one isolated AVD
+        shell: bash
+        env:
+          FENGSHEN_RUNTIME_STAGE: world
+        run: |
+          python -m pip install Pillow==11.3.0
+          bash ci/run-town02-runtime.sh
+      - name: Retain only isolated test evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-town02-runtime-world-evidence
+          path: |
+            artifacts/town02-runtime/*.json
+            artifacts/town02-runtime/test*.txt
+            artifacts/checkpoint-ui/world-*-recording.json
+            artifacts/checkpoint-ui/world-*-normal-*.mp4
+            artifacts/checkpoint-ui/world-*-cold-restart.mp4
+            artifacts/checkpoint-ui/world-*-test.txt
+            artifacts/checkpoint-ui/world-f0-*
+            artifacts/checkpoint-ui/world-north-*
+            artifacts/checkpoint-ui/world-west-*
+            artifacts/checkpoint-ui/world-village1-*
+            artifacts/checkpoint-ui/town02-ci-*
+            artifacts/checkpoint-ui/touch-ux-*
+            artifacts/checkpoint-ui/nanhai-*
+            artifacts/checkpoint-ui/mobile-*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain exact normal checkpoint for the next same-candidate stage
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-normal-checkpoint-world
+          path: artifacts/runtime-handoff/*
+          if-no-files-found: error
           retention-days: 14
 
       - name: Retain bounded original cave story and cold restart evidence
@@ -534,6 +616,83 @@ jobs:
             artifacts/checkpoint-ui/world-yang-join-*.json
             artifacts/checkpoint-ui/world-yang-join-*-test.txt
             artifacts/world-yang-join-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Retain bounded original village4 and ferry evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-world-ferry-checkpoints
+          path: |
+            artifacts/checkpoint-ui/touch-ux-world-village4-*.png
+            artifacts/checkpoint-ui/touch-ux-world-village4-*.json
+            artifacts/checkpoint-ui/world-village4-*.json
+            artifacts/checkpoint-ui/world-village4-*-test.txt
+            artifacts/world-village4-review-clips/*
+            artifacts/checkpoint-ui/touch-ux-world-ferry-*.png
+            artifacts/checkpoint-ui/touch-ux-world-ferry-*.json
+            artifacts/checkpoint-ui/world-ferry-*.json
+            artifacts/checkpoint-ui/world-ferry-*-test.txt
+            artifacts/world-ferry-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+  runtime-continuation:
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
+    needs: [build, runtime-world]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/ci
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-runtime-test-apk
+          path: artifacts/runtime-test
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: fengshen-normal-checkpoint-world
+          path: artifacts/runtime-handoff-input
+      - name: Verify and run the exact candidate in one isolated AVD
+        shell: bash
+        env:
+          FENGSHEN_RUNTIME_STAGE: continuation
+        run: |
+          python -m pip install Pillow==11.3.0
+          bash ci/run-town02-runtime.sh
+      - name: Retain only isolated test evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: fengshen-town02-runtime-evidence
+          path: |
+            artifacts/town02-runtime/*.json
+            artifacts/town02-runtime/test*.txt
+            artifacts/checkpoint-ui/world-*-recording.json
+            artifacts/checkpoint-ui/world-*-normal-*.mp4
+            artifacts/checkpoint-ui/world-*-cold-restart.mp4
+            artifacts/checkpoint-ui/world-*-test.txt
+            artifacts/checkpoint-ui/world-f0-*
+            artifacts/checkpoint-ui/world-north-*
+            artifacts/checkpoint-ui/world-west-*
+            artifacts/checkpoint-ui/world-village1-*
+            artifacts/checkpoint-ui/town02-ci-*
+            artifacts/checkpoint-ui/touch-ux-*
+            artifacts/checkpoint-ui/nanhai-*
+            artifacts/checkpoint-ui/mobile-*
           if-no-files-found: ignore
           retention-days: 14
 

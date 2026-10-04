@@ -3883,7 +3883,9 @@ class TouchTest:IsolatedGameTestCase(){
             walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(54,93)
             var steps=0
             while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<25}){
-                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<7000)
+                // Actual v64: 355 earned wins / 7000 steps left EXP22406 below original T(25)=27750.
+                // Extend only isolated input budget; retain all real encounters, target level and rewards.
+                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<10000)
                 val low=v.currentSnapshot().characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}
                 val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
                 if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){

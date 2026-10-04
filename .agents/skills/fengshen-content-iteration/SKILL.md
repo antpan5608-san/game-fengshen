@@ -352,3 +352,10 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - NPC帧首字节含F1等未解释属性时不猜palette/翻转；复用现有OAM重建方法，在受控附近位置捕获原RAM/PPU/PNG，由四个实际sprite索引及attribute确定flip，比较全部不透明像素且图案表匹配唯一，再用scoped_observed_graphic固定ROM跨度/RGBA。已实际用于当前局部六NPC；位置fixture不是正常路线，完整走动仍欠账。
 - 单actor编号须查真实handler表，不套相邻通用分支；原action41实查CD1A，初误套CB84没有deferred action，失败保留，改查actual dispatcher后CPU对照通过。静态拓扑失败时再比较无NPC组件，只能区分原墙与演员阻挡，不删除墙来让测试变绿；未证明世界连续入口的局部数据不得计正常可玩。
+
+
+## 已核的连续回归接续边界（跨runner App仍待核）
+
+- 原ci/run-town02-runtime.sh的阶段分派经隔离Bash函数执行验证，保留全部原normal recorder/cold-test；tools/runtime_handoff.py只验证/原样搬运App-written JSON，部分阶段不能声明全部PASS。Linux执行`python -m unittest discover -s tests -p test_runtime_handoff.py`实际覆盖同候选/正常与冷启边界、不同run/hash/版本/签名、改数据/缺阶段/真机拒绝和完整分派；此传输fixture不是正常App。
+- 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow三段AVD导入和继续须等同候选实际runner，不把脚本存在当成功。
+- 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。

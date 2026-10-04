@@ -11,10 +11,10 @@ assert all(x not in inspection for x in ['publish-apk.ps1','register-release.ps1
 build=dict(status='completed',conclusion='success',event='workflow_dispatch',head_branch='main',head_sha='fixture-commit',path='.github/workflows/android-build.yml')
 pending=[dict(environment=dict(name='fengshen-production',id=123),current_user_can_approve=True)]
 cases=[]
-def case(name,modify=None,ok=False,token='fixture-token',run='123',digest='a'*64,targets=None,post_fail=False,operation='publish',build_job=True,runtime_job='success'):
+def case(name,modify=None,ok=False,token='fixture-token',run='123',digest='a'*64,targets=None,post_fail=False,operation='publish',build_job=True,runtime_job='success',world_job='success',continuation_job='success'):
     b=copy.deepcopy(build)
     if modify:b.update(modify)
-    cases.append(dict(name=name,build=b,pending=copy.deepcopy(pending if targets is None else targets),ok=ok,token=token,run=run,digest=digest,post_fail=post_fail,operation=operation,build_job=build_job,runtime_job=runtime_job))
+    cases.append(dict(name=name,build=b,pending=copy.deepcopy(pending if targets is None else targets),ok=ok,token=token,run=run,digest=digest,post_fail=post_fail,operation=operation,build_job=build_job,runtime_job=runtime_job,world_job=world_job,continuation_job=continuation_job))
 case('trusted main build approves exact production environment',ok=True)
 case('missing token rejected',token='')
 case('invalid build ID rejected',run='123;invalid')
@@ -33,6 +33,12 @@ case('verification-only run cannot approve publication',build_job=False)
 case('missing App validation rejected',runtime_job='missing')
 case('skipped App validation rejected',runtime_job='skipped')
 case('failed App validation rejected',runtime_job='failure')
+case('missing middle normal stage rejected',world_job='missing')
+case('failed middle normal stage rejected',world_job='failure')
+case('skipped middle normal stage rejected',world_job='skipped')
+case('missing final normal stage rejected',continuation_job='missing')
+case('failed final normal stage rejected',continuation_job='failure')
+case('skipped final normal stage rejected',continuation_job='skipped')
 case('inspect approves without build or hash',ok=True,run='',digest='',operation='inspect')
 case('inspect still requires reviewer token',token='',operation='inspect')
 case('inspect API failure remains failure',post_fail=True,operation='inspect')
@@ -53,7 +59,7 @@ if '--method' in args:
     if c['post_fail']:
         print('fixture HTTP 403',file=sys.stderr);sys.exit(1)
     print('[{"id":1,"environment":"fengshen-production"}]')
-elif any(x.endswith('/jobs') for x in args):print(json.dumps({'jobs':[{'name':'build','status':'completed','conclusion':'success' if c['build_job'] else 'skipped'}]+([] if c['runtime_job']=='missing' else [{'name':'runtime','status':'completed','conclusion':c['runtime_job']}])}))
+elif any(x.endswith('/jobs') for x in args):print(json.dumps({'jobs':[{'name':'build','status':'completed','conclusion':'success' if c['build_job'] else 'skipped'}]+[{'name':name,'status':'completed','conclusion':result} for name,result in [('runtime',c['runtime_job']),('runtime-world',c['world_job']),('runtime-continuation',c['continuation_job'])] if result!='missing']}))
 elif any(x.endswith('/pending_deployments') for x in args):print(json.dumps(c['pending']))
 elif any(x.endswith('/actions/runs/'+c['run']) for x in args):print(json.dumps(c['build']))
 else:sys.exit(1)
