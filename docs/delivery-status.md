@@ -1,3 +1,7 @@
+## WORLD-FULL-01 Windows门禁修正（2026-10-04T11:45Z，未发布）
+
+v65/run37199054406/sourcece5bebaf build在新脚本分派fixture退出1，后续三段App作业未执行；没有APK或发布PASS。保留失败，显式定位已有Git Bash替代默认bash/WSL入口，新增缺Git Bash拒绝与选择测试并输出真实stderr。Linux runtime相关31方法PASS；Windows修正和跨runner接续仍待下一候选。当前c50内容/玩家代码/原版数值不变，正式仍v27/c14，总体PARTIAL，原十类欠账保持。
+
 ## WORLD-FULL-01 原回归分段与v64实际结果（2026-10-04T11:26:54Z）
 
 总体PARTIAL/ALL_MAPS_USABLE=NO/有效分母UNKNOWN，正式仍v27/c14。v64/run37185539165签名build成功但runtime失败，不能发布：实际正常北海与85洞/东海/地府村2通过后，第一殿练级准备7000输入预算耗尽。末尾355正常胜利，哪吒EXP22406/23级，未到原T25=27750，两人存活/装备已取得，没有Boss胜利或App崩溃结论。仅扩大该仪器输入/录制预算，不改玩家规则/目标/断言。

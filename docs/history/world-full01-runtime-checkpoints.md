@@ -720,3 +720,8 @@ task_id: WORLD-FULL-01
 3. 独立核116左侧区域真实连接/地图分派及下一真实区段；原KVM单job最多300分钟，新内容回归增加时须在原workflow内保留同候选正常checkpoint安全续跑，不删门禁或假PASS；缺口只阻塞相应入口，不重做已完成研究，不把55打包地图算全部可玩。
 
 累计权威欠账：docs/delivery-status.md原十类清单；路线：docs/original-playthrough-roadmap.md。已完成三店/药草/触控/南海/逃跑保留。历史任务快照和失败原文见docs/history/world-full01-runtime-checkpoints.md；历史“当前有效”标题不作为当前状态。
+
+
+## v65真实构建失败与最小续跑（2026-10-04T11:45Z）
+
+v65/run37199054406/sourcece5bebafad6d03bfd972d810cfc7d761e97b288b于11:33:01Z在Windows runtime Python门禁失败：隔离脚本分派fixture默认bash退出1、原未显示stderr；3段App作业全部SKIPPED，NOT_PUBLISHED。当前改用已安装Git Bash明确路径，不改全局PATH/认证、不删测试；新增选取与缺失拒绝两例、Linux31相关方法通过，Windows实际下一run待核。原候选65保留，不将其叫运行成功或版本已发布。
