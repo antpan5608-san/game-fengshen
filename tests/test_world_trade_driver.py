@@ -22,15 +22,23 @@ class ServiceBudgetTest(unittest.TestCase):
   self.assertIn('afterArmor+medicine.buyPrice!!',driver)
   self.assertIn('Normal supply earnings exhausted',driver.replace('Bounded normal supply earnings exhausted','Normal supply earnings exhausted'))
   self.assertNotIn('money=220',driver)
- def test_north_training_buys_existing_herbs_before_the_first_encounter(self):
+ def test_north_training_uses_real_nonpoison_zone_and_affordable_supplies(self):
   source=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
   driver=source.split('fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave()',1)[1].split('\n    fun ',1)[0]
-  # Actual v60 source: 398 liang, two herbs; eight legitimate purchases are
-  # affordable while retaining money for two original four-liang stays.
-  self.assertGreaterEqual(398-8*15,8)
-  self.assertIn('replenishTrainingHerbs();inn();walkTo(0,14)',driver)
-  self.assertIn('assertEquals(0,v.world.mapId);replenishTrainingHerbs();inn()',driver)
-  self.assertIn('trade(HerbUse.ID,true,count)',driver)
+  # Actual v61 source, not a synthetic guarantee about future random earnings.
+  self.assertGreaterEqual(314-(8-2)*15-4*20,8)
+  self.assertIn('replenishTrainingSupplies();inn();enterTrainingArea()',driver)
+  self.assertIn('returnFromTraining();replenishTrainingSupplies();inn();enterTrainingArea()',driver)
+  self.assertIn('listOf(HerbUse.ID to 8,AntidoteUse.ID to 4)',driver)
+  self.assertIn('trade(id,true,count)',driver)
+  self.assertIn('walkTo(29,43);walkTo(29,24);walkTo(5,24)',driver)
   self.assertIn('fight.phase!=BattlePhase.DEFEAT',driver)
   self.assertNotIn('inventory=',driver)
+  proof=json.loads((ROOT/'game-data/provenance/world-final-hall-content.json').read_text(encoding='utf-8'))
+  zone=next(z for z in proof['combatOverlay']['zones'] if z['mapId']==96)
+  ids={e['enemyId'] for g in zone['groups'] for e in g['entities']}
+  self.assertEqual({8,9},ids)
+  enemies={e['id']:e for e in proof['combatOverlay']['enemies']}
+  self.assertEqual({0},{enemies[i]['behaviorByte'] for i in ids})
+  self.assertEqual({11,13},{enemies[i]['experienceReward'] for i in ids})
 if __name__=='__main__':unittest.main()

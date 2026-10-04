@@ -27,7 +27,7 @@ class WorldNorthExportTests(unittest.TestCase):
         for enemy in (10,11):
             self.assertGreater(len(Image.open(io.BytesIO(self.result[f'battle-enemy-{enemy}.png'])).getcolors(65536)),1)
         e=next(e for e in combat['enemies']if e['id']==10);self.assertEqual(7,e['behaviorByte']);self.assertEqual('UNKNOWN',e['nameConfidence'])
-    def test_north_preparation_stays_in_actual_zone4_and_can_return_without_a_shortcut(self):
+    def test_historical_zone4_cells_and_return_remain_real_without_a_shortcut(self):
         m=json.loads(self.result['scene25.json']);world=json.loads(self.result['scene.json'])
         zones=json.loads(self.result['combat.json'])['zones'];zone=next(z for z in zones if z['mapId']==25 and z['id']==4)
         contains=lambda z,x,y:any(l<x<=r and t<y<=b for l,t,r,b in z['rectangles'])
@@ -49,8 +49,8 @@ class WorldNorthExportTests(unittest.TestCase):
             self.assertIn(target,seen,(start,target))
         source=(ci.ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
         driver=source.split('fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave()',1)[1].split('fun testWorldNorthPalacePearlColdStartMatchesNormalSave()',1)[0]
-        self.assertIn('walkTo(12,22)',driver);self.assertIn('if(y>21)Key.UP else Key.DOWN',driver)
-        self.assertIn('it.mapId==25&&it.rectangles==listOf(EncounterRect(2,0,30,22),EncounterRect(31,0,63,35))&&it.contains',driver)
+        self.assertIn('walkTo(15,24)',driver);self.assertIn('if(y>23)Key.UP else Key.DOWN',driver)
+        self.assertIn('it.mapId==96&&it.contains(v.world.mapId,nx,ny)',driver)
     def test_true_northwest_records_caller_and_exact_antidote_definition(self):
         scene=json.loads(self.result['scene.json']);edges={(e['fromMapId'],tuple(e['trigger']),e['toMapId'],tuple(e['spawn']))for e in scene['exits']}
         self.assertIn((25,(26,14),16,(186,102)),edges);self.assertIn((16,(186,102),25,(26,14)),edges)
