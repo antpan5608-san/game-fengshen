@@ -4,11 +4,11 @@ task_id: WORLD-FULL-01
 
 任务：全部有效原版地图、交易商店与住宿可用，解除人为试玩边界。连续实施，不以5/10小时或一个小区段为终点；平台/权限中断时保存可复现检查点。原墙、地形、单向连接、剧情条件与交通/道具要求保留，不赠资源/改数值/关闭遇敌/强制胜利。不reset、clean或覆盖玩家存档。复用原两个Actions、reviewer、签名、同提交/同产物hash和既有两个Fengshen对象；Language不变。
 
-## 当前有效状态（2026-10-04T07:32Z）
+## 当前有效状态（2026-10-04T07:44Z）
 
 - task_id保持WORLD-FULL-01，原巡检需要该机器字段；本文件为唯一当前任务入口。
 - 生产仍v27/0.8.7-world-full01-f0/c14，APK SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353，用户已安装。总体PARTIAL，ALL_MAPS_USABLE=NO，有效原版分母UNKNOWN；175几何缓存/259索引不是正常可用分母。
-- main冻结87df6cf836ec7d2106f2231f67f13c622272528c；v64/run37185539165原签名构建执行中，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。独立树不混入审核来源。
+- main冻结87df6cf836ec7d2106f2231f67f13c622272528c；v64/run37185539165原签名构建SUCCESS、真实Android runtime执行中，c41/41图/225文件/manifest7c9a4d5d9796df06515bd093b8861569141f85ba183135b507166a7bb2c9b94f。独立树不混入审核来源。
 - v62/run37180967103 build PASS/runtime FAILURE，TouchTest北海训练waypoint25(29,43)实际class1墙；真实源8级/EXP858/57HP/346两/药草1。仅修测试路径，原网格BFS去返39,42↔5,24均53节点、zone1无毒且无别的出口；7拓扑/3采购与task_id守卫、仪器编译PASS，修后App待v64。v61毒药不足失败保持历史，不混用源状态。
 - v63/run37185326471未完成即取消：精简任务文档漏task_id，inspect37185327792查询前失败UNAVAILABLE；已恢复必需行并测试实际正则，修后新来源重新构建v64，不放宽同源门禁。
 - 最新真实inspect37185540769/2026-10-04T07:22:03.5547836Z成功，可信27/26=1445/2289、3734事件、普通真机9会话/模拟器0/测试0/清理0。精确旧v26下载ProtocolException1仍ISSUES_FOUND/root UNCONFIRMED。自动reviewer成功，publish SKIPPED，不拿旧生产样本证明v64健康。
@@ -20,7 +20,7 @@ task_id: WORLD-FULL-01
 - 6的真实地形/默认palette/桥方向规则/三店原stock和价格/200两客栈/两种医生复用ContentLoader与已有统一命令。7村民组16实际font/12段文本；action52仅真实global7C6.bit64+局部mask首复谈，不按攻略新增route gate/奖励。隐藏6.3是參須1/flag8，C6仍挡路；调查用真实可达17,5向RIGHT，18,6原墙不开放。
 - 原6144对白CPU/9容量与复查CPU案例零差异；字体河/謝等真实图形差异定向校正，保留原寂莫与捆妖繩文字。NPC图形从record-linked F8/F0与4个实际1KiB CHR银行重建，PROVISIONAL静帧、未匹配OAM/Android视觉，不伪造真人录像。
 - 四新商品id/类别/价格/容量有ROM来源；未解名称/能力仍nameConfidence UNKNOWN+PROVISIONAL_REFERENCE，不伪造GAMEPLAY_VERIFIED。仅使用原来源enum，不关闭hash验证。
-- 原export_from_base/ci_apk.restore在全新TemporaryDirectory/assets严格265文件及全manifest PASS；4局部导出/两个世界路径/全部NPC邻格/错价格旗标字体图形拒绝79.223秒PASS；314 JVM/63 suites/0失败错误跳过，仪器编译7秒PASS；22真实Bash审批隔离fixture PASS。c47完整世界回归正在执行，尚无总数/通过结论。
+- 原export_from_base/ci_apk.restore在全新TemporaryDirectory/assets严格265文件及全manifest PASS；4局部导出/两个世界路径/全部NPC邻格/错价格旗标字体图形拒绝79.223秒PASS；314 JVM/63 suites/0失败错误跳过，仪器编译7秒PASS；22真实Bash审批隔离fixture PASS。c47完整世界回归208方法/1064.753秒/0失败错误跳过PASS；日志/tmp/world-c47-full-world-regression.log。安全远端WIP work/world-island-c47/1381cac3e248a299c20e8b5f6c8b1a2c4bb12d81与本地6fe1350精确tree ebcd7d8c1800c11e4154599471c6270efc39ceff一致，main未变。
 - 原TouchTest新增同候选后山存档→真实返镇→世界→6→三店买卖→200两住宿/医生取消→七村民→调查取消/防重复→保存/外部force-stop/独立原边界返程的驱动；原runtime/review receipt与有界原视频artifact接续。编译≠实际App验收。拆出既有village4/5测试helper避免64KiB，所有原断言保留；修正后山Boss测试误套240HP为实际4500，不改游戏数值。
 
 ## 本独立内容树已实施
@@ -44,7 +44,7 @@ task_id: WORLD-FULL-01
 ## 下一条实际动作
 
 1. 读取v64同源候选实际运行结果；新失败读取断言并修受影响部分，全部原门禁通过即自动阶段发布同一APK/公网完整hash/真实postflight，不等待非阻断欠账清零。
-2. c47完整回归后保存本地与安全WIP备份；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
+2. c47完整回归与安全WIP备份已通过；保存本次结果检查点；候选冻结期不推独立内容main。之后安全整合原工作流构建/运行新内容，不拿v64 c41为c47背书。继续实际下一个原版地图/服务区段，不以女儿村单节点结案。
 3. 具体缺口：独立新内容Android尚待runner；class26住宅/客栈overlay181辅助事件未恢复；女儿村北方洞窟/女人国实际数据、能力和连续正常证据待接。缺口只阻塞依赖区段，不重启全量研究。
 
 累计权威清单：docs/delivery-status.md原十类完整段。路线：docs/original-playthrough-roadmap.md。历史授权/检查点/失败原文完整归档：docs/history/world-full01-runtime-checkpoints.md、原stage-publication.md。当前文件是唯一当前任务入口；历史中的“当前有效”标题不再作为当前状态。
