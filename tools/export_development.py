@@ -1505,7 +1505,9 @@ def validate_world_village_batch_resources(reader,map_id):
     font=v['font'];raw=b''.join(checked_span(reader,s)for s in font['sources'])
     if len(raw)!=4096:raise ValueError('Village font CHR missing')
     charset={int(k):ch for k,ch in font['charset'].items()}
-    if {g['code']for g in font['glyphs']}!=set(charset):raise ValueError('Village font coverage incomplete')
+    if any(k&64 and (k!=68 or ch!='　') for k,ch in charset.items()) or \
+            {g['code']for g in font['glyphs']}!={k for k in charset if not k&64}:
+        raise ValueError('Village font coverage incomplete')
     for g in font['glyphs']:
         if charset[g['code']]!=g['character']or digest(bytes(n for row in glyph_pixels(raw,0,g['code'])for n in row))!=g['pixelsSha256']:
             raise ValueError('Village original glyph differs')
@@ -1528,13 +1530,26 @@ def validate_world_village_batch_resources(reader,map_id):
                 (f'rom.npc.{map_id}.{idx}',map_id,cell,raw[0],record['range'],[]):
             raise ValueError('Village original actor identity differs')
         if raw[0]==198:
-            # Only this actual category0/id1 C6 behavior has been exercised here.
-            t=n.get('treasure',{})
-            if (map_id,idx,raw[1],raw[2],raw[12],raw[13])!=(6,3,0,1,0,8)or \
-                    t!=dict(itemId='rom.medicine.1',flagId='rom.map.6.flag.8',amount=1,categoryGrant=0,evidence=path)or \
+            identities={(6,3):(0,1,8),(8,2):(0,9,16),(8,3):(0,0,32),(9,1):(4,13,2),
+                (9,2):(0,10,4),(9,3):(1,14,8),(10,7):(3,14,2),(10,8):(2,11,4)}
+            identity=identities.get((map_id,idx));cat,item,mask=raw[1],raw[2],raw[13]
+            if cat not in range(5):raise ValueError('Unknown hidden investigation category')
+            field='moneyTreasure'if cat==4 else 'treasure'
+            expected=dict(flagId=f'rom.map.{map_id}.flag.{mask}',amount=1,moneyCap=999999,evidence=path)if cat==4 else \
+                dict(itemId=f'rom.{["medicine","special","weapon","armor"][cat]}.{item}',
+                    flagId=f'rom.map.{map_id}.flag.{mask}',amount=1,categoryGrant=cat,evidence=path)
+            if identity!=(cat,item,mask)or raw[12]!=0 or n.get(field)!=expected or \
                     n.get('hiddenInvestigation')is not True or n['firstDialogue']!=''or n['repeatDialogue']is not None or \
                     n.get('removedFlagId')or n.get('openedSprite')!=n['sprite']:
                 raise ValueError('Village hidden pickup cannot invent an effect or remove collision')
+            if map_id!=6 and not any(t['path']=='android/app/src/test/resources/world-west-village-pickups-original.tsv'and
+                    t['caseCount']==94 for t in v['cpu']):raise ValueError('Western hidden pickup lacks CPU cases')
+            if cat==4 and reader.word(2,reader.word(2,0xe616)+2*item)!=1:
+                raise ValueError('Village money amount differs from actual table')
+        elif raw[0]==148 and map_id==10 and idx==6:
+            if raw[1:3]!=b'\xff\xff' or raw[12:]!=b'\x00\x00' or not n.get('talkDisabled') or \
+                    n['firstDialogue']!=''or n['repeatDialogue']is not None:
+                raise ValueError('Original non-talking actor cannot acquire a fake conversation')
         else:
             first=f'rom.dialogue.{v["textGroup"]}.{raw[1]}';repeat=f'rom.dialogue.{v["textGroup"]}.{raw[2] if raw[2]!=255 else raw[1]}'
             if n['firstDialogue']!=first or n['repeatDialogue']!=repeat:raise ValueError('Village actor message differs')
@@ -1543,17 +1558,29 @@ def validate_world_village_batch_resources(reader,map_id):
                     messageDialogues={'0':first,'1':f'rom.dialogue.{v["textGroup"]}.{raw[1]+1}','2':repeat},evidence=path)
                 if map_id!=6 or idx not in range(3)or raw[13]!=1<<idx or n.get('originalTalk')!=expected:
                     raise ValueError('Village action52 lacks actual original selector evidence')
+            elif raw[12]in (53,54):
+                first_repeat={(8,0):(53,1,2,11),(8,1):(53,8,5,12),(9,0):(54,1,12,4)}
+                expected=dict(actionId=raw[12],mapFlagId=f'rom.map.{map_id}.flag.{raw[13]}',
+                    witnessFlagId='rom.global.7c9.nonzero',itemId='',evidence=path)
+                if first_repeat.get((map_id,idx))!=(raw[12],raw[13],raw[1],raw[2])or n.get('originalTalk')!=expected or \
+                        not any(t['path']=='android/app/src/test/resources/world-west-village-talk-original.tsv'and
+                            t['caseCount']==5376 for t in v['cpu']):raise ValueError('Western talk lacks original selector cases')
             elif raw[12]!=0 or raw[2]!=255 or n.get('originalTalk'):
                 raise ValueError('Village side effect is not supported by the local evidence')
         g=v['graphics'][n['sprite']]
-        frames=[rec for rec in records if rec['range']==g['frameRecordSource']]
+        pose_map=g.get('poseMapId',map_id)
+        if pose_map!=map_id and (map_id not in (8,9,10)or
+                (raw[0],pose_map)not in ((140,3),(141,1),(162,4),(168,12))):
+            raise ValueError('Village pose must belong to the same original actor')
+        pose_records=records if pose_map==map_id else extract_npcs(reader,pose_map)['records']
+        frames=[rec for rec in pose_records if rec['range']==g['frameRecordSource']]
         if len(frames)!=1 or frames[0]['entityByte']!=raw[0]:raise ValueError('Village still-frame belongs to another original actor')
         frame_record=frames[0];address=frame_record['animationProgramPointer']
         transport=checked_span(reader,g['animationSource'])
         if g['animationSource']['module']!=0 or g['animationSource']['cpuAddress']!=address or \
                 len(transport)!=3 or transport[0]not in (0xf0,0xf8):raise ValueError('Village initial frame transport differs')
         frame_address=int.from_bytes(transport[1:],'little');frame=checked_span(reader,g['frameSource'])
-        if g['frameSource']['module']!=0 or g['frameSource']['cpuAddress']!=frame_address or len(frame)!=5 or frame[0]not in (0,1,2):
+        if g['frameSource']['module']!=0 or g['frameSource']['cpuAddress']!=frame_address or len(frame)!=5 or frame[0]not in (0,1,2,3):
             raise ValueError('Village static frame is not supported by original bytes')
         banks=g['patternBankSources']
         if len(banks)!=4 or any(len(checked_span(reader,b))!=1024 for b in banks):raise ValueError('Village original sprite CHR banks missing')
@@ -2170,6 +2197,11 @@ def validate_world_cave87_state(reader):
 def validate_world_island_money(reader,npc):
     from forensics.fengshen246 import extract_npcs
     path=npc['moneyTreasure']['evidence']
+    if path=='game-data/provenance/world-village-batch-resources.json':
+        v,_=validate_world_village_batch_resources(reader,npc['mapId'])
+        if npc not in v['npcs']or (npc['mapId'],npc['id'])!=(9,'rom.npc.9.1'):
+            raise ValueError('Village money investigation differs')
+        return v
     identity={'game-data/provenance/world-island-chests.json':(76,6,4,8,100,'island76-five-original-item-chests-and-money100','tools/rom-extractor/probe-world-island-money.py'),
         'game-data/provenance/world-cave87-chests.json':(87,4,8,5,550,'cave87-six-original-item-chests-and-money550','tools/rom-extractor/probe-world-cave87-state.py'),
         'game-data/provenance/world-night8-chests.json':(74,4,32,10,120,'clear-peak100-dark74-seven-original-item-chests-and-money120','tools/rom-extractor/probe-world-night8-money.py')}
@@ -2790,6 +2822,19 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item.get('inventoryGrantEvidence')=='game-data/provenance/world-village-batch-resources.json':
+                    path=item['inventoryGrantEvidence'];p=load(ROOT/path)
+                    bindings=[n for v in p['villages']for n in v['npcs']if
+                        n.get('treasure',{}).get('categoryGrant')==1 and n['treasure']['itemId']==item['id']]
+                    if not bindings:raise ValueError('Special inventory item lacks an original grant')
+                    for n in bindings:validate_world_chest_grant(reader,n)
+                    pointer=reader.word(2,reader.word(2,0xe610)+2*item['originalId']);raw=reader.read(2,pointer,32)
+                    raw=raw[:raw.index(255)+1];source=item['source']['nameRange']
+                    if item['id']!=f'rom.special.{item["originalId"]}'or item['maxCount']!=1 or \
+                            source['cpuAddress']!=pointer or checked_span(reader,source)!=raw or \
+                            any(k in item for k in ('buyPrice','sellPrice','worldUse','battleBindingUse','herbUse','fieldProtectionUse')):
+                        raise ValueError('Inventory-only original special item cannot invent an effect')
+                    continue
                 if item['id']in ('rom.special.8','rom.special.13'):
                     proof=validate_world_night8_resources(reader)
                     if item not in proof['items']:raise ValueError('Night8 special definitions differ')

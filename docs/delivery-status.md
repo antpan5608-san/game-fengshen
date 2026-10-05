@@ -1,3 +1,11 @@
+## 当前进度补记（2026-10-06，北京时间；开发与发布分列）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。生产v82/STABLE、当前R2 v83构建与首段runtime通过，地府主段runtime-world正在执行；后两段与发布未完成。精确来源、run、APK/content hash见docs/current-task.md，历史报告不覆盖当前结果。
+
+独立开发：佳梦关与魔家四将c52已实现并干净DEBUG构建；新增西岐两区域/芙冰三村数据、21演员、共享服务与7隐藏调查形成c53/64图/352文件，原导出/空目录恢复及相关JVM通过，Android APP_VERIFIED=NOT_RUN/PUBLISHED=NO。存档历史20档/前台5分钟/回档前完整快照及事务回滚已实现、逻辑通过，真实UI/冷启/覆盖待验。不把这些内容计入v82或冻结v83的可玩范围。
+
+十类累计欠账仍保留下方权威清单：本次未关闭完整世界、姜子牙招募、出航/杨戬治病、全量技能/物品、真机/声音与真实云恢复；新原村民条件选择与隐藏取物只是限定实现。文字/静态姿态PROVISIONAL、隐藏special14使用未接入。新候选发布仍受原同源/签名/hash/真实运行与巡检门禁约束。
+
 ## WORLD-FULL-01 恢复连续主任务（2026-10-05）
 
 ACTIVE/PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。v79 PERSONAL_TEST_DELIVERED是已发布里程碑，manual_acceptance=PENDING不作为后续前置。正在冻结现有R1范围完成同候选正常三阶段STABLE验收，未执行不能写PASS；之后自动发布并立即继续已有地府/十殿/重生等开发线。c50/56图/302文件及全部取证保留，不能用打包数称全可玩。当前任务仅docs/current-task.md，原十类权威欠账与历史失败在本文件下方完整保留。

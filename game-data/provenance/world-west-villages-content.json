@@ -1,0 +1,6274 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-jiameng-content.json",
+    "pinSha256": "7baf42f0682399969175ac32354b32c87b614fad13e6b8bb1844595eb6352a88",
+    "provenanceSha256": "6710ae7c7de60226bb482dee4ec4126c74143d283891ea4260ad1ea4531b5f81"
+  },
+  "baseManifestSha256": "91fe425a73ee5cec55f469e9871d2b1e0efe4a5eba6054ef5f646fb43df423f8",
+  "clinics": [
+    {
+      "callerMapId": 8,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.8.revival",
+      "kind": "REVIVAL",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 道士",
+      "npcId": "rom.npc.20.1",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": []
+    },
+    {
+      "callerMapId": 8,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.8.care",
+      "kind": "TREATMENT",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 大夫",
+      "npcId": "rom.npc.20.0",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "price": 2,
+          "statusMask": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "price": 3,
+          "statusMask": 4
+        }
+      ]
+    },
+    {
+      "callerMapId": 9,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.9.revival",
+      "kind": "REVIVAL",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 道士",
+      "npcId": "rom.npc.20.1",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": []
+    },
+    {
+      "callerMapId": 9,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.9.care",
+      "kind": "TREATMENT",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 大夫",
+      "npcId": "rom.npc.20.0",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "price": 2,
+          "statusMask": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "price": 3,
+          "statusMask": 4
+        }
+      ]
+    },
+    {
+      "callerMapId": 10,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.10.revival",
+      "kind": "REVIVAL",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 道士",
+      "npcId": "rom.npc.20.1",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": []
+    },
+    {
+      "callerMapId": 10,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "deadMask": 32,
+      "evidence": "game-data/provenance/world-clinic-rules.json",
+      "feeDenominator": 100,
+      "id": "rom.clinic.10.care",
+      "kind": "TREATMENT",
+      "mapId": 20,
+      "minimumFee": 1,
+      "moneyLimit": 999999,
+      "name": "醫館 · 大夫",
+      "npcId": "rom.npc.20.0",
+      "originalEvidenceKind": "CONTROLLED_ORIGINAL_MENU_AND_ACTIVE_CPU_NOT_NORMAL_ANDROID",
+      "recoveredHp": 1,
+      "recoveredStatus": 1,
+      "treatments": [
+        {
+          "id": "poison",
+          "name": "中毒",
+          "price": 2,
+          "statusMask": 2
+        },
+        {
+          "id": "confusion",
+          "name": "錯亂",
+          "price": 3,
+          "statusMask": 4
+        }
+      ]
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.18.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36480,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102032,
+            "sha256": "6c48ee5c7bcd744471bc0be83f267ba25e34ccc17a545c05b7e860c056aaa274"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43636,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109188,
+          "sha256": "d8b80022f96cf37119b17c3f4f189ad810fc5d335743f41ef5df4e0b3da19b86"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『你來西岐做什麼？』"
+    },
+    {
+      "id": "rom.dialogue.18.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36482,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102034,
+            "sha256": "068fe317d662afbf282583041868f01b4089660ffe77969bc80b4b892fbf6c9f"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43647,
+          "length": 9,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109199,
+          "sha256": "a647898c7f8a54273c12cbf2cbf2ef5f72d8aabd9eed138a6408d9136f6d0392"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『離我遠一點。』"
+    },
+    {
+      "id": "rom.dialogue.18.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36484,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102036,
+            "sha256": "f8ba646d6f7b93d32acc17a68251e82f59d15fdd7f08341350a4f778c22d024b"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43656,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109208,
+          "sha256": "8b6af7a32a01d642d06924d0a318d5a6fcd99d7378b3823d75c69c4e2087591b"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『這瘟疫太可怕了！』"
+    },
+    {
+      "id": "rom.dialogue.18.5",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36490,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102042,
+            "sha256": "6998ce228f74a91bd3adeacd9ef1c428fa84a35228d4a78a89a241a28405dcad"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43685,
+          "length": 16,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109237,
+          "sha256": "a27b2fe709bbd84001330635515809159c6b4caf8aab50cfd654c595379ad3d4"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『這裏一定是受到妖怪的詛咒。』"
+    },
+    {
+      "id": "rom.dialogue.18.11",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36502,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102054,
+            "sha256": "d2bdec3101eb836b1a87afbc37e20aafbbd9c77d2e146dda4c732d44c0bf4515"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43776,
+          "length": 9,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109328,
+          "sha256": "5f35c31e400cd85baad8cb6230f95b20ef30e9773f316bd9a206cca6e25c5813"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『總算得救了。』"
+    },
+    {
+      "id": "rom.dialogue.18.12",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36504,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102056,
+            "sha256": "9c9855bbe1ec44436f10bccd80e296a705b7557df99737bb7940b4033dd7b553"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43785,
+          "length": 12,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109337,
+          "sha256": "b2050540edd855af30191918e0de68f7ac0c5e76a80cab3f0248e3208b6e0802"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『我們永遠感激你們。』"
+    },
+    {
+      "id": "rom.dialogue.19.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35464,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101016,
+            "sha256": "f17145487bbb25e6d15727adbdc1bdcbc8bfa3f0800690801b846b1d06b9e4a2"
+          },
+          {
+            "cpuAddress": 36518,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102070,
+            "sha256": "9c5ce690601648040b4061465476e363ca52037083c53e5ffc7e19340d214a91"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43808,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109360,
+          "sha256": "e5277dbb558632b34ac645361489f39b69e012cb26f149290d942c0e26decdc3"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『快遠離西岐城吧！』"
+    },
+    {
+      "id": "rom.dialogue.19.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35464,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101016,
+            "sha256": "f17145487bbb25e6d15727adbdc1bdcbc8bfa3f0800690801b846b1d06b9e4a2"
+          },
+          {
+            "cpuAddress": 36520,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102072,
+            "sha256": "6b19fa3673ef92ac85b0134bc711f0447a766872b59d39c8dc216d8066a989e5"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43819,
+          "length": 12,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109371,
+          "sha256": "bbb644c8e4f6d64660b07170880e6cef155a3a4159afee80bf84f648b155d04d"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『連大夫都得了瘟疫。』"
+    },
+    {
+      "id": "rom.dialogue.19.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35464,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101016,
+            "sha256": "f17145487bbb25e6d15727adbdc1bdcbc8bfa3f0800690801b846b1d06b9e4a2"
+          },
+          {
+            "cpuAddress": 36526,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102078,
+            "sha256": "550cac55214bceb519c85d16ce49a8c051c3b5ae61fa949b04a356e1c78ccdf5"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43859,
+          "length": 14,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109411,
+          "sha256": "40f39871e8dcfedb23c5e4bfdb65732846281b8ada301c9066e3289f463fb45a"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『你聽說怪樹吃人的事嗎？』"
+    },
+    {
+      "id": "rom.dialogue.19.12",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35464,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101016,
+            "sha256": "f17145487bbb25e6d15727adbdc1bdcbc8bfa3f0800690801b846b1d06b9e4a2"
+          },
+          {
+            "cpuAddress": 36542,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102094,
+            "sha256": "f2e64a0ffcb088c1301202d8dcaf446e1272794773f892b21c4b6863b7aaf1d6"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43969,
+          "length": 8,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109521,
+          "sha256": "1c2b2433a60d6388e2ff2e53fdcce1c4a5089907e668a55c5cba38a605144158"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『咳嗽。。。』"
+    },
+    {
+      "id": "rom.dialogue.20.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36582,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102134,
+            "sha256": "2b07ac10ca07c02f2a9d8b027253f52cc5fd6bb9d89b691f79238a3e951962c6"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44475,
+          "length": 14,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110027,
+          "sha256": "d3947c901d46a8b9266b0c1d7febfc4a4355d50dac1b1369daa8b6aa58ab5a47"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『這裏是水上之村芙冰村。』"
+    },
+    {
+      "id": "rom.dialogue.20.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36584,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102136,
+            "sha256": "d549ab9389ef7a573086eff45626f844e1e59c3e58185dcfc38644d35a6d664f"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44489,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110041,
+          "sha256": "1dcc0bd7fd9531d176c7aef0890526ff9f6859eff479832310083c1afe826106"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『村裏有一位百知仙，能知未來。』"
+    },
+    {
+      "id": "rom.dialogue.20.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36586,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102138,
+            "sha256": "157d590b75d19bb91ea1ca7ab7d5f3db36ac51bd133b12bc9f1012c5c2ce4968"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44506,
+          "length": 18,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110058,
+          "sha256": "cd5e36aa648492f412c4aa9ec217536dd2fcbba01bc678594e893a6961858d35"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『聽說西岐城流行瘟疫，太可怕了！』"
+    },
+    {
+      "id": "rom.dialogue.20.8",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36598,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102150,
+            "sha256": "bee94fed63857189c138904f685e1573e909168d61f8909139caee854d093b2f"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44613,
+          "length": 25,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110165,
+          "sha256": "5113b83895b245e1086efd0f7f33cb39b756bc369b553e109da5d1d4ea9fd603"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『聽我奶奶說，湖裏有蓮葉的地方，住著一位仙子。』"
+    },
+    {
+      "id": "rom.dialogue.20.9",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36600,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102152,
+            "sha256": "11deb4c6c57566b8f122fd0efe4d2f5722f18921c64656932dd6b8270e57b630"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44638,
+          "length": 14,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110190,
+          "sha256": "11a781fc5d6ecd6824bc4fcff8387ee74a96e007b7e41ca710c27d7ebb8ba236"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『有位仙子能用百草治病。』"
+    },
+    {
+      "id": "rom.dialogue.20.10",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "originalEvidenceKind": "TARGET_STREAM_AND_ACTUAL_MAPPER_FONT_WITH_PROVISIONAL_UNICODE",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35466,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101018,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36602,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102154,
+            "sha256": "38b3139a1540c3e6226d33e82a57aaa8c57f04c669ceeed2782332aaf0421c11"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44652,
+          "length": 13,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110204,
+          "sha256": "c6d6adeb2dda58ed209e3b34c5b6e5c0f84f049291744e9658a3c68cc5ddff1c"
+        },
+        "reference": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "licenseStatus": "UNKNOWN",
+          "path": "Resources/res/MainData",
+          "repository": "https://github.com/v5100v5100/FengShenBang",
+          "sha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127"
+        }
+      },
+      "text": "『這是渭水上游的湖泊。』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "existingItemPriceUpdates": [],
+  "exits": [
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56978,
+        "length": 5,
+        "meaning": "Original independent entrance",
+        "module": 8,
+        "offset": 286370,
+        "sha256": "79988695ffdad208da0a5dcab671dca0fc37894094189fff4bbf6367c187624f"
+      },
+      "spawn": [
+        3,
+        16
+      ],
+      "toMapId": 8,
+      "trigger": [
+        44,
+        81
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalDirectionSource": {
+        "cpuAddress": 43551,
+        "length": 41,
+        "meaning": "Original scene reconstruction preserves facing",
+        "module": 0,
+        "offset": 10799,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8"
+      },
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 8,
+      "kind": "EDGE_RECORD",
+      "preserveArrivalDirection": true,
+      "resetEncounterSteps": true,
+      "runtimeEvidence": {
+        "cell": [
+          44,
+          81
+        ],
+        "kind": "ACTUAL_ORIGINAL_DOWN_EDGE_KEYS_FROM_CONTROLLED_ENTRY",
+        "mapId": 16,
+        "path": "private-derived/world-west-next-four-entry-controlled/map8-actual-return-ram.bin",
+        "sha256": "9074090ef91f4d066b9a2448ca3f0b9109b41148d1c6fde1a68fdab217d8ce42"
+      },
+      "source": {
+        "cpuAddress": 56828,
+        "length": 5,
+        "meaning": "Original independent down-edge return",
+        "module": 8,
+        "offset": 286220,
+        "sha256": "7cf4dfbcd8e01e3051c7e213a5dbdecf47b5d42ef8690d4b7efc8d383c0d8d50"
+      },
+      "spawn": [
+        44,
+        81
+      ],
+      "toMapId": 16,
+      "trigger": [
+        3,
+        29
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 22,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 8,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 18,
+      "trigger": [
+        26,
+        21
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 23,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 8,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        6,
+        12
+      ],
+      "toMapId": 19,
+      "trigger": [
+        23,
+        7
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 25,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 3,
+      "fromMapId": 8,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        12,
+        14
+      ],
+      "toMapId": 22,
+      "trigger": [
+        10,
+        9
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56983,
+        "length": 5,
+        "meaning": "Original independent entrance",
+        "module": 8,
+        "offset": 286375,
+        "sha256": "a8538b6765f5a7940e9d1d9c48eaf9b6b274e928aca653dccda40fcada5e9927"
+      },
+      "spawn": [
+        30,
+        16
+      ],
+      "toMapId": 9,
+      "trigger": [
+        39,
+        81
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56988,
+        "length": 5,
+        "meaning": "Original independent entrance",
+        "module": 8,
+        "offset": 286380,
+        "sha256": "ec74f712ff6ff78618f00b1ccedf9feb1e0fbe4a53111aa21aeecaf8cd98de92"
+      },
+      "spawn": [
+        30,
+        16
+      ],
+      "toMapId": 9,
+      "trigger": [
+        40,
+        81
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalDirectionSource": {
+        "cpuAddress": 43551,
+        "length": 41,
+        "meaning": "Original scene reconstruction preserves facing",
+        "module": 0,
+        "offset": 10799,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8"
+      },
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 9,
+      "kind": "EDGE_RECORD",
+      "preserveArrivalDirection": true,
+      "resetEncounterSteps": true,
+      "runtimeEvidence": {
+        "cell": [
+          40,
+          81
+        ],
+        "kind": "ACTUAL_ORIGINAL_DOWN_EDGE_KEYS_FROM_CONTROLLED_ENTRY",
+        "mapId": 16,
+        "path": "private-derived/world-west-next-four-entry-controlled/map9-actual-return-ram.bin",
+        "sha256": "69ae151e847243c8ad41a394695ebe2b59a0f51921269ba499b5d3f2cbe6442b"
+      },
+      "source": {
+        "cpuAddress": 56834,
+        "length": 5,
+        "meaning": "Original independent down-edge return",
+        "module": 8,
+        "offset": 286226,
+        "sha256": "ff98d1c4e6364d3372ca30705531af44a5748363ec9327f15c6faddeaaa3d416"
+      },
+      "spawn": [
+        40,
+        81
+      ],
+      "toMapId": 16,
+      "trigger": [
+        30,
+        29
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 21,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 9,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 17,
+      "trigger": [
+        5,
+        24
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 24,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 9,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 20,
+      "trigger": [
+        8,
+        18
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 25,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 3,
+      "fromMapId": 9,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        12,
+        14
+      ],
+      "toMapId": 22,
+      "trigger": [
+        16,
+        14
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56968,
+        "length": 5,
+        "meaning": "Original independent entrance",
+        "module": 8,
+        "offset": 286360,
+        "sha256": "3e7c230eb27d7d2204095d4af30666f0e6fdab65aae1a48a1606f447a61fd5b2"
+      },
+      "spawn": [
+        19,
+        22
+      ],
+      "toMapId": 10,
+      "trigger": [
+        65,
+        88
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56973,
+        "length": 5,
+        "meaning": "Original independent entrance",
+        "module": 8,
+        "offset": 286365,
+        "sha256": "dd47db2af0549e5cb0eea81f28c6ce1ea44c2df5c742ec9e216b9c03b33a6296"
+      },
+      "spawn": [
+        19,
+        22
+      ],
+      "toMapId": 10,
+      "trigger": [
+        66,
+        88
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalDirectionSource": {
+        "cpuAddress": 43551,
+        "length": 41,
+        "meaning": "Original scene reconstruction preserves facing",
+        "module": 0,
+        "offset": 10799,
+        "sha256": "35f017807c014da7fc4f9bf2f78b769bf8c801bc18b10304d9659060139c84b8"
+      },
+      "confidence": "VERIFIED",
+      "fromMapId": 10,
+      "kind": "EXIT_RECORD",
+      "preserveArrivalDirection": true,
+      "resetEncounterSteps": true,
+      "runtimeEvidence": {
+        "cell": [
+          65,
+          88
+        ],
+        "kind": "ACTUAL_ORIGINAL_DOWN_EDGE_KEYS_FROM_CONTROLLED_ENTRY",
+        "mapId": 16,
+        "path": "private-derived/world-west-next-four-entry-controlled/map10-actual-return-ram.bin",
+        "sha256": "9c6f969d90752da8ec45561425ede61316d1c080f589d66e5c08ed61cfc9412d"
+      },
+      "source": {
+        "cpuAddress": 56840,
+        "length": 5,
+        "meaning": "Original independent down-edge return",
+        "module": 8,
+        "offset": 286232,
+        "sha256": "357a83c9a87432db8e502add28c483f3fbba2093e66d269389390d37dee355b0"
+      },
+      "spawn": [
+        65,
+        88
+      ],
+      "toMapId": 16,
+      "trigger": [
+        19,
+        23
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 21,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 10,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 17,
+      "trigger": [
+        27,
+        23
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 22,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 10,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 18,
+      "trigger": [
+        27,
+        17
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 23,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 10,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        6,
+        12
+      ],
+      "toMapId": 19,
+      "trigger": [
+        8,
+        23
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 24,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 4,
+      "fromMapId": 10,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "toMapId": 20,
+      "trigger": [
+        5,
+        25
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "collisionClass": 25,
+      "confidence": "VERIFIED",
+      "dispatchSubtract": 3,
+      "fromMapId": 10,
+      "kind": "COLLISION_ENTRY",
+      "source": {
+        "cpuAddress": 52195,
+        "length": 24,
+        "meaning": "Shared original caller dispatch",
+        "module": 0,
+        "offset": 19443,
+        "sha256": "1c1824fed896a6220cb1bbbfaaa010ecac4e159e43cc6fa63254a31141dc2991"
+      },
+      "spawn": [
+        12,
+        14
+      ],
+      "toMapId": 22,
+      "trigger": [
+        6,
+        9
+      ]
+    }
+  ],
+  "graphics": {
+    "npc-140-village10-1.png": {
+      "animationSource": {
+        "cpuAddress": 36308,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3556,
+        "sha256": "21fc4416fb6f25c5c6b08992205852246e805b9bee59bcfb2513078537ca8b45"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 47120,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 276512,
+        "sha256": "17ab1080ebe16517d7f62156c1773711f313014c197080a434689f50be55ea84"
+      },
+      "frameSource": {
+        "cpuAddress": 36490,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3738,
+        "sha256": "804042189f39ef0be74a49b2a93c576d9a700bc72cb2341b8a36494dd7464474"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          252,
+          252,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "poseMapId": 3,
+      "rgbaSha256": "746d7aaee6100726a6d6078cc271ca2f1ed91459d87d3b160ed31974b0aad734",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 868944,
+          "sha256": "d221d458b7aeb1410c9d072ded37fe3a9747e37b34a887aff8e2a6bb9a537e03",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 868960,
+          "sha256": "781a87cce67d24fc7d8b271f9467f4ed48abf6d1d2d8ffc2a193bb75c293f73c",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869200,
+          "sha256": "86a7d053016f86ca1532478f43e7a534ad37ebad9149e6e4f648c28bd82364da",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869216,
+          "sha256": "f22295ee677a9961b57beefebcddfc943611c6f882149a84dbc18d0937ae4286",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-140-village8-4.png": {
+      "animationSource": {
+        "cpuAddress": 36308,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3556,
+        "sha256": "21fc4416fb6f25c5c6b08992205852246e805b9bee59bcfb2513078537ca8b45"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 47120,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 276512,
+        "sha256": "17ab1080ebe16517d7f62156c1773711f313014c197080a434689f50be55ea84"
+      },
+      "frameSource": {
+        "cpuAddress": 36490,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3738,
+        "sha256": "804042189f39ef0be74a49b2a93c576d9a700bc72cb2341b8a36494dd7464474"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          252,
+          252,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "poseMapId": 3,
+      "rgbaSha256": "d8652e021d18851fcf0ccc45c0efa785b2c260fbbc4a86c3dc7fc1118bfce9e5",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 864848,
+          "sha256": "c68201ac37390bc520b492a9b7293958d8240bd886e6646a90a3ad74a4e1419a",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 864864,
+          "sha256": "875c62f448f56928e9af340435aacd844af4f0894ef624bb296ba87855eb2cac",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 865104,
+          "sha256": "9f6896b77b1a7f19cdf8b0008458f1f19e34c4ba68d8bc9af236cb6b62b2e00b",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 865120,
+          "sha256": "ac7ace15b221baf68ff1d22f1fcfbac35a774d3206b5be60fbe337f741fd5442",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-140-village9-4.png": {
+      "animationSource": {
+        "cpuAddress": 36301,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3549,
+        "sha256": "6347a72d71f02c2ef474401477351c46c57f0617610aaa3ba1eea80cd6eb5825"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48599,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277991,
+        "sha256": "9e7b5f437d038f49aa92d1e8f28d2897c1c3db4e23344138a99ed81d09c74750"
+      },
+      "frameSource": {
+        "cpuAddress": 36480,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3728,
+        "sha256": "57faaa9c225401f723fc222fd46fb6212dd16445e757230ddba6f96846970522"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          252,
+          252,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "dc1d48ba1fb63879b17ed15c7fa083ff78b3a89b4859c342796b2955a30e09a8",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 868880,
+          "sha256": "acbbf92035c4d18849e57443c031e6a01a7af020c68fedc82c3f81435be2fc77",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 868896,
+          "sha256": "b5c3d1c2b22fe932a068d5b5d041dd3778c1de7c622cc8b84b943100d358eeec",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869136,
+          "sha256": "4c515388fbd14eeec3fee51369994d4eb79361f9fd1f0f2d3f4a7439940e8c11",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869152,
+          "sha256": "7a5c0a32594c7fab1038e65c27ea0064fee524c809ef82226d078bb1aa6489cf",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-140-village9-5.png": {
+      "animationSource": {
+        "cpuAddress": 36308,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3556,
+        "sha256": "21fc4416fb6f25c5c6b08992205852246e805b9bee59bcfb2513078537ca8b45"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 47120,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 276512,
+        "sha256": "17ab1080ebe16517d7f62156c1773711f313014c197080a434689f50be55ea84"
+      },
+      "frameSource": {
+        "cpuAddress": 36490,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3738,
+        "sha256": "804042189f39ef0be74a49b2a93c576d9a700bc72cb2341b8a36494dd7464474"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          252,
+          252,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "poseMapId": 3,
+      "rgbaSha256": "746d7aaee6100726a6d6078cc271ca2f1ed91459d87d3b160ed31974b0aad734",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 868944,
+          "sha256": "d221d458b7aeb1410c9d072ded37fe3a9747e37b34a887aff8e2a6bb9a537e03",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 868960,
+          "sha256": "781a87cce67d24fc7d8b271f9467f4ed48abf6d1d2d8ffc2a193bb75c293f73c",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869200,
+          "sha256": "86a7d053016f86ca1532478f43e7a534ad37ebad9149e6e4f648c28bd82364da",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869216,
+          "sha256": "f22295ee677a9961b57beefebcddfc943611c6f882149a84dbc18d0937ae4286",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-141-village10-2.png": {
+      "animationSource": {
+        "cpuAddress": 36336,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3584,
+        "sha256": "7319f9902e44fc7399a1dabb691c15f0918bd772ee6d0d0363f7b57bd0577f1c"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 46693,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 276085,
+        "sha256": "242d32b81888ca07c0627d7800a896bf19c6753c9cf280414e77c6d561a2c068"
+      },
+      "frameSource": {
+        "cpuAddress": 36530,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3778,
+        "sha256": "bd28a7f56751be5b4443124bf50b19daa9a5ed14cca38856e1075f4101bcea59"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "poseMapId": 1,
+      "rgbaSha256": "40940bdc0331efd93932df2ce5f07fc6a70ed4872b60fc6e78b5179b4ba5cbbd",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 869456,
+          "sha256": "5379d87eadcfcf5b457e85f97c16933e98f9fcf8fe7c9e0616af4d4d76ff79e3",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869472,
+          "sha256": "dc2443036b020fbb1e123ccdea3b7b940925567ec8ebb61d0d13bdfa8c590e0b",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869712,
+          "sha256": "0237ee5d4846409d7e6ee28b0f8ce8e9a47c96d1a3963fe35ed12cf68d7d38f8",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869728,
+          "sha256": "424a7adc888dfc3681f726bb33d047e6fe9f651576ed0b5aeb9fb986643817dd",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-141-village8-1.png": {
+      "animationSource": {
+        "cpuAddress": 36336,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3584,
+        "sha256": "7319f9902e44fc7399a1dabb691c15f0918bd772ee6d0d0363f7b57bd0577f1c"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48188,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277580,
+        "sha256": "ded540920a96aeda27a2773fcae06a886ba39afa16f19d8b6fd9cbc6ac0b442d"
+      },
+      "frameSource": {
+        "cpuAddress": 36530,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3778,
+        "sha256": "bd28a7f56751be5b4443124bf50b19daa9a5ed14cca38856e1075f4101bcea59"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "d35d2fd44c6c7bf6bce5708461c92b351002eb586d125b6de5dbf661ab12c244",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 865360,
+          "sha256": "dfd2a1efd3d98cd24e1078e89e969e3cafae7f336bebf85e912eab18195178f6",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 865376,
+          "sha256": "a85aeb50c5315142e2e808ec7dbf4673064a29c29be85ed9b814b663409069ae",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 865616,
+          "sha256": "88ff806ce6c502e9e7bd79ff58be65a45f8ebfe3c5eaace0c461056972e225e1",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 865632,
+          "sha256": "83844e8e51ef9077a7ed85b5ecf20d0b19d7a29442ebe4364173ad31cdbd061c",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-143-village10-5.png": {
+      "animationSource": {
+        "cpuAddress": 36392,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3640,
+        "sha256": "6b3f999e56e92d3b7c71bdcd5779e752d2202822bea480c7985e429ea3f1f6f3"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48758,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278150,
+        "sha256": "c4b5d202c91d36043b256c2fba8e93983d5756ec8b62d415674e029b087c403e"
+      },
+      "frameSource": {
+        "cpuAddress": 36610,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3858,
+        "sha256": "5ebdcaaae50a2155821d2ee215d65731b1ba68c61b41eb665c3215e9cdd4d558"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "22a3e7089f966562ec99f4137f115b4e03c3488184328fea9d07ef9cbde33607",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 869072,
+          "sha256": "690fd335e58517e02538f3bdb3a23f494454eaaa21e011be2d7f03ed108a22b8",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869088,
+          "sha256": "eb3a02cb80a13c7c4392ee51e743df8dea9a77a177300a4914bd931a715256a8",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869328,
+          "sha256": "a9f415f7245e477b86502b28319409d67878e358bf985b7169ecac786949a8c2",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869344,
+          "sha256": "ace409e03b2ced4082b2a06becea01e900d72f85bd0758a7073f8ddc943ebe35",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-148-village10-6.png": {
+      "animationSource": {
+        "cpuAddress": 36428,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3676,
+        "sha256": "d7c28b519ba9e9242a00d7ffb79662efffc3f5a8838a603d10a6a5a0ac5d00e6"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48772,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278164,
+        "sha256": "42877ed04ca8630bfd9f790c3943799557ed919d5dbd13f098f612643749dd61"
+      },
+      "frameSource": {
+        "cpuAddress": 36665,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3913,
+        "sha256": "9add24d1b9c5a9a9e61e2697c28969e623b4baa4ed85930f72dbacee8210ce7f"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "973ca8ca19a28cc0bf489d693d44a441eb5fe82aa68bb594d369a3297c66838a",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 869936,
+          "sha256": "5d6ab89bd2fd79ac0a6e5bc9f0b957922320072001ff09f97adc67afba013369",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 869952,
+          "sha256": "237a5eef7a0b5b2d889062eb66d5000e24b45665b10a40afea58c1d25c788740",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870192,
+          "sha256": "8e65db168adc08f8482341b598fe047886ccf281ed7fc18160f72b66c0404221",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870208,
+          "sha256": "ba3e125ec8554a058288f2480006f86c5eed34e49fd45d28e244063a9736090f",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-162-village10-4.png": {
+      "animationSource": {
+        "cpuAddress": 37411,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 4659,
+        "sha256": "67b28aaa1d5f082eb7fa031351536bff312e2b905c6246429e2540702a3bc3c3"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 47362,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 276754,
+        "sha256": "02ee27a35dad17fea7f2933bd5603f667bca7be6e610d239f07cf75576543cd8"
+      },
+      "frameSource": {
+        "cpuAddress": 37576,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4824,
+        "sha256": "cb8b1906fe642620a4b24559941af1de5adf6626b812219a3c4ec4142a39e3aa"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "poseMapId": 4,
+      "rgbaSha256": "4dedc75ba7d197973bc043723698ffbeb6b9316ae551f2b571f4ca1c4b1f5002",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870992,
+          "sha256": "780ed1129f9cde1fa6b9497daee203feef67288b6e2fd43f6b239fd57b1fa9f6",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871008,
+          "sha256": "ef64e1b60a9a9467851630068f13d8b023b56ef05929e6ead0326f3117443a12",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871248,
+          "sha256": "e1963b3d60fc7b9d646b6ce4361a213f4e5f07d942e5613de5c3d835430eff46",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871264,
+          "sha256": "ee769ca052d7dceb37062e559b4995ea3e4b476a43c5b4025a4f6535de814b05",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-164-village10-3.png": {
+      "animationSource": {
+        "cpuAddress": 37467,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 4715,
+        "sha256": "3d310a3a0c438f5191a8c9f0061cb0477f983f0522e723c4ccac1c8233ff661b"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48730,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278122,
+        "sha256": "64a7024ac33648a0dc6172435269e6930b5b8687856f5871551440b59bb622d3"
+      },
+      "frameSource": {
+        "cpuAddress": 37656,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4904,
+        "sha256": "540190e476123cb674272237bdd1318df8ae66a09910ab2b52db8cf4c78ff29e"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "4d23678db336c78d5946a83413b56683b61629ff29717bb9647a3cec8d0efd8f",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 872016,
+          "sha256": "fa0665bddc6c2ffd797058891d063029b093c49718e2adf3a840cb5454cd63d6",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 872032,
+          "sha256": "d83247cff3367f9086886bc7edaf96d0b8d31cbd9e9cbd4592476c506a1eef1b",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 872272,
+          "sha256": "74a884d1b83af874c1a4ba58611ed7889e25c5ae6a6ec1c820b55d4d7f99bd2e",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 872288,
+          "sha256": "3d7c675bccd8461d905426475ee3f886f069ccead013946408b848fc244d3755",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-165-village10-0.png": {
+      "animationSource": {
+        "cpuAddress": 37502,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 4750,
+        "sha256": "e0b4c23f172d1912498d45aa9232aefa8740fd34843a5907fd5727e69253b21a"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48688,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278080,
+        "sha256": "6161006db0162db1e9b66ca9ed1d44c55707411b7b3c16aeaba9e3cfddb19c49"
+      },
+      "frameSource": {
+        "cpuAddress": 37706,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4954,
+        "sha256": "735e58875140d361736488385331650df11f492aba5a5b29f7cf3b0fb6376235"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "66d254cc831026a2b113b00bbc16669513db96e57035c8f66774c25556c21d85",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 871632,
+          "sha256": "9fabd0dfc683f3d6c585f567d43bd8c91dffff846d306a247ed0b3900e085e94",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871648,
+          "sha256": "760801e61d4fad41e9a0ca2292c1ae6368b71fa6ac184cafc18d68e5fb6ec8f5",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871888,
+          "sha256": "67de47bbce0a35e7f1f8d2b36f030398e781c71051a0b4a0e660265c003fe39f",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871904,
+          "sha256": "50e95b0a834be6eabe0e2bb54435724658af6a83e6a695f02fc40a70a1b2ca6f",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-168-village9-0.png": {
+      "animationSource": {
+        "cpuAddress": 37755,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 5003,
+        "sha256": "3bef3f1844cbb14a7153aebf9ddfc8648b5f1b6d0bf295b4c79ff7eb399161c1"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 49174,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278566,
+        "sha256": "aeeb700af66a10556b7479707a3bebbfa9d97abd79006753af642e9cf9e2fc6a"
+      },
+      "frameSource": {
+        "cpuAddress": 37546,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4794,
+        "sha256": "3745070558094f0c1352cfd4f1dc416942bbdd2a669bf73eb02879df6400b953"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "poseMapId": 12,
+      "rgbaSha256": "98343ba86b9cc86c6bed2ee4ae85c20d9193314ba1be0fd4d064494903d67233",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 874640,
+          "sha256": "0308398f7970f09ea05394855065b3038751bb79dc41b20e1310e69bec2c1c03",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874656,
+          "sha256": "2dd5760777b7b3686fa2998a726b85c6ee9c4608ca714ee98508e06cee3f5e6d",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874896,
+          "sha256": "8a1b9f08313330012d037b5f781e9bed5b78547f1c3bde1e36351f4c5cf6efcc",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874912,
+          "sha256": "510bd1bc9cd8feb595f3c519510627fe85784a626544c1c52be02b324a99cae4",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-172-village8-0.png": {
+      "animationSource": {
+        "cpuAddress": 37860,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 5108,
+        "sha256": "3e6be2600ddc74e2db1f46dcc36f51b47786a1c13d30356d3e9161b42f64e4b4"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48174,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277566,
+        "sha256": "0d0e9e55e91a8cebc2be1299b968abba2f94c297b0ef7b02985d246ea63f526d"
+      },
+      "frameSource": {
+        "cpuAddress": 37985,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 5233,
+        "sha256": "b5cea4e705e46e074002b187dab3245e74af964edaed0c2b025bbca023d1ea2a"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          88,
+          248,
+          152
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "ae2ed417dcdd3049bd6bcc9a5648eda42a32373e44e28e6049ced083d4bce712",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 875216,
+          "sha256": "288b1bf25fa6bfe0b18f211e3794dd85f8beb41c76db8f3b842918485df62578",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 875232,
+          "sha256": "29ad98631f9a667c588b096346fe49ca4e794d0e74e5687d9e261bab129bf20d",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 875472,
+          "sha256": "93615a87544a82230cef672cbbf4191bed5efdf820df50d1dae81d36339644dd",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 875488,
+          "sha256": "4a0cb8f43bb377cc9406cc3756048a2ac8c618184c7e2261262f491acedf74c3",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-172-village8-5.png": {
+      "animationSource": {
+        "cpuAddress": 37853,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 5101,
+        "sha256": "baa87754c5bcd64bdd55a2739842bb08151aab7ba0bd404e3a5112f6c066f127"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48244,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277636,
+        "sha256": "f5a13d38d4ca829319e636913d6d630f749ae25f4d8e1fe8dd7dde2206d556af"
+      },
+      "frameSource": {
+        "cpuAddress": 37975,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 5223,
+        "sha256": "e03b9d9ac368c5366f6b6671e46c92afca8dbc3c9644d40260c74ffefb2cca6b"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          88,
+          248,
+          152
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "dafa70eae310147165caa44b41f050f34747c45fe0369201b40df6a96b6347ec",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 874704,
+          "sha256": "4cea4d02d514d9f4cb4b9a8cc3f2eed3d60af60dee72a3a8f43549cb7d8077f5",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874720,
+          "sha256": "60fcaef6ab1837606ba2d7e8dd94a24f6f03b11f5a6fc573248aa291946a13b4",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874960,
+          "sha256": "4e9c4a47d629115bffff7419821570d76cdf213d9740d61ccac87df26ede20f5",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 874976,
+          "sha256": "d7050f1d40d9dfe9139f80546354ab5e02ed7a42299b6640b216e96734a5b6f6",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village10-7.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48786,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278178,
+        "sha256": "2ab3f08c6186c45c14a9c87579f386abb44da59a56ba0cb6d52b3d6ac44c2db2"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village10-8.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48800,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278192,
+        "sha256": "befc2c0b604a1877127b82711fe435e3a881ee75fc1db891041644ffb8e03e57"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village8-2.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48202,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277594,
+        "sha256": "4bf6e9361cfb84be727c20f16c4be6e2a685bfd7773228d9357c31d811986e3d"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village8-3.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48216,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277608,
+        "sha256": "59f64f0e1bf196d3ef3867d951272c2ed6e7d16388664fd4619e1f0a6b908229"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 864272,
+          "sha256": "43e0474441de1c867d5e26f33bcd6fd71580bd598510d91cbaad0d6e6b83aa95"
+        },
+        {
+          "length": 1024,
+          "offset": 865296,
+          "sha256": "b5e3953701b9288fabf8eadc2a81b3d1d6512fe7f0e33bb45de45a230fd2f1af"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866304,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village9-1.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48557,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277949,
+        "sha256": "c04434f983d37859943f465fad4b9b862462b8aee4c964d5911ce6d151648e1e"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village9-2.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48571,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277963,
+        "sha256": "eaf8cc411e02f4ed3c310b560d68a845001a0f941b398b612f0eed82e73266d6"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-village9-3.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48585,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 277977,
+        "sha256": "02c280113fd536ebefc48f02f8d66d5650a462263b4820a5575a8a998e63adbc"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 874512,
+          "sha256": "3127776e7bc96ee81def6fb353ec04cc1aae0947c0fc64b57f156f06cc0e9a92"
+        },
+        {
+          "length": 1024,
+          "offset": 875536,
+          "sha256": "067f9791cbda6c45512d0e65b5c432e1191b03a2cac271d343a9e9c016acb39c"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "inns": [
+    {
+      "blockedStatusMask": 114,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "evidence": "game-data/provenance/world-village-batch-resources.json",
+      "id": "rom.inn.8",
+      "mapId": 22,
+      "name": "客栈",
+      "npcId": "rom.npc.22.0",
+      "price": 250,
+      "priceSource": {
+        "cpuAddress": 50891,
+        "length": 2,
+        "meaning": "Original caller lodging price",
+        "module": 2,
+        "offset": 83675,
+        "sha256": "37133560d1c3a56cc32bdc7367716b6f5f12879610677b2bc29017e1b2db9374"
+      },
+      "prompt": "住宿一次需250兩。",
+      "promptKind": "MOBILE_PRICE_SUMMARY_NOT_ORIGINAL_TRANSCRIPTION",
+      "statusFlagSources": [
+        {
+          "cpuAddress": 50962,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83746,
+          "sha256": "c3641f8544d7c02f3580b07c0f9887f0c6a27ff5ab1d4a3e29caf197cfc299ae"
+        },
+        {
+          "cpuAddress": 50969,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83753,
+          "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+        },
+        {
+          "cpuAddress": 50976,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83760,
+          "sha256": "c555eab45d08845ae9f10d452a99bfcb06f74a50b988fe7e48dd323789b88ee3"
+        },
+        {
+          "cpuAddress": 50983,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83767,
+          "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+        }
+      ]
+    },
+    {
+      "blockedStatusMask": 114,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "evidence": "game-data/provenance/world-village-batch-resources.json",
+      "id": "rom.inn.9",
+      "mapId": 22,
+      "name": "客栈",
+      "npcId": "rom.npc.22.0",
+      "price": 250,
+      "priceSource": {
+        "cpuAddress": 50893,
+        "length": 2,
+        "meaning": "Original caller lodging price",
+        "module": 2,
+        "offset": 83677,
+        "sha256": "37133560d1c3a56cc32bdc7367716b6f5f12879610677b2bc29017e1b2db9374"
+      },
+      "prompt": "住宿一次需250兩。",
+      "promptKind": "MOBILE_PRICE_SUMMARY_NOT_ORIGINAL_TRANSCRIPTION",
+      "statusFlagSources": [
+        {
+          "cpuAddress": 50962,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83746,
+          "sha256": "c3641f8544d7c02f3580b07c0f9887f0c6a27ff5ab1d4a3e29caf197cfc299ae"
+        },
+        {
+          "cpuAddress": 50969,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83753,
+          "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+        },
+        {
+          "cpuAddress": 50976,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83760,
+          "sha256": "c555eab45d08845ae9f10d452a99bfcb06f74a50b988fe7e48dd323789b88ee3"
+        },
+        {
+          "cpuAddress": 50983,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83767,
+          "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+        }
+      ]
+    },
+    {
+      "blockedStatusMask": 114,
+      "confidence": "GAMEPLAY_VERIFIED",
+      "evidence": "game-data/provenance/world-village-batch-resources.json",
+      "id": "rom.inn.10",
+      "mapId": 22,
+      "name": "客栈",
+      "npcId": "rom.npc.22.0",
+      "price": 250,
+      "priceSource": {
+        "cpuAddress": 50895,
+        "length": 2,
+        "meaning": "Original caller lodging price",
+        "module": 2,
+        "offset": 83679,
+        "sha256": "37133560d1c3a56cc32bdc7367716b6f5f12879610677b2bc29017e1b2db9374"
+      },
+      "prompt": "住宿一次需250兩。",
+      "promptKind": "MOBILE_PRICE_SUMMARY_NOT_ORIGINAL_TRANSCRIPTION",
+      "statusFlagSources": [
+        {
+          "cpuAddress": 50962,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83746,
+          "sha256": "c3641f8544d7c02f3580b07c0f9887f0c6a27ff5ab1d4a3e29caf197cfc299ae"
+        },
+        {
+          "cpuAddress": 50969,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83753,
+          "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+        },
+        {
+          "cpuAddress": 50976,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83760,
+          "sha256": "c555eab45d08845ae9f10d452a99bfcb06f74a50b988fe7e48dd323789b88ee3"
+        },
+        {
+          "cpuAddress": 50983,
+          "length": 1,
+          "meaning": "Original excluded status AND operand",
+          "module": 2,
+          "offset": 83767,
+          "sha256": "36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "buyPrice": 8000,
+      "category": "armor",
+      "description": "原版稳定物品；名称或使用能力尚未核定。",
+      "id": "rom.armor.6",
+      "maxCount": 10,
+      "name": "原版armor 6",
+      "originalId": 6,
+      "sellPrice": 4000,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 60590,
+          "length": 5,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 93374,
+          "sha256": "89de79002300ac5ee967acd51b320aa5c01be20d4f06d9d7ff30a5761c33439b"
+        },
+        "priceRange": {
+          "cpuAddress": 60297,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 93081,
+          "sha256": "c11cfe6fed6b592180b362e415e9b359ee9f6a9bbb7f1bcf4e80ce3c802c91ef"
+        },
+        "referenceKind": "TARGET_ROM_STABLE_ID_AND_PRICE_ONLY",
+        "remainingUnknown": [
+          "Original name and operation"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount",
+          "buyPrice",
+          "sellPrice"
+        ]
+      }
+    },
+    {
+      "category": "special",
+      "description": "原版隐藏物品，使用逻辑尚未接入。",
+      "id": "rom.special.14",
+      "inventoryGrantEvidence": "game-data/provenance/world-village-batch-resources.json",
+      "maxCount": 1,
+      "name": "原版特殊物品14",
+      "originalId": 14,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 59473,
+          "length": 5,
+          "meaning": "Original special14 terminated name stream",
+          "module": 2,
+          "offset": 92257,
+          "sha256": "7094fe447190f99aefc088bd2d2f590f9fd19fe08401bcdfb0c36fec6dbd486d"
+        },
+        "remainingUnknown": [
+          "Name transcription and original use"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount"
+        ]
+      }
+    },
+    {
+      "buyPrice": 2000,
+      "category": "weapon",
+      "description": "原版稳定物品；名称或使用能力尚未核定。",
+      "id": "rom.weapon.10",
+      "maxCount": 10,
+      "name": "原版weapon 10",
+      "originalId": 10,
+      "sellPrice": 1000,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 59969,
+          "length": 5,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 92753,
+          "sha256": "59fb71ed66ed2ed7559cddf45e510093e1715755f5163f974b5dd34aad058e55"
+        },
+        "priceRange": {
+          "cpuAddress": 59662,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 92446,
+          "sha256": "dde12454138143570a55716b7cdc99c7f811f2d0d24397d182d574a6dbbdfe16"
+        },
+        "referenceKind": "TARGET_ROM_STABLE_ID_AND_PRICE_ONLY",
+        "remainingUnknown": [
+          "Original name and operation"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount",
+          "buyPrice",
+          "sellPrice"
+        ]
+      }
+    },
+    {
+      "buyPrice": 1640,
+      "category": "weapon",
+      "description": "原版稳定物品；名称或使用能力尚未核定。",
+      "id": "rom.weapon.37",
+      "maxCount": 10,
+      "name": "原版weapon 37",
+      "originalId": 37,
+      "sellPrice": 820,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 60098,
+          "length": 5,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 92882,
+          "sha256": "c301d1bec18d83536bea2ce9e0232aed5e6999667f0c9c88c0ba1021826143c0"
+        },
+        "priceRange": {
+          "cpuAddress": 59716,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 92500,
+          "sha256": "5a06e4dc651157c0d50b3321761f3a9478c64626120e284d270fedbaf129c419"
+        },
+        "referenceKind": "TARGET_ROM_STABLE_ID_AND_PRICE_ONLY",
+        "remainingUnknown": [
+          "Original name and operation"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount",
+          "buyPrice",
+          "sellPrice"
+        ]
+      }
+    },
+    {
+      "buyPrice": 2500,
+      "category": "weapon",
+      "description": "原版稳定物品；名称或使用能力尚未核定。",
+      "id": "rom.weapon.44",
+      "maxCount": 10,
+      "name": "原版weapon 44",
+      "originalId": 44,
+      "sellPrice": 1250,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 60133,
+          "length": 4,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 92917,
+          "sha256": "6c6c6c5c8c0db9cf48d9e6308c37b0cb3f891402ba5b9579712cc18559b4192f"
+        },
+        "priceRange": {
+          "cpuAddress": 59730,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 92514,
+          "sha256": "d20fa3449f556711a3964ea0a3bc30f27f93823adccc5cc1ddff99803c042e22"
+        },
+        "referenceKind": "TARGET_ROM_STABLE_ID_AND_PRICE_ONLY",
+        "remainingUnknown": [
+          "Original name and operation"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount",
+          "buyPrice",
+          "sellPrice"
+        ]
+      }
+    },
+    {
+      "buyPrice": 2800,
+      "category": "weapon",
+      "description": "原版稳定物品；名称或使用能力尚未核定。",
+      "id": "rom.weapon.11",
+      "maxCount": 10,
+      "name": "原版weapon 11",
+      "originalId": 11,
+      "sellPrice": 1400,
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 59974,
+          "length": 5,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 92758,
+          "sha256": "fb8acb77042e96c378b35761c5d35160c76024dab3df1560fcd0cad1c4aa53e7"
+        },
+        "priceRange": {
+          "cpuAddress": 59664,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 92448,
+          "sha256": "99bf9ac8bb97d53af2bb2336202a905953552cf3b610c64f1f36922431112d8e"
+        },
+        "referenceKind": "TARGET_ROM_STABLE_ID_AND_PRICE_ONLY",
+        "remainingUnknown": [
+          "Original name and operation"
+        ],
+        "verifiedFields": [
+          "originalId",
+          "category",
+          "maxCount",
+          "buyPrice",
+          "sellPrice"
+        ]
+      }
+    }
+  ],
+  "limitations": [],
+  "maps": [
+    {
+      "directionalCollision": true,
+      "gridSha256": "0f5b53defa784bb89f38fa21179aa5cf245273ce91de8f5815d114e030b9bd45",
+      "limitations": [
+        "Static NPC pose and Unicode transcription PROVISIONAL; Android normal route NOT_RUN",
+        "No invented illness cure, character admission, boat departure or optional-house events"
+      ],
+      "mapId": 8,
+      "npcCells": [
+        625,
+        314,
+        663,
+        713,
+        520,
+        463
+      ],
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        3,
+        16
+      ],
+      "townBridgeCollisionEvidence": "game-data/provenance/world-village-batch-resources.json",
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "directionalCollision": true,
+      "gridSha256": "efb0ec2748dc4f9ea43fc446a572238a7ab5539863c72ccbb9ed975987cd801e",
+      "limitations": [
+        "Static NPC pose and Unicode transcription PROVISIONAL; Android normal route NOT_RUN",
+        "No invented illness cure, character admission, boat departure or optional-house events"
+      ],
+      "mapId": 9,
+      "npcCells": [
+        204,
+        118,
+        84,
+        115,
+        471,
+        651
+      ],
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        30,
+        16
+      ],
+      "townBridgeCollisionEvidence": "game-data/provenance/world-village-batch-resources.json",
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "directionalCollision": true,
+      "gridSha256": "9c8ddda8812c76712df29a25e66b5352206ad4b4b3168689d8e966273c95905d",
+      "limitations": [
+        "Static NPC pose and Unicode transcription PROVISIONAL; Android normal route NOT_RUN",
+        "No invented illness cure, character admission, boat departure or optional-house events"
+      ],
+      "mapId": 10,
+      "npcCells": [
+        661,
+        775,
+        456,
+        271,
+        605,
+        497,
+        73,
+        181,
+        245
+      ],
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        19,
+        22
+      ],
+      "townBridgeCollisionEvidence": "game-data/provenance/world-village-batch-resources.json",
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        17,
+        19
+      ],
+      "firstDialogue": "rom.dialogue.18.2",
+      "firstEffects": [],
+      "id": "rom.npc.8.0",
+      "mapId": 8,
+      "originalTalk": {
+        "actionId": 53,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.8.flag.1",
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.18.11",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48174,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277566,
+          "sha256": "0d0e9e55e91a8cebc2be1299b968abba2f94c297b0ef7b02985d246ea63f526d"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-172-village8-0.png",
+      "spriteId": 172,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        26,
+        9
+      ],
+      "firstDialogue": "rom.dialogue.18.5",
+      "firstEffects": [],
+      "id": "rom.npc.8.1",
+      "mapId": 8,
+      "originalTalk": {
+        "actionId": 53,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.8.flag.8",
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.18.12",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48188,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277580,
+          "sha256": "ded540920a96aeda27a2773fcae06a886ba39afa16f19d8b6fd9cbc6ac0b442d"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-141-village8-1.png",
+      "spriteId": 141,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        23,
+        20
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.8.2",
+      "mapId": 8,
+      "openedSprite": "npc-198-village8-2.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48202,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277594,
+          "sha256": "4bf6e9361cfb84be727c20f16c4be6e2a685bfd7773228d9357c31d811986e3d"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village8-2.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.8.flag.16",
+        "itemId": "rom.medicine.9"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        9,
+        22
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.8.3",
+      "mapId": 8,
+      "openedSprite": "npc-198-village8-3.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48216,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277608,
+          "sha256": "59f64f0e1bf196d3ef3867d951272c2ed6e7d16388664fd4619e1f0a6b908229"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village8-3.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.8.flag.32",
+        "itemId": "rom.medicine.0"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        8,
+        16
+      ],
+      "firstDialogue": "rom.dialogue.18.0",
+      "firstEffects": [],
+      "id": "rom.npc.8.4",
+      "mapId": 8,
+      "repeatDialogue": "rom.dialogue.18.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48230,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277622,
+          "sha256": "bc6dd259d27d3ed7090de3ff0c91d81ba29050c3465dbc65e1f98119e7a28b61"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-140-village8-4.png",
+      "spriteId": 140,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        15,
+        14
+      ],
+      "firstDialogue": "rom.dialogue.18.1",
+      "firstEffects": [],
+      "id": "rom.npc.8.5",
+      "mapId": 8,
+      "repeatDialogue": "rom.dialogue.18.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48244,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277636,
+          "sha256": "f5a13d38d4ca829319e636913d6d630f749ae25f4d8e1fe8dd7dde2206d556af"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-172-village8-5.png",
+      "spriteId": 172,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        12,
+        6
+      ],
+      "firstDialogue": "rom.dialogue.19.12",
+      "firstEffects": [],
+      "id": "rom.npc.9.0",
+      "mapId": 9,
+      "originalTalk": {
+        "actionId": 54,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.9.flag.1",
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.19.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48543,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277935,
+          "sha256": "3a8493ce573721109d10d57401237ba2c848d176d230e4ff5e6ee138134f7d7b"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-168-village9-0.png",
+      "spriteId": 168,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        22,
+        3
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.9.1",
+      "mapId": 9,
+      "moneyTreasure": {
+        "amount": 1,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.9.flag.2",
+        "moneyCap": 999999
+      },
+      "openedSprite": "npc-198-village9-1.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48557,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277949,
+          "sha256": "c04434f983d37859943f465fad4b9b862462b8aee4c964d5911ce6d151648e1e"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village9-1.png",
+      "spriteId": 198,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        20,
+        2
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.9.2",
+      "mapId": 9,
+      "openedSprite": "npc-198-village9-2.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48571,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277963,
+          "sha256": "eaf8cc411e02f4ed3c310b560d68a845001a0f941b398b612f0eed82e73266d6"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village9-2.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.9.flag.4",
+        "itemId": "rom.medicine.10"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        19,
+        3
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.9.3",
+      "mapId": 9,
+      "openedSprite": "npc-198-village9-3.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48585,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277977,
+          "sha256": "02c280113fd536ebefc48f02f8d66d5650a462263b4820a5575a8a998e63adbc"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village9-3.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 1,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.9.flag.8",
+        "itemId": "rom.special.14"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        23,
+        14
+      ],
+      "firstDialogue": "rom.dialogue.19.0",
+      "firstEffects": [],
+      "id": "rom.npc.9.4",
+      "mapId": 9,
+      "repeatDialogue": "rom.dialogue.19.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48599,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277991,
+          "sha256": "9e7b5f437d038f49aa92d1e8f28d2897c1c3db4e23344138a99ed81d09c74750"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-140-village9-4.png",
+      "spriteId": 140,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        11,
+        20
+      ],
+      "firstDialogue": "rom.dialogue.19.1",
+      "firstEffects": [],
+      "id": "rom.npc.9.5",
+      "mapId": 9,
+      "repeatDialogue": "rom.dialogue.19.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48613,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278005,
+          "sha256": "a66e903e6bd386b978cf22f4ac8ba522886b486530b9501b61fbc66103070834"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-140-village9-5.png",
+      "spriteId": 140,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        21,
+        20
+      ],
+      "firstDialogue": "rom.dialogue.20.0",
+      "firstEffects": [],
+      "id": "rom.npc.10.0",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48688,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278080,
+          "sha256": "6161006db0162db1e9b66ca9ed1d44c55707411b7b3c16aeaba9e3cfddb19c49"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-165-village10-0.png",
+      "spriteId": 165,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        7,
+        24
+      ],
+      "firstDialogue": "rom.dialogue.20.1",
+      "firstEffects": [],
+      "id": "rom.npc.10.1",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48702,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278094,
+          "sha256": "7f7662beab634b1990c2acd3db90fe24fb7bccc7cd1fbc50b0716a314f76d5fd"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-140-village10-1.png",
+      "spriteId": 140,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        8,
+        14
+      ],
+      "firstDialogue": "rom.dialogue.20.2",
+      "firstEffects": [],
+      "id": "rom.npc.10.2",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48716,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278108,
+          "sha256": "e32aa7d25ab23bec531628c70f6a152403d9b4902002d5af188bfa7f666c7524"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-141-village10-2.png",
+      "spriteId": 141,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        15,
+        8
+      ],
+      "firstDialogue": "rom.dialogue.20.8",
+      "firstEffects": [],
+      "id": "rom.npc.10.3",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.8",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48730,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278122,
+          "sha256": "64a7024ac33648a0dc6172435269e6930b5b8687856f5871551440b59bb622d3"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-164-village10-3.png",
+      "spriteId": 164,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        29,
+        18
+      ],
+      "firstDialogue": "rom.dialogue.20.9",
+      "firstEffects": [],
+      "id": "rom.npc.10.4",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.9",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48744,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278136,
+          "sha256": "fd4e77fdd912523bc3f89a4de4fad1a0c81a0efdcd580badf39eb7ce800f4832"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-162-village10-4.png",
+      "spriteId": 162,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        17,
+        15
+      ],
+      "firstDialogue": "rom.dialogue.20.10",
+      "firstEffects": [],
+      "id": "rom.npc.10.5",
+      "mapId": 10,
+      "repeatDialogue": "rom.dialogue.20.10",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48758,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278150,
+          "sha256": "c4b5d202c91d36043b256c2fba8e93983d5756ec8b62d415674e029b087c403e"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-143-village10-5.png",
+      "spriteId": 143,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        9,
+        2
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "id": "rom.npc.10.6",
+      "mapId": 10,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48772,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278164,
+          "sha256": "42877ed04ca8630bfd9f790c3943799557ed919d5dbd13f098f612643749dd61"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-148-village10-6.png",
+      "spriteId": 148,
+      "talkDisabled": true,
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        21,
+        5
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.10.7",
+      "mapId": 10,
+      "openedSprite": "npc-198-village10-7.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48786,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278178,
+          "sha256": "2ab3f08c6186c45c14a9c87579f386abb44da59a56ba0cb6d52b3d6ac44c2db2"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village10-7.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 3,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.10.flag.2",
+        "itemId": "rom.armor.14"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    },
+    {
+      "cell": [
+        21,
+        7
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "id": "rom.npc.10.8",
+      "mapId": 10,
+      "openedSprite": "npc-198-village10-8.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "record": {
+          "cpuAddress": 48800,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278192,
+          "sha256": "befc2c0b604a1877127b82711fe435e3a881ee75fc1db891041644ffb8e03e57"
+        },
+        "remainingUnknown": [
+          "Moving pose and Android verification"
+        ]
+      },
+      "sprite": "npc-198-village10-8.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 2,
+        "evidence": "game-data/provenance/world-village-batch-resources.json",
+        "flagId": "rom.map.10.flag.4",
+        "itemId": "rom.weapon.11"
+      },
+      "villageResourceEvidence": "game-data/provenance/world-village-batch-resources.json"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 52076,
+      "length": 17,
+      "meaning": "Shared original source collision dispatch",
+      "module": 0,
+      "offset": 19324,
+      "sha256": "ccedf7b2bc4f9f9a42060b233e36e5af3bc5d37facbef30d9b264fce0f3a9936"
+    },
+    {
+      "cpuAddress": 52186,
+      "length": 8,
+      "meaning": "Shared class10/11 source branches",
+      "module": 0,
+      "offset": 19434,
+      "sha256": "e832dc6ae9b4cedd6f6cf998fa00b402f4ff955b704b8c05b2a75a7d1015c2a0"
+    },
+    {
+      "cpuAddress": 52947,
+      "length": 17,
+      "meaning": "Shared original target collision dispatch",
+      "module": 0,
+      "offset": 20195,
+      "sha256": "2ab3e9bb4916e24ebb1bd6119d5f14a976be072e6c119cc0afa6c541a7a4bae3"
+    },
+    {
+      "cpuAddress": 53847,
+      "length": 18,
+      "meaning": "Shared bridge directional source restrictions",
+      "module": 0,
+      "offset": 21095,
+      "sha256": "710be4f4ab08d9d1ba591f19d68c1e1af1e36f2f8f9346ae491d7f71bc463bbc"
+    },
+    {
+      "cpuAddress": 53059,
+      "length": 1,
+      "meaning": "Shared bridge target return",
+      "module": 0,
+      "offset": 20307,
+      "sha256": "8d33f520a3c4cef80d2453aef81b612bfe1cb44c8b2025630ad38662763f13d3"
+    },
+    {
+      "cpuAddress": 54435,
+      "length": 2,
+      "meaning": "Original scene local flag pointer",
+      "module": 0,
+      "offset": 21683,
+      "sha256": "c3aefc14ee1131201d705d4da641e4729e40fcd15a0d80015a9deba1164959f9"
+    },
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Shared first-repeat selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 52810,
+      "length": 47,
+      "meaning": "Original action53 global7c9 witness",
+      "module": 10,
+      "offset": 347738,
+      "sha256": "9743122bfc2ea05719e940033153d7d60ec53d3d6f3b6cbc381165106530212f"
+    },
+    {
+      "cpuAddress": 52853,
+      "length": 40,
+      "meaning": "Original action54 global7c9 witness",
+      "module": 10,
+      "offset": 347781,
+      "sha256": "3ae46307819cb0b4b40e11b1142c129e8c44787653805920763ed13441004b56"
+    },
+    {
+      "cpuAddress": 42816,
+      "length": 233,
+      "meaning": "Original hidden investigation",
+      "module": 10,
+      "offset": 337744,
+      "sha256": "1c0157a2f7d60788c87e42fbface3923d95044cb8b77b8e39e8628dcf9ed7805"
+    },
+    {
+      "cpuAddress": 41195,
+      "length": 173,
+      "meaning": "Original inventory grant",
+      "module": 2,
+      "offset": 73979,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a"
+    },
+    {
+      "cpuAddress": 40885,
+      "length": 58,
+      "meaning": "Original money grant",
+      "module": 2,
+      "offset": 73669,
+      "sha256": "ec675821489e981c6cd17c757e1314ac5dbd40378f11b27461e3d4f1edd4e0c5"
+    },
+    {
+      "cpuAddress": 50480,
+      "length": 32,
+      "meaning": "Original saturated money addition",
+      "module": 2,
+      "offset": 83264,
+      "sha256": "0fe6b2800d4ac0fb9eb9c595fac1a25d4e92026d31fb6c03fef9ea40a6339173"
+    },
+    {
+      "cpuAddress": 58902,
+      "length": 2,
+      "meaning": "Original money table pointer",
+      "module": 2,
+      "offset": 91686,
+      "sha256": "10cdd43e3da7117a0c592b94437e323bb62f375da31640d40e456a82c6c0fce9"
+    },
+    {
+      "cpuAddress": 60992,
+      "length": 2,
+      "meaning": "Original category4 item13 amount",
+      "module": 2,
+      "offset": 93776,
+      "sha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+    },
+    {
+      "cpuAddress": 57555,
+      "length": 2,
+      "meaning": "Map background/sprite palette selector pair",
+      "module": 0,
+      "offset": 24803,
+      "sha256": "e545d395bb3fd971f91bf9a2b6722831df704efae6c1aa9da0989ed0970b77bb"
+    },
+    {
+      "cpuAddress": 58294,
+      "length": 2,
+      "meaning": "Background palette pointer",
+      "module": 0,
+      "offset": 25542,
+      "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293"
+    },
+    {
+      "cpuAddress": 58424,
+      "length": 2,
+      "meaning": "Sprite palette pointer",
+      "module": 0,
+      "offset": 25672,
+      "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+    },
+    {
+      "cpuAddress": 58458,
+      "length": 16,
+      "meaning": "Original default background colors",
+      "module": 0,
+      "offset": 25706,
+      "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0"
+    },
+    {
+      "cpuAddress": 58634,
+      "length": 16,
+      "meaning": "Original sprite colors",
+      "module": 0,
+      "offset": 25882,
+      "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+    },
+    {
+      "cpuAddress": 54437,
+      "length": 2,
+      "meaning": "Original scene local flag pointer",
+      "module": 0,
+      "offset": 21685,
+      "sha256": "cbc2e44043c8b5adad4fc1a9d1046645194e15d74fd20e6c4dfdc2f47488dfa5"
+    },
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Shared first-repeat selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 52810,
+      "length": 47,
+      "meaning": "Original action53 global7c9 witness",
+      "module": 10,
+      "offset": 347738,
+      "sha256": "9743122bfc2ea05719e940033153d7d60ec53d3d6f3b6cbc381165106530212f"
+    },
+    {
+      "cpuAddress": 52853,
+      "length": 40,
+      "meaning": "Original action54 global7c9 witness",
+      "module": 10,
+      "offset": 347781,
+      "sha256": "3ae46307819cb0b4b40e11b1142c129e8c44787653805920763ed13441004b56"
+    },
+    {
+      "cpuAddress": 42816,
+      "length": 233,
+      "meaning": "Original hidden investigation",
+      "module": 10,
+      "offset": 337744,
+      "sha256": "1c0157a2f7d60788c87e42fbface3923d95044cb8b77b8e39e8628dcf9ed7805"
+    },
+    {
+      "cpuAddress": 41195,
+      "length": 173,
+      "meaning": "Original inventory grant",
+      "module": 2,
+      "offset": 73979,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a"
+    },
+    {
+      "cpuAddress": 40885,
+      "length": 58,
+      "meaning": "Original money grant",
+      "module": 2,
+      "offset": 73669,
+      "sha256": "ec675821489e981c6cd17c757e1314ac5dbd40378f11b27461e3d4f1edd4e0c5"
+    },
+    {
+      "cpuAddress": 50480,
+      "length": 32,
+      "meaning": "Original saturated money addition",
+      "module": 2,
+      "offset": 83264,
+      "sha256": "0fe6b2800d4ac0fb9eb9c595fac1a25d4e92026d31fb6c03fef9ea40a6339173"
+    },
+    {
+      "cpuAddress": 58902,
+      "length": 2,
+      "meaning": "Original money table pointer",
+      "module": 2,
+      "offset": 91686,
+      "sha256": "10cdd43e3da7117a0c592b94437e323bb62f375da31640d40e456a82c6c0fce9"
+    },
+    {
+      "cpuAddress": 60992,
+      "length": 2,
+      "meaning": "Original category4 item13 amount",
+      "module": 2,
+      "offset": 93776,
+      "sha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+    },
+    {
+      "cpuAddress": 57557,
+      "length": 2,
+      "meaning": "Map background/sprite palette selector pair",
+      "module": 0,
+      "offset": 24805,
+      "sha256": "a2c4aed1cf757cd9a509734a267ffc7b1166b55f4c8f9c3e3550c56e743328fc"
+    },
+    {
+      "cpuAddress": 58296,
+      "length": 2,
+      "meaning": "Background palette pointer",
+      "module": 0,
+      "offset": 25544,
+      "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293"
+    },
+    {
+      "cpuAddress": 58424,
+      "length": 2,
+      "meaning": "Sprite palette pointer",
+      "module": 0,
+      "offset": 25672,
+      "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+    },
+    {
+      "cpuAddress": 58458,
+      "length": 16,
+      "meaning": "Original default background colors",
+      "module": 0,
+      "offset": 25706,
+      "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0"
+    },
+    {
+      "cpuAddress": 58634,
+      "length": 16,
+      "meaning": "Original sprite colors",
+      "module": 0,
+      "offset": 25882,
+      "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+    },
+    {
+      "cpuAddress": 54439,
+      "length": 2,
+      "meaning": "Original scene local flag pointer",
+      "module": 0,
+      "offset": 21687,
+      "sha256": "3b1b07a15d2ef91320f5ba771d97ab2ce9a7b8b5a0e8fc16fbc7fd9caaa3fc63"
+    },
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Shared first-repeat selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 52810,
+      "length": 47,
+      "meaning": "Original action53 global7c9 witness",
+      "module": 10,
+      "offset": 347738,
+      "sha256": "9743122bfc2ea05719e940033153d7d60ec53d3d6f3b6cbc381165106530212f"
+    },
+    {
+      "cpuAddress": 52853,
+      "length": 40,
+      "meaning": "Original action54 global7c9 witness",
+      "module": 10,
+      "offset": 347781,
+      "sha256": "3ae46307819cb0b4b40e11b1142c129e8c44787653805920763ed13441004b56"
+    },
+    {
+      "cpuAddress": 42816,
+      "length": 233,
+      "meaning": "Original hidden investigation",
+      "module": 10,
+      "offset": 337744,
+      "sha256": "1c0157a2f7d60788c87e42fbface3923d95044cb8b77b8e39e8628dcf9ed7805"
+    },
+    {
+      "cpuAddress": 41195,
+      "length": 173,
+      "meaning": "Original inventory grant",
+      "module": 2,
+      "offset": 73979,
+      "sha256": "242a754ccb4f03a0740ec9257ee636852f8b3510f7620b060ff5f5483201139a"
+    },
+    {
+      "cpuAddress": 40885,
+      "length": 58,
+      "meaning": "Original money grant",
+      "module": 2,
+      "offset": 73669,
+      "sha256": "ec675821489e981c6cd17c757e1314ac5dbd40378f11b27461e3d4f1edd4e0c5"
+    },
+    {
+      "cpuAddress": 50480,
+      "length": 32,
+      "meaning": "Original saturated money addition",
+      "module": 2,
+      "offset": 83264,
+      "sha256": "0fe6b2800d4ac0fb9eb9c595fac1a25d4e92026d31fb6c03fef9ea40a6339173"
+    },
+    {
+      "cpuAddress": 58902,
+      "length": 2,
+      "meaning": "Original money table pointer",
+      "module": 2,
+      "offset": 91686,
+      "sha256": "10cdd43e3da7117a0c592b94437e323bb62f375da31640d40e456a82c6c0fce9"
+    },
+    {
+      "cpuAddress": 60992,
+      "length": 2,
+      "meaning": "Original category4 item13 amount",
+      "module": 2,
+      "offset": 93776,
+      "sha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254"
+    },
+    {
+      "cpuAddress": 57559,
+      "length": 2,
+      "meaning": "Map background/sprite palette selector pair",
+      "module": 0,
+      "offset": 24807,
+      "sha256": "102b51b9765a56a3e899f7cf0ee38e5251f9c503b357b330a49183eb7b155604"
+    },
+    {
+      "cpuAddress": 58298,
+      "length": 2,
+      "meaning": "Background palette pointer",
+      "module": 0,
+      "offset": 25546,
+      "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293"
+    },
+    {
+      "cpuAddress": 58424,
+      "length": 2,
+      "meaning": "Sprite palette pointer",
+      "module": 0,
+      "offset": 25672,
+      "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+    },
+    {
+      "cpuAddress": 58458,
+      "length": 16,
+      "meaning": "Original default background colors",
+      "module": 0,
+      "offset": 25706,
+      "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0"
+    },
+    {
+      "cpuAddress": 58634,
+      "length": 16,
+      "meaning": "Original sprite colors",
+      "module": 0,
+      "offset": 25882,
+      "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "three-west-villages-shared-services-talk-and-hidden-grants",
+  "serviceBindings": [
+    {
+      "callerMapId": 8,
+      "interiorMapId": 17,
+      "npcId": "rom.npc.17.0",
+      "shopId": "rom.shop.8.17"
+    },
+    {
+      "callerMapId": 8,
+      "interiorMapId": 18,
+      "npcId": "rom.npc.18.0",
+      "shopId": "rom.shop.8.18"
+    },
+    {
+      "callerMapId": 8,
+      "interiorMapId": 19,
+      "npcId": "rom.npc.19.0",
+      "shopId": "rom.shop.8.19"
+    },
+    {
+      "callerMapId": 8,
+      "innId": "rom.inn.8",
+      "interiorMapId": 22,
+      "npcId": "rom.npc.22.0"
+    },
+    {
+      "callerMapId": 8,
+      "clinicId": "rom.clinic.8.revival",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1"
+    },
+    {
+      "callerMapId": 8,
+      "clinicId": "rom.clinic.8.care",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0"
+    },
+    {
+      "callerMapId": 9,
+      "interiorMapId": 17,
+      "npcId": "rom.npc.17.0",
+      "shopId": "rom.shop.9.17"
+    },
+    {
+      "callerMapId": 9,
+      "interiorMapId": 18,
+      "npcId": "rom.npc.18.0",
+      "shopId": "rom.shop.9.18"
+    },
+    {
+      "callerMapId": 9,
+      "interiorMapId": 19,
+      "npcId": "rom.npc.19.0",
+      "shopId": "rom.shop.9.19"
+    },
+    {
+      "callerMapId": 9,
+      "innId": "rom.inn.9",
+      "interiorMapId": 22,
+      "npcId": "rom.npc.22.0"
+    },
+    {
+      "callerMapId": 9,
+      "clinicId": "rom.clinic.9.revival",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1"
+    },
+    {
+      "callerMapId": 9,
+      "clinicId": "rom.clinic.9.care",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0"
+    },
+    {
+      "callerMapId": 10,
+      "interiorMapId": 17,
+      "npcId": "rom.npc.17.0",
+      "shopId": "rom.shop.10.17"
+    },
+    {
+      "callerMapId": 10,
+      "interiorMapId": 18,
+      "npcId": "rom.npc.18.0",
+      "shopId": "rom.shop.10.18"
+    },
+    {
+      "callerMapId": 10,
+      "interiorMapId": 19,
+      "npcId": "rom.npc.19.0",
+      "shopId": "rom.shop.10.19"
+    },
+    {
+      "callerMapId": 10,
+      "innId": "rom.inn.10",
+      "interiorMapId": 22,
+      "npcId": "rom.npc.22.0"
+    },
+    {
+      "callerMapId": 10,
+      "clinicId": "rom.clinic.10.revival",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.1"
+    },
+    {
+      "callerMapId": 10,
+      "clinicId": "rom.clinic.10.care",
+      "interiorMapId": 20,
+      "npcId": "rom.npc.20.0"
+    }
+  ],
+  "shops": [
+    {
+      "buyPrompt": "你想買些什麼？",
+      "id": "rom.shop.8.17",
+      "items": [],
+      "mapId": 17,
+      "name": "兵器店",
+      "npcId": "rom.npc.17.0",
+      "sellItems": [],
+      "source": {
+        "callerMapId": 8,
+        "category": "weapon",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59880,
+          "length": 1,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 92664,
+          "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+        }
+      }
+    },
+    {
+      "buyPrompt": "好，公子要買什麼嗎？",
+      "id": "rom.shop.8.18",
+      "items": [
+        "rom.armor.6",
+        "rom.armor.14",
+        "rom.armor.20",
+        "rom.armor.31",
+        "rom.armor.39"
+      ],
+      "mapId": 18,
+      "name": "防具店",
+      "npcId": "rom.npc.18.0",
+      "sellItems": [
+        "rom.armor.6",
+        "rom.armor.14",
+        "rom.armor.20",
+        "rom.armor.31",
+        "rom.armor.39"
+      ],
+      "source": {
+        "callerMapId": 8,
+        "category": "armor",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 60506,
+          "length": 6,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 93290,
+          "sha256": "f64c1b17a9c2a9371ed75affb21e65fd2bd1f381434e26e043a5fa33d5f9ecfd"
+        }
+      }
+    },
+    {
+      "buyPrompt": "要買寶貝嗎？",
+      "id": "rom.shop.8.19",
+      "items": [
+        "rom.medicine.2",
+        "rom.medicine.4",
+        "rom.medicine.9",
+        "rom.medicine.10",
+        "rom.medicine.12",
+        "rom.medicine.13",
+        "rom.medicine.14"
+      ],
+      "mapId": 19,
+      "name": "百貨店",
+      "npcId": "rom.npc.19.0",
+      "sellItems": [
+        "rom.medicine.2",
+        "rom.medicine.4",
+        "rom.medicine.9",
+        "rom.medicine.10",
+        "rom.medicine.12",
+        "rom.medicine.13",
+        "rom.medicine.14"
+      ],
+      "source": {
+        "callerMapId": 8,
+        "category": "medicine",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59148,
+          "length": 8,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 91932,
+          "sha256": "f623eb32e72b80a67bbcb9f0d687c6a5953908c65acde7ca9088cb787e00be3d"
+        }
+      }
+    },
+    {
+      "buyPrompt": "你想買些什麼？",
+      "id": "rom.shop.9.17",
+      "items": [
+        "rom.weapon.10",
+        "rom.weapon.24",
+        "rom.weapon.37",
+        "rom.weapon.44"
+      ],
+      "mapId": 17,
+      "name": "兵器店",
+      "npcId": "rom.npc.17.0",
+      "sellItems": [
+        "rom.weapon.10",
+        "rom.weapon.24",
+        "rom.weapon.37",
+        "rom.weapon.44"
+      ],
+      "source": {
+        "callerMapId": 9,
+        "category": "weapon",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59881,
+          "length": 5,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 92665,
+          "sha256": "9270248fb0c934bda1ddf935726b75744a411305c15e8c72f76458faabe68356"
+        }
+      }
+    },
+    {
+      "buyPrompt": "好，公子要買什麼嗎？",
+      "id": "rom.shop.9.18",
+      "items": [],
+      "mapId": 18,
+      "name": "防具店",
+      "npcId": "rom.npc.18.0",
+      "sellItems": [],
+      "source": {
+        "callerMapId": 9,
+        "category": "armor",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 60512,
+          "length": 1,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 93296,
+          "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+        }
+      }
+    },
+    {
+      "buyPrompt": "要買寶貝嗎？",
+      "id": "rom.shop.9.19",
+      "items": [
+        "rom.medicine.0"
+      ],
+      "mapId": 19,
+      "name": "百貨店",
+      "npcId": "rom.npc.19.0",
+      "sellItems": [
+        "rom.medicine.0"
+      ],
+      "source": {
+        "callerMapId": 9,
+        "category": "medicine",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59156,
+          "length": 2,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 91940,
+          "sha256": "06eb7d6a69ee19e5fbdf749018d3d2abfa04bcbd1365db312eb86dc7169389b8"
+        }
+      }
+    },
+    {
+      "buyPrompt": "你想買些什麼？",
+      "id": "rom.shop.10.17",
+      "items": [
+        "rom.weapon.10",
+        "rom.weapon.24",
+        "rom.weapon.36"
+      ],
+      "mapId": 17,
+      "name": "兵器店",
+      "npcId": "rom.npc.17.0",
+      "sellItems": [
+        "rom.weapon.10",
+        "rom.weapon.24",
+        "rom.weapon.36"
+      ],
+      "source": {
+        "callerMapId": 10,
+        "category": "weapon",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59886,
+          "length": 4,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 92670,
+          "sha256": "e46d0ab858a2d91e818bc9004303520d6aadeccc1433167713da1b6b17b112db"
+        }
+      }
+    },
+    {
+      "buyPrompt": "好，公子要買什麼嗎？",
+      "id": "rom.shop.10.18",
+      "items": [
+        "rom.armor.6",
+        "rom.armor.14",
+        "rom.armor.20",
+        "rom.armor.31",
+        "rom.armor.39"
+      ],
+      "mapId": 18,
+      "name": "防具店",
+      "npcId": "rom.npc.18.0",
+      "sellItems": [
+        "rom.armor.6",
+        "rom.armor.14",
+        "rom.armor.20",
+        "rom.armor.31",
+        "rom.armor.39"
+      ],
+      "source": {
+        "callerMapId": 10,
+        "category": "armor",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 60513,
+          "length": 6,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 93297,
+          "sha256": "f64c1b17a9c2a9371ed75affb21e65fd2bd1f381434e26e043a5fa33d5f9ecfd"
+        }
+      }
+    },
+    {
+      "buyPrompt": "要買寶貝嗎？",
+      "id": "rom.shop.10.19",
+      "items": [
+        "rom.medicine.2",
+        "rom.medicine.4",
+        "rom.medicine.9",
+        "rom.medicine.10",
+        "rom.medicine.11",
+        "rom.medicine.12"
+      ],
+      "mapId": 19,
+      "name": "百貨店",
+      "npcId": "rom.npc.19.0",
+      "sellItems": [
+        "rom.medicine.2",
+        "rom.medicine.4",
+        "rom.medicine.9",
+        "rom.medicine.10",
+        "rom.medicine.11",
+        "rom.medicine.12"
+      ],
+      "source": {
+        "callerMapId": 10,
+        "category": "medicine",
+        "confidence": "ORIGINAL_ROM_STATIC",
+        "runtimeEvidence": {
+          "evidence": "game-data/provenance/world-village-batch-resources.json",
+          "scope": "Original stock, Android NOT_RUN"
+        },
+        "stockRange": {
+          "cpuAddress": 59158,
+          "length": 7,
+          "meaning": "Original terminated stock",
+          "module": 2,
+          "offset": 91942,
+          "sha256": "024540d32219c1780c5a943f1c5b9f48addc671969f89f5dbac66253ae358ead"
+        }
+      }
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}
