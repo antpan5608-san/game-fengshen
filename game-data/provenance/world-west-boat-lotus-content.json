@@ -1,0 +1,1345 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-west-scene-items-content.json",
+    "pinSha256": "00384dc5ae1fbc5243d152577a20de11a730931728bcb5511bcc8c1115ff4147",
+    "provenanceSha256": "abbfb3bf94214b231c22a0d5a08b37372be59e1739312e6b6ffc4091a4fe506c"
+  },
+  "baseManifestSha256": "79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.146.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36610,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102162,
+            "sha256": "aa540d28f7f3882a00b41a53736b3e2eaa7997dd286a6cb99718e933ecfdd4f4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44717,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110269,
+          "sha256": "ef8333080d884782fb5cf16a8fb6a3da4ad404b7f235874a8dbbc802a1a7c81a"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『這兒是香榭居。』"
+    },
+    {
+      "id": "rom.dialogue.146.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36612,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102164,
+            "sha256": "6e492d569015f0dbb33380ae70d6e4f2db8b81f722eef897a1d1349641094be7"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44727,
+          "length": 64,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110279,
+          "sha256": "adb88b06b1fa0984db644607a1c752a911727dcf31cce94f12ec9d23b1866e5b"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『我就是百草仙子，楊戬乃是中了魔禮青的黑風毒，這是雪蓮，服下就沒事了！』『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36614,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102166,
+            "sha256": "6f001a74ba20bdf544d3d59a3a6a5ebb61612d20094e3eb6227485c62fa12484"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44791,
+          "length": 28,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110343,
+          "sha256": "a832dd83ae914c9ca09ab2279816867a9eba1d1b63943c4b3486109806483ca4"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36616,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102168,
+            "sha256": "f6281d739f30f6240dc424cd6b09a28e594379e6330377a082c8e6739530be6b"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44819,
+          "length": 22,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110371,
+          "sha256": "2af7020a49d88c0e8aab06bd5ee77ddcc7932f355b5f4d2677a866c065e1fdda"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『如果遇到困難，再去玉泉山找玉鼎真人吧！』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalTerrainMode": 0,
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57123,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 286515,
+        "sha256": "cf7149bbb3a7d70650a144f8308d80411b6815d1b2e901bed31806c923f60450"
+      },
+      "spawn": [
+        7,
+        14
+      ],
+      "toMapId": 136,
+      "trigger": [
+        65,
+        67
+      ],
+      "vehicleEvidence": "game-data/provenance/world-lotus136-state.json"
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalTerrainMode": 219,
+      "confidence": "VERIFIED",
+      "fromMapId": 136,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 59041,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 288433,
+        "sha256": "0fdd16625e616af995a6b66cf269770ea2262760ff12914d386f8de50a4eebfb"
+      },
+      "spawn": [
+        65,
+        67
+      ],
+      "toMapId": 16,
+      "trigger": [
+        7,
+        14
+      ],
+      "vehicleEvidence": "game-data/provenance/world-lotus136-state.json"
+    }
+  ],
+  "freeBoat": {
+    "evidence": "game-data/provenance/world-west-free-boat.json",
+    "mode": 219,
+    "shipFlag": "rom.global.6812.nonzero",
+    "sprites": {
+      "DOWN": "actor-219-boat-down.png",
+      "LEFT": "actor-219-boat-left.png",
+      "RIGHT": "actor-219-boat-right.png",
+      "UP": "actor-219-boat-up.png"
+    }
+  },
+  "graphics": {
+    "actor-219-boat-down.png": {
+      "actorEntityId": 219,
+      "actorRecordOffset": 1026,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "c0471cac1814b38bc3a7cc7f404ae1fbb94ab2515d2f4b08b42becbb3510f333",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "70800070708100787890007078910078",
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "opaquePixelCount": 160,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "6ebce7b132a782cf116726508481fbf01c4bfb4011bf38ecf4ff14481aa5066d",
+      "ramSha256": "1fc8ee6a4cd3156a644a93a8c9f4428982b310e7dad0e55a3f4b26d6d48f2373",
+      "rgbaSha256": "6f39e1491c029defabc26811b75a36986034f79725798e868f4a84987dcc4756",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034256,
+          "sha256": "773b41c47840ad8e689c8deef12ec126c7e9e777a2a9adbb3e925bf00118ba40",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034272,
+          "sha256": "f9e8934596a914759b13f469287af1a396eb1f4dceaacffa6c5ebc641297a5f3",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034512,
+          "sha256": "e5d8b00cc70d4f4e127951a3b0e44d38f1355ca4f22c042e32c814ebffd620c1",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034528,
+          "sha256": "2a098d075df0d5a6b7938d465b33bc1fb49278d9421114b983152a3fb90954a6",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "actor-219-boat-left.png": {
+      "actorEntityId": 219,
+      "actorRecordOffset": 1026,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "0161c79ed9ed0e24f288e255b43fdc13ac902712e4bb066e688a21293c766b39",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "70840070708500787894007078950078",
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "opaquePixelCount": 157,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "bef07c407a201c19cc87ac16574d1a22c4bed60c12cfdcde662254b69cd65ae3",
+      "ramSha256": "84e6d9a7b949863893b61b07a46fe0beea58dbcc7b47eed454bfc872b7d5ae34",
+      "rgbaSha256": "f746c6741393e9b2c3d6c9c182694709280e8ccd953ddc304a321804ce32f513",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 865840,
+          "sha256": "5d6ab89bd2fd79ac0a6e5bc9f0b957922320072001ff09f97adc67afba013369",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 865856,
+          "sha256": "237a5eef7a0b5b2d889062eb66d5000e24b45665b10a40afea58c1d25c788740",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 866096,
+          "sha256": "8e65db168adc08f8482341b598fe047886ccf281ed7fc18160f72b66c0404221",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 866112,
+          "sha256": "ba3e125ec8554a058288f2480006f86c5eed34e49fd45d28e244063a9736090f",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "actor-219-boat-right.png": {
+      "actorEntityId": 219,
+      "actorRecordOffset": 1026,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "15a1fe85ea3bdfefc32d0cddfcb4e2203492163a519060a6efe71bfd96a15acd",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "70854070708440787895407078944078",
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "opaquePixelCount": 157,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "ea29fd05d02de7771511dd1c58683054ef1cf24edaab2de9435f128a5f94ead6",
+      "ramSha256": "90645f868106a3de752fd7f37ca403392af5291038348f78e8e66f6f1adbecca",
+      "rgbaSha256": "796afe349bc4e247a7f310972e9e979d106d1a969c4f303bad942ea94439497f",
+      "tiles": [
+        {
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 865856,
+          "sha256": "237a5eef7a0b5b2d889062eb66d5000e24b45665b10a40afea58c1d25c788740",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 865840,
+          "sha256": "5d6ab89bd2fd79ac0a6e5bc9f0b957922320072001ff09f97adc67afba013369",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 866112,
+          "sha256": "ba3e125ec8554a058288f2480006f86c5eed34e49fd45d28e244063a9736090f",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 866096,
+          "sha256": "8e65db168adc08f8482341b598fe047886ccf281ed7fc18160f72b66c0404221",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "actor-219-boat-up.png": {
+      "actorEntityId": 219,
+      "actorRecordOffset": 1026,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "7d50f617f07775f844e34c58aeef4048d72f1e26a4032c0f045b3e1d036f8e1f",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "70880070708900787898007078990078",
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "opaquePixelCount": 160,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "b4789a0c9b6a9080f28cd08f473dde553413a7608fc4c69861a0c51b6dc420c5",
+      "ramSha256": "952f3099b7c443905f750fd9cfb42a3152c45b7c883e4e5aa139ee13a018337f",
+      "rgbaSha256": "fd9cab913297763cc0ebee08e61f91e29b0551584b08b8c0b5255763508175ec",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034384,
+          "sha256": "486b343464d770222fd6e6a3ca2391749a042dd2affc99cb10a2a3442281f09c",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034400,
+          "sha256": "5ea8852b5d6d237cc115bd14a8587f18acbc91d04b3d8873a38d75615cddf383",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034640,
+          "sha256": "04541fc5de45dc67ed1e34b654f3e5d1c632bfd2bf51104201e138f12ec0b8d2",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1034656,
+          "sha256": "8be323864156b07d92367af1967ba141ce20433a22a6e4c6ae0c4d152d4920eb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-141-lotus136.png": {
+      "actorEntityId": 141,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "f9591201466f77d27065e7a65283c6531a9aca20c3c446287f4eafda2e2ed86c",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "90400070904100789850007098510078",
+      "observedRect": [
+        112,
+        137,
+        16,
+        16
+      ],
+      "opaquePixelCount": 186,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "5f1d20ad7eac0dad2fef2b480116efc720345efe65a879ce254bc39d5c560cbc",
+      "ramSha256": "37551279b3a29b976f4b917757f1253f2a43ac874c6fa224af8d1a2e2b2171b0",
+      "rgbaSha256": "fa70a2fec92fce684926c842e0a00f46e53e5484cd2e6ff8d5261c7745f54776",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869392,
+          "sha256": "2c1f050b3d6434c24467ba8dd6ae276e4b5b7ac10ca527f47ef1b69c5ea38b32",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869408,
+          "sha256": "2a6f61e4a4e18166cb6192908b80ff85bcb2f6959dd4e3d31a189e89ed263550",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869648,
+          "sha256": "a66d6ca16c35dad817f43aca44ed8e8efe97272bcaee35fbe1cd55aa7d578ca8",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869664,
+          "sha256": "f9547c62c73cffea856d30545115c2abb30888ee2eadc7f44a7d1348f0148ef9",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-182-lotus136.png": {
+      "actorEntityId": 182,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "f9591201466f77d27065e7a65283c6531a9aca20c3c446287f4eafda2e2ed86c",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60a2027060a3027868b2027068b30278",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 225,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ]
+      },
+      "ppuSha256": "5f1d20ad7eac0dad2fef2b480116efc720345efe65a879ce254bc39d5c560cbc",
+      "ramSha256": "37551279b3a29b976f4b917757f1253f2a43ac874c6fa224af8d1a2e2b2171b0",
+      "rgbaSha256": "6a127140de8107c6d524c0d68e2cc61cfb60f6513076267e94b65702d31691ff",
+      "tiles": [
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026608,
+          "sha256": "94f4037a870fb61252479ad4080ccb196ad59b8f6b1c227f7ba69c567c822ad1",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026624,
+          "sha256": "8eb5580c6c9816e8c087e31cede08716a33ab05f426cb90b5585bd7c10638d0a",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026864,
+          "sha256": "57df839c5dd45be2655489f90e00ec76e78d005dcd723949ee1bbe85123def74",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026880,
+          "sha256": "3c732baac61054244c5931d4479e4e1a19e16fcf0e209666bdc77bd250d587a7",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "items": [],
+  "limitations": [
+    "No automatic quest lock, paddle controls water terrain only",
+    "Android quest chain, upgrades and failure/cold-start NOT_RUN"
+  ],
+  "maps": [
+    {
+      "gridSha256": "e8f1dfc803a49764a6e97b6a327b8892a2bee71767bc740fedb27edc7d52bd9e",
+      "limitations": [
+        "Original dialogue Unicode PROVISIONAL; Android normal voyage NOT_RUN"
+      ],
+      "lotusResourceEvidence": "game-data/provenance/world-lotus136-resources.json",
+      "mapId": 136,
+      "npcCells": [
+        87,
+        135
+      ],
+      "palette": [
+        14,
+        28,
+        44,
+        48,
+        25,
+        1,
+        17,
+        49,
+        25,
+        9,
+        26,
+        56,
+        25,
+        53,
+        44,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        7,
+        14
+      ],
+      "terrain": {
+        "evidence": "game-data/provenance/world-terrain.json",
+        "tileset": 4
+      },
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        7,
+        5
+      ],
+      "firstDialogue": "rom.dialogue.146.1",
+      "firstEffects": [],
+      "id": "rom.npc.136.0",
+      "lotusResourceEvidence": "game-data/provenance/world-lotus136-resources.json",
+      "mapId": 136,
+      "originalTalk": {
+        "actionId": 47,
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "itemId": "rom.special.0",
+        "mapFlagId": "rom.map.136.flag.1",
+        "messageDialogues": {
+          "1": "rom.dialogue.146.1",
+          "2": "rom.dialogue.146.2",
+          "3": "rom.dialogue.146.3"
+        },
+        "witnessFlagId": ""
+      },
+      "repeatDialogue": "rom.dialogue.146.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-lotus136-resources.json",
+        "record": {
+          "cpuAddress": 55209,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284601,
+          "sha256": "e8add0509118405e9a2b3907a142c90109482b8e07c2383450b254b7dd88d57c"
+        },
+        "remainingUnknown": [
+          "Original dynamic timing and Android normal voyage"
+        ]
+      },
+      "sprite": "npc-182-lotus136.png",
+      "spriteId": 182
+    },
+    {
+      "cell": [
+        7,
+        8
+      ],
+      "firstDialogue": "rom.dialogue.146.0",
+      "firstEffects": [],
+      "id": "rom.npc.136.1",
+      "lotusResourceEvidence": "game-data/provenance/world-lotus136-resources.json",
+      "mapId": 136,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-lotus136-resources.json",
+        "record": {
+          "cpuAddress": 55223,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284615,
+          "sha256": "817bc4ad81f88270d42d088541ec76876f809b6ae983b4db4f3ef58d57628000"
+        },
+        "remainingUnknown": [
+          "Original dynamic timing and Android normal voyage"
+        ]
+      },
+      "sprite": "npc-141-lotus136.png",
+      "spriteId": 141
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 56246,
+      "length": 34,
+      "meaning": "Original map80/map136 load vehicle219 branch",
+      "module": 8,
+      "offset": 285638,
+      "sha256": "33a73bb40a68b15b59001f68a863da14865819eb0f26290742a33fbd7a1890cb"
+    },
+    {
+      "cpuAddress": 48958,
+      "length": 76,
+      "meaning": "Original Fubing ship boarding",
+      "module": 0,
+      "offset": 16206,
+      "sha256": "6ef12c41e0eb30722240b51d8ea33197cbe70f9f1bafdaad3697a72c0219d11a"
+    },
+    {
+      "cpuAddress": 53270,
+      "length": 27,
+      "meaning": "Original Fubing shore return",
+      "module": 0,
+      "offset": 20518,
+      "sha256": "9294f2dd1bdf9a4e022f385287479cdfec85c6a35e4fdabd95a398f761340c33"
+    },
+    {
+      "cpuAddress": 43551,
+      "length": 46,
+      "meaning": "Original map load and settled facing input",
+      "module": 0,
+      "offset": 10799,
+      "sha256": "91f639154ea6bf1d4d471619613f57147aa1a314430db9c4e3b69c63aa94dc8e"
+    },
+    {
+      "cpuAddress": 51864,
+      "length": 139,
+      "meaning": "Tileset source dispatch",
+      "module": 0,
+      "offset": 19112,
+      "sha256": "ecfa81b1fa98595a7db2b4548bfe7f0000aa19461946e1418f8224dc13611bf1"
+    },
+    {
+      "cpuAddress": 52789,
+      "length": 126,
+      "meaning": "Tileset target dispatch",
+      "module": 0,
+      "offset": 20037,
+      "sha256": "9e2e415304d718e099f7cdd260d6fa2bb5c2682912263c3cc0b2d7985763466d"
+    },
+    {
+      "cpuAddress": 53117,
+      "length": 181,
+      "meaning": "Free boat water and shore target handlers",
+      "module": 0,
+      "offset": 20365,
+      "sha256": "b01d679a3a2bfa4bf98ae2e684c8831c48f7a394fb850707105c8ea2f6400460"
+    },
+    {
+      "cpuAddress": 61398,
+      "length": 44,
+      "meaning": "Original dynamic parked actor and source coordinates",
+      "module": 0,
+      "offset": 28646,
+      "sha256": "da9f2142b1ad37407ff772864ac74c55b12eca4cbb870facdf0042fefe6ea805"
+    },
+    {
+      "cpuAddress": 48958,
+      "length": 76,
+      "meaning": "Fubing boarding and world map dispatch",
+      "module": 0,
+      "offset": 16206,
+      "sha256": "6ef12c41e0eb30722240b51d8ea33197cbe70f9f1bafdaad3697a72c0219d11a"
+    },
+    {
+      "cpuAddress": 61442,
+      "length": 69,
+      "meaning": "Original 22-byte actor slot allocation stride",
+      "module": 0,
+      "offset": 28690,
+      "sha256": "54d35f809427341528e9501f95a8670ecb0b14f280c1b3636e19c1558d6e087d"
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "free-boat219-lotus136-snow-acquisition-original-scene-items-preserved",
+  "taskId": "WORLD-FULL-01"
+}

@@ -2410,6 +2410,93 @@ def validate_world_ferry_resources(reader):
     scoped_observed_graphic(reader,p['graphic'])
     return p
 
+def validate_world_free_boat(reader):
+    p=load(ROOT/'game-data/provenance/world-west-free-boat.json')
+    rules=p['rules']
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='boat219-original-water-shore-parking-fubing-costs-not-app-voyage' or \
+            rules['boatMode']!=219 or rules['worldMapId']!=16 or rules['shipFlagId']!='rom.global.6812.nonzero' or \
+            rules['baseWaterClasses']!=[4,15,16] or rules['paddleWaterClasses']!=[5,14,17] or \
+            rules['shoreDirections']!={'25':['UP','DOWN'],'26':['LEFT','RIGHT']} or rules['paddleRequiredToBoard'] is not False or \
+            rules['parkedActor']!=219 or rules['parkedFlagByte']!=61 or rules['footPortClasses']!=[25,26] or \
+            rules['ordinaryLandAndReboardStatusSteps']!=1 or rules['ordinaryLandAndReboardEncounterSteps']!=1:
+        raise ValueError('Free boat cannot invent terrain, no-paddle lock or free status steps')
+    if {(v['module'],v['cpuAddress'],v['length'])for v in p['sources']}!={
+            (0,0xca98,139),(0,0xce35,126),(0,0xcf7d,181),(0,0xefd6,44),(0,0xbf3e,76),(0,0xf002,69)}:
+        raise ValueError('Free ship source dispatch/parking/allocation spans absent')
+    for name,expected in [('fubingBoard',dict(from_=[10,9,3],contact=[10,9,2],to=[16,68,88],modeAfter=219,statusSteps=1,encounterStepsAfter=0)),
+                          ('fubingReturn',dict(from_=[16,68,88],contact=[16,67,88],to=[10,9,3],modeAfter=0,statusSteps=1,encounterStepsAfter=0))]:
+        expected['from']=expected.pop('from_')
+        if rules[name]!=expected:raise ValueError('Original Fubing contact/load costs differ')
+    for name,expected in [('allDisabledBoardFailure',dict(mapId=16,x=9,y=2,mode=219,encounterSteps='before+1, 8-bit',meaning='Unfinished original map-load/defeat only, never a travel destination')),
+                          ('allDisabledReturnFailure',dict(mapId=10,x=9,y=3,mode=148,encounterSteps='before+1, 8-bit',meaning='Unfinished original actor/map-load/defeat only, never a playable vehicle148'))]:
+        if rules[name]!=expected:raise ValueError('Free ship all-disabled state cannot become a successful transfer')
+    for span in p['sources']:checked_span(reader,span)
+    cpu=p['cpu'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['caseCount']!=112 or cpu['failures']!=0 or len(raw.splitlines())!=113 or digest(raw)!=cpu['sha256'] or \
+            cpu['probePath']!='tools/rom-extractor/probe-world-west-boat-ports.py' or digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Original free ship port CPU evidence differs')
+    if set(p['graphics'])!={'up','down','left','right'}:raise ValueError('Free ship needs its four original poses')
+    for g in p['graphics'].values():
+        if g['actorEntityId']!=219 or g['actorRecordOffset']!=0x402 or not g['opaquePixelMatch'] or g['normalPlayEvidence']:
+            raise ValueError('Free ship graphic identity/capture kind differs')
+        scoped_observed_graphic(reader,g)
+    return p
+
+def validate_world_lotus_resources(reader):
+    from forensics.fengshen246 import extract_npcs,extract_default_map_palette,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-lotus136-resources.json';p=load(ROOT/path);state=p['stateProof'];s=load(ROOT/state['path'])
+    if state['path']!='game-data/provenance/world-lotus136-state.json' or digest((ROOT/state['path']).read_bytes())!=state['sha256'] or \
+            p['romSha256']!=SHA256 or s['romSha256']!=SHA256 or s['actors']!=extract_npcs(reader,136)['records']:
+        raise ValueError('Lotus resource lacks the exact fairy state proof/actors')
+    for source in s['sources']+p['vehicleSources']:checked_span(reader,source)
+    for cpu in s['cpu']:
+        raw=(ROOT/cpu['path']).read_bytes()
+        if digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=cpu['caseCount']+1 or cpu['failures']!=0 or \
+                digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+            raise ValueError('Lotus original selector/gift and water CPU evidence differs')
+    font=b''.join(checked_span(reader,v)for v in s['font']['sources']);charset={int(k):v for k,v in s['font']['charset'].items()}
+    if len(font)!=4096:raise ValueError('Lotus actual font banks absent')
+    for g in s['font']['glyphs']:
+        if charset[g['code']]!=g['character'] or digest(bytes(v for row in glyph_pixels(font,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Lotus glyph transcription lacks original pixel evidence')
+    if p['dialogues']!=s['dialogues'] or [d['id']for d in p['dialogues']]!=[f'rom.dialogue.146.{i}'for i in range(4)]:
+        raise ValueError('Lotus text set differs')
+    for d in p['dialogues']:
+        original=extract_text(reader,146,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=original['range'] or d['source']['pointerEvidence']!=original['pointerEvidence'] or \
+                decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']!=d['text']:
+            raise ValueError('Lotus text differs from original stream/font')
+    m=extract_map(reader,136)
+    if p['map']!=dict(mapId=136,gridSha256=m['gridSha256'],tilesetId=4,palette=extract_default_map_palette(reader,136)['palette'],walkableClasses=[0,2,3,4,5,6,7,8]):
+        raise ValueError('Lotus room must retain the original palace terrain')
+    if len(p['npcs'])!=2 or len(p['exits'])!=2 or set(p['graphics'])!={'npc-182-lotus136.png','npc-141-lotus136.png'}:
+        raise ValueError('Lotus requires both actual actors and independent exit rows')
+    for i,n in enumerate(p['npcs']):
+        record=s['actors'][i];raw=bytes.fromhex(record['rawHex']);cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if len(p['npcs'])!=2 or n['id']!=f'rom.npc.136.{i}' or n['mapId']!=136 or n['cell']!=cell or n['spriteId']!=raw[0] or \
+                n['source']['record']!=record['range'] or n['firstEffects'] or n['lotusResourceEvidence']!=path:
+            raise ValueError('Lotus actor identity/position differs')
+        if i==0:
+            expected=dict(actionId=47,mapFlagId='rom.map.136.flag.1',witnessFlagId='',itemId='rom.special.0',evidence=state['path'],
+                messageDialogues={str(k):f'rom.dialogue.146.{k}'for k in (1,2,3)})
+            if n['originalTalk']!=expected or n['firstDialogue']!='rom.dialogue.146.1' or n['repeatDialogue']!='rom.dialogue.146.3':
+                raise ValueError('Fairy cannot grant cure, prices or another message rule')
+        elif n.get('originalTalk') or n['firstDialogue']!='rom.dialogue.146.0' or n['repeatDialogue'] is not None:
+            raise ValueError('Lotus disciple has no inferred extra event')
+        g=p['graphics'][n['sprite']]
+        if g['actorEntityId']!=raw[0] or not g['opaquePixelMatch'] or g['normalPlayEvidence']:raise ValueError('Lotus original actor pose differs')
+        scoped_observed_graphic(reader,g)
+    for e,addr,values,mode in zip(p['exits'],(0xdf23,0xe6a1),([65,67,136,7,14],[7,14,16,65,67]),(0,219)):
+        if len(p['exits'])!=2 or e['source']!=reader.span(8,addr,5,'Original five-byte exit row') or list(checked_span(reader,e['source']))!=values or \
+                e['trigger']!=values[:2] or e['toMapId']!=values[2] or e['spawn']!=values[3:] or e['fromMapId']!=(16 if mode==0 else 136) or \
+                e['arrivalTerrainMode']!=mode or e['vehicleEvidence']!=state['path'] or e['resetEncounterSteps'] is not True or e['arrivalDirection']!='DOWN':
+            raise ValueError('Lotus independent entry/return vehicle state differs')
+    ship=validate_world_free_boat(reader)
+    expected=dict(mode=219,evidence='game-data/provenance/world-west-free-boat.json',shipFlag='rom.global.6812.nonzero',
+        sprites={d.upper():f'actor-219-boat-{d}.png'for d in ship['graphics']})
+    if p['freeBoat']!=expected:raise ValueError('Lotus ship capability differs from native poses/state')
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -2453,6 +2540,11 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('lotusResourceEvidence'):
+            proof=validate_world_lotus_resources(reader)
+            if mid!=136 or recipe['lotusResourceEvidence']!='game-data/provenance/world-lotus136-resources.json' or \
+                    allowed!=proof['map']['walkableClasses'] or recipe['palette']!=proof['map']['palette'] or recipe['npcCells']!=[87,135]:
+                raise ValueError('Lotus map cannot change original actors/collision/palette')
         if recipe.get('houseRoomEvidence'):
             room,_=validate_world_house_resources(reader,mid)
             if recipe['houseRoomEvidence']!='game-data/provenance/world-west-houses-resources.json' or \
@@ -2663,9 +2755,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if exit.get('triggerMode')!='EDGE' or not exit.get('runtimeEvidence'):
                 raise ValueError('Edge requires observed departure, not swapped coordinates')
         else:raise ValueError('Unsupported transition kind needs original evidence')
+        if 'arrivalTerrainMode' in exit:
+            proof=validate_world_lotus_resources(reader)
+            if exit not in proof['exits'] or evidence.get('freeBoat')!=proof['freeBoat']:
+                raise ValueError('Original vehicle exit requires its scoped boat profile')
         scene['exits'].append({k:exit[k] for k in ['fromMapId','trigger','toMapId','spawn','confidence','arrivalDirection']}|
             {'source':exit['source'],'evidence':exit['contactEvidence']if exit['kind']=='ACTOR_CONTACT'else provenance_path}|
-            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection','contactActorId') if k in exit})
+            {k:exit[k] for k in ('resetEncounterSteps','captureCaller','returnToCaller','triggerMode','direction','preserveArrivalDirection','contactActorId','arrivalTerrainMode','vehicleEvidence') if k in exit})
         if exit.get('preserveArrivalDirection'):
             source=exit['arrivalDirectionSource']
             checked_span(reader,source)
@@ -2961,6 +3057,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if name in result or '/' in name or '\\' in name or not name.endswith('.png'):
             raise ValueError('Unsafe/overlapping world graphic')
         result[name]=scoped_observed_graphic(reader,recipe)
+    if evidence.get('freeBoat'):
+        proof=validate_world_lotus_resources(reader);ship=validate_world_free_boat(reader)
+        if evidence['freeBoat']!=proof['freeBoat'] or not {10,16,136}<=known or \
+                any(e not in evidence['exits']for e in proof['exits']) or \
+                any(evidence['graphics'].get(f'actor-219-boat-{d}.png')!=g for d,g in ship['graphics'].items()):
+            raise ValueError('Free boat lacks existing contact map, independent lotus exits or native graphics')
+        scene['freeBoat']=proof['freeBoat']
     if evidence.get('growthExtension'):
         combat=json.loads(result['combat.json'])
         extend_world_growth(reader,combat,evidence['growthExtension'],provenance_path)
@@ -3170,7 +3273,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('houseResourceEvidence'):
+        if npc.get('lotusResourceEvidence'):
+            proof=validate_world_lotus_resources(reader)
+            if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
+                    any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):
+                raise ValueError('Lotus actor/dialogue/graphic differs')
+        elif npc.get('houseResourceEvidence'):
             room,_=validate_world_house_resources(reader,npc['mapId'])
             if npc['houseResourceEvidence']!='game-data/provenance/world-west-houses-resources.json' or npc not in room['npcs']or \
                     any(d not in scene['dialogues']for d in room['dialogues'])or \

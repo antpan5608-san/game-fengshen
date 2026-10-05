@@ -342,7 +342,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             clock.reset();advanceFerryIfDue(time/1000000L)
         } else if(active&&focused&&layer==Layer.MAP)clock.advance(time){
             if(layer==Layer.MAP&&OriginalFerry.pending(flags,content.ferries.values)==null){
-                if(!beginFerryIfRequested(time/1000000L)){
+                if(!beginFreeBoatIfRequested()&&!beginFerryIfRequested(time/1000000L)){
                     world.tickIntent(input.movementIntent());processContactTransition();processCompletedStep()
                 }
             }
@@ -404,6 +404,29 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         return true
     }
+    private fun beginFreeBoatIfRequested():Boolean {
+        if(!content.freeBoatEnabled||world.remaining!=0)return false
+        val key=input.movementIntent()?.primary?:return false
+        val before=currentSnapshot()
+        if(!OriginalBoat.contact(before,key))return false
+        input.clear();npcTouch.clear();hudTouch.clear();clock.reset()
+        if(localSaveProtected){showNotice("原存档受保护，不能提交船只移动");return true}
+        val result=OriginalBoat.transfer(before,key)
+        if(!result.applied)return true
+        if(!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
+            showNotice("船只落点不可恢复，原状态已保留");Diagnostics.record("boat_transition","ERROR",code="invalid_boat_proposal");return true
+        }
+        if(!persistStateResult()){
+            if(!applySnapshotState(before))localSaveProtected=true
+            showNotice("保存失败，此前状态已保留");return true
+        }
+        Diagnostics.record("boat_transition",details=JSONObject().put("fromMapId",before.mapId).put("mapId",world.mapId))
+        audio.scene(world.mapId)
+        if(OriginalStatus.allDisabled(characters)){
+            flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState()
+        }
+        return true
+    }
     private fun advanceFerryIfDue(now:Long){
         if(ferryPaused)return
         val rule=OriginalFerry.pending(flags,content.ferries.values)?:return
@@ -444,6 +467,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(processedStepSeq==world.completedStepSeq)return
         processedStepSeq=world.completedStepSeq
         val step=world.lastCompletedStep?:return
+        if(content.freeBoatEnabled)flags=OriginalBoat.flagsAfterStep(flags,step)
         flags=WorldItems.fieldFlagsAfterStep(flags,step)
         characters=OriginalStatus.step(characters,step.mapId,flags[WorldItems.FIELD_ACTIVE_FLAG]==true)
         if(OriginalStatus.allDisabled(characters)){
@@ -1830,7 +1854,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val ferry=OriginalFerry.pending(flags,content.ferries.values)
         if(world.mapId==16&&flags[OriginalFerry.PARKED_FLAG]==true&&ferry==null)
             content.ferrySprites["rom.ferry.46"]?.let{c.drawBitmap(it,150*16f,136*16f,paint)}
-        val actor=if(ferry!=null&&world.mapId==16&&(ferry.stage(flags)?:0)>0)
+        if(content.freeBoatEnabled&&world.mapId==16&&world.terrainMode==0)
+            OriginalBoat.parked(flags)?.let{p->OriginalBoat.parkedDirection(flags)?.let{key->
+                content.freeBoatSprites[key]?.let{c.drawBitmap(it,p.first*16f,p.second*16f,paint)}
+            }}
+        val actor=if(content.freeBoatEnabled&&world.terrainMode==OriginalBoat.MODE)
+            content.freeBoatSprites.getValue(world.direction)
+            else if(ferry!=null&&world.mapId==16&&(ferry.stage(flags)?:0)>0)
             content.ferrySprites.getValue(ferry.id)else content.sprites.getValue(world.direction)
         c.drawBitmap(actor,(world.x-8).toFloat(),(world.y-8).toFloat(),paint)
         for(obj in objects.filter{it.y*16+8>world.y})c.drawBitmap(obj.sprite,obj.x*16f,obj.y*16f,paint)

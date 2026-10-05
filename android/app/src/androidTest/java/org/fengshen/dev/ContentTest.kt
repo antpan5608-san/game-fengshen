@@ -13,6 +13,40 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual boat/fairy bundle and codec, isolated fixture; not a normal voyage. */
+    fun testControlledFreeBoatFairyDefinitionsAndFailureSave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertTrue("Requires actual free ship/fairy candidate",c.freeBoatEnabled)
+        assertEquals(setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT),c.freeBoatSprites.keys)
+        assertEquals(setOf(0,219),c.exits.filter{it.arrivalTerrainMode!=null}.map{it.arrivalTerrainMode!!}.toSet())
+        val flags=mapOf(OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+            OriginalSceneItems.SHIP_FLAG to true,"rom.inventory.special.14.used" to true)
+        val roster=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian").copy(statusMask=64))
+        val before=SaveSnapshot(c.scene.version,136,7*16+8,6*16+8,Key.UP,roster,
+            mapOf(OriginalYangJoin.ITEM_ID to 1,"rom.special.14" to 0),flags,money=9103,encounterSteps=17)
+        assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+        val fairy=c.npcs.single{it.id=="rom.npc.136.0"};val rule=fairy.originalTalk!!
+        val gift=OriginalNpcTalk.begin(before,rule,c.itemDefinitions.getValue(rule.itemId))
+        assertTrue(gift.applied);assertEquals("rom.dialogue.146.1",gift.nextDialogue)
+        assertEquals(1,gift.snapshot.inventory["rom.special.0"]);assertFalse(gift.snapshot.inventory.containsKey("rom.special.14"))
+        assertEquals(before.characters,gift.snapshot.characters);assertEquals(before.money,gift.snapshot.money)
+        assertTrue(gift.snapshot.validate(c));assertEquals(gift.snapshot,SaveSnapshot.parse(gift.snapshot.json().toString()))
+        assertEquals("rom.dialogue.146.2",OriginalNpcTalk.begin(gift.snapshot,rule,c.itemDefinitions.getValue(rule.itemId)).nextDialogue)
+        val boat=before.copy(mapId=16,x=68*16+8,y=88*16+8,terrainMode=219)
+        assertTrue(boat.validate(c));assertFalse(boat.copy(terrainMode=0).validate(c))
+        val parked=boat.copy(x=24*16+8,y=45*16+8,terrainMode=0,flags=OriginalBoat.park(flags,24,44,Key.DOWN))
+        assertTrue(parked.validate(c));assertEquals(parked,SaveSnapshot.parse(parked.json().toString()))
+        val dead=roster.map{it.copy(hp=0,statusMask=32)}
+        for(outbound in listOf(true,false)){
+            val failed=before.copy(mapId=if(outbound)16 else 10,x=9*16+8,y=(if(outbound)2 else 3)*16+8,
+                terrainMode=if(outbound)219 else 148,direction=if(outbound)Key.UP else Key.LEFT,characters=dead,
+                flags=flags+((if(outbound)OriginalBoat.FAILED_BOARD else OriginalBoat.FAILED_RETURN)to true)+("runtime.field-defeat.pending" to true))
+            assertTrue(failed.validate(c));assertEquals(failed,SaveSnapshot.parse(failed.json().toString()))
+            assertFalse(failed.copy(characters=roster).validate(c))
+            assertFalse(failed.copy(x=10*16+8).validate(c))
+        }
+        assertTrue(boat.copy(contentVersion="opening-segment-001-c55").validate(c))
+    }
     /** Current scene-item candidate only; CONTROLLED codec, not a normal gift/voyage. */
     fun testControlledSceneItemDefinitionsAndDurableCodec(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

@@ -6,7 +6,19 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效接续（2026-10-06 06:50，北京时间）
+## 当前有效接续（2026-10-06 07:19:25，北京时间）
+
+主任务WORLD-FULL-01持续IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO，有效分母UNKNOWN。生产仍v82，main/R2冻结87bc56cb，原run37364795394/build与runtime SUCCESS、runtime-world仍执行、continuation未开始；未发布、不用首段PASS代替完整R2。inspect两次托管runner未领取，NOT_AVAILABLE，没有取得当前客户端样本；不是Token失效或客户端健康结论。
+
+独立开发/workspace/game-fengshen-world-jiameng-next，work/world-jiameng-next，从eb61a0bd6bbba8542e40e5ceb5a54f623f137a3a继续，远端备份work/world-jiameng-batch-continuation/12b5030b78ebff5d0859df5eba238541d10905d3与eb61同树81eeaffe5ebdc00bad48eb0944195b3cf3752373。c55已在git archive eb61干净目录原restore默认assets/development→原wrapper assembleDebug/assembleDebugAndroidTest/全382 JVM通过26秒；DEBUG84 APK33077135字节/SHA8154403c330f695207fb2cd2ce0c59813fea39a23899626e3a45df0b6de9656c，360文件/66图及manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b严格一致。仅DEBUG、App NOT_RUN；不借它背书后续船代码。
+
+本检查点IMPLEMENTED：复用World/Scene/ContentLoader/完整SaveSnapshot与原状态步成本，接自由船219四向原OAM图形、芙冰148接触出航与独立返回、船水类/两类岸边落岸再登与停车、136独立入出载具模式和47条件赠雪莲；原0/14场景使用与37治疗续段保留。桨不是登船前置，只扩原水域；脚行不能借新入口踏水，原fixed ferry218仅在真实pending点保留例外。原码头112/water5400 CPU零差异，原按键实际核中毒每次1点、普通码头步数+1，芙冰正常换图步数归0。单人死后有其他活人正常到落点，全队失能时停在原半完成地图/载具状态，做禁止行走的战败续接保存，不能算成功出航。原22-byte动态停车演员复制方向，未强画统一朝向。初始矩形fixture误用左/上开区间已修正fixture并保留失败，不改业务。
+
+原baseExport生成c56/67依赖图/368文件，manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9，父c55与可信v27根APK分别固定。新增136真实16×15宫殿地形、两NPC、4对白、4船图形与2原五字节独立出口；原地图/媒体/物品价/战斗实际规则保留，Unicode及动态演出时长PROVISIONAL。3相关导出/篡改拒绝/空目录严格restore通过39.674秒，389 JVM/81套0失败/错误/跳过，原instrument编译通过。新船/仙子加载、失败完整codec仪器已加入，运行NOT_RUN；c56干净打包下一动作，不声称新连续链已正常可玩。
+
+四层：c56 IMPLEMENTED/CONTENT_GENERATED/RESTORE_VERIFIED；签名候选、真实Android、正常治疗路线、历史回档UI/冷启/覆盖均NOT_RUN、PUBLISHED=NO。正常已发布范围仍R1，不能把67依赖图当67正常可达。第一blocker仍R2同候选三段验收/服务runner调度；按实际PASS原审核巡检发布、FAIL原片分类薄修。独立下一动作：干净打包c56和相关实际App驱动；核早访136的原flag在后续病中场景生命周期（不猜清flag），继续杨戬原师父/丹药等必要接续，不以技术检查点停止。不修改Language/玩家云档，不reset/clean；十类欠账仍docs/delivery-status.md。
+
+## 先前场景物品检查点（2026-10-06 06:50，北京时间）
 
 主任务继续IN_PROGRESS/PARTIAL，生产仍v82，R2候选83/main87bc56cb/run37364795394冻结：build与runtime通过，runtime-world运行中、后段未开始；两次inspect托管runner未领取，NOT_AVAILABLE，无客户端样本结论。独立开发从8bb0c74继续，不修改冻结来源。
 

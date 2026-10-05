@@ -100,6 +100,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     var clinics:Map<String,ClinicDefinition> = emptyMap();internal set
     var ferries:Map<String,FerryDefinition> = emptyMap();internal set
     var ferrySprites:Map<String,Bitmap> = emptyMap();internal set
+    var freeBoatEnabled:Boolean=false;internal set
+    var freeBoatSprites:Map<Key,Bitmap> = emptyMap();internal set
     var nightLightAtlas:(()->Bitmap)?=null;internal set
     fun atlasForState(mapId:Int,flags:Map<String,Boolean>):Bitmap =
         if(mapId==74&&flags[WorldItems.NIGHT_LIGHT_FLAG]==true)nightLightAtlas?.invoke()
@@ -151,6 +153,10 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
         for(mechanism in mechanisms)result=mechanism.apply(result,flags)
         result=OriginalFerry.sceneView(result,flags,ferries.values)
+        if(freeBoatEnabled){
+            val leg=OriginalFerry.pending(flags,ferries.values)?.position(flags)?.takeIf{it.mapId==mapId}
+            result=OriginalBoat.sceneView(result,flags,leg?.let{it.x to it.y})
+        }
         stateScene=result;stateFlags=flags;return result
     }
 }
@@ -227,6 +233,14 @@ object ContentLoader {
             require(arrival in setOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT))
             MapExit(o.getInt("fromMapId"),trigger[0],trigger[1],o.getInt("toMapId"),spawn[0],spawn[1],direction,arrival,o.optBoolean("resetEncounterSteps",false),o.optBoolean("captureCaller",false),o.optBoolean("returnToCaller",false)).also{
                 it.preserveArrivalDirection=o.optBoolean("preserveArrivalDirection",false)
+                if(o.has("arrivalTerrainMode")){
+                    val next=o.getInt("arrivalTerrainMode")
+                    require(o.getString("vehicleEvidence")=="game-data/provenance/world-lotus136-state.json"&&
+                        ((it.fromMapId==16&&it.toMapId==136&&it.triggerX==65&&it.triggerY==67&&it.spawnX==7&&it.spawnY==14&&next==0)||
+                         (it.fromMapId==136&&it.toMapId==16&&it.triggerX==7&&it.triggerY==14&&it.spawnX==65&&it.spawnY==67&&next==219)))
+                    require(data.has("freeBoat")&&it.resetEncounterSteps)
+                    it.arrivalTerrainMode=next
+                }
                 if(mode=="ACTOR_CONTACT"){
                     val actor=o.getInt("contactActorId")
                     require(o.getString("evidence")=="game-data/provenance/world-tree-contact.json"&&
@@ -240,8 +254,11 @@ object ContentLoader {
         }}
         for(exit in exits){
             val from=scenes[exit.fromMapId];val to=scenes[exit.toMapId]
-            require(from!=null && to!=null && validExitPlacement(from,exit.triggerX,exit.triggerY,sceneBarriers) &&
-                validExitPlacement(to,exit.spawnX,exit.spawnY,sceneBarriers)
+            fun placement(s:Scene?,x:Int,y:Int)=s!=null&&
+                (validExitPlacement(s,x,y,sceneBarriers)||data.has("freeBoat")&&s.mapId==16&&
+                    x in 0 until s.width&&y in 0 until s.height&&s.collision[y*s.width+x] in setOf(4,5,14,15,16,17)&&
+                    exit.arrivalTerrainMode!=null)
+            require(placement(from,exit.triggerX,exit.triggerY)&&placement(to,exit.spawnX,exit.spawnY)
             ) {"Invalid exit geometry ${exit.fromMapId}(${exit.triggerX},${exit.triggerY}) -> ${exit.toMapId}(${exit.spawnX},${exit.spawnY}) after reviewed removable objects"}
         }
         fun bitmap(name: String,w: Int,h: Int): Bitmap {
@@ -1120,6 +1137,20 @@ object ContentLoader {
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
+                data.optJSONObject("freeBoat")?.let{o->
+                    require(o.getInt("mode")==OriginalBoat.MODE&&o.getString("evidence")==OriginalBoat.EVIDENCE&&
+                        o.getString("shipFlag")==OriginalSceneItems.SHIP_FLAG&&setOf(10,16,136).all{it in scenes})
+                    val npc=npcs.single{it.id=="rom.npc.10.6"}
+                    require(npc.x==9&&npc.y==2&&npc.talkDisabled)
+                    require(exits.count{it.arrivalTerrainMode!=null}==2)
+                    val a=o.getJSONObject("sprites")
+                    require(a.keys().asSequence().toSet()==setOf("UP","DOWN","LEFT","RIGHT"))
+                    content.freeBoatSprites=listOf(Key.UP,Key.DOWN,Key.LEFT,Key.RIGHT).associateWith{key->
+                        val name=checkedName(a.getString(key.name));require(name=="actor-219-boat-${key.name.lowercase()}.png")
+                        bitmap(name,16,16)
+                    }
+                    content.freeBoatEnabled=true
+                }
                 data.optJSONArray("ferries")?.let{a->
                 require(a.length()==2)
                 val rules=(0 until a.length()).map{i->
