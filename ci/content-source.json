@@ -17,10 +17,10 @@
     "provenance": "game-data/provenance/world-room116-content.json"
   },
   "runtimeBaseline": {
-    "buildRunId": 37252974082,
-    "sourceCommit": "96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb",
-    "versionCode": 79,
-    "apkSha256": "59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4",
+    "buildRunId": 37261594942,
+    "sourceCommit": "c461e7c121b6f535d85e2a245b82be1f6e42d786",
+    "versionCode": 82,
+    "apkSha256": "22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9",
     "contentVersion": "opening-segment-001-c51-r1",
     "manifestSha256": "427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805"
   },
