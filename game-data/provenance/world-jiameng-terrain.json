@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "jiameng145-through148-ground-and-upper-plane-bridge-zero",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ANDROID",
+  "inputModes": [
+    0,
+    1
+  ],
+  "initialBridgeState": 0,
+  "testCount": 264,
+  "failures": 0,
+  "maps": {
+    "145": {
+      "mapId": 145,
+      "gridSha256": "1a8e99b356405efe25442b589147be3dbf1f4d2e5bad134bbffc13e9867bcce9",
+      "classCounts": {
+        "0": 144,
+        "1": 332,
+        "13": 2,
+        "19": 2
+      },
+      "testCount": 128
+    },
+    "146": {
+      "mapId": 146,
+      "gridSha256": "146f23b011da26585dadfd80b0464186f0ffba03515be68c7ab8389c582cc643",
+      "classCounts": {
+        "0": 102,
+        "1": 378
+      },
+      "testCount": 32
+    },
+    "147": {
+      "mapId": 147,
+      "gridSha256": "f3f7875126a69d15ac9deadb797aff386dd07e65c5cac6af1837e0997b2e7dd5",
+      "classCounts": {
+        "0": 42,
+        "1": 198
+      },
+      "testCount": 32
+    },
+    "148": {
+      "mapId": 148,
+      "gridSha256": "49610ccc54aebe84c7a631bd30995f240135e04e3ab7689da06cef1a286aa145",
+      "classCounts": {
+        "0": 72,
+        "1": 148,
+        "23": 20
+      },
+      "testCount": 72
+    }
+  },
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 29,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Original collision source dispatcher"
+    },
+    {
+      "offset": 19607,
+      "length": 215,
+      "sha256": "a118646fa613c07d783eeb31976365917292580ea2c333942ec1762bb48382b5",
+      "module": 0,
+      "cpuAddress": 52359,
+      "meaning": "Tileset3 source-plane table and direction dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 29,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Original collision target dispatcher"
+    },
+    {
+      "offset": 20649,
+      "length": 153,
+      "sha256": "028a66c214d87469fc1161db986e50c24087eae0a0fa441cd0346489bdf1b9bf",
+      "module": 0,
+      "cpuAddress": 53401,
+      "meaning": "Tileset3 target-plane and stair dispatch"
+    },
+    {
+      "offset": 21028,
+      "length": 115,
+      "sha256": "fc726076185b454cb84a59fc1d05d3899ed7ff15afde7b7c3301b872aefa9f83",
+      "module": 0,
+      "cpuAddress": 53780,
+      "meaning": "Original directional barriers"
+    },
+    {
+      "offset": 1884,
+      "length": 34,
+      "sha256": "b2c50ccedebf387743cb66c3ea8043a955ae2224b1f6d92d78985be488444269",
+      "module": 0,
+      "cpuAddress": 34636,
+      "meaning": "9B sprite occlusion branch; not encounter suppression"
+    },
+    {
+      "offset": 377027,
+      "length": 100,
+      "sha256": "03813f125a34e0d6848b753e65400e9524d8621dc694091bea94ac7bc5ad9132",
+      "module": 11,
+      "cpuAddress": 49331,
+      "meaning": "Actual encounter gate does not read 9B"
+    },
+    {
+      "offset": 388648,
+      "length": 4,
+      "sha256": "3c4438a21656c9a1ef9f017d7f4c23dd6d234904ac469dca54ce796ce356aff0",
+      "module": 11,
+      "cpuAddress": 60952,
+      "meaning": "Actual four Jiameng map-type bytes; shared tileset3 CPU dispatch retained"
+    }
+  ],
+  "cpuExpectedPath": "android/app/src/test/resources/jiameng-collision-original.tsv",
+  "cpuExpectedSha256": "04d34be9beaea422f7fd8b87fe9f666261e9e5d6096b5b6b69652edf3cb4e53a",
+  "controlledReportSha256": "0ceaa84b7ecd047e7dbf0e74d8324fd71eefcc7f2f7afcfc26e2f7f98d14fafb",
+  "encounterGate": {
+    "testCount": 480,
+    "failures": 0,
+    "cpuExpectedPath": "android/app/src/test/resources/hell-ground-encounter-gate-cpu.tsv",
+    "cpuExpectedSha256": "9663280bc711892b4555b9a4957b42bb77bd7af63939c4c1e44cfd950cd0153b",
+    "controlledReportSha256": "5e8eaa05fc4549218aaaef8ea12d1bb66b3e2ff43eaf145b2cc3f99abac5eed2",
+    "suppressesOn9b": false
+  },
+  "rules": {
+    "source23VerticalSelectsUpperOnlyForTarget14": true,
+    "upperStandingClasses": [
+      10,
+      11,
+      13,
+      14,
+      17,
+      18,
+      23
+    ],
+    "upperBridge20Through22": "NOT_IMPLEMENTED",
+    "9b": "ORIGINAL_SPRITE_OCCLUSION_NOT_ENCOUNTER_CONTROL"
+  },
+  "normalAndroid": "NOT_RUN",
+  "limits": [
+    "Bounded original CPU/class evidence only; no normal Android route or Boss victory claim",
+    "Retain original walls, plane and sprite occlusion; no bridge-state extension or false encounter suppression"
+  ],
+  "cpuReportSha256": "0ceaa84b7ecd047e7dbf0e74d8324fd71eefcc7f2f7afcfc26e2f7f98d14fafb",
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-jiameng-terrain.py",
+    "sha256": "fb7b2d46ebe0320756f3ce84e82d5278819426c96cd9187c29105548cf636dd4",
+    "verifiedCases": 264,
+    "differences": 0,
+    "existingProbe": "tools/rom-extractor/probe-world-island-terrain.py",
+    "existingProbeSha256": "f90c4f00e71d99e2ce3cf54aebfbe6a29f2f2d7a565a00bc2b5316117786374a"
+  },
+  "postScriptRoom": {
+    "mapId": 37,
+    "gridSha256": "d30f25de136ba2d9245f683af74e7d5fe58cdd4fcb1a80906284d966fc003b86",
+    "classCounts": {
+      "0": 33,
+      "1": 203,
+      "2": 2,
+      "5": 2
+    },
+    "testCount": 64,
+    "differences": [],
+    "tableSha256": "cac7c17c21d6230a832e68a97f23189510d11defc2c02770294dabfa72a6699d",
+    "cpuExpectedPath": "android/app/src/test/resources/jiameng-room37-collision-original.tsv",
+    "cpuExpectedSha256": "cac7c17c21d6230a832e68a97f23189510d11defc2c02770294dabfa72a6699d",
+    "inputMode": 0,
+    "tilesetId": 2,
+    "rule": "target1 blocked; all other actual classes allowed; no cave-plane profile",
+    "sources": [
+      {
+        "offset": 19112,
+        "length": 29,
+        "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168",
+        "module": 0,
+        "cpuAddress": 51864,
+        "meaning": "Original source tileset selector"
+      },
+      {
+        "offset": 20037,
+        "length": 29,
+        "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f",
+        "module": 0,
+        "cpuAddress": 52789,
+        "meaning": "Original target tileset selector"
+      },
+      {
+        "offset": 19573,
+        "length": 8,
+        "sha256": "bcd58d0de349b1a7fb1a4e93c3e8d12288371d52bca8b44dcb65750a0813ab17",
+        "module": 0,
+        "cpuAddress": 52325,
+        "meaning": "Tileset2 source rule"
+      },
+      {
+        "offset": 20616,
+        "length": 20,
+        "sha256": "808979c00d4bc62e29f7e2e73669c132c974d6b76fb4f1111b48c9253e9604a9",
+        "module": 0,
+        "cpuAddress": 53368,
+        "meaning": "Tileset2 target rule"
+      }
+    ]
+  }
+}
