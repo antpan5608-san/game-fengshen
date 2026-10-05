@@ -35,7 +35,7 @@ def main():
         assert got==(0,hp,mp,4,216,0),got
         rows.append('\t'.join(map(str,(status,hp,mp,*got))))
     save('jiameng-xiao-return-original.tsv',rows)
-    rows=['yangStatusBefore\tmap145FlagBefore\tyangStatusAfter\tmap145FlagAfter\tmap148Context\tmap101Context\tscript']
+    rows=['yangStatusBefore\tmap145FlagBefore\tyangStatusAfter\tmap145FlagAfter\tmap148Context\tmap37Context\tscript']
     for status,flag in itertools.product((0,2,32,64,255),(0,2,12,128,255)):
         c=MPU();c.memory[0x8000:]=r.read(11,0x8000,32768);c.memory[0xe000:]=r.read(0,0xe000,8192)
         c.memory[0x546]=status;c.memory[0x791]=flag

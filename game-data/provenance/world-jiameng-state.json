@@ -6,7 +6,7 @@
   "kind": "CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE",
   "probe": {
     "path": "tools/rom-extractor/probe-world-jiameng-state.py",
-    "sha256": "b08c8fa18204e5942f8836848718e967cdd5fd41b64b9d5518d2801c8fee54f7"
+    "sha256": "a567af53001942fbae3d11e5ec1f21d4c6d608ac23b11e165f94777f79c12d7a"
   },
   "sources": [
     {
@@ -39,7 +39,7 @@
       "sha256": "97a106709fdadd3fe5feacd37df3a88170c85ae5b8af080b4cd376fbfdee3cde",
       "module": 11,
       "cpuAddress": 52292,
-      "meaning": "Actual three-victory: script30/Yang statusOR64/map145bits4,8/context148217/context101196"
+      "meaning": "Actual three-victory: script30/Yang statusOR64/map145bits4,8/context148217/context37196"
     },
     {
       "offset": 380046,
@@ -50,12 +50,12 @@
       "meaning": "Actual next scene37/viewport minus3,minus2"
     },
     {
-      "offset": 22334,
+      "offset": 22206,
       "length": 2,
-      "sha256": "dde12454138143570a55716b7cdc99c7f811f2d0d24397d182d574a6dbbdfe16",
+      "sha256": "a21089d67fd0a16168914e53c5bdc1ad3815f7908232b4c2898d12c4ef623225",
       "module": 0,
-      "cpuAddress": 55086,
-      "meaning": "Map101 context pointer7D6"
+      "cpuAddress": 54958,
+      "meaning": "Actual map37 context pointer7D6; map101 uses shared default7D0"
     },
     {
       "offset": 21957,
@@ -131,7 +131,7 @@
         "yangStatusOr": 64,
         "map145FlagOr": 12,
         "map148Context": 217,
-        "map101Context": 196
+        "map37Context": 196
       },
       "nextMapId": 37,
       "nextPosition": "Original script30 completed in controlled living-party field state: map37 cell4,5; no normal battle victory claim",
@@ -177,7 +177,7 @@
     {
       "path": "android/app/src/test/resources/jiameng-three-victory-original.tsv",
       "caseCount": 25,
-      "sha256": "9acf3557ce85e1d996a50f4acda715b95d2b33ed5135434e69f26108831177e7",
+      "sha256": "9087e95b77cde852f655c4b992da5d1544dcb43fe3285993085ed6e98f4ea194",
       "failures": 0
     },
     {
@@ -255,6 +255,18 @@
         "path": "private-derived/world-jiameng-field-script-controlled",
         "result": "SCRIPT_DESTINATION_OBSERVED but source party invalid; not used as living-party proof"
       }
+    ]
+  },
+  "contextCorrection": {
+    "actualMap37Pointer": 2006,
+    "map101DefaultPointer": 2000,
+    "originalWriteAddress": 2006,
+    "originalWriteValue": 196,
+    "previousNewDevelopmentLabel": "map101 incorrect; corrected before packaging",
+    "actualContext196Entities": [
+      130,
+      162,
+      163
     ]
   }
 }
