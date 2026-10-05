@@ -49,6 +49,7 @@ object OriginalNpcTalk {
         if(rule.actionId==31)return islandResidents(before,rule)
         if(rule.actionId==58)return jiamengRoom(before,rule)
         if(rule.actionId in listOf(53,54))return westernVillageWitness(before,rule)
+        if(rule.actionId in listOf(55,56))return westernHouseWitness(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -58,6 +59,24 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    /** CE9D/CECF only inspect owned/used paddle and select original dialogue.
+     * These callers do not grant a paddle, equip a boat or move the player. */
+    private fun westernHouseWitness(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val expected=when(rule.mapId){41->Triple(55,1,3);42->Triple(56,2,5);else->null}
+        val repeat=if(rule.mapId==41)4 else 7
+        if(expected==null||rule.actionId!=expected.first||rule.mapFlagId!="rom.map.${rule.mapId}.flag.${expected.second}"||
+            rule.itemId!="rom.special.14"||rule.witnessFlagId!="rom.inventory.special.14.used"||
+            rule.firstDialogue!="rom.dialogue.${rule.mapId+10}.${expected.third}"||
+            rule.repeatDialogue!="rom.dialogue.${rule.mapId+10}.$repeat")
+            return StoryFollowup.Result(before,null,false,"当前室内物品条件对白未核验")
+        val count=before.inventory[rule.itemId]?:0
+        if(count !in 0..1)return StoryFollowup.Result(before,null,false,"神木槳数量异常，原状态已保留")
+        val used=before.flags[rule.witnessFlagId]==true
+        val witnessed=if(rule.actionId==55)count==1||used else used
+        val next=if(witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,if(witnessed||before.flags[rule.mapFlagId]==true)rule.repeatDialogue else rule.firstDialogue,true)
     }
 
     /** Shared original CE4A/CE75 selectors. A nonzero global byte changes only

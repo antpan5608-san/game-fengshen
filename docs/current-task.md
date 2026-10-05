@@ -24,6 +24,21 @@ SAVE-HISTORY附带实现：Settings末尾“存档 / 回档”复用原模态入
 
 第一真实blocker：R2同候选三段正常App验收尚未完成，服务inspect另有托管runner调度限制。下一精确动作：读37364795394 job实际结果；FAIL读取对应断言/原片分类薄修，PASS原review/必要实际巡检/签名同hash发布。等待期间在本独立树继续已有世界的共享接续，限定核下一村庄动作/地图依赖；SAVE-HISTORY需同后续候选真实UI/force-stop/升级验证，复杂问题不阻塞已验证剧情阶段。旧字体/音频/一加13T/真实云恢复按原欠账保留。
 
+
+## 当前增量检查点：芙冰原房屋批次（2026-10-06 05:57，北京时间）
+
+独立开发HEAD从d50c057继续，R2 main/87bc56cb和run37364795394冻结不变（第一runtime PASS、runtime-world仍运行、continuation未开始）。生产仍v82；本增量没有触发发布或覆盖公网。
+
+原caller10的houseIndex0/1从0:D287表进入42/41，区别于商店class-minus算法；实际入口10(13,4)→42(7,12)、10(25,7)→41(5,12)，经各自FE出口正常返回各原门口。原试验初次从落点直接向下没有再踏入触发格而失败，改为真实先上后下复核，未改碰撞/出口。统一World.captureCaller/returnToCaller与完整SaveSnapshot继续复用，新增c53旧内容兼容，不新增室内引擎。
+
+c54目标opening-segment-001-c54：66图/360文件、manifest31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b，原c53基底09473f6b146fb9120468683285f6f44d6c163cd7fd5e56a575facdc69a39e2c1单独固定。两室内4演员、2隐藏调查和5对白，55/56只检查原神木桨持有/已用，变对白与本地flag，无治疗/奖励/移动。原CPU入口96/碰撞64/对白2048/物品22均零差异；374 JVM/78套0失败/错误/跳过、原instrument编译PASS，新导出3方法50.916s PASS，空目录360文件逐字节复现/旧媒体不变。首次导出restore测试因未设置SDK拒绝，正确环境复测通过，不关闭签名门禁；初始CPU碰撞fixture遗漏71=2，补正确原tileset后复测零差异。Unicode/静态图形仍PROVISIONAL，新增Android实际加载/正常路线/覆盖/冷启均NOT_RUN，不将JVM写可玩。
+
+另原神木桨使用已在隔离原版实际菜单核14→map42/actor162，数量1变128、6812置1、event23，原菜单名神木槳；正常对话最终52.6→52.7，仍留在42，无玩家传送。此为CONTROLLED_ORIGINAL_POSITION_ITEM_FIXTURE，未冒称正常原版或Android；药效/治病/航线不从这几句文本补造。当前c54仍只有取得/库存与条件对白，神木桨使用/自由船行未实现；下一精确动作核6812影响原CF7D水上移动与芙冰真实上船/航路，继而薄扩展现有运行机制。map7磻溪/姜子牙context191仍未打包，保留其真实前置/事件欠账。
+
+c53已经在git archive d50c057的干净目录/workspace/scratch/world-west-clean-d50c057实际原ci_apk.restore默认assets/development→assembleDebug/assembleDebugAndroidTest 22秒成功；实际APK内360之前批次352文件/64图hash严格一致，DEBUG包32519333字节/SHA30ddd9c52f4bdc63485918f15f4a8a3d928be34d9aaf0b20eddc62aad3ff2fb8。更早一份手工指定assets/content的调试构建不能证明启动，已明确废弃/未发布/未用于App验收，不记运行PASS。本次仍不改变原CI c50 pin，后续候选需原签名与实际运行门禁。
+
+SAVE-HISTORY继续已实现/单元验证、APP_VERIFIED NOT_RUN；最新20档不淘汰active/迁移/云/CI checkpoint，后续同合适候选运行而不塞回冻结R2。最近独立远端备份work/world-jiameng-batch-continuation/65b92c1641ee72868ec470adc51cb6d337d4ae62与d50c057同树；本增量待提交备份。十类欠账仍delivery-status权威清单，不关闭全世界、全服务、全字库、音频和手机。
+
 ## 历史检查点（2026-10-05；不覆盖以上当前有效状态）
 
 用户最新连续授权：先在现有冻结R1范围完成有限STABLE验收并按原保护自动发布；发布后立即继续既有地府/十殿/重生/后续区域，不等待manual_acceptance或再次“继续”。不扩展R1候选；DEVELOPMENT HEAD与STABLE RELEASE分别维护，正常阶段验收与受控fixture严格区分。

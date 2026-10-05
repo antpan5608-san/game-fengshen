@@ -1,0 +1,1450 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-west-villages-content.json",
+    "pinSha256": "5dadb0be33a960bff239b210cf0d3af8173e9d868a5a141a4c97599c464cba7e",
+    "provenanceSha256": "d6c3beba5898a496133157a21d8335e5251e1ad38b5cef9e90a7f0aed3ec71c8"
+  },
+  "baseManifestSha256": "09473f6b146fb9120468683285f6f44d6c163cd7fd5e56a575facdc69a39e2c1",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.51.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35528,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101080,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36588,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102140,
+            "sha256": "c8ce8236be34e9d7b2aa8deb314285a92332f00759bc64c2b870baaeac1be68c"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44524,
+          "length": 28,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110076,
+          "sha256": "096c69402dc90d443b66b08b6d9a573fea110d0763bed52a87d489ae731782d3"
+        },
+        "remainingUnknown": [
+          "Normal Android rendering and full event progression"
+        ]
+      },
+      "text": "『我知道你們會來找我，可是你們要先幫我找一支神木槳。』"
+    },
+    {
+      "id": "rom.dialogue.51.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35528,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101080,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36590,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102142,
+            "sha256": "5b9ec0373adecead630c31281761ac44683677fd0e21f46085c6df59bff78877"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44552,
+          "length": 18,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110104,
+          "sha256": "cd777a7049b73367958931f3c3ce7127af99a381a5a15ae67bbb21c4d2c61716"
+        },
+        "remainingUnknown": [
+          "Normal Android rendering and full event progression"
+        ]
+      },
+      "text": "『把槳拿給船家，這樣可達香樹居！』"
+    },
+    {
+      "id": "rom.dialogue.52.5",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35530,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101082,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36592,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102144,
+            "sha256": "2a3deee7079f54b8839326a2ec46526e7089b92cb1b90572e87322fec125d63e"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44570,
+          "length": 15,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110122,
+          "sha256": "1ba5906f19934fc11224334775a4eecef7d898a6e45af6983e831233a01f24b2"
+        },
+        "remainingUnknown": [
+          "Normal Android rendering and full event progression"
+        ]
+      },
+      "text": "『這船老舊，根本無法遠航。』"
+    },
+    {
+      "id": "rom.dialogue.52.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35530,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101082,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36594,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102146,
+            "sha256": "a0d9c90ed34d28c571974661f6bf92a4339b576ec2ca10c96b57dfb5c2498ba9"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44585,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110137,
+          "sha256": "bedc6570bb085e48a9a5cd0c1c56e84499569d5c4384e857855d9daa18fa681a"
+        },
+        "remainingUnknown": [
+          "Normal Android rendering and full event progression"
+        ]
+      },
+      "text": "『啊！是神木槳，我來把它裝上！』"
+    },
+    {
+      "id": "rom.dialogue.52.7",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35530,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101082,
+            "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+          },
+          {
+            "cpuAddress": 36596,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102148,
+            "sha256": "e54d5fb04e90f1f7b4397753c1e74530f8cc6f927815e1a93aafa3f6593a138e"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44602,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110154,
+          "sha256": "330059faa13bdbed433086aba67d3e7746ac7b4a7c7f1385ce79efdbb752e4f5"
+        },
+        "remainingUnknown": [
+          "Normal Android rendering and full event progression"
+        ]
+      },
+      "text": "『一路小心，去吧！』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "confidence": "VERIFIED",
+      "fromMapId": 10,
+      "kind": "HOUSE_TABLE_ENTRY",
+      "source": {
+        "cpuAddress": 52286,
+        "length": 11,
+        "meaning": "Original house-index caller dispatch",
+        "module": 0,
+        "offset": 19534,
+        "sha256": "df2a0de70378da5b434a7fcb6ae6325db2a8c3df221a64abec2e81e39fe47545"
+      },
+      "spawn": [
+        5,
+        12
+      ],
+      "tableSource": {
+        "cpuAddress": 53926,
+        "length": 1,
+        "meaning": "Original caller10 house target table",
+        "module": 0,
+        "offset": 21174,
+        "sha256": "ba5ec51d07a4ac0e951608704431d59a02b21a4e951acc10505a8dc407c501ee"
+      },
+      "toMapId": 41,
+      "trigger": [
+        25,
+        7
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 41,
+      "kind": "RETURN_TO_CALLER",
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57609,
+        "length": 5,
+        "meaning": "Original independent house return-to-caller",
+        "module": 8,
+        "offset": 287001,
+        "sha256": "20e32ba122cce8a4f1e7b7165f1dfd7b6390501f98565d673ddce9c9ea557b51"
+      },
+      "spawn": [
+        25,
+        7
+      ],
+      "toMapId": 10,
+      "trigger": [
+        5,
+        12
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "captureCaller": true,
+      "confidence": "VERIFIED",
+      "fromMapId": 10,
+      "kind": "HOUSE_TABLE_ENTRY",
+      "source": {
+        "cpuAddress": 52275,
+        "length": 11,
+        "meaning": "Original house-index caller dispatch",
+        "module": 0,
+        "offset": 19523,
+        "sha256": "8c2a1cd09b79229b107becbf07a240fc3b2e7c5c027b042b3e2f43fbc3517dcc"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "tableSource": {
+        "cpuAddress": 53925,
+        "length": 1,
+        "meaning": "Original caller10 house target table",
+        "module": 0,
+        "offset": 21173,
+        "sha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      },
+      "toMapId": 42,
+      "trigger": [
+        13,
+        4
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 42,
+      "kind": "RETURN_TO_CALLER",
+      "returnToCaller": true,
+      "source": {
+        "cpuAddress": 57615,
+        "length": 5,
+        "meaning": "Original independent house return-to-caller",
+        "module": 8,
+        "offset": 287007,
+        "sha256": "a867e9cce44959b02c2b871719b9b9c5a5fd19cb55d364b559dad3e72d68a483"
+      },
+      "spawn": [
+        13,
+        4
+      ],
+      "toMapId": 10,
+      "trigger": [
+        7,
+        12
+      ]
+    }
+  ],
+  "graphics": {
+    "npc-156-house41-0.png": {
+      "animationSource": {
+        "cpuAddress": 37028,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 4276,
+        "sha256": "e24dca2288e8f37fb930b6f83d9538813adfb69015a73eda93d588acbd456a93"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48815,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278207,
+        "sha256": "456b9b8a8b74b8ad2b7ddeb990d703c9797e542eb01803c9aab8c50226cb4df4"
+      },
+      "frameSource": {
+        "cpuAddress": 37171,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4419,
+        "sha256": "f72c408a5e9889386cb3a9c4c71ba30c74cd3a01eb35f1154b4096a705a56275"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 866320,
+          "sha256": "c1196225816e270b3a1130192a1c777a033cb248f7e94c7fd6817f0fc51b961f"
+        },
+        {
+          "length": 1024,
+          "offset": 867344,
+          "sha256": "f3dad52bc6f74c4fdc8adb5df73a408f384b0c155b5c019f868038bf188e2f2f"
+        }
+      ],
+      "rgbaSha256": "777ac7ef3d6abd8da559e8f48b619c35fb4d35af227b653c5c55e1c5ab35a2a6",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 866320,
+          "sha256": "127c22bae2a9bcd00ce1e8bcd7b73ff82b8cfb5baf362d79beb09f0bcbfe411c",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866336,
+          "sha256": "f9c8b4b5568158dd26c51cea7ff0652eaa1776404b80c02e7e1b7b3d17554be4",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866576,
+          "sha256": "050228331085c59555565395774cc01507993b2cebbead871f5fa2509045879e",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 866592,
+          "sha256": "ab483e0811b57460145fa921e4ab3e83a020247f5ea91facd124fee41e887469",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-162-house42-0.png": {
+      "animationSource": {
+        "cpuAddress": 37404,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 4652,
+        "sha256": "c27864bc3f3bbb8690dd0c8ea2313456d8be1bdd04abe381c7371bed3b1d46a6"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48830,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278222,
+        "sha256": "d83a8fe3b4588750cdfd352ebbe7700684945ecf9a202d95fc80c5736d2ea9b7"
+      },
+      "frameSource": {
+        "cpuAddress": 37566,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 4814,
+        "sha256": "7b2fcd9e3c43b55711ee2b6fd36eb974b3dea5503c939012d2015943a10e2775"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          148,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          116,
+          96
+        ],
+        "3": [
+          92,
+          148,
+          252
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "548026aa47dba6d18f5ccc6e827c80cba364031bc175123e9fe19f0cec32a382",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870960,
+          "sha256": "c557017e9156bd9e12fc4c81133fc34c5df9dc4b3caf950746ede37bba78077e",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870976,
+          "sha256": "ad8041f65fcd21f9637b73d494e9b2a215273fbc9716bc8014b4dcf3d0b259ec",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871216,
+          "sha256": "9bdfba38281f8ae14717bfb4a1f1ea2da54c7ebfddfeaf333429a6dc169c0478",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 871232,
+          "sha256": "09fb94f234e2bdbc54ee0dab141aee14438c36512db1988163cae1b03cc0ee00",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-house42-1.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48844,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278236,
+        "sha256": "992949b8ec117c8a1ef5b73cdf38ee2d244e919f3f5c833d970316723970fcc0"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-198-house42-2.png": {
+      "animationSource": {
+        "cpuAddress": 36434,
+        "length": 3,
+        "meaning": "Actual same-entity record-linked initial transport",
+        "module": 0,
+        "offset": 3682,
+        "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+      },
+      "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+      "frameRecordSource": {
+        "cpuAddress": 48858,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 278250,
+        "sha256": "d89bcaddbb91b60235c09718d29cc7b9de96d14c6d6c266fe2b20d137b87b058"
+      },
+      "frameSource": {
+        "cpuAddress": 36675,
+        "length": 5,
+        "meaning": "Original palette and four CHR tiles",
+        "module": 0,
+        "offset": 3923,
+        "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+      },
+      "height": 16,
+      "normalPlayEvidence": false,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          252,
+          188,
+          176
+        ],
+        "3": [
+          216,
+          40,
+          0
+        ]
+      },
+      "patternBankSources": [
+        {
+          "length": 1024,
+          "offset": 868368,
+          "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+        },
+        {
+          "length": 1024,
+          "offset": 869392,
+          "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+        },
+        {
+          "length": 1024,
+          "offset": 870416,
+          "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+        },
+        {
+          "length": 1024,
+          "offset": 871440,
+          "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+        }
+      ],
+      "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+      "tiles": [
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "length": 16,
+          "offset": 870400,
+          "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "items": [],
+  "limitations": [
+    "Normal Android entry/talk/pickups/cold-start NOT_RUN",
+    "Paddle use and boat travel pending runtime implementation; no cure or party change"
+  ],
+  "maps": [
+    {
+      "gridSha256": "06f97777a21adb6c36620da05ca13e43f80fc1bf73105ea66cd4f35b0afc7c0b",
+      "houseRoomEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "limitations": [
+        "Native controlled evidence; Android normal route NOT_RUN",
+        "No new use/boat/cure inferred"
+      ],
+      "mapId": 41,
+      "npcCells": [
+        101
+      ],
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        5,
+        12
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        5
+      ]
+    },
+    {
+      "gridSha256": "565d61c1903415423e8f14a4215216c84b60b383836bf167d3b456f5131fe842",
+      "houseRoomEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "limitations": [
+        "Native controlled evidence; Android normal route NOT_RUN",
+        "No new use/boat/cure inferred"
+      ],
+      "mapId": 42,
+      "npcCells": [
+        87,
+        83,
+        100
+      ],
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        7,
+        12
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        5
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        5,
+        6
+      ],
+      "firstDialogue": "rom.dialogue.51.3",
+      "firstEffects": [],
+      "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "id": "rom.npc.41.0",
+      "mapId": 41,
+      "originalTalk": {
+        "actionId": 55,
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "itemId": "rom.special.14",
+        "mapFlagId": "rom.map.41.flag.1",
+        "witnessFlagId": "rom.inventory.special.14.used"
+      },
+      "repeatDialogue": "rom.dialogue.51.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "record": {
+          "cpuAddress": 48815,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278207,
+          "sha256": "456b9b8a8b74b8ad2b7ddeb990d703c9797e542eb01803c9aab8c50226cb4df4"
+        },
+        "remainingUnknown": [
+          "Dynamic actor pose and Android normal route"
+        ]
+      },
+      "sprite": "npc-156-house41-0.png",
+      "spriteId": 156
+    },
+    {
+      "cell": [
+        7,
+        5
+      ],
+      "firstDialogue": "rom.dialogue.52.5",
+      "firstEffects": [],
+      "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "id": "rom.npc.42.0",
+      "mapId": 42,
+      "originalTalk": {
+        "actionId": 56,
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "itemId": "rom.special.14",
+        "mapFlagId": "rom.map.42.flag.2",
+        "witnessFlagId": "rom.inventory.special.14.used"
+      },
+      "repeatDialogue": "rom.dialogue.52.7",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "record": {
+          "cpuAddress": 48830,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278222,
+          "sha256": "d83a8fe3b4588750cdfd352ebbe7700684945ecf9a202d95fc80c5736d2ea9b7"
+        },
+        "remainingUnknown": [
+          "Dynamic actor pose and Android normal route"
+        ]
+      },
+      "sprite": "npc-162-house42-0.png",
+      "spriteId": 162
+    },
+    {
+      "cell": [
+        3,
+        5
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "id": "rom.npc.42.1",
+      "mapId": 42,
+      "openedSprite": "npc-198-house42-1.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "record": {
+          "cpuAddress": 48844,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278236,
+          "sha256": "992949b8ec117c8a1ef5b73cdf38ee2d244e919f3f5c833d970316723970fcc0"
+        },
+        "remainingUnknown": [
+          "Dynamic actor pose and Android normal route"
+        ]
+      },
+      "sprite": "npc-198-house42-1.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 2,
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "flagId": "rom.map.42.flag.4",
+        "itemId": "rom.weapon.21"
+      }
+    },
+    {
+      "cell": [
+        4,
+        6
+      ],
+      "firstDialogue": "",
+      "firstEffects": [],
+      "hiddenInvestigation": true,
+      "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+      "id": "rom.npc.42.2",
+      "mapId": 42,
+      "openedSprite": "npc-198-house42-2.png",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "record": {
+          "cpuAddress": 48858,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 278250,
+          "sha256": "d89bcaddbb91b60235c09718d29cc7b9de96d14c6d6c266fe2b20d137b87b058"
+        },
+        "remainingUnknown": [
+          "Dynamic actor pose and Android normal route"
+        ]
+      },
+      "sprite": "npc-198-house42-2.png",
+      "spriteId": 198,
+      "treasure": {
+        "amount": 1,
+        "categoryGrant": 0,
+        "evidence": "game-data/provenance/world-west-houses-resources.json",
+        "flagId": "rom.map.42.flag.8",
+        "itemId": "rom.medicine.0"
+      }
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 52275,
+      "length": 50,
+      "meaning": "Original house index0/1/2 caller table dispatch",
+      "module": 0,
+      "offset": 19523,
+      "sha256": "41dc4dd5ed0f2d303ab01fc59b642eb7813a22adee87899175461dbc1acebde8"
+    },
+    {
+      "cpuAddress": 51864,
+      "length": 29,
+      "meaning": "Original source tileset dispatcher",
+      "module": 0,
+      "offset": 19112,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168"
+    },
+    {
+      "cpuAddress": 52789,
+      "length": 29,
+      "meaning": "Original target tileset dispatcher",
+      "module": 0,
+      "offset": 20037,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f"
+    },
+    {
+      "cpuAddress": 52325,
+      "length": 8,
+      "meaning": "Original plain-room source",
+      "module": 0,
+      "offset": 19573,
+      "sha256": "bcd58d0de349b1a7fb1a4e93c3e8d12288371d52bca8b44dcb65750a0813ab17"
+    },
+    {
+      "cpuAddress": 53368,
+      "length": 20,
+      "meaning": "Original plain-room target",
+      "module": 0,
+      "offset": 20616,
+      "sha256": "808979c00d4bc62e29f7e2e73669c132c974d6b76fb4f1111b48c9253e9604a9"
+    },
+    {
+      "cpuAddress": 52893,
+      "length": 84,
+      "meaning": "Original action55/56 owned-used inventory witness",
+      "module": 10,
+      "offset": 347821,
+      "sha256": "8906f066a2879e871a07fb13e5b9916efdeac79cbbd4a97e3044cc5c018c1cfe"
+    },
+    {
+      "cpuAddress": 53578,
+      "length": 120,
+      "meaning": "Original owned versus used inventory lookup",
+      "module": 10,
+      "offset": 348506,
+      "sha256": "5ca581941e3af69b3da0aaa256c26bf0879a072ee1bca0c7c1a27253b9801036"
+    },
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Original first-repeat actor selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 58313,
+      "length": 31,
+      "meaning": "Original special14 scene42 actor162 event23 and ship bit",
+      "module": 2,
+      "offset": 91097,
+      "sha256": "47856de29ac5ed9f9f7f4d4da62806fb314fd6adee3740b40358ecb508afb55e"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 62,
+      "meaning": "Original use bookkeeping; actual quantity128 separately captured",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "45dc4f799fbd4bbaa642ee2ab00230ece6e524ce0d73ddff7b4bf3d430956ee7"
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "fubing-original-house-table-entry-and-readonly-witness-actors",
+  "taskId": "WORLD-FULL-01"
+}

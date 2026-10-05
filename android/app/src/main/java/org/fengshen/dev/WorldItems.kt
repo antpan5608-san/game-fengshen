@@ -21,6 +21,8 @@ object WorldItems {
     fun categoryGrantEvidenceSupported(evidence:String,mapId:Int,npcId:String,category:Int):Boolean {
         if(category !in 0..3)return false
         return when(evidence){
+            "game-data/provenance/world-west-houses-resources.json"->mapId==42&&
+                mapOf("rom.npc.42.1" to 2,"rom.npc.42.2" to 0)[npcId]==category
             "game-data/provenance/world-hell-chest-grants.json",
             "game-data/provenance/world-tree107-chests.json",
             "game-data/provenance/world-island-chests.json"->true
