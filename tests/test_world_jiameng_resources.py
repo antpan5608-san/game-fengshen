@@ -38,6 +38,17 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertFalse(recipe['normalPlayEvidence'])
         self.assertTrue(all('paletteCodes' in t for t in self.proof['graphics']['enemy158.png']['tiles']))
 
+    def test_field_actor_recipes_keep_transparent_zero_and_actual_opaque_black(self):
+        self.assertEqual({'npc-jiameng-129.png','npc-jiameng-152.png','npc-jiameng-154.png'},set(self.proof['npcGraphics']))
+        for name,recipe in self.proof['npcGraphics'].items():
+            image=Image.open(io.BytesIO(ex.scoped_observed_graphic(self.reader,recipe))).convert('RGBA')
+            self.assertEqual((16,16),image.size);self.assertTrue(recipe['opaquePixelMatch'])
+            self.assertEqual(recipe['opaquePixelCount'],sum(p[3]>0 for p in image.getdata()),name)
+            self.assertTrue(any(p[:3]==(0,0,0)and p[3]==255 for p in image.getdata()))
+            self.assertTrue(any(p[3]==0 for p in image.getdata()))
+            self.assertFalse(recipe['normalPlayEvidence'])
+            self.assertTrue(all('attribute' in t for t in recipe['tiles']))
+
     def test_current_dialogues_use_active_font_not_the_opening_charset(self):
         font=self.proof['font'];raw=b''.join(ex.checked_span(self.reader,s)for s in font['sources'])
         cs={int(k):v for k,v in font['charset'].items()}
@@ -81,6 +92,10 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertEqual((1,11)if flag&128==0 and(x,y)in points else(0,0),(event,phase))
         self.assertEqual('NONE; ordinary battle reward/loot remain separate',proof['rules']['firstBoss']['additionalScriptReward'])
         self.assertEqual(64,proof['rules']['threeBosses']['postBattleBeforeScript30']['yangStatusOr'])
+        self.assertEqual(0x7d6,self.reader.word(0,0xd664+2*37))
+        self.assertEqual(0x7d0,self.reader.word(0,0xd664+2*101))
+        self.assertEqual(196,proof['rules']['threeBosses']['postBattleBeforeScript30']['map37Context'])
+        self.assertNotIn('map101Context',proof['rules']['threeBosses']['postBattleBeforeScript30'])
 
     def test_manual_return_definition_reuses_existing_scoped_export_validation(self):
         definition=ex.world_jiameng_xiao_return_definition()

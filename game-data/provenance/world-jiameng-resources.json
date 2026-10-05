@@ -12951,5 +12951,286 @@
       "unknownCodes": [],
       "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
     }
-  ]
+  ],
+  "npcGraphics": {
+    "npc-jiameng-154.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 872688,
+          "length": 16,
+          "sha256": "75902a6a1a45de42c7948a0374a274eac5492d51db4f51e9e47d6d4a8d142ec4",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 872704,
+          "length": 16,
+          "sha256": "bae8b1015c5ff24a218d5bd14411ccfaf5cb913c855e76aaa6a44a2b6571d931",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 872944,
+          "length": 16,
+          "sha256": "935842f997c0cca09b7c40d21e985031d4392d077d288dc36c5255624523d3c6",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 872960,
+          "length": 16,
+          "sha256": "3ed7fbcc35ca50d3188cff23518ebe77ccfbc3267be47f6743e1a2b24610878a",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "31e40a53580d4789fdb6d6a59cb14faea53a29a186ef1f228aef265da3fdcc47",
+      "captureSha256": "5c635f24835c341eff4021dd96101cc0d0ba63fa721c5acad5c18db00feebea8",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 218,
+      "oamHex": "608e0070608f0078689e0070689f0078",
+      "ramSha256": "93f9f185ebc01dbd17e6abd45c035047ed22f17adea88d82183569ddfe8310f0",
+      "ppuSha256": "6d1e180575e21ea022f59c4713b48db23d9fd885bce26d58f5014a10eb9a61ae",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    },
+    "npc-jiameng-129.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 864816,
+          "length": 16,
+          "sha256": "28e48ffee03907a9c12dff46117192474ff0f6f2bf8d0cf11094c0dd2b8d839b",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 864832,
+          "length": 16,
+          "sha256": "c4dc69d1de26acb7b9e6bc50dbba36a709c934f9ce57146a899560bd232d8853",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 865072,
+          "length": 16,
+          "sha256": "bfbf34438180f048f17a2181d3e1aac5de85e04faf9620e8adf8957add3652e9",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 865088,
+          "length": 16,
+          "sha256": "b6ae0e1ba2ba6ce88afd982b57d8cf5ac13b8d7782e93fa92c83fc7d6708a655",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "64d14905a468aeddffc27496ec04f132a5bd5eb0ab47dacd89d56b3b238e1f08",
+      "captureSha256": "e22fb0752818d2aaae7e57d96f7f55d2e775ed08bc0a09a010482dedf78b4440",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 213,
+      "oamHex": "60220070602300786832007068330078",
+      "ramSha256": "4e4a160d9157c4037400da3d507e87fcc72d0206ecf761358c46ff8518669a74",
+      "ppuSha256": "e4b1d2efb696f6d53765926a57da44008656db3e2e113e6a1f109de3d19e82ef",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    },
+    "npc-jiameng-152.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        41,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 873520,
+          "length": 16,
+          "sha256": "cc07d0eaa85207de045fdb7c56ed5d333f0bca7b090b092cc3e295991be19bf0",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 873536,
+          "length": 16,
+          "sha256": "e967b8b0e3f7d5166e22112aad929cd6a781ac6b3df9b93045d4fb54f6dd637e",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 873776,
+          "length": 16,
+          "sha256": "77075f8b6844e2ed66ead39352bb5a8d38b70afe6d433693c1e59f6213f423b6",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 873792,
+          "length": 16,
+          "sha256": "c926abb1455edfc6ad06ff4471054f0b6900633f1b42ee9728ffe85240b666aa",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "eaed1aadf158dce5a2652d97f14fd26edf7fbe62cbaadeb09c9625b0ee7e912e",
+      "captureSha256": "92be28f137421cab6a8d65c8485fe78f959e3de480f6ccbfb1f56f1177085192",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 201,
+      "oamHex": "30c2017030c3017838d2017038d30178",
+      "ramSha256": "9c2b1f06c27dba059e6bb45ea91eaaa696d73edd38864dbbcd1e03449d45ce35",
+      "ppuSha256": "6d1e180575e21ea022f59c4713b48db23d9fd885bce26d58f5014a10eb9a61ae",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    }
+  }
 }
