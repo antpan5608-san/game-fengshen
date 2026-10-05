@@ -50,6 +50,7 @@ object OriginalNpcTalk {
         if(rule.actionId==58)return jiamengRoom(before,rule)
         if(rule.actionId in listOf(53,54))return westernVillageWitness(before,rule)
         if(rule.actionId in listOf(55,56))return westernHouseWitness(before,rule)
+        if(rule.actionId==47)return lotus136(before,rule,item)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -59,6 +60,44 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    /** CD75 and original B562/B60E: no cure or fee is inferred from gift text.
+     * The completed healthy-first bit is checked by the original selector before
+     * the illness handler. Sick gift attempts do not set a one-time claim bit. */
+    private fun lotus136(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
+        fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
+        if(rule.mapId!=136||rule.mapFlagId!="rom.map.136.flag.1"||rule.witnessFlagId.isNotEmpty()||
+            rule.itemId!="rom.special.0"||rule.firstDialogue!="rom.dialogue.146.1"||
+            rule.repeatDialogue!="rom.dialogue.146.3"||rule.messageDialogues!=mapOf(
+                1 to "rom.dialogue.146.1",2 to "rom.dialogue.146.2",3 to "rom.dialogue.146.3"))
+            return reject("百草仙子对白与赠物规则未核验")
+        val count=before.inventory[rule.itemId]?:0
+        if(count !in 0..1)return reject("雪莲数量异常，原状态已保留")
+        if(before.flags[rule.mapFlagId]==true)return StoryFollowup.Result(before,rule.repeatDialogue,true)
+        val sick=(before.characters.find{it.id=="yangjian"}?.statusMask?:0)and 64!=0
+        if(!sick)return StoryFollowup.Result(before.copy(flags=before.flags+(rule.mapFlagId to true)),rule.repeatDialogue,true)
+        if(count==1)return StoryFollowup.Result(before,rule.messageDialogues.getValue(2),true)
+        if(item?.id!=rule.itemId||item.category!="special"||item.originalId!=0||item.maxCount!=1)
+            return reject("雪莲取得定义未接入")
+        // Existing category capacity remains authoritative. Actual full rows
+        // retain the original dialogue but cannot invent a gift or claim bit.
+        if(!InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category))
+            return StoryFollowup.Result(before,rule.firstDialogue,true)
+        // In the currently implemented route the only newly consumed special
+        // row is the paddle. Native B481/A0EB reuses that empty used row. Do not
+        // keep a stale paddle witness after its ID has become the lotus.
+        // Legacy snapshots did not retain arbitrary slot order: multiple empty
+        // used rows cannot be silently ordered by a Kotlin/JSON map.
+        val emptyUsed=before.inventory.filter{(id,n)->n==0&&InventoryCapacity.category(id)=="special"&&
+            before.flags["rom.inventory.special.${id.substringAfterLast('.')}.used"]==true}.keys
+        if(emptyUsed.size>1||emptyUsed.any{it !in setOf(item.id,"rom.special.14")})
+            return reject("旧存档的原版空物品格顺序未接入，原状态已保留")
+        val replaced=emptyUsed.singleOrNull()?.takeIf{it!=item.id}
+        val next=before.copy(inventory=(if(replaced==null)before.inventory else before.inventory-replaced)+(item.id to 1),
+            flags=(if(replaced==null)before.flags else before.flags-"rom.inventory.special.${replaced.substringAfterLast('.')}.used")-
+                "rom.inventory.special.0.used")
+        return StoryFollowup.Result(next,rule.firstDialogue,true)
     }
 
     /** CE9D/CECF only inspect owned/used paddle and select original dialogue.
@@ -73,7 +112,10 @@ object OriginalNpcTalk {
             return StoryFollowup.Result(before,null,false,"当前室内物品条件对白未核验")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return StoryFollowup.Result(before,null,false,"神木槳数量异常，原状态已保留")
-        val used=before.flags[rule.witnessFlagId]==true
+        // Original D18C finds the item ID in its inventory row as well as the
+        // quantity used bit. A historical flag alone is not current possession;
+        // the native lotus gift can reuse an empty used-paddle row for item0.
+        val used=before.inventory.containsKey(rule.itemId)&&before.flags[rule.witnessFlagId]==true
         val witnessed=if(rule.actionId==55)count==1||used else used
         val next=if(witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
         return StoryFollowup.Result(next,if(witnessed||before.flags[rule.mapFlagId]==true)rule.repeatDialogue else rule.firstDialogue,true)

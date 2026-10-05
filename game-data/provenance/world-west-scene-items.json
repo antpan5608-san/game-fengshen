@@ -1,0 +1,426 @@
+{
+  "cpu": [
+    {
+      "caseCount": 16384,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-scene-items-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-scene-items.py",
+      "probeSha256": "ba20169ce56b9c96569b03c26afd06c22d5b8d04e60211d61b290d620c6bc01e",
+      "sha256": "def692423e09aa0f0b1a0da35a613d3a39f07cef7d8d77eb0331c64fed04d396"
+    },
+    {
+      "caseCount": 8,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-scene-item-consumption-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-scene-items.py",
+      "probeSha256": "ba20169ce56b9c96569b03c26afd06c22d5b8d04e60211d61b290d620c6bc01e",
+      "sha256": "e8ded0bf9bfbc899db2d4c23e20d1c1bf24471c968ed54727bc4a3bc12d4f247"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.47.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35520,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101072,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7"
+          },
+          {
+            "cpuAddress": 36372,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 101924,
+            "sha256": "d62fe21fe67e0b3bbea9e6ab6c230e6ddc31d92a410942627dd07366c501631a"
+          }
+        ],
+        "record": {
+          "cpuAddress": 42523,
+          "length": 52,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 108075,
+          "sha256": "a0f80689de9a2d41b13a14f40f43c76170cf44596db3d2d09c5cd5cd63a9b8a8"
+        },
+        "remainingUnknown": [
+          "Normal Android and NPC animation equivalence"
+        ]
+      },
+      "text": "『謝謝你們為我奔波找解藥，我已經完全好了，在昏迷期間，夢見師父在呼喚　我，請你們跟我一起回去見師父。』"
+    }
+  ],
+  "font": {
+    "charset": {
+      "162": "奔",
+      "163": "解",
+      "164": "已",
+      "165": "完",
+      "166": "期",
+      "167": "夢",
+      "168": "喚",
+      "169": "起",
+      "176": "迷",
+      "177": "謝",
+      "180": "師",
+      "183": "一",
+      "184": "了",
+      "186": "你",
+      "34": "為",
+      "35": "波",
+      "36": "藥",
+      "37": "經",
+      "38": "全",
+      "39": "間",
+      "40": "呼",
+      "41": "跟",
+      "42": "回",
+      "48": "昏",
+      "49": "好",
+      "50": "見",
+      "52": "請",
+      "53": "父",
+      "54": "在",
+      "55": "找",
+      "56": "去",
+      "58": "我",
+      "59": "們",
+      "68": "　"
+    },
+    "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+    "glyphs": [
+      {
+        "character": "為",
+        "code": 34,
+        "pixelsSha256": "03b8800a631857dd24fcbf182dd8197105fbd265fb10f1ed1b7376df3358f6a1"
+      },
+      {
+        "character": "波",
+        "code": 35,
+        "pixelsSha256": "712817d194a4324dec306efa8b08844173218a087479c7fd8adaad701a78977b"
+      },
+      {
+        "character": "藥",
+        "code": 36,
+        "pixelsSha256": "f3dbdd1a72de2613bfb884eb47ad2b3c5b8cf61e7a833b85a6f8a0743c0d42f1"
+      },
+      {
+        "character": "經",
+        "code": 37,
+        "pixelsSha256": "e3931680e84cc9b23397abff5056b845d0e7d9bfd3682908a581ecf9e8bdd276"
+      },
+      {
+        "character": "全",
+        "code": 38,
+        "pixelsSha256": "32645ff826d296bf5fc964839c399e1a1748bfaf68dbfa8bae2504f7007287d8"
+      },
+      {
+        "character": "間",
+        "code": 39,
+        "pixelsSha256": "50b12cc813a251578d92a02fb484304a129020213894a02f550895930a6182dd"
+      },
+      {
+        "character": "呼",
+        "code": 40,
+        "pixelsSha256": "6f5d992fe1934ecdcafbb923953ce482cf6c089a4ed02d48c5aa8c3a3c67e5d9"
+      },
+      {
+        "character": "跟",
+        "code": 41,
+        "pixelsSha256": "ceea6befd4227b8095c8d25859a5474db9ccb29805dd5ea639abf37a37019b8f"
+      },
+      {
+        "character": "回",
+        "code": 42,
+        "pixelsSha256": "b4ede401fbcb95a0955e5dd6f8911cbb20a0e52b8fab83a51047edbb98b97782"
+      },
+      {
+        "character": "昏",
+        "code": 48,
+        "pixelsSha256": "9c502aedaa5aec891c6cd8c9f53401d27f42e45fb6bda24f7176b5d351ede8ce"
+      },
+      {
+        "character": "好",
+        "code": 49,
+        "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+      },
+      {
+        "character": "見",
+        "code": 50,
+        "pixelsSha256": "aeff712dc7c5dedb32bda27c8bc9d1f7d79275dcf9d9272522d5a4b5ccf88e2e"
+      },
+      {
+        "character": "請",
+        "code": 52,
+        "pixelsSha256": "0fe980e424a061baad1c4efac717f75f3ff2ebd08a67c8bda27a87f02d17d71b"
+      },
+      {
+        "character": "父",
+        "code": 53,
+        "pixelsSha256": "c7d1efe6efe4fff46987567c40ec5e5e68b8c37525598d1640b3525d15ef4656"
+      },
+      {
+        "character": "在",
+        "code": 54,
+        "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb"
+      },
+      {
+        "character": "找",
+        "code": 55,
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "character": "去",
+        "code": 56,
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "character": "我",
+        "code": 58,
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "character": "們",
+        "code": 59,
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "character": "奔",
+        "code": 162,
+        "pixelsSha256": "30031e1adb6370f8c1f48cca5336898c22827f746f7220c7d0231244bf3e6159"
+      },
+      {
+        "character": "解",
+        "code": 163,
+        "pixelsSha256": "c62b18b4bc25e8cbf6a8a23f82ff05c17985e82764efaf41ad3edd092e1f08a0"
+      },
+      {
+        "character": "已",
+        "code": 164,
+        "pixelsSha256": "9ee6279ffd189d163ac1726d31fba8c003b3fb0c277f2038344687827d466693"
+      },
+      {
+        "character": "完",
+        "code": 165,
+        "pixelsSha256": "ca819b728d48ddadb5bf8dc0640d6bcffc73c2796750eb3457d33eee2e8d189c"
+      },
+      {
+        "character": "期",
+        "code": 166,
+        "pixelsSha256": "322aa245a21ed4dbcfd1a161c17381ba3176ddb5bad38dd0f901449ca6095964"
+      },
+      {
+        "character": "夢",
+        "code": 167,
+        "pixelsSha256": "10a3830380697ffa71897267222858634781e2843ec68e4b2fcae905341888da"
+      },
+      {
+        "character": "喚",
+        "code": 168,
+        "pixelsSha256": "580d7c08d21190adb7ffb386fbd99175cfc561d065d04ce551c236b26ac395f6"
+      },
+      {
+        "character": "起",
+        "code": 169,
+        "pixelsSha256": "fe51620371143de72a8cbd03d131c7c569eb36b89fbe8c55f86304685620f015"
+      },
+      {
+        "character": "迷",
+        "code": 176,
+        "pixelsSha256": "a62cb53d2ec96cfa8b69b17ad6015a03112a8264cd9b224d217faafbb14826ee"
+      },
+      {
+        "character": "謝",
+        "code": 177,
+        "pixelsSha256": "81a0f5b31620454c2657201a7ce82ff61bc40e5b2ea9560240d79396575644cd"
+      },
+      {
+        "character": "師",
+        "code": 180,
+        "pixelsSha256": "477a1233e39a4a2057d13ac782bcb421940adff6ca4e47fc884041902569d74c"
+      },
+      {
+        "character": "一",
+        "code": 183,
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "character": "了",
+        "code": 184,
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "character": "你",
+        "code": 186,
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      }
+    ],
+    "nativePpuSha256": "a2834319359b6624ee2a5c14e4bb7880ee5b0e423ad23de47850e559a0f39bb4",
+    "privatePpuPath": "private-derived/world-west-snow-use-valid-source-controlled/07-A-ppu.bin",
+    "sources": [
+      {
+        "length": 2048,
+        "offset": 602128,
+        "sha256": "6e2a0900ddd7d4ce00020946cdf3f1979125835d5bfe0d8d7a4290372d588187"
+      },
+      {
+        "length": 2048,
+        "offset": 604176,
+        "sha256": "31615859ebfebacacc3efb404ade2c0606cd0f1bc110e91693672df46fc1c5ce"
+      }
+    ]
+  },
+  "kind": "CONTROLLED_ORIGINAL_MENU_AND_CPU_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "limitations": [
+    "Native controlled adjacency/items/status not normal route",
+    "Android new use/continuation/rollback and cold start NOT_RUN",
+    "Original NPC-only movement not equivalent as full animation",
+    "No boat path or additional item rule inferred"
+  ],
+  "nativeEvidence": [
+    {
+      "kind": "CONTROLLED_POSITION_ITEM_STATUS_NATIVE_KEYS_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-paddle-followup-controlled/timeline.tsv",
+      "probeSha256": "4248da7a9002358ea8143bc2f7896616f0e24958866819ccb83c4f943969b3e2",
+      "sha256": "6eabfb0b0d0849a8db8faef12d1d3e722f6b619b91a75bfeb76dcc893e457f7f"
+    },
+    {
+      "kind": "CONTROLLED_POSITION_ITEM_STATUS_NATIVE_KEYS_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-snow-use-valid-source-controlled/timeline.tsv",
+      "probeSha256": "70d1b67540c66700a939199324dc7d2368d615e94ccadd55d11626ee84dd83a4",
+      "sha256": "d4836f717bbb7f3dd60e3520663d214f998203539a75ca6247e6e19313bcc5be"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": [
+    {
+      "completionFlag": "rom.map.37.flag.128",
+      "consumeCount": 1,
+      "dialogueIds": [
+        "rom.dialogue.47.4"
+      ],
+      "effects": {
+        "characterId": "yangjian",
+        "clearContextAfter": "rom.npccontext.37.196",
+        "hpFrom": "currentMaxHp",
+        "mpFrom": "currentMaxMp",
+        "statusValue": 0
+      },
+      "eventId": 9,
+      "eventSource": {
+        "cpuAddress": 53018,
+        "length": 43,
+        "meaning": "Original scene item event phases",
+        "module": 11,
+        "offset": 380714,
+        "sha256": "b73719ed1d957aefddf6b7075a49959066b4a20d07ae1b32345c88b6982513d9"
+      },
+      "itemId": "rom.special.0",
+      "mapId": 37,
+      "noDestinationChange": true,
+      "originalItemId": 0,
+      "playerSteps": 0,
+      "quantityAfterSuccessfulUse": 128,
+      "retainsEmptyUsedRow": true,
+      "scriptPointer": {
+        "cpuAddress": 52080,
+        "length": 2,
+        "meaning": "Original event pointer",
+        "module": 11,
+        "offset": 379776,
+        "sha256": "6631f64b136056777ca351ca7b8b1d556b2afd0f20e64db7a712ea132d786f46"
+      },
+      "targetActor": 130
+    },
+    {
+      "completionFlag": "rom.map.42.flag.128",
+      "consumeCount": 1,
+      "dialogueIds": [
+        "rom.dialogue.52.6",
+        "rom.dialogue.52.7"
+      ],
+      "effects": {
+        "shipByte": 26770,
+        "shipValue": 1
+      },
+      "eventId": 23,
+      "eventSource": {
+        "cpuAddress": 54182,
+        "length": 39,
+        "meaning": "Original scene item event phases",
+        "module": 11,
+        "offset": 381878,
+        "sha256": "fbc023414381513b47cdbb20356c1ea9d2282a75bbfa787214ca541f07c8670a"
+      },
+      "itemId": "rom.special.14",
+      "mapId": 42,
+      "noDestinationChange": true,
+      "originalItemId": 14,
+      "playerSteps": 0,
+      "quantityAfterSuccessfulUse": 128,
+      "retainsEmptyUsedRow": true,
+      "scriptPointer": {
+        "cpuAddress": 52108,
+        "length": 2,
+        "meaning": "Original event pointer",
+        "module": 11,
+        "offset": 379804,
+        "sha256": "7d1c3a0ac8940f4ea55ff75de8a74581b911c821471ba7569019b0404ca604f2"
+      },
+      "targetActor": 162
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "original-snow37-event9-and-paddle42-event23-menu-and-durable-dialogue",
+  "sources": [
+    {
+      "cpuAddress": 58053,
+      "length": 53,
+      "meaning": "Original snow map37 actor130 maximum restore before script9",
+      "module": 2,
+      "offset": 90837,
+      "sha256": "a30ae6912fb68587861e1e5f6beef35f1f8c906fea5bbd052b57e6c88d1f17e1"
+    },
+    {
+      "cpuAddress": 58313,
+      "length": 31,
+      "meaning": "Original paddle map42 actor162 ship flag before script23",
+      "module": 2,
+      "offset": 91097,
+      "sha256": "47856de29ac5ed9f9f7f4d4da62806fb314fd6adee3740b40358ecb508afb55e"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 110,
+      "meaning": "Original category inventory use bookkeeping",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "97e9d0d4e1043f265de4cae694be309d8ebb64c225bc4d9105f4418ef3e58ec2"
+    },
+    {
+      "cpuAddress": 52634,
+      "length": 45,
+      "meaning": "Original shared event completion map128 flag",
+      "module": 11,
+      "offset": 380330,
+      "sha256": "975e2af8b80d143bbb59fffc4262935763527a4b095ec31e59cec85e0c77d99a"
+    },
+    {
+      "cpuAddress": 52206,
+      "length": 40,
+      "meaning": "Original scoped NPC script selection",
+      "module": 11,
+      "offset": 379902,
+      "sha256": "c03366cde3876fde96c6cd2a64cf8ecb7b46ca3f7927015faa118dc50e8739c1"
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}

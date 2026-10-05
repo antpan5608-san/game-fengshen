@@ -1,0 +1,785 @@
+{
+  "actors": [
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38402,
+      "confidence": "HIGH",
+      "entityByte": 182,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 0,
+      "range": {
+        "cpuAddress": 55209,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 284601,
+        "sha256": "e8add0509118405e9a2b3907a142c90109482b8e07c2383450b254b7dd88d57c"
+      },
+      "rawHex": "b6010300e800c800029601022f01",
+      "xCandidate": 232,
+      "yCandidate": 200
+    },
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 36329,
+      "confidence": "HIGH",
+      "entityByte": 141,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 1,
+      "range": {
+        "cpuAddress": 55223,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 284615,
+        "sha256": "817bc4ad81f88270d42d088541ec76876f809b6ae983b4db4f3ef58d57628000"
+      },
+      "rawHex": "8d00ff00e800f800e98d01020000",
+      "xCandidate": 232,
+      "yCandidate": 248
+    }
+  ],
+  "cpu": [
+    {
+      "caseCount": 7168,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-lotus136-selector-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-lotus136.py",
+      "probeSha256": "b6d31896751e70c53ca335cf26c26ef4325690d941c7379393f28ead645f94e8",
+      "sha256": "bc5c3640929be82751b6d1663d2d31786ca8759a7360a6a6212ed6f3c32f0c04"
+    },
+    {
+      "caseCount": 18,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-lotus136-gift-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-lotus136.py",
+      "probeSha256": "b6d31896751e70c53ca335cf26c26ef4325690d941c7379393f28ead645f94e8",
+      "sha256": "d674de2e7fc02477935f54324ce763e5b2fbb5cf4043f7b8d0bab2672c53afb1"
+    },
+    {
+      "caseCount": 5400,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-boat-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-boat.py",
+      "probeSha256": "a25c732bbb465993d2659998fcce56dbd7478ef2b5875b4e9b4f5288a690507b",
+      "sha256": "681debde515e8ebfadf711920318aa0a47eec8fc683651266dc2ce653eb96885"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.146.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36610,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102162,
+            "sha256": "aa540d28f7f3882a00b41a53736b3e2eaa7997dd286a6cb99718e933ecfdd4f4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44717,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110269,
+          "sha256": "ef8333080d884782fb5cf16a8fb6a3da4ad404b7f235874a8dbbc802a1a7c81a"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『這兒是香榭居。』"
+    },
+    {
+      "id": "rom.dialogue.146.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36612,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102164,
+            "sha256": "6e492d569015f0dbb33380ae70d6e4f2db8b81f722eef897a1d1349641094be7"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44727,
+          "length": 64,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110279,
+          "sha256": "adb88b06b1fa0984db644607a1c752a911727dcf31cce94f12ec9d23b1866e5b"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『我就是百草仙子，楊戬乃是中了魔禮青的黑風毒，這是雪蓮，服下就沒事了！』『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36614,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102166,
+            "sha256": "6f001a74ba20bdf544d3d59a3a6a5ebb61612d20094e3eb6227485c62fa12484"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44791,
+          "length": 28,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110343,
+          "sha256": "a832dd83ae914c9ca09ab2279816867a9eba1d1b63943c4b3486109806483ca4"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36616,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102168,
+            "sha256": "f6281d739f30f6240dc424cd6b09a28e594379e6330377a082c8e6739530be6b"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44819,
+          "length": 22,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110371,
+          "sha256": "2af7020a49d88c0e8aab06bd5ee77ddcc7932f355b5f4d2677a866c065e1fdda"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『如果遇到困難，再去玉泉山找玉鼎真人吧！』"
+    }
+  ],
+  "font": {
+    "charset": {
+      "0": "香",
+      "1": "居",
+      "10": "咳",
+      "11": "能",
+      "12": "病",
+      "128": "榭",
+      "129": "草",
+      "13": "卻",
+      "130": "子",
+      "131": "戬",
+      "132": "魔",
+      "133": "青",
+      "134": "風",
+      "135": "蓮",
+      "136": "下",
+      "137": "事",
+      "138": "雖",
+      "139": "治",
+      "14": "上",
+      "140": "但",
+      "141": "幫",
+      "142": "忙",
+      "143": "果",
+      "144": "困",
+      "145": "去",
+      "146": "山",
+      "147": "鼎",
+      "148": "吧",
+      "15": "如",
+      "16": "遇",
+      "162": "百",
+      "163": "毒",
+      "164": "疫",
+      "165": "再",
+      "17": "難",
+      "175": "西",
+      "176": "城",
+      "179": "人",
+      "18": "泉",
+      "180": "這",
+      "181": "的",
+      "182": "是",
+      "19": "找",
+      "2": "仙",
+      "20": "真",
+      "3": "楊",
+      "34": "就",
+      "35": "中",
+      "36": "瘟",
+      "37": "不",
+      "38": "玉",
+      "4": "乃",
+      "47": "兒",
+      "48": "岐",
+      "5": "禮",
+      "51": "到",
+      "53": "了",
+      "54": "我",
+      "6": "黑",
+      "68": "　",
+      "7": "雪",
+      "8": "服",
+      "9": "沒"
+    },
+    "glyphs": [
+      {
+        "character": "香",
+        "code": 0,
+        "pixelsSha256": "992c82c4a7dd3058ccc8ca6b3603deef86cafe58c3be98cde06e22e6eb2ca3a3"
+      },
+      {
+        "character": "居",
+        "code": 1,
+        "pixelsSha256": "55b99e30d5c67b9e9bc707b3f896daf08bfbf9a124119af9c9c0062adc663e46"
+      },
+      {
+        "character": "仙",
+        "code": 2,
+        "pixelsSha256": "9da300b81cbb476842285362dd2a4ab14439ceceb02d38603c72ed03126cb99b"
+      },
+      {
+        "character": "楊",
+        "code": 3,
+        "pixelsSha256": "94f08be59b32c5e24a12a6911509fedd3f43caccedbb3bf654d5df255cc8eb20"
+      },
+      {
+        "character": "乃",
+        "code": 4,
+        "pixelsSha256": "3902fd53f416089d0c0811892869d60f074407d75d05a7717ff9c6dc7c7c6406"
+      },
+      {
+        "character": "禮",
+        "code": 5,
+        "pixelsSha256": "f5c157f0f9f065c13e6665f083624543be6c1a4e053742e65a189ca6a2c1f4a3"
+      },
+      {
+        "character": "黑",
+        "code": 6,
+        "pixelsSha256": "40e62fcc7d4110ba8337eb6cd2ac159b52e78a0d138f41a0df9e7b059214b2ef"
+      },
+      {
+        "character": "雪",
+        "code": 7,
+        "pixelsSha256": "71165b510c87926bb0ac68969d7f0e9bec02e66090ae65bc02e6ebd9fc4d7e4c"
+      },
+      {
+        "character": "服",
+        "code": 8,
+        "pixelsSha256": "e4ffc9e10357780b87d618dfb93bbf87b43b6e1711296d4f06cf5d6700023c01"
+      },
+      {
+        "character": "沒",
+        "code": 9,
+        "pixelsSha256": "82e6ce68b9cfb446d0d3b108dfe8cc0943e17cb5d32e3b3458210005ad5afc24"
+      },
+      {
+        "character": "咳",
+        "code": 10,
+        "pixelsSha256": "6c08c27371abad36c39daf29f861061e9de73b50c185d10835f7f76929e70a35"
+      },
+      {
+        "character": "能",
+        "code": 11,
+        "pixelsSha256": "170fcfaff377a34697ca9b8e8c26e0c5dce93d9433e00d75080b89349561dbca"
+      },
+      {
+        "character": "病",
+        "code": 12,
+        "pixelsSha256": "4ad0194c249fa5bcefc21588051d22051be2948ed56e46ec13fb4391d65f5b9c"
+      },
+      {
+        "character": "卻",
+        "code": 13,
+        "pixelsSha256": "9872f6584738167d785d614ca6f8523411f19e3eb88caf41ee4e404c2262de6a"
+      },
+      {
+        "character": "上",
+        "code": 14,
+        "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+      },
+      {
+        "character": "如",
+        "code": 15,
+        "pixelsSha256": "f0202b68db7539901dd0af33c491ac158e261e280c80649d9700bd074fc32c96"
+      },
+      {
+        "character": "遇",
+        "code": 16,
+        "pixelsSha256": "bc69fdeafe80a2323f5dad55fde73ee9d623bef10e87a200695cf5d9f7bda0b9"
+      },
+      {
+        "character": "難",
+        "code": 17,
+        "pixelsSha256": "6a916517f2a2a982a97624b00ee80fcc62de7f3efe9ee86474c8582cf3cada70"
+      },
+      {
+        "character": "泉",
+        "code": 18,
+        "pixelsSha256": "8b6d1badf579b9f65aca2aa8823921320f30d222255f44d05188cae6320afbab"
+      },
+      {
+        "character": "找",
+        "code": 19,
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "character": "真",
+        "code": 20,
+        "pixelsSha256": "e877d8db8c8c2f3c9d08a36e122913eeb7d71d5bdaa77a648871f565242f9fcc"
+      },
+      {
+        "character": "就",
+        "code": 34,
+        "pixelsSha256": "9c58ddff3a4bd6d887acd03ca3875d4ef7d9410dba54dc2d1a1f99460ccd4cb5"
+      },
+      {
+        "character": "中",
+        "code": 35,
+        "pixelsSha256": "3c3f250e8d8868d909c01444db51f736bfbd6bb0195877a0623c489d886fb83f"
+      },
+      {
+        "character": "瘟",
+        "code": 36,
+        "pixelsSha256": "67986f59ec4b3a147148f35fae281e72ab20ea28bf57d269761c32f43c3b4f8d"
+      },
+      {
+        "character": "不",
+        "code": 37,
+        "pixelsSha256": "8dcebfe880db18259e1679e1623abd40bd0f03a28ec2461a0fbe057fd78ae5ba"
+      },
+      {
+        "character": "玉",
+        "code": 38,
+        "pixelsSha256": "a0a484f8e9002dd52da6445cc372884edb8c5d19dc30741431544b21a2d931f0"
+      },
+      {
+        "character": "兒",
+        "code": 47,
+        "pixelsSha256": "4aab53f06653becf505e9e3933cb399dc66190d9532cf17c8c58922fd1b8a186"
+      },
+      {
+        "character": "岐",
+        "code": 48,
+        "pixelsSha256": "9c6a96b5805120322e09c50594210cf79c28c20302e9edfbbcbc9d763eadbb48"
+      },
+      {
+        "character": "到",
+        "code": 51,
+        "pixelsSha256": "dbe2fd48836acf4b7e5e58806298026177e3d52ebf08ec6214876ec0f7cc0f64"
+      },
+      {
+        "character": "了",
+        "code": 53,
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "character": "我",
+        "code": 54,
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "character": "榭",
+        "code": 128,
+        "pixelsSha256": "353f04f4a84eef7ebd6b28e021e317c76739a63dc0245824b7130bd6ce73f8d4"
+      },
+      {
+        "character": "草",
+        "code": 129,
+        "pixelsSha256": "434453ed739982b07dbef7ca6861f7659ca6392fe8b914b860c2444b530c1b93"
+      },
+      {
+        "character": "子",
+        "code": 130,
+        "pixelsSha256": "9e72153187ef49d6425b95c2455c3d74c94a6c3cb9035fd37061b57ef3c631d8"
+      },
+      {
+        "character": "戬",
+        "code": 131,
+        "pixelsSha256": "c8658d3db6213fa7e9c9065a0399b5a7eabea8eff3713daf32852a7549f5139b"
+      },
+      {
+        "character": "魔",
+        "code": 132,
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106"
+      },
+      {
+        "character": "青",
+        "code": 133,
+        "pixelsSha256": "0769f1c92a9aabe765ffb738415bbf12244da51b7f40b76b3258574823aeded3"
+      },
+      {
+        "character": "風",
+        "code": 134,
+        "pixelsSha256": "2c09783e47bf425ff1df3ceac6672c2092bbbb9a6294a991920087a98665bc1a"
+      },
+      {
+        "character": "蓮",
+        "code": 135,
+        "pixelsSha256": "9859711c0dcd8bba8d60750781f6874fad54bb33f724175fe0ba4dcf4d7a7548"
+      },
+      {
+        "character": "下",
+        "code": 136,
+        "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+      },
+      {
+        "character": "事",
+        "code": 137,
+        "pixelsSha256": "aed72a64c4f0ce975ff1a41d2d299fd1e2e83a9cbf338b507296b817e8107304"
+      },
+      {
+        "character": "雖",
+        "code": 138,
+        "pixelsSha256": "be8967a47e629ba58fcf99d24136dc06b8dc21ad64cb2a1fe1f533e86b564204"
+      },
+      {
+        "character": "治",
+        "code": 139,
+        "pixelsSha256": "b0e59b62f7f356618e00ea8f05d9012dad233ad277e8fcb0ec03dfd78b7376fe"
+      },
+      {
+        "character": "但",
+        "code": 140,
+        "pixelsSha256": "8f5233639acd9b3ee04e581d6439821bfb75cb749553e190e6b6249d2b142b6b"
+      },
+      {
+        "character": "幫",
+        "code": 141,
+        "pixelsSha256": "7ecf7c040a9c5721552b8c6ee36f0d55b2fdcd2f6a162dfaa940f51895693808"
+      },
+      {
+        "character": "忙",
+        "code": 142,
+        "pixelsSha256": "7bfe498fc64aa0b6928ab7ca94d35c7d1bd52da0946865941db273971c9888f3"
+      },
+      {
+        "character": "果",
+        "code": 143,
+        "pixelsSha256": "1f21ed5821656ee8ba095d7bb2e3db9db15f031889b7055c216e417ac16b3476"
+      },
+      {
+        "character": "困",
+        "code": 144,
+        "pixelsSha256": "c9795f9bc73cec5ec28974fa5e1197f9b293282ba819a5e4ae853ffed08c1eb2"
+      },
+      {
+        "character": "去",
+        "code": 145,
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "character": "山",
+        "code": 146,
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "character": "鼎",
+        "code": 147,
+        "pixelsSha256": "43840a716cb3df27bf4fb05a092e42dd0a10081e0b8fd67b1b28d5046a666081"
+      },
+      {
+        "character": "吧",
+        "code": 148,
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+      },
+      {
+        "character": "百",
+        "code": 162,
+        "pixelsSha256": "d3f3c24343204d6d429c10bc64c344c41b2cc139836c03786423c8fa78ef8f66"
+      },
+      {
+        "character": "毒",
+        "code": 163,
+        "pixelsSha256": "b6354939124a40b429811ac1894af09b05cea09e9c2538f5b5e681bc676199f9"
+      },
+      {
+        "character": "疫",
+        "code": 164,
+        "pixelsSha256": "93680e330daf27d73a4fa0b9e1d0b24130a5ef6dda926d962542dcefb54115cc"
+      },
+      {
+        "character": "再",
+        "code": 165,
+        "pixelsSha256": "0214e8ccdf9c965a266bee560a8ccb44b1ccbdb0716db0fa28483e5e83339321"
+      },
+      {
+        "character": "西",
+        "code": 175,
+        "pixelsSha256": "d7cdf6ae61e67249117469b0a2b00b7148da8732861a46e53a96e591f5551e5c"
+      },
+      {
+        "character": "城",
+        "code": 176,
+        "pixelsSha256": "15856edca60d5be70c240d4fb48cfd67b195a1304606f4eaaf69fcbc3bc6747d"
+      },
+      {
+        "character": "人",
+        "code": 179,
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "character": "這",
+        "code": 180,
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "character": "的",
+        "code": 181,
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "character": "是",
+        "code": 182,
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      }
+    ],
+    "mapperCapture": {
+      "path": "private-derived/world-west-lotus-talk-controlled/registers.tsv",
+      "sha256": "9c1f4d86493659dd8ee1b5310ad5b13bdca887c7461b8137a22aa30324ffe5fa"
+    },
+    "sources": [
+      {
+        "length": 2048,
+        "offset": 638992,
+        "sha256": "24bf8237e3627f3fda84e398732a50e79008226ec126af16b3202c2f8abe7d4e"
+      },
+      {
+        "length": 2048,
+        "offset": 641040,
+        "sha256": "893e0f40e02070eac77a915ceb107e6206f4b4a2877e99a453f32da79285c6f2"
+      }
+    ]
+  },
+  "kind": "TARGET_ROM_CPU_AND_CONTROLLED_ORIGINAL_KEYS_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "limits": [
+    "Normal Android and new stable publication NOT_RUN",
+    "Boat shore25/26 requires separate original docking transaction; water-class CPU is not complete travel",
+    "NPC item0/14 logic compiled/tested, content capability binding not yet exported",
+    "Single consumed-paddle empty row is source-bound; ambiguous multiple legacy empty-used rows preserve current state and report missing slot order"
+  ],
+  "nativeEvidence": [
+    {
+      "kind": "CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-lotus-entry-controlled/timeline.tsv",
+      "probeSha256": "417dab3cc1382ba9dd1576557f61d8690910273b76128351c0753b0ebb4e26d9",
+      "rawInputsPublic": false,
+      "sha256": "b2c31d0e09e9850740c8fdb18934877068936f2100c3318e362bcb4325221d01"
+    },
+    {
+      "kind": "CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-lotus-return-controlled/timeline.tsv",
+      "probeSha256": "5eebe39d7e17c8ba1a8e3e47be58137a23b3e9cffedf29b34247697d73991853",
+      "rawInputsPublic": false,
+      "sha256": "f255082d4a9123d2a2429ced9af0913deb5d3bc908336379313d53d36012bb68"
+    },
+    {
+      "kind": "CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-lotus-talk-controlled/timeline.tsv",
+      "probeSha256": "450dcafbf5df78662a3807419b677fa7caad1dc6b8f28dfdddcbe7dc430bac1f",
+      "rawInputsPublic": false,
+      "sha256": "b12d5c8a0fc7ecbbb9f2c084273238aac59d695eaebfc0955973f8dd01411fa3"
+    },
+    {
+      "kind": "CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+      "path": "private-derived/world-west-boat-boarding-left-controlled/timeline.tsv",
+      "probeSha256": "2c5e0b4909917c34239931f61cd54dd349a8858d2b97347d66c5168e2a248add",
+      "rawInputsPublic": false,
+      "sha256": "acb674d3b0b9c47fd24f3cc84011c4c367f2235b0ce33412c802c6d5219b5e37"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "actionId": 47,
+    "cell": [
+      7,
+      5
+    ],
+    "diseaseCharacter": "yangjian",
+    "diseaseMask": 64,
+    "fullCategoryCapacity": 16,
+    "fullGiftFailureStillShowsMessage": 1,
+    "giftBeforeText": true,
+    "giftCures": false,
+    "healthyFirstSetsMapFlag": true,
+    "itemId": "rom.special.0",
+    "itemMaxCount": 1,
+    "mapFlagMask": 1,
+    "mapId": 136,
+    "messageIds": {
+      "healthy": 3,
+      "sickWithItem": 2,
+      "sickWithoutItem": 1
+    },
+    "npcId": "rom.npc.136.0",
+    "repeatSelectorHonorsExistingMapFlag": true,
+    "sickAttemptSetsMapFlag": false,
+    "spriteId": 182
+  },
+  "schemaVersion": 1,
+  "scopeRevision": "lotus136-actor47-yang-disease-selector-and-original-special0-gift",
+  "sourceCorrection": {
+    "character": "榭",
+    "currentCode": 128,
+    "hash": "353f04f4a84eef7ebd6b28e021e317c76739a63dc0245824b7130bd6ce73f8d4",
+    "priorCode": 11,
+    "priorContentPinUnchanged": true,
+    "priorPath": "game-data/provenance/world-west-houses-resources.json",
+    "reason": "Actual font glyph contains wood and 射; prior c54 Unicode 樹 was provisional, not independently verified"
+  },
+  "sources": [
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Original first-repeat selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 52597,
+      "length": 54,
+      "meaning": "Original action47 Yang disease and owned-item selector",
+      "module": 10,
+      "offset": 347525,
+      "sha256": "0d1f9ffd8d7d93fbc0ea91d4aeda8fcd908bb291700d9c874bb8f200a1a0bbf1"
+    },
+    {
+      "cpuAddress": 53578,
+      "length": 70,
+      "meaning": "Original owned lower7 quantity lookup",
+      "module": 10,
+      "offset": 348506,
+      "sha256": "13b3c2eb8a0e405dd3ef6fc54df47d89765b033588436d11440d5e2399771cd2"
+    },
+    {
+      "cpuAddress": 46209,
+      "length": 250,
+      "meaning": "Original map-specific before-text inventory grants",
+      "module": 2,
+      "offset": 78993,
+      "sha256": "6da88c71da7c95c03e3ac6128db37ccebaf5e5be8c3ddeac73a48aca89490091"
+    },
+    {
+      "cpuAddress": 46434,
+      "length": 24,
+      "meaning": "Original map136 message1 special0 grant",
+      "module": 2,
+      "offset": 79218,
+      "sha256": "4d0ad4b08e73d8a01fea8bd31404ab66d30ed08c66b4fc63970d32c04be87503"
+    },
+    {
+      "cpuAddress": 46606,
+      "length": 8,
+      "meaning": "Original shared special-category grant entry",
+      "module": 2,
+      "offset": 79390,
+      "sha256": "bcf92ba98dc5489bac4a5232ffdfabe5c7f8a842c6a7b7defcde624f4eabf2af"
+    },
+    {
+      "cpuAddress": 58053,
+      "length": 53,
+      "meaning": "Original special0 map37 actor130 cure and event9",
+      "module": 2,
+      "offset": 90837,
+      "sha256": "a30ae6912fb68587861e1e5f6beef35f1f8c906fea5bbd052b57e6c88d1f17e1"
+    },
+    {
+      "cpuAddress": 58313,
+      "length": 31,
+      "meaning": "Original special14 map42 actor162 ship bit and event23",
+      "module": 2,
+      "offset": 91097,
+      "sha256": "47856de29ac5ed9f9f7f4d4da62806fb314fd6adee3740b40358ecb508afb55e"
+    },
+    {
+      "cpuAddress": 48958,
+      "length": 57,
+      "meaning": "Original contact boat219 world68,88 spawn",
+      "module": 0,
+      "offset": 16206,
+      "sha256": "157ab683472f89310acf6bb791e45d0a6cecc30163c575202a007d5228b729e0"
+    },
+    {
+      "cpuAddress": 53060,
+      "length": 237,
+      "meaning": "Original vehicle and water/landing target dispatch",
+      "module": 0,
+      "offset": 20308,
+      "sha256": "00ef2f8376952bc0ac8c97e67e67e923df4a4f77ce7302d5def29d294db7fe9d"
+    },
+    {
+      "cpuAddress": 56246,
+      "length": 41,
+      "meaning": "Original map80 or136 return restores boat219",
+      "module": 8,
+      "offset": 285638,
+      "sha256": "0cc77c99dbbb7a63c42d5a1d83f74c9770b46dc03a540a88fa6c08810150da97"
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}

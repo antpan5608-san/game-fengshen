@@ -1554,3 +1554,8 @@ v53不可变签名artifact11276415922已实际取回并独立核包名/签名/c3
 4局部导出PASS62.474秒；完整世界176方法PASS620.571秒；286 JVM/57 suites/0失败错误跳过；instrument编译、真实LFcheckout1方法及原restore225/hash PASS。初轮局部两失败为错误的旧scene16整份JSON不变断言及缺少岛墙拒绝；保留原真实新增出口格，仅拒绝开放墙，修后已全量重跑。先前JVM JSONObject stub两失败改以纯不可变状态验逻辑，实际JSON/生命周期由仪器门禁，不能称旧失败为游戏崩溃。
 
 正常村4→渡船→岛口→自然遇敌及外部冷启返程驱动已接原runtime/review，c40/c41实际App NOT_RUN；正式未变v27。候选v57/909a8ec原签名build成功，KVM在跑，来源冻结；后续只发布通过原App/旧档/同产物门禁的显著可玩增量。岛内78/77/76/四恶事件、31特殊入口、全部交通/原手动败后加载未关闭。ALL_MAPS_USABLE=NO/有效分母UNKNOWN，累计十类继续保留。
+
+
+## 原场景物品接续检查点（2026-10-06，北京时间）
+
+起点开发5a3a072，生产v82/main R2 87bc56cb仍冻结；37364795394首段PASS/地府段运行、未发布，inspect托管runner未领取为NOT_AVAILABLE。新增雪莲37/event9和神木桨42/event23复用明确使用/共享StoryFollowup/完整存档事务，仙子赠物与当前空used桨行修正已实现；原CPU 16384效果/8消耗/7168 selector/18 gift/5400水类全部零差异，382 JVM/80套与仪器编译PASS。实际原菜单与对白/独立水域入口返程已取证，全部CONTROLLED_ORIGINAL，新增能力内容绑定与船落岸未接通，APP_VERIFIED NOT_RUN/PUBLISHED NO。Nullable maxMp/缺上限fixture/错误原存档来源与错误返程方向分别修正并保留失败，不改原断言/碰撞。c54干净DEBUG仍360文件/66图/SHA10b2a6b7，不能替新代码背书。完整当前状态与下一精确动作见docs/current-task.md；证据world-lotus136-state.json与world-west-scene-items.json。继续原136局部导出/boat219水面与落岸事务，R2实际通过后原审核/巡检/发布；存档历史与所有新增App/旧档运行尚未关闭，总任务不结案。

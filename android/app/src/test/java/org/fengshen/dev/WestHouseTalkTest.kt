@@ -36,5 +36,9 @@ class WestHouseTalkTest {
         assertFalse(OriginalNpcTalk.begin(state(41),good).applied)
         val invalid=before.copy(inventory=mapOf("rom.special.14" to 2))
         val result=OriginalNpcTalk.begin(invalid,good);assertFalse(result.applied);assertEquals(invalid,result.snapshot)
+        val overwritten=before.copy(flags=before.flags+(good.witnessFlagId to true))
+        val historical=OriginalNpcTalk.begin(overwritten,good)
+        assertTrue(historical.applied);assertEquals(good.firstDialogue,historical.nextDialogue)
+        assertEquals(overwritten,historical.snapshot)
     }
 }

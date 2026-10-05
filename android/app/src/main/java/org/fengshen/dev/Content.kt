@@ -116,7 +116,9 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         internal set
     private var stateScene:Scene?=null
     private var stateFlags:Map<String,Boolean>?=null
-    fun worldItemTargets()=mapObjects.mapNotNull{it.itemTarget}+npcs.mapNotNull{it.worldItemTarget}
+    fun sceneItemUses()=itemDefinitions.values.mapNotNull{it.worldUse?.sceneScript}
+    fun worldItemTargets()=mapObjects.mapNotNull{it.itemTarget}+npcs.mapNotNull{it.worldItemTarget}+
+        sceneItemUses().map{it.target}
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
     fun npcsForState(mapId:Int,flags:Map<String,Boolean>)=npcs.filter{it.mapId==mapId}.map{npc->
         val v=npc.stateVariant
@@ -405,6 +407,15 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        47->{
+                            require(npc.id=="rom.npc.136.0"&&npc.mapId==136&&npc.x==7&&npc.y==5&&
+                                t.getString("evidence")=="game-data/provenance/world-lotus136-state.json"&&
+                                rule.mapFlagId=="rom.map.136.flag.1"&&rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.0"&&
+                                rule.firstDialogue=="rom.dialogue.146.1"&&rule.repeatDialogue=="rom.dialogue.146.3")
+                            val m=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=m.keys().asSequence().associate{k->k.toInt()to m.getString(k)}
+                            require(rule.messageDialogues==mapOf(1 to "rom.dialogue.146.1",2 to "rom.dialogue.146.2",3 to "rom.dialogue.146.3"))
+                        }
                         55,56->{
                             val mask=if(rule.actionId==55)1 else 2
                             val first=if(rule.actionId==55)3 else 5
@@ -558,13 +569,23 @@ object ContentLoader {
                     AntidoteUseDefinition(use.getString("evidence"))
                 },o.optJSONObject("worldUse")?.let{use->
                     val id=o.getString("id");val special=o.getString("category")=="special"&&o.getInt("maxCount")==1
-                    require(special&&use.getBoolean("reusable"))
-                    if(id==WorldItems.ID)require(o.getInt("originalId")==11&&use.getInt("targetSpriteId")==226&&use.getString("evidence").isNotBlank())
+                    require(special)
+                    val sceneItem=id in setOf("rom.special.0","rom.special.14")
+                    if(sceneItem){
+                        val original=o.getInt("originalId")
+                        require(id=="rom.special.$original"&&original in setOf(0,14)&&!use.getBoolean("reusable")&&
+                            use.getInt("targetSpriteId")==if(original==0)130 else 162)
+                        require(use.getString("usedFlagId")=="rom.inventory.special.$original.used"&&
+                            use.getString("evidence")==OriginalSceneItems.EVIDENCE&&!o.has("buyPrice")&&!o.has("sellPrice"))
+                    }else require(use.getBoolean("reusable"))
+                    if(sceneItem)Unit
+                    else if(id==WorldItems.ID)require(o.getInt("originalId")==11&&use.getInt("targetSpriteId")==226&&use.getString("evidence").isNotBlank())
                     else require(id==OriginalYangJoin.ITEM_ID&&o.getInt("originalId")==19&&use.getInt("targetSpriteId")==130&&
                         use.getString("usedFlagId")==OriginalYangJoin.USED_FLAG&&use.getString("evidence")==OriginalYangJoin.EVIDENCE&&
                         !o.has("buyPrice")&&!o.has("sellPrice"))
                     WorldItemUseDefinition(use.getInt("targetSpriteId"),use.getString("usedFlagId")).also{
                         if(id==OriginalYangJoin.ITEM_ID)it.yangJoin=OriginalYangJoinDefinition(use.getString("evidence"))
+                        if(sceneItem)it.sceneScript=OriginalSceneItemDefinition(use.getString("evidence"),o.getInt("originalId"))
                     }
 
                 })
@@ -617,6 +638,13 @@ object ContentLoader {
         itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin?.let{rule->
             require(npcs.single{it.id==rule.npcId}.worldItemTarget!=null&&
                 rule.continuation.dialogueIds.all{it in dialogues}&&extraCharacters.any{it.first.id=="yangjian"})
+        }
+        for(rule in itemDefinitions.values.mapNotNull{it.worldUse?.sceneScript}){
+            val target=rule.target;val npc=npcs.single{it.id==rule.npcId}
+            require(rule.verified()&&npc.mapId==target.mapId&&npc.x==target.x&&npc.y==target.y&&
+                rule.continuation.dialogueIds.all{it in dialogues}&&
+                (if(rule.originalItemId==0)npc.visibleFlagId=="rom.npccontext.37.196"&&
+                    extraCharacters.any{it.first.id=="yangjian"} else npc.originalTalk?.actionId==56))
         }
 
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->

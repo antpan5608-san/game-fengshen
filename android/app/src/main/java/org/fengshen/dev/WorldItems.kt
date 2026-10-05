@@ -10,6 +10,7 @@ data class WorldObjectTarget(val id:String,val mapId:Int,val x:Int,val y:Int,val
     val removedFlagId:String,val completionFlagId:String)
 data class WorldItemUseDefinition(val targetSpriteId:Int,val usedFlagId:String) {
     var yangJoin:OriginalYangJoinDefinition?=null;internal set
+    var sceneScript:OriginalSceneItemDefinition?=null;internal set
 }
 data class WorldFieldProtectionDefinition(val evidence:String)
 
@@ -157,6 +158,7 @@ object WorldItems {
     private fun unavailable(snapshot:SaveSnapshot,item:ItemDefinition,rule:WorldItemUseDefinition,
         target:WorldObjectTarget,inMapMenu:Boolean):String? {
         if(rule.yangJoin!=null)return OriginalYangJoin.unavailable(snapshot,item,target,inMapMenu)
+        if(rule.sceneScript!=null)return OriginalSceneItems.unavailable(snapshot,item,target,inMapMenu)
         val flagIds=listOf(rule.usedFlagId,target.removedFlagId,target.completionFlagId)
         if(!supported(item)||rule.targetSpriteId!=TARGET_SPRITE||target.spriteId!=TARGET_SPRITE||
             !validId(target.id)||flagIds.any{!validId(it)}||flagIds.toSet().size!=3||
@@ -181,6 +183,7 @@ object WorldItems {
         target:WorldObjectTarget,inMapMenu:Boolean):Result {
         unavailable(snapshot,item,rule,target,inMapMenu)?.let{return reject(snapshot,it)}
         if(rule.yangJoin!=null)return reject(snapshot,"入队须通过统一剧情事务提交")
+        if(rule.sceneScript!=null)return reject(snapshot,"场景物品须通过统一剧情事务提交")
         // This reusable item keeps its quantity, including when its used bit was already set.
         return Result(snapshot.inventory,snapshot.flags+mapOf(rule.usedFlagId to true,
             target.removedFlagId to true,target.completionFlagId to true),true)
