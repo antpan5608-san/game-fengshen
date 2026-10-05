@@ -757,6 +757,20 @@ object ContentLoader {
                                 boss.intro=SceneStoryDefinition("rom.scene-story.117.queen-intro",boss.npcId,flag,
                                     boss.entryTrigger!!,StoryContinuation(ids,null,destination,setOf(flag)),
                                     StoryMovement(destination,0),emptyMap())
+                            }else if(boss.id=="rom.boss.159"){
+                                require(boss.npcId=="rom.npc.148.0"&&boss.additionalEntryTriggers.size==5&&
+                                    v.getString("evidence")=="game-data/provenance/world-jiameng-state.json"&&
+                                    v.getInt("completedSteps")==0&&!v.getBoolean("accumulateEncounterSteps")&&
+                                    v.getBoolean("preserveOpeningPosition"))
+                                val ids=v.getJSONArray("dialogueIds").let{d->(0 until d.length()).map{d.getString(it)}}
+                                require(ids==(3..5).map{"rom.dialogue.148.$it"}&&ids.all{it in dialogues}&&
+                                    ints(v,"destinationCell").contentEquals(intArrayOf(8,6)))
+                                val flag="runtime.story.148.event1.intro.complete"
+                                val destination=StoryDestination(148,8,6,null,null,null)
+                                boss.intro=SceneStoryDefinition("rom.scene-story.148.three-generals-intro",boss.npcId,flag,
+                                    boss.entryTrigger!!,StoryContinuation(ids,null,null,setOf(flag)),
+                                    StoryMovement(destination,0),emptyMap()).also{
+                                        it.additionalEntryTriggers=boss.additionalEntryTriggers;it.preserveOpeningPosition=true}
                             }else{
                             require(boss.id=="rom.boss.152"&&boss.npcId=="rom.npc.76.0"&&
                                 boss.entryTrigger==StoryEntryTrigger(76,12,12)&&
@@ -783,16 +797,29 @@ object ContentLoader {
                             boss.approach=StoryMovement(StoryDestination(87,5,5,Key.UP,0,null),6).also{it.accumulateEncounterSteps=true}
                         }
                         boss.finalizeWithoutDialogue=b.optBoolean("finalizeWithoutDialogue",false)
-                        if(boss.finalizeWithoutDialogue)require(boss.intro!=null&&!b.optBoolean("commitAfterDialogue",false)&&
+                        val firstJiameng=boss.id=="rom.boss.158"&&boss.npcId=="rom.npc.145.0"&&
+                            boss.activationFlagId=="rom.npccontext.145.215"&&boss.flagId=="rom.map.145.flag.2"&&
+                            members==listOf(EncounterMember(3,158))&&g.getInt("id")==0&&
+                            b.optString("source")=="game-data/provenance/world-jiameng-state.json"
+                        if(boss.finalizeWithoutDialogue)require(!b.optBoolean("commitAfterDialogue",false)&&(firstJiameng||
+                            (boss.intro!=null&&
                             boss.flagId=="rom.map.76.flag.128"&&members==listOf(EncounterMember(0,152),EncounterMember(2,153),
                                 EncounterMember(4,154),EncounterMember(6,155))&&g.getInt("id")==62&&
-                            b.getString("victoryFlagEvidence")=="game-data/provenance/world-island-event7.json")
+                            b.getString("victoryFlagEvidence")=="game-data/provenance/world-island-event7.json")))
                         b.optJSONArray("victoryFlags")?.let{fs->
                             require(b.getString("victoryFlagEvidence").isNotBlank())
                             boss.victoryFlags=(0 until fs.length()).map{fs.getString(it)}.toSet()
+                            val jiamengFlags=when{
+                                firstJiameng->setOf("rom.npccontext.145.228")
+                                boss.id=="rom.boss.159"&&boss.npcId=="rom.npc.148.0"&&boss.additionalEntryTriggers.size==5&&
+                                    b.optString("source")=="game-data/provenance/world-jiameng-state.json"->
+                                    setOf("rom.map.145.flag.4","rom.map.145.flag.8","rom.npccontext.148.217","rom.npccontext.37.196")
+                                else->emptySet()
+                            }
                             require(boss.victoryFlags.size==fs.length()&&boss.victoryFlags.size in 1..16&&
-                                boss.victoryFlags.all{it.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+"))||
-                                    (boss.finalizeWithoutDialogue&&it=="rom.global.7c6.16")})
+                                (if(jiamengFlags.isNotEmpty())boss.victoryFlags==jiamengFlags else
+                                    boss.victoryFlags.all{it.matches(Regex("rom\\.map\\.\\d+\\.flag\\.\\d+"))||
+                                        (boss.finalizeWithoutDialogue&&it=="rom.global.7c6.16")}))
                         }
                         boss.commitAfterDialogue=b.optBoolean("commitAfterDialogue",false)
                         boss.continuation=b.optJSONObject("continuation")?.let{c->

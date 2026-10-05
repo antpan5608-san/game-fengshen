@@ -794,6 +794,76 @@ def validate_world_rebirth_script(reader,definition):
         raise ValueError('Scene actor pose is incomplete')
     return p
 
+def world_jiameng_boss_definitions(reader):
+    """Only observed actor2/event1 groups; existing settlement owns ordinary rewards."""
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-jiameng-state.json';p=load(ROOT/path)
+    first=dict(id='rom.boss.158',npcId='rom.npc.145.0',mapId=145,eventId=2,eventArgument=2,
+        sourceType=172,enemyId=158,group=dict(id=0,entities=[dict(slot=3,enemyId=158)]),
+        flagId='rom.map.145.flag.2',activationFlagId='rom.npccontext.145.215',
+        victoryDialogue='rom.dialogue.155.1',finalizeWithoutDialogue=True,commitAfterDialogue=False,
+        victoryFlags=['rom.npccontext.145.228'],victoryFlagEvidence=path,
+        npcSource=extract_npcs(reader,215)['records'][0]['range'],ruleSources=p['sources'],source=path)
+    points=[dict(mapId=148,x=x,y=y)for x,y in [(6,5),(10,5),(7,6),(8,6),(9,6)]]
+    three=dict(id='rom.boss.159',npcId='rom.npc.148.0',mapId=148,eventId=1,eventArgument=0,
+        sourceType=173,enemyId=159,group=dict(id=0,entities=[dict(slot=0,enemyId=159),dict(slot=3,enemyId=160),dict(slot=6,enemyId=161)]),
+        flagId='rom.map.148.flag.128',victoryDialogue='rom.dialogue.148.6',commitAfterDialogue=True,
+        entryTrigger=dict(mapId=148,x=8,y=6,evidence=path),additionalEntryTriggers=points,
+        intro=dict(dialogueIds=[f'rom.dialogue.148.{i}'for i in range(3,6)],destinationCell=[8,6],
+            completedSteps=0,accumulateEncounterSteps=False,preserveOpeningPosition=True,evidence=path),
+        victoryCharacterChanges=[dict(characterId='yangjian',statusAndMask=255,statusOrMask=64,restoreHp=False,restoreMp=False)],
+        victoryFlags=['rom.map.145.flag.4','rom.map.145.flag.8','rom.npccontext.148.217','rom.npccontext.37.196'],
+        victoryFlagEvidence=path,
+        continuation=dict(dialogueIds=[f'rom.dialogue.148.{i}'for i in range(6,9)],completionFlags=['rom.map.148.flag.128'],
+            destination=dict(mapId=37,x=4,y=5),evidence=path),
+        npcSource=extract_npcs(reader,148)['records'][0]['range'],ruleSources=p['sources'],source=path)
+    return [first,three]
+
+def validate_world_jiameng_boss(reader,boss):
+    path='game-data/provenance/world-jiameng-state.json';p=load(ROOT/path)
+    candidates=world_jiameng_boss_definitions(reader)
+    if boss not in candidates or p['romSha256']!=SHA256 or \
+            p['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE' or \
+            p['rules']['firstBoss']['requiresOriginalContext']!=215 or \
+            p['rules']['firstBoss']['additionalScriptReward']!='NONE; ordinary battle reward/loot remain separate' or \
+            p['rules']['threeBosses']['triggerCells']!=[[6,5],[10,5],[7,6],[8,6],[9,6]]:
+        raise ValueError('Jiameng Boss group, context, trigger or exact state differs')
+    for span in p['sources']:checked_span(reader,span)
+    if digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Jiameng completion probe changed without executing it')
+    for table in p['expected']:
+        raw=(ROOT/table['path']).read_bytes()
+        if table['failures']!=0 or digest(raw)!=table['sha256'] or len(raw.splitlines())!=table['caseCount']+1:
+            raise ValueError('Jiameng lacks actual original completion/trigger cases')
+    for span in boss['ruleSources']:checked_span(reader,span)
+    if boss['id']=='rom.boss.158':
+        if checked_span(reader,boss['npcSource'])!=bytes.fromhex('9a01ff00b8001801a88f01020202') or \
+                reader.read(1,0x9ea3+172)[0]!=158:
+            raise ValueError('First Boss requires actual context215 actor2 and source172')
+    else:
+        trace=p['script30'];raw=(ROOT/trace['tracePath']).read_bytes()
+        if trace['traceSha256']!=digest(raw) or trace['destination']!={'mapId':37,'x':4,'y':5,
+                'direction':'PRESERVE; no scripted direction write claimed'}:
+            raise ValueError('Three generals must finish the actual script30 destination')
+        intro=p['script31'];raw=(ROOT/intro['tracePath']).read_bytes()
+        if intro['traceSha256']!=digest(raw)or(intro['cases'],intro['rows'])!=(5,25)or \
+                intro['triggerCells']!=[[6,5],[10,5],[7,6],[8,6],[9,6]]or \
+                intro['destination']!='PRESERVE_EACH_COMPLETED_TRIGGER_CELL':
+            raise ValueError('Three generals require actual five-entrance controller evidence')
+        rows=[line.split('\t')for line in raw.decode('ascii').splitlines()[1:]]
+        if len(rows)!=25:raise ValueError('Incomplete script31 controller trace')
+        for case,(x,y)in enumerate(intro['triggerCells'],1):
+            expected=[('controlled-before-final-step',0,2,0,x*16,(y+1)*16),
+                ('actual-intro-3',2,3,31,x*16,y*16+2),
+                ('actual-after-A-1',2,4,31,x*16,y*16),
+                ('actual-after-A-2',2,5,31,x*16,y*16),
+                ('actual-after-A-3',3,5,0,x*16,y*16)]
+            for row,(stage,phase,message,script,px,py)in zip(rows[(case-1)*5:case*5],expected):
+                values=[int(v)for v in row[2:]]
+                if int(row[0])!=case or row[1]!=stage or values!=[148,phase,message,script,px,py,px+120,py+120]:
+                    raise ValueError('Script31 cannot teleport, add a step or reorder actual dialogue')
+    return boss
+
 def world_jiameng_xiao_return_definition():
     """Existing actor action3: manual talk, no invented approach or new template."""
     return {'id':'rom.scene-story.146.xiao-return','npcId':'rom.npc.146.0',

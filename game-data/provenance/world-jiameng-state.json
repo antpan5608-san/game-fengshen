@@ -268,5 +268,59 @@
       162,
       163
     ]
+  },
+  "script31": {
+    "kind": "CONTROLLED_SOURCE_POSITION_REAL_FINAL_STEP_ORIGINAL_DIALOGUE_NOT_NORMAL_ROUTE",
+    "tracePath": "android/app/src/test/resources/jiameng-script31-five-entrances-original.tsv",
+    "traceSha256": "a01a438b53630e309a0e1ad094b09c3e703fa17d583417838e9cae826bfccdbd",
+    "cases": 5,
+    "rows": 25,
+    "dialogueIds": [
+      "rom.dialogue.148.3",
+      "rom.dialogue.148.4",
+      "rom.dialogue.148.5"
+    ],
+    "triggerCells": [
+      [
+        6,
+        5
+      ],
+      [
+        10,
+        5
+      ],
+      [
+        7,
+        6
+      ],
+      [
+        8,
+        6
+      ],
+      [
+        9,
+        6
+      ]
+    ],
+    "destination": "PRESERVE_EACH_COMPLETED_TRIGGER_CELL",
+    "timingDifference": "Original intro3 waits with last2px of the entering step pending; after A1 the same trigger cell is complete. Android reuses finish-step-before-modal and adds no teleport or second step."
+  },
+  "xiaoReturnTiming": {
+    "kind": "CONTROLLED_SOURCE_POSITION_NORMAL_NPC_A_DIALOGUE_NOT_NORMAL_ROUTE",
+    "tracePath": "android/app/src/test/resources/jiameng-xiao-return-dialogue-timing-original.tsv",
+    "traceSha256": "c4fb611bf500f4f233431fdff1a5edce2561e72574ec160ac92094007dbeed47",
+    "rows": 8,
+    "effectTiming": "After first dialogue closes: original saved HP/MP restored/status0/map146 flag4/context216, not on item selection or first text",
+    "sourceCapturePrefix": "actor146-talk",
+    "sourceRamHashes": {
+      "1": "4e4a160d9157c4037400da3d507e87fcc72d0206ecf761358c46ff8518669a74",
+      "2": "95771e2659b43c1ca1710371dd7f07c3fef14c398aae3a1a3b3f6ec217da2906",
+      "3": "22a4a4a07e587921c72706738225fb5c9747e5c6b830153a441aea3e473fc0fc",
+      "4": "356f0c24253a68d3a6f7a6cf5e8243a823a5833d34828a4d76a16bd7df5a62ae",
+      "5": "df6506134fd5291a0b782d9432f420ff07725219d83770eae1db5aa2c574fb28",
+      "6": "bf46107fbcc5a0db54bf656bbc24e04759a33f42dcbf36ec666b6cd27a96650d",
+      "7": "02cd5f9fa67f98fe4ddb03ec9aca7f80c4b99c9fd3140bb720196a85712af1d4",
+      "8": "b4bce177319dea9a563aa65a7b45cf8857584b4e46a92a6e19cb7e69a9f29377"
+    }
   }
 }
