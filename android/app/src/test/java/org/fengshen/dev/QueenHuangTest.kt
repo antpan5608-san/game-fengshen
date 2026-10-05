@@ -5,6 +5,20 @@ import org.junit.Test
 
 /** Controlled fixtures + original CPU tables; not normal Android progression. */
 class QueenHuangTest {
+    @Test fun correctedJiamengContextReadsLegacySavesWithoutMutatingOrRevivingClearedActors(){
+        val legacy=mapOf("rom.npccontext.121.215" to true,OriginalNpcTalk.HUANG_COMPLETED_FLAG to true,
+            "rom.global.7fe.128" to true,"unrelated" to true)
+        val copy=legacy.toMap()
+        assertTrue(OriginalNpcTalk.hasHuangJiamengContext(legacy));assertEquals(copy,legacy)
+        assertFalse(OriginalNpcTalk.hasHuangJiamengContext(legacy-OriginalNpcTalk.HUANG_COMPLETED_FLAG))
+        assertFalse(OriginalNpcTalk.hasHuangJiamengContext(legacy-"rom.global.7fe.128"))
+        assertFalse(OriginalNpcTalk.hasHuangJiamengContext(legacy+("rom.npccontext.145.215" to false)))
+        assertTrue(OriginalNpcTalk.hasHuangJiamengContext(mapOf("rom.npccontext.145.215" to true)))
+        val rows=javaClass.getResourceAsStream("/jiameng-huang-context-original.tsv")!!.bufferedReader().readLines().drop(1)
+        assertEquals(16,rows.size)
+        rows.forEach{line->val r=line.split('\t').map(String::toInt)
+            assertEquals(211,r[2]);assertEquals(215,r[3]);assertEquals(r[1],r[4]);assertEquals(20,r[5])}
+    }
     private val rule=OriginalNpcTalkDefinition(117,OriginalNpcTalk.HUANG_COMPLETED_FLAG,"","rom.special.18",
         "rom.dialogue.127.14","rom.dialogue.127.14").also{it.actionId=43}
     private val item=ItemDefinition(rule.itemId,"攢心釘",null,"ORIGINAL_CPU","special",18,maxCount=1)
@@ -28,7 +42,8 @@ class QueenHuangTest {
         assertTrue(close.applied);assertNull(close.nextDialogue);assertTrue(close.snapshot.flags[rule.mapFlagId]==true)
         assertTrue(close.snapshot.flags["rom.global.7fe.128"]==true)
         assertTrue(close.snapshot.flags["rom.npccontext.117.211"]==true)
-        assertTrue(close.snapshot.flags["rom.npccontext.121.215"]==true)
+        assertTrue(close.snapshot.flags["rom.npccontext.145.215"]==true)
+        assertFalse(close.snapshot.flags["rom.npccontext.121.215"]==true)
         assertFalse(close.snapshot.flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true)
         assertEquals(first.snapshot.inventory,close.snapshot.inventory)
         assertFalse(OriginalNpcTalk.finishHuang(close.snapshot,rule,rule.firstDialogue).applied)

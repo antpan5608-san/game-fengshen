@@ -142,6 +142,10 @@ def scoped_observed_graphic(reader,recipe):
         raise ValueError('Invalid bounded graphic dimensions')
     colors=recipe['paletteCodes'];image=Image.new('RGBA',(width,height));occupied=set()
     for tile in recipe['tiles']:
+        tile_colors=tile.get('paletteCodes',colors)
+        if not isinstance(tile_colors,dict) or not tile_colors or any(k not in ('0','1','2','3') or
+                not isinstance(v,list) or len(v)!=3 or any(type(c) is not int or not 0<=c<=255 for c in v)
+                for k,v in tile_colors.items()):raise ValueError('Invalid graphic palette codes')
         raw=checked_span(reader,tile)
         if len(raw)!=16:raise ValueError('Graphic tile must be 16 bytes')
         xx,yy=tile['xy']
@@ -157,14 +161,15 @@ def scoped_observed_graphic(reader,recipe):
                 sx=7-x if tile.get('flipX',False)else x
                 sy=7-y if tile.get('flipY',False)else y
                 value=((raw[sy]>>(7-sx))&1)+2*((raw[sy+8]>>(7-sx))&1)
-                color=tuple(colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
+                if str(value) not in tile_colors:raise ValueError('Graphic palette omits a used tile code')
+                color=tuple(tile_colors[str(value)])+(0 if value==0 and recipe.get('transparentZero',True) else 255,)
                 image.putpixel((xx+x,yy+y),color)
     if len(occupied)!=width*height//64:raise ValueError('Incomplete graphic recipe')
     if not recipe.get('rgbaSha256') or digest(image.tobytes())!=recipe['rgbaSha256']:
         raise ValueError('Reconstructed graphic differs from reviewed RGBA pixels')
     return deterministic_rgba_png(image)
 
-def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False):
+def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False,*,per_tile_palette=False):
     """Bounded evidence helper for the existing ROM-tile recipe, never an image importer.
 
     Call only with a settled original capture and an explicitly reviewed rectangle.
@@ -179,6 +184,35 @@ def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False):
     with Image.open(capture_path) as capture:
         if x<0 or y<0 or x+width>capture.width or y+height>capture.height:raise ValueError('Capture rectangle escapes image')
         observed=capture.convert('RGB').crop((x,y,x+width,y+height))
+    if per_tile_palette:
+        # Some real large enemies use multiple palettes. Keep the same bounded
+        # ROM-tile recipe/reconstructor, with an exact palette on each 8x8 tile.
+        chr_start=reader.header['sections']['chr']['offset'];tiles=[]
+        for yy in range(0,height,8):
+            for xx in range(0,width,8):
+                colors=sorted(set(observed.crop((xx,yy,xx+8,yy+8)).getdata())-{(0,0,0)})
+                if len(colors)>3:raise ValueError('Mixed palette inside one original graphic tile')
+                found=None
+                for order in itertools.permutations((1,2,3),len(colors)):
+                    codes={(0,0,0):0,**dict(zip(colors,order))}
+                    rows=[[codes[observed.getpixel((xx+dx,yy+dy))]for dx in range(8)]for dy in range(8)]
+                    raw=bytes([sum((row[dx]&1)<<(7-dx)for dx in range(8))for row in rows]+
+                        [sum(((row[dx]>>1)&1)<<(7-dx)for dx in range(8))for row in rows])
+                    offset=reader.data.find(raw,chr_start)
+                    if offset>=chr_start:
+                        found={'xy':[xx,yy],'offset':offset,'length':16,'sha256':digest(raw),
+                            'paletteCodes':{str(code):list(color)for color,code in codes.items()}}
+                        break
+                if found is None:raise ValueError(f'Original graphic tile not matched at {xx},{yy}')
+                tiles.append(found)
+        rgba=observed.convert('RGBA')
+        if transparent_zero:rgba.putdata([p[:3]+(0 if p[:3]==(0,0,0)else 255,)for p in rgba.getdata()])
+        recipe={'width':width,'height':height,'observedRect':rect,'transparentZero':transparent_zero,
+            'paletteCodes':{'0':[0,0,0]},'tiles':tiles,'rgbaSha256':digest(rgba.tobytes()),
+            'captureSha256':digest(Path(capture_path).read_bytes()),
+            'captureKind':'CONTROLLED_ORIGINAL_FULL_GROUP_LOADER','normalPlayEvidence':False}
+        scoped_observed_graphic(reader,recipe)
+        return recipe
     colors=sorted(set(observed.getdata())-{(0,0,0)})
     if not 1<=len(colors)<=3:raise ValueError('Faded or mixed graphic palette')
     chr_start=reader.header['sections']['chr']['offset'];best=None
