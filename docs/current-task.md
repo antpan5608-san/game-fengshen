@@ -55,3 +55,13 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 2026-10-05 05:34 UTC独立佳梦关接续：共享手动NPC脚本已实现（靠近不提交、四个邻位正常交谈不虚构单点门槛、对白结束后仅更新旧角色）；原ContentLoader与export_world_from_base限定同来源/实际action3规则，无第二导入器。7个资源/规则正反例、28个相关JVM方法、仪器编译通过；既有c50范围7回归通过（首轮漏SDK环境失败，补原SDK/JDK后32s通过，未改门禁）。另960原CPU核三将真实5个触发格和map148 bit80完成条件，无新增等级/队员/物品前置。script30受控存活队伍确认6→7→8对白、杨戬OR64、地图37(4,5)、map148完成128；原HP1尝试战败/直接重置battle模式卡住保留失败，非原版正常胜利或Android证明。当前新图仍未打包，R2 c50/56/302和冻结R1未变。R1候选37261594942 base全部25 gate通过；runtime-world执行中，生产仍v79个人版。下一动作：批次NPC上下文/图形/地图37依赖薄接续，待R1全部三段通过再发布并立即接R2。
 
 佳梦关NPC图形：152/154/129原OAM重建均逐个非透明像素匹配截图（201/218/213）；初次用旧FCEUX RGB表颜色不同导致拒绝，定位后从原像素码一致采样当前原图色值，保留透明0与实体黑，未近似调色或放宽RGBA门禁。8个资源正反例通过。新状态记录中7D6曾误标map101；按原0:D664表确认实际map37，map101用共享default7D0，已在未打包开发线改正并新增回归；实际context196加载130/162/163（病中杨戬和原两名NPC）。只读用户数据/冻结R1/原c50均未改变。已取得地图37真实交谈，NPC58暂无Android执行逻辑，后续按定向规则接续，不写已可玩。R1运行已通过base/world，continuation执行中；05:46实际巡检79/27共3115普通事件、9真机session/0测试/0模拟器，观察窗口未见ERROR、cleanup0，原Node评估ALLOW；不代表候选82健康/本轮手机验收。
+
+## 当前有效检查点（2026-10-05 07:04 UTC）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、分母UNKNOWN。上文旧版本/阶段为历史记录。生产v82 STABLE已由原三job同APK正常阶段验收与受保护发布37269398974通过；来源c461e7c1、APK22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9，公网重新下载/签名/包名/hash/c51-r1校验通过。05:49:25 postflight82/79只有79事件1903、2普通真机会话，无82样本，不代表82健康。manual_acceptance=PENDING，已立即继续。
+
+R2冻结main dd310273b371e813b11198e665b6ff81e147d029，原run37270937736 build SUCCESS、89 Python/335 JVM、签名候选v83 hash bf987949e15dff54e45a5ee8017a9dd5d9b0075ac8eec3412c7772950f3517d5，c50/56图/302文件不变；原ci_apk独立验包PASS。base App正在运行、后两stage尚NOT_RUN、NOT_PUBLISHED；保留之前Windows cp1252测试读取失败及显式UTF8修正。验收期间不移动main。
+
+独立佳梦关树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next：原script31五个真实触发位置均保留各自玩家格，3→4→5对白后战斗，无新增传送/玩家步/条件；script30到37(4,5)已核。原小龙女恢复发生首次交谈对白关闭时（8行RAM时间证据），不是提前回血。两场Boss定义/原数值、黄飞虎真实context145.215、三将组合/胜后原flag/杨戬OR64只接已有角色、special18 marker5已在原逻辑/导出限定校验中实现。13 Python来源/拒绝回归、52相关JVM方法/8suite及仪器编译PASS；旧c50 scope7 PASS。原始ROM/RAM/PPU仍忽略私有目录。
+
+新地图145..148和37、Boss/场景定义尚未PACKAGED/APP_VERIFIED/PUBLISHED；不能写可玩或正常胜利。下一动作：批量内容配方及原导出薄适配，保留四图原zone29完整12组（敌人60/61/62）和真实高阈值遇敌，补原敌图/状态8身份，随后严格干净重复导出与App验收。无不可替代资源/权限/平台阻塞，继续实施，不等待用户“继续”。

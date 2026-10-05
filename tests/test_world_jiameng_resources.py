@@ -153,6 +153,29 @@ class JiamengResourcesTest(unittest.TestCase):
         self.assertEqual(196,proof['rules']['threeBosses']['postBattleBeforeScript30']['map37Context'])
         self.assertNotIn('map101Context',proof['rules']['threeBosses']['postBattleBeforeScript30'])
 
+    def test_boss_definitions_reject_extra_rewards_wrong_groups_and_context(self):
+        first,three=ex.world_jiameng_boss_definitions(self.reader)
+        for definition in (first,three):ex.validate_world_jiameng_boss(self.reader,definition)
+        for mode in ('context','source','slot','reward','trigger','departure','destination','extra-dialogue'):
+            bad=copy.deepcopy(first if mode in ('context','source','slot','reward')else three)
+            if mode=='context':bad['activationFlagId']='rom.npccontext.121.215'
+            elif mode=='source':bad['sourceType']=171
+            elif mode=='slot':bad['group']['entities'][0]['slot']=0
+            elif mode=='reward':bad['moneyReward']=100
+            elif mode=='trigger':bad['additionalEntryTriggers'].pop()
+            elif mode=='departure':bad['victoryCharacterChanges'][0]['statusOrMask']=0
+            elif mode=='destination':bad['continuation']['destination']['mapId']=101
+            else:bad['continuation']['dialogueIds'].append('rom.dialogue.148.9')
+            with self.subTest(mode=mode),self.assertRaises(ValueError):ex.validate_world_jiameng_boss(self.reader,bad)
+
+    def test_actual_xiao_restore_timing_is_dialogue_closure_not_selection(self):
+        proof=ex.load(ROOT/'game-data/provenance/world-jiameng-state.json');timing=proof['xiaoReturnTiming']
+        raw=(ROOT/timing['tracePath']).read_bytes();self.assertEqual(timing['traceSha256'],hashlib.sha256(raw).hexdigest())
+        rows=[line.split('\t')for line in raw.decode('ascii').splitlines()[1:]];self.assertEqual(8,len(rows))
+        for row in rows[:3]:self.assertEqual([32,0,92,44,44,0,0],list(map(int,row[3:])))
+        self.assertEqual([0,2,0,92,92,44,44,4,216],list(map(int,rows[3][1:])))
+        self.assertIn('After first dialogue closes',timing['effectTiming'])
+
     def test_manual_return_definition_reuses_existing_scoped_export_validation(self):
         definition=ex.world_jiameng_xiao_return_definition()
         ex.validate_world_jiameng_scene_script(self.reader,definition)

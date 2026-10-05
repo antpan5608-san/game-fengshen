@@ -69,4 +69,28 @@ class JiamengActivationTest {
         val other=first().also{it.victoryCharacterChanges=boss.victoryCharacterChanges}
         assertNull(other.charactersOnVictory(listOf(nezha))) // No generic skip-missing weakening.
     }
+    @Test fun fiveOriginalScript31EntrancesKeepTheirOwnCompletedStepPosition(){
+        val flag="runtime.story.148.event1.intro.complete"
+        val ids=(3..5).map{"rom.dialogue.148.$it"}
+        val points=setOf(6 to 5,10 to 5,7 to 6,8 to 6,9 to 6)
+        val story=SceneStoryDefinition("rom.scene-story.148.three-generals-intro","rom.npc.148.0",flag,
+            StoryEntryTrigger(148,8,6),StoryContinuation(ids,null,null,setOf(flag)),
+            StoryMovement(StoryDestination(148,8,6,null,null,null),0),emptyMap()).also{
+                it.additionalEntryTriggers=points.map{p->StoryEntryTrigger(148,p.first,p.second)}.toSet()
+                it.preserveOpeningPosition=true}
+        val actor=CharacterState("nezha",20,12000,100,500,7,80,40,60,10,statusMask=2)
+        for((x,y)in points){
+            val before=SaveSnapshot("fixture",148,x*16+8,y*16+8,Key.UP,listOf(actor),mapOf(HerbUse.ID to 3),emptyMap(),1234)
+            assertTrue(story.automaticallyTriggersAt(before))
+            val begin=StoryFollowup.begin(before,story);assertTrue(begin.applied)
+            assertEquals(before.copy(flags=mapOf(story.pendingFlag to true)),begin.snapshot)
+            var next=begin.snapshot
+            for(id in ids){val result=StoryFollowup.advance(next,story,id);assertTrue(result.applied);next=result.snapshot}
+            assertEquals(before.x,next.x);assertEquals(before.y,next.y);assertEquals(before.characters,next.characters)
+            assertEquals(before.money,next.money);assertEquals(before.inventory,next.inventory)
+            assertTrue(next.flags[flag]==true);assertFalse(story.automaticallyTriggersAt(next))
+        }
+        assertFalse(story.automaticallyTriggersAt(SaveSnapshot("fixture",148,8*16+8,7*16+8,
+            Key.UP,listOf(actor),emptyMap(),emptyMap(),1234)))
+    }
 }
