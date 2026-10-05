@@ -43,3 +43,9 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 发布后记录实际来源/content/APK hash/路线与欠账，将稳定包置新的覆盖回归基底，修复同步开发线并立即继续地府必要流程→十殿→重生→既有山洞/村→女儿村/清峰山/暗洞/女人国→剩余主线/地图/服务/结局。只有全任务条件齐备才COMPLETE；时限中断须写最后可信commit/content/正常终点/首阻塞/精确动作/生产稳定与开发版本/验收边界。
 
 局部清单字段已纠正：NPC首字节为entityByte，不是对白组textGroup；原extract_npcs与清单在0/17/121/145四域逐值对照，11清单测试通过。使用已有SDK/JDK环境原CLI重生成40服务/56目标图清单；首次未设置SDK时实际拒绝，未关闭签名校验。此修改仅溯源语义，不新增或验证App剧情。
+
+独立下一批开发（不改变冻结的R1/R2来源）：work/world-jiameng-next从9c8e835接续。已对目标ROM受控真实门/楼梯输入核145→146→147→148，地图145默认守卫确认佳梦关；Huang context215重建触发魔礼寿source172/live slot3 enemy158，148真实逼近触发event1/source173..175/live slots0/3/6 enemy159..161。不是正常Android或正常原版全路线。四Boss全部实际RAM数值相符；原图块配方恢复4图（魔礼寿280块、海99/红120/青120），首图多palette通过原重建器的每图块薄扩展，未引入资源平台。
+
+代码能力：统一原特殊物品profile追加special18/marker5，允许已核单158与三159..161组合；原回合调度/数量保留/取消不提交/敌人继续行动保留。修正Huang RAM $7E6实际map145而非旧map121标签；旧错误key只作带完成/global flag的只读兼容，明确false不重新激活演员。1656保护/效果+16 context原CPU通过；56相关JVM/仪器编译通过，5Python通过（含c50两次原导出严格相同）。当前c50仍56/302不变，没有将4新图塞入冻结候选，special18尚未由当前内容启用，佳梦关APP_VERIFIED=NOT_RUN/PUBLISHED=NO。
+
+下一独立动作：定向核魔礼寿胜后、原小龙女再次入队与三将event1胜后/杨戬病状态，再以原局部导出批次接145..148和必要actor/script；不猜奖品或原剧情条件。R1运行37261594942先按实际结果处理；正式发布后立即推进已备份R2地府连续验收。本任务依然IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO。

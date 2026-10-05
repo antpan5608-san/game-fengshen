@@ -397,3 +397,6 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 外部冷启比较必须绑定刚保存的端点：实际个人smoke在内部Activity重进后已正常移动，却仍读旧normal端点，host字节恢复比较已过而测试坐标/encounter断言失败。保留原状态断言，正常smoke只做一次保存，然后由原录屏器唯一执行外部force-stop/cold/继续；该薄修已编译、快检、真实同候选短smoke与外部cold通过，并经原发布链路/公网字节复核。保留失败原片和源值，不能把之前未通过的cold改PASS。
 
 - 原NPC记录首字节是entityByte，不能当对白组；以原extract_npcs逐值核清单，当前四域正反例已运行。对白组须另查实际调度/活动font，Reference编号和相似拓扑仅是线索。清单CLI仍要求已有JDK/ANDROID_SDK_ROOT，缺SDK会明确拒绝，不关闭APK校验。
+
+- 大敌可能使用多palette。原observed_graphic_recipe的per_tile_palette模式按每8×8块找匹配ROM跨度并在scoped_observed_graphic核整体RGBA；已对真实魔礼寿280块运行，四图重建/错palette/span/重叠拒绝/派生fixture回环通过。原c50两次导出字节/hash保持。原片混入其他精灵时旧单palette拒绝，先缩定真实矩形，不能放宽整体RGBA。原图/PPU仍留忽略目录。
+- RAM context标签需用原0:D664指针表定位，不依据旧provenance名字猜场景。原event16写7E6对应145，121实际7D0；16个原CPU边界已运行。旧错误key做只读兼容时须由原完成/global flag约束且新明确false优先，不能覆盖真实存档或重复激活演员。

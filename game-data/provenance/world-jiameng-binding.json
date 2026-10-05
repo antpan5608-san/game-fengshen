@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "jiameng-special18-existing-scheduler-and-protection",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "rules": {
+    "itemId": "rom.special.18",
+    "originalId": 18,
+    "bindingMarker": 5,
+    "originalTargets": [
+      158,
+      159,
+      160,
+      161
+    ],
+    "enabledGroups": [
+      [
+        158
+      ],
+      [
+        159,
+        160,
+        161
+      ]
+    ],
+    "consumesAction": true,
+    "chooseTarget": false,
+    "reusable": true,
+    "quantityConsumed": 0,
+    "scope": "Battle-local protection marker; not immobilization or guaranteed victory",
+    "mapUse": "NOT_ENABLED_BY_THIS_PROOF"
+  },
+  "sources": [
+    {
+      "offset": 297278,
+      "length": 2,
+      "sha256": "365d684ba50eea4861b948cc0876de55deca4d7475a24b90127e83456c745638",
+      "module": 9,
+      "cpuAddress": 35118,
+      "meaning": "Original special18 handler pointer"
+    },
+    {
+      "offset": 297379,
+      "length": 29,
+      "sha256": "6ef5e6d423e475692b010aff165862582d82a2481f17f1686c58c5cf9213c60e",
+      "module": 9,
+      "cpuAddress": 35219,
+      "meaning": "Actual four target comparisons and battle-local marker5"
+    },
+    {
+      "offset": 306104,
+      "length": 13,
+      "sha256": "60403861ac95433013fe6821f3702f94db1b5107fccd2afbf63f286166be3de6",
+      "module": 9,
+      "cpuAddress": 43944,
+      "meaning": "Original protected enemy IDs"
+    },
+    {
+      "offset": 306229,
+      "length": 13,
+      "sha256": "c006dace47a02d0131b1b9c82d685541f976c7bd8cbcf7fb5af4e992611f221a",
+      "module": 9,
+      "cpuAddress": 44069,
+      "meaning": "Original required damage markers"
+    },
+    {
+      "offset": 306242,
+      "length": 17,
+      "sha256": "2289875914cfc113fef82bafd365f184fac280494ba4c65906d0ea9e24fbaec5",
+      "module": 9,
+      "cpuAddress": 44082,
+      "meaning": "Actual marker gate preserves or zeroes already computed damage"
+    }
+  ],
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-jiameng-binding.py",
+    "sha256": "5d61989f368e3e3459734d02c0ec8d88567b99ee83e76fbc48c274ac37a3c931",
+    "kind": "CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_APP"
+  },
+  "expected": [
+    {
+      "path": "android/app/src/test/resources/jiameng18-binding-original.tsv",
+      "caseCount": 1536,
+      "failures": 0,
+      "sha256": "50bddb9ed9c2c36d80e5af1495eb7b5f514c531efd29125388ae7506b81baa75"
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng18-damage-original.tsv",
+      "caseCount": 120,
+      "failures": 0,
+      "sha256": "f72e563399c09210ebf0706ee43742490b835da66ec8f7a202be0728e8cd4e52"
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng-huang-context-original.tsv",
+      "caseCount": 16,
+      "failures": 0,
+      "sha256": "885f9ad5790172cb5086d18acf3a864c17652f0e18ed91f52c4a3c350cbc8c37"
+    }
+  ],
+  "limitations": [
+    "Normal Jiameng Android route NOT_RUN",
+    "Current c50 package does not contain these rooms/enemies or enable special18 battle use",
+    "Original command dispatch is reused from existing special commands; no new inventory or initiative mechanism",
+    "Entry, actor replacement, join/departure, victory continuation and map gates need separate evidence"
+  ],
+  "huangContextCorrection": {
+    "historicalLabel": "context121=215",
+    "actualMapId": 145,
+    "ramAddress": 2022,
+    "actualContextId": 215,
+    "map121RamAddress": 2000,
+    "interpretation": "Old contextAfter.map121 label is erroneous; target pointer table and actual event16 write identify map145",
+    "legacySaveRead": "Old inert key accepted only with original completed/global flags; explicit current false takes precedence",
+    "sources": [
+      {
+        "offset": 22422,
+        "length": 2,
+        "sha256": "7e7b3b247e1e931e8d22ae17f38f35fc7aaa47f6449f98bce645b892328f690c",
+        "module": 0,
+        "cpuAddress": 55174,
+        "meaning": "Map145 NPC-context RAM pointer"
+      },
+      {
+        "offset": 22374,
+        "length": 2,
+        "sha256": "dde12454138143570a55716b7cdc99c7f811f2d0d24397d182d574a6dbbdfe16",
+        "module": 0,
+        "cpuAddress": 55126,
+        "meaning": "Map121 has a different NPC-context RAM pointer"
+      },
+      {
+        "offset": 381539,
+        "length": 20,
+        "sha256": "1a3068ad165da2e892c47b69e97d7bd5eb6839643fc3dc718f10fa5e9a844758",
+        "module": 11,
+        "cpuAddress": 53843,
+        "meaning": "Actual event16 stage: script20, context117=211/context145=215"
+      }
+    ]
+  }
+}

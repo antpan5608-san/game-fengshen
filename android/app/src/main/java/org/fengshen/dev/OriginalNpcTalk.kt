@@ -116,12 +116,23 @@ object OriginalNpcTalk {
         if(!isHuangRule(rule)||currentDialogue!=rule.firstDialogue||before.flags[HUANG_PENDING_FLAG]!=true||!validHuangPending(before))
             return StoryFollowup.Result(before,null,false,"黄天化对白阶段已变化")
         // Original closes text, writes actor bit2, runs NPC-only script20,
-        // switches contexts117/121, then event16 finishes via global7FE128.
+        // switches contexts117/145, then event16 finishes via global7FE128.
+        // Original 0:D664 map145 -> $7E6; map121 -> $7D0. The old map121
+        // namespace was a provenance interpretation error, not a second scene.
         // No player step, extra reward or Queen completion is inferred here.
         val flags=before.flags+(HUANG_PENDING_FLAG to false)+(HUANG_COMPLETED_FLAG to true)+
             mapOf("rom.npccontext.117.231" to false,"rom.npccontext.117.211" to true,
-                "rom.npccontext.121.215" to true,"rom.global.7fe.128" to true)
+                "rom.npccontext.145.215" to true,"rom.global.7fe.128" to true)
         return StoryFollowup.Result(before.copy(flags=flags),null,true)
+    }
+
+    /** Read-only compatibility for saves written before the corrected RAM/map
+     * mapping. An explicit current false state must never revive the old actor. */
+    fun hasHuangJiamengContext(flags:Map<String,Boolean>):Boolean {
+        val current="rom.npccontext.145.215"
+        if(current in flags)return flags[current]==true
+        return flags["rom.npccontext.121.215"]==true&&flags[HUANG_COMPLETED_FLAG]==true&&
+            flags["rom.global.7fe.128"]==true
     }
 
     private fun teacher163(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {

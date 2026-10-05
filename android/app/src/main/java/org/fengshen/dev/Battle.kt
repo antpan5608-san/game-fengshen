@@ -24,15 +24,32 @@ fun originalBoundTargetDamage(requiredMarker:Int,battleMarker:Int,computed:Int):
     require(requiredMarker in 0..5&&battleMarker in 0..255&&computed in 0..65535)
     return if(requiredMarker!=0&&battleMarker!=requiredMarker)0 else computed
 }
-/** Original special13 dispatcher 9:8954. The marker is local to this battle;
+internal data class OriginalBindingProfile(val itemId:Int,val marker:Int,val originalTargets:Set<Int>,
+    val enabledGroups:Set<Set<Int>>,val itemEvidence:String,val protectionEvidence:String,
+    val targetKey:String,val targetLabel:String)
+/** One scoped registry shared by content validation and command eligibility.
+ * Enabled groups remain narrower than the original effect's full target domain. */
+internal fun originalBindingProfile(itemId:Int):OriginalBindingProfile?=when(itemId){
+    9->OriginalBindingProfile(9,1,(152..155).toSet(),setOf((152..155).toSet()),
+        "game-data/provenance/world-teacher163-binding.json","game-data/provenance/world-island-binding.json",
+        "four-villains-current-battle","四恶人")
+    13->OriginalBindingProfile(13,2,setOf(157,174),setOf(setOf(157)),
+        "game-data/provenance/world-queen117-state.json","game-data/provenance/world-queen117-state.json",
+        "queen-current-battle","女王")
+    18->OriginalBindingProfile(18,5,(158..161).toSet(),setOf(setOf(158),setOf(159,160,161)),
+        "game-data/provenance/world-jiameng-binding.json","game-data/provenance/world-jiameng-binding.json",
+        "four-generals-current-battle","魔家四将")
+    else->null
+}
+internal fun originalProtectionProfile(enemyId:Int):OriginalBindingProfile?=
+    listOf(9,13,18).mapNotNull(::originalBindingProfile).firstOrNull{p->
+        p.enabledGroups.any{enemyId in it}}
+/** Original special9/13/18 dispatcher. The marker is local to this battle;
  * matching a name, owning the item or a past victory never applies the effect. */
 fun originalSpecialBindingMarker(itemId:Int,targetEnemyId:Int,before:Int):Int {
     require(itemId in 0..255&&targetEnemyId in 0..255&&before in 0..255)
-    return when {
-        itemId==9&&targetEnemyId in 152..155->1
-        itemId==13&&targetEnemyId in setOf(157,174)->2
-        else->before
-    }
+    val profile=originalBindingProfile(itemId)?:return before
+    return if(targetEnemyId in profile.originalTargets)profile.marker else before
 }
 data class BattleLoot(val itemId:String,val threshold:Int,val category:String)
 data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThresholds:List<Int>) {
@@ -344,16 +361,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         if(phase!=BattlePhase.TARGET||content.physicalRules==null||(inputHero?.hp?:0)<=0||count!=1||alreadyUsed||
             item.category!="special"||item.maxCount!=1)return false
         val use=item.battleBindingUse?:return false
-        return when(item.id) {
-            "rom.special.9"->item.originalId==9&&use.bindingMarker==1&&
-                use.evidence=="game-data/provenance/world-teacher163-binding.json"&&
-                enemies.size==4&&enemies.map{it.definition.id}.toSet()==setOf(152,153,154,155)&&
-                enemies.all{it.definition.requiredBindingMarker==1}
-            "rom.special.13"->item.originalId==13&&use.bindingMarker==2&&
-                use.evidence=="game-data/provenance/world-queen117-state.json"&&
-                enemies.size==1&&enemies.single().definition.id==157&&enemies.single().definition.requiredBindingMarker==2
-            else->false
-        }
+        val profile=originalBindingProfile(item.originalId)?:return false
+        val ids=enemies.map{it.definition.id}.toSet()
+        return item.id=="rom.special.${profile.itemId}"&&use.bindingMarker==profile.marker&&
+            use.evidence==profile.itemEvidence&&ids in profile.enabledGroups&&ids.size==enemies.size&&
+            enemies.all{it.definition.requiredBindingMarker==profile.marker}
     }
     fun useBinding(count:Int,item:ItemDefinition,alreadyUsed:Boolean,nextByte:()->Int):BattleTurn? {
         if(!bindingAvailable(count,item,alreadyUsed))return null
@@ -441,7 +453,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(command.kind==CommandKind.BINDING){
                     val target=enemies.firstOrNull{it.hp>0}?:continue
                     bindingMarker=originalSpecialBindingMarker(command.bindingOriginalId,target.definition.id,bindingMarker)
-                    steps.add(frame("${command.bindingName}困住${command.bindingTarget} · 数量保留",kind=BattleActionKind.SPECIAL,actorId=player.id))
+                    val feedback=if(command.bindingOriginalId==18)"${command.bindingName} · ${command.bindingTarget}保护标记生效 · 数量保留"
+                        else "${command.bindingName}困住${command.bindingTarget} · 数量保留"
+                    steps.add(frame(feedback,kind=BattleActionKind.SPECIAL,actorId=player.id))
                     continue
                 }
                 if(command.kind==CommandKind.HERB){

@@ -509,16 +509,16 @@ object ContentLoader {
                 item.nightLightUse=WorldFieldProtectionDefinition(use.getString("evidence"))
             }
             o.optJSONObject("battleBindingUse")?.let{use->
-                val queen=item.id=="rom.special.13"
-                require(item.id=="rom.special.${if(queen)13 else 9}"&&item.category=="special"&&item.originalId==if(queen)13 else 9)
+                val profile=requireNotNull(originalBindingProfile(item.originalId))
+                require(item.id=="rom.special.${profile.itemId}"&&item.category=="special")
                 require(item.maxCount==1&&
                     item.buyPrice==null&&item.sellPrice==null&&item.worldUse==null&&item.herbUse==null&&
                     use.getBoolean("reusable")&&use.getBoolean("consumesAction")&&!use.getBoolean("chooseTarget")&&
-                    use.getString("target")==if(queen)"queen-current-battle" else "four-villains-current-battle")
-                require(use.getInt("bindingMarker")==if(queen)2 else 1)
-                require(use.getString("evidence")==if(queen)"game-data/provenance/world-queen117-state.json" else "game-data/provenance/world-teacher163-binding.json")
+                    use.getString("target")==profile.targetKey)
+                require(use.getInt("bindingMarker")==profile.marker)
+                require(use.getString("evidence")==profile.itemEvidence)
                 item.battleBindingUse=BattleBindingUseDefinition(use.getString("evidence")).also{
-                    it.bindingMarker=if(queen)2 else 1;it.targetLabel=if(queen)"女王" else "四恶人"
+                    it.bindingMarker=profile.marker;it.targetLabel=profile.targetLabel
                 }
             }
             item.id to item
@@ -627,13 +627,11 @@ object ContentLoader {
                     e.optJSONObject("loot")?.let{l->BattleLoot(l.getString("itemId"),l.getInt("threshold"),l.getString("category"))
                         .also{require(it.itemId in itemDefinitions&&it.threshold in 0..128&&
                             itemDefinitions.getValue(it.itemId).category==it.category)}}).also{enemy->
-                    if(enemy.id in 152..155){
-                        require(e.getInt("requiredBindingMarker")==1&&
-                            e.getString("bindingEvidence")=="game-data/provenance/world-island-binding.json")
-                        enemy.requiredBindingMarker=1
-                    }else if(enemy.id==157){
-                        require(e.getInt("requiredBindingMarker")==2&&e.getString("bindingEvidence")=="game-data/provenance/world-queen117-state.json")
-                        enemy.requiredBindingMarker=2
+                    val protection=originalProtectionProfile(enemy.id)
+                    if(protection!=null){
+                        require(e.getInt("requiredBindingMarker")==protection.marker&&
+                            e.getString("bindingEvidence")==protection.protectionEvidence)
+                        enemy.requiredBindingMarker=protection.marker
                     }else require(!e.has("requiredBindingMarker")&&!e.has("bindingEvidence"))
                     if(e.has("specialBaseDamage")){
                         require(enemy.behaviorByte in setOf(1,2,4)&&enemy.iceBaseDamage==null&&
