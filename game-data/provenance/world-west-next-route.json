@@ -155,6 +155,28 @@
         "packaged": false,
         "appVerified": false,
         "published": false
+      },
+      "observedNpcContext": {
+        "id": 191,
+        "source": {
+          "offset": 22146,
+          "length": 2,
+          "sha256": "8bc8e3aae346eebdbdce2a6b4a9e5a5f1c154a6c7af899c36ebef05034667588",
+          "module": 0,
+          "cpuAddress": 54898,
+          "meaning": "Original map7 context RAM pointer07d3"
+        },
+        "actorSource": {
+          "offset": 277481,
+          "length": 14,
+          "sha256": "8e5fcddef863cc5679c6586d019e427c907275542524e1f65729fd7f2939acdd",
+          "module": 8,
+          "cpuAddress": 48089,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "observedActionId": 61,
+        "observedMask": 1,
+        "limitation": "Context activation/recruitment full flow not yet implemented; base action0 must not replace observed action61"
       }
     },
     {
@@ -674,5 +696,38 @@
       "Controlled initial scratch-event persists when generic repeat selector skips handler; not a new runtime event.",
       "Not yet enabled by Android content for these four maps."
     ]
+  },
+  "departureEvidence": {
+    "kind": "ACTUAL_DOWN_KEYS_FROM_EXISTING_CONTROLLED_ORIGINAL_ENTRY_SAVES",
+    "sha256": "6b373731ce2ea47b9923544cdf4f1369ff53aedaab8ec98f330a393ae012bb33",
+    "privateSource": "private-derived/world-west-exact-departure-controlled/departures.tsv",
+    "lastOriginalCells": {
+      "8": [
+        3,
+        29
+      ],
+      "9": [
+        30,
+        29
+      ],
+      "10": [
+        19,
+        22
+      ]
+    },
+    "triggerCells": {
+      "8": [
+        3,
+        29
+      ],
+      "9": [
+        30,
+        29
+      ],
+      "10": [
+        19,
+        23
+      ]
+    }
   }
 }

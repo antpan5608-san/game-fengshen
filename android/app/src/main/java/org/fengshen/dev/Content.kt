@@ -35,6 +35,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var moneyTreasure:MoneyTreasureDefinition?=null;internal set
     var stateVariant:NpcStateVariant?=null;internal set
     var hiddenInvestigation:Boolean=false;internal set
+    var talkDisabled:Boolean=false;internal set
 }
 data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String) {
     var sprite:Bitmap?=null;internal set
@@ -126,6 +127,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
             n.removedFlagId=npc.removedFlagId;n.moneyTreasure=npc.moneyTreasure;n.stateVariant=npc.stateVariant
             n.visibleFlagId=npc.visibleFlagId
             n.hiddenInvestigation=npc.hiddenInvestigation
+            n.talkDisabled=npc.talkDisabled
         }else npc
     }
     fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=
@@ -133,7 +135,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
         (npc.removedFlagId?.let{flags[it]!=true}?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true)
     // Original context196 actor130 has FF/FF messages and no talk action.
     // Keep its visible collision without inventing an empty conversation.
-    fun npcInteractive(npc:StoryNpc)=!npc.scriptedActor&&!npc.automaticStoryOnly&&npc.id!="rom.npc.37.yang-bed"
+    fun npcInteractive(npc:StoryNpc)=!npc.scriptedActor&&!npc.automaticStoryOnly&&!npc.talkDisabled&&npc.id!="rom.npc.37.yang-bed"
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
         if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
         val base=scenes[mapId]?:return null
@@ -292,6 +294,10 @@ object ContentLoader {
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
+                npc.talkDisabled=n.optBoolean("talkDisabled",false)
+                if(npc.talkDisabled)require(n.getString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&
+                    npc.id=="rom.npc.10.6"&&npc.mapId==10&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
+                    npc.firstEffects.isEmpty()&&npc.treasure==null)
                 if(npc.hiddenInvestigation){
                     val queen=npc.id=="rom.npc.115.5"&&npc.mapId==115&&npc.x==41&&npc.y==7&&
                         npc.treasure?.flagId=="rom.map.115.flag.2"&&npc.treasure?.itemId=="rom.weapon.23"&&
@@ -302,7 +308,10 @@ object ContentLoader {
                     npc.treasure?.itemId=="rom.medicine.1"&&
                     npc.treasure.categoryGrant==0&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
                     npc.firstEffects.isEmpty()&&npc.openedSprite!=null
-                    require((old||queen)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
+                    val west=n.optString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&
+                        npc.id in listOf("rom.npc.8.2","rom.npc.8.3","rom.npc.9.1","rom.npc.9.2","rom.npc.9.3","rom.npc.10.7","rom.npc.10.8")&&
+                        (npc.treasure!=null||n.has("moneyTreasure"))
+                    require((old||queen||west)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
                 }
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
@@ -346,7 +355,10 @@ object ContentLoader {
                     val dark=npc.id=="rom.npc.74.4"&&npc.mapId==74&&npc.x==40&&npc.y==18&&
                         t.getString("flagId")=="rom.map.74.flag.32"&&t.getInt("amount")==120&&
                         t.getString("evidence")=="game-data/provenance/world-night8-chests.json"
-                    require((island||cave||dark)&&t.getInt("moneyCap")==999999&&npc.openedSprite!=null&&
+                    val village=npc.id=="rom.npc.9.1"&&npc.mapId==9&&npc.x==22&&npc.y==3&&
+                        t.getString("flagId")=="rom.map.9.flag.2"&&t.getInt("amount")==1&&
+                        t.getString("evidence")=="game-data/provenance/world-village-batch-resources.json"&&npc.hiddenInvestigation
+                    require((island||cave||dark||village)&&t.getInt("moneyCap")==999999&&npc.openedSprite!=null&&
                         npc.treasure==null&&npc.firstEffects.isEmpty())
                     npc.moneyTreasure=MoneyTreasureDefinition(t.getString("flagId"),t.getInt("amount"),t.getInt("moneyCap"),t.getString("evidence"))
                 }
@@ -391,6 +403,16 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        53,54->{
+                            val index=npc.id.substringAfterLast('.').toInt()
+                            val expected=when(npc.id){"rom.npc.8.0"->listOf(53,1,2,11);"rom.npc.8.1"->listOf(53,8,5,12);
+                                "rom.npc.9.0"->listOf(54,1,12,4);else->error("Unknown western witness")}
+                            require(index in 0..1&&t.getString("evidence")=="game-data/provenance/world-village-batch-resources.json"&&
+                                rule.actionId==expected[0]&&rule.mapFlagId=="rom.map.${npc.mapId}.flag.${expected[1]}"&&
+                                rule.witnessFlagId=="rom.global.7c9.nonzero"&&rule.itemId.isEmpty()&&
+                                rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.${expected[2]}"&&
+                                rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.${expected[3]}")
+                        }
                         58->require(t.getString("evidence")=="game-data/provenance/world-jiameng-actors.json"&&
                             npc.mapId==37&&npc.id in listOf("rom.npc.37.0","rom.npc.37.1")&&
                             npc.x==4+2*npc.id.substringAfterLast('.').toInt()&&npc.y==4&&rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
@@ -489,7 +511,7 @@ object ContentLoader {
                         t.getString("removedFlagId"),t.getString("completionFlagId"))
                 }else null)
         }}?:emptyList()
-        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.treasure!=null||it.moneyTreasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
+        require(npcs.map{it.id}.toSet().size==npcs.size && npcs.all{(it.talkDisabled||it.treasure!=null||it.moneyTreasure!=null||it.firstDialogue in dialogues) && (it.repeatDialogue==null||it.repeatDialogue in dialogues)})
         require(npcs.all{it.originalTalk?.messageDialogues?.values?.all{id->id in dialogues}!=false})
         require(npcs.all{it.stateVariant?.let{v->v.firstDialogue in dialogues&&v.repeatDialogue in dialogues}!=false})
         data.optJSONArray("mapObjects")?.let{a->for(i in 0 until a.length()){

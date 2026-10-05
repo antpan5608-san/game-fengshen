@@ -35,7 +35,10 @@ object WorldItems {
             "game-data/provenance/world-queen117-state.json"->mapId==115&&
                 mapOf("rom.npc.115.5" to 2,"rom.npc.115.6" to 3)[npcId]==category
             "game-data/provenance/world-village5-hidden.json"->mapId==5&&npcId=="rom.npc.5.5"&&category==0
-            "game-data/provenance/world-village-batch-resources.json"->mapId==6&&npcId=="rom.npc.6.3"&&category==0
+            "game-data/provenance/world-village-batch-resources.json"->mapOf(
+                "rom.npc.6.3" to 0,"rom.npc.8.2" to 0,"rom.npc.8.3" to 0,"rom.npc.9.2" to 0,
+                "rom.npc.9.3" to 1,"rom.npc.10.7" to 3,"rom.npc.10.8" to 2)[npcId]==category&&
+                npcId.startsWith("rom.npc.$mapId.")
             else->false
         }
     }
@@ -59,8 +62,10 @@ object WorldItems {
             treasure.evidence=="game-data/provenance/world-cave87-chests.json"
         val dark=treasure.flagId=="rom.map.74.flag.32"&&treasure.amount==120&&
             treasure.evidence=="game-data/provenance/world-night8-chests.json"
-        if((!island&&!cave&&!dark)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
-        if(snapshot.mapId!=when{island->76;cave->87;else->74})return reject("当前场景不可用")
+        val village=treasure.flagId=="rom.map.9.flag.2"&&treasure.amount==1&&
+            treasure.evidence=="game-data/provenance/world-village-batch-resources.json"
+        if((!island&&!cave&&!dark&&!village)||treasure.moneyCap!=999999)return reject("钱箱规则尚未核验")
+        if(snapshot.mapId!=when{island->76;cave->87;village->9;else->74})return reject("当前场景不可用")
         if(snapshot.flags[treasure.flagId]==true)return reject("已经取过了")
         if(snapshot.money !in 0..treasure.moneyCap)return reject("当前银两超出原版钱箱可核范围，原状态已保留")
         return MoneyResult(snapshot.copy(money=minOf(treasure.moneyCap,snapshot.money+treasure.amount),

@@ -30,6 +30,29 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(runCatching{SaveHistory.parse(JSONObject(encoded).put("schemaVersion",999).toString())}.isFailure)
     }
     /** Real loader and isolated state fixtures, not a normal Jiameng route. */
+    fun testWestVillagesOriginalSharedCallersAndSaveFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in listOf(8,9,10))assertNotNull(c.scenes[mid])
+        assertEquals(21,c.npcs.count{it.mapId in listOf(8,9,10)})
+        assertEquals(7,c.npcs.count{it.mapId in listOf(8,9,10)&&it.hiddenInvestigation})
+        val witness=c.npcs.single{it.id=="rom.npc.8.0"}.originalTalk!!
+        assertEquals(53,witness.actionId);assertEquals("rom.global.7c9.nonzero",witness.witnessFlagId)
+        val boat=c.npcs.single{it.id=="rom.npc.10.6"};assertFalse(c.npcInteractive(boat));assertTrue(boat.talkDisabled)
+        val special=c.itemDefinitions.getValue("rom.special.14")
+        assertEquals("special",special.category);assertEquals(14,special.originalId);assertEquals(1,special.maxCount)
+        assertNull(special.worldUse);assertNull(special.battleBindingUse)
+        for(mid in listOf(8,9,10)){
+            val scene=c.scenes.getValue(mid);val snapshot=SaveSnapshot(c.scene.version,mid,scene.spawnX*16+8,scene.spawnY*16+8,
+                Key.DOWN,listOf(c.initialPlayer),mapOf(HerbUse.ID to 2),mapOf("opening.intro.seen" to true),money=999)
+            assertTrue(snapshot.validate(c));assertEquals(snapshot,SaveSnapshot.parse(snapshot.json().toString()))
+            assertTrue(snapshot.copy(contentVersion="opening-segment-001-c52").validate(c))
+            assertEquals(6,c.serviceBindings.count{it.callerMapId==mid})
+        }
+        val returned=c.exits.single{it.fromMapId==9&&it.toMapId==16}
+        assertEquals(40 to 81,returned.spawnX to returned.spawnY);assertTrue(returned.preserveArrivalDirection)
+    }
+
+    /** Real loader and isolated state fixtures, not a normal Jiameng route. */
     fun testJiamengOriginalMapsActorsAndBattleDefinitionsFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val rules=c.battle!!
         for(mid in listOf(145,146,147,148,37))assertNotNull(c.scenes[mid])
