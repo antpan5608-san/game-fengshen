@@ -931,3 +931,9 @@ WORLD-FULL-01总体仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。既有c
 当前新生产发布已完成；不因纯记录/skill另发APK，不修改Language，不reset/clean/清档或放宽签名/reviewer。旧现场与失败追溯继续docs/history/world-full01-runtime-checkpoints.md。
 
 可靠核心回流检查点：work/world-island/5e94b68f51a7c30de40443a4751af8d3de9d2d24，原c50内容pin/配方不变，仪器编译14秒PASS；这不是全56图Android正常路线通过或新发布。
+
+## 佳梦关独立开发触发与胜后接入（2026-10-05 06:16 UTC）
+
+开发线work/world-jiameng-next，冻结地府候选不改。共享StoryBattle增加受证context、附加入口集与现存角色胜后proposal，constructor ABI保持；NPC variant共用相同context/图形用于绘制交谈碰撞，Huang旧标签兼容只读。原960触发表逐值对照五个真实格，显式false不从旧flag复活。三将胜后仅已有杨戬status OR64，无角色时不生成模板/剧情门槛；普通奖励仍由原settle一次，状态提交前校验。
+
+实际bash gradlew :app:testDebugUnitTest（JiamengActivationTest/JiamengBindingTest/StoryCharacterChangeTest/SceneStoryTest/StoryEntryTest/StoryFollowupTest/QueenHuangTest/PartyBattleTest）及 :app:compileDebugAndroidTestKotlin --offline PASS，共51方法/8 suites，无失败/跳过。首轮误列不存在StoryBattleTest过滤项未产生该suite；统计按真实XML修正，未把过滤名算测试。新fields的scoped loader已编译，地图145..148/37与Boss/新NPC定义尚未打包，APP_VERIFIED NOT_RUN/PUBLISHED NO，不能称新路线已可玩。
