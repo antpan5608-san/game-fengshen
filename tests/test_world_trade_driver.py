@@ -20,7 +20,7 @@ class ServiceBudgetTest(unittest.TestCase):
   self.assertEqual((80,40),(medicine['buyPrice'],medicine['sellPrice']))
   self.assertEqual(8,next(i for i in p['inns']if i['id']=='rom.inn.1')['price'])
   source=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
-  driver=source.split('private fun normalWorldBatchContinuation(west:Boolean)',1)[1].split('fun testNormalWorldNorthPalaceAndPearl',1)[0]
+  driver=source.split('private fun normalWorldBatchContinuation(west:Boolean,',1)[1].split('fun testNormalWorldNorthPalaceAndPearl',1)[0]
   self.assertIn('return pills+herbs+serviceBudget',driver)
   self.assertIn('afterArmor+medicine.buyPrice!!',driver)
   self.assertIn('Normal supply earnings exhausted',driver.replace('Bounded normal supply earnings exhausted','Normal supply earnings exhausted'))
