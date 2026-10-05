@@ -29,6 +29,33 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(runCatching{SaveHistory.parse("{invalid")}.isFailure)
         assertTrue(runCatching{SaveHistory.parse(JSONObject(encoded).put("schemaVersion",999).toString())}.isFailure)
     }
+    /** CONTROLLED actual loader/caller codec; not a normal western voyage. */
+    fun testWestHouseCallersOriginalWitnessAndFullSnapshotFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        for(mid in listOf(41,42)){
+            val scene=c.scenes.getValue(mid)
+            val entry=c.exits.single{it.fromMapId==10&&it.toMapId==mid}
+            val back=c.exits.single{it.fromMapId==mid&&it.returnToCaller}
+            assertTrue(entry.captureCaller);assertEquals(10,back.toMapId)
+            assertEquals(entry.spawnX to entry.spawnY,back.triggerX to back.triggerY)
+            val caller=InteriorContext(10,entry.triggerX,entry.triggerY)
+            val before=SaveSnapshot(c.scene.version,mid,scene.spawnX*16+8,scene.spawnY*16+8,Key.UP,
+                listOf(c.initialPlayer),mapOf("rom.special.14" to 1,HerbUse.ID to 2),
+                mapOf("opening.intro.seen" to true),money=987,encounterSteps=23,interiorContext=caller)
+            assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+            assertFalse(before.copy(interiorContext=null).validate(c))
+            assertFalse(before.copy(interiorContext=InteriorContext(10,19,23)).validate(c))
+            assertTrue(before.copy(contentVersion="opening-segment-001-c53").validate(c))
+            val rule=c.npcs.single{it.id=="rom.npc.$mid.0"}.originalTalk!!
+            val result=OriginalNpcTalk.begin(before,rule)
+            assertTrue(result.applied);assertEquals(before.inventory,result.snapshot.inventory)
+            assertEquals(before.characters,result.snapshot.characters);assertEquals(before.money,result.snapshot.money)
+            assertEquals(if(mid==41)rule.repeatDialogue else rule.firstDialogue,result.nextDialogue)
+        }
+        assertEquals(2,c.npcs.count{it.mapId==42&&it.hiddenInvestigation})
+        assertFalse(c.npcs.filter{it.mapId==42&&it.hiddenInvestigation}.any{c.npcInteractive(it)})
+    }
+
     /** Real loader and isolated state fixtures, not a normal Jiameng route. */
     fun testWestVillagesOriginalSharedCallersAndSaveFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

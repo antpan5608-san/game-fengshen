@@ -1,0 +1,1694 @@
+{
+  "bindings": [
+    {
+      "callerMapId": 10,
+      "collisionClass": 27,
+      "houseIndex": 1,
+      "runtimeEvidence": {
+        "entrySha256": "6e7e26c2151f0c9b82a1f818016d2961d04d31c9e3be0977c7058e38b8c137e6",
+        "kind": "CONTROLLED_POSITION_REAL_ORIGINAL_ENTRY_AND_RETURN_KEYS",
+        "path": "private-derived/world-west-houses-controlled/timeline.tsv",
+        "returnSha256": "20e13b773e9147448e6c7f032ace8063cadf5367a94b3a0cb11b95ff61bbc55e",
+        "timelineSha256": "96f3ba289d9ac96de6f9b6bb3817d096625053b40a734328ca2cc3324a28e4e5"
+      },
+      "spawn": [
+        5,
+        12
+      ],
+      "tableSource": {
+        "cpuAddress": 53926,
+        "length": 1,
+        "meaning": "Original caller10 house target table",
+        "module": 0,
+        "offset": 21174,
+        "sha256": "ba5ec51d07a4ac0e951608704431d59a02b21a4e951acc10505a8dc407c501ee"
+      },
+      "toMapId": 41,
+      "trigger": [
+        25,
+        7
+      ]
+    },
+    {
+      "callerMapId": 10,
+      "collisionClass": 26,
+      "houseIndex": 0,
+      "runtimeEvidence": {
+        "entrySha256": "7d6c3e98daa3d6e67544780f436251c1e8d19eab196ab79cb029612c63da7f4e",
+        "kind": "CONTROLLED_POSITION_REAL_ORIGINAL_ENTRY_AND_RETURN_KEYS",
+        "path": "private-derived/world-west-houses-controlled/timeline.tsv",
+        "returnSha256": "9b311e686036c391234b265b86d68dc38bb609538cc4eec186880330be8b1961",
+        "timelineSha256": "96f3ba289d9ac96de6f9b6bb3817d096625053b40a734328ca2cc3324a28e4e5"
+      },
+      "spawn": [
+        7,
+        12
+      ],
+      "tableSource": {
+        "cpuAddress": 53925,
+        "length": 1,
+        "meaning": "Original caller10 house target table",
+        "module": 0,
+        "offset": 21173,
+        "sha256": "684888c0ebb17f374298b65ee2807526c066094c701bcc7ebbe1c1095f494fc1"
+      },
+      "toMapId": 42,
+      "trigger": [
+        13,
+        4
+      ]
+    }
+  ],
+  "cpu": [
+    {
+      "caseCount": 96,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-house-entry-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-houses.py",
+      "probeSha256": "bfb8bd5041fd8bc5abe32a41decaa0d7344b46405d129dac29d5b2a00c9795e4",
+      "sha256": "19e600b74ac7c9360dd5d747c5f2ecd361978c621901114a8a131fe605058f24"
+    },
+    {
+      "caseCount": 64,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-house-terrain-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-houses.py",
+      "probeSha256": "bfb8bd5041fd8bc5abe32a41decaa0d7344b46405d129dac29d5b2a00c9795e4",
+      "sha256": "f6da9e06b3f05a25ef638b723e4ab0ea47003164e9497bab398e4d8a66e066ec"
+    },
+    {
+      "caseCount": 2048,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-house-talk-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-houses.py",
+      "probeSha256": "bfb8bd5041fd8bc5abe32a41decaa0d7344b46405d129dac29d5b2a00c9795e4",
+      "sha256": "8bce06f408f382dd4a6f6ad816ae1e4510f638d7cbf4972278b3d165472209ca"
+    },
+    {
+      "caseCount": 22,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-west-house-pickups-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-west-house-pickups.py",
+      "probeSha256": "695fd94fc1054e74d2218f0c40ff46d7ea26ff6c461d8eefded4553e337e8732",
+      "sha256": "e119abbadb77bbb2ea52613c2fe0fa00c1a8a6288449ae556fd39eccf7634f45"
+    }
+  ],
+  "kind": "TARGET_ROM_AND_CONTROLLED_CPU_MENU_KEYS_NOT_NORMAL_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rooms": [
+    {
+      "dialogues": [
+        {
+          "id": "rom.dialogue.51.3",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35528,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101080,
+                "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+              },
+              {
+                "cpuAddress": 36588,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 102140,
+                "sha256": "c8ce8236be34e9d7b2aa8deb314285a92332f00759bc64c2b870baaeac1be68c"
+              }
+            ],
+            "record": {
+              "cpuAddress": 44524,
+              "length": 28,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 110076,
+              "sha256": "096c69402dc90d443b66b08b6d9a573fea110d0763bed52a87d489ae731782d3"
+            },
+            "remainingUnknown": [
+              "Normal Android rendering and full event progression"
+            ]
+          },
+          "text": "『我知道你們會來找我，可是你們要先幫我找一支神木槳。』"
+        },
+        {
+          "id": "rom.dialogue.51.4",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35528,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101080,
+                "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+              },
+              {
+                "cpuAddress": 36590,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 102142,
+                "sha256": "5b9ec0373adecead630c31281761ac44683677fd0e21f46085c6df59bff78877"
+              }
+            ],
+            "record": {
+              "cpuAddress": 44552,
+              "length": 18,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 110104,
+              "sha256": "cd777a7049b73367958931f3c3ce7127af99a381a5a15ae67bbb21c4d2c61716"
+            },
+            "remainingUnknown": [
+              "Normal Android rendering and full event progression"
+            ]
+          },
+          "text": "『把槳拿給船家，這樣可達香樹居！』"
+        }
+      ],
+      "font": {
+        "charset": {
+          "10": "達",
+          "11": "樹",
+          "12": "老",
+          "13": "根",
+          "133": "會",
+          "134": "先",
+          "135": "支",
+          "136": "給",
+          "137": "樣",
+          "138": "香",
+          "139": "居",
+          "14": "無",
+          "140": "舊",
+          "141": "本",
+          "142": "法",
+          "143": "航",
+          "144": "它",
+          "145": "路",
+          "146": "心",
+          "147": "吧",
+          "15": "遠",
+          "16": "啊",
+          "166": "你",
+          "167": "神",
+          "168": "把",
+          "17": "裝",
+          "173": "上",
+          "175": "知",
+          "176": "來",
+          "177": "們",
+          "179": "這",
+          "18": "小",
+          "180": "是",
+          "19": "去",
+          "39": "找",
+          "40": "木",
+          "41": "船",
+          "49": "可",
+          "5": "道",
+          "50": "槳",
+          "53": "一",
+          "54": "我",
+          "6": "要",
+          "68": "　",
+          "7": "幫",
+          "8": "拿",
+          "9": "家"
+        },
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "glyphs": [
+          {
+            "character": "道",
+            "code": 5,
+            "pixelsSha256": "4e2bf73d3d7ed4460e1fa0144da586dcd3d5fa820ac3293aa1333b4033d75068"
+          },
+          {
+            "character": "要",
+            "code": 6,
+            "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+          },
+          {
+            "character": "幫",
+            "code": 7,
+            "pixelsSha256": "7ecf7c040a9c5721552b8c6ee36f0d55b2fdcd2f6a162dfaa940f51895693808"
+          },
+          {
+            "character": "拿",
+            "code": 8,
+            "pixelsSha256": "ed23ce773e16991d12189155a23fdfba05b6b5f699b943a89ebc5460c62309fd"
+          },
+          {
+            "character": "家",
+            "code": 9,
+            "pixelsSha256": "9cdf0f17a57a8d19c3503d868bdd649575813633d44bd97401df0dd00f17b425"
+          },
+          {
+            "character": "達",
+            "code": 10,
+            "pixelsSha256": "5038058e3c08883cf793d1d46de9ad11a5b1dbbff905a93941fa2056a362df81"
+          },
+          {
+            "character": "樹",
+            "code": 11,
+            "pixelsSha256": "353f04f4a84eef7ebd6b28e021e317c76739a63dc0245824b7130bd6ce73f8d4"
+          },
+          {
+            "character": "老",
+            "code": 12,
+            "pixelsSha256": "52619d26e0ad54bb0787724fe2fdf5088bfe44bbc1b46ced5761bffff80c8990"
+          },
+          {
+            "character": "根",
+            "code": 13,
+            "pixelsSha256": "bb54655acbcf6d0722577c28eecc66ea467fc22004d8bcf19a172a4c4b4968ca"
+          },
+          {
+            "character": "無",
+            "code": 14,
+            "pixelsSha256": "ceeb98b47f68d60f349ef2a90acee1f7dbdf7969373d85c9b234faaa25c044ad"
+          },
+          {
+            "character": "遠",
+            "code": 15,
+            "pixelsSha256": "ff9330656df97b88b4235093deec7e46332f7c2f2ef02f17f0dae29e598e9144"
+          },
+          {
+            "character": "啊",
+            "code": 16,
+            "pixelsSha256": "c6bb6d4495525f83b19d56083d24ce08317b10a5e050f732e15b7fd76f3d865a"
+          },
+          {
+            "character": "裝",
+            "code": 17,
+            "pixelsSha256": "211fe23ea3e02c74f57d2ebc4ad3fd10937135c12d314944422a90e8daca4cca"
+          },
+          {
+            "character": "小",
+            "code": 18,
+            "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856"
+          },
+          {
+            "character": "去",
+            "code": 19,
+            "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+          },
+          {
+            "character": "找",
+            "code": 39,
+            "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+          },
+          {
+            "character": "木",
+            "code": 40,
+            "pixelsSha256": "6e761c6b75bbfe19cc08bc2dd083253c999d0a67feb5dfeea741b5787e8d9beb"
+          },
+          {
+            "character": "船",
+            "code": 41,
+            "pixelsSha256": "d52e8e869792560a592c598ebb5c663278cc831d7af75567556447dd2fa09efc"
+          },
+          {
+            "character": "可",
+            "code": 49,
+            "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8"
+          },
+          {
+            "character": "槳",
+            "code": 50,
+            "pixelsSha256": "ed21e3cbeb7aaa630098bd0ad1b4c50b678170dd6137f6779f72950526028ad7"
+          },
+          {
+            "character": "一",
+            "code": 53,
+            "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+          },
+          {
+            "character": "我",
+            "code": 54,
+            "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+          },
+          {
+            "character": "會",
+            "code": 133,
+            "pixelsSha256": "db4fe0555411a09f4015deb42cf5ea949030c502c173d162fad20ea0f3740067"
+          },
+          {
+            "character": "先",
+            "code": 134,
+            "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+          },
+          {
+            "character": "支",
+            "code": 135,
+            "pixelsSha256": "4e6bcc65c0d66852a9a42e1109f76fc709d69c38d3758c38c84bd31d6b0d539e"
+          },
+          {
+            "character": "給",
+            "code": 136,
+            "pixelsSha256": "d7e4e993ec3a69097feb52126cc61edce8947a9b068560d849fb8864955c29fe"
+          },
+          {
+            "character": "樣",
+            "code": 137,
+            "pixelsSha256": "83e053862cb7fe03b56e56e4c02c805487d9ab9faacadec6b0d41030e3bdf178"
+          },
+          {
+            "character": "香",
+            "code": 138,
+            "pixelsSha256": "992c82c4a7dd3058ccc8ca6b3603deef86cafe58c3be98cde06e22e6eb2ca3a3"
+          },
+          {
+            "character": "居",
+            "code": 139,
+            "pixelsSha256": "55b99e30d5c67b9e9bc707b3f896daf08bfbf9a124119af9c9c0062adc663e46"
+          },
+          {
+            "character": "舊",
+            "code": 140,
+            "pixelsSha256": "9f870e5cc8c258bb5b456f4bbe27a5319b16ab6bae5935ad7acfbcf2489e8e16"
+          },
+          {
+            "character": "本",
+            "code": 141,
+            "pixelsSha256": "c209bdc09f08affc798f673bed9f66ac6182268212ba1259365f97d0b4b0db17"
+          },
+          {
+            "character": "法",
+            "code": 142,
+            "pixelsSha256": "f36c35ac18e60451f3e40225fd745d78909da8a0ca396f4cbdf32422f01fc81e"
+          },
+          {
+            "character": "航",
+            "code": 143,
+            "pixelsSha256": "57550c0ce124839541adcd387f93a62ac1ed92b4598edf48d502fe387b977ac2"
+          },
+          {
+            "character": "它",
+            "code": 144,
+            "pixelsSha256": "39e8923a7fe57e1d48d0d619115d3e0528fd430e68992418ed13725989f8dec1"
+          },
+          {
+            "character": "路",
+            "code": 145,
+            "pixelsSha256": "36ee05708d25a506e046553f2280c82f38ea3005a8592fdc79815d12913ff8e9"
+          },
+          {
+            "character": "心",
+            "code": 146,
+            "pixelsSha256": "6aafd097a47f1f90930d3222a17a33d4474c9f1f6c34037fd43e745b19807beb"
+          },
+          {
+            "character": "吧",
+            "code": 147,
+            "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+          },
+          {
+            "character": "你",
+            "code": 166,
+            "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+          },
+          {
+            "character": "神",
+            "code": 167,
+            "pixelsSha256": "f62036d25ccf7cdcaaeef392f191afa52c8ddcad18b4310a1298990af11c10c7"
+          },
+          {
+            "character": "把",
+            "code": 168,
+            "pixelsSha256": "f05d1043c8abde60bd1b333a980f148e0c952a7f33e0fbafbdcc1e02c78a4670"
+          },
+          {
+            "character": "上",
+            "code": 173,
+            "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+          },
+          {
+            "character": "知",
+            "code": 175,
+            "pixelsSha256": "b22e5ddea2de86cea9f287b03c464039adc6156e362b91c2d1b041c5cf7af352"
+          },
+          {
+            "character": "來",
+            "code": 176,
+            "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+          },
+          {
+            "character": "們",
+            "code": 177,
+            "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+          },
+          {
+            "character": "這",
+            "code": 179,
+            "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+          },
+          {
+            "character": "是",
+            "code": 180,
+            "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+          }
+        ],
+        "mapperCapture": {
+          "kind": "ACTUAL_ORIGINAL_MAPPER_WRITES_IN_CONTROLLED_DIALOGUE",
+          "path": "private-derived/world-west-house-fonts-controlled/registers.tsv",
+          "sha256": "39d678668a937bc0a38673666c481c98a39efb2eb48324f6f990d7dd755aa98e"
+        },
+        "sources": [
+          {
+            "length": 2048,
+            "meaning": "Actual original mapper dialogue font bank",
+            "offset": 634896,
+            "sha256": "59d1f40cf1a41dfb3fb0cba139a47c22a2ff964b1d4fff291a733da063c94c98"
+          },
+          {
+            "length": 2048,
+            "meaning": "Actual original mapper dialogue font bank",
+            "offset": 636944,
+            "sha256": "c44613cb697912d3fad55ae7ed94249f7cfe32f3a0b7378b59bbe5afcee9f6d5"
+          }
+        ]
+      },
+      "graphics": {
+        "npc-156-house41-0.png": {
+          "animationSource": {
+            "cpuAddress": 37028,
+            "length": 3,
+            "meaning": "Actual same-entity record-linked initial transport",
+            "module": 0,
+            "offset": 4276,
+            "sha256": "e24dca2288e8f37fb930b6f83d9538813adfb69015a73eda93d588acbd456a93"
+          },
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "frameRecordSource": {
+            "cpuAddress": 48815,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 278207,
+            "sha256": "456b9b8a8b74b8ad2b7ddeb990d703c9797e542eb01803c9aab8c50226cb4df4"
+          },
+          "frameSource": {
+            "cpuAddress": 37171,
+            "length": 5,
+            "meaning": "Original palette and four CHR tiles",
+            "module": 0,
+            "offset": 4419,
+            "sha256": "f72c408a5e9889386cb3a9c4c71ba30c74cd3a01eb35f1154b4096a705a56275"
+          },
+          "height": 16,
+          "normalPlayEvidence": false,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "patternBankSources": [
+            {
+              "length": 1024,
+              "offset": 868368,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "length": 1024,
+              "offset": 869392,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "length": 1024,
+              "offset": 866320,
+              "sha256": "c1196225816e270b3a1130192a1c777a033cb248f7e94c7fd6817f0fc51b961f"
+            },
+            {
+              "length": 1024,
+              "offset": 867344,
+              "sha256": "f3dad52bc6f74c4fdc8adb5df73a408f384b0c155b5c019f868038bf188e2f2f"
+            }
+          ],
+          "rgbaSha256": "777ac7ef3d6abd8da559e8f48b619c35fb4d35af227b653c5c55e1c5ab35a2a6",
+          "tiles": [
+            {
+              "length": 16,
+              "offset": 866320,
+              "sha256": "127c22bae2a9bcd00ce1e8bcd7b73ff82b8cfb5baf362d79beb09f0bcbfe411c",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 866336,
+              "sha256": "f9c8b4b5568158dd26c51cea7ff0652eaa1776404b80c02e7e1b7b3d17554be4",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 866576,
+              "sha256": "050228331085c59555565395774cc01507993b2cebbead871f5fa2509045879e",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 866592,
+              "sha256": "ab483e0811b57460145fa921e4ab3e83a020247f5ea91facd124fee41e887469",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        }
+      },
+      "map": {
+        "gridSha256": "06f97777a21adb6c36620da05ca13e43f80fc1bf73105ea66cd4f35b0afc7c0b",
+        "mapId": 41,
+        "palette": [
+          14,
+          7,
+          23,
+          55,
+          25,
+          7,
+          38,
+          22,
+          25,
+          33,
+          23,
+          22,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "tilesetId": 2,
+        "walkableClasses": [
+          0,
+          2,
+          5
+        ]
+      },
+      "mapId": 41,
+      "normalAndroid": "NOT_RUN",
+      "npcs": [
+        {
+          "cell": [
+            5,
+            6
+          ],
+          "firstDialogue": "rom.dialogue.51.3",
+          "firstEffects": [],
+          "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+          "id": "rom.npc.41.0",
+          "mapId": 41,
+          "originalTalk": {
+            "actionId": 55,
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "itemId": "rom.special.14",
+            "mapFlagId": "rom.map.41.flag.1",
+            "witnessFlagId": "rom.inventory.special.14.used"
+          },
+          "repeatDialogue": "rom.dialogue.51.4",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "record": {
+              "cpuAddress": 48815,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 278207,
+              "sha256": "456b9b8a8b74b8ad2b7ddeb990d703c9797e542eb01803c9aab8c50226cb4df4"
+            },
+            "remainingUnknown": [
+              "Dynamic actor pose and Android normal route"
+            ]
+          },
+          "sprite": "npc-156-house41-0.png",
+          "spriteId": 156
+        }
+      ]
+    },
+    {
+      "dialogues": [
+        {
+          "id": "rom.dialogue.52.5",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35530,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101082,
+                "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+              },
+              {
+                "cpuAddress": 36592,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 102144,
+                "sha256": "2a3deee7079f54b8839326a2ec46526e7089b92cb1b90572e87322fec125d63e"
+              }
+            ],
+            "record": {
+              "cpuAddress": 44570,
+              "length": 15,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 110122,
+              "sha256": "1ba5906f19934fc11224334775a4eecef7d898a6e45af6983e831233a01f24b2"
+            },
+            "remainingUnknown": [
+              "Normal Android rendering and full event progression"
+            ]
+          },
+          "text": "『這船老舊，根本無法遠航。』"
+        },
+        {
+          "id": "rom.dialogue.52.6",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35530,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101082,
+                "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+              },
+              {
+                "cpuAddress": 36594,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 102146,
+                "sha256": "a0d9c90ed34d28c571974661f6bf92a4339b576ec2ca10c96b57dfb5c2498ba9"
+              }
+            ],
+            "record": {
+              "cpuAddress": 44585,
+              "length": 17,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 110137,
+              "sha256": "bedc6570bb085e48a9a5cd0c1c56e84499569d5c4384e857855d9daa18fa681a"
+            },
+            "remainingUnknown": [
+              "Normal Android rendering and full event progression"
+            ]
+          },
+          "text": "『啊！是神木槳，我來把它裝上！』"
+        },
+        {
+          "id": "rom.dialogue.52.7",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35530,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101082,
+                "sha256": "4395f01948b49adcf5343730b3611466595316d5a388e1a415e6fbf0e4d0ccf8"
+              },
+              {
+                "cpuAddress": 36596,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 102148,
+                "sha256": "e54d5fb04e90f1f7b4397753c1e74530f8cc6f927815e1a93aafa3f6593a138e"
+              }
+            ],
+            "record": {
+              "cpuAddress": 44602,
+              "length": 11,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 110154,
+              "sha256": "330059faa13bdbed433086aba67d3e7746ac7b4a7c7f1385ce79efdbb752e4f5"
+            },
+            "remainingUnknown": [
+              "Normal Android rendering and full event progression"
+            ]
+          },
+          "text": "『一路小心，去吧！』"
+        }
+      ],
+      "font": {
+        "charset": {
+          "10": "達",
+          "11": "樹",
+          "12": "老",
+          "13": "根",
+          "133": "會",
+          "134": "先",
+          "135": "支",
+          "136": "給",
+          "137": "樣",
+          "138": "香",
+          "139": "居",
+          "14": "無",
+          "140": "舊",
+          "141": "本",
+          "142": "法",
+          "143": "航",
+          "144": "它",
+          "145": "路",
+          "146": "心",
+          "147": "吧",
+          "15": "遠",
+          "16": "啊",
+          "166": "你",
+          "167": "神",
+          "168": "把",
+          "17": "裝",
+          "173": "上",
+          "175": "知",
+          "176": "來",
+          "177": "們",
+          "179": "這",
+          "18": "小",
+          "180": "是",
+          "19": "去",
+          "39": "找",
+          "40": "木",
+          "41": "船",
+          "49": "可",
+          "5": "道",
+          "50": "槳",
+          "53": "一",
+          "54": "我",
+          "6": "要",
+          "68": "　",
+          "7": "幫",
+          "8": "拿",
+          "9": "家"
+        },
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "glyphs": [
+          {
+            "character": "道",
+            "code": 5,
+            "pixelsSha256": "4e2bf73d3d7ed4460e1fa0144da586dcd3d5fa820ac3293aa1333b4033d75068"
+          },
+          {
+            "character": "要",
+            "code": 6,
+            "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+          },
+          {
+            "character": "幫",
+            "code": 7,
+            "pixelsSha256": "7ecf7c040a9c5721552b8c6ee36f0d55b2fdcd2f6a162dfaa940f51895693808"
+          },
+          {
+            "character": "拿",
+            "code": 8,
+            "pixelsSha256": "ed23ce773e16991d12189155a23fdfba05b6b5f699b943a89ebc5460c62309fd"
+          },
+          {
+            "character": "家",
+            "code": 9,
+            "pixelsSha256": "9cdf0f17a57a8d19c3503d868bdd649575813633d44bd97401df0dd00f17b425"
+          },
+          {
+            "character": "達",
+            "code": 10,
+            "pixelsSha256": "5038058e3c08883cf793d1d46de9ad11a5b1dbbff905a93941fa2056a362df81"
+          },
+          {
+            "character": "樹",
+            "code": 11,
+            "pixelsSha256": "353f04f4a84eef7ebd6b28e021e317c76739a63dc0245824b7130bd6ce73f8d4"
+          },
+          {
+            "character": "老",
+            "code": 12,
+            "pixelsSha256": "52619d26e0ad54bb0787724fe2fdf5088bfe44bbc1b46ced5761bffff80c8990"
+          },
+          {
+            "character": "根",
+            "code": 13,
+            "pixelsSha256": "bb54655acbcf6d0722577c28eecc66ea467fc22004d8bcf19a172a4c4b4968ca"
+          },
+          {
+            "character": "無",
+            "code": 14,
+            "pixelsSha256": "ceeb98b47f68d60f349ef2a90acee1f7dbdf7969373d85c9b234faaa25c044ad"
+          },
+          {
+            "character": "遠",
+            "code": 15,
+            "pixelsSha256": "ff9330656df97b88b4235093deec7e46332f7c2f2ef02f17f0dae29e598e9144"
+          },
+          {
+            "character": "啊",
+            "code": 16,
+            "pixelsSha256": "c6bb6d4495525f83b19d56083d24ce08317b10a5e050f732e15b7fd76f3d865a"
+          },
+          {
+            "character": "裝",
+            "code": 17,
+            "pixelsSha256": "211fe23ea3e02c74f57d2ebc4ad3fd10937135c12d314944422a90e8daca4cca"
+          },
+          {
+            "character": "小",
+            "code": 18,
+            "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856"
+          },
+          {
+            "character": "去",
+            "code": 19,
+            "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+          },
+          {
+            "character": "找",
+            "code": 39,
+            "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+          },
+          {
+            "character": "木",
+            "code": 40,
+            "pixelsSha256": "6e761c6b75bbfe19cc08bc2dd083253c999d0a67feb5dfeea741b5787e8d9beb"
+          },
+          {
+            "character": "船",
+            "code": 41,
+            "pixelsSha256": "d52e8e869792560a592c598ebb5c663278cc831d7af75567556447dd2fa09efc"
+          },
+          {
+            "character": "可",
+            "code": 49,
+            "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8"
+          },
+          {
+            "character": "槳",
+            "code": 50,
+            "pixelsSha256": "ed21e3cbeb7aaa630098bd0ad1b4c50b678170dd6137f6779f72950526028ad7"
+          },
+          {
+            "character": "一",
+            "code": 53,
+            "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+          },
+          {
+            "character": "我",
+            "code": 54,
+            "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+          },
+          {
+            "character": "會",
+            "code": 133,
+            "pixelsSha256": "db4fe0555411a09f4015deb42cf5ea949030c502c173d162fad20ea0f3740067"
+          },
+          {
+            "character": "先",
+            "code": 134,
+            "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+          },
+          {
+            "character": "支",
+            "code": 135,
+            "pixelsSha256": "4e6bcc65c0d66852a9a42e1109f76fc709d69c38d3758c38c84bd31d6b0d539e"
+          },
+          {
+            "character": "給",
+            "code": 136,
+            "pixelsSha256": "d7e4e993ec3a69097feb52126cc61edce8947a9b068560d849fb8864955c29fe"
+          },
+          {
+            "character": "樣",
+            "code": 137,
+            "pixelsSha256": "83e053862cb7fe03b56e56e4c02c805487d9ab9faacadec6b0d41030e3bdf178"
+          },
+          {
+            "character": "香",
+            "code": 138,
+            "pixelsSha256": "992c82c4a7dd3058ccc8ca6b3603deef86cafe58c3be98cde06e22e6eb2ca3a3"
+          },
+          {
+            "character": "居",
+            "code": 139,
+            "pixelsSha256": "55b99e30d5c67b9e9bc707b3f896daf08bfbf9a124119af9c9c0062adc663e46"
+          },
+          {
+            "character": "舊",
+            "code": 140,
+            "pixelsSha256": "9f870e5cc8c258bb5b456f4bbe27a5319b16ab6bae5935ad7acfbcf2489e8e16"
+          },
+          {
+            "character": "本",
+            "code": 141,
+            "pixelsSha256": "c209bdc09f08affc798f673bed9f66ac6182268212ba1259365f97d0b4b0db17"
+          },
+          {
+            "character": "法",
+            "code": 142,
+            "pixelsSha256": "f36c35ac18e60451f3e40225fd745d78909da8a0ca396f4cbdf32422f01fc81e"
+          },
+          {
+            "character": "航",
+            "code": 143,
+            "pixelsSha256": "57550c0ce124839541adcd387f93a62ac1ed92b4598edf48d502fe387b977ac2"
+          },
+          {
+            "character": "它",
+            "code": 144,
+            "pixelsSha256": "39e8923a7fe57e1d48d0d619115d3e0528fd430e68992418ed13725989f8dec1"
+          },
+          {
+            "character": "路",
+            "code": 145,
+            "pixelsSha256": "36ee05708d25a506e046553f2280c82f38ea3005a8592fdc79815d12913ff8e9"
+          },
+          {
+            "character": "心",
+            "code": 146,
+            "pixelsSha256": "6aafd097a47f1f90930d3222a17a33d4474c9f1f6c34037fd43e745b19807beb"
+          },
+          {
+            "character": "吧",
+            "code": 147,
+            "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2"
+          },
+          {
+            "character": "你",
+            "code": 166,
+            "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+          },
+          {
+            "character": "神",
+            "code": 167,
+            "pixelsSha256": "f62036d25ccf7cdcaaeef392f191afa52c8ddcad18b4310a1298990af11c10c7"
+          },
+          {
+            "character": "把",
+            "code": 168,
+            "pixelsSha256": "f05d1043c8abde60bd1b333a980f148e0c952a7f33e0fbafbdcc1e02c78a4670"
+          },
+          {
+            "character": "上",
+            "code": 173,
+            "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+          },
+          {
+            "character": "知",
+            "code": 175,
+            "pixelsSha256": "b22e5ddea2de86cea9f287b03c464039adc6156e362b91c2d1b041c5cf7af352"
+          },
+          {
+            "character": "來",
+            "code": 176,
+            "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+          },
+          {
+            "character": "們",
+            "code": 177,
+            "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+          },
+          {
+            "character": "這",
+            "code": 179,
+            "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+          },
+          {
+            "character": "是",
+            "code": 180,
+            "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+          }
+        ],
+        "mapperCapture": {
+          "kind": "ACTUAL_ORIGINAL_MAPPER_WRITES_IN_CONTROLLED_DIALOGUE",
+          "path": "private-derived/world-west-house-fonts-controlled/registers.tsv",
+          "sha256": "39d678668a937bc0a38673666c481c98a39efb2eb48324f6f990d7dd755aa98e"
+        },
+        "sources": [
+          {
+            "length": 2048,
+            "meaning": "Actual original mapper dialogue font bank",
+            "offset": 634896,
+            "sha256": "59d1f40cf1a41dfb3fb0cba139a47c22a2ff964b1d4fff291a733da063c94c98"
+          },
+          {
+            "length": 2048,
+            "meaning": "Actual original mapper dialogue font bank",
+            "offset": 636944,
+            "sha256": "c44613cb697912d3fad55ae7ed94249f7cfe32f3a0b7378b59bbe5afcee9f6d5"
+          }
+        ]
+      },
+      "graphics": {
+        "npc-162-house42-0.png": {
+          "animationSource": {
+            "cpuAddress": 37404,
+            "length": 3,
+            "meaning": "Actual same-entity record-linked initial transport",
+            "module": 0,
+            "offset": 4652,
+            "sha256": "c27864bc3f3bbb8690dd0c8ea2313456d8be1bdd04abe381c7371bed3b1d46a6"
+          },
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "frameRecordSource": {
+            "cpuAddress": 48830,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 278222,
+            "sha256": "d83a8fe3b4588750cdfd352ebbe7700684945ecf9a202d95fc80c5736d2ea9b7"
+          },
+          "frameSource": {
+            "cpuAddress": 37566,
+            "length": 5,
+            "meaning": "Original palette and four CHR tiles",
+            "module": 0,
+            "offset": 4814,
+            "sha256": "7b2fcd9e3c43b55711ee2b6fd36eb974b3dea5503c939012d2015943a10e2775"
+          },
+          "height": 16,
+          "normalPlayEvidence": false,
+          "paletteCodes": {
+            "0": [
+              0,
+              148,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              116,
+              96
+            ],
+            "3": [
+              92,
+              148,
+              252
+            ]
+          },
+          "patternBankSources": [
+            {
+              "length": 1024,
+              "offset": 868368,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "length": 1024,
+              "offset": 869392,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "length": 1024,
+              "offset": 870416,
+              "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+            },
+            {
+              "length": 1024,
+              "offset": 871440,
+              "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+            }
+          ],
+          "rgbaSha256": "548026aa47dba6d18f5ccc6e827c80cba364031bc175123e9fe19f0cec32a382",
+          "tiles": [
+            {
+              "length": 16,
+              "offset": 870960,
+              "sha256": "c557017e9156bd9e12fc4c81133fc34c5df9dc4b3caf950746ede37bba78077e",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870976,
+              "sha256": "ad8041f65fcd21f9637b73d494e9b2a215273fbc9716bc8014b4dcf3d0b259ec",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 871216,
+              "sha256": "9bdfba38281f8ae14717bfb4a1f1ea2da54c7ebfddfeaf333429a6dc169c0478",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 871232,
+              "sha256": "09fb94f234e2bdbc54ee0dab141aee14438c36512db1988163cae1b03cc0ee00",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        },
+        "npc-198-house42-1.png": {
+          "animationSource": {
+            "cpuAddress": 36434,
+            "length": 3,
+            "meaning": "Actual same-entity record-linked initial transport",
+            "module": 0,
+            "offset": 3682,
+            "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+          },
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "frameRecordSource": {
+            "cpuAddress": 48844,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 278236,
+            "sha256": "992949b8ec117c8a1ef5b73cdf38ee2d244e919f3f5c833d970316723970fcc0"
+          },
+          "frameSource": {
+            "cpuAddress": 36675,
+            "length": 5,
+            "meaning": "Original palette and four CHR tiles",
+            "module": 0,
+            "offset": 3923,
+            "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+          },
+          "height": 16,
+          "normalPlayEvidence": false,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "patternBankSources": [
+            {
+              "length": 1024,
+              "offset": 868368,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "length": 1024,
+              "offset": 869392,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "length": 1024,
+              "offset": 870416,
+              "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+            },
+            {
+              "length": 1024,
+              "offset": 871440,
+              "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+            }
+          ],
+          "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "tiles": [
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        },
+        "npc-198-house42-2.png": {
+          "animationSource": {
+            "cpuAddress": 36434,
+            "length": 3,
+            "meaning": "Actual same-entity record-linked initial transport",
+            "module": 0,
+            "offset": 3682,
+            "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+          },
+          "captureKind": "PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED",
+          "frameRecordSource": {
+            "cpuAddress": 48858,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 278250,
+            "sha256": "d89bcaddbb91b60235c09718d29cc7b9de96d14c6d6c266fe2b20d137b87b058"
+          },
+          "frameSource": {
+            "cpuAddress": 36675,
+            "length": 5,
+            "meaning": "Original palette and four CHR tiles",
+            "module": 0,
+            "offset": 3923,
+            "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+          },
+          "height": 16,
+          "normalPlayEvidence": false,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              252,
+              188,
+              176
+            ],
+            "3": [
+              216,
+              40,
+              0
+            ]
+          },
+          "patternBankSources": [
+            {
+              "length": 1024,
+              "offset": 868368,
+              "sha256": "1d2cafcf7ae04baa82c1b8a40235fa49c7a4a025b4019001babc87ef46c0e834"
+            },
+            {
+              "length": 1024,
+              "offset": 869392,
+              "sha256": "80590fe50be743171fc82d792ff24d0099c7b8f78a1e5c3ac5cc811a64f4806c"
+            },
+            {
+              "length": 1024,
+              "offset": 870416,
+              "sha256": "4bdbcc3a3861811e8887aea3d7d675e5908707c77439a823b7f03b077cdd381f"
+            },
+            {
+              "length": 1024,
+              "offset": 871440,
+              "sha256": "40ffd09a8d6063e0b49fe9df02857b7c5b45705597a6f47c9205709f4d769e3e"
+            }
+          ],
+          "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "tiles": [
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "length": 16,
+              "offset": 870400,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        }
+      },
+      "map": {
+        "gridSha256": "565d61c1903415423e8f14a4215216c84b60b383836bf167d3b456f5131fe842",
+        "mapId": 42,
+        "palette": [
+          14,
+          7,
+          23,
+          55,
+          25,
+          7,
+          38,
+          22,
+          25,
+          33,
+          23,
+          22,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "tilesetId": 2,
+        "walkableClasses": [
+          0,
+          2,
+          5
+        ]
+      },
+      "mapId": 42,
+      "normalAndroid": "NOT_RUN",
+      "npcs": [
+        {
+          "cell": [
+            7,
+            5
+          ],
+          "firstDialogue": "rom.dialogue.52.5",
+          "firstEffects": [],
+          "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+          "id": "rom.npc.42.0",
+          "mapId": 42,
+          "originalTalk": {
+            "actionId": 56,
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "itemId": "rom.special.14",
+            "mapFlagId": "rom.map.42.flag.2",
+            "witnessFlagId": "rom.inventory.special.14.used"
+          },
+          "repeatDialogue": "rom.dialogue.52.7",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "record": {
+              "cpuAddress": 48830,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 278222,
+              "sha256": "d83a8fe3b4588750cdfd352ebbe7700684945ecf9a202d95fc80c5736d2ea9b7"
+            },
+            "remainingUnknown": [
+              "Dynamic actor pose and Android normal route"
+            ]
+          },
+          "sprite": "npc-162-house42-0.png",
+          "spriteId": 162
+        },
+        {
+          "cell": [
+            3,
+            5
+          ],
+          "firstDialogue": "",
+          "firstEffects": [],
+          "hiddenInvestigation": true,
+          "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+          "id": "rom.npc.42.1",
+          "mapId": 42,
+          "openedSprite": "npc-198-house42-1.png",
+          "repeatDialogue": null,
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "record": {
+              "cpuAddress": 48844,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 278236,
+              "sha256": "992949b8ec117c8a1ef5b73cdf38ee2d244e919f3f5c833d970316723970fcc0"
+            },
+            "remainingUnknown": [
+              "Dynamic actor pose and Android normal route"
+            ]
+          },
+          "sprite": "npc-198-house42-1.png",
+          "spriteId": 198,
+          "treasure": {
+            "amount": 1,
+            "categoryGrant": 2,
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "flagId": "rom.map.42.flag.4",
+            "itemId": "rom.weapon.21"
+          }
+        },
+        {
+          "cell": [
+            4,
+            6
+          ],
+          "firstDialogue": "",
+          "firstEffects": [],
+          "hiddenInvestigation": true,
+          "houseResourceEvidence": "game-data/provenance/world-west-houses-resources.json",
+          "id": "rom.npc.42.2",
+          "mapId": 42,
+          "openedSprite": "npc-198-house42-2.png",
+          "repeatDialogue": null,
+          "source": {
+            "confidence": "PROVISIONAL_ROM_STATIC",
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "record": {
+              "cpuAddress": 48858,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 278250,
+              "sha256": "d89bcaddbb91b60235c09718d29cc7b9de96d14c6d6c266fe2b20d137b87b058"
+            },
+            "remainingUnknown": [
+              "Dynamic actor pose and Android normal route"
+            ]
+          },
+          "sprite": "npc-198-house42-2.png",
+          "spriteId": 198,
+          "treasure": {
+            "amount": 1,
+            "categoryGrant": 0,
+            "evidence": "game-data/provenance/world-west-houses-resources.json",
+            "flagId": "rom.map.42.flag.8",
+            "itemId": "rom.medicine.0"
+          }
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "fubing-two-original-house-callers-and-item-witness-talk",
+  "sources": [
+    {
+      "cpuAddress": 52275,
+      "length": 50,
+      "meaning": "Original house index0/1/2 caller table dispatch",
+      "module": 0,
+      "offset": 19523,
+      "sha256": "41dc4dd5ed0f2d303ab01fc59b642eb7813a22adee87899175461dbc1acebde8"
+    },
+    {
+      "cpuAddress": 51864,
+      "length": 29,
+      "meaning": "Original source tileset dispatcher",
+      "module": 0,
+      "offset": 19112,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168"
+    },
+    {
+      "cpuAddress": 52789,
+      "length": 29,
+      "meaning": "Original target tileset dispatcher",
+      "module": 0,
+      "offset": 20037,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f"
+    },
+    {
+      "cpuAddress": 52325,
+      "length": 8,
+      "meaning": "Original plain-room source",
+      "module": 0,
+      "offset": 19573,
+      "sha256": "bcd58d0de349b1a7fb1a4e93c3e8d12288371d52bca8b44dcb65750a0813ab17"
+    },
+    {
+      "cpuAddress": 53368,
+      "length": 20,
+      "meaning": "Original plain-room target",
+      "module": 0,
+      "offset": 20616,
+      "sha256": "808979c00d4bc62e29f7e2e73669c132c974d6b76fb4f1111b48c9253e9604a9"
+    },
+    {
+      "cpuAddress": 52893,
+      "length": 84,
+      "meaning": "Original action55/56 owned-used inventory witness",
+      "module": 10,
+      "offset": 347821,
+      "sha256": "8906f066a2879e871a07fb13e5b9916efdeac79cbbd4a97e3044cc5c018c1cfe"
+    },
+    {
+      "cpuAddress": 53578,
+      "length": 120,
+      "meaning": "Original owned versus used inventory lookup",
+      "module": 10,
+      "offset": 348506,
+      "sha256": "5ca581941e3af69b3da0aaa256c26bf0879a072ee1bca0c7c1a27253b9801036"
+    },
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Original first-repeat actor selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 58313,
+      "length": 31,
+      "meaning": "Original special14 scene42 actor162 event23 and ship bit",
+      "module": 2,
+      "offset": 91097,
+      "sha256": "47856de29ac5ed9f9f7f4d4da62806fb314fd6adee3740b40358ecb508afb55e"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 62,
+      "meaning": "Original use bookkeeping; actual quantity128 separately captured",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "45dc4f799fbd4bbaa642ee2ab00230ece6e524ce0d73ddff7b4bf3d430956ee7"
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}

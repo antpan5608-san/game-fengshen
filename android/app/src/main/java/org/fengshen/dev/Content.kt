@@ -311,7 +311,9 @@ object ContentLoader {
                     val west=n.optString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&
                         npc.id in listOf("rom.npc.8.2","rom.npc.8.3","rom.npc.9.1","rom.npc.9.2","rom.npc.9.3","rom.npc.10.7","rom.npc.10.8")&&
                         (npc.treasure!=null||n.has("moneyTreasure"))
-                    require((old||queen||west)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
+                    val house=n.optString("houseResourceEvidence")=="game-data/provenance/world-west-houses-resources.json"&&
+                        npc.mapId==42&&npc.id in listOf("rom.npc.42.1","rom.npc.42.2")&&npc.treasure!=null
+                    require((old||queen||west||house)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
                 }
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
@@ -403,6 +405,18 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        55,56->{
+                            val mask=if(rule.actionId==55)1 else 2
+                            val first=if(rule.actionId==55)3 else 5
+                            val repeat=if(rule.actionId==55)4 else 7
+                            require(npc.mapId==if(rule.actionId==55)41 else 42)
+                            require(npc.id=="rom.npc.${npc.mapId}.0"&&
+                                t.getString("evidence")=="game-data/provenance/world-west-houses-resources.json"&&
+                                rule.mapFlagId=="rom.map.${npc.mapId}.flag.$mask"&&rule.itemId=="rom.special.14"&&
+                                rule.witnessFlagId=="rom.inventory.special.14.used"&&
+                                rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.$first"&&
+                                rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.$repeat")
+                        }
                         53,54->{
                             val index=npc.id.substringAfterLast('.').toInt()
                             val expected=when(npc.id){"rom.npc.8.0"->listOf(53,1,2,11);"rom.npc.8.1"->listOf(53,8,5,12);

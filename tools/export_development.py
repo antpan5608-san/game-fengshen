@@ -1100,6 +1100,10 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/world-west-houses-resources.json':
+        room,_=validate_world_house_resources(reader,npc['mapId'])
+        if npc not in room['npcs']:raise ValueError('House hidden grant record differs')
+        return room
     if npc['treasure']['evidence']=='game-data/provenance/world-queen117-state.json':
         proof=validate_world_queen117_resources(reader)
         expected=next((n for n in proof['region']['npcs']if n['id']==npc['id']),None)
@@ -1593,6 +1597,89 @@ def validate_world_village_batch_resources(reader,map_id):
         rgba=Image.open(io.BytesIO(scoped_observed_graphic(reader,g))).convert('RGBA')
         if raw[0]==198 and any(rgba.getchannel('A').getdata()):raise ValueError('Original hidden actor cannot become a fake icon')
     return v,p['bridge']
+
+
+def validate_world_house_resources(reader,map_id):
+    """Reuse plain rooms/caller state with exact original house-table bindings.
+
+    Only the currently evidenced pair is admitted. This does not establish boat
+    movement, cure or other unimplemented event outcomes.
+    """
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
+    path='game-data/provenance/world-west-houses-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='fubing-two-original-house-callers-and-item-witness-talk':
+        raise ValueError('House resource source differs')
+    if map_id not in (41,42) or [v['mapId']for v in p['rooms']]!=[41,42]:raise ValueError('Unevidenced house scope')
+    room=next(v for v in p['rooms']if v['mapId']==map_id);m=extract_map(reader,map_id)
+    if room['map']!=dict(mapId=map_id,gridSha256=m['gridSha256'],tilesetId=2,
+            palette=extract_default_map_palette(reader,map_id)['palette'],walkableClasses=[0,2,5]):
+        raise ValueError('House geometry or palette differs')
+    for span in p['sources']:checked_span(reader,span)
+    counts=(96,64,2048,22)
+    for table,count in zip(p['cpu'],counts):
+        data=(ROOT/table['path']).read_bytes()
+        if table['caseCount']!=count or table['failures'] or digest(data)!=table['sha256'] or \
+                len(data.splitlines())!=count+1 or digest((ROOT/table['probePath']).read_bytes())!=table['probeSha256']:
+            raise ValueError('House original CPU expectations differ')
+    if len(p['cpu'])!=4:raise ValueError('House CPU coverage missing')
+    binding=next(b for b in p['bindings']if b['toMapId']==map_id)
+    house_index=0 if map_id==42 else 1
+    expected=(10,house_index,26+house_index,[13,4]if map_id==42 else[25,7],[7,12]if map_id==42 else[5,12])
+    if tuple(binding[k]for k in ('callerMapId','houseIndex','collisionClass','trigger','spawn'))!=expected or \
+            binding['tableSource']!=reader.span(0,0xd287+30+house_index,1,'Original caller10 house target table') or \
+            checked_span(reader,binding['tableSource'])!=bytes([map_id]):raise ValueError('House target table differs')
+    font=room['font'];raw=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(raw)!=4096 or [s['offset']for s in font['sources']]!=[524304+54*2048,524304+55*2048]:
+        raise ValueError('House active mapper font differs')
+    if {g['code']for g in font['glyphs']}!={k for k in cs if not k&64}:raise ValueError('House font incomplete')
+    for g in font['glyphs']:
+        if cs[g['code']]!=g['character']or digest(bytes(v for row in glyph_pixels(raw,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('House original glyph differs')
+    messages=[3,4]if map_id==41 else[5,6,7]
+    if [d['id']for d in room['dialogues']]!=[f'rom.dialogue.{map_id+10}.{i}'for i in messages]:raise ValueError('House dialogue scope differs')
+    for d in room['dialogues']:
+        t=extract_text(reader,map_id+10,int(d['id'].split('.')[-1]))
+        if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:raise ValueError('House original text differs')
+    records=extract_npcs(reader,map_id)['records']
+    if len(room['npcs'])!=len(records):raise ValueError('House actor count differs')
+    for n,rec in zip(room['npcs'],records):
+        b=bytes.fromhex(rec['rawHex']);idx=rec['index']
+        if (n['id'],n['mapId'],n['cell'],n['spriteId'],n['source']['record'],n['firstEffects'])!= \
+                (f'rom.npc.{map_id}.{idx}',map_id,[(rec[k]-120)//16 for k in ('xCandidate','yCandidate')],b[0],rec['range'],[]):
+            raise ValueError('House original actor differs')
+        if idx==0:
+            expected_talk=dict(actionId=b[12],mapFlagId=f'rom.map.{map_id}.flag.{b[13]}',
+                witnessFlagId='rom.inventory.special.14.used',itemId='rom.special.14',evidence=path)
+            if n.get('originalTalk')!=expected_talk or n['firstDialogue']!=f'rom.dialogue.{map_id+10}.{b[1]}'or \
+                    n['repeatDialogue']!=f'rom.dialogue.{map_id+10}.{b[2]}':raise ValueError('House witness cannot invent an outcome')
+        else:
+            cat,item,mask=b[1],b[2],b[13]
+            if map_id!=42 or b[0]!=198 or (idx,cat,item,mask)not in ((1,2,21,4),(2,0,0,8)) or \
+                    n.get('treasure')!=dict(itemId=f'rom.{["medicine","special","weapon","armor"][cat]}.{item}',
+                        flagId=f'rom.map.42.flag.{mask}',amount=1,categoryGrant=cat,evidence=path) or \
+                    not n.get('hiddenInvestigation') or n['firstDialogue'] or n['repeatDialogue']is not None:
+                raise ValueError('House hidden grant differs')
+        g=room['graphics'][n['sprite']];pose_map=g.get('poseMapId',map_id)
+        if pose_map!=map_id and (b[0],pose_map)!=(162,4):raise ValueError('House static pose belongs to another entity')
+        pose=next((v for v in extract_npcs(reader,pose_map)['records']if v['range']==g['frameRecordSource']),None)
+        if pose is None or pose['entityByte']!=b[0]or g['animationSource']!=reader.span(0,pose['animationProgramPointer'],3,'Actual same-entity record-linked initial transport'):
+            raise ValueError('House original animation identity differs')
+        frame_address=reader.word(0,pose['animationProgramPointer']+1);frame=checked_span(reader,g['frameSource'])
+        if g['frameSource']['module']!=0 or g['frameSource']['cpuAddress']!=frame_address or len(frame)!=5 or frame[0]not in range(4):
+            raise ValueError('House static frame differs')
+        banks=g['patternBankSources']
+        if len(banks)!=4 or len(g['tiles'])!=4:raise ValueError('House original sprite banks missing')
+        for bank in banks:
+            if len(checked_span(reader,bank))!=1024:raise ValueError('House sprite bank differs')
+        for q,(tile,code)in enumerate(zip(g['tiles'],frame[1:])):
+            if tile['xy']!=[q%2*8,q//2*8]or tile['offset']!=banks[code//64]['offset']+16*(code%64)or tile['length']!=16:
+                raise ValueError('House tile identity differs')
+        if g['captureKind']!='PROVISIONAL_ROM_STATIC_FRAME_NOT_OAM_OBSERVED'or g['normalPlayEvidence']is not False:
+            raise ValueError('House unobserved pose must remain provisional')
+        image=Image.open(io.BytesIO(scoped_observed_graphic(reader,g))).convert('RGBA')
+        if b[0]==198 and any(image.getchannel('A').getdata()):raise ValueError('House hidden item cannot become a fake icon')
+    return room,p
 
 
 def validate_world_village5_resources(reader):
@@ -2308,6 +2395,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('houseRoomEvidence'):
+            room,_=validate_world_house_resources(reader,mid)
+            if recipe['houseRoomEvidence']!='game-data/provenance/world-west-houses-resources.json' or \
+                    original['tilesetId']!=2 or set(collision)!={0,1,2,5} or allowed!=[0,2,5] or \
+                    recipe['palette']!=room['map']['palette']or recipe.get('directionalCollision') or \
+                    recipe['npcCells']!=[n['cell'][1]*original['width']+n['cell'][0]for n in room['npcs']]:
+                raise ValueError('House must preserve its original plain-room collision and actors')
         if recipe.get('jiamengRoomCollisionEvidence'):
             path=recipe['jiamengRoomCollisionEvidence'];proof=load(ROOT/path);room=proof['postScriptRoom']
             raw=(ROOT/room['cpuExpectedPath']).read_bytes()
@@ -2466,12 +2560,29 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         raw=checked_span(reader,exit['source'])
         if exit['kind']=='RETURN_TO_CALLER':
             if list(raw)!=exit['trigger']+[254,0,0]:raise ValueError('Original return record differs')
+            if exit['fromMapId']in (41,42):
+                _,proof=validate_world_house_resources(reader,exit['fromMapId'])
+                b=next(b for b in proof['bindings']if b['toMapId']==exit['fromMapId'])
+                if exit.get('returnToCaller')is not True or exit['trigger']!=b['spawn']or \
+                        exit['toMapId']!=b['callerMapId']or exit['spawn']!=b['trigger']:
+                    raise ValueError('House return must retain actual caller and independent door')
         elif exit['kind']=='COLLISION_ENTRY':
             origin=extract_map(reader,exit['fromMapId']);c=origin['collisionCandidate']
             x,y=exit['trigger'];tile=origin['grid'][y][x]
             klass=reader.read(c['module'],c['cpuAddress']+tile)[0]
             if klass!=exit['collisionClass'] or exit['toMapId']!=klass-exit['dispatchSubtract']:
                 raise ValueError('Original indoor collision dispatch differs')
+        elif exit['kind']=='HOUSE_TABLE_ENTRY':
+            _,proof=validate_world_house_resources(reader,exit['toMapId'])
+            binding=next(b for b in proof['bindings']if b['toMapId']==exit['toMapId'])
+            original=extract_map(reader,exit['fromMapId']);x,y=exit['trigger'];c=original['collisionCandidate']
+            klass=reader.read(c['module'],c['cpuAddress']+original['grid'][y][x])[0]
+            house=binding['houseIndex']
+            if exit['fromMapId']!=binding['callerMapId']or exit['trigger']!=binding['trigger']or \
+                    exit['spawn']!=binding['spawn']or klass!=binding['collisionClass']or exit.get('captureCaller')is not True or \
+                    exit['source']!=reader.span(0,(0xcc33,0xcc3e,0xcc49)[house],11,'Original house-index caller dispatch')or \
+                    exit.get('tableSource')!=binding['tableSource']:
+                raise ValueError('Original house table must preserve independent entry and spawn')
         elif exit['kind']=='ACTOR_CONTACT':
             proof=validate_world_tree_contact(reader,exit['contactEvidence'])
             binding=next((b for b in proof['bindings']if b['actorId']==exit['contactActorId']),None)
@@ -2986,7 +3097,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('jiamengResourceEvidence'):
+        if npc.get('houseResourceEvidence'):
+            room,_=validate_world_house_resources(reader,npc['mapId'])
+            if npc['houseResourceEvidence']!='game-data/provenance/world-west-houses-resources.json' or npc not in room['npcs']or \
+                    any(d not in scene['dialogues']for d in room['dialogues'])or \
+                    any(evidence['graphics'].get(k)!=g for k,g in room['graphics'].items()):
+                raise ValueError('House actor/dialogue/graphic differs')
+        elif npc.get('jiamengResourceEvidence'):
             proof=validate_world_jiameng_actors(reader)
             if npc['jiamengResourceEvidence']!='game-data/provenance/world-jiameng-actors.json' or npc not in proof['npcs'] or \
                     any(d not in scene['dialogues']for d in proof['dialogues']) or \

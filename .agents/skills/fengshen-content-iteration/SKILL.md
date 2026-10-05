@@ -415,3 +415,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 村民条件对白可复用原selector与action handler的CPU矩阵，仅增加当前实际记录；probe-world-west-village-talk.py已运行并与共享OriginalNpcTalk通过定向JVM对照。原有flag已置位时selector会跳过handler，受控scratch event不能错误地要求清零；CPU通过不代替ContentLoader或Android接入。
 - 后续同类村庄增量写入既有world-village-batch-resources与原baseExport子配方，旧caller资源保持语义和历史字节。原NPC hidden类别/ID不能当对白索引；probe-world-west-village-pickups.py已核当前隐藏选择、容量、重复与金钱上限，并与WorldItems的JVM提案逐案对照。隐藏special的取得与使用分别记录，未核使用不补按钮效果；原名未解码保留稳定ID。
 - 原动画帧高位标志不能直接当调色板下标。当前静态配方可引用另一真实记录中同entity的普通静止帧，依旧限定原动画指针、四图块、实际当前CHR与palette/像素hash；动态朝向/OAM未证时保持PROVISIONAL。原边界出口要补记录最后旧场景坐标，不把入口落点直接当离开trigger；当前实例已复用原FCEUX入口存档执行真实DOWN并核单独返回。新批次原导出、空目录restore和旧caller回归已实际运行，App仍须另验。
+
+- 原房屋入口不能套用商店class-minus公式；当前已实际读取caller*3+houseIndex表、FCEUX真实入门/FE返程，并用probe-world-west-houses.py执行96入口与64 plain-room碰撞案例。入口落点重合出口时，正常先离开再踏入出口；原存档保留captureCaller/returnToCaller，不交换正反坐标。只检查持有/已用的action55/56不补治疗/航线。原ci_apk.restore省略destination即写加载器实际assets/development；APK内实际前缀/manifest需再核，编译不证明启动。新CPU fixture要保留实际tileset变量，漏设时标取证配置错误后复测，不改原预期。上述局部导出/JVM/编译与空目录复现已执行；新App仍待原runner。

@@ -943,3 +943,18 @@ WORLD-FULL-01总体仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。既有c
 复用旧碰撞CPU探针固定SHA的scoped wrapper：当前四地图145..148共264组合/房间37实际tileset2共64组合，全部0差异；原c50完整56/302重复导出及pin原样通过7 scope方法，旧媒体/来源没有改。11局部Python方法通过；胜后房间font38/39、context196实际原NPC与四条对白已核，15字定向转录/历史罩→照差异局部记录。三actor130/162/163原OAM/ROM每个非零像素与alpha成功，公开仅配方/hash/数值TSV，原RAM/PPU/截图/回放仍忽略。
 
 失败保留：原FCEUX首轮用了本树不存在的.ci-private/nanhai-target.nes，分类ENV_INPUT_PATH，进程停止，改读实际已匹配缓存成功，无重下载。NPC按14/24推算stride使162身份拒绝，实际记录418/42e/444匹配后成功，属EVIDENCE_INPUT_MAPPING；未把拒绝改通过。原Game规则/数值无修改。新增地图/Boss定义和批量配方仍待接入，APP_VERIFIED NOT_RUN/PUBLISHED NO；原受控胜后source不是正常Boss胜利。地府候选main独立冻结，其App验收不借本局部测试背书。
+
+
+## 当前增量检查点：芙冰原房屋批次（2026-10-06 05:57，北京时间）
+
+独立开发HEAD从d50c057继续，R2 main/87bc56cb和run37364795394冻结不变（第一runtime PASS、runtime-world仍运行、continuation未开始）。生产仍v82；本增量没有触发发布或覆盖公网。
+
+原caller10的houseIndex0/1从0:D287表进入42/41，区别于商店class-minus算法；实际入口10(13,4)→42(7,12)、10(25,7)→41(5,12)，经各自FE出口正常返回各原门口。原试验初次从落点直接向下没有再踏入触发格而失败，改为真实先上后下复核，未改碰撞/出口。统一World.captureCaller/returnToCaller与完整SaveSnapshot继续复用，新增c53旧内容兼容，不新增室内引擎。
+
+c54目标opening-segment-001-c54：66图/360文件、manifest31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b，原c53基底09473f6b146fb9120468683285f6f44d6c163cd7fd5e56a575facdc69a39e2c1单独固定。两室内4演员、2隐藏调查和5对白，55/56只检查原神木桨持有/已用，变对白与本地flag，无治疗/奖励/移动。原CPU入口96/碰撞64/对白2048/物品22均零差异；374 JVM/78套0失败/错误/跳过、原instrument编译PASS，新导出3方法50.916s PASS，空目录360文件逐字节复现/旧媒体不变。首次导出restore测试因未设置SDK拒绝，正确环境复测通过，不关闭签名门禁；初始CPU碰撞fixture遗漏71=2，补正确原tileset后复测零差异。Unicode/静态图形仍PROVISIONAL，新增Android实际加载/正常路线/覆盖/冷启均NOT_RUN，不将JVM写可玩。
+
+另原神木桨使用已在隔离原版实际菜单核14→map42/actor162，数量1变128、6812置1、event23，原菜单名神木槳；正常对话最终52.6→52.7，仍留在42，无玩家传送。此为CONTROLLED_ORIGINAL_POSITION_ITEM_FIXTURE，未冒称正常原版或Android；药效/治病/航线不从这几句文本补造。当前c54仍只有取得/库存与条件对白，神木桨使用/自由船行未实现；下一精确动作核6812影响原CF7D水上移动与芙冰真实上船/航路，继而薄扩展现有运行机制。map7磻溪/姜子牙context191仍未打包，保留其真实前置/事件欠账。
+
+c53已经在git archive d50c057的干净目录/workspace/scratch/world-west-clean-d50c057实际原ci_apk.restore默认assets/development→assembleDebug/assembleDebugAndroidTest 22秒成功；实际APK内360之前批次352文件/64图hash严格一致，DEBUG包32519333字节/SHA30ddd9c52f4bdc63485918f15f4a8a3d928be34d9aaf0b20eddc62aad3ff2fb8。更早一份手工指定assets/content的调试构建不能证明启动，已明确废弃/未发布/未用于App验收，不记运行PASS。本次仍不改变原CI c50 pin，后续候选需原签名与实际运行门禁。
+
+SAVE-HISTORY继续已实现/单元验证、APP_VERIFIED NOT_RUN；最新20档不淘汰active/迁移/云/CI checkpoint，后续同合适候选运行而不塞回冻结R2。最近独立远端备份work/world-jiameng-batch-continuation/65b92c1641ee72868ec470adc51cb6d337d4ae62与d50c057同树；本增量待提交备份。十类欠账仍delivery-status权威清单，不关闭全世界、全服务、全字库、音频和手机。

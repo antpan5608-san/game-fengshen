@@ -1,5 +1,10 @@
 ## 当前进度补记（2026-10-06，北京时间；开发与发布分列）
 
+### 独立芙冰房屋增量（2026-10-06，北京时间；非发布报告）
+
+原地图41/42通过caller10独立房屋表接入现有World/存档；两演员条件对白、两隐藏调查与FE返程已实现。c54为66图/360文件、manifest31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b；96入口/64碰撞/2048对白/22取得CPU零差异、374 JVM/78套、3局部导出及仪器编译PASS。APP_VERIFIED/PUBLISHED均NO，生产v82和R2冻结不变。原神木桨ID14使用已取得受控菜单证据，但船运行/使用入口仍未实现，不称原版完整；Unicode和静态姿态PROVISIONAL。SAVE-HISTORY待实际App/外部冷启，十类欠账完整保留；精确下一动作和失败环境记录见current-task。
+
+
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。生产v82/STABLE、当前R2 v83构建与首段runtime通过，地府主段runtime-world正在执行；后两段与发布未完成。精确来源、run、APK/content hash见docs/current-task.md，历史报告不覆盖当前结果。
 
 独立开发：佳梦关与魔家四将c52已实现并干净DEBUG构建；新增西岐两区域/芙冰三村数据、21演员、共享服务与7隐藏调查形成c53/64图/352文件，原导出/空目录恢复及相关JVM通过，Android APP_VERIFIED=NOT_RUN/PUBLISHED=NO。存档历史20档/前台5分钟/回档前完整快照及事务回滚已实现、逻辑通过，真实UI/冷启/覆盖待验。不把这些内容计入v82或冻结v83的可玩范围。
