@@ -1,0 +1,1379 @@
+{
+  "arrival": {
+    "actualMapId": 172,
+    "evidence": "game-data/provenance/world-master172-resources.json",
+    "itemId": "rom.special.0",
+    "partyCountBelow": 4,
+    "requestedMapId": 171
+  },
+  "collisionReuse": {
+    "cpuExpected": {
+      "caseCount": 36,
+      "failures": 0,
+      "path": "android/app/src/test/resources/world-room171-terrain-original-cpu.tsv",
+      "sha256": "692dbec65361873934fc84432a432c606ae6b5c863f045dee8f43b974aeb518e"
+    },
+    "originalTileset2": true,
+    "path": "game-data/provenance/world-room171-resources.json",
+    "sameGrid": true,
+    "sha256": "48947ce4008315d0775f3843b30a743b9bd0b04c59fd8cc998a1258035ce2af8",
+    "sources": [
+      {
+        "cpuAddress": 51864,
+        "length": 29,
+        "meaning": "Original source tileset selector",
+        "module": 0,
+        "offset": 19112,
+        "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168"
+      },
+      {
+        "cpuAddress": 52789,
+        "length": 29,
+        "meaning": "Original target tileset selector",
+        "module": 0,
+        "offset": 20037,
+        "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f"
+      },
+      {
+        "cpuAddress": 52325,
+        "length": 8,
+        "meaning": "Tileset2 source rule",
+        "module": 0,
+        "offset": 19573,
+        "sha256": "bcd58d0de349b1a7fb1a4e93c3e8d12288371d52bca8b44dcb65750a0813ab17"
+      },
+      {
+        "cpuAddress": 53368,
+        "length": 20,
+        "meaning": "Tileset2 target rule",
+        "module": 0,
+        "offset": 20616,
+        "sha256": "808979c00d4bc62e29f7e2e73669c132c974d6b76fb4f1111b48c9253e9604a9"
+      }
+    ]
+  },
+  "controlledEvidence": {
+    "androidEvidence": false,
+    "captures": [
+      {
+        "path": "private-derived/world-master172-letter-investigation-controlled/00-real-letter-front.png",
+        "sha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468"
+      },
+      {
+        "path": "private-derived/world-master172-letter-investigation-controlled/investigate-A-01.png",
+        "sha256": "25866703e5ff99608b8128bd2bf71c3989b4d5f8cd0a9113edc449d96644741e"
+      },
+      {
+        "path": "private-derived/world-master172-letter-investigation-controlled/investigate-A-02.png",
+        "sha256": "4fa32f266241bc45727c15195a32f67e006e465ec363c6357633ab81d856ed69"
+      }
+    ],
+    "investigation": {
+      "actorEntityId": 179,
+      "commandKeys": [
+        "A",
+        "DOWN",
+        "DOWN",
+        "DOWN",
+        "A"
+      ],
+      "global7c8After": 1,
+      "global7c8Before": 1,
+      "group": 182,
+      "inventoryAndPartyChanged": false,
+      "mapFlag172After": 0,
+      "mapFlag172Before": 0,
+      "message": 2
+    },
+    "kind": "CONTROLLED_ORIGINAL_CURE_SOURCE_AND_POSITION_REAL_MENU_KEYS",
+    "noRewardNoQuestLock": true,
+    "normalPlayEvidence": false,
+    "probePath": "tools/rom-extractor/probe-world-master172-investigation.lua",
+    "probeSha256": "c0322f702ed7182182de9bfadd7086589a3e81260aec8eb63599b31585d56ac3",
+    "traceSha256": "65a9d639946da01dc4f99d03e8bf73dc8ad679036ea1e3a46d2efed499075a0f"
+  },
+  "cpuExpected": {
+    "caseCount": 256,
+    "failures": 0,
+    "path": "android/app/src/test/resources/world-master172-arrival-original.tsv",
+    "probePath": "tools/rom-extractor/probe-world-master172-arrival.py",
+    "probeSha256": "4160d089b5b17e5900f8679395a3adf241640dd5cc436631c37b07bf05a2322a",
+    "sha256": "de5872eaf5988e5797521bd94f4c0850445809d1e6612a4cb4fac1eb09e44f1d"
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.182.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36636,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102188,
+            "sha256": "4a055d7925d0e3fede025a241751864ec67b404eb8e05266a69875ac9bdb6453"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45002,
+          "length": 20,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110554,
+          "sha256": "3f69e7d5ac381215be32bd5ae27ea8b9d599264c6983d67b479f577f022db655"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "『師父知道你們要來，卻自已先出門了！』"
+    },
+    {
+      "id": "rom.dialogue.182.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36638,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102190,
+            "sha256": "71d5be8f41abd02269d3cb7a62f7c39026971b6b96e9db029d1ca00a9851fd55"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45022,
+          "length": 21,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110574,
+          "sha256": "ed5ecf06cf0374be885bfeec7fa9a6a4a422a187c2804235d4f36c95a81d4697"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "『最近常發生地震，東方的山脈被震崩了！』"
+    },
+    {
+      "id": "rom.dialogue.182.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36640,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102192,
+            "sha256": "0bdd1029ea43c54c86c19d69f0613a84516eabba015e14353a3b6062eb5514c2"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45043,
+          "length": 55,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110595,
+          "sha256": "4f658f3db7967ab03ee0391a9a84b04efff85c38b8f712fc9f1486c47d7e9b3d"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "信上寫著：　吾徒楊戬，為師有事外出。要解救西岐城瘟疫，須拜見火雲洞的三聖大師。他日再有困難，記得回來找師父。"
+    }
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 172,
+      "kind": "EXIT_RECORD",
+      "source": {
+        "cpuAddress": 59445,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 288837,
+        "sha256": "481cd2cbf7173330066bdb15be0904f8cc7116bbc7db06b9c8534117ced539e0"
+      },
+      "spawn": [
+        32,
+        12
+      ],
+      "toMapId": 101,
+      "trigger": [
+        7,
+        14
+      ]
+    }
+  ],
+  "font": {
+    "charset": {
+      "0": "知",
+      "1": "你",
+      "2": "卻",
+      "3": "已",
+      "4": "門",
+      "5": "近",
+      "6": "發",
+      "7": "方",
+      "8": "脈",
+      "9": "崩",
+      "10": "上",
+      "11": "著",
+      "12": "吾",
+      "13": "楊",
+      "14": "為",
+      "15": "外",
+      "16": "救",
+      "17": "岐",
+      "18": "瘟",
+      "19": "須",
+      "20": "見",
+      "21": "雲",
+      "22": "三",
+      "23": "大",
+      "24": "日",
+      "25": "困",
+      "26": "記",
+      "27": "回",
+      "45": "父",
+      "46": "出",
+      "47": "地",
+      "48": "的",
+      "50": "了",
+      "51": "師",
+      "68": "　",
+      "128": "道",
+      "129": "們",
+      "130": "自",
+      "131": "先",
+      "132": "最",
+      "133": "常",
+      "134": "東",
+      "135": "山",
+      "136": "被",
+      "137": "信",
+      "138": "寫",
+      "139": "：",
+      "140": "徒",
+      "141": "戬",
+      "142": "事",
+      "143": "解",
+      "144": "西",
+      "145": "城",
+      "146": "疫",
+      "147": "拜",
+      "148": "火",
+      "149": "洞",
+      "150": "聖",
+      "151": "他",
+      "152": "再",
+      "153": "難",
+      "154": "得",
+      "155": "找",
+      "173": "要",
+      "174": "生",
+      "175": "震",
+      "176": "有",
+      "177": "來"
+    },
+    "chr2kBanks": [
+      58,
+      59
+    ],
+    "glyphs": [
+      {
+        "character": "知",
+        "code": 0,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "b22e5ddea2de86cea9f287b03c464039adc6156e362b91c2d1b041c5cf7af352"
+      },
+      {
+        "character": "你",
+        "code": 1,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      },
+      {
+        "character": "卻",
+        "code": 2,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9872f6584738167d785d614ca6f8523411f19e3eb88caf41ee4e404c2262de6a"
+      },
+      {
+        "character": "已",
+        "code": 3,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9ee6279ffd189d163ac1726d31fba8c003b3fb0c277f2038344687827d466693"
+      },
+      {
+        "character": "門",
+        "code": 4,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "97a9129f7f8d63cd2d59a1de26e1bddafa46051691643c6d5fd7daf957c75cb7"
+      },
+      {
+        "character": "近",
+        "code": 5,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "da77e9d8ac091bd13f84533a3ef536df582a24e0f28229baf3655c9d950ea7c1"
+      },
+      {
+        "character": "發",
+        "code": 6,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3b525964f11c5e6718b2b3777aef64fc13d6b6528c526cd7030676695e9b2057"
+      },
+      {
+        "character": "方",
+        "code": 7,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "8ca28957a1b3ed46ef036b2a9282fbae3ec81334da0b88bafb03920b6ddadbd7"
+      },
+      {
+        "character": "脈",
+        "code": 8,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f377dccb4c999bcd8baa0aad875f21979bbcea78636a552d7ac4b48a88f53f53"
+      },
+      {
+        "character": "崩",
+        "code": 9,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "bce97903501c70b595b6b1171c77f123bd63cd9351ba39c1c0471dbb139b900c"
+      },
+      {
+        "character": "上",
+        "code": 10,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94"
+      },
+      {
+        "character": "著",
+        "code": 11,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "0d73d8d51ee6950651e41c0c75dd82ba600345719ba9cef74927d2b704bd2e6a"
+      },
+      {
+        "character": "吾",
+        "code": 12,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "38fbaed6850e170494931a190c3e9931c0ed71429f937bef0813ec773a9d6f52"
+      },
+      {
+        "character": "楊",
+        "code": 13,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "94f08be59b32c5e24a12a6911509fedd3f43caccedbb3bf654d5df255cc8eb20"
+      },
+      {
+        "character": "為",
+        "code": 14,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "03b8800a631857dd24fcbf182dd8197105fbd265fb10f1ed1b7376df3358f6a1"
+      },
+      {
+        "character": "外",
+        "code": 15,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "5912a837b65089216a46b6661a89cae2d682f4e1b7c0f8f99abed8beef31f427"
+      },
+      {
+        "character": "救",
+        "code": 16,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2ec4f2d71e416f2159b3c180a80fe52520e1dca8c183b293b804291b12c1247e"
+      },
+      {
+        "character": "岐",
+        "code": 17,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9c6a96b5805120322e09c50594210cf79c28c20302e9edfbbcbc9d763eadbb48"
+      },
+      {
+        "character": "瘟",
+        "code": 18,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "67986f59ec4b3a147148f35fae281e72ab20ea28bf57d269761c32f43c3b4f8d"
+      },
+      {
+        "character": "須",
+        "code": 19,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "60bc20d8ae654f647db3474e13e48392358aa3d78bebfbe4ffc90d4b71d1c2ba"
+      },
+      {
+        "character": "見",
+        "code": 20,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "aeff712dc7c5dedb32bda27c8bc9d1f7d79275dcf9d9272522d5a4b5ccf88e2e"
+      },
+      {
+        "character": "雲",
+        "code": 21,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "32f42b02fec8266161b8cd63224903058f4e9101318e96ec20a3d77f58d80a6b"
+      },
+      {
+        "character": "三",
+        "code": 22,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f1b1e7d885415fcb9c710238586739c388ec40db8af7ddec3cff91dda5810b77"
+      },
+      {
+        "character": "大",
+        "code": 23,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "18b5668cc28938c7131e9fccb189c81bc2becee1d79e37135260922e3ac517ba"
+      },
+      {
+        "character": "日",
+        "code": 24,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3411e7fc49b9ec86640d569bfecf8347a4958369e3b060d2f4a26370fd0fc109"
+      },
+      {
+        "character": "困",
+        "code": 25,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c9795f9bc73cec5ec28974fa5e1197f9b293282ba819a5e4ae853ffed08c1eb2"
+      },
+      {
+        "character": "記",
+        "code": 26,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "69b45add34d77505294abf5752a9fb1a2fec6e90671284213af2f36264ae9e9d"
+      },
+      {
+        "character": "回",
+        "code": 27,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "b4ede401fbcb95a0955e5dd6f8911cbb20a0e52b8fab83a51047edbb98b97782"
+      },
+      {
+        "character": "父",
+        "code": 45,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c7d1efe6efe4fff46987567c40ec5e5e68b8c37525598d1640b3525d15ef4656"
+      },
+      {
+        "character": "出",
+        "code": 46,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "aff8fd1c19cf5eb13d22146991f778067f4a208d9d7e2095902be6a5895c2179"
+      },
+      {
+        "character": "地",
+        "code": 47,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "461c849d67b6019ff4add9b25d0857f29291dcf34d10f705f31120137aad3452"
+      },
+      {
+        "character": "的",
+        "code": 48,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "character": "了",
+        "code": 50,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "character": "師",
+        "code": 51,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "477a1233e39a4a2057d13ac782bcb421940adff6ca4e47fc884041902569d74c"
+      },
+      {
+        "character": "道",
+        "code": 128,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "4e2bf73d3d7ed4460e1fa0144da586dcd3d5fa820ac3293aa1333b4033d75068"
+      },
+      {
+        "character": "們",
+        "code": 129,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "character": "自",
+        "code": 130,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "48338eae8ca0447c6eca9652442071eb3348aefd5ff87b06418ca9e4903f0832"
+      },
+      {
+        "character": "先",
+        "code": 131,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86"
+      },
+      {
+        "character": "最",
+        "code": 132,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ecb416874f0eec7edfdc2c1365dc3c2c2afea7a8eec8d5e54ba080cb844d96df"
+      },
+      {
+        "character": "常",
+        "code": 133,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "fc4ab8d5c9f08b42021991ad3dc60ccecef9a724af8e6319a689fe03a8aa8350"
+      },
+      {
+        "character": "東",
+        "code": 134,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "bec9897f1252a88f54ab051701efb6ccb6031cb723da4b1107ddfe0dff6445f6"
+      },
+      {
+        "character": "山",
+        "code": 135,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6b35bb8c821c54b38f4de88752442b436ff5ffc936881aa70e813a7118bf04d5"
+      },
+      {
+        "character": "被",
+        "code": 136,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "7453bfc4fb13bbdab80a49466515f92f3354920f803bff53c649c6b1db7abd63"
+      },
+      {
+        "character": "信",
+        "code": 137,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "992660be7a0877fa2ede8e69f1f135bce7ca844b9f8ec93e73934ca3284f81c2"
+      },
+      {
+        "character": "寫",
+        "code": 138,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "562aa90b2e35c4ac811e6222f1def3f451a55065517fa2ae4b28be2f4de43f3f"
+      },
+      {
+        "character": "：",
+        "code": 139,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ca6cec2f558713bddddb43291f6c2a9fd3870f3aca363c9c659246dfecfd8f22"
+      },
+      {
+        "character": "徒",
+        "code": 140,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "505d2f1ee5cc1c3fc16885e3fe5803e28adb08a7f346651b4ec43d8fafb90164"
+      },
+      {
+        "character": "戬",
+        "code": 141,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c8658d3db6213fa7e9c9065a0399b5a7eabea8eff3713daf32852a7549f5139b"
+      },
+      {
+        "character": "事",
+        "code": 142,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "aed72a64c4f0ce975ff1a41d2d299fd1e2e83a9cbf338b507296b817e8107304"
+      },
+      {
+        "character": "解",
+        "code": 143,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c62b18b4bc25e8cbf6a8a23f82ff05c17985e82764efaf41ad3edd092e1f08a0"
+      },
+      {
+        "character": "西",
+        "code": 144,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d7cdf6ae61e67249117469b0a2b00b7148da8732861a46e53a96e591f5551e5c"
+      },
+      {
+        "character": "城",
+        "code": 145,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "15856edca60d5be70c240d4fb48cfd67b195a1304606f4eaaf69fcbc3bc6747d"
+      },
+      {
+        "character": "疫",
+        "code": 146,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "93680e330daf27d73a4fa0b9e1d0b24130a5ef6dda926d962542dcefb54115cc"
+      },
+      {
+        "character": "拜",
+        "code": 147,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e7e99b8034edff2d162de0f313ea42ca0994caf3b4b2c87e7916108fce0f3377"
+      },
+      {
+        "character": "火",
+        "code": 148,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "be0461b1a24c4c75cd5ac92e99afdaf35658a72222f1582f05af53220d45c23d"
+      },
+      {
+        "character": "洞",
+        "code": 149,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "484ecc016fb7fb1d2d29b4e80608621c6cca356633b5187aadd58b664c5dd62f"
+      },
+      {
+        "character": "聖",
+        "code": 150,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "95798ef15ef830094d019b7c376843c3acc8cf4bf5ae0f0bffd37e4aae6688e8"
+      },
+      {
+        "character": "他",
+        "code": 151,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+      },
+      {
+        "character": "再",
+        "code": 152,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "0214e8ccdf9c965a266bee560a8ccb44b1ccbdb0716db0fa28483e5e83339321"
+      },
+      {
+        "character": "難",
+        "code": 153,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6a916517f2a2a982a97624b00ee80fcc62de7f3efe9ee86474c8582cf3cada70"
+      },
+      {
+        "character": "得",
+        "code": 154,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c8a72a252ee65db7db0bd3e40df2196e87feae4993e7113fd2eaa1f53e6241c1"
+      },
+      {
+        "character": "找",
+        "code": 155,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "character": "要",
+        "code": 173,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+      },
+      {
+        "character": "生",
+        "code": 174,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "0dd7b7d1f3e2bf8751b14d6f1af8dc8a20a45742b5525917a9cf82c0a0f6f598"
+      },
+      {
+        "character": "震",
+        "code": 175,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1ed674272262be34121ab78468756855d1e00d1a85da1ce3cbef0d650a32a948"
+      },
+      {
+        "character": "有",
+        "code": 176,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "character": "來",
+        "code": 177,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118"
+      }
+    ],
+    "observedPpuSha256": "dfe7ded18db56327447939c2d643a81e8047c24847c392163cf251181a98f46d",
+    "ppu0000Matches": true,
+    "sources": [
+      {
+        "length": 4096,
+        "meaning": "Actual investigation dialogue PPU0000 font CHR banks58/59",
+        "offset": 643088,
+        "sha256": "fdd10f12260c13114a3c4b17562f582196f5b832463e5a5198306a68fe1287e7"
+      }
+    ]
+  },
+  "graphics": {
+    "npc-178-master172-0.png": {
+      "actorEntityId": 178,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "b0ce0050b0cf0058b8de0050b8df0058",
+      "observedRect": [
+        80,
+        169,
+        16,
+        16
+      ],
+      "opaquePixelCount": 147,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "29cf484098784dc8b500128e9fa84779092d3309a274fc71361ed9f1b675da54",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025264,
+          "sha256": "7a1dfd3297002d41dfeaf7ce515895f1f6da9fc91697e8ec3810e035a582b618",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025280,
+          "sha256": "1f168080886215dc349c7b432ce69a70ed83120549039df2d902deccc5230dc4",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025520,
+          "sha256": "c2082abfdebb19f9bb82fa40125be3c185e551cec0c8409cadba05600581cb02",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025536,
+          "sha256": "ea8c44c3bd40cd579b0054a287813fe8d61c085a89e04ba3cbbb46a2aa74e8e0",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-178-master172-1.png": {
+      "actorEntityId": 178,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "938e00a0938f00a89b9e00a09b9f00a8",
+      "observedRect": [
+        160,
+        140,
+        16,
+        16
+      ],
+      "opaquePixelCount": 151,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "9cb8f7f4be51256595a69a95d194e30d8cdf59cb63fc90889a691152b76f3404",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024240,
+          "sha256": "172d898186c0eb8b89891721b7d270ebe4d4a567693208d3d1de7d4131cdffab",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024256,
+          "sha256": "e905d66243d8b3929ecb6b8a97bb7ca99b79ad643e7435c031fd44b91ca75b1c",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872240,
+          "sha256": "e7f90f838e8aca5ac8bf432f8c12904c7422d97a0feef0b3b6aa9e86f6a9630f",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024512,
+          "sha256": "ffa301c95fe14f67f941aa6fef31aebd65d3ca5c0bc7891c6346bbdd510bebb0",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-179-master172-letter.png": {
+      "actorEntityId": 179,
+      "actorRecordOffset": 1092,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60ed037060ee037868fd037068fe0378",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 87,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "1fcc78dc77073964b59b30b06b273e171ddd4e36ad4b5741e06efd746b6657bf",
+      "tiles": [
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025760,
+          "sha256": "f11ce62c2500205b2ea54cf4503c8d2c774bb968b10fa5d18a6d24d950672ad9",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025776,
+          "sha256": "ebfa5b1653832f3c0007d0d06c2abd213e2964c12f0684739e05012c15152351",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026016,
+          "sha256": "c712dc0376eedb552ef48981defe722c8e0a8e789843bdc75c08ede59c67834e",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026032,
+          "sha256": "b6dbb9a57076f564144efc29cdefa95de8a067c4fc5a9343e20cf7c5a140d2bc",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "map": {
+    "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+    "height": 15,
+    "mapId": 172,
+    "palette": [
+      14,
+      7,
+      23,
+      55,
+      14,
+      7,
+      38,
+      22,
+      14,
+      33,
+      23,
+      22,
+      14,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      14,
+      14,
+      54,
+      43,
+      14,
+      14,
+      38,
+      34,
+      14,
+      14,
+      38,
+      32
+    ],
+    "staticPalette": {
+      "backgroundSelector": 28,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "mapId": 172,
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        25,
+        7,
+        38,
+        22,
+        25,
+        33,
+        23,
+        22,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "routineEvidence": [
+        {
+          "cpuAddress": 43001,
+          "length": 44,
+          "meaning": "Signed map ID selector dispatch",
+          "module": 0,
+          "offset": 10249,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478"
+        },
+        {
+          "cpuAddress": 41872,
+          "length": 110,
+          "meaning": "Original queued background then sprite palette writes",
+          "module": 0,
+          "offset": 9120,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d"
+        }
+      ],
+      "source": [
+        {
+          "cpuAddress": 57883,
+          "length": 2,
+          "meaning": "Map background/sprite palette selector pair",
+          "module": 0,
+          "offset": 25131,
+          "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04"
+        },
+        {
+          "cpuAddress": 58334,
+          "length": 2,
+          "meaning": "Background palette pointer",
+          "module": 0,
+          "offset": 25582,
+          "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567"
+        },
+        {
+          "cpuAddress": 58424,
+          "length": 2,
+          "meaning": "Sprite palette pointer",
+          "module": 0,
+          "offset": 25672,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+        },
+        {
+          "cpuAddress": 58826,
+          "length": 16,
+          "meaning": "Original default background colors",
+          "module": 0,
+          "offset": 26074,
+          "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9"
+        },
+        {
+          "cpuAddress": 58634,
+          "length": 16,
+          "meaning": "Original sprite colors",
+          "module": 0,
+          "offset": 25882,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+        }
+      ],
+      "spriteSelector": 0
+    },
+    "tilesetId": 2,
+    "walkableClasses": [
+      0,
+      2
+    ],
+    "width": 16
+  },
+  "npcRecords": [
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38137,
+      "confidence": "HIGH",
+      "entityByte": 178,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 0,
+      "range": {
+        "cpuAddress": 55961,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 285353,
+        "sha256": "7ccabb7853cf6835dfe3a96f21a78dd16223595ec3921cc8247c77ffb0b2f33d"
+      },
+      "rawHex": "b200ff05c800f800f99401020000",
+      "xCandidate": 200,
+      "yCandidate": 248
+    },
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38137,
+      "confidence": "HIGH",
+      "entityByte": 178,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 1,
+      "range": {
+        "cpuAddress": 55975,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 285367,
+        "sha256": "4e9ab0f1875b6140ef501851faf59abedd0e1f1e8a95d19248f81f64733560fb"
+      },
+      "rawHex": "b201ff051801d800f99401020000",
+      "xCandidate": 280,
+      "yCandidate": 216
+    },
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38165,
+      "confidence": "HIGH",
+      "entityByte": 179,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 2,
+      "range": {
+        "cpuAddress": 55989,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 285381,
+        "sha256": "969c9f2b92d261e665b49e19db09bd6097ded02d3860af68a7da0c992ce0f783"
+      },
+      "rawHex": "b3050200e800b800159501020000",
+      "xCandidate": 232,
+      "yCandidate": 184
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "firstDialogue": "rom.dialogue.182.0",
+      "firstEffects": [],
+      "id": "rom.npc.172.0",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "record": {
+          "cpuAddress": 55961,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285353,
+          "sha256": "7ccabb7853cf6835dfe3a96f21a78dd16223595ec3921cc8247c77ffb0b2f33d"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-178-master172-0.png",
+      "spriteId": 178
+    },
+    {
+      "cell": [
+        10,
+        6
+      ],
+      "firstDialogue": "rom.dialogue.182.1",
+      "firstEffects": [],
+      "id": "rom.npc.172.1",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "record": {
+          "cpuAddress": 55975,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285367,
+          "sha256": "4e9ab0f1875b6140ef501851faf59abedd0e1f1e8a95d19248f81f64733560fb"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-178-master172-1.png",
+      "spriteId": 178
+    },
+    {
+      "cell": [
+        7,
+        4
+      ],
+      "firstDialogue": "rom.dialogue.182.2",
+      "firstEffects": [],
+      "id": "rom.npc.172.2",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "notOrdinaryTalk": true,
+        "originalInteraction": "INVESTIGATION_RAW_MESSAGE2",
+        "record": {
+          "cpuAddress": 55989,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285381,
+          "sha256": "969c9f2b92d261e665b49e19db09bd6097ded02d3860af68a7da0c992ce0f783"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-179-master172-letter.png",
+      "spriteId": 179
+    }
+  ],
+  "remainingUnknown": [
+    "Normal Android mainline flow and cold restart NOT_RUN",
+    "Disciple animation not reproduced",
+    "Unicode transcription PROVISIONAL; byte streams/font recipes pinned",
+    "Letter does not implement firecloud sages/potion or subsequent plague cure"
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "schemaVersion": 1,
+  "scopeRevision": "master172-original-used-snow-arrival-and-read-only-investigation",
+  "sources": [
+    {
+      "cpuAddress": 47570,
+      "length": 37,
+      "meaning": "Original used snow and party size map171 replacement",
+      "module": 0,
+      "offset": 14818,
+      "sha256": "7b961e23af5dfdb885c63e458358eaea4f7445e407d63023bfbdebac53fa7588"
+    },
+    {
+      "cpuAddress": 62872,
+      "length": 58,
+      "meaning": "Original current special inventory USED lookup",
+      "module": 0,
+      "offset": 30120,
+      "sha256": "a6c6d3a2215fd4c62cae0b85b3ba233e7089dc79165830e5bc3e8a4067911ea0"
+    },
+    {
+      "cpuAddress": 60979,
+      "length": 1,
+      "meaning": "Original room172 absent encounter zone",
+      "module": 0,
+      "offset": 28227,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    },
+    {
+      "cpuAddress": 61171,
+      "length": 1,
+      "meaning": "Original room172 absent encounter selector",
+      "module": 0,
+      "offset": 28419,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    },
+    {
+      "cpuAddress": 56769,
+      "length": 2,
+      "meaning": "Original map172 independent exit table pointer",
+      "module": 8,
+      "offset": 286161,
+      "sha256": "bdfe8045350b94997a8b2636d9f952004b5712566b071c9a11ae394fe47777ce"
+    },
+    {
+      "cpuAddress": 59445,
+      "length": 5,
+      "meaning": "Original five-byte exit row",
+      "module": 8,
+      "offset": 288837,
+      "sha256": "481cd2cbf7173330066bdb15be0904f8cc7116bbc7db06b9c8534117ced539e0"
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}

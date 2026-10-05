@@ -2497,6 +2497,87 @@ def validate_world_lotus_resources(reader):
     if p['freeBoat']!=expected:raise ValueError('Lotus ship capability differs from native poses/state')
     return p
 
+def validate_world_master172_resources(reader):
+    """Original shared room geometry, used-item arrival and read-only letter.
+
+    The letter is an investigation message, not a gift or inferred quest flag.
+    Preserve explicit saved maps; this selector is only for a new transition.
+    """
+    from forensics.fengshen246 import extract_npcs,extract_default_map_palette,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-master172-resources.json';p=load(ROOT/path)
+    m=extract_map(reader,172);palette=extract_default_map_palette(reader,172)
+    expected=dict(requestedMapId=171,actualMapId=172,itemId='rom.special.0',partyCountBelow=4,evidence=path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='master172-original-used-snow-arrival-and-read-only-investigation' or \
+            p['arrival']!=expected or p['map']!=dict(mapId=172,width=16,height=15,tilesetId=2,
+                gridSha256=m['gridSha256'],staticPalette=palette,
+                palette=[palette['palette'][0]if i%4==0 else v for i,v in enumerate(palette['palette'])],walkableClasses=[0,2]) or \
+            m['tilesetId']!=2 or m['gridSha256']!=extract_map(reader,171)['gridSha256']:
+        raise ValueError('Master172 must retain original used snow selector and shared room geometry')
+    required={(0,0xb9d2,37),(0,0xf598,58),(0,0xed87+172,1),(0,0xee47+172,1),(8,0xdc69+344,2),(8,0xe835,5)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            reader.read(0,0xed87+172,1)!=b'\xff' or reader.read(0,0xee47+172,1)!=b'\xff':
+        raise ValueError('Master172 original arrival/exit/encounter dispatch differs')
+    for s in p['sources']:checked_span(reader,s)
+    cpu=p['cpuExpected'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['caseCount']!=256 or cpu['failures']!=0 or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=257 or \
+            digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Master172 original CPU expectations differ')
+    cases=set()
+    for line in raw.decode('ascii').splitlines()[1:]:
+        requested,party,item,qty,row,actual=map(int,line.split('\t'));cases.add((requested,party,item,qty,row))
+        if actual!=(172 if requested==171 and party<4 and item==0 and qty&128 else requested):
+            raise ValueError('Master172 cannot replace inventory witness with a treatment flag')
+    import itertools
+    if cases!=set(itertools.product((16,101,171,172),(1,2,3,4),(0,1),(0,1,128,129),(0,15))):
+        raise ValueError('Master172 CPU matrix is incomplete')
+    reuse=p['collisionReuse'];room=validate_world_room171_resources(reader)
+    if reuse!=dict(path='game-data/provenance/world-room171-resources.json',
+            sha256=digest((ROOT/'game-data/provenance/world-room171-resources.json').read_bytes()),
+            sameGrid=True,originalTileset2=True,cpuExpected=room['cpuExpected'],sources=room['sources'][:4]):
+        raise ValueError('Master172 must reuse the actual identical tileset2 room matrix')
+    font=b''.join(checked_span(reader,s)for s in p['font']['sources']);charset={int(k):v for k,v in p['font']['charset'].items()}
+    if p['font']['chr2kBanks']!=[58,59] or font!=reader.data[524304+58*2048:524304+60*2048] or \
+            p['font']['ppu0000Matches'] is not True:
+        raise ValueError('Master172 actual investigation font differs')
+    glyphs=p['font']['glyphs']
+    if {g['code']for g in glyphs}!={c for c in charset if not c&64}:
+        raise ValueError('Master172 glyph transcription is incomplete')
+    for g in glyphs:
+        if charset[g['code']]!=g['character'] or digest(bytes(v for row in glyph_pixels(font,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Master172 glyph pixels differ')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.182.{i}'for i in range(3)]:
+        raise ValueError('Master172 requires actual disciple and investigation messages')
+    for i,d in enumerate(p['dialogues']):
+        original=extract_text(reader,182,i)
+        if d['source']['record']!=original['range'] or d['source']['pointerEvidence']!=original['pointerEvidence'] or \
+                d['text']!=decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']:
+            raise ValueError('Master172 message byte stream/font differs')
+    records=extract_npcs(reader,172)['records']
+    if p['npcRecords']!=records or len(p['npcs'])!=3 or len(p['graphics'])!=3:
+        raise ValueError('Master172 actual actor count differs')
+    for i,(n,record)in enumerate(zip(p['npcs'],records)):
+        raw=bytes.fromhex(record['rawHex']);message=raw[2]if i==2 else raw[1]
+        if n['id']!=f'rom.npc.172.{i}' or n['mapId']!=172 or n['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')] or \
+                n['spriteId']!=raw[0] or n['source']['record']!=record['range'] or n['firstEffects'] or \
+                n.get('originalTalk') or n.get('treasure') or n['repeatDialogue'] is not None or \
+                n['firstDialogue']!=f'rom.dialogue.182.{message}' or n.get('readOnlyDialogue') is not True or n['master172ResourceEvidence']!=path:
+            raise ValueError('Master172 investigation cannot grant rewards or invent flags')
+        g=p['graphics'][n['sprite']]
+        if g['actorEntityId']!=raw[0] or not g['opaquePixelMatch'] or g['normalPlayEvidence']:
+            raise ValueError('Master172 actor graphic lacks exact original OAM evidence')
+        scoped_observed_graphic(reader,g)
+    expected_exit=dict(fromMapId=172,trigger=[7,14],toMapId=101,spawn=[32,12],kind='EXIT_RECORD',
+        confidence='VERIFIED',arrivalDirection='DOWN',source=reader.span(8,0xe835,5,'Original five-byte exit row'))
+    if p['exits']!=[expected_exit] or list(checked_span(reader,expected_exit['source']))!=[7,14,101,32,12]:
+        raise ValueError('Master172 independent return differs')
+    evidence=p['controlledEvidence'];probe=evidence['probePath']
+    if evidence['normalPlayEvidence'] or evidence['androidEvidence'] or not evidence['noRewardNoQuestLock'] or \
+            digest((ROOT/probe).read_bytes())!=evidence['probeSha256'] or \
+            evidence['investigation']!=dict(commandKeys=['A','DOWN','DOWN','DOWN','A'],group=182,message=2,
+                actorEntityId=179,mapFlag172Before=0,mapFlag172After=0,global7c8Before=1,global7c8After=1,inventoryAndPartyChanged=False):
+        raise ValueError('Master172 read-only original investigation evidence differs')
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -2540,6 +2621,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('master172ResourceEvidence'):
+            proof=validate_world_master172_resources(reader)
+            if mid!=172 or recipe['master172ResourceEvidence']!='game-data/provenance/world-master172-resources.json' or \
+                    allowed!=[0,2] or recipe['palette']!=proof['map']['palette'] or set(collision)!={0,1,2} or \
+                    recipe.get('directionalCollision') or recipe.get('terrain') or \
+                    recipe['npcCells']!=[n['cell'][1]*16+n['cell'][0]for n in proof['npcs']]:
+                raise ValueError('Master172 cannot change original room collision/palette/actors')
         if recipe.get('lotusResourceEvidence'):
             proof=validate_world_lotus_resources(reader)
             if mid!=136 or recipe['lotusResourceEvidence']!='game-data/provenance/world-lotus136-resources.json' or \
@@ -3064,6 +3152,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 any(evidence['graphics'].get(f'actor-219-boat-{d}.png')!=g for d,g in ship['graphics'].items()):
             raise ValueError('Free boat lacks existing contact map, independent lotus exits or native graphics')
         scene['freeBoat']=proof['freeBoat']
+    if evidence.get('mapArrivals'):
+        proof=validate_world_master172_resources(reader)
+        if evidence['mapArrivals']!=[proof['arrival']] or not {171,172}<=known or scene.get('mapArrivals') or \
+                evidence.get('exits')!=proof['exits']:
+            raise ValueError('Original arrival selector requires both bounded maps and independent return')
+        scene['mapArrivals']=evidence['mapArrivals']
     if evidence.get('growthExtension'):
         combat=json.loads(result['combat.json'])
         extend_world_growth(reader,combat,evidence['growthExtension'],provenance_path)
@@ -3273,7 +3367,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('lotusResourceEvidence'):
+        if npc.get('master172ResourceEvidence'):
+            proof=validate_world_master172_resources(reader)
+            if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
+                    any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):
+                raise ValueError('Master172 actor/dialogue/graphic differs')
+        elif npc.get('lotusResourceEvidence'):
             proof=validate_world_lotus_resources(reader)
             if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):

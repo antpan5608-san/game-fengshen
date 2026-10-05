@@ -6,7 +6,19 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效接续（2026-10-06 07:29:10，北京时间）
+## 当前有效接续（2026-10-06 07:52，北京时间）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82/c51-r1；R2冻结main87bc56cb、run37364795394：build/runtime SUCCESS，runtime-world正在运行，continuation尚未开始、NOT_PUBLISHED。inspect两次原runner未领取，NOT_AVAILABLE，无本轮客户端样本；不改候选、不将首段PASS写完整R2。
+
+独立开发树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next，从6ea732ed继续。当前IMPLEMENTED：原B9D2/F598仅在新入图时按当前雪莲0 USED行及队伍<4将171选为172，恢复显式保存的171不重选；共享World/ContentLoader，无治疗完成flag前置。map172与171真实网格/tileset2完全相同，复用既有36原CPU碰撞矩阵；三对象/独立172(7,14)→101(32,12)/182三段文本接续。信179原命令为调查/message2，不是普通谈话/message5；现有直接对象交互承载调查，不发奖、不设NPC-seen剧情flag。Unicode/静态弟子姿态PROVISIONAL，动态NPC尚未等价。
+
+c57局部内容GENERATED/RESTORE_VERIFIED：68依赖图/373文件，manifestd7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a；c56基底manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9分别固定，旧媒体逐字节保留。新原CPU256案/相关2 JVM、全391 JVM/82套0失败/错误/跳过、仪器编译、3导出方法41.240秒及严格空目录恢复通过。新源码APK干净构建待执行，APP_VERIFIED/PUBLISHED均NO；不要借前一80e6/c56 debug包背书本轮。旧ContentTest神木桨worldUse必null断言只对旧未启用内容有效，按真实freeBoatEnabled核新sceneScript；分类TEST_HARNESS旧能力断言，不删除原规则/经济断言。
+
+原版证据为CONTROLLED_ORIGINAL：实际受控治疗源库存/flag移至正常加载世界状态，真实门入101/172；37.flag0/128均入172，调查A/down×3/A真实读182.2两页且库存/队伍/map172.flag/7c8不变，独立DOWN返回101；不是正常原版全程或Android证据。必要输入已在忽略缓存，完整ROM及RAM/PPU/FC8不进公开Git。当前只保存派生数字矩阵/hash/OAM配方与实际Lua。
+
+下一精确动作：提交此可复现检查点并git archive→原ci_apk.restore→正确fengshenVersionCode/Name参数编译验包；同步备份独立树。继续核火云洞：Reference127只是不同地图ID，实际候选ROM89有三演员、真实world16(219,144)→89(8,13)和独立89(8,13)→16(219,144)，当前只调查，未打包/未实现丹药。运行中受控原版probe不冒称正常路线。R2实际PASS后按原审核/巡检/签名/hash发布，失败取真实证据薄修。SAVE-HISTORY仍已实现/JVM验证，UI/外部冷启NOT_RUN；十类欠账仍delivery-status。不中断主任务，不改Language/真实云档。
+
+## 先前有效接续（2026-10-06 07:29:10，北京时间）
 
 WORLD-FULL-01持续IN_PROGRESS/PARTIAL；ALL_MAPS_USABLE=NO，有效分母UNKNOWN。生产仍v82，R2冻结main87bc56cb/run37364795394；build、runtime SUCCESS，runtime-world仍IN_PROGRESS，后段未开始。未发布、不改候选。此前两次inspect托管runner未领取，NOT_AVAILABLE，未取得本轮客户端样本；不能称健康。
 

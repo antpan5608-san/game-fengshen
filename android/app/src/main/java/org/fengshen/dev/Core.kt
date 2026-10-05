@@ -269,6 +269,8 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     var transitionObserver:((Int,Int,Boolean)->Unit)?=null
     var prepareTarget:((Int)->Boolean)?=null
     var sceneResolver:((Int)->Scene?)?=null
+    /** New arrivals only. A saved explicit map ID is never silently remapped. */
+    var arrivalResolver:((Int)->Int)?=null
     var transitionFailure:Exception?=null;private set
     constructor(scene:Scene):this(mapOf(scene.mapId to scene),emptyList(),scene.mapId)
     init {require(initialMapId in scenes && exits.all{it.fromMapId in scenes && it.toMapId in scenes})}
@@ -322,7 +324,10 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
     private fun enter(exit:MapExit):Boolean {
         transitionFailure=null
         val caller=interiorContext.takeIf{exit.returnToCaller}
-        val destination=caller?.callerMapId?:exit.toMapId
+        val requested=caller?.callerMapId?:exit.toMapId
+        val destination=try{arrivalResolver?.invoke(requested)?:requested}catch(e:Exception){
+            transitionFailure=e;message="目标场景选择失败 · 当前状态已保留"
+            transitionObserver?.invoke(mapId,requested,false);return false}
         val landingX=caller?.returnX?:exit.spawnX;val landingY=caller?.returnY?:exit.spawnY
         val nextMode=exit.arrivalTerrainMode?:terrainMode
         val target=try{resolvedScene(destination)}catch(e:Exception){transitionFailure=e;null}

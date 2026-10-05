@@ -36,6 +36,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var stateVariant:NpcStateVariant?=null;internal set
     var hiddenInvestigation:Boolean=false;internal set
     var talkDisabled:Boolean=false;internal set
+    var readOnlyDialogue:Boolean=false;internal set
 }
 data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String) {
     var sprite:Bitmap?=null;internal set
@@ -101,6 +102,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     var ferries:Map<String,FerryDefinition> = emptyMap();internal set
     var ferrySprites:Map<String,Bitmap> = emptyMap();internal set
     var freeBoatEnabled:Boolean=false;internal set
+    var mapArrivals:List<OriginalMapArrival> = emptyList();internal set
     var freeBoatSprites:Map<Key,Bitmap> = emptyMap();internal set
     var nightLightAtlas:(()->Bitmap)?=null;internal set
     fun atlasForState(mapId:Int,flags:Map<String,Boolean>):Bitmap =
@@ -131,6 +133,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
             n.removedFlagId=npc.removedFlagId;n.moneyTreasure=npc.moneyTreasure;n.stateVariant=npc.stateVariant
             n.visibleFlagId=npc.visibleFlagId
             n.hiddenInvestigation=npc.hiddenInvestigation
+            n.readOnlyDialogue=npc.readOnlyDialogue
             n.talkDisabled=npc.talkDisabled
         }else npc
     }
@@ -313,6 +316,15 @@ object ContentLoader {
                 },n.optString("openedSprite").takeIf{it.isNotEmpty()}?.let{bitmap(it,16,16)}).also{npc->
                 npc.scriptedActor=n.optBoolean("scriptedActor",false)
                 npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
+                npc.readOnlyDialogue=n.optBoolean("readOnlyDialogue",false)
+                if(npc.readOnlyDialogue){
+                    require(n.optString("master172ResourceEvidence")=="game-data/provenance/world-master172-resources.json"&&
+                        npc.mapId==172&&npc.id in listOf("rom.npc.172.0","rom.npc.172.1","rom.npc.172.2")&&
+                        npc.firstDialogue=="rom.dialogue.182.${npc.id.substringAfterLast('.')}"&&
+                        npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.treasure==null&&
+                        npc.originalTalk==null&&npc.shopId==null&&npc.innId==null&&
+                        !n.has("originalTalk")&&!n.has("clinicId")&&!n.has("sceneStoryActor")&&!n.has("scriptedActor"))
+                }
                 npc.talkDisabled=n.optBoolean("talkDisabled",false)
                 if(npc.talkDisabled)require(n.getString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&
                     npc.id=="rom.npc.10.6"&&npc.mapId==10&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
@@ -1127,6 +1139,17 @@ object ContentLoader {
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 content.clinics=clinics
+                data.optJSONArray("mapArrivals")?.let{a->
+                    require(a.length()==1)
+                    content.mapArrivals=(0 until a.length()).map{i->val o=a.getJSONObject(i)
+                        OriginalMapArrival(o.getInt("requestedMapId"),o.getInt("actualMapId"),
+                            o.getString("itemId"),o.getInt("partyCountBelow"),o.getString("evidence")).also{r->
+                            require(r.verified()&&r.requestedMapId in scenes&&r.actualMapId in scenes)
+                            require(itemDefinitions[r.itemId]?.originalId==0&&itemDefinitions[r.itemId]?.category=="special")
+                            require(scenes.getValue(r.requestedMapId).width==scenes.getValue(r.actualMapId).width&&
+                                scenes.getValue(r.requestedMapId).height==scenes.getValue(r.actualMapId).height)
+                        }}
+                }
                 data.optJSONObject("nightLightAtlas")?.let{v->
                     require(v.getInt("mapId")==74&&v.getString("activeFlag")==WorldItems.NIGHT_LIGHT_FLAG&&
                         v.getString("evidence")=="game-data/provenance/world-night8-resources.json"&&74 in scenes)
