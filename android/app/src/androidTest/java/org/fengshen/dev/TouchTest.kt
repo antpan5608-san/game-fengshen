@@ -394,6 +394,15 @@ class TouchTest:IsolatedGameTestCase(){
             File(instrumentation.targetContext.getExternalFilesDir(null),"town01-$name.png").outputStream().use{
                 instrumentation.uiAutomation.takeScreenshot().compress(Bitmap.CompressFormat.PNG,100,it)}
         }
+        var seekingInjury=false
+        val injuryEvents=org.json.JSONArray()
+        fun injuryState(name:String){
+            injuryEvents.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
+                .put("snapshot",v.currentSnapshot().json()))
+            File(instrumentation.targetContext.getExternalFilesDir(null),"town01-normal-injury-attempts.json").writeText(
+                org.json.JSONObject().put("kind","NORMAL_NEW_GAME_TOUCH_INPUTS")
+                    .put("stateGrants",false).put("events",injuryEvents).toString())
+        }
         fun finishFight(){
             if(v.layer!=GameView.Layer.BATTLE)return
             val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
@@ -403,13 +412,20 @@ class TouchTest:IsolatedGameTestCase(){
                 val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     assertTrue("Town route must survive normally",fight.phase!=BattlePhase.DEFEAT)
-                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
-                        tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
+                        // A hand-knife can legitimately defeat early single enemies before they act.
+                        // Use the actual escape button while still at full HP to expose ordinary
+                        // retaliation; never edit HP, force an enemy, or alter random consumption.
+                        if(seekingInjury&&fight.hero.hp==fight.hero.maxHp)
+                            tap(v,center(v.battleCommandBounds(3)))
+                        else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    }
                     else if(presentation.screen==BattlePresentation.Screen.RESULT)SystemClock.sleep(40)
                 }
                 SystemClock.sleep(40)
             }
             assertEquals(GameView.Layer.MAP,v.layer)
+            if(seekingInjury)injuryState("normal-encounter-ended")
         }
         fun step(k:Key){stickStep(v,k);finishFight()}
         fun walkTo(tx:Int,ty:Int){
@@ -518,13 +534,15 @@ class TouchTest:IsolatedGameTestCase(){
             if(v.currentSnapshot().characters.first().hp==v.currentSnapshot().characters.first().maxHp){
                 walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId)
                 walkTo(200,130)
-                for(i in 0..120){
+                seekingInjury=true;injuryState("normal-injury-preparation-start")
+                for(i in 0 until 320){
                     val hero=v.currentSnapshot().characters.first()
                     if(hero.hp in 1 until hero.maxHp)break
                     val key=if(v.world.y/16==130)Key.UP else Key.DOWN
                     step(key)
                 }
-                assertTrue("Normal encounters must produce a living injured hero",v.currentSnapshot().characters.first().let{it.hp in 1 until it.maxHp})
+                seekingInjury=false;injuryState("normal-injury-preparation-end")
+                assertTrue("Normal encounters must produce a living injured hero; see town01-normal-injury-attempts.json",v.currentSnapshot().characters.first().let{it.hp in 1 until it.maxHp})
                 walkTo(202,130);assertEquals(0,v.world.mapId)
             }
             val before=v.currentSnapshot();val hero=before.characters.first()

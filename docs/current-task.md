@@ -10,7 +10,7 @@ valid_map_denominator: UNKNOWN
 
 用户最新连续授权：先在现有冻结R1范围完成有限STABLE验收并按原保护自动发布；发布后立即继续既有地府/十殿/重生/后续区域，不等待manual_acceptance或再次“继续”。不扩展R1候选；DEVELOPMENT HEAD与STABLE RELEASE分别维护，正常阶段验收与受控fixture严格区分。
 
-当前阶段：R1_STABLE_ACCEPTANCE。当前来源检查点c3850969167e5bfe29211328516d4094f8ff259f，work/world-c3850969，开始时 tracked clean；实际远端main同值。开始03:05 UTC（北京时间11:05），本平台连续时限无保证；约45～60分钟/实质检查点持久化状态。
+当前阶段：R1_STABLE_ACCEPTANCE。候选v80/source0491c444/build37258719811未发布：75 Python/335 JVM/17 Content/覆盖升级及前置App回归通过；runtime111602290566在正常村庄用药准备FAIL，后两job SKIPPED。实际原片78.807秒末尾哪吒Lv1/HP20满/EXP8，候选格200,129↔200,130均原合法zone0；有限120输入只取得弱敌无损胜利，未取得受伤状态。分类TEST_HARNESS的伤害前提采样不足，不是已证明客户端崩溃。修驱动只在仍满HP时使用真实逃跑按钮观察正常反击、受伤后恢复普通攻击，并记录实际状态索引；不修改HP/遇敌/RNG/奖励/药效。新同源候选待原三段验收。当前来源检查点c3850969167e5bfe29211328516d4094f8ff259f，work/world-c3850969，开始时 tracked clean；实际远端main同值。开始03:05 UTC（北京时间11:05），本平台连续时限无保证；约45～60分钟/实质检查点持久化状态。
 
 当前生产：v79/0.8.11-playable-r1-personal，PERSONAL_TEST_DELIVERED，manual_acceptance=PENDING，stable_acceptance=NOT_RUN。APK来源96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb，build37252974082/publish37253618518；SHA59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4。此个人阶段已交付但不是主任务终点，人工待定不阻塞开发。当前没有已发布STABLE R1。
 
@@ -20,7 +20,7 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 
 最近可信正常路线证据：v76同候选开局/龙宫/85洞/东海与入队/外部冷启通过，后来村2驱动未解第二人毒失败；驱动已回流且v79隔离村2补给/住宿/医疗/冷启PASS。本次STABLE同候选完整阶段仍NOT_RUN。历史失败和v77用户授权取消均保留，不能改PASS。
 
-当前具体阻塞：尚未取得R1 STABLE同候选三段正常验收，不是manual_acceptance。下一精确动作：同步scope与原审批源quality=STABLE及当前巡检task_id→相关快回归→原inspect→冻结main候选并触发原build/runtime→根据实际失败分类修复；成功后原审核发布，再接回地府开发线。
+当前具体阻塞：尚未取得R1 STABLE同候选三段正常验收，不是manual_acceptance。下一精确动作：编译并验证有限正常用药驱动修正→提交冻结新source→原build/runtime三段→根据实际失败分类修复；成功后原审核发布，再接回地府开发线。
 
 已验证/未验证边界：IMPLEMENTED/PACKAGED/APP_VERIFIED/PUBLISHED分列；当前18仅打包、v79短smoke已验，正式正常阶段尚未本轮执行；原始有效地图分母UNKNOWN。音频根因/真机/完整全世界NOT_RUN或UNCONFIRMED，P2字体问题保留，不阻塞无关内容。无新生产样本NO_DATA不能冒称健康，也不能单独否决实际自动阶段验收。
 
@@ -29,3 +29,5 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 累计十类欠账：docs/delivery-status.md；路线和已核连接：docs/original-playthrough-roadmap.md；历史现场：docs/history/world-full01-runtime-checkpoints.md；已有两个skill先直接读取。不reset/clean、不卸载清档、不覆盖真实云进度、不改Language、不放宽hash/signer/reviewer。
 
 发布后记录实际来源/content/APK hash/路线与欠账，将稳定包置新的覆盖回归基底，修复同步开发线并立即继续地府必要流程→十殿→重生→既有山洞/村→女儿村/清峰山/暗洞/女人国→剩余主线/地图/服务/结局。只有全任务条件齐备才COMPLETE；时限中断须写最后可信commit/content/正常终点/首阻塞/精确动作/生产稳定与开发版本/验收边界。
+
+隔离DEVELOPMENT HEAD已准备于/workspace/game-fengshen-world-continuation/work/world-full-after-r1，完整c50/56图/302文件逐hash复用；有限地府/十殿/重生scope与原三job薄适配在本地验证中，尚未提交或Android运行，不把准备算App通过。其内容不会混入冻结R1。
