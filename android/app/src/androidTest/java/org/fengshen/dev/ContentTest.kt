@@ -13,6 +13,70 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Real loader and isolated state fixtures, not a normal Jiameng route. */
+    fun testJiamengOriginalMapsActorsAndBattleDefinitionsFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val rules=c.battle!!
+        for(mid in listOf(145,146,147,148,37))assertNotNull(c.scenes[mid])
+        assertEquals(32,c.scenes.getValue(145).width);assertEquals(32,c.scenes.getValue(146).width)
+        assertEquals(16,c.scenes.getValue(147).width);assertEquals(16,c.scenes.getValue(148).width)
+        for(mid in 145..148){val zone=rules.zones.single{it.mapId==mid}
+            assertEquals(12,zone.groups.size);assertTrue(zone.groups.all{it.zoneId==29});assertEquals(245,zone.randomThreshold);assertTrue(zone.highGate)}
+        for(id in listOf(60,61,62,158,159,160,161)){
+            assertNotNull(c.enemyGraphics[id]);assertNotNull(c.itemDefinitions[rules.enemies.getValue(id).loot!!.itemId])}
+        val guard=c.npcsForState(145,emptyMap()).single{it.id=="rom.npc.145.0"}
+        assertEquals("rom.dialogue.155.0",guard.firstDialogue)
+        val active=mapOf("rom.npccontext.145.215" to true)
+        val activated=c.npcsForState(145,active).single{it.id==guard.id}
+        assertEquals("rom.dialogue.155.1",activated.firstDialogue);assertNotSame(guard.sprite,activated.sprite)
+        val completed=active+("rom.npccontext.145.228" to true)
+        assertFalse(c.npcVisible(activated,completed));assertFalse(10*32+4 in c.sceneForState(145,completed)!!.dynamicObjectCells)
+        val bed=c.npcs.single{it.id=="rom.npc.37.yang-bed"}
+        assertFalse(c.npcVisible(bed,emptyMap()));assertFalse(c.npcInteractive(bed))
+        assertFalse(5*16+3 in c.sceneForState(37,emptyMap())!!.dynamicObjectCells)
+        val context=mapOf("rom.npccontext.37.196" to true)
+        assertTrue(c.npcVisible(bed,context));assertTrue(5*16+3 in c.sceneForState(37,context)!!.dynamicObjectCells)
+        assertEquals(setOf("rom.map.145.flag.4","rom.map.145.flag.8"),c.sceneBarriers.filter{it.mapId==145}.map{it.removedFlagId}.toSet())
+        val first=rules.storyBattles.getValue(guard.id);assertTrue(first.activeIn(active));assertFalse(first.activeIn(emptyMap()))
+        assertTrue(first.finalizeWithoutDialogue);assertEquals(listOf(EncounterMember(3,158)),first.group.members)
+        val three=rules.storyBattles.getValue("rom.npc.148.0")
+        assertEquals(listOf(EncounterMember(0,159),EncounterMember(3,160),EncounterMember(6,161)),three.group.members)
+        assertEquals(5,three.additionalEntryTriggers.size);assertTrue(three.intro!!.preserveOpeningPosition)
+        assertEquals(37,three.continuation!!.destination!!.mapId)
+        assertEquals(4 to 5,three.continuation!!.destination!!.let{it.x to it.y})
+        assertEquals(5,c.itemDefinitions.getValue("rom.special.18").battleBindingUse!!.bindingMarker)
+        assertNull(c.equipmentDefinitions["rom.armor.20"])
+    }
+
+    fun testJiamengSavedActorsDialogueAndManualReturnFixture(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val yang=c.joinCharacters.getValue("yangjian").copy(statusMask=64)
+        val xiao=c.joinCharacters.getValue("xiaolongnv").copy(hp=0,mp=0,statusMask=64)
+        val before=SaveSnapshot(c.scene.version,37,72,88,Key.UP,listOf(c.initialPlayer,xiao,yang),
+            mapOf(HerbUse.ID to 2,"rom.special.18" to 1),mapOf("rom.npccontext.37.196" to true),money=321)
+        assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+        val npc=c.npcs.single{it.id=="rom.npc.37.0"};val first=OriginalNpcTalk.begin(before,npc.originalTalk!!)
+        assertTrue(first.applied);assertEquals(before,first.snapshot);assertEquals("rom.dialogue.47.0",first.nextDialogue)
+        val healthy=before.copy(characters=before.characters.map{if(it.id==yang.id)it.copy(statusMask=0)else it})
+        val repeat=OriginalNpcTalk.begin(healthy,npc.originalTalk!!);assertTrue(repeat.snapshot.flags["rom.map.37.flag.1"]==true)
+        assertEquals("rom.dialogue.47.1",repeat.nextDialogue);assertTrue(repeat.snapshot.validate(c))
+        assertEquals(healthy.copy(flags=repeat.snapshot.flags),repeat.snapshot)
+        assertEquals(repeat.snapshot,OriginalNpcTalk.begin(repeat.snapshot,npc.originalTalk!!).snapshot)
+        val script=c.sceneStories.getValue("rom.npc.146.0");val source=before.copy(mapId=146,x=40,y=88,flags=emptyMap())
+        assertTrue(source.validate(c));assertFalse(script.automaticallyTriggersAt(source))
+        val opened=StoryFollowup.begin(source,script);assertEquals(source.characters,opened.snapshot.characters)
+        assertTrue(opened.snapshot.validate(c));val saved=SaveSnapshot.parse(opened.snapshot.json().toString())
+        assertEquals(opened.snapshot,saved);assertTrue(saved.validate(c))
+        assertFalse(StoryFollowup.advance(saved,script,"wrong.dialogue").applied)
+        val closed=StoryFollowup.advance(saved,script,"rom.dialogue.156.2");assertTrue(closed.applied)
+        assertEquals(xiao.copy(hp=xiao.maxHp,mp=xiao.maxMp!!,statusMask=0),closed.snapshot.characters[1])
+        assertEquals(source.inventory,closed.snapshot.inventory);assertEquals(source.money,closed.snapshot.money)
+        assertEquals(source.characters[0],closed.snapshot.characters[0]);assertEquals(yang,closed.snapshot.characters[2])
+        assertTrue(closed.snapshot.validate(c));assertEquals(closed.snapshot,SaveSnapshot.parse(closed.snapshot.json().toString()))
+        assertFalse(StoryFollowup.advance(closed.snapshot,script,"rom.dialogue.156.2").applied)
+        assertFalse(c.npcVisible(c.npcs.single{it.id==script.npcId},closed.snapshot.flags))
+        assertTrue(source.copy(contentVersion="opening-segment-001-c50").validate(c))
+        assertTrue(source.copy(contentVersion="opening-segment-001-c51-r1").validate(c))
+    }
     /** Actual loader and controlled JSON/variant fixtures, separate from normal optional talk. */
     /** R1 dependencies, original services and isolated save rules; not normal route evidence. */
     fun testPlayableR1FrozenDependenciesAndMedicalPartySave(){

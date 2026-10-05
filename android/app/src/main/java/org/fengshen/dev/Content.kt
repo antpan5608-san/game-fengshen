@@ -131,6 +131,9 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=
         (npc.visibleFlagId?.let{flags[it]==true}?:true)&&
         (npc.removedFlagId?.let{flags[it]!=true}?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true)
+    // Original context196 actor130 has FF/FF messages and no talk action.
+    // Keep its visible collision without inventing an empty conversation.
+    fun npcInteractive(npc:StoryNpc)=!npc.scriptedActor&&!npc.automaticStoryOnly&&npc.id!="rom.npc.37.yang-bed"
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
         if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
         val base=scenes[mapId]?:return null

@@ -76,3 +76,10 @@ WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN�
 新增实现：8原NPC、2原碰撞actor、17真实出口、7敌人/完整zone29四图12组、两Boss及原小龙女恢复/三将胜后到37脚本；原特殊18 marker5通过现有回合入口。Room37条件对白不收费/不治病/不增剧情锁；床上杨戬只在context196出现，保留既有角色。普通敌人60/61/62原名UNKNOWN，防具20参考名PROVISIONAL、装备主人/槽位未接入。原ROM/原图/PPU仍在忽略目录，没有公开上传。
 
 四层状态：新佳梦关IMPLEMENTED（局部逻辑/配方）；CONTENT_GENERATED（可重复325文件）；APK_PACKAGED/APP_VERIFIED/PUBLISHED均NOT_RUN。当前ci/content-source/runtime-scope仍旧c50，不将新golden误作当前候选。下一动作：增加ContentTest限定加载/条件演员/共享命令/存档回归，原恢复至隔离干净工作区构建候选；等待R2同源三job结果后按原发布门槛处理，再整合后续有限可玩区段，不停止等待用户继续。
+
+
+### 2026-10-06 04:09:38 Asia/Shanghai 加载与存档接续
+
+独立佳梦关检查点92a5131b8589d868cf24498eae43810a38bb8aa3已由API非force备份到work/world-jiameng-batch-continuation/a5220c8665c0b14a754e8fe3fa186bf7598bfb8c，精确树09343219b12f0fb15824ae307b494880b468ebe2。新增两个ContentTest验证真实加载、61图中的本段/zone29/Boss/条件演员/原旧档及零步NPC恢复，已编译但App NOT_RUN；19相关JVM方法通过（7 activation/2 room talk/6 character change/4 scene story）。原context196卧床actor FF/FF无交谈，不打开伪空对白，保持真实显示/碰撞。
+
+R2新候选签名APK独立验证通过，v83/0.8.13-world-hell-r2，来源87bc56cb，run37364795394，SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab，c50/302文件和原签名不变。runtime仍执行，NOT_PUBLISHED。inspect37364791739审批成功但托管runner未领取任务而取消（runner_id0、无steps），服务端查询NOT_AVAILABLE；通过原inspect重试一次37367849461，审批成功，查询runner尚排队。不能把环境失败或无样本写健康。
