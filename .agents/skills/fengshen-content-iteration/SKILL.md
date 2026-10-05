@@ -112,6 +112,8 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 
 清单的打包集合必须来自当前target，而不是较小的恢复输入：`inventory_target_from_base`先核原APK/signature/hash，再调用原`export_from_base`核target manifest。此CLI已在Linux既有JDK/ANDROID_SDK_ROOT实际运行，`test_world_hell_scope`验证当前target集合/文件数及错误基底拒绝，`test_world_inventory`仍要求未知分母和App NOT_RUN。`packageSource`标REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE，不能当成已发布APK；仅ROM服务枚举也不能把后来已接的caller硬编码成NOT_IMPLEMENTED。
 
+服务同样从目标`scene.serviceBindings`与实际shops/inns/clinics交叉引用，原inventory入口已生成caller/室内/定义绑定并验证错引用拒绝。PACKAGED不推断App业务通过或已发布。新场景局部复现可在隔离git archive目录复用匹配ROM缓存/原SDK，原`ci_apk.restore`→wrapper `assembleDebug`→`ci.content`核实际包；已实际成功，debug签名产物只证明干净构建/内容，不替代生产签名或KVM运行。
+
 F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取已执行成功：旧收集器给town01画面加touch-ux-前缀，按真实文件名筛选后取回7张原App服务PNG并人工检查。先前筛选零图片和未保留F0原片仍是限制；后续必须核artifact实际文件，不能将测试PASS当录像已保留。不要无限重试或修改代理。
 
 

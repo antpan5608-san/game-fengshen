@@ -28,6 +28,10 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 
 本树52相关测试/仪器编译14秒PASS，含原R1隔离scope、PERSONAL_TEST分级拒绝、R2三段不同APK/缺gate/错pin拒绝、精确56/302复现与原Bash分派。原inventory入口已实际运行：从可信v27输入按c50 target pin导出后统计56，旧“packaged9”不是当前目标；175几何/233NPC/额外175槽未知继续保留。reports/world-coverage.json新增packageSource，appRenderPassed=0/全部正常可达未验证，未把结构枚举写全地图完成。
 
+干净源码ae39acb7103ada9b3f0435853252669df41d0bb4已用git archive在/workspace/scratch/world-hell-r2-clean-ae39acb复现：原ci_apk.restore严格恢复c50/302→原wrapper assembleDebug全35任务14秒PASS→原ci.content读取实际APK，56图/302文件/目标manifest一致。仅本地DEBUG签名包，SHA19eec6d885b50a30155e40d84a5ed8e968a0ef15a938955fb54f706c7cd36f26，NOT_APP_VERIFIED/NOT_PUBLISHED，不是待正式发布签名候选。源码精确树6c828051549b844939f9e96ae7c596d67649709b已在GitHub work/world-hell-r2-c50-continuation/4c1f1c55befb44830a86a858fdb2faed545f24d8备份，main未移动。
+
+当前清单还从目标scene的真实serviceBindings读取40个caller/室内绑定（村0..6、含12医生绑定），记录PACKAGED与APP_VERIFICATION=NOT_RUN/发布未评估。不是全世界商店实现完成；结构表服务仍需当前包与App审阅。原CLI与该路径正反例已运行，错定义引用拒绝。
+
 当前首阻塞：R1同候选三段真实运行尚未完成。下一精确动作：查看37261594942实际runtime结果；成功则原review/发布和公网完整字节/postflight，再将可信v81作为R2覆盖升级基底、合并本接续检查点而不覆盖来源/旧修改，原构建跑地府→十殿→重生。失败则先读取原失败录像/状态索引分类，有限修复重新构建，不用旧结果替新APK背书。R2本地提交先持久化，不在R1候选期间移动main。
 
 已验证/未验证边界：IMPLEMENTED/PACKAGED/APP_VERIFIED/PUBLISHED分列；当前18仅打包、v79短smoke已验，正式正常阶段尚未本轮执行；原始有效地图分母UNKNOWN。音频根因/真机/完整全世界NOT_RUN或UNCONFIRMED，P2字体问题保留，不阻塞无关内容。无新生产样本NO_DATA不能冒称健康，也不能单独否决实际自动阶段验收。
