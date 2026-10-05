@@ -1599,6 +1599,64 @@ def validate_world_village_batch_resources(reader,map_id):
     return v,p['bridge']
 
 
+def validate_world_scene_items(reader):
+    """Only the current native item0/14 menu effects and durable dialogues.
+    Does not infer boat travel or bless Android/legacy slot-order equivalence.
+    """
+    from forensics.fengshen246 import extract_text,glyph_pixels,decode_tokens
+    path='game-data/provenance/world-west-scene-items.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='original-snow37-event9-and-paddle42-event23-menu-and-durable-dialogue':
+        raise ValueError('Scene item source differs')
+    required={(2,0xe2c5,53),(2,0xe3c9,31),(2,0xa22c,110),(11,0xcd9a,45),(11,0xcbee,40)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Scene item original dispatch missing')
+    for s in p['sources']:checked_span(reader,s)
+    for rule,ident,mid,event,actor,messages,ptr,size in zip(p['rules'],(0,14),(37,42),(9,23),(130,162),
+            ([4],[6,7]),(0xcf1a,0xd3a6),(0x2b,0x27)):
+        expected=dict(originalItemId=ident,itemId=f'rom.special.{ident}',mapId=mid,eventId=event,targetActor=actor,
+            quantityAfterSuccessfulUse=128,consumeCount=1,retainsEmptyUsedRow=True,
+            dialogueIds=[f'rom.dialogue.{mid+10}.{m}'for m in messages],completionFlag=f'rom.map.{mid}.flag.128',
+            playerSteps=0,noDestinationChange=True,
+            effects=dict(characterId='yangjian',statusValue=0,hpFrom='currentMaxHp',mpFrom='currentMaxMp',
+                clearContextAfter='rom.npccontext.37.196')if ident==0 else dict(shipByte=0x6812,shipValue=1),
+            scriptPointer=reader.span(11,0xcb5e+2*event,2,'Original event pointer'),
+            eventSource=reader.span(11,ptr,size,'Original scene item event phases'))
+        if rule!=expected or reader.word(11,0xcb5e+2*event)!=ptr:
+            raise ValueError('Scene item cannot invent another effect, target, travel or consumption')
+        checked_span(reader,rule['eventSource'])
+    if len(p['rules'])!=2 or len(p['cpu'])!=2:raise ValueError('Scene item scope differs')
+    for t,count in zip(p['cpu'],(16384,8)):
+        data=(ROOT/t['path']).read_bytes()
+        if t['caseCount']!=count or t['failures'] or digest(data)!=t['sha256'] or len(data.splitlines())!=count+1 or \
+                digest((ROOT/t['probePath']).read_bytes())!=t['probeSha256']:
+            raise ValueError('Scene item CPU proof differs')
+    font=p['font'];raw=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(raw)!=4096 or [s['offset']for s in font['sources']]!=[524304+38*2048,524304+39*2048]:
+        raise ValueError('Snow use active font differs')
+    if {g['code']for g in font['glyphs']}!={k for k in cs if not k&64}:raise ValueError('Snow use glyph coverage missing')
+    for g in font['glyphs']:
+        if g['character']!=cs[g['code']] or digest(bytes(v for row in glyph_pixels(raw,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Snow use glyph differs')
+    if [d['id']for d in p['dialogues']]!=['rom.dialogue.47.4']:raise ValueError('Snow use message differs')
+    d=p['dialogues'][0];t=extract_text(reader,47,4)
+    if d['source']['record']!=t['range'] or d['source']['pointerEvidence']!=t['pointerEvidence'] or \
+            decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:
+        raise ValueError('Snow use original dialogue differs')
+    items=p['items'];updates=p['itemCapabilityUpdates']
+    expected_use=lambda ident:dict(targetSpriteId=130 if ident==0 else 162,reusable=False,
+        usedFlagId=f'rom.inventory.special.{ident}.used',evidence=path)
+    if len(items)!=1 or len(updates)!=1 or updates[0]['id']!='rom.special.14' or \
+            updates[0]['fields']!=dict(name='神木槳',description='面向船家使用神木槳；接原版对白，拓宽原版航行地形。',worldUse=expected_use(14)):
+        raise ValueError('Paddle capability update differs')
+    i=items[0];pointer=reader.word(2,reader.word(2,0xe610));name=reader.read(2,pointer,32);name=name[:name.index(255)+1]
+    if (i['id'],i['category'],i['originalId'],i['maxCount'],i['name'])!=('rom.special.0','special',0,1,'雪蓮') or \
+            i['source']['confidence']!='PROVISIONAL_REFERENCE' or i['source']['originalVerified']is not False or \
+            i['source']['nameRange']['cpuAddress']!=pointer or checked_span(reader,i['source']['nameRange'])!=name or \
+            i['worldUse']!=expected_use(0) or any(k in i for k in ('buyPrice','sellPrice','herbUse','battleBindingUse','equipment')):
+        raise ValueError('Snow item definition or scene-only use differs')
+    return p
+
+
 def validate_world_house_resources(reader,map_id):
     """Reuse plain rooms/caller state with exact original house-table bindings.
 
@@ -2933,6 +2991,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item.get('sceneItemEvidence')=='game-data/provenance/world-west-scene-items.json':
+                    if item not in validate_world_scene_items(reader)['items']:
+                        raise ValueError('Scene special item lacks scoped original menu proof')
+                    continue
                 if item.get('inventoryGrantEvidence')=='game-data/provenance/world-village-batch-resources.json':
                     path=item['inventoryGrantEvidence'];p=load(ROOT/path)
                     bindings=[n for v in p['villages']for n in v['npcs']if
@@ -3045,6 +3107,17 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('Jiameng capability must preserve the complete actual special18 parent')
         validate_world_jiameng_binding(reader,dict(id=158,requiredBindingMarker=5,bindingEvidence=path))
         matches[0].update(evidence['existingItemCapabilityUpdates'][0]['fields'])
+    elif evidence.get('sceneItemCapabilityEvidence'):
+        proof=validate_world_scene_items(reader)
+        if evidence['sceneItemCapabilityEvidence']!='game-data/provenance/world-west-scene-items.json' or \
+                evidence.get('existingItemCapabilityUpdates')!=proof['itemCapabilityUpdates'] or \
+                evidence.get('existingNpcCapabilityUpdates') or any(d not in evidence.get('dialogues',[])for d in proof['dialogues']):
+            raise ValueError('Scene item capability update differs from original proof')
+        for update in proof['itemCapabilityUpdates']:
+            matches=[v for v in scene['items']if v['id']==update['id']]
+            if len(matches)!=1 or digest(encoded(matches[0]))!=update['baseDefinitionSha256']:
+                raise ValueError('Scene item capability parent differs')
+            matches[0].update(update['fields'])
     elif evidence.get('queen117CapabilityEvidence'):
         proof=validate_world_queen117_resources(reader)
         if evidence['queen117CapabilityEvidence']!='game-data/provenance/world-queen117-state.json'or \

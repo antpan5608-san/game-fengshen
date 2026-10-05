@@ -277,6 +277,63 @@
       }
     ]
   },
+  "itemCapabilityUpdates": [
+    {
+      "baseDefinitionSha256": "88e804b8674b7f023e344394462af3c5c56a8bf384738c0d74c47675892bd079",
+      "fields": {
+        "description": "面向船家使用神木槳；接原版对白，拓宽原版航行地形。",
+        "name": "神木槳",
+        "worldUse": {
+          "evidence": "game-data/provenance/world-west-scene-items.json",
+          "reusable": false,
+          "targetSpriteId": 162,
+          "usedFlagId": "rom.inventory.special.14.used"
+        }
+      },
+      "id": "rom.special.14"
+    }
+  ],
+  "items": [
+    {
+      "category": "special",
+      "description": "面向病房中的楊戬使用；接原版恢復與对白。",
+      "id": "rom.special.0",
+      "maxCount": 1,
+      "name": "雪蓮",
+      "originalId": 0,
+      "sceneItemEvidence": "game-data/provenance/world-west-scene-items.json",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "nameEvidence": "Actual controlled original menu and dialogue name",
+        "nameRange": {
+          "cpuAddress": 59409,
+          "length": 4,
+          "meaning": "Original special0 name byte stream",
+          "module": 2,
+          "offset": 92193,
+          "sha256": "8d0184b0fbcf85926bd24b866561daaaa70c07fbda31d4d7de8649a375542863"
+        },
+        "originalVerified": false,
+        "provisionalKind": "ROM_MENU_NAME_WITH_SCOPED_CPU_RULES_NOT_FULL_CANONICAL",
+        "referenceNameCrossCheck": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "databaseSha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "project": "https://github.com/v5100v5100/FengShenBang"
+        },
+        "remainingUnknown": [
+          "Normal Android flow and complete font equivalence"
+        ]
+      },
+      "worldUse": {
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "reusable": false,
+        "targetSpriteId": 130,
+        "usedFlagId": "rom.inventory.special.0.used"
+      }
+    }
+  ],
   "kind": "CONTROLLED_ORIGINAL_MENU_AND_CPU_NOT_NORMAL_ANDROID",
   "licenseStatus": "UNKNOWN",
   "limitations": [
@@ -299,6 +356,15 @@
       "sha256": "d4836f717bbb7f3dd60e3520663d214f998203539a75ca6247e6e19313bcc5be"
     }
   ],
+  "paddleNameVerification": {
+    "kind": "CONTROLLED_ORIGINAL_MENU_ITEM_SELECTION",
+    "licenseStatus": "UNKNOWN",
+    "name": "神木槳",
+    "originalItemId": 14,
+    "originalVerifiedScope": "Current original item name only; not full canonical",
+    "screenshotPath": "private-derived/world-west-paddle-menu-controlled/06-A.png",
+    "screenshotSha256": "ada7263eea1ee0f9d1f909fe810df90334fb5d35a1ca88a79ba59b3480d2ce0d"
+  },
   "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
   "rules": [
     {
@@ -348,7 +414,7 @@
         "rom.dialogue.52.7"
       ],
       "effects": {
-        "shipByte": 26770,
+        "shipByte": 26642,
         "shipValue": 1
       },
       "eventId": 23,
