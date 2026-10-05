@@ -395,3 +395,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 用户反馈先查对应版本和时间的既有日志，再复现/修复/补快回归，不要求其证明技术根因；保留唯一好的迁移前原档和真实云进度。完整游玩、设备、声音及长体验仍标人工PENDING，取消/失败和未实现内容分别保留。
 
 - 外部冷启比较必须绑定刚保存的端点：实际个人smoke在内部Activity重进后已正常移动，却仍读旧normal端点，host字节恢复比较已过而测试坐标/encounter断言失败。保留原状态断言，正常smoke只做一次保存，然后由原录屏器唯一执行外部force-stop/cold/继续；该薄修已编译、快检、真实同候选短smoke与外部cold通过，并经原发布链路/公网字节复核。保留失败原片和源值，不能把之前未通过的cold改PASS。
+
+- 原NPC记录首字节是entityByte，不能当对白组；以原extract_npcs逐值核清单，当前四域正反例已运行。对白组须另查实际调度/活动font，Reference编号和相似拓扑仅是线索。清单CLI仍要求已有JDK/ANDROID_SDK_ROOT，缺SDK会明确拒绝，不关闭APK校验。

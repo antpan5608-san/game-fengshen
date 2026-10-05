@@ -32,7 +32,7 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 
 当前清单还从目标scene的真实serviceBindings读取40个caller/室内绑定（村0..6、含12医生绑定），记录PACKAGED与APP_VERIFICATION=NOT_RUN/发布未评估。不是全世界商店实现完成；结构表服务仍需当前包与App审阅。原CLI与该路径正反例已运行，错定义引用拒绝。
 
-当前首阻塞：R1同候选三段真实运行尚未完成。下一精确动作：查看37261594942实际runtime结果；成功则原review/发布和公网完整字节/postflight，再将可信v81作为R2覆盖升级基底、合并本接续检查点而不覆盖来源/旧修改，原构建跑地府→十殿→重生。失败则先读取原失败录像/状态索引分类，有限修复重新构建，不用旧结果替新APK背书。R2本地提交先持久化，不在R1候选期间移动main。
+当前首阻塞：R1同候选三段真实运行尚未完成。下一精确动作：查看37261594942实际runtime结果；成功则原review/发布和公网完整字节/postflight，再将实际发布的可信R1版本作为R2覆盖升级基底、合并本接续检查点而不覆盖来源/旧修改，原构建跑地府→十殿→重生。失败则先读取原失败录像/状态索引分类，有限修复重新构建，不用旧结果替新APK背书。R2本地提交先持久化，不在R1候选期间移动main。
 
 已验证/未验证边界：IMPLEMENTED/PACKAGED/APP_VERIFIED/PUBLISHED分列；当前18仅打包、v79短smoke已验，正式正常阶段尚未本轮执行；原始有效地图分母UNKNOWN。音频根因/真机/完整全世界NOT_RUN或UNCONFIRMED，P2字体问题保留，不阻塞无关内容。无新生产样本NO_DATA不能冒称健康，也不能单独否决实际自动阶段验收。
 
@@ -41,3 +41,5 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 累计十类欠账：docs/delivery-status.md；路线和已核连接：docs/original-playthrough-roadmap.md；历史现场：docs/history/world-full01-runtime-checkpoints.md；已有两个skill先直接读取。不reset/clean、不卸载清档、不覆盖真实云进度、不改Language、不放宽hash/signer/reviewer。
 
 发布后记录实际来源/content/APK hash/路线与欠账，将稳定包置新的覆盖回归基底，修复同步开发线并立即继续地府必要流程→十殿→重生→既有山洞/村→女儿村/清峰山/暗洞/女人国→剩余主线/地图/服务/结局。只有全任务条件齐备才COMPLETE；时限中断须写最后可信commit/content/正常终点/首阻塞/精确动作/生产稳定与开发版本/验收边界。
+
+局部清单字段已纠正：NPC首字节为entityByte，不是对白组textGroup；原extract_npcs与清单在0/17/121/145四域逐值对照，11清单测试通过。使用已有SDK/JDK环境原CLI重生成40服务/56目标图清单；首次未设置SDK时实际拒绝，未关闭签名校验。此修改仅溯源语义，不新增或验证App剧情。
