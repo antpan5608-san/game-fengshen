@@ -712,7 +712,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun visibleMapControls()=layer==Layer.MAP
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
-        return content.npcsForState(world.mapId,flags).filter{!it.scriptedActor && !it.automaticStoryOnly && content.npcVisible(it,flags) &&
+        return content.npcsForState(world.mapId,flags).filter{content.npcInteractive(it) && content.npcVisible(it,flags) &&
             (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
     }
     private fun interactionTarget():StoryNpc? {
@@ -722,7 +722,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val originalPoint=nearbyNpcs().firstOrNull{it.interactionDirection!=null&&it.interactionCell==(x to y)}
         if(originalPoint!=null)return originalPoint
         val actors=content.npcsForState(world.mapId,flags)
-        val id=interactionTarget(x,y,world.direction,actors.filter{!it.scriptedActor&&!it.automaticStoryOnly&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
+        val id=interactionTarget(x,y,world.direction,actors.filter{content.npcInteractive(it)&&content.npcVisible(it,flags)}.map{NpcCell(it.id,it.x,it.y)})?.id
         return actors.firstOrNull{it.id==id}
     }
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
