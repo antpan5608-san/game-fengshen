@@ -122,7 +122,7 @@ try {
         $metadata['quality']='STABLE'
         $metadata['stable_acceptance']='PASS'
         $metadata['manual_acceptance']='PENDING'
-        $metadata.notes='Scoped R1 stable intermediate release; same-candidate normal routes, save and external cold restart verified. Full world incomplete; real-device and sound acceptance pending.'
+        $metadata.notes='Scoped stable intermediate release; same-candidate normal routes, save and external cold restart verified. Full world incomplete; real-device and sound acceptance pending.'
     }
     $metadata | ConvertTo-Json | Set-Content -LiteralPath $metadataPath -Encoding utf8NoBOM
     $env:OSS_ACCESS_KEY_ID=$env:ALIYUN_ACCESS_KEY_ID

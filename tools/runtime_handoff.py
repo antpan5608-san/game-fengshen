@@ -41,7 +41,7 @@ BINDING_KEYS = ('sourceCommit', 'buildRunID', 'sha256', 'contentHash',
 MAX_JSON_BYTES = 8 * 1024 * 1024
 MAX_SAVE_BYTES = 64 * 1024
 IMPORT_NAMES = {f'world-{label}-expected-save.json' for label in
-                ('north-palace', 'hell-village2', 'ferry', 'yang-join', 'runtime-storage-probe')}
+                ('north-palace', 'hell-village2', 'hall-batch', 'ferry', 'yang-join', 'runtime-storage-probe')}
 SCOPE_PATH = Path(__file__).resolve().parents[1] / 'ci/runtime-scope.json'
 R1_BASE_KEYS = ('upgrade normalHerbSupply controlledBoundaries shopEquipmentInputRegression '
     'touchUx phoneSizedLayout nanhaiNormalRoute nanhaiBossVictory nanhaiOnceAndColdRestart '
@@ -52,6 +52,12 @@ R1_BASE_KEYS = ('upgrade normalHerbSupply controlledBoundaries shopEquipmentInpu
 R1_WORLD_KEYS = WORLD_KEYS[:6]
 R1_CONTINUATION_KEYS = ['playableR1MedicalNormal', 'playableR1MedicalColdRestart']
 R1_STAGE_GATES = dict(base=R1_BASE_KEYS, world=R1_WORLD_KEYS, continuation=R1_CONTINUATION_KEYS)
+R2_WORLD_KEYS = R1_WORLD_KEYS + R1_CONTINUATION_KEYS + [
+    'worldFirstHallNormal','worldFirstHallColdRestart','worldSecondHallNormal',
+    'worldSecondHallColdRestart','worldHallBatchNormal','worldHallBatchColdRestart']
+R2_CONTINUATION_KEYS = ['worldFinalHallsNormal','worldRebirthDialogueAndColdRestart']
+R2_STAGE_GATES = dict(base=R1_BASE_KEYS,world=R2_WORLD_KEYS,continuation=R2_CONTINUATION_KEYS)
+R2_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 16, 17, 18, 19, 20, 22, 23, 25, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 76, 77, 78, 79, 85, 86, 87, 95, 96, 97, 98, 99, 100, 101, 107, 108, 109, 110, 114, 115, 116, 117, 139, 141, 158, 159, 163, 164, 171]
 PERSONAL_GATES = ['upgrade', 'contentLoad', 'touchTransactions', 'partySupplyAndInn',
                   'medicalDoors', 'herbAndBattle', 'saveProtection', 'preMigrationBackup', 'externalColdRestart']
 
@@ -100,17 +106,30 @@ def active_scope(candidate=None):
     scope = read_json(SCOPE_PATH)
     pin = read_json(SCOPE_PATH.parent / 'content-source.json')
     reference = pin.get('runtimeScope', {})
-    if (reference != dict(path='ci/runtime-scope.json', sha256=digest(SCOPE_PATH))
-            or scope.get('id') != 'PLAYABLE-R1'
-            or scope.get('requiredJobs') != ['runtime', 'runtime-world', 'runtime-continuation']
+    if scope.get('id') == 'PLAYABLE-R1':
+        expected_maps=[0,1,2,16,17,18,19,20,22,23,25,85,95,96,97,98,114,139]
+        expected_endpoint=dict(mapId=2,party=['nezha','xiaolongnv'],bossFlag='rom.map.95.flag.128')
+        expected_gates=R1_STAGE_GATES
+        expected_points={'base':['north-palace'],'world':['hell-village2']}
+    elif scope.get('id') == 'WORLD-HELL-R2':
+        expected_maps=R2_MAP_IDS
+        expected_endpoint=dict(mapId=16,cell=[238,160],party=['nezha','xiaolongnv'],sceneFlag='rom.map.86.flag.128')
+        expected_gates=R2_STAGE_GATES
+        expected_points={'base':['north-palace'],'world':['hall-batch']}
+        if scope.get('quality') != 'STABLE':
+            raise ValueError('Hell/rebirth milestone requires actual stable normal stages')
+    else:
+        raise ValueError('Unknown authorized frozen milestone')
+    if (reference != dict(path='ci/runtime-scope.json',sha256=digest(SCOPE_PATH))
+            or scope.get('requiredJobs') != ['runtime','runtime-world','runtime-continuation']
             or scope.get('completedStages') != list(STAGES)
             or scope.get('contentVersion') != pin['contentVersion']
             or scope.get('manifestSha256') != pin['manifestSha256']
-            or scope.get('mapIds') != [0,1,2,16,17,18,19,20,22,23,25,85,95,96,97,98,114,139]
-            or scope.get('endpoint') != dict(mapId=2, party=['nezha','xiaolongnv'], bossFlag='rom.map.95.flag.128')
-            or scope.get('stageGates') != R1_STAGE_GATES
-            or scope.get('checkpoints') != {'base':['north-palace'], 'world':['hell-village2']}):
-        raise ValueError('Frozen R1 scope differs from its dependency, endpoint or content pin')
+            or scope.get('mapIds') != expected_maps
+            or scope.get('endpoint') != expected_endpoint
+            or scope.get('stageGates') != expected_gates
+            or scope.get('checkpoints') != expected_points):
+        raise ValueError('Frozen milestone differs from its dependency, endpoint or content pin')
     if candidate is not None and (candidate['contentHash'] != scope['manifestSha256']
             or candidate['contentVersion'] != scope['contentVersion']):
         raise ValueError('Runtime scope does not describe this exact candidate content')
@@ -159,7 +178,7 @@ def finish_stage(stage, proposed, previous=None):
     """Keep only gates actually reached by this stage; never pre-approve later flows."""
     scope = active_scope(proposed)
     if stage == 'all' and scope is not None:
-        raise ValueError('Frozen R1 requires all three actual same-candidate stages')
+        raise ValueError('Frozen milestone requires all three actual same-candidate stages')
     if stage == 'all':
         return proposed
     if stage not in STAGES:
@@ -184,7 +203,7 @@ def finish_stage(stage, proposed, previous=None):
             raise ValueError('Missing actual stage gate: ' + key)
         result[key] = proposed[key]
         if scope and proposed[key] != 'PASS':
-            raise ValueError('Frozen R1 gate did not actually pass: ' + key)
+            raise ValueError('Frozen milestone gate did not actually pass: ' + key)
     result.update(binding(proposed), completedStages=list(STAGES[:index + 1]),
                   runtime='PASS' if stage == 'continuation' else 'PARTIAL')
     if scope:
@@ -360,17 +379,17 @@ def main():
             print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
             return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):
-            raise ValueError('Missing exact frozen R1 scope receipt')
+            raise ValueError('Missing exact frozen milestone scope receipt')
         active_scope(receipt)
         if receipt.get('runtime') != 'PASS' or receipt.get('completedStages') != list(STAGES):
-            raise ValueError('All three R1 runtime stages must actually pass')
+            raise ValueError('All three milestone runtime stages must actually pass')
         for keys in scope['stageGates'].values():
             for key in keys:
                 if receipt.get(key) != 'PASS':
-                    raise ValueError('R1 actual runtime gate missing: ' + key)
+                    raise ValueError('Milestone actual runtime gate missing: ' + key)
         if any(receipt.get(key) == 'PASS' for key in scope['deferredFullWorldGates']):
             raise ValueError('Stage-excluded world content must not be reported as verified')
-        print('Exact frozen R1 same-candidate runtime scope verified')
+        print('Exact frozen milestone same-candidate runtime scope verified')
         return
     if args.mode == 'probe':
         if not args.candidate:

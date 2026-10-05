@@ -3,6 +3,13 @@ import json,re,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class ServiceBudgetTest(unittest.TestCase):
+ def test_actual_evidence_filter_keeps_normal_route_journal_without_private_inputs(self):
+  script=(ROOT/'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
+  pattern=re.search(r"re.fullmatch\(r'([^']+)',name\)",script).group(1)
+  for name in ('town01-normal-injury-attempts.json','town01-herb-route-defeat.png','town01-shop17.png'):
+   self.assertIsNotNone(re.fullmatch(pattern,name),name)
+  for name in ('opening-local-save.xml','target.nes','../world-save.json','town01-secrets.json'):
+   self.assertIsNone(re.fullmatch(pattern,name),name)
  def test_current_task_keeps_required_runtime_identity(self):
   task=(ROOT/'docs/current-task.md').read_text(encoding='utf-8')
   self.assertEqual(['WORLD-FULL-01'],re.findall(r'^task_id:\s*([A-Z0-9-]+)',task,re.M))
