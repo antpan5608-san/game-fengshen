@@ -302,6 +302,9 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         }
         File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").writeText(v.currentSnapshot().json().toString())
+        val oldBackup=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("preContentMigration",null)
+        val backupFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-existing-backup.json")
+        if(oldBackup!=null)backupFile.writeText(oldBackup) else backupFile.delete()
         instrumentation.runOnMainSync{v.persistState();activity.finish()}
     }
     fun testUpgradeKeepsPreviousSave(){
@@ -310,7 +313,26 @@ class TouchTest:IsolatedGameTestCase(){
         val old=SaveSnapshot.parse(file.readText())
         val(activity,v)=launch()
         assertEquals(old.copy(contentVersion=v.content.scene.version),v.currentSnapshot())
+        if(old.contentVersion!=v.content.scene.version){
+            val backup=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("preContentMigration",null)
+            val priorBackup=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-existing-backup.json")
+            val first=if(priorBackup.exists())SaveSnapshot.parse(priorBackup.readText())else old
+            assertEquals("First original pre-upgrade JSON must remain recoverable",first,SaveSnapshot.parse(backup!!))
+        }
         instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testContentMigrationKeepsFirstRecoverableBackup(){
+        val source=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").readText()
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        val first=prefs.getString("preContentMigration",null)!!
+        val(activity,v)=launch()
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString("saveJson",source).commit())
+            v.restorePersisted();v.persistState()
+            assertEquals(first,prefs.getString("preContentMigration",null))
+            assertEquals(SaveSnapshot.parse(source).copy(contentVersion=v.content.scene.version),v.currentSnapshot())
+            activity.finish()
+        }
     }
     fun testHerbColdStartMatchesNormalSave(){
         val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json")
@@ -2432,6 +2454,10 @@ class TouchTest:IsolatedGameTestCase(){
         val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-village2-source.json")
         file.writeBytes(bytes)
         normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
+        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
+    }
+    /** Personal smoke only: same sourced fixture, no mainline-completion claim. */
+    fun testPersonalR1SmokeColdRestartMatchesVerifiedSave(){
         normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
     }
     fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}

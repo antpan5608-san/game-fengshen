@@ -54,6 +54,8 @@ class PlayableR1ScopeTest(unittest.TestCase):
   with self.assertRaises(ValueError):h.finish_stage('base',bad)
   with self.assertRaises(ValueError):h.finish_stage('all',proposed)
  def test_actual_review_command_accepts_complete_scope_and_rejects_missing_or_future_claims(self):
+  if self.scope.get('quality')=='PERSONAL_TEST':
+   self._personal_review_command_cases();return
   candidate=dict(sourceCommit='c'*40,buildRunID='123',sha256='a'*64,contentHash=self.pin['manifestSha256'],
    contentVersion=self.pin['contentVersion'],versionCode=68,versionName='fixture-only',signerSha256=self.pin['signerSha256'])
   candidate.update({key:'PASS'for keys in h.R1_STAGE_GATES.values()for key in keys})
@@ -68,6 +70,21 @@ class PlayableR1ScopeTest(unittest.TestCase):
     path.write_text(json.dumps(value),encoding='utf-8')
     run=subprocess.run([sys.executable,str(ci.ROOT/'tools/runtime_handoff.py'),'review','--receipt',str(path)],
      capture_output=True,text=True,timeout=10)
+    self.assertEqual(ok,run.returncode==0,run.stderr[-500:])
+ def _personal_review_command_cases(self):
+  candidate=dict(sourceCommit='c'*40,buildRunID='123',sha256='a'*64,contentHash=self.pin['manifestSha256'],
+   contentVersion=self.pin['contentVersion'],versionCode=78,versionName='fixture-only',signerSha256=self.pin['signerSha256'])
+  candidate.update({key:'PASS' for key in h.PERSONAL_GATES})
+  receipt=h.finish_personal(candidate)
+  cases=[(receipt,True),(dict(receipt,externalColdRestart='NOT_RUN'),False),
+   (dict(receipt,completedStages=['base','world','continuation']),False),
+   (dict(receipt,worldQueenRouteAndBindingNormal='PASS'),False),(dict(receipt,manual_acceptance='PASS'),False),
+   (dict(receipt,contentHash='f'*64),False)]
+  with tempfile.TemporaryDirectory() as td:
+   path=Path(td)/'receipt.json'
+   for value,ok in cases:
+    path.write_text(json.dumps(value),encoding='utf-8')
+    run=subprocess.run([sys.executable,str(ci.ROOT/'tools/runtime_handoff.py'),'review','--receipt',str(path)],capture_output=True,text=True,timeout=10)
     self.assertEqual(ok,run.returncode==0,run.stderr[-500:])
  def test_stage_content_methods_exist_and_shared_regressions_remain(self):
   source=(ci.ROOT/'android/app/src/androidTest/java/org/fengshen/dev/ContentTest.kt').read_text(encoding='utf-8')

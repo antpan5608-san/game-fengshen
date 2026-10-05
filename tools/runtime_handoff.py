@@ -52,6 +52,45 @@ R1_BASE_KEYS = ('upgrade normalHerbSupply controlledBoundaries shopEquipmentInpu
 R1_WORLD_KEYS = WORLD_KEYS[:6]
 R1_CONTINUATION_KEYS = ['playableR1MedicalNormal', 'playableR1MedicalColdRestart']
 R1_STAGE_GATES = dict(base=R1_BASE_KEYS, world=R1_WORLD_KEYS, continuation=R1_CONTINUATION_KEYS)
+PERSONAL_GATES = ['upgrade', 'contentLoad', 'touchTransactions', 'partySupplyAndInn',
+                  'medicalDoors', 'herbAndBattle', 'saveProtection', 'preMigrationBackup', 'externalColdRestart']
+
+
+def personal_quality(scope=None):
+    scope = active_scope() if scope is None else scope
+    return bool(scope and scope.get('quality') == 'PERSONAL_TEST')
+
+
+def finish_personal(proposed):
+    scope = active_scope(proposed)
+    if not personal_quality(scope):
+        raise ValueError('Personal delivery requires the exact authorized personal scope')
+    if any(proposed.get(key) != 'PASS' for key in PERSONAL_GATES):
+        raise ValueError('Personal delivery minimum smoke/upgrade/backup gate did not pass')
+    result = dict(binding(proposed), **{key: proposed[key] for key in PERSONAL_GATES})
+    result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
+        completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
+        longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
+        smokeStart='CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE',
+        fixtureSourceSaveSha256='84ab15c0acc25e5ec5dfcb5345a1978ce634cdfc27ec0e47b26c728dece31a01')
+    return result
+
+
+def review_personal(receipt):
+    scope = active_scope(receipt)
+    if not personal_quality(scope) or receipt.get('quality') != 'PERSONAL_TEST':
+        raise ValueError('Personal receipt must match the authorized source quality')
+    if receipt.get('manual_acceptance') != 'PENDING' or receipt.get('runtime') != 'SMOKE_PASS':
+        raise ValueError('Personal smoke cannot claim stable or manual acceptance')
+    if receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH) or receipt.get('runtimeScope') != scope['id']:
+        raise ValueError('Personal receipt scope/hash mismatch')
+    if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in PERSONAL_GATES):
+        raise ValueError('Actual personal minimum gates are required')
+    if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
+        raise ValueError('Unexecuted long/stable acceptance must remain explicit')
+    if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
+        raise ValueError('Personal smoke cannot masquerade as normal full-route acceptance')
+    return receipt
 
 
 def active_scope(candidate=None):
@@ -75,6 +114,12 @@ def active_scope(candidate=None):
     if candidate is not None and (candidate['contentHash'] != scope['manifestSha256']
             or candidate['contentVersion'] != scope['contentVersion']):
         raise ValueError('Runtime scope does not describe this exact candidate content')
+    if scope.get('quality', 'STABLE') not in ('STABLE', 'PERSONAL_TEST'):
+        raise ValueError('Unknown delivery quality')
+    if scope.get('quality') == 'PERSONAL_TEST' and scope.get('personalTest') != dict(
+            requiredJobs=['runtime'], completedStages=['personal-smoke'], gates=PERSONAL_GATES,
+            manual_acceptance='PENDING'):
+        raise ValueError('Personal minimum gates cannot be silently weakened')
     return scope
 
 
@@ -294,12 +339,15 @@ def main():
     parser.add_argument('--stage', choices=STAGES)
     parser.add_argument('--candidate', type=Path)
     parser.add_argument('--directory', type=Path)
-    parser.add_argument('--field', choices=('id', 'contentTests'))
+    parser.add_argument('--field', choices=('id', 'contentTests', 'quality'))
     parser.add_argument('--evidence', type=Path, default=Path('artifacts/checkpoint-ui'))
     parser.add_argument('--receipt', type=Path, default=Path('artifacts/town02-runtime/runtime-receipt.json'))
     args = parser.parse_args()
     if args.mode == 'scope':
         scope = active_scope()
+        if args.field == 'quality':
+            print(scope.get('quality','STABLE') if scope else 'STABLE')
+            return
         print((scope['id'] if scope else 'WORLD-FULL-01') if args.field == 'id' else
             ','.join('org.fengshen.dev.ContentTest#' + n for n in scope['contentTests']) if scope else
             'org.fengshen.dev.ContentTest')
@@ -307,6 +355,10 @@ def main():
     if args.mode == 'review':
         scope = active_scope()
         receipt = read_json(args.receipt)
+        if personal_quality(scope):
+            review_personal(receipt)
+            print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
+            return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):
             raise ValueError('Missing exact frozen R1 scope receipt')
         active_scope(receipt)

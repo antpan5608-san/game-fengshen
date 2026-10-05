@@ -150,5 +150,26 @@
     "testCloudSessionTokenEncryptedAndCleared",
     "testPathTraversalRejected",
     "testTownTradeFailuresAndEquipmentCycle"
-  ]
+  ],
+  "quality": "PERSONAL_TEST",
+  "personalTest": {
+    "requiredJobs": [
+      "runtime"
+    ],
+    "completedStages": [
+      "personal-smoke"
+    ],
+    "gates": [
+      "upgrade",
+      "contentLoad",
+      "touchTransactions",
+      "partySupplyAndInn",
+      "medicalDoors",
+      "herbAndBattle",
+      "saveProtection",
+      "preMigrationBackup",
+      "externalColdRestart"
+    ],
+    "manual_acceptance": "PENDING"
+  }
 }

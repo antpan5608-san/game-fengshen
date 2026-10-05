@@ -41,6 +41,7 @@ jobs:
     outputs:
       reviewed_base_run_id: ${{ steps.content_base.outputs.run_id }}
       reviewed_upgrade_run_id: ${{ steps.content_base.outputs.upgrade_run_id }}
+      runtime_quality: ${{ steps.content_base.outputs.runtime_quality }}
     defaults:
       run:
         shell: pwsh
@@ -73,6 +74,9 @@ jobs:
           $runtime=(Get-Content ci/content-source.json -Raw|ConvertFrom-Json).runtimeBaseline
           $upgradeRun=if($runtime){$runtime.buildRunId}else{$base.buildRunId}
           "upgrade_run_id=$upgradeRun"|Add-Content $env:GITHUB_OUTPUT
+          $quality=python tools/runtime_handoff.py scope --field quality
+          if($LASTEXITCODE -ne 0){throw 'Invalid hash-bound delivery scope'}
+          "runtime_quality=$quality"|Add-Content $env:GITHUB_OUTPUT
           $golden=(Get-Content ci/golden-nanhai-content.json -Raw|ConvertFrom-Json).iteration.base
           "golden_run_id=$($golden.buildRunId)"|Add-Content $env:GITHUB_OUTPUT
           $worldGolden=(Get-Content ci/golden-world-f0-content.json -Raw|ConvertFrom-Json).iteration.base
@@ -300,7 +304,21 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+      - name: Retain the explicitly graded personal smoke receipt and raw evidence
+        if: always() && needs.build.outputs.runtime_quality == 'PERSONAL_TEST'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fengshen-town02-runtime-evidence
+          path: |
+            artifacts/town02-runtime/*.json
+            artifacts/town02-runtime/test*.txt
+            artifacts/checkpoint-ui/personal-r1-smoke-*
+            artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Retain exact normal checkpoint for the next same-candidate stage
+        if: needs.build.outputs.runtime_quality != 'PERSONAL_TEST'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: fengshen-normal-checkpoint-base
@@ -421,7 +439,7 @@ jobs:
 
 
   runtime-world:
-    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests && needs.build.outputs.runtime_quality != 'PERSONAL_TEST'
     needs: [build, runtime]
     runs-on: ubuntu-24.04
     timeout-minutes: 300
@@ -639,7 +657,7 @@ jobs:
           retention-days: 14
 
   runtime-continuation:
-    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests
+    if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests && needs.build.outputs.runtime_quality != 'PERSONAL_TEST'
     needs: [build, runtime-world]
     runs-on: ubuntu-24.04
     timeout-minutes: 300

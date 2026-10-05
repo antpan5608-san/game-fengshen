@@ -26,6 +26,14 @@ try {
     if($ContentApk){$restore+=@('--apk',$ContentApk)}
     & python @restore
     if($LASTEXITCODE -ne 0){throw 'Existing content restoration failed'}
+    $quality=python tools/runtime_handoff.py scope --field quality
+    if($LASTEXITCODE -ne 0){throw 'Invalid delivery quality'}
+    if($quality -eq 'PERSONAL_TEST'){
+        foreach($pattern in @('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_playable_r1_scope.py','test_personal_test_delivery.py')){
+            & python -m unittest discover -s tests -p $pattern
+            if($LASTEXITCODE -ne 0){throw "Personal related regression failed: $pattern"}
+        }
+    }else{
     & python -m unittest discover -s tests -p test_ci_apk.py
     if($LASTEXITCODE -ne 0){throw 'CI safety tests failed'}
     & python -m unittest discover -s tests -p test_town02_export.py
@@ -122,6 +130,7 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Frozen playable R1 dependency and runtime-scope gates failed'}
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
+    }
     Push-Location (Join-Path $root 'android')
     try {
         $runtime=@();if($RuntimeTests){$runtime=@('-PfengshenInstrumentRelease=true',':app:assembleReleaseAndroidTest')}

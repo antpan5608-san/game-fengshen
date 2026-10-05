@@ -36,6 +36,7 @@ jobs:
           BUILD_RUN_ID: ${{ inputs.build_run_id }}
           EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
           OPERATION: ${{ inputs.mode }}
+          RELEASE_QUALITY: PERSONAL_TEST
         shell: bash
         run: |
           set -euo pipefail
@@ -60,7 +61,13 @@ jobs:
           ' <<< "$build" >/dev/null
           build_jobs=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BUILD_RUN_ID/jobs")
           jq -e '[.jobs[] | select(.name == "build" and .status == "completed" and .conclusion == "success")] | length == 1' <<< "$build_jobs" >/dev/null
-          for runtime_job in runtime runtime-world runtime-continuation; do
+          runtime_jobs=(runtime runtime-world runtime-continuation)
+          case "$RELEASE_QUALITY" in
+            PERSONAL_TEST) runtime_jobs=(runtime);;
+            STABLE) ;;
+            *) echo 'Unknown source-bound release quality' >&2; exit 1;;
+          esac
+          for runtime_job in "${runtime_jobs[@]}"; do
             jq -e --arg name "$runtime_job" '[.jobs[] | select(.name == $name and .status == "completed" and .conclusion == "success")] | length == 1' <<< "$build_jobs" >/dev/null
           done
           fi
@@ -112,7 +119,10 @@ jobs:
           if($r.conclusion -ne 'success' -or $r.status -ne 'completed' -or $r.event -ne 'workflow_dispatch' -or $r.headBranch -ne 'main' -or $r.headSha -ne $env:GITHUB_SHA -or $r.workflowName -ne 'Android cloud build'){throw 'Only a successful reviewed main build at this commit may publish'}
           $successfulBuildJobs=@($r.jobs|Where-Object {$_.name -eq 'build' -and $_.status -eq 'completed' -and $_.conclusion -eq 'success'})
           if($successfulBuildJobs.Count -ne 1){throw 'Base verification/capability runs are not APK builds'}
-          foreach($runtimeName in @('runtime','runtime-world','runtime-continuation')){
+          $quality=python tools/runtime_handoff.py scope --field quality
+          if($LASTEXITCODE -ne 0){throw 'Invalid hash-bound runtime quality'}
+          $runtimeNames=if($quality -eq 'PERSONAL_TEST'){@('runtime')}else{@('runtime','runtime-world','runtime-continuation')}
+          foreach($runtimeName in $runtimeNames){
             $runtimeJobs=@($r.jobs|Where-Object {$_.name -eq $runtimeName -and $_.status -eq 'completed' -and $_.conclusion -eq 'success'})
             if($runtimeJobs.Count -ne 1){throw "Actual same-candidate runtime stage required: $runtimeName"}
           }

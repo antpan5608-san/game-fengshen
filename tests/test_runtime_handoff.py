@@ -236,6 +236,7 @@ adb(){ printf '%s\\n' "$*" >> adb-calls.txt; printf 'OK (1 test)\\n'; }
         prefix = '''set -euo pipefail
 stage="$1"
 scope_id="WORLD-FULL-01"
+quality="STABLE"
 mkdir -p artifacts/town02-runtime
 python(){ printf 'PY %s\\n' "$*"; }
 run_test(){ printf 'TEST %s\\n' "$*"; }
@@ -275,6 +276,7 @@ sleep(){ :; }
         prefix = '''set -euo pipefail
 stage="$1"
 scope_id="PLAYABLE-R1"
+quality="STABLE"
 mkdir -p artifacts/town02-runtime
 python(){ printf 'PY %s\\n' "$*"; }
 run_test(){ printf 'TEST %s\\n' "$*"; }
