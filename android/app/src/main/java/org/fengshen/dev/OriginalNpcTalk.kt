@@ -48,6 +48,7 @@ object OriginalNpcTalk {
         if(rule.actionId==52)return villageSix(before,rule)
         if(rule.actionId==31)return islandResidents(before,rule)
         if(rule.actionId==58)return jiamengRoom(before,rule)
+        if(rule.actionId in listOf(53,54))return westernVillageWitness(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -57,6 +58,26 @@ object OriginalNpcTalk {
             (if(count==1)mapOf(rule.mapFlagId to true)else emptyMap())
         return StoryFollowup.Result(before.copy(flags=flags),
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
+    }
+
+    /** Shared original CE4A/CE75 selectors. A nonzero global byte changes only
+     * the message and actor map bit; it does not cure, grant, charge or join. */
+    private fun westernVillageWitness(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val expected=when(rule.mapId to rule.mapFlagId){
+            8 to "rom.map.8.flag.1"->Triple(53,"rom.dialogue.18.2","rom.dialogue.18.11")
+            8 to "rom.map.8.flag.8"->Triple(53,"rom.dialogue.18.5","rom.dialogue.18.12")
+            9 to "rom.map.9.flag.1"->Triple(54,"rom.dialogue.19.12","rom.dialogue.19.4")
+            else->null
+        }
+        if(expected==null||rule.actionId!=expected.first||rule.firstDialogue!=expected.second||
+            rule.repeatDialogue!=expected.third||rule.witnessFlagId!="rom.global.7c9.nonzero"||rule.itemId.isNotEmpty())
+            return StoryFollowup.Result(before,null,false,"当前村民条件对白未核验")
+        val witnessed=before.flags[rule.witnessFlagId]==true||(0..7).any{
+            before.flags["rom.global.7c9.${1 shl it}"]==true
+        }
+        val repeat=before.flags[rule.mapFlagId]==true||witnessed
+        val next=if(witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,if(repeat)rule.repeatDialogue else rule.firstDialogue,true)
     }
 
     /** Original 10:CEF8: illness keeps the first message/bit clear. Healthy

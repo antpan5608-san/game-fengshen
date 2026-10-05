@@ -13,6 +13,22 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Local history is not the active slot or a second state schema. CONTROLLED codec regression. */
+    fun testControlledSaveHistoryFullSnapshotCodecAndLegacyCompatibility(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val a=SaveSnapshot(c.scene.version,114,c.scene.spawnX*16+8,c.scene.spawnY*16+8,Key.DOWN,
+            listOf(c.initialPlayer),mapOf(HerbUse.ID to 2),mapOf("opening.intro.seen" to true),money=88,encounterSteps=7)
+        assertTrue(a.validate(c))
+        val history=SaveHistory.append(emptyList(),a,SaveHistoryEntry.Kind.MANUAL,100,"codec-A")
+        val encoded=SaveHistory.encode(history);assertEquals(history,SaveHistory.parse(encoded))
+        val legacy=a.copy(contentVersion="opening-segment-001-c14")
+        assertTrue(legacy.validate(c))
+        assertEquals(legacy,SaveSnapshot.parse(legacy.json().toString()))
+        val bad=JSONObject(encoded);bad.getJSONArray("entries").getJSONObject(0).put("snapshotSha256","0".repeat(64))
+        assertTrue(runCatching{SaveHistory.parse(bad.toString())}.isFailure)
+        assertTrue(runCatching{SaveHistory.parse("{invalid")}.isFailure)
+        assertTrue(runCatching{SaveHistory.parse(JSONObject(encoded).put("schemaVersion",999).toString())}.isFailure)
+    }
     /** Real loader and isolated state fixtures, not a normal Jiameng route. */
     fun testJiamengOriginalMapsActorsAndBattleDefinitionsFixture(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets));val rules=c.battle!!

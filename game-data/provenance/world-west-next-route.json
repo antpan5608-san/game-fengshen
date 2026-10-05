@@ -1,0 +1,678 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "four-following-village-original-entry-return-and-talk",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_POSITION_HP_ORIGINAL_INPUT_NOT_NORMAL_ROUTE_OR_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "maps": [
+    {
+      "mapId": 7,
+      "width": 32,
+      "height": 30,
+      "entry": {
+        "worldMapId": 16,
+        "worldTrigger": [
+          16,
+          65
+        ],
+        "entryKey": "UP",
+        "arrival": [
+          11,
+          21
+        ]
+      },
+      "return": {
+        "input": "DOWN",
+        "worldMapId": 16,
+        "arrival": [
+          16,
+          65
+        ],
+        "independentlyObserved": true
+      },
+      "sources": [
+        {
+          "offset": 275247,
+          "length": 2,
+          "sha256": "3ea23f48685c39a065596a5622de1e31a2573c142f6f34ad6f660dd41a7bb695",
+          "module": 8,
+          "cpuAddress": 45855,
+          "meaning": "NPC list pointer"
+        },
+        {
+          "offset": 277267,
+          "length": 85,
+          "sha256": "de7130d90342c2c5428e125c0c12faa93b5711041ff6bb53ec0c11849cbe84f7",
+          "module": 8,
+          "cpuAddress": 47875,
+          "meaning": "14-byte records terminated by FF"
+        }
+      ],
+      "controlledCaptures": [
+        {
+          "label": "actual-entry",
+          "ramSha256": "5aba88bec8792337fa6e2985e5240888e0d9fb0ea42aae8f8e31db2557a7aab1",
+          "sramSha256": "af941ae7871364def4f530d0fea95b9a5d0b57c25876e7084dd27a941de91cf7",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map7-actual-entry"
+        },
+        {
+          "label": "actual-return",
+          "ramSha256": "cd423488c8db921f1b8ed68ed634cc5cb1cb5d189d21afe120e6aa64bd992182",
+          "sramSha256": "9936a06191d6cdced07165d21f1b12875a261b0270406b42df14a2f110890e09",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map7-actual-return"
+        }
+      ],
+      "npcCount": 6,
+      "originalActions": [
+        {
+          "index": 0,
+          "entity": 140,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277267,
+            "length": 14,
+            "sha256": "c3057bb88a98ea38942a30403065432484185cc7ab7d79a55a1d0f71ad27b98e",
+            "module": 8,
+            "cpuAddress": 47875,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 1,
+          "entity": 141,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277281,
+            "length": 14,
+            "sha256": "517e1bc99127563cb74da5edb1b66413dbcca2eb26fb1d4c3dcf1dcdf50c1796",
+            "module": 8,
+            "cpuAddress": 47889,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 2,
+          "entity": 143,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277295,
+            "length": 14,
+            "sha256": "979d95b97244b982c332ba3cf06570601ae7378cf73f5c4d436d690ec66af63d",
+            "module": 8,
+            "cpuAddress": 47903,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 3,
+          "entity": 142,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277309,
+            "length": 14,
+            "sha256": "42749dbefb719942719bb1a972c0a94baa67f49fae6612936e73b2424875298f",
+            "module": 8,
+            "cpuAddress": 47917,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 4,
+          "entity": 199,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277323,
+            "length": 14,
+            "sha256": "4d6d3c43057f8356a6752dace463ba7183411cf092ff30c8f8ed9ceb2c4508a6",
+            "module": 8,
+            "cpuAddress": 47931,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 5,
+          "entity": 247,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277337,
+            "length": 14,
+            "sha256": "fc0e25888ca5351fb7038c417d84bbde38f0bf19860e4e20cee3024f734d4763",
+            "module": 8,
+            "cpuAddress": 47945,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        }
+      ],
+      "android": {
+        "implemented": false,
+        "packaged": false,
+        "appVerified": false,
+        "published": false
+      }
+    },
+    {
+      "mapId": 8,
+      "width": 32,
+      "height": 30,
+      "entry": {
+        "worldMapId": 16,
+        "worldTrigger": [
+          44,
+          81
+        ],
+        "entryKey": "UP",
+        "arrival": [
+          3,
+          16
+        ]
+      },
+      "return": {
+        "input": "DOWN",
+        "worldMapId": 16,
+        "arrival": [
+          44,
+          81
+        ],
+        "independentlyObserved": true
+      },
+      "sources": [
+        {
+          "offset": 275249,
+          "length": 2,
+          "sha256": "4cc852e2e61deaa36114851ef3497055a43ae2e8c045b60f44922a4f68127ddb",
+          "module": 8,
+          "cpuAddress": 45857,
+          "meaning": "NPC list pointer"
+        },
+        {
+          "offset": 277566,
+          "length": 85,
+          "sha256": "0a37072ae2a370d99bd592034521bd79fd58c1d2d476ea0f3e5e3aa9340eda72",
+          "module": 8,
+          "cpuAddress": 48174,
+          "meaning": "14-byte records terminated by FF"
+        }
+      ],
+      "controlledCaptures": [
+        {
+          "label": "actual-entry",
+          "ramSha256": "2c3d3f65200a86b5648b7de3a26db8b52b369d3ab2e1fb41fa8e21e51c30ce05",
+          "sramSha256": "6ef31e32f0a3e21dbc5bb08fbae216534c371e8ec6adaec6695f9125c2719718",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map8-actual-entry"
+        },
+        {
+          "label": "actual-return",
+          "ramSha256": "9074090ef91f4d066b9a2448ca3f0b9109b41148d1c6fde1a68fdab217d8ce42",
+          "sramSha256": "8228e74ae8948925bde674b4f9143b9db1f756c3e8eb574872972f253ade11ca",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map8-actual-return"
+        }
+      ],
+      "npcCount": 6,
+      "originalActions": [
+        {
+          "index": 0,
+          "entity": 172,
+          "actionId": 53,
+          "mask": 1,
+          "source": {
+            "offset": 277566,
+            "length": 14,
+            "sha256": "0d0e9e55e91a8cebc2be1299b968abba2f94c297b0ef7b02985d246ea63f526d",
+            "module": 8,
+            "cpuAddress": 48174,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 1,
+          "entity": 141,
+          "actionId": 53,
+          "mask": 8,
+          "source": {
+            "offset": 277580,
+            "length": 14,
+            "sha256": "ded540920a96aeda27a2773fcae06a886ba39afa16f19d8b6fd9cbc6ac0b442d",
+            "module": 8,
+            "cpuAddress": 48188,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 2,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 16,
+          "source": {
+            "offset": 277594,
+            "length": 14,
+            "sha256": "4bf6e9361cfb84be727c20f16c4be6e2a685bfd7773228d9357c31d811986e3d",
+            "module": 8,
+            "cpuAddress": 48202,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 3,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 32,
+          "source": {
+            "offset": 277608,
+            "length": 14,
+            "sha256": "59f64f0e1bf196d3ef3867d951272c2ed6e7d16388664fd4619e1f0a6b908229",
+            "module": 8,
+            "cpuAddress": 48216,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 4,
+          "entity": 140,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277622,
+            "length": 14,
+            "sha256": "bc6dd259d27d3ed7090de3ff0c91d81ba29050c3465dbc65e1f98119e7a28b61",
+            "module": 8,
+            "cpuAddress": 48230,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 5,
+          "entity": 172,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277636,
+            "length": 14,
+            "sha256": "f5a13d38d4ca829319e636913d6d630f749ae25f4d8e1fe8dd7dde2206d556af",
+            "module": 8,
+            "cpuAddress": 48244,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        }
+      ],
+      "android": {
+        "implemented": false,
+        "packaged": false,
+        "appVerified": false,
+        "published": false
+      }
+    },
+    {
+      "mapId": 9,
+      "width": 32,
+      "height": 30,
+      "entry": {
+        "worldMapId": 16,
+        "worldTrigger": [
+          39,
+          81
+        ],
+        "entryKey": "UP",
+        "arrival": [
+          30,
+          16
+        ]
+      },
+      "return": {
+        "input": "DOWN",
+        "worldMapId": 16,
+        "arrival": [
+          40,
+          81
+        ],
+        "independentlyObserved": true
+      },
+      "sources": [
+        {
+          "offset": 275251,
+          "length": 2,
+          "sha256": "b7621a41d016ad9600ca6970cd14c3a7c77e3375a6b1ad2bb0fae50f0131a223",
+          "module": 8,
+          "cpuAddress": 45859,
+          "meaning": "NPC list pointer"
+        },
+        {
+          "offset": 277935,
+          "length": 85,
+          "sha256": "c3ce48806985e4ef4fe257aeae86faf6dc8f59f0c2ffd42d90d322519b184959",
+          "module": 8,
+          "cpuAddress": 48543,
+          "meaning": "14-byte records terminated by FF"
+        }
+      ],
+      "controlledCaptures": [
+        {
+          "label": "actual-entry",
+          "ramSha256": "0af4927ff980749138c56999fb2ce488f8fb00dd6a57800cce8c254d2592831b",
+          "sramSha256": "e9b6346c4281fdd26359a15ab404f51c1ac8f5ebc40d9b7cda20801201981e82",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map9-actual-entry"
+        },
+        {
+          "label": "actual-return",
+          "ramSha256": "69ae151e847243c8ad41a394695ebe2b59a0f51921269ba499b5d3f2cbe6442b",
+          "sramSha256": "bc7dc3053fe1add46e436abf4e77cd717a4a31b912964ab7be0cb5c91d71b35e",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map9-actual-return"
+        }
+      ],
+      "npcCount": 6,
+      "originalActions": [
+        {
+          "index": 0,
+          "entity": 168,
+          "actionId": 54,
+          "mask": 1,
+          "source": {
+            "offset": 277935,
+            "length": 14,
+            "sha256": "3a8493ce573721109d10d57401237ba2c848d176d230e4ff5e6ee138134f7d7b",
+            "module": 8,
+            "cpuAddress": 48543,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 1,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 2,
+          "source": {
+            "offset": 277949,
+            "length": 14,
+            "sha256": "c04434f983d37859943f465fad4b9b862462b8aee4c964d5911ce6d151648e1e",
+            "module": 8,
+            "cpuAddress": 48557,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 2,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 4,
+          "source": {
+            "offset": 277963,
+            "length": 14,
+            "sha256": "eaf8cc411e02f4ed3c310b560d68a845001a0f941b398b612f0eed82e73266d6",
+            "module": 8,
+            "cpuAddress": 48571,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 3,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 8,
+          "source": {
+            "offset": 277977,
+            "length": 14,
+            "sha256": "02c280113fd536ebefc48f02f8d66d5650a462263b4820a5575a8a998e63adbc",
+            "module": 8,
+            "cpuAddress": 48585,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 4,
+          "entity": 140,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 277991,
+            "length": 14,
+            "sha256": "9e7b5f437d038f49aa92d1e8f28d2897c1c3db4e23344138a99ed81d09c74750",
+            "module": 8,
+            "cpuAddress": 48599,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 5,
+          "entity": 140,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278005,
+            "length": 14,
+            "sha256": "a66e903e6bd386b978cf22f4ac8ba522886b486530b9501b61fbc66103070834",
+            "module": 8,
+            "cpuAddress": 48613,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        }
+      ],
+      "android": {
+        "implemented": false,
+        "packaged": false,
+        "appVerified": false,
+        "published": false
+      }
+    },
+    {
+      "mapId": 10,
+      "width": 32,
+      "height": 30,
+      "entry": {
+        "worldMapId": 16,
+        "worldTrigger": [
+          65,
+          88
+        ],
+        "entryKey": "UP",
+        "arrival": [
+          19,
+          22
+        ]
+      },
+      "return": {
+        "input": "DOWN",
+        "worldMapId": 16,
+        "arrival": [
+          65,
+          88
+        ],
+        "independentlyObserved": true
+      },
+      "sources": [
+        {
+          "offset": 275253,
+          "length": 2,
+          "sha256": "61490132c66f4c626c9c1ec2d865fc572acbe96d0a2c2aa5e14a7385d8cd2891",
+          "module": 8,
+          "cpuAddress": 45861,
+          "meaning": "NPC list pointer"
+        },
+        {
+          "offset": 278080,
+          "length": 127,
+          "sha256": "0661b82ce9d8653a676e20ac759bf2c1aa4df637f1cf25809d42fbc2c5d6cbc7",
+          "module": 8,
+          "cpuAddress": 48688,
+          "meaning": "14-byte records terminated by FF"
+        }
+      ],
+      "controlledCaptures": [
+        {
+          "label": "actual-entry",
+          "ramSha256": "7442a50b3951f2030aa00218560bcabcc97cd44273e164525ac87616bdbb3bb5",
+          "sramSha256": "d35d5d2513e46425c8e2309bc37b7aa70a706ca4a459c67a7840cf9c19953e90",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map10-actual-entry"
+        },
+        {
+          "label": "actual-return",
+          "ramSha256": "9c6f969d90752da8ec45561425ede61316d1c080f589d66e5c08ed61cfc9412d",
+          "sramSha256": "b3e9f8369d05a51cb1814468002c2dc618fa5226d147fa2912e7cb47065bb158",
+          "privateSource": "private-derived/world-west-next-four-entry-controlled/map10-actual-return"
+        }
+      ],
+      "npcCount": 9,
+      "originalActions": [
+        {
+          "index": 0,
+          "entity": 165,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278080,
+            "length": 14,
+            "sha256": "6161006db0162db1e9b66ca9ed1d44c55707411b7b3c16aeaba9e3cfddb19c49",
+            "module": 8,
+            "cpuAddress": 48688,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 1,
+          "entity": 140,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278094,
+            "length": 14,
+            "sha256": "7f7662beab634b1990c2acd3db90fe24fb7bccc7cd1fbc50b0716a314f76d5fd",
+            "module": 8,
+            "cpuAddress": 48702,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 2,
+          "entity": 141,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278108,
+            "length": 14,
+            "sha256": "e32aa7d25ab23bec531628c70f6a152403d9b4902002d5af188bfa7f666c7524",
+            "module": 8,
+            "cpuAddress": 48716,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 3,
+          "entity": 164,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278122,
+            "length": 14,
+            "sha256": "64a7024ac33648a0dc6172435269e6930b5b8687856f5871551440b59bb622d3",
+            "module": 8,
+            "cpuAddress": 48730,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 4,
+          "entity": 162,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278136,
+            "length": 14,
+            "sha256": "fd4e77fdd912523bc3f89a4de4fad1a0c81a0efdcd580badf39eb7ce800f4832",
+            "module": 8,
+            "cpuAddress": 48744,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 5,
+          "entity": 143,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278150,
+            "length": 14,
+            "sha256": "c4b5d202c91d36043b256c2fba8e93983d5756ec8b62d415674e029b087c403e",
+            "module": 8,
+            "cpuAddress": 48758,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 6,
+          "entity": 148,
+          "actionId": 0,
+          "mask": 0,
+          "source": {
+            "offset": 278164,
+            "length": 14,
+            "sha256": "42877ed04ca8630bfd9f790c3943799557ed919d5dbd13f098f612643749dd61",
+            "module": 8,
+            "cpuAddress": 48772,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 7,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 2,
+          "source": {
+            "offset": 278178,
+            "length": 14,
+            "sha256": "2ab3f08c6186c45c14a9c87579f386abb44da59a56ba0cb6d52b3d6ac44c2db2",
+            "module": 8,
+            "cpuAddress": 48786,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        },
+        {
+          "index": 8,
+          "entity": 198,
+          "actionId": 0,
+          "mask": 4,
+          "source": {
+            "offset": 278192,
+            "length": 14,
+            "sha256": "befc2c0b604a1877127b82711fe435e3a881ee75fc1db891041644ffb8e03e57",
+            "module": 8,
+            "cpuAddress": 48800,
+            "meaning": "Fixed 14-byte NPC source record"
+          }
+        }
+      ],
+      "android": {
+        "implemented": false,
+        "packaged": false,
+        "appVerified": false,
+        "published": false
+      }
+    }
+  ],
+  "limitations": [
+    "No new Android map packaging or play proof.",
+    "Reference location names and guide conditions are not original truth.",
+    "map7 actor199 selects message13 although raw first/repeat=6; special dispatch remains unimplemented.",
+    "CHR register shadows are map/sprite observations, not an identified dialogue font."
+  ],
+  "selectorEvidence": {
+    "probePath": "tools/rom-extractor/probe-world-west-village-talk.py",
+    "probeSha256": "0098f0f4392652c8ee04b81125b68fb9905cac29f6aa4b4cb02b6f592885e443",
+    "tablePath": "android/app/src/test/resources/world-west-village-talk-original.tsv",
+    "tableSha256": "d2ebfc5ed23dad69a5303662372803d98f79e0084c17e92a612f07ae09935bf5",
+    "caseCount": 5376,
+    "failures": 0,
+    "map8Action53": "10:CE4A",
+    "map9Action54": "10:CE75",
+    "condition": "original global7C9 byte is nonzero",
+    "effect": "Select original repeat message and set only this actor local map bit; no reward/cure/charge/join",
+    "limitations": [
+      "Controlled initial scratch-event persists when generic repeat selector skips handler; not a new runtime event.",
+      "Not yet enabled by Android content for these four maps."
+    ]
+  }
+}

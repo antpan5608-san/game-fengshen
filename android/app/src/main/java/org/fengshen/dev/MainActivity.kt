@@ -76,6 +76,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val hadPersistedAtStart=savePrefs.contains("saveJson")||savePrefs.contains("mapId")
     private var localSaveProtected=false
     private var savedSnapshot=""
+    private val historyClock=AutoSaveHistoryClock()
+    private var historyErrorReported=false
     private var characters=listOf(content.initialPlayer)
     private var inventory:Map<String,Int> = emptyMap()
     private var flags:Map<String,Boolean> = emptyMap()
@@ -135,8 +137,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v)finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
+    var active=false;set(v){field=v;if(!v){historyClock.pause();finishPendingStep()};input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){historyClock.pause();finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
     var layer=Layer.MAP;private set
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
@@ -267,19 +269,71 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun persistState(){persistStateResult()}
     private fun persistStateResult():Boolean {
         if(localSaveProtected || world.remaining!=0 || (layer==Layer.BATTLE && !battleCommitted))return false
-        val snapshot=currentSnapshot();val encoded=snapshot.json().toString()
-        if(encoded==savedSnapshot)return true
-        val committed=savePrefs.edit().putString("contentVersion",content.scene.version).putInt("mapId",world.mapId)
-            .putInt("x",world.x).putInt("y",world.y).putInt("direction",world.direction.ordinal)
-            .putString("saveJson",encoded).commit()
-        Diagnostics.record("save_write",if(committed)"INFO" else "ERROR",JSONObject().put("success",committed).put("mapId",world.mapId),if(committed)"" else "local_commit_failed")
+        return writeLocalSnapshot(currentSnapshot())
+    }
+    private fun writeLocalSnapshot(snapshot:SaveSnapshot,history:List<SaveHistoryEntry>?=null):Boolean {
+        val encoded=snapshot.json().toString()
+        if(history==null&&encoded==savedSnapshot)return true
+        val touched=listOf("contentVersion","mapId","x","y","direction","saveJson",SaveHistory.KEY)
+        val old=if(history!=null)savePrefs.all.filterKeys{it in touched}else emptyMap()
+        val editor=savePrefs.edit().putString("contentVersion",snapshot.contentVersion).putInt("mapId",snapshot.mapId)
+            .putInt("x",snapshot.x).putInt("y",snapshot.y).putInt("direction",snapshot.direction.ordinal)
+            .putString("saveJson",encoded)
+        if(history!=null)editor.putString(SaveHistory.KEY,SaveHistory.encode(history))
+        val committed=editor.commit()
+        if(!committed&&history!=null){
+            // Android may change its in-memory preferences even when disk commit fails.
+            // Restore only the keys touched by this transaction; never clear backups or cloud state.
+            val rollback=savePrefs.edit();touched.forEach{rollback.remove(it)}
+            old.forEach{(k,v)->when(v){is String->rollback.putString(k,v);is Int->rollback.putInt(k,v)}}
+            if(!rollback.commit())localSaveProtected=true
+        }
+        Diagnostics.record("save_write",if(committed)"INFO" else "ERROR",JSONObject().put("success",committed).put("mapId",snapshot.mapId),if(committed)"" else "local_commit_failed")
         if(committed){savedSnapshot=encoded;activity.onLocalSnapshotSaved(snapshot)}
         return committed
+    }
+    private fun historySafe()= !localSaveProtected&&world.remaining==0&&battle==null&&
+        layer in listOf(Layer.MAP,Layer.MENU,Layer.SETTINGS)&&
+        OriginalFerry.pending(flags,content.ferries.values)==null
+    fun saveHistoryResult(kind:SaveHistoryEntry.Kind=SaveHistoryEntry.Kind.MANUAL):Boolean {
+        if(kind==SaveHistoryEntry.Kind.BEFORE_RESTORE||!historySafe())return false
+        val snapshot=currentSnapshot();if(!snapshot.validate(content))return false
+        val entries=runCatching{SaveHistory.parse(savePrefs.getString(SaveHistory.KEY,null))}.getOrElse{
+            reportHistoryError("invalid_history");return false
+        }
+        val next=SaveHistory.append(entries,snapshot,kind,System.currentTimeMillis())
+        val success=next==entries||writeLocalSnapshot(snapshot,next)
+        if(success){historyClock.saved();historyErrorReported=false}
+        return success
+    }
+    fun restoreHistoryResult(id:String):Boolean {
+        if(!historySafe())return false
+        val before=currentSnapshot()
+        val entries=runCatching{SaveHistory.parse(savePrefs.getString(SaveHistory.KEY,null))}.getOrElse{
+            reportHistoryError("invalid_history");return false
+        }
+        val proposal=SaveHistory.prepareRestore(entries,id,before,System.currentTimeMillis()){it.validate(content)}?:return false
+        val target=proposal.target.copy(contentVersion=content.scene.version,
+            flags=OriginalNpcTalk.flagsAfterMapLoad(proposal.target.mapId,proposal.target.characters.size,proposal.target.flags))
+        val status=SaveHistory.applyRestore(proposal.copy(target=target),before,::applySnapshotState,::currentSnapshot){state,history->
+            writeLocalSnapshot(state,history)
+        }
+        if(status!=SaveHistory.RestoreStatus.SAVED){
+            if(status==SaveHistory.RestoreStatus.ROLLBACK_FAILED)localSaveProtected=true
+            return false
+        }
+        historyClock.saved();historyErrorReported=false;diagnoseExperience()
+        if(flags[FIELD_FAILURE_FLAG]==true)post{showFieldFailure()}
+        Diagnostics.record("save_history_restore",details=JSONObject().put("success",true).put("mapId",world.mapId))
+        return true
+    }
+    private fun reportHistoryError(code:String){
+        if(!historyErrorReported){historyErrorReported=true;Diagnostics.record("save_history","ERROR",code=code)}
     }
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){historyClock.pause();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -312,6 +366,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         } else clock.reset()
         if(layoutMapId!=world.mapId){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId}
         if(world.remaining==0)persistState()
+        historyClock.tick(time/1000000L,active&&focused,historySafe()){
+            saveHistoryResult(SaveHistoryEntry.Kind.AUTO)
+        }
         var canvas:Canvas?=null
         try {canvas=holder.lockCanvas();if(canvas!=null)render(canvas)} finally {if(canvas!=null){holder.unlockCanvasAndPost(canvas);if(active&&focused)activity.firstInteractiveFrame()}}
         schedule()
@@ -2087,7 +2144,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun settings(){
         layer=Layer.SETTINGS;input.clear();menuTouch.clear();clock.reset()
         var child=0
-        val choices=arrayOf("显示：${mode.name}（全屏 / 原版比例 / 整数裁切）","开发者调试层：$debug","触觉反馈：$haptic","检查应用更新","封神云存档 / 登录","查看设备与开发范围","摇杆/按钮参数 JSON","恢复默认控件","回到初始位置（仅调试）","声音与诊断上传（${if(Diagnostics.enabled)"上传开启" else "上传关闭"}）")
+        val choices=arrayOf("显示：${mode.name}（全屏 / 原版比例 / 整数裁切）","开发者调试层：$debug","触觉反馈：$haptic","检查应用更新","封神云存档 / 登录","查看设备与开发范围","摇杆/按钮参数 JSON","恢复默认控件","回到初始位置（仅调试）","声音与诊断上传（${if(Diagnostics.enabled)"上传开启" else "上传关闭"}）","存档 / 回档")
         modalDialog=AlertDialog.Builder(activity).setTitle("设置 · 操作验证版").setItems(choices){_,i->
             when(i){
                 0->{mode=when(mode){DisplayMode.FULL->DisplayMode.ORIGINAL;DisplayMode.ORIGINAL->DisplayMode.INTEGER;DisplayMode.INTEGER->DisplayMode.FULL};prefs.edit().putString("display-v2",mode.name).apply();relayout()}
@@ -2100,6 +2157,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 7->{config=ControlConfig();prefs.edit().remove("controls-v2").apply();relayout()}
                 8->world.reset()
                 9->child=9
+                10->child=10
             }
         }.setNegativeButton("返回",null).setOnDismissListener{
             modalDialog=null
@@ -2109,9 +2167,48 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 5->showInfo()
                 6->editControls()
                 9->audioSettings()
+                10->openSaveHistory()
                 else->returnToMenu()
             }
         }.show()
+    }
+    private fun historyLabel(e:SaveHistoryEntry):String {
+        val time=java.text.SimpleDateFormat("MM-dd HH:mm:ss",java.util.Locale.getDefault()).format(java.util.Date(e.timeMillis))
+        val heroes=e.snapshot.characters.joinToString(" / "){"${heroName(it.id)} Lv.${it.level}"}
+        return "${e.kind.label} · $time\n地图 ${e.snapshot.mapId} · $heroes"
+    }
+    private fun openSaveHistory(){
+        layer=Layer.SETTINGS;input.clear();clearUxGesture();menuTouch.clear();clock.reset()
+        val entries=runCatching{SaveHistory.parse(savePrefs.getString(SaveHistory.KEY,null))}.getOrElse{
+            reportHistoryError("invalid_history");modalDialog=AlertDialog.Builder(activity).setTitle("存档 / 回档")
+                .setMessage("历史记录无法读取，当前进度和原记录已保留。")
+                .setPositiveButton("返回",null).setOnDismissListener{modalDialog=null;returnToMenu()}.show();return
+        }
+        var selected:String?=null;var manual=false
+        val builder=AlertDialog.Builder(activity).setTitle("存档 / 回档 · 最新20档")
+        if(entries.isEmpty())builder.setMessage("还没有历史存档。当前自动续玩存档保持不变。")
+        else builder.setItems(entries.map{historyLabel(it)}.toTypedArray()){_,i->selected=entries[i].id}
+        modalDialog=builder.setNeutralButton("手动存档"){_,_->manual=true}.setNegativeButton("返回",null)
+            .setOnDismissListener{
+                modalDialog=null;returnToMenu()
+                if(manual){
+                    val success=saveHistoryResult();showNotice(if(success)"手动存档已保存" else "存档失败，当前进度已保留")
+                    openSaveHistory()
+                }else selected?.let{id->confirmHistoryRestore(id,entries.single{it.id==id})}
+            }.show()
+    }
+    private fun confirmHistoryRestore(id:String,entry:SaveHistoryEntry){
+        layer=Layer.SETTINGS;input.clear();clock.reset()
+        var success=false
+        modalDialog=AlertDialog.Builder(activity).setTitle("确认回档")
+            .setMessage("${historyLabel(entry)}\n\n回档前会保存当前完整进度。云同步沿用当前设置。")
+            .setNegativeButton("取消",null).setPositiveButton("回档",null)
+            .setOnDismissListener{modalDialog=null;returnToMenu();if(success){closeMenu();showNotice("回档成功，已保存")}}.create()
+        val dialog=modalDialog!!;dialog.show()
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener{
+            success=restoreHistoryResult(id)
+            if(success)dialog.dismiss()else dialog.setMessage("回档失败，当前进度和历史记录已保留。请取消后检查存档。")
+        }
     }
     private fun audioSettings(){
         layer=Layer.SETTINGS;input.clear();clock.reset()
