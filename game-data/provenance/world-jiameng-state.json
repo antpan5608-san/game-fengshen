@@ -6,7 +6,7 @@
   "kind": "CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE",
   "probe": {
     "path": "tools/rom-extractor/probe-world-jiameng-state.py",
-    "sha256": "9604904c4923e9cf6bdc55e5345889572d8960160215df38b721e775e794416c"
+    "sha256": "b08c8fa18204e5942f8836848718e967cdd5fd41b64b9d5518d2801c8fee54f7"
   },
   "sources": [
     {
@@ -64,6 +64,30 @@
       "module": 0,
       "cpuAddress": 54709,
       "meaning": "Flags for145..148"
+    },
+    {
+      "offset": 383029,
+      "length": 50,
+      "sha256": "f5c7e2b224fe202642b7769f6a0611444b1cb0a8d7ffd31a13befffe7204cfaa",
+      "module": 11,
+      "cpuAddress": 55333,
+      "meaning": "Actual map148 bit80 gate and event1 coordinate dispatcher"
+    },
+    {
+      "offset": 383622,
+      "length": 11,
+      "sha256": "8a0b14853f164cb44e3a83e620642a19363141e84822687a82225267fd679126",
+      "module": 11,
+      "cpuAddress": 55926,
+      "meaning": "All five actual event1 trigger cells with sentinel"
+    },
+    {
+      "offset": 383578,
+      "length": 46,
+      "sha256": "d1301002bf49715a2e6ba473a7be9875158040fefe4ffd9647d4eda4c25d52b4",
+      "module": 11,
+      "cpuAddress": 55882,
+      "meaning": "Shared original camera+7 literal trigger scan"
     }
   ],
   "rules": {
@@ -110,7 +134,31 @@
         "map101Context": 196
       },
       "nextMapId": 37,
-      "nextPosition": "Viewport -3,-2 observed in original code; final sprite coordinate/facing not yet verified"
+      "nextPosition": "Original script30 completed in controlled living-party field state: map37 cell4,5; no normal battle victory claim",
+      "triggerCells": [
+        [
+          6,
+          5
+        ],
+        [
+          10,
+          5
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          8,
+          6
+        ],
+        [
+          9,
+          6
+        ]
+      ],
+      "completionFlag": "rom.map.148.flag.128",
+      "triggerConditions": "Current map148, not map flag80; no party/item/level condition read by dispatcher"
     }
   },
   "expected": [
@@ -131,12 +179,82 @@
       "caseCount": 25,
       "sha256": "9acf3557ce85e1d996a50f4acda715b95d2b33ed5135434e69f26108831177e7",
       "failures": 0
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng-three-trigger-original.tsv",
+      "caseCount": 960,
+      "sha256": "51f1d1816631852e47aa749c5bbceb39f2c210e47574e542e5d091948ff6fd3e",
+      "failures": 0
     }
   ],
   "limitations": [
-    "First activation approach, script30 complete coordinate/facing and post-save continuity still need verification",
+    "First activation variant/protection/defeat, final Android save continuity still need same-candidate verification",
     "Original defeat capture not a victory route",
     "Android normal route NOT_RUN",
     "No added travel requirement inferred from recommended guide route"
-  ]
+  ],
+  "script30": {
+    "kind": "CONTROLLED_LIVING_PARTY_POST_BATTLE_STAGE_NOT_NORMAL_VICTORY",
+    "tracePath": "android/app/src/test/resources/jiameng-script30-original.tsv",
+    "traceSha256": "14048a55cb8691cb4aa09f7912e74094cc1c220e6e940108fe36410c958492ef",
+    "probePrivatePath": "private-derived/world-jiameng-valid-field-script-controlled/probe.lua",
+    "probeSha256": "1ec7b73ef19ca74b356ec2aba0e5031861866a70179b23d6388379c8c40230ff",
+    "dialogueOrder": [
+      6,
+      7,
+      8
+    ],
+    "destination": {
+      "mapId": 37,
+      "x": 4,
+      "y": 5,
+      "direction": "PRESERVE; no scripted direction write claimed"
+    },
+    "worldCoordinates": [
+      64,
+      80
+    ],
+    "spriteCoordinates": [
+      184,
+      200
+    ],
+    "map148FlagAfter": 128,
+    "yangStatusAfter": 64,
+    "originalScreenshots": [
+      {
+        "path": "private-derived/world-jiameng-valid-field-script-controlled/validfield148-post-text-6.png",
+        "sha256": "0bc3cf9990667d3ac52a3e818d454f08d49ae57607cf888c3f322e282c099f0f",
+        "captureKind": "CONTROLLED_ORIGINAL_EVENT_SCRIPT_NOT_ANDROID_OR_NORMAL_BATTLE"
+      },
+      {
+        "path": "private-derived/world-jiameng-valid-field-script-controlled/validfield148-post-text-7.png",
+        "sha256": "806282162ba8bb31f459b22872727da74dbed18739e4ad6445885b97c0e1a9f2",
+        "captureKind": "CONTROLLED_ORIGINAL_EVENT_SCRIPT_NOT_ANDROID_OR_NORMAL_BATTLE"
+      },
+      {
+        "path": "private-derived/world-jiameng-valid-field-script-controlled/validfield148-post-text-8.png",
+        "sha256": "e40788d711c573044b5974c65485cbe337022a6d140269ca832095f3ee4e275e",
+        "captureKind": "CONTROLLED_ORIGINAL_EVENT_SCRIPT_NOT_ANDROID_OR_NORMAL_BATTLE"
+      },
+      {
+        "path": "private-derived/world-jiameng-valid-field-script-controlled/validfield148-actual-next-map37.png",
+        "sha256": "72bc8d024fb33dcc8423feaa7067914588667609f02f2a5a539e5e5ec90c30dc",
+        "captureKind": "CONTROLLED_ORIGINAL_EVENT_SCRIPT_NOT_ANDROID_OR_NORMAL_BATTLE"
+      }
+    ],
+    "failedMethods": [
+      {
+        "path": "private-derived/world-jiameng-victory-controlled",
+        "result": "CONTROLLED_HP1_BATTLE_DEFEAT; does not validate normal boss difficulty/effects"
+      },
+      {
+        "path": "private-derived/world-jiameng-post-script-controlled",
+        "result": "CONTROLLED_PHASE_RESET_STUCK; field mapper/context required"
+      },
+      {
+        "path": "private-derived/world-jiameng-field-script-controlled",
+        "result": "SCRIPT_DESTINATION_OBSERVED but source party invalid; not used as living-party proof"
+      }
+    ]
+  }
 }

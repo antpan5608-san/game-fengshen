@@ -737,6 +737,52 @@ def validate_world_rebirth_script(reader,definition):
         raise ValueError('Scene actor pose is incomplete')
     return p
 
+def world_jiameng_xiao_return_definition():
+    """Existing actor action3: manual talk, no invented approach or new template."""
+    return {'id':'rom.scene-story.146.xiao-return','npcId':'rom.npc.146.0',
+        'flagId':'rom.map.146.flag.4','manualActivation':True,
+        'entryTrigger':{'mapId':146,'x':2,'y':5},
+        'openingMovement':{'completedSteps':0,'destination':{'mapId':146,'x':2,'y':5}},
+        'movementsBeforeDialogue':[],
+        'continuation':{'dialogueIds':['rom.dialogue.156.2'],
+            'completionFlags':['rom.map.146.flag.4','rom.npccontext.146.216'],
+            'characterChanges':[{'characterId':'xiaolongnv','statusAndMask':0,'statusOrMask':0,
+                'restoreHp':True,'restoreMp':True}]},
+        'evidence':'game-data/provenance/world-jiameng-state.json'}
+
+def validate_world_jiameng_scene_script(reader,definition):
+    from forensics.fengshen246 import extract_npcs,extract_text,decode_tokens
+    p=load(ROOT/'game-data/provenance/world-jiameng-state.json')
+    resources=load(ROOT/'game-data/provenance/world-jiameng-resources.json')
+    expected={'mapId':146,'actorId':129,'mapFlag':4,'npcContextAfter':216,
+        'characterId':'xiaolongnv','statusMaskAfter':0,'hp':'RESTORE_SAVED_MAX_HP',
+        'mp':'RESTORE_SAVED_MAX_MP','preserve':'saved level/EXP/equipment/stats; no new template or reward'}
+    if p['romSha256']!=SHA256 or p['kind']!='CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE' or \
+            p['rules']['xiaoReturn']!=expected or definition!=world_jiameng_xiao_return_definition():
+        raise ValueError('Original manual actor return cannot invent a trigger, template, reward or effect')
+    for span in p['sources']:checked_span(reader,span)
+    required=next((s for s in p['sources']if(s['module'],s['cpuAddress'],s['length'])==(10,0xd29a,46)),None)
+    if required is None or digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Original actor return lacks its current executed CPU scope')
+    rows=next((s for s in p['expected']if s['path']=='android/app/src/test/resources/jiameng-xiao-return-original.tsv'),None)
+    if rows is None or rows['caseCount']!=80 or rows['failures']!=0:
+        raise ValueError('Missing original return expectations')
+    raw=(ROOT/rows['path']).read_bytes()
+    if digest(raw)!=rows['sha256']or len(raw.splitlines())!=81:
+        raise ValueError('Original return expectations differ')
+    npc=extract_npcs(reader,146)['records'][0]
+    if npc['rawHex']!='8102ff009800b800ca8c01020304' or reader.word(0,0xd664+2*146)!=0x7e7:
+        raise ValueError('Original actor, action, position or NPC context differs')
+    text=extract_text(reader,156,2)
+    font=resources['font'];charset={int(k):v for k,v in font['charset'].items()}
+    for span in font['sources']:checked_span(reader,span)
+    evidence=next((t for t in resources['dialogueStreams']if(t['group'],t['messageIndex'])==(156,2)),None)
+    decoded=decode_tokens(bytes.fromhex(text['rawHex']),charset)
+    if resources['romSha256']!=SHA256 or evidence is None or text['rawHex']!=evidence['rawHex']or \
+            decoded['unknownCodes']or decoded['text']!=evidence['text']:
+        raise ValueError('Actual return dialogue or active-font mapping differs')
+    return p
+
 def validate_world_field_protection_item(reader,item):
     path='game-data/provenance/world-field67-item12.json'
     proof=load(ROOT/path)
@@ -2579,10 +2625,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('NPC capability parent differs')
             old.update(update['fields'])
     for definition in evidence.get('sceneStories',[]):
-        validate_world_rebirth_script(reader,definition)
+        if definition.get('evidence')=='game-data/provenance/world-jiameng-state.json':
+            validate_world_jiameng_scene_script(reader,definition)
+        else:validate_world_rebirth_script(reader,definition)
         if any(s['id']==definition['id']or s['npcId']==definition['npcId']for s in scene.get('sceneStories',[])):
             raise ValueError('Duplicate scene script identity')
-        if definition['entryTrigger']['mapId'] not in known or definition['continuation']['destination']['mapId'] not in known:
+        destination=definition['continuation'].get('destination')
+        if definition['entryTrigger']['mapId'] not in known or destination and destination['mapId'] not in known:
             raise ValueError('Scene story destination not packaged')
         scene.setdefault('sceneStories',[]).append(definition)
     for name in ('npcs','dialogues','inns','clinics','shops','items'):

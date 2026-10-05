@@ -44,6 +44,20 @@ def main():
         assert got==(status|64,flag|12,217,196,30),got
         rows.append('\t'.join(map(str,(status,flag,*got))))
     save('jiameng-three-victory-original.tsv',rows)
+    rows=['x\ty\tflagBefore\teventAfter\tphaseAfter']
+    literal=bytes([6,5,10,5,7,6,8,6,9,6,0])
+    assert r.read(11,0xda76,len(literal))==literal
+    points={(6,5),(10,5),(7,6),(8,6),(9,6)}
+    fa=r.word(0,0xd493+2*148)
+    for x,y,flag in itertools.product(range(16),range(15),(0,2,128,255)):
+        c=MPU();c.memory[0x8000:]=r.read(11,0x8000,32768)
+        c.memory[0x47]=148;c.memory[0x7a]=(x-7)&255;c.memory[0x7b]=(y-7)&255
+        c.memory[0xa3]=fa&255;c.memory[0xa4]=fa>>8;c.memory[fa]=flag
+        shared.call(c,0xd825)
+        expected=flag&128==0 and(x,y)in points
+        assert(c.memory[0xa5],c.memory[0x38])==((1,11)if expected else(0,0))
+        rows.append('\t'.join(map(str,(x,y,flag,c.memory[0xa5],c.memory[0x38]))))
+    save('jiameng-three-trigger-original.tsv',rows)
     print(json.dumps(dict(romSha256=digest(r.data),kind='CONTROLLED_ORIGINAL_CPU_NOT_NORMAL_ROUTE',results=summaries)))
 
 if __name__=='__main__':main()

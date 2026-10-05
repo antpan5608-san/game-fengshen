@@ -114,9 +114,13 @@ data class StoryMovement(val destination:StoryDestination,val completedSteps:Int
 data class SceneStoryDefinition(val id:String,val npcId:String,val flagId:String,
     val entryTrigger:StoryEntryTrigger,val continuation:StoryContinuation,
     val openingMovement:StoryMovement,val movementsBeforeDialogue:Map<Int,StoryMovement>) {
+    // NPC interaction is validated by the map UI; approaching is not a command.
+    var manualActivation:Boolean=false;internal set
     val pendingFlag get()=flagId+".dialogue.pending"
-    fun triggersAt(snapshot:SaveSnapshot)=snapshot.mapId==entryTrigger.mapId&&snapshot.x/16==entryTrigger.x&&
-        snapshot.y/16==entryTrigger.y&&snapshot.flags[flagId]!=true&&snapshot.flags[pendingFlag]!=true
+    fun triggersAt(snapshot:SaveSnapshot)=snapshot.mapId==entryTrigger.mapId&&
+        (manualActivation||(snapshot.x/16==entryTrigger.x&&snapshot.y/16==entryTrigger.y))&&
+        snapshot.flags[flagId]!=true&&snapshot.flags[pendingFlag]!=true
+    fun automaticallyTriggersAt(snapshot:SaveSnapshot)=!manualActivation&&triggersAt(snapshot)
     fun pendingDialogue(flags:Map<String,Boolean>)=continuation.stage(id,flags)?.let{continuation.dialogueIds[it]}
     fun validPending(snapshot:SaveSnapshot):Boolean {
         if(snapshot.flags[pendingFlag]!=true)return true
@@ -150,6 +154,10 @@ object StoryFollowup {
                 before.flags[story.continuation.stageKey(story.id,it)]==true})
             return Result(before,null,false,"场景剧情状态已变化")
         val pending=before.copy(flags=before.flags+(story.pendingFlag to true))
+        if(story.manualActivation){
+            require(story.openingMovement.completedSteps==0&&story.movementsBeforeDialogue.isEmpty())
+            return Result(pending,story.continuation.dialogueIds.first(),true)
+        }
         return Result(move(pending,story.openingMovement),story.continuation.dialogueIds.first(),true)
     }
     fun advance(before:SaveSnapshot,story:SceneStoryDefinition,currentDialogue:String):Result {

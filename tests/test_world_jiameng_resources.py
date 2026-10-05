@@ -59,13 +59,42 @@ class JiamengResourcesTest(unittest.TestCase):
         self.assertEqual('CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE',proof['kind'])
         for span in proof['sources']:ex.checked_span(self.reader,span)
         self.assertEqual(proof['probe']['sha256'],hashlib.sha256((ROOT/proof['probe']['path']).read_bytes()).hexdigest())
-        self.assertEqual([8,80,25],[row['caseCount']for row in proof['expected']])
+        self.assertEqual([8,80,25,960],[row['caseCount']for row in proof['expected']])
         for row in proof['expected']:
             raw=(ROOT/row['path']).read_bytes()
             self.assertEqual(row['sha256'],hashlib.sha256(raw).hexdigest())
             self.assertEqual(row['caseCount'],len(raw.splitlines())-1)
+        trace=proof['script30'];raw=(ROOT/trace['tracePath']).read_bytes()
+        self.assertEqual(trace['traceSha256'],hashlib.sha256(raw).hexdigest())
+        self.assertEqual('CONTROLLED_LIVING_PARTY_POST_BATTLE_STAGE_NOT_NORMAL_VICTORY',trace['kind'])
+        rows=raw.decode().splitlines()
+        texts=[r for r in rows if 'post-text-' in r]
+        self.assertEqual([6,7,8],[int(r.split('message=')[1].split('\t')[0])for r in texts])
+        self.assertTrue(all('script=30\t' in r and 'yangStatus=64\t' in r for r in texts))
+        self.assertEqual({'mapId':37,'x':4,'y':5,'direction':'PRESERVE; no scripted direction write claimed'},trace['destination'])
+        self.assertTrue(any('map=37\tphase=0' in r and 'x=253\ty=254' in r and 'event=0\t' in r for r in rows))
+        self.assertEqual(3,len(trace['failedMethods']))
+        points={tuple(p)for p in proof['rules']['threeBosses']['triggerCells']}
+        trigger=next(row for row in proof['expected']if row['caseCount']==960)
+        for row in (ROOT/trigger['path']).read_text().splitlines()[1:]:
+            x,y,flag,event,phase=map(int,row.split('\t'))
+            self.assertEqual((1,11)if flag&128==0 and(x,y)in points else(0,0),(event,phase))
         self.assertEqual('NONE; ordinary battle reward/loot remain separate',proof['rules']['firstBoss']['additionalScriptReward'])
         self.assertEqual(64,proof['rules']['threeBosses']['postBattleBeforeScript30']['yangStatusOr'])
+
+    def test_manual_return_definition_reuses_existing_scoped_export_validation(self):
+        definition=ex.world_jiameng_xiao_return_definition()
+        ex.validate_world_jiameng_scene_script(self.reader,definition)
+        for mode in ('automatic','new-template','wrong-character','partial-recovery','walk-player','reward','map'):
+            bad=copy.deepcopy(definition)
+            if mode=='automatic':bad['manualActivation']=False
+            elif mode=='new-template':bad['continuation']['joinCharacterId']='xiaolongnv'
+            elif mode=='wrong-character':bad['continuation']['characterChanges'][0]['characterId']='yangjian'
+            elif mode=='partial-recovery':bad['continuation']['characterChanges'][0]['restoreMp']=False
+            elif mode=='walk-player':bad['openingMovement']['completedSteps']=1
+            elif mode=='reward':bad['continuation']['money']=1
+            else:bad['entryTrigger']['mapId']=145
+            with self.subTest(mode=mode),self.assertRaises(ValueError):ex.validate_world_jiameng_scene_script(self.reader,bad)
 
     def test_multi_palette_generator_roundtrip_is_only_a_derived_fixture(self):
         recipe=self.proof['graphics']['enemy158.png']
