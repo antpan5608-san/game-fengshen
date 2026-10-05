@@ -1,0 +1,483 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-west-houses-content.json",
+    "pinSha256": "c41cc1c003a7ec66178a3e63ab3c03628e6b88efd3a1952d5e8701e081531f96",
+    "provenanceSha256": "306a6ad6449c91d2ab4422b62dd9c6abea6072c7cf17a1883cc0da56bfa3a517"
+  },
+  "baseManifestSha256": "31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.47.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35520,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101072,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7"
+          },
+          {
+            "cpuAddress": 36372,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 101924,
+            "sha256": "d62fe21fe67e0b3bbea9e6ab6c230e6ddc31d92a410942627dd07366c501631a"
+          }
+        ],
+        "record": {
+          "cpuAddress": 42523,
+          "length": 52,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 108075,
+          "sha256": "a0f80689de9a2d41b13a14f40f43c76170cf44596db3d2d09c5cd5cd63a9b8a8"
+        },
+        "remainingUnknown": [
+          "Normal Android and NPC animation equivalence"
+        ]
+      },
+      "text": "『謝謝你們為我奔波找解藥，我已經完全好了，在昏迷期間，夢見師父在呼喚　我，請你們跟我一起回去見師父。』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "existingItemCapabilityUpdates": [
+    {
+      "baseDefinitionSha256": "88e804b8674b7f023e344394462af3c5c56a8bf384738c0d74c47675892bd079",
+      "fields": {
+        "description": "面向船家使用神木槳；接原版对白，拓宽原版航行地形。",
+        "name": "神木槳",
+        "worldUse": {
+          "evidence": "game-data/provenance/world-west-scene-items.json",
+          "reusable": false,
+          "targetSpriteId": 162,
+          "usedFlagId": "rom.inventory.special.14.used"
+        }
+      },
+      "id": "rom.special.14"
+    }
+  ],
+  "exits": [],
+  "graphics": {},
+  "items": [
+    {
+      "category": "special",
+      "description": "面向病房中的楊戬使用；接原版恢復與对白。",
+      "id": "rom.special.0",
+      "maxCount": 1,
+      "name": "雪蓮",
+      "originalId": 0,
+      "sceneItemEvidence": "game-data/provenance/world-west-scene-items.json",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "nameEvidence": "Actual controlled original menu and dialogue name",
+        "nameRange": {
+          "cpuAddress": 59409,
+          "length": 4,
+          "meaning": "Original special0 name byte stream",
+          "module": 2,
+          "offset": 92193,
+          "sha256": "8d0184b0fbcf85926bd24b866561daaaa70c07fbda31d4d7de8649a375542863"
+        },
+        "originalVerified": false,
+        "provisionalKind": "ROM_MENU_NAME_WITH_SCOPED_CPU_RULES_NOT_FULL_CANONICAL",
+        "referenceNameCrossCheck": {
+          "commit": "d636453f14f86a096f9d293bf3facfd96cfcb614",
+          "databaseSha256": "59ccd27378d6be713cbb240f22bef8fec6b9ae057c6b745941fdbcd3a89ae127",
+          "licenseStatus": "UNKNOWN",
+          "project": "https://github.com/v5100v5100/FengShenBang"
+        },
+        "remainingUnknown": [
+          "Normal Android flow and complete font equivalence"
+        ]
+      },
+      "worldUse": {
+        "evidence": "game-data/provenance/world-west-scene-items.json",
+        "reusable": false,
+        "targetSpriteId": 130,
+        "usedFlagId": "rom.inventory.special.0.used"
+      }
+    }
+  ],
+  "limitations": [
+    "Boat travel and map136 gift source not yet packaged",
+    "New scene menu use and continuation App NOT_RUN; no normal route claim"
+  ],
+  "maps": [],
+  "npcs": [],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 58053,
+      "length": 53,
+      "meaning": "Original snow map37 actor130 maximum restore before script9",
+      "module": 2,
+      "offset": 90837,
+      "sha256": "a30ae6912fb68587861e1e5f6beef35f1f8c906fea5bbd052b57e6c88d1f17e1"
+    },
+    {
+      "cpuAddress": 58313,
+      "length": 31,
+      "meaning": "Original paddle map42 actor162 ship flag before script23",
+      "module": 2,
+      "offset": 91097,
+      "sha256": "47856de29ac5ed9f9f7f4d4da62806fb314fd6adee3740b40358ecb508afb55e"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 110,
+      "meaning": "Original category inventory use bookkeeping",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "97e9d0d4e1043f265de4cae694be309d8ebb64c225bc4d9105f4418ef3e58ec2"
+    },
+    {
+      "cpuAddress": 52634,
+      "length": 45,
+      "meaning": "Original shared event completion map128 flag",
+      "module": 11,
+      "offset": 380330,
+      "sha256": "975e2af8b80d143bbb59fffc4262935763527a4b095ec31e59cec85e0c77d99a"
+    },
+    {
+      "cpuAddress": 52206,
+      "length": 40,
+      "meaning": "Original scoped NPC script selection",
+      "module": 11,
+      "offset": 379902,
+      "sha256": "c03366cde3876fde96c6cd2a64cf8ecb7b46ca3f7927015faa118dc50e8739c1"
+    }
+  ],
+  "sceneItemCapabilityEvidence": "game-data/provenance/world-west-scene-items.json",
+  "schemaVersion": 1,
+  "scopeRevision": "scene-menu-items0-14-original-events-not-boat-movement-or-lotus-route",
+  "taskId": "WORLD-FULL-01"
+}

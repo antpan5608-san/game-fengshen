@@ -6,7 +6,17 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效接续（2026-10-06 06:33:17，北京时间）
+## 当前有效接续（2026-10-06 06:50，北京时间）
+
+主任务继续IN_PROGRESS/PARTIAL，生产仍v82，R2候选83/main87bc56cb/run37364795394冻结：build与runtime通过，runtime-world运行中、后段未开始；两次inspect托管runner未领取，NOT_AVAILABLE，无客户端样本结论。独立开发从8bb0c74继续，不修改冻结来源。
+
+本检查点原baseExport已接场景物品0/14及实际原名雪蓮/神木槳、47.4恢复对白，c55/66图/360文件，manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b；父c54单独固定，旧地图/媒体/战斗全部实际规则不变。新增导出3方法50.616s通过：严格空目录restore逐字节一致、价格/规则/媒体不变、篡改消耗/固定回血/对白/父hash拒绝。首次restore拒绝不兼容confidence枚举，现沿用PROVISIONAL_REFERENCE并明确ROM菜单与局部CPU依据，不关闭source guard；测试原误把combat版本metadata当业务规则已修正，全部实际规则仍逐字段比较。原6812地址十进制更正26642，原运行逻辑地址未变。
+
+四层：场景物品代码IMPLEMENTED/COMPILED、c55 CONTENT_GENERATED/RESTORE_VERIFIED；待干净源码打包；新Android APP_VERIFIED=NOT_RUN/PUBLISHED=NO。新ContentTest受控codec已编译，尚未实跑。之前382 JVM/80套通过、10局部规则方法及仪器编译通过，不借c54 debug APK背书新代码。
+
+原受控船219两码头已实际按键落岸再登：16(24,44)DOWN→(24,45)/foot，UP回原船；(35,71)LEFT→(34,71)/foot，RIGHT回船，停车681A/B为原水格、681F=61。仅原受控位置，非Android或正常路线。下一动作：保存本技术检查点/干净构建，核登船/落岸步成本与原219图形、码头碰撞CPU后薄接World/Scene；导入136百草仙子形成雪莲治疗链。136/自由船尚未打包/未可玩，不用只增加名称宣称路线闭环。检查R2实际结论并按原保护继续发布或分类薄修；不以本检查点停止全世界任务。
+
+## 先前有效接续（2026-10-06 06:33:17，北京时间）
 
 生产仍v82，APK来源c461e7c121b6f535d85e2a245b82be1f6e42d786；全世界IN_PROGRESS/PARTIAL/ALL_MAPS_USABLE=NO，有效地图分母UNKNOWN。main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，原R2候选83/37364795394：build、runtime SUCCESS，runtime-world仍IN_PROGRESS，continuation未开始；同候选APK SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab。未发布、不改候选，不以首段通过代替整段。inspect两次因托管runner未领取job而NOT_AVAILABLE；未取得本轮客户端样本，不称健康。
 

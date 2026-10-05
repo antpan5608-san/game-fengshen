@@ -13,6 +13,39 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Current scene-item candidate only; CONTROLLED codec, not a normal gift/voyage. */
+    fun testControlledSceneItemDefinitionsAndDurableCodec(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertTrue("Requires the actual scene-item candidate content",c.itemDefinitions.containsKey("rom.special.0"))
+        assertEquals("神木槳",c.itemNames["rom.special.14"])
+        assertEquals(setOf(0,14),c.sceneItemUses().map{it.originalItemId}.toSet())
+        val templates=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),
+            c.joinCharacters.getValue("yangjian").copy(hp=1,mp=0,statusMask=64))
+        for(id in listOf(0,14)){
+            val item=c.itemDefinitions.getValue("rom.special.$id");val rule=item.worldUse!!.sceneScript!!
+            val flags=mapOf(OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+                "rom.npccontext.37.196" to true)
+            val before=SaveSnapshot(c.scene.version,rule.mapId,rule.target.x*16+8,(rule.target.y+1)*16+8,Key.UP,
+                templates,mapOf(OriginalYangJoin.ITEM_ID to 1,item.id to 1),flags,money=1223,encounterSteps=33,
+                interiorContext=if(id==14)InteriorContext(10,13,4)else null)
+            assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+            val started=OriginalSceneItems.begin(before,item,rule.target,true)
+            assertTrue(started.applied);assertTrue(started.snapshot.validate(c))
+            var restored=SaveSnapshot.parse(started.snapshot.json().toString());assertEquals(started.snapshot,restored)
+            for(dialogue in rule.continuation.dialogueIds){
+                val next=OriginalSceneItems.advance(restored,rule,dialogue);assertTrue(next.applied)
+                assertTrue(next.snapshot.validate(c));restored=SaveSnapshot.parse(next.snapshot.json().toString())
+                assertEquals(next.snapshot,restored)
+            }
+            assertEquals(before.money,restored.money);assertEquals(before.encounterSteps,restored.encounterSteps)
+            assertTrue(restored.flags["rom.map.${rule.mapId}.flag.128"]==true)
+            assertFalse(OriginalSceneItems.begin(restored,item,rule.target,true).applied)
+            assertTrue(before.copy(contentVersion="opening-segment-001-c54").validate(c))
+            assertFalse(restored.copy(inventory=restored.inventory+(item.id to 1),
+                flags=restored.flags+(rule.pendingFlag to true)).validate(c))
+        }
+        Log.i("FengshenSceneItemTest","CONTROLLED_SCENE_ITEM_LOADER_CODEC_NOT_NORMAL_VOYAGE")
+    }
     /** Local history is not the active slot or a second state schema. CONTROLLED codec regression. */
     fun testControlledSaveHistoryFullSnapshotCodecAndLegacyCompatibility(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

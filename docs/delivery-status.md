@@ -1559,3 +1559,8 @@ v53不可变签名artifact11276415922已实际取回并独立核包名/签名/c3
 ## 原场景物品接续检查点（2026-10-06，北京时间）
 
 起点开发5a3a072，生产v82/main R2 87bc56cb仍冻结；37364795394首段PASS/地府段运行、未发布，inspect托管runner未领取为NOT_AVAILABLE。新增雪莲37/event9和神木桨42/event23复用明确使用/共享StoryFollowup/完整存档事务，仙子赠物与当前空used桨行修正已实现；原CPU 16384效果/8消耗/7168 selector/18 gift/5400水类全部零差异，382 JVM/80套与仪器编译PASS。实际原菜单与对白/独立水域入口返程已取证，全部CONTROLLED_ORIGINAL，新增能力内容绑定与船落岸未接通，APP_VERIFIED NOT_RUN/PUBLISHED NO。Nullable maxMp/缺上限fixture/错误原存档来源与错误返程方向分别修正并保留失败，不改原断言/碰撞。c54干净DEBUG仍360文件/66图/SHA10b2a6b7，不能替新代码背书。完整当前状态与下一精确动作见docs/current-task.md；证据world-lotus136-state.json与world-west-scene-items.json。继续原136局部导出/boat219水面与落岸事务，R2实际通过后原审核/巡检/发布；存档历史与所有新增App/旧档运行尚未关闭，总任务不结案。
+
+
+## WORLD-FULL场景物品局部内容检查点（2026-10-06 06:50，北京时间）
+
+原baseExport生成c55/66图/360文件，manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b，3导出/篡改拒绝/空目录restore回归通过；代码与受控codec已编译，Android仍NOT_RUN，未发布。原船两类型岸边落岸再登已受控按键核，但World运行与136区域仍待接。生产v82/R2候选冻结不变；主任务继续，详见current-task当前有效状态，未关闭十类累计欠账。
