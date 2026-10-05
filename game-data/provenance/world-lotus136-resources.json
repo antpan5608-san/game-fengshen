@@ -1,0 +1,633 @@
+{
+  "dialogues": [
+    {
+      "id": "rom.dialogue.146.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36610,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102162,
+            "sha256": "aa540d28f7f3882a00b41a53736b3e2eaa7997dd286a6cb99718e933ecfdd4f4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44717,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110269,
+          "sha256": "ef8333080d884782fb5cf16a8fb6a3da4ad404b7f235874a8dbbc802a1a7c81a"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『這兒是香榭居。』"
+    },
+    {
+      "id": "rom.dialogue.146.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36612,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102164,
+            "sha256": "6e492d569015f0dbb33380ae70d6e4f2db8b81f722eef897a1d1349641094be7"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44727,
+          "length": 64,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110279,
+          "sha256": "adb88b06b1fa0984db644607a1c752a911727dcf31cce94f12ec9d23b1866e5b"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『我就是百草仙子，楊戬乃是中了魔禮青的黑風毒，這是雪蓮，服下就沒事了！』『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36614,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102166,
+            "sha256": "6f001a74ba20bdf544d3d59a3a6a5ebb61612d20094e3eb6227485c62fa12484"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44791,
+          "length": 28,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110343,
+          "sha256": "a832dd83ae914c9ca09ab2279816867a9eba1d1b63943c4b3486109806483ca4"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『咳！我雖能治百病，但是西岐城的瘟疫，我卻幫不上忙。』"
+    },
+    {
+      "id": "rom.dialogue.146.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35718,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101270,
+            "sha256": "2d9f693a5d1df840e2d75f815cebac44fea5a3c16b372b0f788da12dbca732f5"
+          },
+          {
+            "cpuAddress": 36616,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102168,
+            "sha256": "f6281d739f30f6240dc424cd6b09a28e594379e6330377a082c8e6739530be6b"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44819,
+          "length": 22,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110371,
+          "sha256": "2af7020a49d88c0e8aab06bd5ee77ddcc7932f355b5f4d2677a866c065e1fdda"
+        },
+        "remainingUnknown": [
+          "Normal Android route and font equivalence"
+        ]
+      },
+      "text": "『如果遇到困難，再去玉泉山找玉鼎真人吧！』"
+    }
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalTerrainMode": 0,
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57123,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 286515,
+        "sha256": "cf7149bbb3a7d70650a144f8308d80411b6815d1b2e901bed31806c923f60450"
+      },
+      "spawn": [
+        7,
+        14
+      ],
+      "toMapId": 136,
+      "trigger": [
+        65,
+        67
+      ],
+      "vehicleEvidence": "game-data/provenance/world-lotus136-state.json"
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "arrivalTerrainMode": 219,
+      "confidence": "VERIFIED",
+      "fromMapId": 136,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 59041,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 288433,
+        "sha256": "0fdd16625e616af995a6b66cf269770ea2262760ff12914d386f8de50a4eebfb"
+      },
+      "spawn": [
+        65,
+        67
+      ],
+      "toMapId": 16,
+      "trigger": [
+        7,
+        14
+      ],
+      "vehicleEvidence": "game-data/provenance/world-lotus136-state.json"
+    }
+  ],
+  "freeBoat": {
+    "evidence": "game-data/provenance/world-west-free-boat.json",
+    "mode": 219,
+    "shipFlag": "rom.global.6812.nonzero",
+    "sprites": {
+      "DOWN": "actor-219-boat-down.png",
+      "LEFT": "actor-219-boat-left.png",
+      "RIGHT": "actor-219-boat-right.png",
+      "UP": "actor-219-boat-up.png"
+    }
+  },
+  "graphics": {
+    "npc-141-lotus136.png": {
+      "actorEntityId": 141,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "f9591201466f77d27065e7a65283c6531a9aca20c3c446287f4eafda2e2ed86c",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "90400070904100789850007098510078",
+      "observedRect": [
+        112,
+        137,
+        16,
+        16
+      ],
+      "opaquePixelCount": 186,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "5f1d20ad7eac0dad2fef2b480116efc720345efe65a879ce254bc39d5c560cbc",
+      "ramSha256": "37551279b3a29b976f4b917757f1253f2a43ac874c6fa224af8d1a2e2b2171b0",
+      "rgbaSha256": "fa70a2fec92fce684926c842e0a00f46e53e5484cd2e6ff8d5261c7745f54776",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869392,
+          "sha256": "2c1f050b3d6434c24467ba8dd6ae276e4b5b7ac10ca527f47ef1b69c5ea38b32",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869408,
+          "sha256": "2a6f61e4a4e18166cb6192908b80ff85bcb2f6959dd4e3d31a189e89ed263550",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869648,
+          "sha256": "a66d6ca16c35dad817f43aca44ed8e8efe97272bcaee35fbe1cd55aa7d578ca8",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 869664,
+          "sha256": "f9547c62c73cffea856d30545115c2abb30888ee2eadc7f44a7d1348f0148ef9",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-182-lotus136.png": {
+      "actorEntityId": 182,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "f9591201466f77d27065e7a65283c6531a9aca20c3c446287f4eafda2e2ed86c",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60a2027060a3027868b2027068b30278",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 225,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ]
+      },
+      "ppuSha256": "5f1d20ad7eac0dad2fef2b480116efc720345efe65a879ce254bc39d5c560cbc",
+      "ramSha256": "37551279b3a29b976f4b917757f1253f2a43ac874c6fa224af8d1a2e2b2171b0",
+      "rgbaSha256": "6a127140de8107c6d524c0d68e2cc61cfb60f6513076267e94b65702d31691ff",
+      "tiles": [
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026608,
+          "sha256": "94f4037a870fb61252479ad4080ccb196ad59b8f6b1c227f7ba69c567c822ad1",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026624,
+          "sha256": "8eb5580c6c9816e8c087e31cede08716a33ab05f426cb90b5585bd7c10638d0a",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026864,
+          "sha256": "57df839c5dd45be2655489f90e00ec76e78d005dcd723949ee1bbe85123def74",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026880,
+          "sha256": "3c732baac61054244c5931d4479e4e1a19e16fcf0e209666bdc77bd250d587a7",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "licenseStatus": "UNKNOWN",
+  "map": {
+    "gridSha256": "e8f1dfc803a49764a6e97b6a327b8892a2bee71767bc740fedb27edc7d52bd9e",
+    "mapId": 136,
+    "palette": [
+      14,
+      28,
+      44,
+      48,
+      25,
+      1,
+      17,
+      49,
+      25,
+      9,
+      26,
+      56,
+      25,
+      53,
+      44,
+      48,
+      14,
+      14,
+      54,
+      22,
+      25,
+      14,
+      54,
+      43,
+      25,
+      14,
+      38,
+      34,
+      25,
+      14,
+      38,
+      32
+    ],
+    "tilesetId": 4,
+    "walkableClasses": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "nativeEntryReturnCost": {
+    "arrivalTerrainModes": [
+      0,
+      219
+    ],
+    "encounterStepsAfter": 0,
+    "kind": "CONTROLLED_ORIGINAL_POSITION_POISON_FIXTURE_NOT_NORMAL_ANDROID",
+    "path": "private-derived/world-west-lotus-entry-cost-controlled/costs.tsv",
+    "rows": [
+      {
+        "case": "lotus-entry",
+        "hp": "100",
+        "map": "16",
+        "stage": "before",
+        "status": "2",
+        "steps": "0",
+        "vehicle": "219",
+        "x": "65",
+        "y": "68"
+      },
+      {
+        "case": "lotus-entry",
+        "hp": "99",
+        "map": "136",
+        "stage": "after",
+        "status": "2",
+        "steps": "0",
+        "vehicle": "0",
+        "x": "7",
+        "y": "14"
+      },
+      {
+        "case": "lotus-return",
+        "hp": "100",
+        "map": "136",
+        "stage": "before",
+        "status": "2",
+        "steps": "0",
+        "vehicle": "0",
+        "x": "7",
+        "y": "13"
+      },
+      {
+        "case": "lotus-return",
+        "hp": "99",
+        "map": "16",
+        "stage": "after",
+        "status": "2",
+        "steps": "0",
+        "vehicle": "219",
+        "x": "65",
+        "y": "67"
+      }
+    ],
+    "settledInput97": 0,
+    "sha256": "1bfcc8dd9081286f66951bdf696f39262782fa2b4f832ab51225f5f2d99a5a5a",
+    "statusSteps": 1
+  },
+  "npcs": [
+    {
+      "cell": [
+        7,
+        5
+      ],
+      "firstDialogue": "rom.dialogue.146.1",
+      "firstEffects": [],
+      "id": "rom.npc.136.0",
+      "lotusResourceEvidence": "game-data/provenance/world-lotus136-resources.json",
+      "mapId": 136,
+      "originalTalk": {
+        "actionId": 47,
+        "evidence": "game-data/provenance/world-lotus136-state.json",
+        "itemId": "rom.special.0",
+        "mapFlagId": "rom.map.136.flag.1",
+        "messageDialogues": {
+          "1": "rom.dialogue.146.1",
+          "2": "rom.dialogue.146.2",
+          "3": "rom.dialogue.146.3"
+        },
+        "witnessFlagId": ""
+      },
+      "repeatDialogue": "rom.dialogue.146.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-lotus136-resources.json",
+        "record": {
+          "cpuAddress": 55209,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284601,
+          "sha256": "e8add0509118405e9a2b3907a142c90109482b8e07c2383450b254b7dd88d57c"
+        },
+        "remainingUnknown": [
+          "Original dynamic timing and Android normal voyage"
+        ]
+      },
+      "sprite": "npc-182-lotus136.png",
+      "spriteId": 182
+    },
+    {
+      "cell": [
+        7,
+        8
+      ],
+      "firstDialogue": "rom.dialogue.146.0",
+      "firstEffects": [],
+      "id": "rom.npc.136.1",
+      "lotusResourceEvidence": "game-data/provenance/world-lotus136-resources.json",
+      "mapId": 136,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-lotus136-resources.json",
+        "record": {
+          "cpuAddress": 55223,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284615,
+          "sha256": "817bc4ad81f88270d42d088541ec76876f809b6ae983b4db4f3ef58d57628000"
+        },
+        "remainingUnknown": [
+          "Original dynamic timing and Android normal voyage"
+        ]
+      },
+      "sprite": "npc-141-lotus136.png",
+      "spriteId": 141
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "schemaVersion": 1,
+  "scopeRevision": "lotus136-two-real-actors-independent-ship-entry-return",
+  "stateProof": {
+    "path": "game-data/provenance/world-lotus136-state.json",
+    "sha256": "1745f8c1d16687431036909f8e057a26dec5ea742ef15a038c1c08acf927725c"
+  },
+  "taskId": "WORLD-FULL-01",
+  "vehicleSources": [
+    {
+      "cpuAddress": 56246,
+      "length": 34,
+      "meaning": "Original map80/map136 load vehicle219 branch",
+      "module": 8,
+      "offset": 285638,
+      "sha256": "33a73bb40a68b15b59001f68a863da14865819eb0f26290742a33fbd7a1890cb"
+    },
+    {
+      "cpuAddress": 48958,
+      "length": 76,
+      "meaning": "Original Fubing ship boarding",
+      "module": 0,
+      "offset": 16206,
+      "sha256": "6ef12c41e0eb30722240b51d8ea33197cbe70f9f1bafdaad3697a72c0219d11a"
+    },
+    {
+      "cpuAddress": 53270,
+      "length": 27,
+      "meaning": "Original Fubing shore return",
+      "module": 0,
+      "offset": 20518,
+      "sha256": "9294f2dd1bdf9a4e022f385287479cdfec85c6a35e4fdabd95a398f761340c33"
+    },
+    {
+      "cpuAddress": 43551,
+      "length": 46,
+      "meaning": "Original map load and settled facing input",
+      "module": 0,
+      "offset": 10799,
+      "sha256": "91f639154ea6bf1d4d471619613f57147aa1a314430db9c4e3b69c63aa94dc8e"
+    }
+  ]
+}

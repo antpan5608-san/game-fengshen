@@ -249,6 +249,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(!OriginalNpcTalk.validHuangPending(this))return false
         if(flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.117.0"&&it.originalTalk?.actionId==43})return false
         if(!OriginalFerry.validPending(this,content.ferries.values))return false
+        if(content.freeBoatEnabled&&!OriginalBoat.validSnapshot(this,content.sceneForState(16,flags)))return false
         val scene=content.sceneForState(mapId,flags)?:return false
         val resolved=resolvedInteriorContext(content)
         if(resolved==null&&content.exits.any{it.returnToCaller&&it.fromMapId==mapId})return false
@@ -266,7 +267,7 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
             saved=="opening-segment-001-c51-r1"||saved=="opening-segment-001-c52"||saved=="opening-segment-001-c53"||
-            saved=="opening-segment-001-c54"||
+            saved=="opening-segment-001-c54"||saved=="opening-segment-001-c55"||
             saved in (1..50).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)

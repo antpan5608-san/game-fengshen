@@ -250,3 +250,8 @@ Android 老仪器运行器须明确指定本项目类，避免扫描依赖；`Co
 ## WORLD-FULL场景物品局部内容检查点（2026-10-06 06:50，北京时间）
 
 原baseExport生成c55/66图/360文件，manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b，3导出/篡改拒绝/空目录restore回归通过；代码与受控codec已编译，Android仍NOT_RUN，未发布。原船两类型岸边落岸再登已受控按键核，但World运行与136区域仍待接。生产v82/R2候选冻结不变；主任务继续，详见current-task当前有效状态，未关闭十类累计欠账。
+
+
+## WORLD-FULL自由船与香榭居开发检查点（2026-10-06 07:19:25，北京时间）
+
+c56/67依赖图/368文件，manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9，原baseExport/空目录restore及3相关回归通过；389 JVM/81套通过，instrument编译通过。World/Scene原船、停车/返程、136条件赠雪莲接既有使用链；原CPU/OAM和死亡成本已受控核，Android航行与治疗仍NOT_RUN。生产v82/R2冻结run未完成，未发布，不关闭全地图、全剧情或手机验收；具体来源/失败与下一动作见current-task当前有效状态。

@@ -1,0 +1,883 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "boat219-original-water-shore-parking-fubing-costs-not-app-voyage",
+  "licenseStatus": "UNKNOWN",
+  "kind": "SCOPED_CPU_AND_CONTROLLED_ORIGINAL_NOT_NORMAL_ANDROID",
+  "sources": [
+    {
+      "offset": 19112,
+      "length": 139,
+      "sha256": "ecfa81b1fa98595a7db2b4548bfe7f0000aa19461946e1418f8224dc13611bf1",
+      "module": 0,
+      "cpuAddress": 51864,
+      "meaning": "Tileset source dispatch"
+    },
+    {
+      "offset": 20037,
+      "length": 126,
+      "sha256": "9e2e415304d718e099f7cdd260d6fa2bb5c2682912263c3cc0b2d7985763466d",
+      "module": 0,
+      "cpuAddress": 52789,
+      "meaning": "Tileset target dispatch"
+    },
+    {
+      "offset": 20365,
+      "length": 181,
+      "sha256": "b01d679a3a2bfa4bf98ae2e684c8831c48f7a394fb850707105c8ea2f6400460",
+      "module": 0,
+      "cpuAddress": 53117,
+      "meaning": "Free boat water and shore target handlers"
+    },
+    {
+      "offset": 28646,
+      "length": 44,
+      "sha256": "da9f2142b1ad37407ff772864ac74c55b12eca4cbb870facdf0042fefe6ea805",
+      "module": 0,
+      "cpuAddress": 61398,
+      "meaning": "Original dynamic parked actor and source coordinates"
+    },
+    {
+      "offset": 16206,
+      "length": 76,
+      "sha256": "6ef12c41e0eb30722240b51d8ea33197cbe70f9f1bafdaad3697a72c0219d11a",
+      "module": 0,
+      "cpuAddress": 48958,
+      "meaning": "Fubing boarding and world map dispatch"
+    },
+    {
+      "offset": 28690,
+      "length": 69,
+      "sha256": "54d35f809427341528e9501f95a8670ecb0b14f280c1b3636e19c1558d6e087d",
+      "module": 0,
+      "cpuAddress": 61442,
+      "meaning": "Original 22-byte actor slot allocation stride"
+    }
+  ],
+  "cpu": {
+    "probePath": "tools/rom-extractor/probe-world-west-boat-ports.py",
+    "probeSha256": "2ccdf95c61f10c063b528647bd5ab7c11c054535656f995bd492b289342af44d",
+    "path": "android/app/src/test/resources/world-west-boat-ports-original.tsv",
+    "sha256": "b20a4e8733472253d59969022684ca4b41574cda02374799f9e5311455b74ba9",
+    "caseCount": 112,
+    "failures": 0
+  },
+  "rules": {
+    "boatMode": 219,
+    "worldMapId": 16,
+    "shipFlagId": "rom.global.6812.nonzero",
+    "baseWaterClasses": [
+      4,
+      15,
+      16
+    ],
+    "paddleWaterClasses": [
+      5,
+      14,
+      17
+    ],
+    "shoreDirections": {
+      "25": [
+        "UP",
+        "DOWN"
+      ],
+      "26": [
+        "LEFT",
+        "RIGHT"
+      ]
+    },
+    "parkedActor": 219,
+    "parkedFlagByte": 61,
+    "parkedPosition": "source water cell before landing",
+    "paddleRequiredToBoard": false,
+    "footPortClasses": [
+      25,
+      26
+    ],
+    "ordinaryLandAndReboardStatusSteps": 1,
+    "ordinaryLandAndReboardEncounterSteps": 1,
+    "fubingBoard": {
+      "from": [
+        10,
+        9,
+        3
+      ],
+      "contact": [
+        10,
+        9,
+        2
+      ],
+      "to": [
+        16,
+        68,
+        88
+      ],
+      "modeAfter": 219,
+      "statusSteps": 1,
+      "encounterStepsAfter": 0
+    },
+    "fubingReturn": {
+      "from": [
+        16,
+        68,
+        88
+      ],
+      "contact": [
+        16,
+        67,
+        88
+      ],
+      "to": [
+        10,
+        9,
+        3
+      ],
+      "modeAfter": 0,
+      "statusSteps": 1,
+      "encounterStepsAfter": 0
+    },
+    "parkedDirection": "copied original actor direction, not forced DOWN",
+    "allDisabledBoardFailure": {
+      "mapId": 16,
+      "x": 9,
+      "y": 2,
+      "mode": 219,
+      "encounterSteps": "before+1, 8-bit",
+      "meaning": "Unfinished original map-load/defeat only, never a travel destination"
+    },
+    "allDisabledReturnFailure": {
+      "mapId": 10,
+      "x": 9,
+      "y": 3,
+      "mode": 148,
+      "encounterSteps": "before+1, 8-bit",
+      "meaning": "Unfinished original actor/map-load/defeat only, never a playable vehicle148"
+    }
+  },
+  "graphics": {
+    "up": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1034384,
+          "length": 16,
+          "sha256": "486b343464d770222fd6e6a3ca2391749a042dd2affc99cb10a2a3442281f09c",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1034400,
+          "length": 16,
+          "sha256": "5ea8852b5d6d237cc115bd14a8587f18acbc91d04b3d8873a38d75615cddf383",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1034640,
+          "length": 16,
+          "sha256": "04541fc5de45dc67ed1e34b654f3e5d1c632bfd2bf51104201e138f12ec0b8d2",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1034656,
+          "length": 16,
+          "sha256": "8be323864156b07d92367af1967ba141ce20433a22a6e4c6ae0c4d152d4920eb",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "fd9cab913297763cc0ebee08e61f91e29b0551584b08b8c0b5255763508175ec",
+      "captureSha256": "7d50f617f07775f844e34c58aeef4048d72f1e26a4032c0f045b3e1d036f8e1f",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 160,
+      "oamHex": "70880070708900787898007078990078",
+      "actorRecordOffset": 1026,
+      "actorEntityId": 219,
+      "ramSha256": "952f3099b7c443905f750fd9cfb42a3152c45b7c883e4e5aa139ee13a018337f",
+      "ppuSha256": "b4789a0c9b6a9080f28cd08f473dde553413a7608fc4c69861a0c51b6dc420c5"
+    },
+    "down": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 1034256,
+          "length": 16,
+          "sha256": "773b41c47840ad8e689c8deef12ec126c7e9e777a2a9adbb3e925bf00118ba40",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 1034272,
+          "length": 16,
+          "sha256": "f9e8934596a914759b13f469287af1a396eb1f4dceaacffa6c5ebc641297a5f3",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 1034512,
+          "length": 16,
+          "sha256": "e5d8b00cc70d4f4e127951a3b0e44d38f1355ca4f22c042e32c814ebffd620c1",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 1034528,
+          "length": 16,
+          "sha256": "2a098d075df0d5a6b7938d465b33bc1fb49278d9421114b983152a3fb90954a6",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "6f39e1491c029defabc26811b75a36986034f79725798e868f4a84987dcc4756",
+      "captureSha256": "c0471cac1814b38bc3a7cc7f404ae1fbb94ab2515d2f4b08b42becbb3510f333",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 160,
+      "oamHex": "70800070708100787890007078910078",
+      "actorRecordOffset": 1026,
+      "actorEntityId": 219,
+      "ramSha256": "1fc8ee6a4cd3156a644a93a8c9f4428982b310e7dad0e55a3f4b26d6d48f2373",
+      "ppuSha256": "6ebce7b132a782cf116726508481fbf01c4bfb4011bf38ecf4ff14481aa5066d"
+    },
+    "left": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 865840,
+          "length": 16,
+          "sha256": "5d6ab89bd2fd79ac0a6e5bc9f0b957922320072001ff09f97adc67afba013369",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 865856,
+          "length": 16,
+          "sha256": "237a5eef7a0b5b2d889062eb66d5000e24b45665b10a40afea58c1d25c788740",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 866096,
+          "length": 16,
+          "sha256": "8e65db168adc08f8482341b598fe047886ccf281ed7fc18160f72b66c0404221",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 866112,
+          "length": 16,
+          "sha256": "ba3e125ec8554a058288f2480006f86c5eed34e49fd45d28e244063a9736090f",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "f746c6741393e9b2c3d6c9c182694709280e8ccd953ddc304a321804ce32f513",
+      "captureSha256": "0161c79ed9ed0e24f288e255b43fdc13ac902712e4bb066e688a21293c766b39",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 157,
+      "oamHex": "70840070708500787894007078950078",
+      "actorRecordOffset": 1026,
+      "actorEntityId": 219,
+      "ramSha256": "84e6d9a7b949863893b61b07a46fe0beea58dbcc7b47eed454bfc872b7d5ae34",
+      "ppuSha256": "bef07c407a201c19cc87ac16574d1a22c4bed60c12cfdcde662254b69cd65ae3"
+    },
+    "right": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        105,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 865856,
+          "length": 16,
+          "sha256": "237a5eef7a0b5b2d889062eb66d5000e24b45665b10a40afea58c1d25c788740",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 865840,
+          "length": 16,
+          "sha256": "5d6ab89bd2fd79ac0a6e5bc9f0b957922320072001ff09f97adc67afba013369",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 866112,
+          "length": 16,
+          "sha256": "ba3e125ec8554a058288f2480006f86c5eed34e49fd45d28e244063a9736090f",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 866096,
+          "length": 16,
+          "sha256": "8e65db168adc08f8482341b598fe047886ccf281ed7fc18160f72b66c0404221",
+          "attribute": 64,
+          "flipX": true,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "796afe349bc4e247a7f310972e9e979d106d1a969c4f303bad942ea94439497f",
+      "captureSha256": "15a1fe85ea3bdfefc32d0cddfcb4e2203492163a519060a6efe71bfd96a15acd",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 157,
+      "oamHex": "70854070708440787895407078944078",
+      "actorRecordOffset": 1026,
+      "actorEntityId": 219,
+      "ramSha256": "90645f868106a3de752fd7f37ca403392af5291038348f78e8e66f6f1adbecca",
+      "ppuSha256": "ea29fd05d02de7771511dd1c58683054ef1cf24edaab2de9435f128a5f94ead6"
+    }
+  },
+  "nativeEvidence": [
+    {
+      "path": "private-derived/world-west-boat-cost-valid-source-controlled/costs.tsv",
+      "sha256": "4189cf1fcf56a52ecc75bb200a87f1fc0d199b80368d4e5f0599ecf16632ee5a",
+      "kind": "CONTROLLED_ORIGINAL_POSITION_STATUS_FIXTURE_NOT_NORMAL_ROUTE",
+      "rows": [
+        {
+          "case": "shore25-land",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "shore25-land",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "1",
+          "hp": "99",
+          "status": "2"
+        },
+        {
+          "case": "shore25-board",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "shore25-board",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "1",
+          "hp": "99",
+          "status": "2"
+        },
+        {
+          "case": "shore26-land",
+          "stage": "before",
+          "map": "16",
+          "x": "35",
+          "y": "71",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "shore26-land",
+          "stage": "after",
+          "map": "16",
+          "x": "34",
+          "y": "71",
+          "vehicle": "0",
+          "steps": "1",
+          "hp": "99",
+          "status": "2"
+        },
+        {
+          "case": "shore26-board",
+          "stage": "before",
+          "map": "16",
+          "x": "34",
+          "y": "71",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "shore26-board",
+          "stage": "after",
+          "map": "16",
+          "x": "35",
+          "y": "71",
+          "vehicle": "219",
+          "steps": "1",
+          "hp": "99",
+          "status": "2"
+        },
+        {
+          "case": "fubing-board",
+          "stage": "before",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "fubing-board",
+          "stage": "after",
+          "map": "16",
+          "x": "68",
+          "y": "88",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "99",
+          "status": "2"
+        },
+        {
+          "case": "fubing-return",
+          "stage": "before",
+          "map": "16",
+          "x": "68",
+          "y": "88",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "100",
+          "status": "2"
+        },
+        {
+          "case": "fubing-return",
+          "stage": "after",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "99",
+          "status": "2"
+        }
+      ]
+    },
+    {
+      "path": "private-derived/world-west-boat-generic-landing-controlled/timeline.tsv",
+      "sha256": "9b0efa080cd7dbf7e8e6962f6ba0818a0c96d42ee400547921bc3e02134506ee",
+      "kind": "CONTROLLED_ORIGINAL_POSITION_STATUS_FIXTURE_NOT_NORMAL_ROUTE"
+    },
+    {
+      "path": "private-derived/world-west-boat-graphic-aligned-controlled/timeline.tsv",
+      "sha256": "d4faaec7e6cca91895e037b2e6ba1c6db13ce1ae2b42da444ef357e41137f1bb",
+      "kind": "CONTROLLED_ORIGINAL_POSITION_STATUS_FIXTURE_NOT_NORMAL_ROUTE"
+    },
+    {
+      "path": "private-derived/world-west-boat-cost-one-hp-controlled/costs.tsv",
+      "sha256": "e3e0e6834c4c5c7b01612829087e360fe9611652202f3799b13be0a38a3787d2",
+      "kind": "CONTROLLED_ORIGINAL_ONE_HERO_POISON_ONE_HP_NOT_NORMAL_ROUTE",
+      "rows": [
+        {
+          "case": "shore25-land-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "shore25-land-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "shore25-board-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "shore25-board-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "fubing-board-one-hp",
+          "stage": "before",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "fubing-board-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "68",
+          "y": "88",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "fubing-return-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "68",
+          "y": "88",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "fubing-return-one-hp",
+          "stage": "after",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "0",
+          "status": "32"
+        }
+      ]
+    },
+    {
+      "path": "private-derived/world-west-boat-cost-all-poison-one-hp-controlled/costs.tsv",
+      "sha256": "3c04e3ab23e24bbaf316452c4731e999f01606916bfedaa87f78990e67ee76f5",
+      "kind": "CONTROLLED_ORIGINAL_ALL_PRESENT_ACTORS_POISON_ONE_HP_NOT_NORMAL_ROUTE",
+      "rows": [
+        {
+          "case": "shore25-land-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "shore25-land-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "shore25-board-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "24",
+          "y": "45",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "shore25-board-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "24",
+          "y": "44",
+          "vehicle": "219",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "fubing-board-one-hp",
+          "stage": "before",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "0",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "fubing-board-one-hp",
+          "stage": "after",
+          "map": "16",
+          "x": "9",
+          "y": "2",
+          "vehicle": "219",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        },
+        {
+          "case": "fubing-return-one-hp",
+          "stage": "before",
+          "map": "16",
+          "x": "68",
+          "y": "88",
+          "vehicle": "219",
+          "steps": "0",
+          "hp": "1",
+          "status": "2"
+        },
+        {
+          "case": "fubing-return-one-hp",
+          "stage": "after",
+          "map": "10",
+          "x": "9",
+          "y": "3",
+          "vehicle": "148",
+          "steps": "1",
+          "hp": "0",
+          "status": "32"
+        }
+      ]
+    }
+  ],
+  "remainingUnknown": [
+    "Normal Android voyage and old-save/cold-start validation",
+    "Android resume of the two original all-disabled transient endpoints pending same-candidate runtime",
+    "Other vehicle modes and unrelated land transport",
+    "Original full sprite animation timing"
+  ]
+}
