@@ -1,0 +1,64 @@
+{
+  "kind": "CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_APP_CHECKPOINT",
+  "sourceCommit": "fbfe0a64bfe05f992e3dc3d76edfc607c240b9a8",
+  "sourceBuildRunId": 37202777979,
+  "sourceApkSha256": "553839d32b6c78680fe2e49bc3a5d0d29e18756426f57cf67237c83662705592",
+  "sourceContentVersion": "opening-segment-001-c51-r1",
+  "sourceManifestSha256": "427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805",
+  "sourceArtifactId": 11305543123,
+  "sourceIndex": "checkpoint-ui/touch-ux-world-north-palace-normal-index.json",
+  "sourceEvent": "repeat-chest-no-grant",
+  "snapshotCanonicalSha256": "7efc00e9483e8f22401d275e5af7275a776e7a86c6890adf63bb6ecbf996c99a",
+  "limit": "Isolated regression replay only; not the new candidate normal playthrough. JSON formatting differs from the App index; values are unmodified.",
+  "snapshot": {
+    "saveSchemaVersion": 1,
+    "contentVersion": "opening-segment-001-c51-r1",
+    "mapId": 139,
+    "x": 40,
+    "y": 72,
+    "direction": "UP",
+    "characters": [
+      {
+        "id": "nezha",
+        "level": 12,
+        "experience": 2566,
+        "hp": 46,
+        "maxHp": 109,
+        "mp": 0,
+        "strength": 33,
+        "stamina": 15,
+        "agility": 13,
+        "spirit": 9,
+        "maxMp": 0,
+        "equipment": {
+          "rightHand": 2,
+          "leftHand": -1,
+          "body": 1,
+          "feet": 28
+        }
+      }
+    ],
+    "terrainMode": 0,
+    "inventory": {
+      "rom.armor.0": 1,
+      "rom.item.0": 2,
+      "rom.medicine.0": 7,
+      "rom.medicine.2": 1,
+      "rom.medicine.6": 8,
+      "rom.medicine.7": 1,
+      "rom.special.11": 1,
+      "rom.weapon.2": 1
+    },
+    "flags": {
+      "opening.intro.seen": true,
+      "rom.event.97.39.1": true,
+      "rom.map.139.flag.128": true,
+      "rom.map.139.flag.2": true,
+      "rom.npc.114.1": true,
+      "rom.npc.114.2": true,
+      "rom.npc.97.2": true
+    },
+    "money": 946,
+    "encounterSteps": 0
+  }
+}
