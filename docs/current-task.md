@@ -6,7 +6,21 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效状态：R2冻结与世界接续 / SAVE-HISTORY（2026-10-06，北京时间）
+## 当前有效接续（2026-10-06 06:33:17，北京时间）
+
+生产仍v82，APK来源c461e7c121b6f535d85e2a245b82be1f6e42d786；全世界IN_PROGRESS/PARTIAL/ALL_MAPS_USABLE=NO，有效地图分母UNKNOWN。main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，原R2候选83/37364795394：build、runtime SUCCESS，runtime-world仍IN_PROGRESS，continuation未开始；同候选APK SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab。未发布、不改候选，不以首段通过代替整段。inspect两次因托管runner未领取job而NOT_AVAILABLE；未取得本轮客户端样本，不称健康。
+
+开发树/workspace/game-fengshen-world-jiameng-next，work/world-jiameng-next；本检查点从5a3a07287e4a0054fe8b14f2589a832d7009fe2f继续，前一远端备份work/world-jiameng-batch-continuation/d496e0806f04542f671b05e281dcec2f9d13e764与5a3a同树。c54/66图/360文件，manifest31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b，原git archive/默认assets/development/原restore干净构建25s通过；DEBUG APK SHA10b2a6b76eab636b74ff1c242b1daff058a0448827973b7de89ee37af79169d8/33056523字节。DEBUG不算原签名或App验收；本检查点新增代码不借旧APK背书。ci/content-source与runtime-scope仍c50。
+
+新增IMPLEMENTED但未接内容pin：百草仙子47条件赠雪莲、统一场景物品0/event9与14/event23，复用WorldItems/现有明确使用、StoryFollowup完整事务/存档与对白续段。神木桨数量1→0保留used行，6812置1，52.6→52.7后42.flag128，无移动或治疗；雪莲对37实际杨戬130恢复当前maxHp/maxMp/status0，47.4后37.flag128、清病房context196，无新人物、奖励或传送。新规则/名称/对白有匹配ROM与原菜单/脚本证据，Unicode仍PROVISIONAL。目标规则调用16384 CPU组合、消耗8组合、仙子selector7168与gift18组合、boat219目标0..24的5400组合均零差异；382 JVM/80套0失败/错误/跳过、原仪器编译通过。原失败：新代码Nullable maxMp编译修正；fixture没填maxMp被安全检查拒绝后改正确fixture，未改游戏预期。
+
+实际受控原版：芙冰10(9,3)向UP接触船148，无桨/有桨都进入16(68,88)/vehicle219；向LEFT原码头67,88返回10(9,3)。桨不是登船前置，仅扩水域。先前UP/DOWN返程尝试方向错误保留，不算Game Bug。原16(65,67)→136(7,14)/vehicle0，实际离开返回16(65,67)/vehicle219；map136两NPC/4对白，百草仙子仅病中未有雪莲赠0，赠物不治病、满包不锁重试。原房屋文字中樹暂定转录由实际木+射字形校正为榭，旧c54固定配方不改，新证明记录差异。原库存赠物可覆盖空used神木桨行；本窄流程已清过期当前行与witness，任意旧档多个空used行缺slot顺序时诚实拒绝并保留存档，不能称全物品槽位已等价。
+
+四层：c54 IMPLEMENTED/DEBUG_PACKAGED；后续场景物品IMPLEMENTED/COMPILED，内容能力绑定与新136/boat还未生成目标包；所有新增APP_VERIFIED=NOT_RUN/PUBLISHED=NO。SAVE-HISTORY已实现/JVM验证，新UI/外部冷启仍NOT_RUN。正常可信发布终点仍R1东海胜后小龙女→村2服务→保存冷启，不把66图当正常可达66图。
+
+第一真实blocker仍R2三段实际验收/服务runner调度；下一精确动作读37364795394实际结果：PASS复用原审核/签名hash/真实巡检/发布，FAIL读原片断言分类薄修。等待期间继续本独立开发：把原136两NPC/雪莲与两物品绑定接原baseExport、核boat219 shore25/26落岸/停船/自由移动并复用World，形成杨戬治疗连续链；不以此检查点结案。雪莲正常Android、旧档覆盖、存档历史恢复、后续玉泉/火云洞/西岐丹药/磻溪姜入队未关闭。十类累计权威docs/delivery-status.md，不修改Language/真实云档，不reset/clean。
+
+## 先前检查点：R2冻结与世界接续 / SAVE-HISTORY（2026-10-06，北京时间）
 
 用户最新授权仍是WORLD-FULL-01连续实施，不以R2或存档历史完成结案。生产v82/0.8.12-playable-r1-stable，来源c461e7c121b6f535d85e2a245b82be1f6e42d786；服务器version.json实际读回82/STABLE/stable_acceptance=PASS/manual_acceptance=PENDING。当前正常已验终点为东海胜后小龙女入队→村2既有服务→保存/冷启；完整全世界仍PARTIAL/有效分母UNKNOWN。
 

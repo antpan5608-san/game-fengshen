@@ -417,3 +417,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原动画帧高位标志不能直接当调色板下标。当前静态配方可引用另一真实记录中同entity的普通静止帧，依旧限定原动画指针、四图块、实际当前CHR与palette/像素hash；动态朝向/OAM未证时保持PROVISIONAL。原边界出口要补记录最后旧场景坐标，不把入口落点直接当离开trigger；当前实例已复用原FCEUX入口存档执行真实DOWN并核单独返回。新批次原导出、空目录restore和旧caller回归已实际运行，App仍须另验。
 
 - 原房屋入口不能套用商店class-minus公式；当前已实际读取caller*3+houseIndex表、FCEUX真实入门/FE返程，并用probe-world-west-houses.py执行96入口与64 plain-room碰撞案例。入口落点重合出口时，正常先离开再踏入出口；原存档保留captureCaller/returnToCaller，不交换正反坐标。只检查持有/已用的action55/56不补治疗/航线。原ci_apk.restore省略destination即写加载器实际assets/development；APK内实际前缀/manifest需再核，编译不证明启动。新CPU fixture要保留实际tileset变量，漏设时标取证配置错误后复测，不改原预期。上述局部导出/JVM/编译与空目录复现已执行；新App仍待原runner。
+
+- 原菜单效果与事件结束分别核：现已复用匹配缓存执行probe-world-west-scene-items.py（状态恢复/船位与消耗）与原FCEUX明确菜单/后续对白；共享StoryFollowup负责pending阶段、结束flag及同存档事务，原CPU/JVM/编译不代替App。font38/39本轮与实际使用对白PPU全4096字节匹配；逐字转录和局部未知格保留PROVISIONAL。库存低7位数量与高used标志分开，原新赠物可覆盖零数量的used行；缺旧档多空行顺序时保留当前存档并报精确缺口，不从JSON排序假造原格顺序。新原船水类矩阵不等于已接通落岸/停船/运行，必须另核原码头与独立返程。

@@ -239,6 +239,11 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
                 (x/16!=i.openingMovement.destination.x||y/16!=i.openingMovement.destination.y))}==true}==true)return false
         if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
+        if(content.sceneItemUses().any{!it.validPending(this)})return false
+        for(originalId in listOf(0,14)){
+            val rule=OriginalSceneItemDefinition(OriginalSceneItems.EVIDENCE,originalId)
+            if(flags[rule.pendingFlag]==true&&content.sceneItemUses().none{it.id==rule.id})return false
+        }
         if(!OriginalNpcTalk.validRoom116Pending(this))return false
         if(flags[OriginalNpcTalk.ROOM116_PENDING_FLAG]==true&&content.npcs.none{it.id=="rom.npc.116.0"&&it.originalTalk?.actionId==41})return false
         if(!OriginalNpcTalk.validHuangPending(this))return false

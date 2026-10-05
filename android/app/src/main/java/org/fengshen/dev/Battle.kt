@@ -191,7 +191,7 @@ object StoryFollowup {
             encounterSteps=if(movement.accumulateEncounterSteps)(before.encounterSteps+movement.completedSteps) and 255
                 else d.encounterSteps?:before.encounterSteps)
     }
-    private fun advance(before:SaveSnapshot,storyId:String,pendingFlag:String,chain:StoryContinuation,
+    internal fun advance(before:SaveSnapshot,storyId:String,pendingFlag:String,chain:StoryContinuation,
         currentDialogue:String,templates:Map<String,CharacterState>,complete:(Map<String,Boolean>)->Map<String,Boolean>):Result {
         fun reject(reason:String)=Result(before,null,false,reason)
         if(before.flags[pendingFlag]!=true)return reject("剧情状态已变化")

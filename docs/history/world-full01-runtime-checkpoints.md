@@ -958,3 +958,8 @@ c54目标opening-segment-001-c54：66图/360文件、manifest31572398f6c383feda6
 c53已经在git archive d50c057的干净目录/workspace/scratch/world-west-clean-d50c057实际原ci_apk.restore默认assets/development→assembleDebug/assembleDebugAndroidTest 22秒成功；实际APK内360之前批次352文件/64图hash严格一致，DEBUG包32519333字节/SHA30ddd9c52f4bdc63485918f15f4a8a3d928be34d9aaf0b20eddc62aad3ff2fb8。更早一份手工指定assets/content的调试构建不能证明启动，已明确废弃/未发布/未用于App验收，不记运行PASS。本次仍不改变原CI c50 pin，后续候选需原签名与实际运行门禁。
 
 SAVE-HISTORY继续已实现/单元验证、APP_VERIFIED NOT_RUN；最新20档不淘汰active/迁移/云/CI checkpoint，后续同合适候选运行而不塞回冻结R2。最近独立远端备份work/world-jiameng-batch-continuation/65b92c1641ee72868ec470adc51cb6d337d4ae62与d50c057同树；本增量待提交备份。十类欠账仍delivery-status权威清单，不关闭全世界、全服务、全字库、音频和手机。
+
+
+## 原场景物品接续检查点（2026-10-06，北京时间）
+
+起点开发5a3a072，生产v82/main R2 87bc56cb仍冻结；37364795394首段PASS/地府段运行、未发布，inspect托管runner未领取为NOT_AVAILABLE。新增雪莲37/event9和神木桨42/event23复用明确使用/共享StoryFollowup/完整存档事务，仙子赠物与当前空used桨行修正已实现；原CPU 16384效果/8消耗/7168 selector/18 gift/5400水类全部零差异，382 JVM/80套与仪器编译PASS。实际原菜单与对白/独立水域入口返程已取证，全部CONTROLLED_ORIGINAL，新增能力内容绑定与船落岸未接通，APP_VERIFIED NOT_RUN/PUBLISHED NO。Nullable maxMp/缺上限fixture/错误原存档来源与错误返程方向分别修正并保留失败，不改原断言/碰撞。c54干净DEBUG仍360文件/66图/SHA10b2a6b7，不能替新代码背书。完整当前状态与下一精确动作见docs/current-task.md；证据world-lotus136-state.json与world-west-scene-items.json。继续原136局部导出/boat219水面与落岸事务，R2实际通过后原审核/巡检/发布；存档历史与所有新增App/旧档运行尚未关闭，总任务不结案。

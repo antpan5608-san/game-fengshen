@@ -935,6 +935,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
 
+        content.sceneItemUses().firstOrNull{flags[it.pendingFlag]==true&&it.validPending(currentSnapshot())}?.let{rule->
+            val stage=rule.continuation.stage(rule.id,flags)?:return@let
+            openDialogue(content.dialogues.getValue(rule.continuation.dialogueIds[stage]),content.npcs.single{it.id==rule.npcId});return
+        }
         val scenePending=content.sceneStories.values.firstOrNull{flags[it.pendingFlag]==true}
         if(scenePending!=null){
             if(OriginalStatus.allDisabled(characters)){
@@ -993,6 +997,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
+        content.sceneItemUses().firstOrNull{it.npcId==npc?.id&&flags[it.pendingFlag]==true}?.let{rule->
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot()
+            commitStoryFollowup(before,OriginalSceneItems.advance(before,rule,dialogueText?.id?:""),npc!!);return
+        }
         content.yangJoin()?.let{rule->
             if(npc?.id==rule.npcId&&flags[rule.pendingFlag]==true){
                 if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
@@ -1301,6 +1310,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(selectedItemId!=id||current.kind!="world-use"||!current.enabled||current.target!=cmd.targetId)return
                 val target=content.worldItemTargets().firstOrNull{it.id==cmd.targetId}?:return
                 val before=currentSnapshot()
+                if(rule.sceneScript!=null){
+                    val result=OriginalSceneItems.begin(before,item,target,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                    if(!result.applied){feedback(result.error?:"当前不可使用");return}
+                    closePanel();commitStoryFollowup(before,result,content.npcs.single{it.id==target.id});return
+                }
                 if(rule.yangJoin!=null){
                     val result=OriginalYangJoin.begin(before,item,target,content.joinCharacters["yangjian"],panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
                     if(!result.applied){feedback(result.error?:"当前不可使用");return}
