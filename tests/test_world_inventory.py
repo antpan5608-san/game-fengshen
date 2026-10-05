@@ -57,6 +57,8 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertTrue(all(m['appRender']=='NOT_RUN' for m in rows))
         self.assertEqual(527,self.report['summary']['exitRecords'])
         self.assertEqual('RETURN_TO_CALLER',next(m for m in rows if m['mapId']==22)['exits'][0]['kind'])
+        self.assertTrue(all(s['operation']=='NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW'
+            for s in self.report['services'] if s.get('callerMapId') is not None))
     def test_category_local_stock_and_prices_are_not_reference_ids(self):
         catalog=self.report['serviceCatalog'];items={x['id']:x for x in catalog['items']}
         self.assertEqual(54,len(catalog['stocks']))

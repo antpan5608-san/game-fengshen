@@ -336,7 +336,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                     'appearance':'NEEDS_NPC_STATE_DISPATCH'} for n in overlay_rows],
                 'contextSource':reader.span(0,0xd2c7+context_index,1,'Original additional indoor NPC context'),
                 'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
-                'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
+                'operation':'NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW',
                 'verification':'STRUCTURAL_ROM_DISPATCH'})
     for service in services:
         kind=service['kind'];caller=service['callerMapId']

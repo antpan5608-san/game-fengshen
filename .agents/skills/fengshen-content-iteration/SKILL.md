@@ -110,6 +110,8 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 
 `export_development.py --world-inventory <report> --base-apk <reviewed-apk>`复用原Reader枚举物理几何表、NPC overlay域、真实出口/服务门口；解码、打包和实际App运行字段分开。相同grid不合并状态ID，未证明使用的尾槽保留UNKNOWN；Reference TMX扩边数据不替代原格网。原E0C3选择/E3A6背景/E438精灵palette及PPU零色镜像已与正常防具/客栈截图核对；只代表静态默认palette，不宣称脚本光照变体已核。
 
+清单的打包集合必须来自当前target，而不是较小的恢复输入：`inventory_target_from_base`先核原APK/signature/hash，再调用原`export_from_base`核target manifest。此CLI已在Linux既有JDK/ANDROID_SDK_ROOT实际运行，`test_world_hell_scope`验证当前target集合/文件数及错误基底拒绝，`test_world_inventory`仍要求未知分母和App NOT_RUN。`packageSource`标REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE，不能当成已发布APK；仅ROM服务枚举也不能把后来已接的caller硬编码成NOT_IMPLEMENTED。
+
 F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取已执行成功：旧收集器给town01画面加touch-ux-前缀，按真实文件名筛选后取回7张原App服务PNG并人工检查。先前筛选零图片和未保留F0原片仍是限制；后续必须核artifact实际文件，不能将测试PASS当录像已保留。不要无限重试或修改代理。
 
 

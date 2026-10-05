@@ -394,6 +394,15 @@ class TouchTest:IsolatedGameTestCase(){
             File(instrumentation.targetContext.getExternalFilesDir(null),"town01-$name.png").outputStream().use{
                 instrumentation.uiAutomation.takeScreenshot().compress(Bitmap.CompressFormat.PNG,100,it)}
         }
+        var seekingInjury=false
+        val injuryEvents=org.json.JSONArray()
+        fun injuryState(name:String){
+            injuryEvents.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
+                .put("snapshot",v.currentSnapshot().json()))
+            File(instrumentation.targetContext.getExternalFilesDir(null),"town01-normal-injury-attempts.json").writeText(
+                org.json.JSONObject().put("kind","NORMAL_NEW_GAME_TOUCH_INPUTS")
+                    .put("stateGrants",false).put("events",injuryEvents).toString())
+        }
         fun finishFight(){
             if(v.layer!=GameView.Layer.BATTLE)return
             val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
@@ -403,13 +412,20 @@ class TouchTest:IsolatedGameTestCase(){
                 val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     assertTrue("Town route must survive normally",fight.phase!=BattlePhase.DEFEAT)
-                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
-                        tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
+                        // A hand-knife can legitimately defeat early single enemies before they act.
+                        // Use the actual escape button while still at full HP to expose ordinary
+                        // retaliation; never edit HP, force an enemy, or alter random consumption.
+                        if(seekingInjury&&fight.hero.hp==fight.hero.maxHp)
+                            tap(v,center(v.battleCommandBounds(3)))
+                        else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
+                    }
                     else if(presentation.screen==BattlePresentation.Screen.RESULT)SystemClock.sleep(40)
                 }
                 SystemClock.sleep(40)
             }
             assertEquals(GameView.Layer.MAP,v.layer)
+            if(seekingInjury)injuryState("normal-encounter-ended")
         }
         fun step(k:Key){stickStep(v,k);finishFight()}
         fun walkTo(tx:Int,ty:Int){
@@ -518,13 +534,15 @@ class TouchTest:IsolatedGameTestCase(){
             if(v.currentSnapshot().characters.first().hp==v.currentSnapshot().characters.first().maxHp){
                 walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId)
                 walkTo(200,130)
-                for(i in 0..120){
+                seekingInjury=true;injuryState("normal-injury-preparation-start")
+                for(i in 0 until 320){
                     val hero=v.currentSnapshot().characters.first()
                     if(hero.hp in 1 until hero.maxHp)break
                     val key=if(v.world.y/16==130)Key.UP else Key.DOWN
                     step(key)
                 }
-                assertTrue("Normal encounters must produce a living injured hero",v.currentSnapshot().characters.first().let{it.hp in 1 until it.maxHp})
+                seekingInjury=false;injuryState("normal-injury-preparation-end")
+                assertTrue("Normal encounters must produce a living injured hero; see town01-normal-injury-attempts.json",v.currentSnapshot().characters.first().let{it.hp in 1 until it.maxHp})
                 walkTo(202,130);assertEquals(0,v.world.mapId)
             }
             val before=v.currentSnapshot();val hero=before.characters.first()
@@ -2581,6 +2599,7 @@ class TouchTest:IsolatedGameTestCase(){
     // Both routes share the same real touch/service/BFS driver. Only their
     // verified source checkpoints and scenario assertions differ.
     fun testNormalWorldFirstHallFromVerifiedHellVillageSave(){normalWorldStoryContinuation(false,true,false,true)}
+    fun testNormalWorldFirstHallFromVerifiedMedicalSave(){normalWorldStoryContinuation(false,true,firstHall=true,normalSourceName="world-r1-medical-expected-save.json")}
     fun testWorldFirstHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,true)}
     fun testNormalWorldSecondHallFromVerifiedFirstHallSave(){normalWorldStoryContinuation(false,true,false,false,true)}
     fun testWorldSecondHallColdRestartAndRepeatNoReward(){normalWorldStoryContinuation(true,true,false,false,true)}
@@ -3079,11 +3098,11 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false,fixtureLabel:String?=null){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false,fixtureLabel:String?=null,normalSourceName:String?=null){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
         require(fixtureLabel==null || (fixtureLabel=="controlled-r1-village2" && hell && east))
         val label=fixtureLabel?:if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
-        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else if(fixtureLabel!=null)"world-$fixtureLabel-source.json" else
+        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else if(fixtureLabel!=null)"world-$fixtureLabel-source.json" else normalSourceName?:
             if(queen)"world-night8-expected-save.json"else if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))

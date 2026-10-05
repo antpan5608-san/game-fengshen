@@ -11,9 +11,10 @@ class PersonalDeliveryTest(unittest.TestCase):
         self.source_scope=h.active_scope()
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
         fixture=Path(self.tmp.name)/'runtime-scope.json'
-        scope=copy.deepcopy(self.source_scope);scope['quality']='PERSONAL_TEST'
+        scope=json.loads((ROOT/'ci/golden-playable-r1-scope.json').read_text()) if self.source_scope['id']!='PLAYABLE-R1' else copy.deepcopy(self.source_scope)
+        scope['quality']='PERSONAL_TEST'
         fixture.write_text(json.dumps(scope))
-        pin=json.loads((ROOT/'ci/content-source.json').read_text())
+        pin=json.loads((ROOT/('ci/golden-playable-r1-content.json' if self.source_scope['id']!='PLAYABLE-R1' else 'ci/content-source.json')).read_text())
         pin['runtimeScope']['sha256']=h.digest(fixture)
         (fixture.parent/'content-source.json').write_text(json.dumps(pin))
         scope_patch=patch.object(h,'SCOPE_PATH',fixture);scope_patch.start();self.addCleanup(scope_patch.stop)

@@ -10,7 +10,16 @@ import ci_apk as ci,export_development as ex
 class PlayableR1ScopeTest(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
-  cls.scope=h.active_scope();cls.pin=ex.load(ci.ROOT/'ci/content-source.json')
+  current=h.active_scope()
+  cls.pin=ex.load(ci.ROOT/('ci/content-source.json' if current['id']=='PLAYABLE-R1' else 'ci/golden-playable-r1-content.json'))
+  if current['id']!='PLAYABLE-R1':
+   cls.tmp=tempfile.TemporaryDirectory();cls.addClassCleanup(cls.tmp.cleanup)
+   fixture=Path(cls.tmp.name)/'runtime-scope.json'
+   fixture.write_bytes((ci.ROOT/'ci/golden-playable-r1-scope.json').read_bytes())
+   pin=copy.deepcopy(cls.pin);pin['runtimeScope']['sha256']=h.digest(fixture)
+   (fixture.parent/'content-source.json').write_text(json.dumps(pin))
+   scope_patch=patch.object(h,'SCOPE_PATH',fixture);scope_patch.start();cls.addClassCleanup(scope_patch.stop)
+  cls.scope=h.active_scope()
   cls.base=ci.content(Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK',
    '/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')),cls.pin['iteration']['base'])
   cls.out=ex.export_from_base(cls.base,cls.pin['iteration']['provenance'],cls.pin)
@@ -68,7 +77,8 @@ class PlayableR1ScopeTest(unittest.TestCase):
    path=Path(td)/'isolated-runtime-receipt.json'
    for value,ok in cases:
     path.write_text(json.dumps(value),encoding='utf-8')
-    run=subprocess.run([sys.executable,str(ci.ROOT/'tools/runtime_handoff.py'),'review','--receipt',str(path)],
+    run=subprocess.run([sys.executable,'-c',
+     "from pathlib import Path;from tools import runtime_handoff as h;import sys;h.SCOPE_PATH=Path(sys.argv.pop(1));h.main()",str(h.SCOPE_PATH),'review','--receipt',str(path)],
      capture_output=True,text=True,timeout=10)
     self.assertEqual(ok,run.returncode==0,run.stderr[-500:])
  def _personal_review_command_cases(self):
@@ -84,7 +94,8 @@ class PlayableR1ScopeTest(unittest.TestCase):
    path=Path(td)/'receipt.json'
    for value,ok in cases:
     path.write_text(json.dumps(value),encoding='utf-8')
-    run=subprocess.run([sys.executable,str(ci.ROOT/'tools/runtime_handoff.py'),'review','--receipt',str(path)],capture_output=True,text=True,timeout=10)
+    run=subprocess.run([sys.executable,'-c',
+     "from pathlib import Path;from tools import runtime_handoff as h;import sys;h.SCOPE_PATH=Path(sys.argv.pop(1));h.main()",str(h.SCOPE_PATH),'review','--receipt',str(path)],capture_output=True,text=True,timeout=10)
     self.assertEqual(ok,run.returncode==0,run.stderr[-500:])
  def test_stage_content_methods_exist_and_shared_regressions_remain(self):
   source=(ci.ROOT/'android/app/src/androidTest/java/org/fengshen/dev/ContentTest.kt').read_text(encoding='utf-8')

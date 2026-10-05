@@ -376,7 +376,7 @@
       ],
       "mapId": 1,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -566,7 +566,7 @@
       ],
       "mapId": 2,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -763,7 +763,7 @@
       ],
       "mapId": 3,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -960,7 +960,7 @@
       ],
       "mapId": 4,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -1234,7 +1234,7 @@
       ],
       "mapId": 5,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -1431,7 +1431,7 @@
       ],
       "mapId": 6,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -6251,7 +6251,7 @@
       "incomingDirectReferences": [],
       "mapId": 20,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -7385,7 +7385,7 @@
       ],
       "mapId": 23,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -13363,7 +13363,7 @@
       ],
       "mapId": 60,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -13565,7 +13565,7 @@
       ],
       "mapId": 61,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -13752,7 +13752,7 @@
       ],
       "mapId": 62,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -13954,7 +13954,7 @@
       ],
       "mapId": 63,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -14169,7 +14169,7 @@
       ],
       "mapId": 64,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -14411,7 +14411,7 @@
       ],
       "mapId": 65,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -14609,7 +14609,7 @@
       ],
       "mapId": 66,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -14975,7 +14975,7 @@
       ],
       "mapId": 67,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -15199,7 +15199,7 @@
       ],
       "mapId": 68,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -15413,7 +15413,7 @@
       ],
       "mapId": 69,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -15607,7 +15607,7 @@
       ],
       "mapId": 70,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -17084,7 +17084,7 @@
       ],
       "mapId": 74,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -17458,7 +17458,7 @@
       ],
       "mapId": 76,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -17708,7 +17708,7 @@
       ],
       "mapId": 77,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -17951,7 +17951,7 @@
       ],
       "mapId": 78,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -18138,7 +18138,7 @@
       ],
       "mapId": 79,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -20248,7 +20248,7 @@
       ],
       "mapId": 85,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -20449,7 +20449,7 @@
       ],
       "mapId": 86,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -20608,7 +20608,7 @@
       ],
       "mapId": 87,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -22729,7 +22729,7 @@
       ],
       "mapId": 95,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -22888,7 +22888,7 @@
       ],
       "mapId": 96,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -23234,7 +23234,7 @@
       ],
       "mapId": 98,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -23421,7 +23421,7 @@
       ],
       "mapId": 99,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -23629,7 +23629,7 @@
       ],
       "mapId": 100,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -23823,7 +23823,7 @@
       ],
       "mapId": 101,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -24938,7 +24938,7 @@
       ],
       "mapId": 107,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -25209,7 +25209,7 @@
       ],
       "mapId": 108,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -25424,7 +25424,7 @@
       ],
       "mapId": 109,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -25583,7 +25583,7 @@
       ],
       "mapId": 110,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -26574,7 +26574,7 @@
       ],
       "mapId": 115,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -26733,7 +26733,7 @@
       ],
       "mapId": 116,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -26892,7 +26892,7 @@
       ],
       "mapId": 117,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -32504,7 +32504,7 @@
       ],
       "mapId": 139,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -33382,7 +33382,7 @@
       ],
       "mapId": 141,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -36900,7 +36900,7 @@
       ],
       "mapId": 158,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -37114,7 +37114,7 @@
       ],
       "mapId": 159,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -37841,7 +37841,7 @@
       ],
       "mapId": 163,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -38000,7 +38000,7 @@
       ],
       "mapId": 164,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -39113,7 +39113,7 @@
       ],
       "mapId": 171,
       "normalReachability": "NOT_VERIFIED_IN_THIS_INVENTORY",
-      "packaged": false,
+      "packaged": true,
       "remaining": [
         "NPC/event/terrain/encounter conditions require scoped conversion and runtime proof"
       ],
@@ -59502,7 +59502,18 @@
       "runtime": "NOT_RUN"
     }
   ],
-  "packagedCount": 9,
+  "packageSource": {
+    "appRuntime": "NOT_RUN",
+    "baseApkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+    "baseVersionCode": 27,
+    "contentVersion": "opening-segment-001-c50",
+    "fileCount": 302,
+    "kind": "REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE",
+    "manifestSha256": "421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0",
+    "provenance": "game-data/provenance/world-room116-content.json",
+    "publication": "NOT_ASSESSED"
+  },
+  "packagedCount": 56,
   "referenceIsDenominator": false,
   "referenceMapCount": 259,
   "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
@@ -64997,7 +65008,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 176,
-      "operation": "CANDIDATE_PENDING_APP",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 0,
@@ -65099,7 +65110,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "CANDIDATE_PENDING_APP",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 0,
@@ -65201,7 +65212,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "CANDIDATE_PENDING_APP",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 4,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -65279,7 +65290,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "CANDIDATE_PENDING_APP",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 0,
@@ -65380,7 +65391,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -65457,7 +65468,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 1,
@@ -65560,7 +65571,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 1,
@@ -65661,7 +65672,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 8,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -65699,7 +65710,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 177,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 1,
@@ -65771,7 +65782,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 178,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 20,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -65849,7 +65860,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 2,
@@ -65952,7 +65963,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 2,
@@ -66054,7 +66065,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 2,
@@ -66159,7 +66170,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -66236,7 +66247,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 3,
@@ -66342,7 +66353,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 3,
@@ -66445,7 +66456,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 3,
@@ -66517,7 +66528,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 179,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 40,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -66595,7 +66606,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -66672,7 +66683,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 4,
@@ -66776,7 +66787,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 4,
@@ -66882,7 +66893,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 90,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -66960,7 +66971,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -67037,7 +67048,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 4,
@@ -67139,7 +67150,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 5,
@@ -67243,7 +67254,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 5,
@@ -67345,7 +67356,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 5,
@@ -67431,7 +67442,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 180,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 150,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -67509,7 +67520,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -67586,7 +67597,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 6,
@@ -67688,7 +67699,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 200,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -67766,7 +67777,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 6,
@@ -67872,7 +67883,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -67949,7 +67960,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 6,
@@ -68053,7 +68064,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 300,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -68131,7 +68142,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 7,
@@ -68235,7 +68246,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 7,
@@ -68338,7 +68349,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 7,
@@ -68443,7 +68454,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -68520,7 +68531,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 8,
@@ -68606,7 +68617,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 181,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 250,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -68684,7 +68695,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 8,
@@ -68737,7 +68748,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 182,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 250,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -68815,7 +68826,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -68892,7 +68903,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 9,
@@ -68975,7 +68986,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 183,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 250,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -69053,7 +69064,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 10,
@@ -69157,7 +69168,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 10,
@@ -69262,7 +69273,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 10,
@@ -69364,7 +69375,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -69441,7 +69452,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 11,
@@ -69506,7 +69517,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 184,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -69583,7 +69594,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 11,
@@ -69686,7 +69697,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 11,
@@ -69761,7 +69772,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 185,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 400,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -69839,7 +69850,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 12,
@@ -69945,7 +69956,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 12,
@@ -70048,7 +70059,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 12,
@@ -70113,7 +70124,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 186,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -70150,7 +70161,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 187,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 550,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -70228,7 +70239,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 13,
@@ -70331,7 +70342,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 13,
@@ -70432,7 +70443,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 13,
@@ -70507,7 +70518,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 188,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 800,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -70585,7 +70596,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -70662,7 +70673,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 14,
@@ -70747,7 +70758,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 189,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 600,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -70825,7 +70836,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 14,
@@ -70928,7 +70939,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -71005,7 +71016,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 14,
@@ -71108,7 +71119,7 @@
       "interiorMapId": 20,
       "kind": "other-clinic-candidate",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
     {
@@ -71185,7 +71196,7 @@
       "interiorMapId": 18,
       "kind": "armor",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "armor",
         "contextIndex": 15,
@@ -71290,7 +71301,7 @@
       "interiorMapId": 17,
       "kind": "weapon",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "weapon",
         "contextIndex": 15,
@@ -71393,7 +71404,7 @@
       "interiorMapId": 22,
       "kind": "inn",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "price": 550,
       "verification": "STRUCTURAL_ROM_DISPATCH"
     },
@@ -71471,7 +71482,7 @@
       "interiorMapId": 19,
       "kind": "medicine",
       "npcOverlayId": 23,
-      "operation": "NOT_IMPLEMENTED",
+      "operation": "NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW",
       "stock": {
         "category": "medicine",
         "contextIndex": 15,
