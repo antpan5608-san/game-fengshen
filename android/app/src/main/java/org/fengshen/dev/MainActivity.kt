@@ -232,7 +232,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val encoded=savePrefs.getString("saveJson",null)
         if(encoded!=null){
             localSaveProtected=true
-            val result=runCatching{restoreSnapshot(SaveSnapshot.parse(encoded))}
+            val result=runCatching{
+                val snapshot=SaveSnapshot.parse(encoded)
+                // Preserve the first pre-migration JSON before restoreSnapshot can persist a new format.
+                // Never replace an existing recoverable backup; failed commits leave the original protected.
+                if(snapshot.contentVersion!=content.scene.version && !savePrefs.contains("preContentMigration")){
+                    if(!savePrefs.edit().putString("preContentMigration",encoded).commit())
+                        throw IllegalStateException("pre_migration_backup_failed")
+                }
+                restoreSnapshot(snapshot)
+            }
             val restored=result.getOrDefault(false)
             Diagnostics.record("save_load",if(restored)"INFO" else "ERROR",JSONObject()
                 .put("success",restored).put("existingSaveProtected",!restored)

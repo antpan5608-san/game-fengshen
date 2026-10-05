@@ -11,6 +11,30 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Bounded CI transport only: App-owned bytes, no launch or state restore. */
+    fun testImportVerifiedCheckpointBytes(){
+        val args=(instrumentation as android.test.InstrumentationTestRunner).arguments
+        val names=setOf("north-palace","hell-village2","ferry","yang-join","runtime-storage-probe")
+            .map{"world-$it-expected-save.json"}.toSet()
+        val name=args.getString("checkpointName")!!;assertTrue(name in names)
+        val encoded=args.getString("checkpointBytesBase64")!!;assertTrue(encoded.length<=87384)
+        val bytes=android.util.Base64.decode(encoded,android.util.Base64.DEFAULT)
+        assertTrue(bytes.size in 1..65536)
+        fun hash(value:ByteArray)=java.security.MessageDigest.getInstance("SHA-256")
+            .digest(value).joinToString(""){"%02x".format(it)}
+        val expected=args.getString("checkpointSha256")!!
+        assertTrue(expected.matches(Regex("[a-f0-9]{64}")));assertEquals(expected,hash(bytes))
+        val ctx=instrumentation.targetContext
+        assertEquals(args.getString("checkpointVersionCode")!!.toInt(),ctx.packageManager.getPackageInfo(ctx.packageName,0).versionCode)
+        val content=ContentLoader.load(AssetSource(ctx.assets))
+        assertEquals(args.getString("checkpointContentVersion"),content.scene.version)
+        val snapshot=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))!!
+        assertTrue(snapshot.validate(content))
+        val root=ctx.getExternalFilesDir(null)!!.canonicalFile
+        val file=File(root,name);assertEquals(root,file.canonicalFile.parentFile)
+        file.writeBytes(bytes)
+        assertEquals(expected,hash(file.readBytes()))
+    }
     // The opening zone is a separate original root, not an entry in the later
     // zones array. A normal training driver must query both existing domains.
     private fun inExistingEncounterRegion(content:BattleContent,mapId:Int,x:Int,y:Int)=
@@ -278,6 +302,9 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         }
         File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").writeText(v.currentSnapshot().json().toString())
+        val oldBackup=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("preContentMigration",null)
+        val backupFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-existing-backup.json")
+        if(oldBackup!=null)backupFile.writeText(oldBackup) else backupFile.delete()
         instrumentation.runOnMainSync{v.persistState();activity.finish()}
     }
     fun testUpgradeKeepsPreviousSave(){
@@ -286,7 +313,26 @@ class TouchTest:IsolatedGameTestCase(){
         val old=SaveSnapshot.parse(file.readText())
         val(activity,v)=launch()
         assertEquals(old.copy(contentVersion=v.content.scene.version),v.currentSnapshot())
+        if(old.contentVersion!=v.content.scene.version){
+            val backup=instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("preContentMigration",null)
+            val priorBackup=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-existing-backup.json")
+            val first=if(priorBackup.exists())SaveSnapshot.parse(priorBackup.readText())else old
+            assertEquals("First original pre-upgrade JSON must remain recoverable",first,SaveSnapshot.parse(backup!!))
+        }
         instrumentation.runOnMainSync{activity.finish()}
+    }
+    fun testContentMigrationKeepsFirstRecoverableBackup(){
+        val source=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").readText()
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        val first=prefs.getString("preContentMigration",null)!!
+        val(activity,v)=launch()
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString("saveJson",source).commit())
+            v.restorePersisted();v.persistState()
+            assertEquals(first,prefs.getString("preContentMigration",null))
+            assertEquals(SaveSnapshot.parse(source).copy(contentVersion=v.content.scene.version),v.currentSnapshot())
+            activity.finish()
+        }
     }
     fun testHerbColdStartMatchesNormalSave(){
         val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json")
@@ -704,6 +750,8 @@ class TouchTest:IsolatedGameTestCase(){
     /** Isolated real UI gestures; not normal acquisition, death or poison evidence. */
     fun testControlledMedicalCommandsCancellationGestureAndSave(){
         val(activity,v)=launch();val baseline=v.currentSnapshot()
+        val caller=if(v.content.scenes.containsKey(3))3 else 2
+        val door=if(caller==3)7 to 18 else 22 to 26
         fun fixture(role:String,status:Int,hp:Int=0,money:Int=887){
             instrumentation.runOnMainSync{
                 if(v.layer!=GameView.Layer.MAP)v.handleBack()
@@ -711,10 +759,10 @@ class TouchTest:IsolatedGameTestCase(){
                 val point=if(role=="revival")3 to 7 else 13 to 5
                 assertTrue(v.restoreSnapshot(baseline.copy(mapId=20,x=point.first*16+8,y=point.second*16+8,
                     money=money,characters=listOf(v.content.initialPlayer.copy(hp=minOf(5,v.content.initialPlayer.maxHp)),girl),
-                    interiorContext=InteriorContext(3,7,18))))
+                    interiorContext=InteriorContext(caller,door.first,door.second))))
             }
             tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
-            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.3.$role",v.activeClinicId)
+            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.$caller.$role",v.activeClinicId)
         }
         fixture("revival",32);val before=v.currentSnapshot()
         tap(v,center(v.clinicTargetBounds("xiaolongnv")));assertEquals(before,v.currentSnapshot())
@@ -728,7 +776,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(before,v.currentSnapshot())
         instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
         fixture("revival",32);tap(v,center(v.clinicTargetBounds("xiaolongnv")))
-        val expected=ClinicRevival.apply(v.currentSnapshot().money,v.currentSnapshot().characters,"xiaolongnv",v.content.clinics.getValue("rom.clinic.3.revival"))
+        val expected=ClinicRevival.apply(v.currentSnapshot().money,v.currentSnapshot().characters,"xiaolongnv",v.content.clinics.getValue("rom.clinic.$caller.revival"))
         tap(v,center(v.clinicReviveBounds()));assertEquals(GameView.Layer.MAP,v.layer)
         assertEquals(expected.money,v.currentSnapshot().money);assertEquals(expected.characters,v.currentSnapshot().characters)
         val saved=v.currentSnapshot();send(v,MotionEvent.ACTION_UP,listOf(action));assertEquals(saved,v.currentSnapshot())
@@ -1479,9 +1527,22 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{activity.finish()}
     }
     /** Exact checkpoint produced above by normal new-game play; no changed HP/level/money/flags. */
-    fun testNormalWorldSeaNorthFromVerifiedNanhaiSave(){
-        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"nanhai-expected-save.json")
-        assertTrue("Same candidate normal Nanhai flow must first produce its save",file.exists())
+    fun testNormalWorldSeaNorthFromVerifiedNanhaiSave(){normalWorldSeaNorthFromSave("nanhai-expected-save.json")}
+    fun testNormalWorldSeaNorthFromVerifiedNorthPalaceSave(){normalWorldSeaNorthFromSave("world-north-palace-expected-save.json")}
+    fun testControlledNorthTravelFromVerifiedPalaceSave(){
+        val fixture=JSONObject(instrumentation.context.assets.open("north-travel-verified-palace.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-north-travel-source.json")
+        file.writeBytes(bytes)
+        normalWorldSeaNorthFromSave(file.name,"controlled-north-travel",fixture.getString("kind"))
+    }
+    private fun normalWorldSeaNorthFromSave(sourceName:String,label:String="north",
+        kind:String="CONTINUATION_FROM_VERIFIED_NORMAL_SAVE"){
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),sourceName)
+        assertTrue("The recorded normal source must exist before route continuation",file.exists())
         val source=SaveSnapshot.parse(file.readText());assertEquals(true,source.flags["rom.event.97.39.1"])
         val(activity,v)=launch();instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals(source,v.currentSnapshot())
@@ -1489,13 +1550,13 @@ class TouchTest:IsolatedGameTestCase(){
         val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
         val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
         fun state(name:String){
-            screenshot(v,"world-north-$name")
+            screenshot(v,"world-$label-$name")
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             val hash=java.security.MessageDigest.getInstance("SHA-256").digest(file.readBytes()).joinToString(""){"%02x".format(it)}
-            File(instrumentation.targetContext.getExternalFilesDir(null),"world-north-normal-index.json").writeText(
-                org.json.JSONObject().put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_NANHAI_SAVE")
-                    .put("sourceFile","nanhai-expected-save.json").put("sourceSha256",hash).put("sourceSnapshot",source.json())
+            File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-normal-index.json").writeText(
+                org.json.JSONObject().put("kind",kind)
+                    .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
                     .put("stateChangesAtLoad",false).put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).toString())
         }
         fun mapMedicine(id:String){
@@ -1526,6 +1587,19 @@ class TouchTest:IsolatedGameTestCase(){
                 instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)pair=(f.get(v) as OpeningBattle) to (p.get(v) as BattlePresentation)}
                 val (battle,presentation)=pair?:break
                 assertTrue("Normal north encounter exceeded budget",SystemClock.elapsedRealtime()<deadline)
+                if(battle.phase==BattlePhase.DEFEAT){
+                    val enemies=org.json.JSONArray()
+                    for(enemy in battle.enemies)enemies.put(JSONObject().put("slot",enemy.slot)
+                        .put("definitionId",enemy.definition.id).put("hp",enemy.hp).put("maxHp",enemy.definition.hp))
+                    File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-failed-battle.json")
+                        .writeText(JSONObject().put("kind","FAILED_INPUT_RUN_BATTLE_OBSERVATION")
+                            .put("inputOrigin",kind).put("battleNumber",fights).put("remainingHerbs",v.battleHerbCount())
+                            .put("heroHp",battle.hero.hp).put("heroMaxHp",battle.hero.maxHp)
+                            .put("heroStatus",battle.hero.statusMask).put("enemies",enemies)
+                            .put("displayedActionKind",presentation.action?.kind?.name)
+                            .put("displayedHeroHp",presentation.action?.heroHp).put("world",v.currentSnapshot().json()).toString())
+                    state("failed-battle-$fights")
+                }
                 assertTrue("Normal north player defeated; no state repair allowed",battle.phase!=BattlePhase.DEFEAT)
                 if(!capturedPoison&&presentation.screen==BattlePresentation.Screen.ACTING&&presentation.action?.kind==BattleActionKind.STATUS){
                     state("original-enemy-poison-action");capturedPoison=true
@@ -1544,7 +1618,7 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(GameView.Layer.MAP,v.layer);supply()
         }
-        fun step(key:Key){stickStep(v,key);finishFight();supply()}
+        fun step(key:Key){supply();stickStep(v,key);finishFight();supply()}
         fun walkTo(tx:Int,ty:Int){
             val scene=v.world.scene;val goal=ty*scene.width+tx;var attempts=0
             while(v.world.mapId==scene.mapId&&v.world.y/16*scene.width+v.world.x/16!=goal){
@@ -1567,15 +1641,17 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun talk(){tap(v,center(layoutFor(v).buttons.getValue(Key.A)));repeat(16){if(v.layer==GameView.Layer.DIALOGUE)tap(v,Pair(v.width*.5f,v.height*.5f))}}
         state("verified-normal-source-loaded")
-        walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
+        if(v.world.mapId==97){walkTo(15,29);assertEquals(25,v.world.mapId)}
+        else{assertEquals(25,v.world.mapId);assertEquals(true,source.flags["rom.map.139.flag.128"])}
+        walkTo(39,42);assertEquals(16,v.world.mapId)
         walkTo(202,130);assertEquals(0,v.world.mapId)
         val entry=v.content.exits.first{it.fromMapId==0&&it.toMapId==19};walkTo(entry.triggerX,entry.triggerY)
         assertEquals(InteriorContext(0,24,25),v.currentSnapshot().interiorContext)
         val npc=v.content.npcs.first{it.mapId==19&&it.shopId!=null};walkTo(npc.interactionCell!!.first,npc.interactionCell.second)
         talk();assertEquals(GameView.Layer.SHOP,v.layer)
         tap(v,center(v.shopActionBounds(1)));scrollToShopItem(v,AntidoteUse.ID);tap(v,center(v.shopItemBounds(AntidoteUse.ID)))
-        val count=minOf(10-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0),v.currentSnapshot().money/20)
-        assertTrue("Legitimate Boss/encounter earnings must support antidote supply",count>=2)
+        val count=minOf((10-(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)).coerceAtLeast(0),v.currentSnapshot().money/20)
+        assertTrue("Legitimate source must fund or already carry antidotes",(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)+count>=2)
         repeat(count){val before=v.currentSnapshot();tap(v,center(v.shopActionBounds(4)))
             assertEquals(before.money-20,v.currentSnapshot().money)
             assertEquals((before.inventory[AntidoteUse.ID]?:0)+1,v.currentSnapshot().inventory[AntidoteUse.ID])}
@@ -1593,7 +1669,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(0,v.currentSnapshot().encounterSteps);assertEquals(true,v.currentSnapshot().flags["rom.event.97.39.1"])
         state("northwest-sea-return");step(Key.DOWN);state("next-operable")
         instrumentation.runOnMainSync{v.persistState()}
-        File(instrumentation.targetContext.getExternalFilesDir(null),"world-north-expected-save.json").writeText(v.currentSnapshot().json().toString())
+        File(instrumentation.targetContext.getExternalFilesDir(null),"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
     fun testWorldNorthColdStartMatchesNormalSave(){
@@ -1610,14 +1686,15 @@ class TouchTest:IsolatedGameTestCase(){
     /** Two isolated continuations load only the byte-exact save from this candidate's normal Nanhai run. */
     fun testNormalWorldWestPalaceFromVerifiedNanhaiSave(){normalWorldBatchContinuation(true)}
     fun testNormalWorldVillageOneServicesFromVerifiedNanhaiSave(){normalWorldBatchContinuation(false)}
-    private fun normalWorldBatchContinuation(west:Boolean){
+    fun testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave(){normalWorldBatchContinuation(false,"world-north-palace-expected-save.json")}
+    private fun normalWorldBatchContinuation(west:Boolean,sourceName:String="nanhai-expected-save.json"){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val sourceFile=File(root,"nanhai-expected-save.json")
+        val sourceFile=File(root,sourceName)
         assertTrue("The same candidate's normal Nanhai recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
         assertEquals(true,source.flags["rom.event.97.39.1"])
-        assertTrue("Normal source must precede West victory",source.flags["rom.event.96.40.2"]!=true)
+        if(west)assertTrue("Normal source must precede West victory",source.flags["rom.event.96.40.2"]!=true)
         val(activity,v)=launch();instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals("No resources or flags may be changed at continuation load",source,v.currentSnapshot())
         val label=if(west)"west" else "village1";val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
@@ -1630,7 +1707,7 @@ class TouchTest:IsolatedGameTestCase(){
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             File(root,"world-$label-normal-index.json").writeText(org.json.JSONObject()
-                .put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_NANHAI_SAVE").put("sourceFile",sourceFile.name)
+                .put("kind","CONTINUATION_FROM_VERIFIED_NORMAL_SAVE").put("sourceFile",sourceFile.name)
                 .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("westIceObserved",capturedIce).toString())
@@ -1782,7 +1859,9 @@ class TouchTest:IsolatedGameTestCase(){
             instrumentation.runOnMainSync{v.handleBack()}
         }
         state("verified-normal-source-loaded")
-        walkTo(15,29);assertEquals(25,v.world.mapId);walkTo(39,42);assertEquals(16,v.world.mapId)
+        if(v.world.mapId==97){walkTo(15,29);assertEquals(25,v.world.mapId)}
+        else{assertEquals(25,v.world.mapId);assertEquals(true,source.flags["rom.map.139.flag.128"])}
+        walkTo(39,42);assertEquals(16,v.world.mapId)
         walkTo(202,130);assertEquals(0,v.world.mapId)
         // SecureRandom makes the legitimate prior run's earnings variable. If
         // needed, earn the shortfall in the already verified opening zone and pay
@@ -1942,6 +2021,49 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{v.persistState()}
         File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
         state("persisted-for-external-cold-restart",false);instrumentation.runOnMainSync{activity.finish()}
+    }
+    /** Isolated replay of a real normal checkpoint, not this candidate's main route. */
+    fun testControlledNorthRepeatAfterOptionalMapSupply(){
+        val fixture=JSONObject(instrumentation.context.assets.open("north-repeat-before-optional-herb.json")
+            .bufferedReader(Charsets.UTF_8).use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_APP_CHECKPOINT",fixture.getString("kind"))
+        val recorded=SaveSnapshot.parse(fixture.getJSONObject("snapshot").toString())
+        // 46 is the unmodified normal source; 4 is an explicit isolated boundary.
+        // At max109, one herb from4 leaves54 and the automatic supply helper
+        // would use another on the next step. Reentry must isolate movement.
+        fun verify(hp:Int){
+        val source=if(hp==46)recorded else recorded.copy(characters=recorded.characters.map{it.copy(hp=hp)})
+        val(activity,v)=launch()
+        assertTrue("Historical normal checkpoint must validate against actual content",source.validate(v.content))
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
+        val before=v.currentSnapshot();assertEquals(139,before.mapId)
+        assertEquals(true,before.flags["rom.map.139.flag.128"])
+        assertEquals(true,before.flags["rom.map.139.flag.2"])
+        assertEquals(hp,before.characters.single().hp);assertEquals(109,before.characters.single().maxHp)
+        val expected=HerbUse.apply(before.characters,before.inventory,"nezha",
+            v.content.itemDefinitions.getValue(HerbUse.ID),true)
+        assertTrue(expected.applied)
+        tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,HerbUse.ID)
+        tap(v,center(v.panelItemBounds(HerbUse.ID)));assertEquals(before,v.currentSnapshot())
+        tap(v,center(v.panelPrimaryBounds()))
+        val supplied=v.currentSnapshot()
+        assertEquals(expected.characters,supplied.characters);assertEquals(expected.inventory,supplied.inventory)
+        assertEquals(before.money,supplied.money);assertEquals(before.flags,supplied.flags)
+        assertEquals(hp+50,supplied.characters.single().hp)
+        assertEquals((before.inventory[HerbUse.ID]?:0)-1,supplied.inventory[HerbUse.ID]?:0)
+        instrumentation.runOnMainSync{v.handleBack()}
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP)
+        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(139,v.world.mapId)
+        assertEquals(2 to 4,v.world.x/16 to v.world.y/16)
+        val repeated=v.currentSnapshot()
+        assertEquals(supplied.characters,repeated.characters);assertEquals(supplied.inventory,repeated.inventory)
+        assertEquals(supplied.money,repeated.money);assertEquals(supplied.flags,repeated.flags)
+        tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+        assertEquals(repeated,v.currentSnapshot());assertEquals(GameView.Layer.MAP,v.layer)
+        screenshot(v,"controlled-north-repeat-after-optional-herb-hp$hp")
+        instrumentation.runOnMainSync{activity.finish()}
+        }
+        verify(46);verify(4)
     }
     /** Normal continuation: no fixture mutation beyond byte-exact same-candidate source load. */
     fun testNormalWorldNorthPalaceAndPearlFromVerifiedNanhaiSave(){
@@ -2225,10 +2347,16 @@ class TouchTest:IsolatedGameTestCase(){
         state("pearl-investigated-and-claimed")
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
         assertEquals(claimed,v.currentSnapshot());state("repeat-chest-no-grant")
-        step(Key.DOWN);walkTo(2,4);assertEquals(GameView.Layer.MAP,v.layer)
-        assertEquals(claimed.characters,v.currentSnapshot().characters)
-        assertEquals(claimed.inventory,v.currentSnapshot().inventory);assertEquals(claimed.money,v.currentSnapshot().money)
-        assertEquals(claimed.flags,v.currentSnapshot().flags);state("trigger-reentered-no-battle-or-reward")
+        // A legal map herb can be needed after the real boss. Separate that
+        // explicit normal supply from the no-second-reward comparison.
+        supply();val beforeReentry=v.currentSnapshot();state("optional-normal-supply-before-trigger-reentry")
+        // These two original interior moves must not also call the optional
+        // field supply helper; otherwise low HP can legally consume a second herb.
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP);assertEquals(GameView.Layer.MAP,v.layer)
+        assertEquals(139,v.world.mapId);assertEquals(2 to 4,v.world.x/16 to v.world.y/16)
+        assertEquals(beforeReentry.characters,v.currentSnapshot().characters)
+        assertEquals(beforeReentry.inventory,v.currentSnapshot().inventory);assertEquals(beforeReentry.money,v.currentSnapshot().money)
+        assertEquals(beforeReentry.flags,v.currentSnapshot().flags);state("trigger-reentered-no-battle-or-reward")
         walkTo(11,25);assertEquals(98,v.world.mapId);walkTo(7,29);assertEquals(25,v.world.mapId)
         state("north-palace-return")
         walkTo(45,40);step(Key.RIGHT);assertEquals(25,v.world.mapId);supply()
@@ -2312,6 +2440,144 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldEastPartyColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true)}
     fun testNormalWorldHellVillageServicesFromVerifiedEastPartySave(){normalWorldStoryContinuation(false,true,true)}
     fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
+    /** Exact failed-run East normal/cold source; no HP, inventory or flag repair. */
+    fun testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave(){
+        prepareR1VillageTwoVerifiedSource()
+        normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
+        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
+    }
+    private fun prepareR1VillageTwoVerifiedSource(){
+        val fixture=JSONObject(instrumentation.context.assets.open("r1-village2-verified-east.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        assertTrue(fixture.getBoolean("sourceNormalAndExternalColdVerified"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
+        assertEquals(23,source.mapId)
+        assertEquals(OriginalStatus.POISON,source.characters.single{it.id=="xiaolongnv"}.statusMask)
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-village2-source.json")
+        file.writeBytes(bytes)
+    }
+    fun testPersonalR1SmokeFromVerifiedEastSave(){
+        prepareR1VillageTwoVerifiedSource()
+        normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
+    }
+    /** Personal smoke only: same sourced fixture, no mainline-completion claim. */
+    fun testPersonalR1SmokeColdRestartMatchesVerifiedSave(){
+        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
+    }
+    fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}
+    fun testPlayableR1MedicalColdStartMatchesNormalSave(){normalPlayableR1Medical(true)}
+
+    /** Isolated replay of exact v73 normal/cold-verified bytes, never current mainline proof. */
+    fun testControlledPlayableR1MedicalDoorReentryFromVerifiedSave(){
+        val fixture=JSONObject(instrumentation.context.assets.open("r1-medical-verified-village.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-medical-source.json")
+        file.writeBytes(bytes)
+        normalPlayableR1Medical(false,"controlled-r1-medical",file.name,fixture.getString("kind"))
+        // Activity restart of the actual saved result; the final normal recorder
+        // still separately requires an external force-stop/cold-start boundary.
+        normalPlayableR1Medical(true,"controlled-r1-medical",file.name,fixture.getString("kind"))
+    }
+
+    /** Exact same-candidate village checkpoint, original door and normal touch only. */
+    private fun normalPlayableR1Medical(cold:Boolean,label:String="r1-medical",
+        normalSourceName:String="world-hell-village2-expected-save.json",kind:String="CONTINUATION_FROM_VERIFIED_SAVE"){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)
+        val file=File(root,if(cold)"world-$label-expected-save.json"else normalSourceName)
+        assertTrue(file.exists());val bytes=file.readBytes();val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
+        val hash=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
+        val(activity,v)=launch()
+        assertEquals(v.content.scene.version,source.contentVersion)
+        assertEquals(2,source.mapId);assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
+        assertEquals(true,source.flags["rom.map.95.flag.128"])
+        if(!cold)instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
+        assertEquals(source,v.currentSnapshot())
+        val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
+        fun state(name:String){
+            val snapshot=v.currentSnapshot()
+            events.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.uptimeMillis()).put("elapsedMs",SystemClock.elapsedRealtime()-started)
+                .put("snapshot",snapshot.json()))
+            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
+                .put("kind",if(kind=="CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE")
+                    if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else kind
+                    else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY"else kind)
+                .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
+                .put("stateChangesAtLoad",false).put("normalInputsOnly",true).put("events",events).toString())
+            screenshot(v,"world-$label-${if(cold)"cold-" else ""}$name")
+        }
+        fun walk(tx:Int,ty:Int){
+            val map=v.world.mapId;var tries=0
+            while(v.world.mapId==map&&(v.world.x/16!=tx||v.world.y/16!=ty)){
+                assertTrue("R1 original medical path must converge without position edits",tries++<512)
+                val scene=v.world.scene;val start=v.world.y/16*scene.width+v.world.x/16;val goal=ty*scene.width+tx
+                val queue=java.util.ArrayDeque<Int>();queue.add(start)
+                val parents=mutableMapOf<Int,Pair<Int,Key>>();parents[start]=start to Key.UP
+                while(queue.isNotEmpty()&&goal !in parents){
+                    val at=queue.removeFirst();val x=at%scene.width;val y=at/scene.width
+                    for((key,d)in listOf(Key.UP to (0 to -1),Key.DOWN to (0 to 1),Key.LEFT to (-1 to 0),Key.RIGHT to (1 to 0))){
+                        if(scene.probeFrom(x,y,key)!=MovementBlock.NONE)continue
+                        val nx=x+d.first;val ny=y+d.second;val next=ny*scene.width+nx
+                        if(next in parents||(next!=goal&&v.content.exits.any{it.fromMapId==map&&it.triggerX==nx&&it.triggerY==ny&&it.edgeDirection==null}))continue
+                        parents[next]=at to key;queue.add(next)
+                    }
+                }
+                assertTrue("Original R1 medical target not reachable: $map $tx,$ty",goal in parents)
+                var next=goal
+                while(parents.getValue(next).first!=start)next=parents.getValue(next).first
+                stickStep(v,parents.getValue(next).second)
+                assertEquals("No normal field battle exists in this village/medical room",GameView.Layer.MAP,v.layer)
+            }
+        }
+        state(if(cold)"cold-exact-normal-state"else"verified-village-source")
+        for((role,id)in listOf("revival" to "rom.npc.20.1","care" to "rom.npc.20.0")){
+            // Original shared-room return lands on the entrance trigger. Merely
+            // asking walk() for that same cell emits no input and cannot reenter.
+            // Move to a real adjacent legal cell, then walk back through the door.
+            if(v.world.mapId==2&&v.world.x/16==22&&v.world.y/16==26){
+                val departure=listOf(Key.DOWN,Key.LEFT,Key.RIGHT,Key.UP).firstOrNull{key->
+                    val next=when(key){Key.DOWN->22 to 27;Key.LEFT->21 to 26;Key.RIGHT->23 to 26;else->22 to 25}
+                    v.world.scene.probeFrom(22,26,key,v.world.terrainMode)==MovementBlock.NONE&&
+                        v.content.exits.none{it.fromMapId==2&&it.triggerX==next.first&&it.triggerY==next.second}
+                }
+                assertNotNull("Original medical door requires a legal step away before reentry",departure)
+                stickStep(v,departure!!);assertEquals(2,v.world.mapId)
+                assertFalse(v.world.x/16==22&&v.world.y/16==26)
+                state("$role-normal-step-away-before-reentry")
+            }
+            walk(22,26);assertEquals(20,v.world.mapId)
+            assertEquals(InteriorContext(2,22,26),v.currentSnapshot().interiorContext)
+            val npc=v.content.npcs.single{it.id==id};val cell=npc.interactionCell!!
+            walk(cell.first,cell.second)
+            tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
+            assertEquals(GameView.Layer.INN,v.layer);assertEquals("rom.clinic.2.$role",v.activeClinicId)
+            state("$role-real-entry-service")
+            val before=v.currentSnapshot()
+            tap(v,center(v.clinicTargetBounds("xiaolongnv")))
+            assertEquals(before,v.currentSnapshot());state("$role-target-selected-no-side-effect")
+            instrumentation.runOnMainSync{v.handleBack()}
+            assertEquals(before,v.currentSnapshot());assertEquals(GameView.Layer.MAP,v.layer)
+            walk(7,12);assertEquals(2,v.world.mapId)
+            assertEquals(22 to 26,v.world.x/16 to v.world.y/16);assertNull(v.currentSnapshot().interiorContext)
+            state("$role-original-return-no-charge")
+        }
+        assertEquals(source.money,v.currentSnapshot().money)
+        assertEquals(source.inventory,v.currentSnapshot().inventory)
+        assertEquals(source.flags,v.currentSnapshot().flags)
+        assertEquals(source.characters.map{it.id},v.currentSnapshot().characters.map{it.id})
+        assertTrue(file.readBytes().contentEquals(bytes))
+        instrumentation.runOnMainSync{v.persistState()}
+        assertEquals(v.currentSnapshot(),SaveSnapshot.parse(instrumentation.targetContext
+            .getSharedPreferences("opening-local-save",0).getString("saveJson",null)!!))
+        if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
+        state(if(cold)"cold-medical-reentry-and-continue"else"normal-medical-doors-and-cancel-saved")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     // Both routes share the same real touch/service/BFS driver. Only their
     // verified source checkpoints and scenario assertions differ.
     fun testNormalWorldFirstHallFromVerifiedHellVillageSave(){normalWorldStoryContinuation(false,true,false,true)}
@@ -2813,10 +3079,11 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false,fixtureLabel:String?=null){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
-        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
+        require(fixtureLabel==null || (fixtureLabel=="controlled-r1-village2" && hell && east))
+        val label=fixtureLabel?:if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else if(fixtureLabel!=null)"world-$fixtureLabel-source.json" else
             if(queen)"world-night8-expected-save.json"else if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
@@ -2846,7 +3113,8 @@ class TouchTest:IsolatedGameTestCase(){
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
-                .put("kind",if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE").put("sourceFile",sourceFile.name)
+                .put("kind",if(fixtureLabel!=null)if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else"CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE"
+                    else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE").put("sourceFile",sourceFile.name)
                 .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("bossEntries",bossEntries).put("bossAttackObserved",capturedBossAttack).put("bossHerbObserved",capturedBattleHerb)
@@ -2872,7 +3140,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
+            if(east||hell||firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0&&OriginalPartyRules.present(it)}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -3960,7 +4228,8 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(((before.inventory[AntidoteUse.ID]?:0)-2).coerceAtLeast(0),after.inventory[AntidoteUse.ID]?:0)
                 instrumentation.runOnMainSync{v.handleBack()};state("normal-antidote-${actor.id}")
             }
-            inn(2);assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
+            inn(2);assertTrue("Normal inn preserves excluded states; cure actual owners before shopping: ${v.currentSnapshot().characters}",
+                v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
             state("normal-original20-inn-two-actor-recovery-and-return")
             walkTo(30,19);assertEquals(23,v.world.mapId);assertEquals(55,v.world.x/16);assertEquals(91,v.world.y/16)
             state("normal-village2-return-to-hell")

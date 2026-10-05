@@ -256,10 +256,11 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         return scene.check(x/16,y/16,terrainMode)==null
     }
     companion object {
-        /** Known schema1 content iterations through the original Queen content checkpoint.
+        /** Known schema1 iterations and the frozen R1 content marker.
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
+            saved=="opening-segment-001-c51-r1"||
             saved in (1..50).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)

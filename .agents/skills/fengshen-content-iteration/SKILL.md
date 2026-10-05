@@ -57,7 +57,7 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 
 输出恢复/验证receipt、脱敏巡检摘要、测试结果及固定交付报告；临时输入/产物按.gitignore隔离。
 缺直接证据先找已有公开研究与参考；有来源且无冲突可PROVISIONAL接入开发版，关键状态定向测试，不猜药效/条件。缺口只阻塞依赖项，不停止无关可执行工作。
-无设备/无App实际验收只留候选；纯文档/skill或工具变化不发布游戏。
+默认个人交付使用当前任务授权的PERSONAL_TEST级别：相关快速回归、真实短冒烟（来源明确的隔离fixture可用）、存档/外部冷启/旧档升级和严格产物校验；完整剧情/真机/声音交用户人工验收并标PENDING。无短冒烟只留明确首次启动待检候选，不能冒称运行PASS或无说明覆盖稳定对象；纯文档/skill或工具变化不发布游戏。
 权限/查询失败报告实际动作和最小权限；保留main、reviewer、同提交/同APK hash和目标隔离。
 
 # 仍待验证
@@ -354,8 +354,40 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 单actor编号须查真实handler表，不套相邻通用分支；原action41实查CD1A，初误套CB84没有deferred action，失败保留，改查actual dispatcher后CPU对照通过。静态拓扑失败时再比较无NPC组件，只能区分原墙与演员阻挡，不删除墙来让测试变绿；未证明世界连续入口的局部数据不得计正常可玩。
 
 
-## 已核的连续回归接续边界（跨runner App仍待核）
+## 已核的连续回归接续边界（整段验收以当前回执为准）
 
 - 原ci/run-town02-runtime.sh的阶段分派经隔离Bash函数执行验证，保留全部原normal recorder/cold-test；tools/runtime_handoff.py只验证/原样搬运App-written JSON，部分阶段不能声明全部PASS。Linux执行`python -m unittest discover -s tests -p test_runtime_handoff.py`实际覆盖同候选/正常与冷启边界、不同run/hash/版本/签名、改数据/缺阶段/真机拒绝和完整分派；此传输fixture不是正常App。
-- 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow三段AVD导入和继续须等同候选实际runner，不把脚本存在当成功。
+- 实际已完成原北海候选的expected-save、最后normal event及recording冷启前状态已校验一致；原运行后来失败时仍只保留PARTIAL，不从通过局部推断整包可发布。原workflow跨runner App-owned导入、85洞→东海胜后→真实双人村2已实际通过同候选；最终阶段不能从前段通过推断PASS。
 - 长时正常准备预算以实际normal-index的获胜数/EXP/原成长门槛和耗时定位，修限定驱动预算而不改玩家等级、遇敌/价格/奖励或删断言。曾355正常胜利后仍未到原目标等级，失败不是崩溃证据。新预算是否足够继续以实际App结果为准，未知不写PASS。
+
+- 隔离shell分派fixture在Linux实际通过，Windows默认bash执行曾退出1且未展示stderr。现在源码显式定位已有Git Bash，缺失明确拒绝，不调用WSL或安装平台；定位正反例本地已执行，原Windows runner实际门禁已通过；其成功不等于Android路线通过。失败须保留stdout/stderr摘要，不能跳过fixture或冒充App崩溃。
+
+## 已执行的阶段收敛检查（App结果另核）
+
+将已实现、已打包、同候选App已验证、已发布分开记。阶段候选先冻结真实依赖/终点/测试集合，以原golden配方和局部已有服务复用导出；原ci_apk.restore在全新临时目录严格验120文件和原签名基底已执行，不手删素材或放宽hash。更远配方/源码保留开发线，不能整个后续内容照包却省其验收。
+
+失败先按实际错误分BUILD_ENV/TEST_HARNESS/GAME_BUG/CONTENT_GAP/ENV_LIMIT；测试基底路径使用runner已有FENGSHEN_CONTENT_BASE_APK，硬编码/workspace在Windows实际失败。先执行相关fixture/原审批回归/仪器编译，再跑最终同候选长流程；范围外训练耗时不作为阶段前置，更不成为玩家门槛。
+
+原runtime_handoff只搬真实正常JSON，scope依赖清单由内容pin固定SHA，原三job、同源/同签名/同hash/reviewer保留。全开发29条正常路径仍保留；R1分派和内容局部门禁已本地执行，长路线用于稳定里程碑/核心规则大改/特定故障；个人短冒烟与完整验收分别记录，未执行长测不写PASS。修复交付后同步回既有开发线，避免从头重做。
+
+- 长路线无奖励重进比较前，先定位normal-index中的合法补给：真实用药可改变HP/库存，比较点须在补给后；原两格室内重进使用普通触控，不混入自动补给field helper。半血区可能再次合法用药，不能假设一次恢复就足够。实际索引46HP来源逐值/SHA核对，新增4HP明确隔离边界，保留全部角色/物品/钱/flag断言；编译/相关fixture及原Android两例隔离复现、正常北宫重进已通过；它们不替代新候选整段主线。正常/cold索引与截图分名防覆盖，医疗分名实际路径仍待验。
+
+- 跨runner交接曾仅root推送/hash成功，但App读取实际EACCES；不能把主机读回当App可读。原runtime_handoff的来源/cold/hash验证继续保留。新增App-owned字节写入/读回及64KiB/文件名边界已通过Linux主机35相关方法、5scope方法和仪器编译；原生存储探针、后两runner的App-owned导入已实际通过；85洞/东海/村2正常和cold同候选接续通过，末段仍以当前结果为准。探针只搬隔离历史snapshot原值、不启动或restore GameState，不计正常流程。
+
+- 实际Windows长分派fixture通过Git Bash -c传递时末尾两fi未到达，报unexpected EOF；本地块为8007字符，不能以Linux -c通过推断Windows参数传输可靠。改在隔离临时目录写UTF-8/LF脚本文件，以原Git Bash执行同一完整分派与断言；本地及原Windows门禁已实际通过，不安装另一Bash或删范围外原测试。
+
+- App-owned存储探针及文件分派已经原Windows构建/实际AOSP执行成功；实际跨runner导入及世界中段已通过，最终整体以完整回执为准。正常旅程失败也可能是合法战败：先读真实起点HP/等级/库存与采购索引。本次满药仍在低等级多敌群战败，改用同候选已有正常准备检查点串联可选回归，不再重复练级；不改玩家规则或建立剧情等级锁。原29路径及cold保留，提前隔离北向复现及同候选准备后的北向/村1正常和cold已实际通过，独立分支不合并奖励。历史正常fixture只用于有源局部复现，原字节/SHA/来源另记在test资产；正常主线必须本次新游戏生成同候选状态。
+
+- 共享室内返程会落在原门口trigger；BFS目标等于当前位置时不会发输入，不能当再次进店。实际医疗首店/取消/返程已通过，第二次入店断言失败属于驱动遗漏离门步骤；新增普通合法一步离门再返回，原价格/角色/存档断言保持。此修正与有源正常双人fixture的提前Activity重启回归已在实际AVD通过；Activity重启不冒称外部force-stop冷启。提前局部复现须用原IsolatedGameTestCase还原进入前偏好，不能像外部cold recorder一样保留fixture：实际保留已装备长剑的源污染下一小刀回归，产生测试!! NPE。原run_test仅此局部复现传false，真实升级/外部录屏保留不变；该局部false还原及其后原装备用例已由同一原AVD实际通过；整包仍必须取完整同候选回执。
+
+- 阶段冻结前，用当前任务的真实inspect摘要执行原Node --release-assessment；仅inspect成功不足以证明发布决策可用。曾阶段task_id已改而非阻断issue文件仍绑定父任务，原门禁实际拒绝。修复只同步当前taskId，旧错误范围/时间/hash/count/UNCONFIRMED保持；实际摘要与原13个决策正反例通过，新回归核当前任务字段。冻结后必须新同源候选，不能修改main后发布旧APK。
+
+- 连续双人路线的失败先逐人检查正常source status/HP与补给目标。曾驱动只解毒首人，第二人逛店自然毒损到低HP，原客栈排除该状态；这是已定位的驱动遗漏，不能改客栈为免费解除/复活。复用既有全队补给，提前以已核正常/外部cold的原值复现整段村2；新fixture和正常主线分label且恢复偏好。当前只完成定位/编译，实际新App回归以当前任务回执为准。
+
+## 个人测试交付与反馈闭环
+
+默认以当前任务/原runtime-scope的明确质量等级交付，PERSONAL_TEST不等于稳定版；原三段长测和原签名/来源/hash/reviewer仍保留，不能伪造长测成功。已经实际执行的隔离医馆/双人中毒补给/交易装备及偏好恢复可优先复用；原录屏器已有外部force-stop/实际冷启机制，原PERSONAL_TEST分级薄适配已在真实Windows/KVM/保护发布链路执行成功：相关快检和全JVM、原短smoke、覆盖升级/不覆盖迁移前原档、一次外部force-stop/实际冷启、同源同签名同hash审核及公网完整字节复核；人工/稳定验收仍PENDING/NOT_RUN。
+
+用户反馈先查对应版本和时间的既有日志，再复现/修复/补快回归，不要求其证明技术根因；保留唯一好的迁移前原档和真实云进度。完整游玩、设备、声音及长体验仍标人工PENDING，取消/失败和未实现内容分别保留。
+
+- 外部冷启比较必须绑定刚保存的端点：实际个人smoke在内部Activity重进后已正常移动，却仍读旧normal端点，host字节恢复比较已过而测试坐标/encounter断言失败。保留原状态断言，正常smoke只做一次保存，然后由原录屏器唯一执行外部force-stop/cold/继续；该薄修已编译、快检、真实同候选短smoke与外部cold通过，并经原发布链路/公网字节复核。保留失败原片和源值，不能把之前未通过的cold改PASS。
