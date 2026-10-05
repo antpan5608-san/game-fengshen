@@ -395,10 +395,16 @@ class TouchTest:IsolatedGameTestCase(){
                 instrumentation.uiAutomation.takeScreenshot().compress(Bitmap.CompressFormat.PNG,100,it)}
         }
         var seekingInjury=false
+        var approachingVillage=false
         val injuryEvents=org.json.JSONArray()
-        fun injuryState(name:String){
-            injuryEvents.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
-                .put("snapshot",v.currentSnapshot().json()))
+        fun injuryState(name:String,fight:OpeningBattle?=null){
+            val event=org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
+                .put("snapshot",v.currentSnapshot().json())
+            if(fight!=null)event.put("battlePhase",fight.phase.name).put("battleHeroHp",fight.hero.hp)
+                .put("groupId",fight.group.id).put("enemies",org.json.JSONArray().also{rows->
+                    fight.enemies.forEach{rows.put(org.json.JSONObject().put("slot",it.slot)
+                        .put("enemyId",it.definition.id).put("hp",it.hp))}})
+            injuryEvents.put(event)
             File(instrumentation.targetContext.getExternalFilesDir(null),"town01-normal-injury-attempts.json").writeText(
                 org.json.JSONObject().put("kind","NORMAL_NEW_GAME_TOUCH_INPUTS")
                     .put("stateGrants",false).put("events",injuryEvents).toString())
@@ -411,12 +417,16 @@ class TouchTest:IsolatedGameTestCase(){
                 if(v.layer!=GameView.Layer.BATTLE)break
                 val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
+                    if(fight.phase==BattlePhase.DEFEAT){injuryState("normal-route-defeat",fight);capture("herb-route-defeat")}
                     assertTrue("Town route must survive normally",fight.phase!=BattlePhase.DEFEAT)
                     if(presentation.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)){
                         // A hand-knife can legitimately defeat early single enemies before they act.
                         // Use the actual escape button while still at full HP to expose ordinary
                         // retaliation; never edit HP, force an enemy, or alter random consumption.
-                        if(seekingInjury&&fight.hero.hp==fight.hero.maxHp)
+                        val escape=(seekingInjury&&fight.hero.hp==fight.hero.maxHp)||
+                            (approachingVillage&&(fight.enemies.count{it.hp>0}>1||fight.hero.hp<=fight.hero.maxHp*2/3))
+                        injuryState(if(escape)"normal-touch-escape" else "normal-touch-attack",fight)
+                        if(escape)
                             tap(v,center(v.battleCommandBounds(3)))
                         else tap(v,center(v.battleTargetBounds(fight.enemies.first{it.hp>0}.slot)))
                     }
@@ -425,7 +435,7 @@ class TouchTest:IsolatedGameTestCase(){
                 SystemClock.sleep(40)
             }
             assertEquals(GameView.Layer.MAP,v.layer)
-            if(seekingInjury)injuryState("normal-encounter-ended")
+            injuryState("normal-encounter-ended")
         }
         fun step(k:Key){stickStep(v,k);finishFight()}
         fun walkTo(tx:Int,ty:Int){
@@ -456,7 +466,11 @@ class TouchTest:IsolatedGameTestCase(){
         walkTo(7,16);talk();assertEquals(100,v.currentSnapshot().money)
         walkTo(11,22);talk();assertEquals(1,v.currentSnapshot().inventory[OpeningEquipment.KNIFE_ID])
         walkTo(8,29);assertEquals(16,v.world.mapId)
+        // Initial equipment already includes a knife. Reach optional supply with real
+        // escape commands for risky groups; no forced win, encounter or HP edits.
+        approachingVillage=true;injuryState("normal-town-approach-start")
         walkTo(202,130);assertEquals("Town entrance at actual ${v.world.x/16},${v.world.y/16}",0,v.world.mapId)
+        approachingVillage=false;injuryState("normal-town-approach-end")
         capture("town")
         for(mid in listOf(17,18,19)){
             val entry=v.content.exits.first{it.fromMapId==0 && it.toMapId==mid}
