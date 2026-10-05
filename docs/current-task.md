@@ -37,3 +37,9 @@ PUBLISHED：生产仅R1 v82；c50尚未正式发布，原始有效地图分母UN
 后续固定接续：重生/队伍→既有山洞/村→女儿村→清峰山→暗洞→女人国→剩余原主线/地图/服务/结局。R2达标原保护发布后继续；只有全WORLD条件达成才COMPLETE。正常/受控、代码/打包/App/发布分列，manual PENDING不锁开发。平台实际中断前保存来源/content/正常终点/具体阻塞/精确动作及生产/开发边界，不假装无限后台。
 
 权威十类累计欠账：docs/delivery-status.md；路线：docs/original-playthrough-roadmap.md；历史：docs/history/world-full01-runtime-checkpoints.md。直接复用两个已有skill，不reset/clean、不卸载清档、不覆盖真实云进度/唯一好备份、不放宽签名/hash/reviewer、不修改Language。
+
+## R2 实际失败与恢复检查点（2026-10-06 03:40 北京时间）
+
+原run37270937736/v83/source dd310273：build/base SUCCESS，world FAILURE，continuation SKIPPED，NOT_PUBLISHED。已取得实际同候选医疗→一殿→二殿→map61/62正常胜后与出口证据；未将失败批次改为PASS。world-hall-batch在TouchTest:4004失败：原map63两宝箱(26,23)/(26,25)，驱动到中间(26,24)侧向仍用A导致无目标/没有取得牛黄丸（expected2/actual1），不是已证重复消耗或丢档。依据现有interactionTarget多邻规则、CoreTest和真实index/截图，薄改隔离驱动用实际ScreenLayout/camera触屏点同一稳定NPC；完整库存/flag/金钱/角色/复点断言均保留，业务逻辑/数值/内容不变。CoreTest快速JVM与仪器Kotlin编译PASS（1m43s；首次daemon启动告警后编译成功）。新App复验NOT_RUN。
+
+CLI实际gh run view仍HTTP401，即用户回复连接更新后也未生效；GH_TOKEN仅报告SET，hosts.yml不存在，cloud环境状态revision262/observations_current=true但无ready GitHub凭据绑定。现有GitHub仓库连接器只读接口成功取得作业/失败日志和691823字节不可变检查点artifact；没有读取或输出Secret、没有移除proxy/TLS。原生产保持v82，等待当前运行环境凭据应用，同时继续独立本地功能与证据工作，不假称后台发布。恢复动作：在相同source校验后提交薄修正，原android-build.yml生成新同源签名候选并复跑原3stage；原门禁通过再原流程发布。
