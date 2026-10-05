@@ -831,7 +831,10 @@ object ContentLoader {
         val sceneStories=data.optJSONArray("sceneStories")?.let{a->
             (0 until a.length()).map{i->
                 val o=a.getJSONObject(i)
-                require(o.getString("evidence")=="game-data/provenance/world-rebirth-script.json")
+                val sceneEvidence=o.getString("evidence")
+                val manual=o.optBoolean("manualActivation",false)
+                require(sceneEvidence in setOf("game-data/provenance/world-rebirth-script.json",
+                    "game-data/provenance/world-jiameng-state.json"))
                 val entry=o.getJSONObject("entryTrigger")
                 val trigger=StoryEntryTrigger(entry.getInt("mapId"),entry.getInt("x"),entry.getInt("y"))
                 fun destination(t:JSONObject):StoryDestination {
@@ -849,17 +852,36 @@ object ContentLoader {
                 val ids=c.getJSONArray("dialogueIds").let{d->(0 until d.length()).map{d.getString(it)}}
                 require(!c.has("joinCharacterId")&&ids.all{it in dialogues})
                 val completion=c.getJSONArray("completionFlags").let{f->(0 until f.length()).map{f.getString(it)}.toSet()}
-                val chain=StoryContinuation(ids,null,destination(c.getJSONObject("destination")),completion)
+                val chain=StoryContinuation(ids,null,c.optJSONObject("destination")?.let(::destination),completion)
                 val moves=o.getJSONArray("movementsBeforeDialogue").let{m->(0 until m.length()).map{j->
                     val v=m.getJSONObject(j);v.getInt("dialogueIndex") to movement(v)}}
                 require(moves.map{it.first}.distinct().size==moves.size&&moves.all{it.first in 1 until ids.size&&it.second.destination.mapId==86})
                 val story=SceneStoryDefinition(o.getString("id"),o.getString("npcId"),o.getString("flagId"),trigger,chain,
-                    movement(o.getJSONObject("openingMovement")),moves.toMap())
-                require(story.id=="rom.scene-story.86.rebirth"&&story.npcId=="rom.npc.86.0"&&
+                    movement(o.getJSONObject("openingMovement")),moves.toMap()).also{it.manualActivation=manual}
+                if(sceneEvidence=="game-data/provenance/world-rebirth-script.json"){
+                require(!manual&&!c.has("characterChanges")&&story.id=="rom.scene-story.86.rebirth"&&story.npcId=="rom.npc.86.0"&&
                     story.flagId=="rom.map.86.flag.128"&&trigger.mapId==86&&story.openingMovement.destination.mapId==86&&
                     chain.destination?.mapId==16&&completion==setOf(story.flagId)&&
                     scenes[86]?.check(trigger.x,trigger.y)==null&&
                     npcs.any{it.id==story.npcId&&it.mapId==86&&it.scriptedActor&&it.firstEffects.isEmpty()})
+                }else{
+                    // Only this witnessed NPC return is admitted. Not a generic
+                    // data-driven way to restore or create arbitrary party members.
+                    require(manual&&story.id=="rom.scene-story.146.xiao-return"&&story.npcId=="rom.npc.146.0"&&
+                        story.flagId=="rom.map.146.flag.4"&&trigger==StoryEntryTrigger(146,2,5)&&
+                        chain.destination==null&&ids==listOf("rom.dialogue.156.2")&&moves.isEmpty()&&
+                        completion==setOf(story.flagId,"rom.npccontext.146.216")&&
+                        story.openingMovement.completedSteps==0&&story.openingMovement.destination.mapId==146&&
+                        story.openingMovement.destination.x==2&&story.openingMovement.destination.y==5&&
+                        scenes[146]?.check(trigger.x,trigger.y)==null&&"xiaolongnv" in knownCharacters&&
+                        npcs.any{it.id==story.npcId&&it.mapId==146&&!it.scriptedActor&&it.x==2&&it.y==4&&
+                            it.firstDialogue==ids.single()&&it.firstEffects.isEmpty()})
+                    val changes=c.getJSONArray("characterChanges");require(changes.length()==1)
+                    val change=changes.getJSONObject(0)
+                    require(change.getString("characterId")=="xiaolongnv"&&change.getInt("statusAndMask")==0&&
+                        change.getInt("statusOrMask")==0&&change.getBoolean("restoreHp")&&change.getBoolean("restoreMp"))
+                    chain.characterChanges=listOf(StoryCharacterChange("xiaolongnv",0,0,true,true))
+                }
                 story
             }.also{s->require(s.map{it.id}.distinct().size==s.size&&s.map{it.npcId}.distinct().size==s.size)}
                 .associateBy{it.npcId}

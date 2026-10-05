@@ -60,4 +60,17 @@ class StoryCharacterChangeTest {
             catch(expected:IllegalArgumentException){assertEquals(40,before.x);assertEquals(88,before.y);assertTrue(before.flags.isEmpty())}
         }
     }
+    @Test fun manualNpcTalkDoesNotAutoTriggerOrInventAnApproachCell(){
+        val chain=StoryContinuation(listOf("original.xiao.return"),null,null,setOf("original.done"))
+            .also{it.characterChanges=listOf(rejoin)}
+        val story=SceneStoryDefinition("original.scene","original.npc","original.done",StoryEntryTrigger(146,2,5),chain,
+            StoryMovement(StoryDestination(146,2,5,Key.UP,null,null),0),emptyMap()).also{it.manualActivation=true}
+        for((x,y)in listOf(2 to 5,2 to 3,1 to 4,3 to 4)){
+            val before=SaveSnapshot("fixture",146,x*16+8,y*16+8,Key.RIGHT,listOf(nezha,xiao,yang),emptyMap(),emptyMap(),1234)
+            assertFalse(story.automaticallyTriggersAt(before));assertTrue(story.triggersAt(before))
+            val a=StoryFollowup.begin(before,story);assertTrue(a.applied)
+            assertEquals(before.copy(flags=mapOf(story.pendingFlag to true)),a.snapshot)
+            assertFalse(story.triggersAt(before.copy(mapId=147)))
+        }
+    }
 }

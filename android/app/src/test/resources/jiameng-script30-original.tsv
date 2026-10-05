@@ -1,0 +1,12 @@
+validfield148-source16	map=16	phase=0	message=2	group=110	event=0	source=54	x=139	y=143	script=0	scriptIndex=0	yangStatus=1	enemy=18
+validfield148-actual-door-entry	map=145	phase=0	message=2	group=110	event=0	source=54	x=253	y=7	script=0	scriptIndex=0	yangStatus=1	enemy=18
+validfield148-actual-stair146	map=146	phase=0	message=2	group=110	event=0	source=54	x=13	y=0	script=0	scriptIndex=0	yangStatus=1	enemy=18
+validfield148-actual-stair147	map=147	phase=0	message=2	group=110	event=0	source=54	x=250	y=4	script=0	scriptIndex=0	yangStatus=1	enemy=18
+validfield148-actual-stair148	map=148	phase=0	message=2	group=110	event=0	source=54	x=255	y=4	script=0	scriptIndex=0	yangStatus=1	enemy=18
+validfield148-original-field-before-controlled-event	map=148	phase=0	message=2	group=110	event=0	source=54	x=255	y=4	script=0	scriptIndex=0	yangStatus=0	enemy=18
+validfield148-controlled-post-battle-stage3	map=148	phase=0	message=2	group=110	event=1	source=54	x=255	y=4	script=0	scriptIndex=0	yangStatus=0	enemy=18
+validfield148-post-text-6	map=148	phase=2	message=6	group=148	event=1	source=0	x=255	y=4	script=30	scriptIndex=7	yangStatus=64	enemy=18
+validfield148-post-text-7	map=148	phase=2	message=7	group=148	event=1	source=0	x=255	y=4	script=30	scriptIndex=8	yangStatus=64	enemy=18
+validfield148-post-text-8	map=148	phase=2	message=8	group=148	event=1	source=0	x=255	y=4	script=30	scriptIndex=9	yangStatus=64	enemy=18
+validfield148-actual-next-map37	map=37	phase=0	message=8	group=148	event=0	source=0	x=253	y=254	script=0	scriptIndex=0	yangStatus=64	enemy=18
+validfield148-actual-final	map=37	phase=0	message=8	group=148	event=0	source=0	x=253	y=254	script=0	scriptIndex=0	yangStatus=64	enemy=18

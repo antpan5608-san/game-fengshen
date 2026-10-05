@@ -764,6 +764,18 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val direction=if(npc.interactionDirection!=null&&npc.interactionCell==(x to y))npc.interactionDirection!!
             else facingToward(x,y,NpcCell(npc.id,npc.x,npc.y))?:return
         world.face(direction)
+        content.sceneStories[npc.id]?.takeIf{it.manualActivation}?.let{scene->
+            if(npc !in nearbyNpcs())return
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot()
+            if(flags[scene.pendingFlag]==true){
+                scene.pendingDialogue(flags)?.let{content.dialogues[it]}?.let{openDialogue(it,npc)}
+                return
+            }
+            if(scene.triggersAt(before)){
+                commitStoryFollowup(before,StoryFollowup.begin(before,scene),npc);return
+            }
+        }
         npc.originalTalk?.let{rule->
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()
@@ -890,7 +902,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun openSceneStoryIfNeeded():Boolean {
         if(layer!=Layer.MAP||world.remaining!=0)return false
         val before=currentSnapshot()
-        val story=content.sceneStories.values.firstOrNull{it.triggersAt(before)}?:return false
+        val story=content.sceneStories.values.firstOrNull{it.automaticallyTriggersAt(before)}?:return false
         if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return true}
         commitStoryFollowup(before,StoryFollowup.begin(before,story),content.npcs.first{it.id==story.npcId})
         return true
@@ -928,7 +940,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
         val sceneStory=npc?.let{content.sceneStories[it.id]}
-        if(sceneStory!=null&&npc!=null){
+        if(sceneStory!=null&&npc!=null&&flags[sceneStory.pendingFlag]==true){
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()
             commitStoryFollowup(before,StoryFollowup.advance(before,sceneStory,dialogueText?.id?:""),npc)
