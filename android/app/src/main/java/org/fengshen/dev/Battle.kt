@@ -67,11 +67,33 @@ data class PhysicalRules(val weaponHitThreshold:Map<Int,Int>,val multiplierThres
 data class StoryEntryTrigger(val mapId:Int,val x:Int,val y:Int)
 data class StoryDestination(val mapId:Int,val x:Int,val y:Int,val direction:Key?,val terrainMode:Int?,
     val encounterSteps:Int?)
+/** Existing-member scene effects: never create, reorder or replace a saved actor.
+ * Content validation must bind each definition to its original script evidence. */
+data class StoryCharacterChange(val characterId:String,val statusAndMask:Int=255,val statusOrMask:Int=0,
+    val restoreHp:Boolean=false,val restoreMp:Boolean=false) {
+    init {require(characterId.matches(Regex("[a-z0-9_-]{1,64}"))&&statusAndMask in 0..255&&statusOrMask in 0..255)}
+}
+fun applyStoryCharacterChanges(before:List<CharacterState>,changes:List<StoryCharacterChange>):List<CharacterState>? {
+    if(before.map{it.id}.distinct().size!=before.size||changes.map{it.characterId}.distinct().size!=changes.size)return null
+    if(changes.any{change->before.none{it.id==change.characterId}})return null
+    val definitions=changes.associateBy{it.characterId}
+    val result=mutableListOf<CharacterState>()
+    for(actor in before){
+        val change=definitions[actor.id]
+        if(change==null){result.add(actor);continue}
+        if(actor.statusMask !in 0..255||change.restoreHp&&actor.maxHp !in 1..9999||
+            change.restoreMp&&(actor.maxMp==null||actor.maxMp !in 0..9999))return null
+        result.add(actor.copy(statusMask=(actor.statusMask and change.statusAndMask)or change.statusOrMask,
+            hp=if(change.restoreHp)actor.maxHp else actor.hp,mp=if(change.restoreMp)actor.maxMp!! else actor.mp))
+    }
+    return result
+}
 data class StoryContinuation(val dialogueIds:List<String>,val joinCharacterId:String?,
     val destination:StoryDestination?,val completionFlags:Set<String>) {
     // Optional scoped event6 fields keep the existing constructor ABI.
     var departureCharacterId:String?=null;internal set
     var movementsBeforeDialogue:Map<Int,StoryMovement> = emptyMap();internal set
+    var characterChanges:List<StoryCharacterChange> = emptyList();internal set
     init {
         require(dialogueIds.isNotEmpty()&&dialogueIds.size<=64&&dialogueIds.all{it.isNotBlank()})
         require(dialogueIds.distinct().size==dialogueIds.size)
@@ -145,9 +167,10 @@ object StoryFollowup {
     }
     private fun move(before:SaveSnapshot,movement:StoryMovement):SaveSnapshot {
         // Original witnessed cutscenes on these maps; no cross-map shortcut.
-        require(before.mapId in setOf(86,76,87,117)&&movement.destination.mapId==before.mapId)
-        if(movement.completedSteps==0)require(before.mapId==117&&before.x/16==movement.destination.x&&
-            before.y/16==movement.destination.y) // Script18 moves an NPC, not the player.
+        require(movement.destination.mapId==before.mapId)
+        if(movement.completedSteps==0)require(before.x/16==movement.destination.x&&
+            before.y/16==movement.destination.y) // NPC-only scripts cannot teleport the player.
+        else require(before.mapId in setOf(86,76,87)) // Positive movement still needs its scoped original trace.
         if(before.mapId==117)require(movement.completedSteps==0)
         var party=before.characters
         repeat(movement.completedSteps){party=OriginalStatus.step(party,before.mapId)}
@@ -178,8 +201,10 @@ object StoryFollowup {
             // Original CE91..CE98 retains all actor data, ORs bit40 only.
             characters[index]=characters[index].copy(statusMask=characters[index].statusMask or 64)
         }
+        val changed=applyStoryCharacterChanges(characters,chain.characterChanges)
+            ?:return reject("剧情角色状态与已核变化不一致，原存档已保留")
         val completed=complete(progressed)+chain.completionFlags.associateWith{true}
-        val next=before.copy(characters=characters,flags=completed)
+        val next=before.copy(characters=changed,flags=completed)
         val destination=chain.destination?:return Result(next,null,true)
         return Result(next.copy(mapId=destination.mapId,x=destination.x*16+8,y=destination.y*16+8,
             direction=destination.direction?:before.direction,terrainMode=destination.terrainMode?:before.terrainMode,interiorContext=null,

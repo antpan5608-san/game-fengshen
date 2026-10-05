@@ -10495,5 +10495,2461 @@
     "Not in current c50 package; no APK publication claim",
     "Guard default/context215 and event1 observed with controlled positions; not normal route",
     "Victory/party changes/repeated challenge/escape/first-trigger semantics need separate evidence"
+  ],
+  "font": {
+    "sources": [
+      {
+        "offset": 614416,
+        "length": 2048,
+        "sha256": "fc783cc20a660af59cd0e1f4cdba9ae3b9022be3685e82132ec9f9cc421097cd",
+        "meaning": "Active map145 dialogue PPU bank44 exact match"
+      },
+      {
+        "offset": 616464,
+        "length": 2048,
+        "sha256": "1f1e57e50a5c6075bcd23a183ae4b3af714eda8b7dc3888841dec73632b3968f",
+        "meaning": "Active map145 dialogue PPU bank45 exact match"
+      }
+    ],
+    "charset": {
+      "0": "裏",
+      "1": "夢",
+      "2": "已",
+      "3": "封",
+      "4": "回",
+      "5": "壽",
+      "6": "納",
+      "7": "救",
+      "8": "高",
+      "9": "大",
+      "10": "平",
+      "11": "無",
+      "12": "讓",
+      "13": "消",
+      "14": "海",
+      "15": "太",
+      "16": "群",
+      "17": "自",
+      "18": "鬼",
+      "19": "混",
+      "20": "傘",
+      "21": "把",
+      "22": "劍",
+      "23": "久",
+      "24": "沾",
+      "25": "拿",
+      "26": "敗",
+      "27": "倒",
+      "28": "上",
+      "29": "哪",
+      "30": "糟",
+      "31": "先",
+      "32": "到",
+      "33": "人",
+      "34": "這",
+      "35": "可",
+      "36": "死",
+      "37": "狐",
+      "38": "來",
+      "39": "女",
+      "40": "一",
+      "41": "老",
+      "42": "力",
+      "43": "青",
+      "44": "地",
+      "45": "吧",
+      "46": "你",
+      "47": "將",
+      "48": "楊",
+      "49": "禮",
+      "50": "我",
+      "51": "家",
+      "52": "魔",
+      "128": "佳",
+      "129": "關",
+      "130": "經",
+      "131": "鎖",
+      "132": "去",
+      "133": "子",
+      "134": "命",
+      "135": "很",
+      "136": "興",
+      "137": "都",
+      "138": "安",
+      "139": "事",
+      "140": "起",
+      "141": "滅",
+      "142": "和",
+      "143": "紅",
+      "144": "不",
+      "145": "量",
+      "146": "夫",
+      "147": "元",
+      "148": "威",
+      "149": "雲",
+      "150": "好",
+      "151": "沒",
+      "152": "血",
+      "153": "刀",
+      "154": "後",
+      "155": "在",
+      "156": "呀",
+      "157": "吒",
+      "158": "糕",
+      "159": "扶",
+      "160": "有",
+      "161": "方",
+      "162": "是",
+      "163": "惡",
+      "164": "花",
+      "165": "貂",
+      "166": "龍",
+      "167": "謝",
+      "168": "就",
+      "169": "了",
+      "170": "嚐",
+      "171": "磨",
+      "172": "醒",
+      "173": "打",
+      "174": "四",
+      "175": "他",
+      "176": "戬",
+      "177": "小",
+      "178": "們",
+      "179": "的",
+      "68": "　"
+    },
+    "glyphs": [
+      {
+        "code": 0,
+        "character": "裏",
+        "pixelsSha256": "f6ed5c1534cab367bc8c7c83067591a895ff95775dd6eb04549e8487c404b49a",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 1,
+        "character": "夢",
+        "pixelsSha256": "10a3830380697ffa71897267222858634781e2843ec68e4b2fcae905341888da",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 2,
+        "character": "已",
+        "pixelsSha256": "e554f869ed8f18ecdb6032f5f5dcc4adc12dd20982bb29c48df7728ad7644c57",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 3,
+        "character": "封",
+        "pixelsSha256": "2c681966fc8ff3ee1c893bddd6a3d364535e6a3beb3b3c8ea13126d7d8afb23c",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 4,
+        "character": "回",
+        "pixelsSha256": "b4ede401fbcb95a0955e5dd6f8911cbb20a0e52b8fab83a51047edbb98b97782",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 5,
+        "character": "壽",
+        "pixelsSha256": "fbf282afa092a45c9cf8388fa208a71d0d649b886708da5cf117dca38fa52a08",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 6,
+        "character": "納",
+        "pixelsSha256": "750f6da78d5fe45177479aa979f3e4106ce93fc95835de680e4353d7837d0aea",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 7,
+        "character": "救",
+        "pixelsSha256": "2ec4f2d71e416f2159b3c180a80fe52520e1dca8c183b293b804291b12c1247e",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 8,
+        "character": "高",
+        "pixelsSha256": "d4a2d0c3d06e14f82026ad35785622c099a83cb7ad85bb64091dfd761ffa329d",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 9,
+        "character": "大",
+        "pixelsSha256": "18b5668cc28938c7131e9fccb189c81bc2becee1d79e37135260922e3ac517ba",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 10,
+        "character": "平",
+        "pixelsSha256": "8d48b16b6d9a49aef0bc69bdb77d521ecac0b754cb4b8e1947c6f8ceea34ccc0",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 11,
+        "character": "無",
+        "pixelsSha256": "ceeb98b47f68d60f349ef2a90acee1f7dbdf7969373d85c9b234faaa25c044ad",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 12,
+        "character": "讓",
+        "pixelsSha256": "68d0faaeceff6daa1ad08b5a9ac590168615550358343b9a2264e70949345e7c",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 13,
+        "character": "消",
+        "pixelsSha256": "bdef279fa759731336903d095b71ab15e003923ae173ec6a7deb595c29968514",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 14,
+        "character": "海",
+        "pixelsSha256": "38bf850830b935d79b308f034df784c8c081fac08d5768b289783ccff4e9c249",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 15,
+        "character": "太",
+        "pixelsSha256": "e7c0eae4dc2c4be60887eef9bc7c812fe4b8278a550df1023ebdf09297cdfe31",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 16,
+        "character": "群",
+        "pixelsSha256": "b6c4a90cc63b602c05f4f18adf607800d8c965c8a6204525bda9641121b0a417",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 17,
+        "character": "自",
+        "pixelsSha256": "48338eae8ca0447c6eca9652442071eb3348aefd5ff87b06418ca9e4903f0832",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 18,
+        "character": "鬼",
+        "pixelsSha256": "527339ffb37329d25fe71af4dc3ee243921f897260dd0d87a5678cb7e4434b48",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 19,
+        "character": "混",
+        "pixelsSha256": "e93ed47719a46d2f0b77fdd2549a84e080307f274e9360ec7fd36aff176c389d",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 20,
+        "character": "傘",
+        "pixelsSha256": "868ac398e08095670b52f834fb2f609bdc3c2eaf0a3f17b94525908f64bf913a",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 21,
+        "character": "把",
+        "pixelsSha256": "f05d1043c8abde60bd1b333a980f148e0c952a7f33e0fbafbdcc1e02c78a4670",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 22,
+        "character": "劍",
+        "pixelsSha256": "ba4938cec8bbb45e8f9ea0c545cfc56a623414d08a415154de3ac405d0575f73",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 23,
+        "character": "久",
+        "pixelsSha256": "548ec4e39499cf362398591f5e856446a11e730bbd61edc3978eb191fca2c209",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 24,
+        "character": "沾",
+        "pixelsSha256": "d4a731f6a3d6bbd457f2ab8f3e9e5501d66ebef8baf243058271f30df759721b",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 25,
+        "character": "拿",
+        "pixelsSha256": "ed23ce773e16991d12189155a23fdfba05b6b5f699b943a89ebc5460c62309fd",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 26,
+        "character": "敗",
+        "pixelsSha256": "a7edd00a28cf4cf24743aba7a4530265f680ce1a40e46109eb206d5fd2cc52ec",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 27,
+        "character": "倒",
+        "pixelsSha256": "e9fd8a6351c8cc709d4c6f6c570aa7beb1c972c158a52db0aa945e39492eb4e7",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 28,
+        "character": "上",
+        "pixelsSha256": "3aeaaab57e734216c1268fb6c6907c9e88577f578505d7f3f62e47590b5acd94",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 29,
+        "character": "哪",
+        "pixelsSha256": "33730ccd49b417d33ab1510286017b263911cffde2a80afa27674e6930e61ac2",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 30,
+        "character": "糟",
+        "pixelsSha256": "693b55abeae6d6d07b2d6a727484b54e1313be77304c5c84d684da8524583a80",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 31,
+        "character": "先",
+        "pixelsSha256": "a87bdf2b2fe052f2234c6632486e8787a39f3b5db85ef1f4a26ff95c28f43d86",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 32,
+        "character": "到",
+        "pixelsSha256": "dbe2fd48836acf4b7e5e58806298026177e3d52ebf08ec6214876ec0f7cc0f64",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 33,
+        "character": "人",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 34,
+        "character": "這",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 35,
+        "character": "可",
+        "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 36,
+        "character": "死",
+        "pixelsSha256": "a6d538952cfbf50fbd09e82706b9ba4d71ac6178432dc8c6574051ae0bb7d921",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 37,
+        "character": "狐",
+        "pixelsSha256": "0534ed43cff90dd735cca72a0e15dd0b0475f5896e03c77c63eb94f1af221d53",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 38,
+        "character": "來",
+        "pixelsSha256": "d1b2a6ff9e929b9bc3fb68c1c7fd335eda13020e73f33ef763515a218fc93118",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 39,
+        "character": "女",
+        "pixelsSha256": "f79325588ea291a6cd2719202f7bb5142d0874f970586852d3b3a9b0a4d2b6fb",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 40,
+        "character": "一",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 41,
+        "character": "老",
+        "pixelsSha256": "52619d26e0ad54bb0787724fe2fdf5088bfe44bbc1b46ced5761bffff80c8990",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 42,
+        "character": "力",
+        "pixelsSha256": "ae056383b85879715f7b9bbfec4e29aca3f8f246af54ada11d3350e4cd25a696",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 43,
+        "character": "青",
+        "pixelsSha256": "0769f1c92a9aabe765ffb738415bbf12244da51b7f40b76b3258574823aeded3",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 44,
+        "character": "地",
+        "pixelsSha256": "461c849d67b6019ff4add9b25d0857f29291dcf34d10f705f31120137aad3452",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 45,
+        "character": "吧",
+        "pixelsSha256": "aafd92a595423ca195c37d359a6cf18cbbe343a6306cdd473c00dd559a0562d2",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 46,
+        "character": "你",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 47,
+        "character": "將",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 48,
+        "character": "楊",
+        "pixelsSha256": "94f08be59b32c5e24a12a6911509fedd3f43caccedbb3bf654d5df255cc8eb20",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 49,
+        "character": "禮",
+        "pixelsSha256": "f5c157f0f9f065c13e6665f083624543be6c1a4e053742e65a189ca6a2c1f4a3",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 50,
+        "character": "我",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 51,
+        "character": "家",
+        "pixelsSha256": "9cdf0f17a57a8d19c3503d868bdd649575813633d44bd97401df0dd00f17b425",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 52,
+        "character": "魔",
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 128,
+        "character": "佳",
+        "pixelsSha256": "5abd64a30e0674c07735a4f9d8d8aff85d4325f32db2827ac60b60050c87ff29",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 129,
+        "character": "關",
+        "pixelsSha256": "402865601a50b6fac4979c8d9cc4e67c9052a6fc245b4faee4b27c1305d1f2bf",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 130,
+        "character": "經",
+        "pixelsSha256": "e3931680e84cc9b23397abff5056b845d0e7d9bfd3682908a581ecf9e8bdd276",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 131,
+        "character": "鎖",
+        "pixelsSha256": "b7c9fac559020b297b522dfac4b6aa34bd9e00f6bbcf1fcb05431ccd67c2cc2e",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 132,
+        "character": "去",
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 133,
+        "character": "子",
+        "pixelsSha256": "9e72153187ef49d6425b95c2455c3d74c94a6c3cb9035fd37061b57ef3c631d8",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 134,
+        "character": "命",
+        "pixelsSha256": "2a857344e7754bbe98e736a742af67514cf0554e50029646c00c19ba830f2a90",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 135,
+        "character": "很",
+        "pixelsSha256": "e0df8da78f9e9352c56225d7ccba239dfc287fb8ade46f21e0443c9f01d20afb",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 136,
+        "character": "興",
+        "pixelsSha256": "cfaf91fef0b3dc8a4c9aed34f31f6c717019ae8cb021953fda02d1bca06ca785",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 137,
+        "character": "都",
+        "pixelsSha256": "80ef4a92fb130173bbbf1b51b5897fd670c48c92c714a450c4803e2f4c591b0d",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 138,
+        "character": "安",
+        "pixelsSha256": "908d6bdd2830b271b776fe2adbc2b79b0d2462b9181e9431bea583f0a39f5c47",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 139,
+        "character": "事",
+        "pixelsSha256": "aed72a64c4f0ce975ff1a41d2d299fd1e2e83a9cbf338b507296b817e8107304",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 140,
+        "character": "起",
+        "pixelsSha256": "fe51620371143de72a8cbd03d131c7c569eb36b89fbe8c55f86304685620f015",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 141,
+        "character": "滅",
+        "pixelsSha256": "d68cd8ece93b82770102b1d3d4dc87d5c8367a6b2e9c9869c81bd33fbf0e0758",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 142,
+        "character": "和",
+        "pixelsSha256": "5714745a4a840dd2b5db28573710a5057c4f0f9ab258fe9f4015079b7b1c0f98",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 143,
+        "character": "紅",
+        "pixelsSha256": "0f98349e43419f61d8cabc4a3fc9a47c4acbe19996cbc545afcda8ed20b99c38",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 144,
+        "character": "不",
+        "pixelsSha256": "8dcebfe880db18259e1679e1623abd40bd0f03a28ec2461a0fbe057fd78ae5ba",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 145,
+        "character": "量",
+        "pixelsSha256": "5bd5b2b70b9936da021baec97163e6a9d143fb8969a935317902263af6a84f26",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 146,
+        "character": "夫",
+        "pixelsSha256": "ab5092aa73aaae9a87e6cc765a8ed325d236d1577fc15016718d2ec82f85db96",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 147,
+        "character": "元",
+        "pixelsSha256": "4d46844f2d836783c32532c0c7708036830bd6dead22b6095502a1e98732865f",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 148,
+        "character": "威",
+        "pixelsSha256": "f98cdb9ee8de41e75483f11cf903454ac5e68eb46d3e5be19cef58c8a135074f",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 149,
+        "character": "雲",
+        "pixelsSha256": "32f42b02fec8266161b8cd63224903058f4e9101318e96ec20a3d77f58d80a6b",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 150,
+        "character": "好",
+        "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 151,
+        "character": "沒",
+        "pixelsSha256": "82e6ce68b9cfb446d0d3b108dfe8cc0943e17cb5d32e3b3458210005ad5afc24",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 152,
+        "character": "血",
+        "pixelsSha256": "dd16c97f034553ae5c6efcc66b6f54142ecb0875396b19a4c8abe8245166eae2",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 153,
+        "character": "刀",
+        "pixelsSha256": "9569f67f686e2ea0f2b305589e3d3a8d593e4ee1d0409c711805513f563d5fdc",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 154,
+        "character": "後",
+        "pixelsSha256": "2b9b01654647256323e012db8c4be0299ee56491cfe236bd3e220a877a6aa552",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 155,
+        "character": "在",
+        "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 156,
+        "character": "呀",
+        "pixelsSha256": "d88403ce617cd210c4421bd57651225e9a42e7a4905d42fa76d09c1e232649b4",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 157,
+        "character": "吒",
+        "pixelsSha256": "d7d627e6511da4cd44a01f9d94baf176db2080f5b6e399d06a47df21d2783a1b",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 158,
+        "character": "糕",
+        "pixelsSha256": "4ef9300b2f7aac092af9e2c4811be2eaecb85eecad2fd616c4b15905c8a9f170",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 159,
+        "character": "扶",
+        "pixelsSha256": "2f35d7a71d3056f88ea4c47ba7344bf08d0866eb45ddad56493ff45a5a8a51ff",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 160,
+        "character": "有",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 161,
+        "character": "方",
+        "pixelsSha256": "8ca28957a1b3ed46ef036b2a9282fbae3ec81334da0b88bafb03920b6ddadbd7",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 162,
+        "character": "是",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 163,
+        "character": "惡",
+        "pixelsSha256": "82b595ffe1ee2e93bf51c6068e6c29da2c10ea244a734a8de15ded3e52b029c7",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 164,
+        "character": "花",
+        "pixelsSha256": "ea295cba891f2ffe567913276a779638d5bf3cac88d244b77198fb22ceed2ec6",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 165,
+        "character": "貂",
+        "pixelsSha256": "086fa328b0cb0ddaea9187ed0cdee80ab324026041700bbc517f73b38dc32c86",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 166,
+        "character": "龍",
+        "pixelsSha256": "880c8f604cf13f170b483f290d5ceb3f30410cccf993356d27bc8d334dbaca9f",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 167,
+        "character": "謝",
+        "pixelsSha256": "81a0f5b31620454c2657201a7ce82ff61bc40e5b2ea9560240d79396575644cd",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 168,
+        "character": "就",
+        "pixelsSha256": "9c58ddff3a4bd6d887acd03ca3875d4ef7d9410dba54dc2d1a1f99460ccd4cb5",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 169,
+        "character": "了",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 170,
+        "character": "嚐",
+        "pixelsSha256": "a9c3a99965c4773a84b53670d038f47d9a2aad3867431e818f48ff2b1e094292",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 171,
+        "character": "磨",
+        "pixelsSha256": "a325d2e890f9a299c1ec3d065c34af8d39a2d55872a6b527136603b95f548e55",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 172,
+        "character": "醒",
+        "pixelsSha256": "97e8743e4d3a22199db10f533691beb662e40168adb06beb7a00dea08751b65a",
+        "verification": "TARGET_GLYPH_TRANSCRIPTION"
+      },
+      {
+        "code": 173,
+        "character": "打",
+        "pixelsSha256": "3a038bee24015ff307807b122453db1a862a94ef31220fea9f1b76903b43a92c",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 174,
+        "character": "四",
+        "pixelsSha256": "7f14a77ef21a4686449bd7866c8533e2def25610ddf983c9d6f15daef7cac724",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 175,
+        "character": "他",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 176,
+        "character": "戬",
+        "pixelsSha256": "c8658d3db6213fa7e9c9065a0399b5a7eabea8eff3713daf32852a7549f5139b",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 177,
+        "character": "小",
+        "pixelsSha256": "48d298469090277fca94da92483b419d8045f8bbf6ed8e34ad747efe2bada856",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 178,
+        "character": "們",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c",
+        "verification": "EXACT_REUSED_GLYPH"
+      },
+      {
+        "code": 179,
+        "character": "的",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3",
+        "verification": "EXACT_REUSED_GLYPH"
+      }
+    ],
+    "limitation": "Scoped needed glyphs; no all-font or all-game text claim",
+    "controlCodes": {
+      "68": {
+        "text": "　",
+        "source": {
+          "offset": 99100,
+          "length": 4,
+          "sha256": "ad95131bc0b799c0b1af477fb14fcf26a6a9f76079e48bf090acb7e8367bfd0e",
+          "module": 3,
+          "cpuAddress": 33548,
+          "meaning": "Actual blank four-tile punctuation44"
+        },
+        "blankFontTileSha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb"
+      }
+    }
+  },
+  "dialogueStreams": [
+    {
+      "id": "rom.dialogue.155.0",
+      "group": 155,
+      "messageIndex": 0,
+      "rawHex": "402200a280018142028203834204842dc041c3",
+      "range": {
+        "offset": 108704,
+        "length": 19,
+        "sha256": "7bac725bbf6aeef2b35875fabf67b94661bf74be0eddd55da5774f41988c5631",
+        "module": 3,
+        "cpuAddress": 43152,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101288,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35736,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101986,
+          "length": 2,
+          "sha256": "bb17a5367ff6498df1379e5013e7bc66f8c1f1742bca7180661fdd871e3b5fa4",
+          "module": 3,
+          "cpuAddress": 36434,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "『這裏是佳夢關，已經封鎖，回去吧！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 34,
+          "character": "這",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 0,
+          "character": "裏",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 162,
+          "character": "是",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 128,
+          "character": "佳",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 1,
+          "character": "夢",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 129,
+          "character": "關",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 2,
+          "character": "已",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 130,
+          "character": "經",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 3,
+          "character": "封",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 131,
+          "character": "鎖",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 4,
+          "character": "回",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 132,
+          "character": "去",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 45,
+          "character": "吧",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 19,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.155.1",
+      "group": 155,
+      "messageIndex": 1,
+      "rawHex": "343105444023a3b18542ad2432b3a425a542068626c041c3",
+      "range": {
+        "offset": 108723,
+        "length": 24,
+        "sha256": "45bea73cfc5155bee7478474e43a563c58c6109dfe5859ca7a891dece35508bc",
+        "module": 3,
+        "cpuAddress": 43171,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101288,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35736,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101988,
+          "length": 2,
+          "sha256": "1570726cb4b526068128010b032752ed525b1c58fa14ae989841ac6ca1a55dd6",
+          "module": 3,
+          "cpuAddress": 36436,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "魔禮壽　『可惡小子，打死我的花狐貂，納命來！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 49,
+          "character": "禮",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 5,
+          "character": "壽",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 35,
+          "character": "可",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 163,
+          "character": "惡",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 177,
+          "character": "小",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 133,
+          "character": "子",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 173,
+          "character": "打",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 36,
+          "character": "死",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 50,
+          "character": "我",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 179,
+          "character": "的",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 164,
+          "character": "花",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 37,
+          "character": "狐",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 165,
+          "character": "貂",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 6,
+          "character": "納",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 134,
+          "character": "命",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 38,
+          "character": "來",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 23,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 24,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.156.2",
+      "group": 156,
+      "messageIndex": 2,
+      "rawHex": "b1a6274440a7a72eb2260732428708880933890a8a0b8b420c32b2288c0d8d3433ae2f2dc041c3",
+      "range": {
+        "offset": 108747,
+        "length": 39,
+        "sha256": "8c3c81be472ad2a573d29112c3a879ecbcb95946f2a4bab006bced8b40343ed5",
+        "module": 3,
+        "cpuAddress": 43195,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101290,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35738,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101990,
+          "length": 2,
+          "sha256": "fd31f5558903fbe132dc4035d8976c36607f8adfd0fb71072163c4dc7e067c3d",
+          "module": 3,
+          "cpuAddress": 36438,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "小龍女　『謝謝你們來救我，很高興大家都平安無事，讓我們一起消滅魔家四將吧！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 177,
+          "character": "小",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 166,
+          "character": "龍",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 39,
+          "character": "女",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 167,
+          "character": "謝",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 167,
+          "character": "謝",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 46,
+          "character": "你",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 178,
+          "character": "們",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 38,
+          "character": "來",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 7,
+          "character": "救",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 50,
+          "character": "我",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 135,
+          "character": "很",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 8,
+          "character": "高",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 136,
+          "character": "興",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 9,
+          "character": "大",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 51,
+          "character": "家",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 137,
+          "character": "都",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 10,
+          "character": "平",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 138,
+          "character": "安",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 11,
+          "character": "無",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 139,
+          "character": "事",
+          "status": "DECODED"
+        },
+        {
+          "index": 23,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 24,
+          "code": 12,
+          "character": "讓",
+          "status": "DECODED"
+        },
+        {
+          "index": 25,
+          "code": 50,
+          "character": "我",
+          "status": "DECODED"
+        },
+        {
+          "index": 26,
+          "code": 178,
+          "character": "們",
+          "status": "DECODED"
+        },
+        {
+          "index": 27,
+          "code": 40,
+          "character": "一",
+          "status": "DECODED"
+        },
+        {
+          "index": 28,
+          "code": 140,
+          "character": "起",
+          "status": "DECODED"
+        },
+        {
+          "index": 29,
+          "code": 13,
+          "character": "消",
+          "status": "DECODED"
+        },
+        {
+          "index": 30,
+          "code": 141,
+          "character": "滅",
+          "status": "DECODED"
+        },
+        {
+          "index": 31,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 32,
+          "code": 51,
+          "character": "家",
+          "status": "DECODED"
+        },
+        {
+          "index": 33,
+          "code": 174,
+          "character": "四",
+          "status": "DECODED"
+        },
+        {
+          "index": 34,
+          "code": 47,
+          "character": "將",
+          "status": "DECODED"
+        },
+        {
+          "index": 35,
+          "code": 45,
+          "character": "吧",
+          "status": "DECODED"
+        },
+        {
+          "index": 36,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 37,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 38,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 39,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.3",
+      "group": 158,
+      "messageIndex": 3,
+      "rawHex": "34310e4440a8a2afb2ad2429ae8eafb3a425a5420f23a3a9c041c3",
+      "range": {
+        "offset": 108786,
+        "length": 27,
+        "sha256": "ff03cb5da98e5a1740f3e36f254bfe3fdf7245ff9893b203373e36f6f2fa5304",
+        "module": 3,
+        "cpuAddress": 43234,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101992,
+          "length": 2,
+          "sha256": "dc5f036a529621545084bd8f072d0fc508643a798eeb5a2979e052e7135f23d3",
+          "module": 3,
+          "cpuAddress": 36440,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "魔禮海　『就是他們打死老四和他的花狐貂，太可惡了！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 49,
+          "character": "禮",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 14,
+          "character": "海",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 168,
+          "character": "就",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 162,
+          "character": "是",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 175,
+          "character": "他",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 178,
+          "character": "們",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 173,
+          "character": "打",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 36,
+          "character": "死",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 41,
+          "character": "老",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 174,
+          "character": "四",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 142,
+          "character": "和",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 175,
+          "character": "他",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 179,
+          "character": "的",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 164,
+          "character": "花",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 37,
+          "character": "狐",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 165,
+          "character": "貂",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 15,
+          "character": "太",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 35,
+          "character": "可",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 163,
+          "character": "惡",
+          "status": "DECODED"
+        },
+        {
+          "index": 23,
+          "code": 169,
+          "character": "了",
+          "status": "DECODED"
+        },
+        {
+          "index": 24,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 25,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 26,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 27,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.4",
+      "group": 158,
+      "messageIndex": 4,
+      "rawHex": "34318f444028109011912ab3b11242aaaa2992139314b3942ac041c3",
+      "range": {
+        "offset": 108813,
+        "length": 28,
+        "sha256": "53abf6839ade72ed2d795e3d6ad47855d943551c5dee2f5039963e3701978b23",
+        "module": 3,
+        "cpuAddress": 43261,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101994,
+          "length": 2,
+          "sha256": "0aafbff86161aaadfa75f4d1da00896bee11bbeb5e15566d457d53b5a556800a",
+          "module": 3,
+          "cpuAddress": 36442,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "魔禮紅　『一群不自量力的小鬼，嚐嚐老夫混元傘的威力！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 49,
+          "character": "禮",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 143,
+          "character": "紅",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 40,
+          "character": "一",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 16,
+          "character": "群",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 144,
+          "character": "不",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 17,
+          "character": "自",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 145,
+          "character": "量",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 42,
+          "character": "力",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 179,
+          "character": "的",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 177,
+          "character": "小",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 18,
+          "character": "鬼",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 170,
+          "character": "嚐",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 170,
+          "character": "嚐",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 41,
+          "character": "老",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 146,
+          "character": "夫",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 19,
+          "character": "混",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 147,
+          "character": "元",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 20,
+          "character": "傘",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 179,
+          "character": "的",
+          "status": "DECODED"
+        },
+        {
+          "index": 23,
+          "code": 148,
+          "character": "威",
+          "status": "DECODED"
+        },
+        {
+          "index": 24,
+          "code": 42,
+          "character": "力",
+          "status": "DECODED"
+        },
+        {
+          "index": 25,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 26,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 27,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 28,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.5",
+      "group": 158,
+      "messageIndex": 5,
+      "rawHex": "34312b44403222152b95169617971898a942a8192eb2abab99c041c3",
+      "range": {
+        "offset": 108841,
+        "length": 28,
+        "sha256": "1148ef6c0f9f8335980731d005fbcf84d16fd0045328b71439a0346449ef006a",
+        "module": 3,
+        "cpuAddress": 43289,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101996,
+          "length": 2,
+          "sha256": "fde5db8f06dd927b461d56417a5cf8948cb7c494d4170cdd757b5772b93e82e9",
+          "module": 3,
+          "cpuAddress": 36444,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "魔禮青　『我這把青雲劍好久沒沾血了，就拿你們磨磨刀！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 49,
+          "character": "禮",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 43,
+          "character": "青",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 50,
+          "character": "我",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 34,
+          "character": "這",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 21,
+          "character": "把",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 43,
+          "character": "青",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 149,
+          "character": "雲",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 22,
+          "character": "劍",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 150,
+          "character": "好",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 23,
+          "character": "久",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 151,
+          "character": "沒",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 24,
+          "character": "沾",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 152,
+          "character": "血",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 169,
+          "character": "了",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 66,
+          "character": "，",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 168,
+          "character": "就",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 25,
+          "character": "拿",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 46,
+          "character": "你",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 178,
+          "character": "們",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 171,
+          "character": "磨",
+          "status": "DECODED"
+        },
+        {
+          "index": 23,
+          "code": 171,
+          "character": "磨",
+          "status": "DECODED"
+        },
+        {
+          "index": 24,
+          "code": 153,
+          "character": "刀",
+          "status": "DECODED"
+        },
+        {
+          "index": 25,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 26,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 27,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 28,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.6",
+      "group": 158,
+      "messageIndex": 6,
+      "rawHex": "ad1a3433ae2f9a30b01b9b2c1cc3",
+      "range": {
+        "offset": 108869,
+        "length": 14,
+        "sha256": "1a8b0bc0d7a1c9174ac8b4ceb0719463a40170515f346ee8b3ed06bb7172f0a9",
+        "module": 3,
+        "cpuAddress": 43317,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 101998,
+          "length": 2,
+          "sha256": "804080359ad9a0556a0127bc6666df01e3be11fef679f9d72059179c01fcf84b",
+          "module": 3,
+          "cpuAddress": 36446,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "打敗魔家四將後楊戬倒在地上",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 173,
+          "character": "打",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 26,
+          "character": "敗",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 52,
+          "character": "魔",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 51,
+          "character": "家",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 174,
+          "character": "四",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 47,
+          "character": "將",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 154,
+          "character": "後",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 48,
+          "character": "楊",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 176,
+          "character": "戬",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 27,
+          "character": "倒",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 155,
+          "character": "在",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 44,
+          "character": "地",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 28,
+          "character": "上",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 14,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.7",
+      "group": 158,
+      "messageIndex": 7,
+      "rawHex": "b1a627444030b0c030b04343432eacac9cc041c3",
+      "range": {
+        "offset": 108883,
+        "length": 20,
+        "sha256": "255b0b5ebbf951e47cffcdaddeb6d51bba89afc19a5a81f10ebc06497c38a90b",
+        "module": 3,
+        "cpuAddress": 43331,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 102000,
+          "length": 2,
+          "sha256": "30d6d766d50922e50aced256f82f5d1128e6810e7178b71009f1283a6af04d15",
+          "module": 3,
+          "cpuAddress": 36448,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "小龍女　『楊戬！楊戬。。。你醒醒呀！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 177,
+          "character": "小",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 166,
+          "character": "龍",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 39,
+          "character": "女",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 48,
+          "character": "楊",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 176,
+          "character": "戬",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 48,
+          "character": "楊",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 176,
+          "character": "戬",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 67,
+          "character": "。",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 67,
+          "character": "。",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 67,
+          "character": "。",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 46,
+          "character": "你",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 172,
+          "character": "醒",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 172,
+          "character": "醒",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 156,
+          "character": "呀",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 20,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    },
+    {
+      "id": "rom.dialogue.158.8",
+      "group": 158,
+      "messageIndex": 8,
+      "rawHex": "1d9d4444401e9ec01f2faf9f20a02133b32ca12dc041c3",
+      "range": {
+        "offset": 108903,
+        "length": 23,
+        "sha256": "c633accb03098d960a267b76a2f5859cf60a1245b4feb99250dbb4da9ff64e93",
+        "module": 3,
+        "cpuAddress": 43351,
+        "meaning": "C3-terminated text byte stream"
+      },
+      "pointerEvidence": [
+        {
+          "offset": 101294,
+          "length": 2,
+          "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+          "module": 3,
+          "cpuAddress": 35742,
+          "meaning": "Text group pointer"
+        },
+        {
+          "offset": 102002,
+          "length": 2,
+          "sha256": "1c61766198ee68183035d9ccb9969855d3e3685ba5501e3f5e146af86d9f2c4d",
+          "module": 3,
+          "cpuAddress": 36450,
+          "meaning": "Message pointer"
+        }
+      ],
+      "confidence": "UNKNOWN",
+      "fontContext": null,
+      "text": "哪吒　　『糟糕！先將他扶到有人家的地方吧！』",
+      "tokens": [
+        {
+          "index": 0,
+          "code": 29,
+          "character": "哪",
+          "status": "DECODED"
+        },
+        {
+          "index": 1,
+          "code": 157,
+          "character": "吒",
+          "status": "DECODED"
+        },
+        {
+          "index": 2,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 3,
+          "code": 68,
+          "character": "　",
+          "status": "DECODED"
+        },
+        {
+          "index": 4,
+          "code": 64,
+          "character": "『",
+          "status": "DECODED"
+        },
+        {
+          "index": 5,
+          "code": 30,
+          "character": "糟",
+          "status": "DECODED"
+        },
+        {
+          "index": 6,
+          "code": 158,
+          "character": "糕",
+          "status": "DECODED"
+        },
+        {
+          "index": 7,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 8,
+          "code": 31,
+          "character": "先",
+          "status": "DECODED"
+        },
+        {
+          "index": 9,
+          "code": 47,
+          "character": "將",
+          "status": "DECODED"
+        },
+        {
+          "index": 10,
+          "code": 175,
+          "character": "他",
+          "status": "DECODED"
+        },
+        {
+          "index": 11,
+          "code": 159,
+          "character": "扶",
+          "status": "DECODED"
+        },
+        {
+          "index": 12,
+          "code": 32,
+          "character": "到",
+          "status": "DECODED"
+        },
+        {
+          "index": 13,
+          "code": 160,
+          "character": "有",
+          "status": "DECODED"
+        },
+        {
+          "index": 14,
+          "code": 33,
+          "character": "人",
+          "status": "DECODED"
+        },
+        {
+          "index": 15,
+          "code": 51,
+          "character": "家",
+          "status": "DECODED"
+        },
+        {
+          "index": 16,
+          "code": 179,
+          "character": "的",
+          "status": "DECODED"
+        },
+        {
+          "index": 17,
+          "code": 44,
+          "character": "地",
+          "status": "DECODED"
+        },
+        {
+          "index": 18,
+          "code": 161,
+          "character": "方",
+          "status": "DECODED"
+        },
+        {
+          "index": 19,
+          "code": 45,
+          "character": "吧",
+          "status": "DECODED"
+        },
+        {
+          "index": 20,
+          "code": 192,
+          "character": "！",
+          "status": "DECODED"
+        },
+        {
+          "index": 21,
+          "code": 65,
+          "character": "』",
+          "status": "DECODED"
+        },
+        {
+          "index": 22,
+          "code": 195,
+          "control": "END"
+        }
+      ],
+      "consumed": 23,
+      "unknownCodes": [],
+      "verification": "TARGET_BYTES_AND_ACTIVE_FONT"
+    }
   ]
 }

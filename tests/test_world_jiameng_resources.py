@@ -4,7 +4,7 @@ from pathlib import Path
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tools'))
 import export_development as ex
-from forensics.fengshen246 import extract_enemy,extract_map,extract_npcs,Reader
+from forensics.fengshen246 import extract_enemy,extract_map,extract_npcs,extract_text,glyph_pixels,decode_tokens,Reader
 
 class JiamengResourcesTest(unittest.TestCase):
     @classmethod
@@ -37,6 +37,35 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertEqual(recipe['rgbaSha256'],hashlib.sha256(pixels.tobytes()).hexdigest(),name)
             self.assertFalse(recipe['normalPlayEvidence'])
         self.assertTrue(all('paletteCodes' in t for t in self.proof['graphics']['enemy158.png']['tiles']))
+
+    def test_current_dialogues_use_active_font_not_the_opening_charset(self):
+        font=self.proof['font'];raw=b''.join(ex.checked_span(self.reader,s)for s in font['sources'])
+        cs={int(k):v for k,v in font['charset'].items()}
+        for g in font['glyphs']:
+            pixels=bytes(n for row in glyph_pixels(raw,0,g['code'])for n in row)
+            self.assertEqual(g['pixelsSha256'],hashlib.sha256(pixels).hexdigest())
+            self.assertEqual(g['character'],cs[g['code']])
+        for t in self.proof['dialogueStreams']:
+            actual=extract_text(self.reader,t['group'],t['messageIndex'])
+            self.assertEqual(actual['rawHex'],t['rawHex'])
+            decoded=decode_tokens(bytes.fromhex(t['rawHex']),cs)
+            self.assertEqual([],decoded['unknownCodes']);self.assertEqual(t['text'],decoded['text'])
+        self.assertEqual(bytes([255]*4),ex.checked_span(self.reader,font['controlCodes']['68']['source']))
+        self.assertEqual('　',cs[68])
+
+    def test_original_completion_boundaries_remain_hash_bound_and_separate_from_app(self):
+        proof=ex.load(ROOT/'game-data/provenance/world-jiameng-state.json')
+        self.assertEqual(self.binding['romSha256'],proof['romSha256'])
+        self.assertEqual('CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE',proof['kind'])
+        for span in proof['sources']:ex.checked_span(self.reader,span)
+        self.assertEqual(proof['probe']['sha256'],hashlib.sha256((ROOT/proof['probe']['path']).read_bytes()).hexdigest())
+        self.assertEqual([8,80,25],[row['caseCount']for row in proof['expected']])
+        for row in proof['expected']:
+            raw=(ROOT/row['path']).read_bytes()
+            self.assertEqual(row['sha256'],hashlib.sha256(raw).hexdigest())
+            self.assertEqual(row['caseCount'],len(raw.splitlines())-1)
+        self.assertEqual('NONE; ordinary battle reward/loot remain separate',proof['rules']['firstBoss']['additionalScriptReward'])
+        self.assertEqual(64,proof['rules']['threeBosses']['postBattleBeforeScript30']['yangStatusOr'])
 
     def test_multi_palette_generator_roundtrip_is_only_a_derived_fixture(self):
         recipe=self.proof['graphics']['enemy158.png']

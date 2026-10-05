@@ -400,3 +400,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 大敌可能使用多palette。原observed_graphic_recipe的per_tile_palette模式按每8×8块找匹配ROM跨度并在scoped_observed_graphic核整体RGBA；已对真实魔礼寿280块运行，四图重建/错palette/span/重叠拒绝/派生fixture回环通过。原c50两次导出字节/hash保持。原片混入其他精灵时旧单palette拒绝，先缩定真实矩形，不能放宽整体RGBA。原图/PPU仍留忽略目录。
 - RAM context标签需用原0:D664指针表定位，不依据旧provenance名字猜场景。原event16写7E6对应145，121实际7D0；16个原CPU边界已运行。旧错误key做只读兼容时须由原完成/global flag约束且新明确false优先，不能覆盖真实存档或重复激活演员。
+
+- 原角色再次入队不得用新模板覆盖旧角色。复用原CPU调用核已有最大HP/MP、状态与flag，再用统一StoryCharacterChange提案更新存档原角色；缺角色/未知最大值/重复效果拒绝，取消或重复对白不提交。8/80/25个原CPU案例及相关JVM已运行；NPC零玩家步还需拒绝同图异位和跨图，不能借演出补剧情捷径。原字体按活动CHR与实际编码复用旧已核字形，剩余仅辨认当前对白所需字形，空格控制码另核，非全字库完成；新内容仍须原导出/同产物App验证。
