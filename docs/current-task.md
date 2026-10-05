@@ -1,30 +1,31 @@
-# 当前任务：PLAYABLE-R1（父任务 WORLD-FULL-01）
+# 当前执行主任务：WORLD-FULL-01
 
-task_id: PLAYABLE-R1
-parent_task: WORLD-FULL-01
-status: PERSONAL_TEST_DELIVERED
-quality: PERSONAL_TEST
-manual_acceptance: PENDING
-stable_acceptance: NOT_RUN
+task_id: WORLD-FULL-01
+status: IN_PROGRESS
+overall: PARTIAL
+ALL_MAPS_USABLE: NO
+valid_map_denominator: UNKNOWN
 
-## 当前有效状态（2026-10-05 UTC）
+## 当前检查点（2026-10-05）
 
-已按用户正式修订交付个人测试版v79/0.8.11-playable-r1-personal；完整剧情/真机/声音/长时体验交用户人工验收。18依赖图/120内容文件/c51-r1，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805，冻结范围未扩大。
+用户最新连续授权：先在现有冻结R1范围完成有限STABLE验收并按原保护自动发布；发布后立即继续既有地府/十殿/重生/后续区域，不等待manual_acceptance或再次“继续”。不扩展R1候选；DEVELOPMENT HEAD与STABLE RELEASE分别维护，正常阶段验收与受控fixture严格区分。
 
-实际APK来源96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb；原build/runtime37252974082 SUCCESS，两个长job明确SKIPPED；原approve/publish37253618518 SUCCESS。APK SHA59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4/16632749字节，原包名org.fengshen.dev/原Signer5c460557保留。公网完整下载与审核字节相同，原ci_apk.verify独立包名/签名/版本/120文件/hash全部PASS。
+当前阶段：R1_STABLE_ACCEPTANCE。当前来源检查点c3850969167e5bfe29211328516d4094f8ff259f，work/world-c3850969，开始时 tracked clean；实际远端main同值。开始03:05 UTC（北京时间11:05），本平台连续时限无保证；约45～60分钟/实质检查点持久化状态。
 
-最低检查：Windows68 Python执行/335 JVM及17 Content PASS，真实原KVM短smoke的九项门禁全部PASS/SMOKE_PASS。起点为已核正常v76东海存档、明确CONTROLLED，不冒称本版正常通关。真实买卖/装备/药草/双人解毒住宿/医疗/保存/外部force-stop/实际冷启继续已验证；迁移前原saveJson保留、已有备份不覆盖、v27覆盖升级未卸载清档，真实云进度不动。原完整长测保留，v77按用户新授权取消，v78旧端点驱动失败保留，v79完整长路DEFERRED_TO_MANUAL。
+当前生产：v79/0.8.11-playable-r1-personal，PERSONAL_TEST_DELIVERED，manual_acceptance=PENDING，stable_acceptance=NOT_RUN。APK来源96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb，build37252974082/publish37253618518；SHA59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4。此个人阶段已交付但不是主任务终点，人工待定不阻塞开发。当前没有已发布STABLE R1。
 
-实际巡检：01:38:55/02:01:00前27+26=3757事件/9普通真机会话，旧26 ProtocolException1根因UNCONFIRMED/精确非阻断评估；02:01:19后79+27=1468事件/8普通真机会话，全部27，79暂无生产样本。最近两版轮转清理失败0；不把旧错退出当前样本写根因已修。真机/声音/真实云恢复NOT_RUN；字体角色名裁切等P2继续欠账。
+R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805，18依赖图/120内容文件。正常候选路径：新游戏→陈塘村→南海→西北龙宫→85洞→东海/小龙女→村2/双人战斗/三店客栈医馆→保存/外部冷启。沿用原三job真实正常App-written handoff；不拿v79短受控smoke冒充本次正常路线。不改原等级/遇敌/Boss/奖励/条件。
 
-下一可信覆盖基底已在ci/content-source.json.runtimeBaseline登记79；iteration.base仍不可变v27，未改导出来源/hash。发布后文档提交可不同于APK来源，不能把后续记录提交称为APK来源。
+已保留开发线：work/world-island/5e94b68f51a7c30de40443a4751af8d3de9d2d24；c50/56地图/302文件，manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0，十殿/重生/后续区域/女人国逻辑数据与取证完整保留；instrument compile已通过，但全56正常路线NOT_RUN。不从18图重新开发或复制逐图Kotlin。
 
-## 继续与边界
+最近可信正常路线证据：v76同候选开局/龙宫/85洞/东海与入队/外部冷启通过，后来村2驱动未解第二人毒失败；驱动已回流且v79隔离村2补给/住宿/医疗/冷启PASS。本次STABLE同候选完整阶段仍NOT_RUN。历史失败和v77用户授权取消均保留，不能改PASS。
 
-累计未完成项唯一权威docs/delivery-status.md；完整正文PERSONAL_TEST_DELIVERY已在该文档顶部及artifacts/world-full01/personal-test-v79-delivery.txt。已有路线docs/original-playthrough-roadmap.md。当前用户反馈优先查询对应版本/时间日志→复现→修复→相关快回归，保留进度；不要求其证明技术根因。
+当前具体阻塞：尚未取得R1 STABLE同候选三段正常验收，不是manual_acceptance。下一精确动作：同步scope与原审批源quality=STABLE及当前巡检task_id→相关快回归→原inspect→冻结main候选并触发原build/runtime→根据实际失败分类修复；成功后原审核发布，再接回地府开发线。
 
-WORLD-FULL-01总体仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。既有c50/56图/302文件与十殿/重生/后续入队/女人国/地牢取证完整保留。已验证R1核心存档/双人补给/驱动/fixture及规则skill已回流/workspace/game-fengshen-world-island；后续固定从地府必要流程/重生接续，不回滚或重研、不污染本次冻结包。人工未全验不阻止隔离后续开发；稳定里程碑仍可运行原完整长测，未实现不能写已实现待验。
+已验证/未验证边界：IMPLEMENTED/PACKAGED/APP_VERIFIED/PUBLISHED分列；当前18仅打包、v79短smoke已验，正式正常阶段尚未本轮执行；原始有效地图分母UNKNOWN。音频根因/真机/完整全世界NOT_RUN或UNCONFIRMED，P2字体问题保留，不阻塞无关内容。无新生产样本NO_DATA不能冒称健康，也不能单独否决实际自动阶段验收。
 
-当前新生产发布已完成；不因纯记录/skill另发APK，不修改Language，不reset/clean/清档或放宽签名/reviewer。旧现场与失败追溯继续docs/history/world-full01-runtime-checkpoints.md。
+## 权威入口与续跑
 
-可靠核心回流检查点：work/world-island/5e94b68f51a7c30de40443a4751af8d3de9d2d24，原c50内容pin/配方不变，仪器编译14秒PASS；这不是全56图Android正常路线通过或新发布。
+累计十类欠账：docs/delivery-status.md；路线和已核连接：docs/original-playthrough-roadmap.md；历史现场：docs/history/world-full01-runtime-checkpoints.md；已有两个skill先直接读取。不reset/clean、不卸载清档、不覆盖真实云进度、不改Language、不放宽hash/signer/reviewer。
+
+发布后记录实际来源/content/APK hash/路线与欠账，将稳定包置新的覆盖回归基底，修复同步开发线并立即继续地府必要流程→十殿→重生→既有山洞/村→女儿村/清峰山/暗洞/女人国→剩余主线/地图/服务/结局。只有全任务条件齐备才COMPLETE；时限中断须写最后可信commit/content/正常终点/首阻塞/精确动作/生产稳定与开发版本/验收边界。
