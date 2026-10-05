@@ -73,7 +73,7 @@ if listed.returncode:
         print('No installed App evidence directory; preserve the primary runtime failure')
         raise SystemExit(0)
 for name in listed.stdout.splitlines():
-    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*)\.(png|json)',name):
+    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*|town01-normal-injury-attempts)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
