@@ -7,7 +7,7 @@ export FENGSHEN_RUNTIME_STAGE="$stage"
 scope_id=$(python tools/runtime_handoff.py scope --field id)
 export FENGSHEN_RUNTIME_SCOPE="$scope_id"
 quality=$(python tools/runtime_handoff.py scope --field quality)
-if [[ "$scope_id" == PLAYABLE-R1 && "$stage" == all ]]; then echo "Frozen R1 requires base/world/continuation jobs" >&2; exit 1; fi
+if [[ ( "$scope_id" == PLAYABLE-R1 || "$scope_id" == WORLD-HELL-R2 ) && "$stage" == all ]]; then echo "Frozen R1 requires base/world/continuation jobs" >&2; exit 1; fi
 sdk="${ANDROID_HOME:?Existing runner SDK is required}"
 export ANDROID_SDK_ROOT="$sdk"
 export PATH="$sdk/platform-tools:$PATH"
@@ -197,14 +197,14 @@ run_test testControlledNorthRepeatAfterOptionalMapSupply
 if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledNorthTravelFromVerifiedPalaceSave; fi
 run_test testControlledMobileBattleTouchAndSnapshots
 run_test testControlledMobileBattleHerbAndSave
-if [[ "$scope_id" != PLAYABLE-R1 ]]; then run_test testControlledBindingItemSelectionCancelAndSingleActorCommand; fi
+if [[ "$scope_id" == WORLD-FULL-01 ]]; then run_test testControlledBindingItemSelectionCancelAndSingleActorCommand; fi
 run_test testUnrestorableSaveCannotBeOverwritten
 run_test testWorldLegacyInteriorContextAndRestart
 run_test testControlledWorldAntidoteAndFieldPoison
 run_test testControlledInnTransactionsAndGestureSafety
 run_test testControlledMedicalCommandsCancellationGestureAndSave
 run_test testControlledWholly08PartyAdvancesWithoutTouchCommand
-if [[ "$scope_id" != PLAYABLE-R1 ]]; then run_test testControlledFerryPauseSavedStageAndActivityRestart; fi
+if [[ "$scope_id" == WORLD-FULL-01 ]]; then run_test testControlledFerryPauseSavedStageAndActivityRestart; fi
 # Actual phone-sized windows and scaled text; only this isolated AVD is changed.
 adb shell wm size 2640x1216
 adb shell wm density 480
@@ -221,7 +221,7 @@ adb shell wm size 960x540
 adb shell wm density 160
 
 run_test testNormalTownShopsBuySellAndReturn
-if [[ "$scope_id" != PLAYABLE-R1 ]]; then run_test testControlledRebirthCancelPendingRestartAndOnceOnlyCompletion; fi
+if [[ "$scope_id" == WORLD-FULL-01 ]]; then run_test testControlledRebirthCancelPendingRestartAndOnceOnlyCompletion; fi
 run_test testOpeningKnifeEquipCyclePersistsWithoutDuplication
 run_test testInput01RealMapWallSlidesAndMenuCancellation
 run_test testHeldJoystickMenuOpenReleaseDoesNotResumeMovement
@@ -242,7 +242,13 @@ if [[ "$stage" == all || "$stage" == world ]]; then
 python tools/record_app_audio.py world-cave85 testNormalWorldCave85FromVerifiedNorthPalaceSave --silent --cold-test testWorldCave85ColdStartAndReentryMatchesNormalSave --budget-seconds 2400
 python tools/record_app_audio.py world-east-palace testNormalWorldEastPalacePartyFromVerifiedCaveSave --silent --cold-test testWorldEastPartyColdStartMatchesNormalSave --budget-seconds 3600
 python tools/record_app_audio.py world-hell-village2 testNormalWorldHellVillageServicesFromVerifiedEastPartySave --silent --cold-test testWorldHellVillageColdStartMatchesNormalSave --budget-seconds 1200
-if [[ "$scope_id" != PLAYABLE-R1 ]]; then
+if [[ "$scope_id" == WORLD-HELL-R2 ]]; then
+python tools/record_app_audio.py world-r1-medical testNormalPlayableR1MedicalFromVerifiedVillageSave --silent --cold-test testPlayableR1MedicalColdStartMatchesNormalSave --budget-seconds 1200
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedMedicalSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
+python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
+python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
+fi
+if [[ "$scope_id" == WORLD-FULL-01 ]]; then
 python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
@@ -261,6 +267,8 @@ fi
 if [[ "$stage" == all || "$stage" == continuation ]]; then
 if [[ "$scope_id" == PLAYABLE-R1 ]]; then
 python tools/record_app_audio.py world-r1-medical testNormalPlayableR1MedicalFromVerifiedVillageSave --silent --cold-test testPlayableR1MedicalColdStartMatchesNormalSave --budget-seconds 1200
+elif [[ "$scope_id" == WORLD-HELL-R2 ]]; then
+python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600
 else
 python tools/record_app_audio.py world-island testNormalIslandLayersFourVillainsAndChestsFromVerifiedFerrySave --silent --cold-test testIslandVictoryColdRestartChestsAndRealReturn --budget-seconds 3600
 python tools/record_app_audio.py world-village5 testNormalVillageFiveServicesAndTalkFromVerifiedYangSave --silent --cold-test testVillageFiveColdRestartAndOriginalReturn --budget-seconds 2400
@@ -294,10 +302,10 @@ r.update(worldVillageSixServicesTalkNormal='PASS',worldVillageSixColdRestart='PA
 r.update(worldNightEightGiftAndCaveNormal='PASS',worldNightEightColdRestart='PASS')
 r.update(worldQueenRouteAndBindingNormal='PASS',worldQueenHuangOnceAndColdRestart='PASS')
 stage=os.environ['FENGSHEN_RUNTIME_STAGE']
-if stage in ('all','world') and os.environ.get('FENGSHEN_RUNTIME_SCOPE') != 'PLAYABLE-R1':
+if stage in ('all','world') and os.environ.get('FENGSHEN_RUNTIME_SCOPE') == 'WORLD-FULL-01':
     medical=json.loads(Path('artifacts/checkpoint-ui/touch-ux-world-medical-normal-summary.json').read_text())
     for key in ('revivalNormal','poisonNormal','confusionNormal'):r['worldMedical'+key[0].upper()+key[1:]]=medical[key]
-if os.environ.get('FENGSHEN_RUNTIME_SCOPE') == 'PLAYABLE-R1' and os.environ['FENGSHEN_RUNTIME_STAGE'] == 'continuation':
+if (os.environ.get('FENGSHEN_RUNTIME_SCOPE'),os.environ['FENGSHEN_RUNTIME_STAGE']) in [('PLAYABLE-R1','continuation'),('WORLD-HELL-R2','world')]:
     r.update(playableR1MedicalNormal='PASS',playableR1MedicalColdRestart='PASS')
 from tools.runtime_handoff import finish_stage
 previous=json.loads(Path('artifacts/town02-runtime/previous-stage.json').read_text()) if stage in ('world','continuation') else None

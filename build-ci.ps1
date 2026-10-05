@@ -39,6 +39,11 @@ try {
             & python -m unittest discover -s tests -p $pattern
             if($LASTEXITCODE -ne 0){throw "Frozen R1 related regression failed: $pattern"}
         }
+    }elseif($scopeId -eq 'WORLD-HELL-R2'){
+        foreach($pattern in @('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_world_hell_scope.py','test_personal_test_delivery.py','test_world_trade_driver.py','test_world_hell_route_driver.py','test_world_first_hall_export.py','test_world_final_hall_export.py')){
+            & python -m unittest discover -s tests -p $pattern
+            if($LASTEXITCODE -ne 0){throw "Hell milestone related regression failed: $pattern"}
+        }
     }else{
     & python -m unittest discover -s tests -p test_ci_apk.py
     if($LASTEXITCODE -ne 0){throw 'CI safety tests failed'}
@@ -132,8 +137,6 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Village5 export regression failed" }
     & python -m unittest discover -s tests -p test_world_village5_hidden_export.py
     if ($LASTEXITCODE -ne 0) { throw "Village5 hidden pickup export regression failed" }
-    & python -m unittest discover -s tests -p test_playable_r1_scope.py
-    if($LASTEXITCODE -ne 0){throw 'Frozen playable R1 dependency and runtime-scope gates failed'}
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
     }

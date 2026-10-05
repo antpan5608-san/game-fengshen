@@ -6,32 +6,34 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前检查点（2026-10-05）
+## 当前有效检查点（2026-10-05 05:52 UTC）
 
-用户最新连续授权：先在现有冻结R1范围完成有限STABLE验收并按原保护自动发布；发布后立即继续既有地府/十殿/重生/后续区域，不等待manual_acceptance或再次“继续”。不扩展R1候选；DEVELOPMENT HEAD与STABLE RELEASE分别维护，正常阶段验收与受控fixture严格区分。
+R1有限STABLE已完成并正式发布，按用户授权立即进入WORLD-HELL-R2，不等待人工验收或再次继续。旧R1候选/失败/准备状态已移入docs/history/world-full01-runtime-checkpoints.md，历史不得冒称当前。
 
-当前阶段：R1_STABLE_ACCEPTANCE。起始c3850969167e5bfe29211328516d4094f8ff259f tracked clean，开始03:05 UTC；当前最近可信源码main6227b5a554b2e4759bf522cc71311fa8f7a2939b。本平台连续时限无保证，实质检查点持久化状态。
+稳定生产：v82 / 0.8.12-playable-r1-stable；来源c461e7c121b6f535d85e2a245b82be1f6e42d786。
+build/runtime37261594942：build及原base/world/continuation全部SUCCESS，最终receipt PASS/三个阶段；76 Python、335 JVM，真实新游戏补给→南/西/北宫→85→东海Boss与小龙女入队→村2双人买卖/客栈/医馆→保存/外部force-stop/cold。部分边界fixture另标，不替代正常链。没有更改原等级、遇敌、Boss或条件。无新增地图，本次取得冻结R1同候选正常稳定验收。
+APK SHA22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9，16,632,753 bytes，原包org.fengshen.dev、signer5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6。
+R1内容opening-segment-001-c51-r1/18图/120文件，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805。
+原approve/publish37269398974 SUCCESS，05:49:11 UTC发布；公网完整字节/原ci_apk验签、包名、nondebuggable、版本、资源manifest及quality STABLE/stable_acceptance PASS独立复核。manual_acceptance PENDING、声音/本轮一加13T NOT_RUN、P2字体裁切/历史音频UNCONFIRMED保留。
+05:49:25 postflight实际82/79保留；1903普通事件/2真机会话、0模拟器/测试/ERROR、cleanup0，全为79，82暂无样本，不能证明新包健康。旧v26精确下载异常策略保留，不因轮转写根因修复。仅两个Fengshen对象，Language不改。
 
-v80/source0491c444/run37258719811未发布：75 Python/335 JVM/17 Content/覆盖升级及前置App回归通过；runtime111602290566正常村庄用药准备FAIL，后两job SKIPPED。实际原片78.807秒末尾哪吒Lv1/HP20满/EXP8，候选格200,129↔200,130均原合法zone0；120输入只取得弱敌无损胜利，没有用药所需受伤。分类TEST_HARNESS采样前提不足，不是已证明崩溃。满HP真实逃跑/受伤普通攻击及320步修正已进入v81，不改HP/遇敌/RNG/奖励/药效。
+## 当前开发范围与四层状态
 
-v81/source6227b5a5/run37260287534：build SUCCESS（75 Python/335 JVM）；APK独立原工具verify PASS，16632753字节/SHA820eea4a49fa6853fc80ce5ea99a1682c10197c450efd3e043be96b9c43b952b，c51-r1/原包名签名不变。03:51:38Z前置testNormalTownShopsBuySellAndReturn赶路到村庄途中正常DEFEAT，后续新受伤驱动NOT_RUN，后两job SKIPPED/NOT_PUBLISHED。旧驱动无每回合状态，不能归因具体敌人/公式；初始原定义已装备小刀，不能误写未装备。最小修正仅正常赶路时多敌或低HP用实际逃跑，其余实际攻击，保存指令/敌HP/defeat截图；原断言与原规则保留。编译14秒PASS，新App结果待下一同候选。
+已保留完整c50/56地图/302内容文件与全部既有地府、十殿、重生、村庄、山洞、女人国成果。target manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0，不从R1十八图重做。内容恢复iteration.base仍可信v27，覆盖升级runtimeBaseline已改为真实发布v82；基底与目标hash分别固定。
 
-当前生产：v79/0.8.11-playable-r1-personal，PERSONAL_TEST_DELIVERED，manual_acceptance=PENDING，stable_acceptance=NOT_RUN。APK来源96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb，build37252974082/publish37253618518；SHA59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4。此个人阶段已交付但不是主任务终点，人工待定不阻塞开发。当前没有已发布STABLE R1。
+WORLD-HELL-R2有限正常验收终点：十殿→地图86重生→地图16(238,160)，rom.map.86.flag.128，哪吒与小龙女旧角色记录保留。原三job：base复用R1正常准备；world到村2真实医疗保存→一殿/二殿/中殿；continuation末殿/重生/外部cold。同源App-owned交接，不改等级/HP/flag，不添加练级剧情锁；第一殿10000正常步/9000秒是隔离驱动有界准备，不是玩家门槛。
 
-R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805，18依赖图/120内容文件。正常候选路径：新游戏→陈塘村→南海→西北龙宫→85洞→东海/小龙女→村2/双人战斗/三店客栈医馆→保存/外部冷启。沿用原三job真实正常App-written handoff；不拿v79短受控smoke冒充本次正常路线。不改原等级/遇敌/Boss/奖励/条件。
+IMPLEMENTED：已有c50各区段逻辑/提取/来源和原R1修正回流，scope/Handoff/不同源拒绝保留。
+PACKAGED：两次原导出完整c50/56/302；干净git archive原restore→wrapper assembleDebug成功，仅DEBUG本地候选不是正式签名包。40已定义服务绑定；不代表全世界服务完成。
+APP_VERIFIED：v82有限R1正常全链PASS；新R2完整十殿/重生正常同候选尚NOT_RUN，后续女人国等不能借R1背书。
+PUBLISHED：生产仅R1 v82；c50尚未正式发布，原始有效地图分母UNKNOWN、不计算完成百分比。
 
-已保留开发线：work/world-island/5e94b68f51a7c30de40443a4751af8d3de9d2d24；c50/56地图/302文件，manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0，十殿/重生/后续区域/女人国逻辑数据与取证完整保留；instrument compile已通过，但全56正常路线NOT_RUN。不从18图重新开发或复制逐图Kotlin。
+独立佳梦关准备开发线work/world-jiameng-next已保留：从9c8e835接续，最近61b15bd；匹配ROM定向资源/105字形/9对白、四Boss图、special18原CPU、Huang context145修正、现存角色状态事务及手动NPC共享逻辑。实际7→8 Python/相关JVM/仪器编译已运行，但该批地图145..148/37尚未打包，APP_VERIFIED NOT_RUN/PUBLISHED NO；三将受控script30到37(4,5)不是正常原版胜利。新7D6标签修正为map37而非101，尚未进入稳定候选。原ROM/PPU/回放不上传公开Git/artifact。
 
-最近可信正常路线证据：v76同候选开局/龙宫/85洞/东海与入队/外部冷启通过，后来村2驱动未解第二人毒失败；驱动已回流且v79隔离村2补给/住宿/医疗/冷启PASS。本次STABLE同候选完整阶段仍NOT_RUN。历史失败和v77用户授权取消均保留，不能改PASS。
+## 下一精确动作
 
-当前具体阻塞：尚未取得R1 STABLE同候选三段正常验收，不是manual_acceptance。下一精确动作：编译并验证有限正常用药驱动修正→提交冻结新source→原build/runtime三段→根据实际失败分类修复；成功后原审核发布，再接回地府开发线。
+验证原PYBASE块对真实v82签名APK/原receipt/hash/content，通过后持久化本R2来源、原非force同树主分支整合；原android-build.yml构建新版本（必须大于82），保留三job同提交/同产物审核。冻结该R2候选进行地府→十殿→重生，等待CI时继续独立佳梦关依赖批次，不动候选来源。实际失败先分类/取原片再薄修，不改验收。
 
-已验证/未验证边界：IMPLEMENTED/PACKAGED/APP_VERIFIED/PUBLISHED分列；当前18仅打包、v79短smoke已验，正式正常阶段尚未本轮执行；原始有效地图分母UNKNOWN。音频根因/真机/完整全世界NOT_RUN或UNCONFIRMED，P2字体问题保留，不阻塞无关内容。无新生产样本NO_DATA不能冒称健康，也不能单独否决实际自动阶段验收。
+后续固定接续：重生/队伍→既有山洞/村→女儿村→清峰山→暗洞→女人国→剩余原主线/地图/服务/结局。R2达标原保护发布后继续；只有全WORLD条件达成才COMPLETE。正常/受控、代码/打包/App/发布分列，manual PENDING不锁开发。平台实际中断前保存来源/content/正常终点/具体阻塞/精确动作及生产/开发边界，不假装无限后台。
 
-## 权威入口与续跑
-
-累计十类欠账：docs/delivery-status.md；路线和已核连接：docs/original-playthrough-roadmap.md；历史现场：docs/history/world-full01-runtime-checkpoints.md；已有两个skill先直接读取。不reset/clean、不卸载清档、不覆盖真实云进度、不改Language、不放宽hash/signer/reviewer。
-
-发布后记录实际来源/content/APK hash/路线与欠账，将稳定包置新的覆盖回归基底，修复同步开发线并立即继续地府必要流程→十殿→重生→既有山洞/村→女儿村/清峰山/暗洞/女人国→剩余主线/地图/服务/结局。只有全任务条件齐备才COMPLETE；时限中断须写最后可信commit/content/正常终点/首阻塞/精确动作/生产稳定与开发版本/验收边界。
-
-隔离DEVELOPMENT HEAD已持久提交5dcf05b于/workspace/game-fengshen-world-continuation/work/world-full-after-r1，完整c50/56图/302文件逐hash复用；有限WORLD-HELL-R2 scope/原三job薄适配、正常医馆存档接一殿、末殿后原86重生终点均已保存。52相关测试/两次严格导出/仪器编译14秒PASS，Android正常地狱仍NOT_RUN。修正原inventory误统计较小恢复基底，实际当前target56/302，175结构/233NPC/有效分母UNKNOWN/AppRender0分别列出，不将打包写可玩。等待R1冻结候选期间main不混入此开发内容；R1成功后立即用新可信稳定APK作覆盖基底接续。
+权威十类累计欠账：docs/delivery-status.md；路线：docs/original-playthrough-roadmap.md；历史：docs/history/world-full01-runtime-checkpoints.md。直接复用两个已有skill，不reset/clean、不卸载清档、不覆盖真实云进度/唯一好备份、不放宽签名/hash/reviewer、不修改Language。

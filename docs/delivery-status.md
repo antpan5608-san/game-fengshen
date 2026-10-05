@@ -1,3 +1,11 @@
+## WORLD-FULL-01 当前有效进度（2026-10-05 05:52 UTC）
+
+IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。R1 v82/0.8.12-playable-r1-stable已发布；原三段同候选正常链/外部cold最终PASS，build37261594942、source c461e7c121b6f535d85e2a245b82be1f6e42d786；publish37269398974 SUCCESS、公网完整字节/签名/内容独立复核。APK22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9，c51-r1 manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805，18图/120文件。人工/真机/声音未完成，旧音频与P2字体欠账仍保留。
+
+已经立即进入已有c50/56图/302文件的WORLD-HELL-R2地府/十殿/重生连续验收；覆盖基底为真实v82、恢复基底仍v27，后续成果不从头重做。R2当前IMPLEMENTED/PACKAGED，完整同产物正常APP_VERIFIED NOT_RUN/PUBLISHED NO；独立佳梦关资源/最小逻辑也保留，尚未打包或App验证。实际发布后只保留82/79日志，82无样本不作健康证明；十类清单下方保持，只有实际关闭才更新。本次关闭R1本候选有限正常稳定验收欠账，不关闭全世界/全量原规则。
+
+下面为历史交付，版本与状态不得当当前结论；当前唯一任务见docs/current-task.md。
+
 ## WORLD-FULL-01 恢复连续主任务（2026-10-05）
 
 ACTIVE/PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。v79 PERSONAL_TEST_DELIVERED是已发布里程碑，manual_acceptance=PENDING不作为后续前置。正在冻结现有R1范围完成同候选正常三阶段STABLE验收，未执行不能写PASS；之后自动发布并立即继续已有地府/十殿/重生等开发线。c50/56图/302文件及全部取证保留，不能用打包数称全可玩。当前任务仅docs/current-task.md，原十类权威欠账与历史失败在本文件下方完整保留。

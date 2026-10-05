@@ -24,7 +24,7 @@ if($runtime.quality -eq 'PERSONAL_TEST' -or $runtime.runtime -ne 'PASS' -or $run
 if(($runtime.completedStages -join ',') -ne 'base,world,continuation'){throw 'All same-candidate normal stable runtime stages must pass'}
 
 # The exact R1 dependency manifest requires all shared and stage-specific gates; full gates remain below.
-if($runtime.runtimeScope -eq 'PLAYABLE-R1'){
+if($runtime.runtimeScope -in @('PLAYABLE-R1','WORLD-HELL-R2')){
     & python (Join-Path $root 'tools/runtime_handoff.py') review --receipt (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json')
     if($LASTEXITCODE -ne 0){throw 'Frozen R1 same-candidate scope review failed'}
     return

@@ -3,7 +3,7 @@ import sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from export_development import iteration_reader
-from forensics.fengshen246 import extract_world_inventory,extract_default_map_palette,Reader
+from forensics.fengshen246 import extract_world_inventory,extract_default_map_palette,extract_npcs,Reader
 
 class WorldInventoryTests(unittest.TestCase):
     @classmethod
@@ -46,6 +46,12 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertEqual(5,len(contexts[23]['records']))
         self.assertTrue(all(not n['positionInRoom'] for n in services['rom.service.0.armor']['additionalNpcCandidates']))
         self.assertEqual('NEEDS_NPC_STATE_DISPATCH',extra[0]['appearance'])
+    def test_npc_entity_selector_is_not_misreported_as_dialogue_group(self):
+        for mid in (0,17,121,145):
+            original=extract_npcs(self.reader,mid)['records']
+            actual=self.report['npcContexts'][mid]['records']
+            self.assertEqual([n['entityByte'] for n in original],[n['entityByte'] for n in actual])
+            self.assertTrue(all('textGroup' not in n for n in actual))
     def test_identical_grids_do_not_merge_ids_or_events(self):
         rows={m['mapId']:m for m in self.report['maps']}
         self.assertEqual(rows[69]['gridSha256'],rows[158]['gridSha256'])
@@ -57,6 +63,8 @@ class WorldInventoryTests(unittest.TestCase):
         self.assertTrue(all(m['appRender']=='NOT_RUN' for m in rows))
         self.assertEqual(527,self.report['summary']['exitRecords'])
         self.assertEqual('RETURN_TO_CALLER',next(m for m in rows if m['mapId']==22)['exits'][0]['kind'])
+        self.assertTrue(all(s['operation']=='NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW'
+            for s in self.report['services'] if s.get('callerMapId') is not None))
     def test_category_local_stock_and_prices_are_not_reference_ids(self):
         catalog=self.report['serviceCatalog'];items={x['id']:x for x in catalog['items']}
         self.assertEqual(54,len(catalog['stocks']))

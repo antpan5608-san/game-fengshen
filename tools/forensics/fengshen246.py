@@ -309,7 +309,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
             position=[int.from_bytes(b[4:6],'little'),int.from_bytes(b[6:8],'little')]
             # A8F5/A90E/A92E encodes an NPC cell as cell*16 + $78, not screen pixels.
             cell=[(v-0x78)//16 for v in position] if all(v>=0x78 and (v-0x78)%16==0 for v in position) else None
-            records.append({'index':index,'textGroup':b[0],'firstMessage':b[1],'repeatMessage':b[2],
+            records.append({'index':index,'entityByte':b[0],'firstMessage':b[1],'repeatMessage':b[2],
                 'pixelPosition':position,'positionEncoding':'CELL_TIMES_16_PLUS_120','cell':cell,
                 'appearanceAndBehavior':'NEEDS_NPC_DISPATCH','source':reader.span(8,address,14,'Original NPC record')})
         else:raise ValueError('Unterminated NPC/context list')
@@ -336,7 +336,7 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
                     'appearance':'NEEDS_NPC_STATE_DISPATCH'} for n in overlay_rows],
                 'contextSource':reader.span(0,0xd2c7+context_index,1,'Original additional indoor NPC context'),
                 'conditions':'Original village access and NPC/state dispatch retained; not a supply prerequisite',
-                'operation':'NOT_IMPLEMENTED' if (mid!=0 or kind not in ('weapon','armor','medicine','inn')) else 'CANDIDATE_PENDING_APP',
+                'operation':'NEEDS_CURRENT_PACKAGE_AND_APP_REVIEW',
                 'verification':'STRUCTURAL_ROM_DISPATCH'})
     for service in services:
         kind=service['kind'];caller=service['callerMapId']
@@ -348,9 +348,9 @@ def extract_world_inventory(reader,packaged_ids=(),runtime_evidence=None):
         mid=context['contextId']
         if mid in (17,18,19,20,22):continue
         for npc in context['records']:
-            if npc['textGroup'] not in (158,159):continue
+            if npc['entityByte'] not in (158,159):continue
             services.append({'id':f'rom.service.map{mid}.npc{npc["index"]}',
-                'kind':'special-merchant-candidate' if npc['textGroup']==159 else 'special-inn-candidate',
+                'kind':'special-merchant-candidate' if npc['entityByte']==159 else 'special-inn-candidate',
                 'interiorMapId':mid,'npcIndex':npc['index'],'source':npc['source'],
                 'conditions':'NEEDS_ORIGINAL_SPECIAL_SERVICE_AND_APPEARANCE_DISPATCH',
                 'operation':'NOT_IMPLEMENTED','verification':'PROVISIONAL_SERVICE_GROUP_CORRELATION'})

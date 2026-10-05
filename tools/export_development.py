@@ -3417,6 +3417,43 @@ def export():
         'output':OUT.relative_to(ROOT).as_posix(),'canonicalModified':False,'uploaded':False}
     save(ROOT/'reports/development-export.json',report);return report
 
+def inventory_target_from_base(base_apk,pin):
+    """Inventory the reproducible target, not the older APK used as its input.
+
+    This proves packaging only. It never supplies App or publication evidence.
+    """
+    import ci_apk as ci
+    base=pin['iteration']['base'];ci.verify_apk(base_apk,release=True)
+    if digest(base_apk.read_bytes())!=base['apkSha256']:
+        raise ValueError('Wrong reviewed inventory APK')
+    payload=export_from_base(ci.content(base_apk,base),pin['iteration']['provenance'],pin)
+    scene=json.loads(payload['scene.json'])
+    return scene,{'kind':'REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE',
+        'contentVersion':pin['contentVersion'],'manifestSha256':digest(payload['manifest.json']),
+        'fileCount':len(payload),'provenance':pin['iteration']['provenance'],
+        'baseVersionCode':base['versionCode'],'baseApkSha256':base['apkSha256'],
+        'appRuntime':'NOT_RUN','publication':'NOT_ASSESSED'}
+
+def attach_inventory_package(report,scene,package_source):
+    """Describe actual caller bindings without upgrading them to runtime proof."""
+    report['packageSource']=package_source
+    bindings=[]
+    catalog={field:{r['id']:r for r in scene.get(key,[])} for field,key in
+        [('shopId','shops'),('innId','inns'),('clinicId','clinics')]}
+    maps={m['id'] for m in scene.get('maps',[])}
+    for binding in scene.get('serviceBindings',[]):
+        fields=[field for field in catalog if binding.get(field)]
+        if len(fields)!=1:raise ValueError('Inventory requires one actual service binding')
+        field=fields[0];definition=catalog[field].get(binding[field])
+        if (definition is None or binding['callerMapId'] not in maps
+                or binding['interiorMapId'] not in maps
+                or definition['mapId']!=binding['interiorMapId']):
+            raise ValueError('Inventory service binding has an unresolved target')
+        bindings.append(dict(binding,definitionKind=field.removesuffix('Id'),
+            packaged=True,implementation='NOT_ASSESSED_BY_STATIC_INVENTORY',
+            appVerification='NOT_RUN',publication='NOT_ASSESSED'))
+    report['packagedServiceBindings']=bindings
+
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
@@ -3435,15 +3472,13 @@ if __name__=='__main__':
     elif args.world_inventory:
         from forensics.fengshen246 import extract_world_inventory
         pin=load(ROOT/'ci/content-source.json')
-        packaged=load(ROOT/pin['iteration']['provenance'])
-        # Package status is populated by the reviewed manifest, not by successful ROM parsing.
-        ids=[]
+        # Rebuild and verify the pinned target before describing it as packaged.
+        ids=[];scene={};package_source={'kind':'NOT_AVAILABLE','appRuntime':'NOT_RUN','publication':'NOT_ASSESSED'}
         if args.base_apk:
-            import ci_apk as ci
-            base=ci.CONFIG['iteration']['base'];ci.verify_apk(args.base_apk,release=True)
-            if digest(args.base_apk.read_bytes())!=base['apkSha256']:raise ValueError('Wrong reviewed inventory APK')
-            payload=ci.content(args.base_apk,base);ids=[m['id'] for m in json.loads(payload['scene.json'])['maps']]
+            scene,package_source=inventory_target_from_base(args.base_apk,pin)
+            ids=[m['id'] for m in scene['maps']]
         report=extract_world_inventory(iteration_reader(),ids)
+        attach_inventory_package(report,scene,package_source)
         args.world_inventory.parent.mkdir(parents=True,exist_ok=True);save(args.world_inventory,report)
         print(json.dumps({k:report[k] for k in ['structuralGeometryCount','npcContextCount','effectiveMapCount','summary']}))
     elif args.base_apk:
