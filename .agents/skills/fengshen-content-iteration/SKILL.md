@@ -423,3 +423,7 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 自由载具与原固定渡船分开接现有World/Scene：先用原CPU水/码头矩阵和真实原按键核登船、落岸、停车与独立返程，状态成本与换图计数分别记录。当前已运行码头112组合、水5400组合、真实中毒/单人死亡/全队失能与四向OAM opaque像素核对；全队失能可停在原半完成换图，须保存为禁止行走的战败续接，不能算出航成功。原渡船的精确pending点与自由船入口都不能开放其他脚行水格。FreeBoatTest和相关导出/篡改拒绝/空目录restore已实跑，Android正常航行仍须原同候选runtime；不以本地或受控原版写App已验。
 
 - 原Gradle wrapper版本属性为fengshenVersionCode/fengshenVersionName；其他同义属性会被忽略并生成旧默认版本。本轮aapt dump badging实际查出本地debug参数错误，纠正构建后仍须逐包核实际versionCode/versionName、内容pin与hash；debug不是正式签名或App验收，不能仅从命令意图填版本。
+
+
+- 原新入图选择与cold restore分开：先对实际header前分派/当前USED库存行执行有界CPU矩阵，再用World无副作用arrivalResolver接新门；tryRestore显式旧map不重选。地图选择不能从对白推断病旗。共享地图网格/tileset相同且原碰撞矩阵相同可复用，其它出口必须分别核原记录与真实按键，不能交换坐标。已实际执行256 CPU、对应JVM/World失败保留与原局部export/空restore；新的Android加载/正常流程仍要当前产物验收。
+- 原可见信件的investigation消息不等于普通talk消息；核真实菜单指令和raw记录字段。无奖励/flag的消息用限定readOnlyDialogue，避免通用NPC-seen标志制造剧情状态；原ROM、PPU和savestate继续仅在忽略目录。已有字体哈希复用后对未知字形目视转录并标PROVISIONAL，不从Reference地图ID推定ROM地图。

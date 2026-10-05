@@ -1,0 +1,976 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-west-boat-lotus-content.json",
+    "pinSha256": "c36384aa1fe6215420c5dc189fd418c8322260ed1a7e00e0631b3e4894beec98",
+    "provenanceSha256": "9d54b7b412b7373cdecc67e5f00d82e7ef0d41e1f53e92551473ef1a769ec610"
+  },
+  "baseManifestSha256": "dcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.182.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36636,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102188,
+            "sha256": "4a055d7925d0e3fede025a241751864ec67b404eb8e05266a69875ac9bdb6453"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45002,
+          "length": 20,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110554,
+          "sha256": "3f69e7d5ac381215be32bd5ae27ea8b9d599264c6983d67b479f577f022db655"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "『師父知道你們要來，卻自已先出門了！』"
+    },
+    {
+      "id": "rom.dialogue.182.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36638,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102190,
+            "sha256": "71d5be8f41abd02269d3cb7a62f7c39026971b6b96e9db029d1ca00a9851fd55"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45022,
+          "length": 21,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110574,
+          "sha256": "ed5ecf06cf0374be885bfeec7fa9a6a4a422a187c2804235d4f36c95a81d4697"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "『最近常發生地震，東方的山脈被震崩了！』"
+    },
+    {
+      "id": "rom.dialogue.182.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35790,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101342,
+            "sha256": "c6c5bf39b028142c684061e12fd80476b497131a508ff068c8c1d3dc5acb2eaf"
+          },
+          {
+            "cpuAddress": 36640,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102192,
+            "sha256": "0bdd1029ea43c54c86c19d69f0613a84516eabba015e14353a3b6062eb5514c2"
+          }
+        ],
+        "record": {
+          "cpuAddress": 45043,
+          "length": 55,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110595,
+          "sha256": "4f658f3db7967ab03ee0391a9a84b04efff85c38b8f712fc9f1486c47d7e9b3d"
+        },
+        "remainingUnknown": [
+          "Exact Android glyph rendering and normal mainline verification"
+        ]
+      },
+      "text": "信上寫著：　吾徒楊戬，為師有事外出。要解救西岐城瘟疫，須拜見火雲洞的三聖大師。他日再有困難，記得回來找師父。"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 172,
+      "kind": "EXIT_RECORD",
+      "source": {
+        "cpuAddress": 59445,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 288837,
+        "sha256": "481cd2cbf7173330066bdb15be0904f8cc7116bbc7db06b9c8534117ced539e0"
+      },
+      "spawn": [
+        32,
+        12
+      ],
+      "toMapId": 101,
+      "trigger": [
+        7,
+        14
+      ]
+    }
+  ],
+  "graphics": {
+    "npc-178-master172-0.png": {
+      "actorEntityId": 178,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "b0ce0050b0cf0058b8de0050b8df0058",
+      "observedRect": [
+        80,
+        169,
+        16,
+        16
+      ],
+      "opaquePixelCount": 147,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "29cf484098784dc8b500128e9fa84779092d3309a274fc71361ed9f1b675da54",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025264,
+          "sha256": "7a1dfd3297002d41dfeaf7ce515895f1f6da9fc91697e8ec3810e035a582b618",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025280,
+          "sha256": "1f168080886215dc349c7b432ce69a70ed83120549039df2d902deccc5230dc4",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025520,
+          "sha256": "c2082abfdebb19f9bb82fa40125be3c185e551cec0c8409cadba05600581cb02",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025536,
+          "sha256": "ea8c44c3bd40cd579b0054a287813fe8d61c085a89e04ba3cbbb46a2aa74e8e0",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-178-master172-1.png": {
+      "actorEntityId": 178,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "938e00a0938f00a89b9e00a09b9f00a8",
+      "observedRect": [
+        160,
+        140,
+        16,
+        16
+      ],
+      "opaquePixelCount": 151,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "9cb8f7f4be51256595a69a95d194e30d8cdf59cb63fc90889a691152b76f3404",
+      "tiles": [
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024240,
+          "sha256": "172d898186c0eb8b89891721b7d270ebe4d4a567693208d3d1de7d4131cdffab",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024256,
+          "sha256": "e905d66243d8b3929ecb6b8a97bb7ca99b79ad643e7435c031fd44b91ca75b1c",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872240,
+          "sha256": "e7f90f838e8aca5ac8bf432f8c12904c7422d97a0feef0b3b6aa9e86f6a9630f",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024512,
+          "sha256": "ffa301c95fe14f67f941aa6fef31aebd65d3ca5c0bc7891c6346bbdd510bebb0",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-179-master172-letter.png": {
+      "actorEntityId": 179,
+      "actorRecordOffset": 1092,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "88e099e1ab92c6e5ef4b7c35d9731ac9818b51c7170d2e874e920d2c596c4468",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60ed037060ee037868fd037068fe0378",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 87,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "ppuSha256": "52465d643817de295eafd42d101c6ce888c9c5b7fc4433e4a9f61908fa6fb8e2",
+      "ramSha256": "f9bfabb1f4522d19cf76d914535c0cd9c3ffc319fd30a55e768089aaf5f9f39e",
+      "rgbaSha256": "1fcc78dc77073964b59b30b06b273e171ddd4e36ad4b5741e06efd746b6657bf",
+      "tiles": [
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025760,
+          "sha256": "f11ce62c2500205b2ea54cf4503c8d2c774bb968b10fa5d18a6d24d950672ad9",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025776,
+          "sha256": "ebfa5b1653832f3c0007d0d06c2abd213e2964c12f0684739e05012c15152351",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026016,
+          "sha256": "c712dc0376eedb552ef48981defe722c8e0a8e789843bdc75c08ede59c67834e",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1026032,
+          "sha256": "b6dbb9a57076f564144efc29cdefa95de8a067c4fc5a9343e20cf7c5a140d2bc",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "limitations": [
+    "Master172 scoped original arrival/investigation implemented; Android normal route NOT_RUN; next firecloud state not implemented"
+  ],
+  "mapArrivals": [
+    {
+      "actualMapId": 172,
+      "evidence": "game-data/provenance/world-master172-resources.json",
+      "itemId": "rom.special.0",
+      "partyCountBelow": 4,
+      "requestedMapId": 171
+    }
+  ],
+  "maps": [
+    {
+      "gridSha256": "5d3b34cf8f24e0cefafd3900cb6a63f4a193ff21fa634be997f46d1486b8248e",
+      "limitations": [
+        "Normal Android mainline flow and cold restart NOT_RUN",
+        "Disciple animation not reproduced",
+        "Unicode transcription PROVISIONAL; byte streams/font recipes pinned",
+        "Letter does not implement firecloud sages/potion or subsequent plague cure"
+      ],
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "npcCells": [
+        133,
+        106,
+        71
+      ],
+      "palette": [
+        14,
+        7,
+        23,
+        55,
+        14,
+        7,
+        38,
+        22,
+        14,
+        33,
+        23,
+        22,
+        14,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        14,
+        14,
+        54,
+        43,
+        14,
+        14,
+        38,
+        34,
+        14,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        7,
+        14
+      ],
+      "walkableClasses": [
+        0,
+        2
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        5,
+        8
+      ],
+      "firstDialogue": "rom.dialogue.182.0",
+      "firstEffects": [],
+      "id": "rom.npc.172.0",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "record": {
+          "cpuAddress": 55961,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285353,
+          "sha256": "7ccabb7853cf6835dfe3a96f21a78dd16223595ec3921cc8247c77ffb0b2f33d"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-178-master172-0.png",
+      "spriteId": 178
+    },
+    {
+      "cell": [
+        10,
+        6
+      ],
+      "firstDialogue": "rom.dialogue.182.1",
+      "firstEffects": [],
+      "id": "rom.npc.172.1",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "record": {
+          "cpuAddress": 55975,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285367,
+          "sha256": "4e9ab0f1875b6140ef501851faf59abedd0e1f1e8a95d19248f81f64733560fb"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-178-master172-1.png",
+      "spriteId": 178
+    },
+    {
+      "cell": [
+        7,
+        4
+      ],
+      "firstDialogue": "rom.dialogue.182.2",
+      "firstEffects": [],
+      "id": "rom.npc.172.2",
+      "mapId": 172,
+      "master172ResourceEvidence": "game-data/provenance/world-master172-resources.json",
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-master172-resources.json",
+        "notOrdinaryTalk": true,
+        "originalInteraction": "INVESTIGATION_RAW_MESSAGE2",
+        "record": {
+          "cpuAddress": 55989,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 285381,
+          "sha256": "969c9f2b92d261e665b49e19db09bd6097ded02d3860af68a7da0c992ce0f783"
+        },
+        "remainingUnknown": [
+          "Dynamic disciple movement not reproduced; observed exact static pose reused"
+        ]
+      },
+      "sprite": "npc-179-master172-letter.png",
+      "spriteId": 179
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 47570,
+      "length": 37,
+      "meaning": "Original used snow and party size map171 replacement",
+      "module": 0,
+      "offset": 14818,
+      "sha256": "7b961e23af5dfdb885c63e458358eaea4f7445e407d63023bfbdebac53fa7588"
+    },
+    {
+      "cpuAddress": 62872,
+      "length": 58,
+      "meaning": "Original current special inventory USED lookup",
+      "module": 0,
+      "offset": 30120,
+      "sha256": "a6c6d3a2215fd4c62cae0b85b3ba233e7089dc79165830e5bc3e8a4067911ea0"
+    },
+    {
+      "cpuAddress": 60979,
+      "length": 1,
+      "meaning": "Original room172 absent encounter zone",
+      "module": 0,
+      "offset": 28227,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    },
+    {
+      "cpuAddress": 61171,
+      "length": 1,
+      "meaning": "Original room172 absent encounter selector",
+      "module": 0,
+      "offset": 28419,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    },
+    {
+      "cpuAddress": 56769,
+      "length": 2,
+      "meaning": "Original map172 independent exit table pointer",
+      "module": 8,
+      "offset": 286161,
+      "sha256": "bdfe8045350b94997a8b2636d9f952004b5712566b071c9a11ae394fe47777ce"
+    },
+    {
+      "cpuAddress": 59445,
+      "length": 5,
+      "meaning": "Original five-byte exit row",
+      "module": 8,
+      "offset": 288837,
+      "sha256": "481cd2cbf7173330066bdb15be0904f8cc7116bbc7db06b9c8534117ced539e0"
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "master172-original-snow-used-map-selector-and-read-only-letter",
+  "taskId": "WORLD-FULL-01"
+}

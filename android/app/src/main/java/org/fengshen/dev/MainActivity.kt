@@ -188,6 +188,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mapNotice=""
     init {holder.addCallback(this);isFocusable=true;isFocusableInTouchMode=true;contentDescription="封神全屏地图"
         world.sceneResolver={mid->content.sceneForState(mid,flags)}
+        world.arrivalResolver={mid->content.mapArrivals.fold(mid){target,rule->
+            rule.resolve(target,characters.size,inventory,flags)}}
         world.prepareTarget={target->try{content.atlases.getValue(target);true}catch(e:Exception){
             input.clear();Diagnostics.record("scene_load","ERROR",JSONObject().put("mapId",target).put("success",false),e.javaClass.simpleName,e.stackTrace.take(12).joinToString("\n"));false}}
         world.transitionObserver={from,to,success->
@@ -1079,6 +1081,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
             dismissDialogue();return
         }
+        if(npc?.readOnlyDialogue==true){dismissDialogue();persistState();return}
         if(npc==null)flags=flags+("opening.intro.seen" to true)
         else if(flags[npc.id]!=true){
             for(effect in npc.firstEffects)when(effect.type){

@@ -1,0 +1,27 @@
+{
+  "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
+  "contentVersion": "opening-segment-001-c57",
+  "iteration": {
+    "base": {
+      "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+      "buildRunId": 36995827962,
+      "contentVersion": "opening-segment-001-c14",
+      "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495",
+      "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+      "versionCode": 27
+    },
+    "provenance": "game-data/provenance/world-master172-content.json"
+  },
+  "manifestSha256": "d7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a",
+  "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
+  "package": "org.fengshen.dev",
+  "runtimeBaseline": {
+    "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+    "buildRunId": 36995827962,
+    "contentVersion": "opening-segment-001-c14",
+    "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495",
+    "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+    "versionCode": 27
+  },
+  "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6"
+}

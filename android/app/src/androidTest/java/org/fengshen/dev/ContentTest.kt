@@ -13,6 +13,34 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual scoped alternative room; CONTROLLED loader/codec, not normal cure/mainline. */
+    fun testControlledMaster172ArrivalLetterAndSavedExplicitMap(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val rule=c.mapArrivals.single()
+        assertTrue(rule.verified());assertTrue(171 in c.scenes&&172 in c.scenes)
+        val flags=mapOf(OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+            "rom.inventory.special.0.used" to true,"rom.map.37.flag.128" to true)
+        val party=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian"))
+        val old=SaveSnapshot("opening-segment-001-c56",171,7*16+8,14*16+8,Key.UP,
+            party,mapOf(OriginalYangJoin.ITEM_ID to 1,"rom.special.0" to 0),flags,money=1030,encounterSteps=7)
+        assertTrue(old.validate(c));assertEquals(172,rule.resolve(171,party.size,old.inventory,flags))
+        assertEquals(171,rule.resolve(171,party.size,emptyMap(),flags))
+        assertEquals(old,SaveSnapshot.parse(old.json().toString()))
+        val world=World(c.scenes,c.exits,101)
+        world.arrivalResolver={rule.resolve(it,party.size,old.inventory,flags)}
+        assertTrue(world.tryRestore(old.mapId,old.x,old.y));assertEquals(171,world.mapId)
+        val room=old.copy(contentVersion=c.scene.version,mapId=172,y=5*16+8)
+        assertTrue(room.validate(c));assertEquals(room,SaveSnapshot.parse(room.json().toString()))
+        val letter=c.npcs.single{it.id=="rom.npc.172.2"}
+        assertTrue(letter.readOnlyDialogue);assertEquals("rom.dialogue.182.2",letter.firstDialogue)
+        assertEquals(7,letter.x);assertEquals(4,letter.y);assertTrue(letter.firstEffects.isEmpty())
+        assertNull(letter.originalTalk);assertNull(letter.treasure);assertNull(letter.repeatDialogue)
+        assertTrue(c.dialogues.getValue(letter.firstDialogue).text.contains("火雲洞"))
+        assertTrue(c.npcsForState(172,flags).all{it.readOnlyDialogue})
+        val back=c.exits.single{it.fromMapId==172}
+        assertEquals(101,back.toMapId);assertEquals(32,back.spawnX);assertEquals(12,back.spawnY)
+        Log.i("FengshenMaster172Test","CONTROLLED_LOADER_CODEC_NOT_NORMAL_CURE_MAINLINE")
+    }
     /** Actual boat/fairy bundle and codec, isolated fixture; not a normal voyage. */
     fun testControlledFreeBoatFairyDefinitionsAndFailureSave(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
@@ -134,7 +162,11 @@ class ContentTest:IsolatedGameTestCase(){
         val boat=c.npcs.single{it.id=="rom.npc.10.6"};assertFalse(c.npcInteractive(boat));assertTrue(boat.talkDisabled)
         val special=c.itemDefinitions.getValue("rom.special.14")
         assertEquals("special",special.category);assertEquals(14,special.originalId);assertEquals(1,special.maxCount)
-        assertNull(special.worldUse);assertNull(special.battleBindingUse)
+        if(c.freeBoatEnabled){
+            assertEquals(14,special.worldUse?.sceneScript?.originalItemId)
+            assertEquals(OriginalSceneItems.EVIDENCE,special.worldUse?.sceneScript?.evidence)
+        }else assertNull(special.worldUse)
+        assertNull(special.battleBindingUse)
         for(mid in listOf(8,9,10)){
             val scene=c.scenes.getValue(mid);val snapshot=SaveSnapshot(c.scene.version,mid,scene.spawnX*16+8,scene.spawnY*16+8,
                 Key.DOWN,listOf(c.initialPlayer),mapOf(HerbUse.ID to 2),mapOf("opening.intro.seen" to true),money=999)

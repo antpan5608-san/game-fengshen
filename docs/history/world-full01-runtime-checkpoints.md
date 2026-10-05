@@ -963,3 +963,17 @@ SAVE-HISTORY继续已实现/单元验证、APP_VERIFIED NOT_RUN；最新20档不
 ## 原场景物品接续检查点（2026-10-06，北京时间）
 
 起点开发5a3a072，生产v82/main R2 87bc56cb仍冻结；37364795394首段PASS/地府段运行、未发布，inspect托管runner未领取为NOT_AVAILABLE。新增雪莲37/event9和神木桨42/event23复用明确使用/共享StoryFollowup/完整存档事务，仙子赠物与当前空used桨行修正已实现；原CPU 16384效果/8消耗/7168 selector/18 gift/5400水类全部零差异，382 JVM/80套与仪器编译PASS。实际原菜单与对白/独立水域入口返程已取证，全部CONTROLLED_ORIGINAL，新增能力内容绑定与船落岸未接通，APP_VERIFIED NOT_RUN/PUBLISHED NO。Nullable maxMp/缺上限fixture/错误原存档来源与错误返程方向分别修正并保留失败，不改原断言/碰撞。c54干净DEBUG仍360文件/66图/SHA10b2a6b7，不能替新代码背书。完整当前状态与下一精确动作见docs/current-task.md；证据world-lotus136-state.json与world-west-scene-items.json。继续原136局部导出/boat219水面与落岸事务，R2实际通过后原审核/巡检/发布；存档历史与所有新增App/旧档运行尚未关闭，总任务不结案。
+
+
+## 当前有效接续（2026-10-06 07:52，北京时间）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82/c51-r1；R2冻结main87bc56cb、run37364795394：build/runtime SUCCESS，runtime-world正在运行，continuation尚未开始、NOT_PUBLISHED。inspect两次原runner未领取，NOT_AVAILABLE，无本轮客户端样本；不改候选、不将首段PASS写完整R2。
+
+独立开发树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next，从6ea732ed继续。当前IMPLEMENTED：原B9D2/F598仅在新入图时按当前雪莲0 USED行及队伍<4将171选为172，恢复显式保存的171不重选；共享World/ContentLoader，无治疗完成flag前置。map172与171真实网格/tileset2完全相同，复用既有36原CPU碰撞矩阵；三对象/独立172(7,14)→101(32,12)/182三段文本接续。信179原命令为调查/message2，不是普通谈话/message5；现有直接对象交互承载调查，不发奖、不设NPC-seen剧情flag。Unicode/静态弟子姿态PROVISIONAL，动态NPC尚未等价。
+
+c57局部内容GENERATED/RESTORE_VERIFIED：68依赖图/373文件，manifestd7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a；c56基底manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9分别固定，旧媒体逐字节保留。新原CPU256案/相关2 JVM、全391 JVM/82套0失败/错误/跳过、仪器编译、3导出方法41.240秒及严格空目录恢复通过。新源码APK干净构建待执行，APP_VERIFIED/PUBLISHED均NO；不要借前一80e6/c56 debug包背书本轮。旧ContentTest神木桨worldUse必null断言只对旧未启用内容有效，按真实freeBoatEnabled核新sceneScript；分类TEST_HARNESS旧能力断言，不删除原规则/经济断言。
+
+原版证据为CONTROLLED_ORIGINAL：实际受控治疗源库存/flag移至正常加载世界状态，真实门入101/172；37.flag0/128均入172，调查A/down×3/A真实读182.2两页且库存/队伍/map172.flag/7c8不变，独立DOWN返回101；不是正常原版全程或Android证据。必要输入已在忽略缓存，完整ROM及RAM/PPU/FC8不进公开Git。当前只保存派生数字矩阵/hash/OAM配方与实际Lua。
+
+下一精确动作：提交此可复现检查点并git archive→原ci_apk.restore→正确fengshenVersionCode/Name参数编译验包；同步备份独立树。继续核火云洞：Reference127只是不同地图ID，实际候选ROM89有三演员、真实world16(219,144)→89(8,13)和独立89(8,13)→16(219,144)，当前只调查，未打包/未实现丹药。运行中受控原版probe不冒称正常路线。R2实际PASS后按原审核/巡检/签名/hash发布，失败取真实证据薄修。SAVE-HISTORY仍已实现/JVM验证，UI/外部冷启NOT_RUN；十类欠账仍delivery-status。不中断主任务，不改Language/真实云档。
+
