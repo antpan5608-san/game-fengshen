@@ -2418,6 +2418,22 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldEastPartyColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true)}
     fun testNormalWorldHellVillageServicesFromVerifiedEastPartySave(){normalWorldStoryContinuation(false,true,true)}
     fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
+    /** Exact failed-run East normal/cold source; no HP, inventory or flag repair. */
+    fun testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave(){
+        val fixture=JSONObject(instrumentation.context.assets.open("r1-village2-verified-east.json").bufferedReader().use{it.readText()})
+        assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
+        assertTrue(fixture.getBoolean("sourceNormalAndExternalColdVerified"))
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
+        assertEquals(23,source.mapId)
+        assertEquals(OriginalStatus.POISON,source.characters.single{it.id=="xiaolongnv"}.statusMask)
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-village2-source.json")
+        file.writeBytes(bytes)
+        normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
+        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
+    }
     fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}
     fun testPlayableR1MedicalColdStartMatchesNormalSave(){normalPlayableR1Medical(true)}
 
@@ -3030,10 +3046,11 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
-    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false){
+    private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false,fixtureLabel:String?=null){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
-        val label=if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
-        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else
+        require(fixtureLabel==null || (fixtureLabel=="controlled-r1-village2" && hell && east))
+        val label=fixtureLabel?:if(queen)"queen117"else if(night8)"night8"else if(village6)"village6"else if(cave87)"cave87"else if(village5)"village5"else if(island)"island"else if(ferry)"ferry"else if(village4)"village4"else if(yangJoin)"yang-join"else if(room171)"room171"else if(tree107)"tree107"else if(forest101)"forest101"else if(continentBridge)"continent-bridge"else if(medical)"medical"else if(village3)"village3" else if(rebirth)"rebirth" else if(hallBatch)"hall-batch" else if(secondHall)"second-hall" else if(firstHall)"first-hall" else if(hell)"hell-village2" else if(east)"east-palace" else "cave85"
+        val sourceFile=File(root,if(cold)"world-$label-expected-save.json" else if(fixtureLabel!=null)"world-$fixtureLabel-source.json" else
             if(queen)"world-night8-expected-save.json"else if(night8)"world-village6-expected-save.json"else if(village6)"world-cave87-expected-save.json"else if(cave87)"world-island-expected-save.json"else if(island)"world-ferry-expected-save.json"else if(ferry)"world-village4-expected-save.json"else if(village4||village5)"world-yang-join-expected-save.json"else if(yangJoin)"world-room171-expected-save.json"else if(room171)"world-tree107-expected-save.json"else if(tree107||forest101)"world-continent-bridge-expected-save.json"else if(continentBridge)"world-medical-expected-save.json"else if(medical)"world-village3-expected-save.json"else if(village3)"world-rebirth-expected-save.json" else if(rebirth)"world-hall-batch-expected-save.json" else if(hallBatch)"world-second-hall-expected-save.json" else if(secondHall)"world-first-hall-expected-save.json" else if(firstHall)"world-hell-village2-expected-save.json" else if(hell)"world-east-palace-expected-save.json" else if(east)"world-cave85-expected-save.json" else "world-north-palace-expected-save.json")
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
@@ -3063,7 +3080,8 @@ class TouchTest:IsolatedGameTestCase(){
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
             File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
-                .put("kind",if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE").put("sourceFile",sourceFile.name)
+                .put("kind",if(fixtureLabel!=null)if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else"CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE"
+                    else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE").put("sourceFile",sourceFile.name)
                 .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("bossEntries",bossEntries).put("bossAttackObserved",capturedBossAttack).put("bossHerbObserved",capturedBattleHerb)
@@ -3089,7 +3107,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun supply(){
             if(v.layer!=GameView.Layer.MAP)return
-            if(firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
+            if(east||hell||firstHall||secondHall||hallBatch||rebirth||continentBridge||forest101||tree107||room171||yangJoin||village4||ferry||island||village5||cave87||village6||night8||queen){
                 for(actor in v.currentSnapshot().characters.filter{it.hp>0&&OriginalPartyRules.present(it)}){
                     if(actor.statusMask and OriginalStatus.POISON!=0&&(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)>=2)medicine(AntidoteUse.ID,actor.id)
                     if(!training&&actor.hp<=actor.maxHp/2&&(v.currentSnapshot().inventory[HerbUse.ID]?:0)>0)medicine(HerbUse.ID,actor.id)
@@ -4177,7 +4195,8 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(((before.inventory[AntidoteUse.ID]?:0)-2).coerceAtLeast(0),after.inventory[AntidoteUse.ID]?:0)
                 instrumentation.runOnMainSync{v.handleBack()};state("normal-antidote-${actor.id}")
             }
-            inn(2);assertTrue(v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
+            inn(2);assertTrue("Normal inn preserves excluded states; cure actual owners before shopping: ${v.currentSnapshot().characters}",
+                v.currentSnapshot().characters.all{it.hp==it.maxHp&&it.mp==it.maxMp})
             state("normal-original20-inn-two-actor-recovery-and-return")
             walkTo(30,19);assertEquals(23,v.world.mapId);assertEquals(55,v.world.x/16);assertEquals(91,v.world.y/16)
             state("normal-village2-return-to-hell")
