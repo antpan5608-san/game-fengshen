@@ -169,6 +169,52 @@ def scoped_observed_graphic(reader,recipe):
         raise ValueError('Reconstructed graphic differs from reviewed RGBA pixels')
     return deterministic_rgba_png(image)
 
+def observed_oam_graphic_recipe(reader,capture_path,ram_path,ppu_path,oam_offset,*,record_offset,entity_id):
+    """Four actual field sprites, preserving opaque black and per-OAM flips.
+
+    Original raw inputs stay private; returns the existing bounded tile recipe.
+    The runtime actor record must identify the actor; list positions alone do not.
+    """
+    if digest(reader.data)!=SHA256:raise ValueError('OAM evidence needs the pinned ROM')
+    ram=Path(ram_path).read_bytes();ppu=Path(ppu_path).read_bytes()
+    if len(ram)!=0x800 or len(ppu)!=0x4000 or not 0x200<=oam_offset<=0x2f0 or \
+            not 0x400<=record_offset<0x800 or ram[record_offset]!=entity_id:
+        raise ValueError('Original actor record/OAM input differs')
+    sprites=[tuple(ram[oam_offset+i:oam_offset+i+4])for i in range(0,16,4)]
+    x=min(s[3]for s in sprites);y=min(s[0]-7 for s in sprites)
+    positions={(s[3]-x,s[0]-7-y)for s in sprites}
+    if positions!={(0,0),(8,0),(0,8),(8,8)}or len({s[2]&3 for s in sprites})!=1:
+        raise ValueError('Field OAM must be one complete four-tile pose/palette')
+    with Image.open(capture_path)as source:
+        if x<0 or y<0 or x+16>source.width or y+16>source.height:raise ValueError('OAM escapes actual capture')
+        observed=source.convert('RGB').crop((x,y,x+16,y+16))
+    tiles=[];codes={};pixels=[(0,0,0,0)]*256;opaque=0
+    for sy,index,attribute,sx in sprites:
+        raw=ppu[0x1000+index*16:0x1000+(index+1)*16]
+        offset=reader.data.find(raw,reader.header['sections']['chr']['offset'])
+        if offset<reader.header['sections']['chr']['offset']:raise ValueError('Active OAM tile missing from original ROM')
+        dx,dy=sx-x,sy-7-y
+        for yy in range(8):
+            for xx in range(8):
+                tx=7-xx if attribute&0x40 else xx;ty=7-yy if attribute&0x80 else yy
+                code=((raw[ty]>>(7-tx))&1)|(((raw[ty+8]>>(7-tx))&1)<<1)
+                if code==0:continue
+                color=observed.getpixel((dx+xx,dy+yy))
+                if code in codes and codes[code]!=color:raise ValueError('Overlapping/moving/faded OAM capture')
+                codes[code]=color;pixels[(dy+yy)*16+dx+xx]=(*color,255);opaque+=1
+        tiles.append(dict(xy=[dx,dy],offset=offset,length=16,sha256=digest(raw),attribute=attribute,
+            flipX=bool(attribute&0x40),flipY=bool(attribute&0x80)))
+    rgba=Image.new('RGBA',(16,16));rgba.putdata(pixels)
+    recipe=dict(width=16,height=16,observedRect=[x,y,16,16],transparentZero=True,
+        paletteCodes={'0':[0,0,0],**{str(k):list(v)for k,v in codes.items()}},tiles=tiles,
+        rgbaSha256=digest(rgba.tobytes()),captureSha256=digest(Path(capture_path).read_bytes()),
+        captureKind='CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE',normalPlayEvidence=False,
+        opaquePixelMatch=True,opaquePixelCount=opaque,oamHex=ram[oam_offset:oam_offset+16].hex(),
+        actorRecordOffset=record_offset,actorEntityId=entity_id,ramSha256=digest(ram),ppuSha256=digest(ppu))
+    if Image.open(io.BytesIO(scoped_observed_graphic(reader,recipe))).convert('RGBA').tobytes()!=rgba.tobytes():
+        raise ValueError('OAM recipe did not preserve every original nonzero pixel')
+    return recipe
+
 def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False,*,per_tile_palette=False):
     """Bounded evidence helper for the existing ROM-tile recipe, never an image importer.
 
@@ -622,7 +668,9 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
         'game-data/provenance/world-rebirth-terrain.json':
         ('map86-rebirth-ground-and-upper-plane-bridge-zero',128,{86}),
         'game-data/provenance/world-island-terrain.json':
-        ('island76-through78-ground-and-upper-plane-bridge-zero',1536,{76,77,78})}
+        ('island76-through78-ground-and-upper-plane-bridge-zero',1536,{76,77,78}),
+        'game-data/provenance/world-jiameng-terrain.json':
+        ('jiameng145-through148-ground-and-upper-plane-bridge-zero',264,{145,146,147,148})}
     if evidence_path not in scopes:raise ValueError('Unreviewed terrain evidence path')
     scope,count,maps=scopes[evidence_path];proof=load(ROOT/evidence_path)
     if proof['romSha256']!=SHA256 or proof['scopeRevision']!=scope or map_id not in maps or \
@@ -651,6 +699,15 @@ def validate_world_hall_batch_terrain(reader,map_id,evidence_path='game-data/pro
                 digest((ROOT/probe['path']).read_bytes())!=probe['sha256'] or \
                 (probe['verifiedCases'],probe['differences'])!=(1536,0) or len(table.splitlines())!=1537:
             raise ValueError('Island terrain requires its actual bounded probe and complete matrix')
+    elif evidence_path=='game-data/provenance/world-jiameng-terrain.json':
+        required.add((11,0xed87+145,4))
+        probe=proof['probe'];table=(ROOT/proof['cpuExpectedPath']).read_bytes()
+        if probe['path']!='tools/rom-extractor/probe-world-jiameng-terrain.py' or \
+                digest((ROOT/probe['path']).read_bytes())!=probe['sha256'] or \
+                (probe['verifiedCases'],probe['differences'])!=(264,0) or len(table.splitlines())!=265 or \
+                probe['existingProbe']!='tools/rom-extractor/probe-world-island-terrain.py' or \
+                digest((ROOT/probe['existingProbe']).read_bytes())!=probe['existingProbeSha256']:
+            raise ValueError('Jiameng terrain requires the executed scoped reuse and complete matrix')
     else:required.add((11,0xed87+23,46))
     if {(s['module'],s['cpuAddress'],s['length'])for s in proof['sources']}!=required:
         raise ValueError('Hell terrain lacks original plane, direction, occlusion or encounter code')
@@ -2011,6 +2068,25 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('jiamengRoomCollisionEvidence'):
+            path=recipe['jiamengRoomCollisionEvidence'];proof=load(ROOT/path);room=proof['postScriptRoom']
+            raw=(ROOT/room['cpuExpectedPath']).read_bytes()
+            if path!='game-data/provenance/world-jiameng-terrain.json' or proof['romSha256']!=SHA256 or \
+                    mid!=37 or original['tilesetId']!=2 or room['gridSha256']!=original['gridSha256'] or \
+                    allowed!=[0,2,5] or set(collision)!={0,1,2,5} or recipe.get('terrain') or \
+                    room['testCount']!=64 or room['differences'] or digest(raw)!=room['cpuExpectedSha256'] or \
+                    len(raw.splitlines())!=65 or \
+                    digest((ROOT/proof['probe']['path']).read_bytes())!=proof['probe']['sha256']:
+                raise ValueError('Jiameng post-script room must retain its executed plain-room class scope')
+            if {(s['module'],s['cpuAddress'],s['length'])for s in room['sources']}!={
+                    (0,0xca98,29),(0,0xce35,29),(0,0xcc65,8),(0,0xd078,20)}:
+                raise ValueError('Missing original plain-room dispatcher')
+            for span in room['sources']:checked_span(reader,span)
+            for row in raw.decode('ascii').splitlines()[1:]:
+                source,target,direction,blocked,plane=map(int,row.split('\t'))
+                if source not in (0,1,2,5)or target not in (0,1,2,5)or direction not in (1,2,3,4)or \
+                        (blocked,plane)!=(int(target==1),0):
+                    raise ValueError('Jiameng room movement differs from original CPU results')
         if evidence.get('ferries')and mid==79:
             if original['tilesetId']!=3 or original['width']!=16 or original['height']!=15 or \
                     set(collision)!={0,1}or allowed!=[0]or recipe.get('directionalCollision'):
@@ -2134,7 +2210,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                     raise ValueError('Hell hall ground classes differ')
             elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
                     'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero',
-                    'island76-through78-ground-and-upper-plane-bridge-zero'):
+                    'island76-through78-ground-and-upper-plane-bridge-zero',
+                    'jiameng145-through148-ground-and-upper-plane-bridge-zero'):
                 validate_world_hall_batch_terrain(reader,mid,terrain['evidence'])
                 if set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell batch must retain both observed planes, never unknown wall classes')

@@ -937,3 +937,9 @@ WORLD-FULL-01总体仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。既有c
 开发线work/world-jiameng-next，冻结地府候选不改。共享StoryBattle增加受证context、附加入口集与现存角色胜后proposal，constructor ABI保持；NPC variant共用相同context/图形用于绘制交谈碰撞，Huang旧标签兼容只读。原960触发表逐值对照五个真实格，显式false不从旧flag复活。三将胜后仅已有杨戬status OR64，无角色时不生成模板/剧情门槛；普通奖励仍由原settle一次，状态提交前校验。
 
 实际bash gradlew :app:testDebugUnitTest（JiamengActivationTest/JiamengBindingTest/StoryCharacterChangeTest/SceneStoryTest/StoryEntryTest/StoryFollowupTest/QueenHuangTest/PartyBattleTest）及 :app:compileDebugAndroidTestKotlin --offline PASS，共51方法/8 suites，无失败/跳过。首轮误列不存在StoryBattleTest过滤项未产生该suite；统计按真实XML修正，未把过滤名算测试。新fields的scoped loader已编译，地图145..148/37与Boss/新NPC定义尚未打包，APP_VERIFIED NOT_RUN/PUBLISHED NO，不能称新路线已可玩。
+
+## 佳梦关局部导出资源检查点（2026-10-05，开发线未发布）
+
+复用旧碰撞CPU探针固定SHA的scoped wrapper：当前四地图145..148共264组合/房间37实际tileset2共64组合，全部0差异；原c50完整56/302重复导出及pin原样通过7 scope方法，旧媒体/来源没有改。11局部Python方法通过；胜后房间font38/39、context196实际原NPC与四条对白已核，15字定向转录/历史罩→照差异局部记录。三actor130/162/163原OAM/ROM每个非零像素与alpha成功，公开仅配方/hash/数值TSV，原RAM/PPU/截图/回放仍忽略。
+
+失败保留：原FCEUX首轮用了本树不存在的.ci-private/nanhai-target.nes，分类ENV_INPUT_PATH，进程停止，改读实际已匹配缓存成功，无重下载。NPC按14/24推算stride使162身份拒绝，实际记录418/42e/444匹配后成功，属EVIDENCE_INPUT_MAPPING；未把拒绝改通过。原Game规则/数值无修改。新增地图/Boss定义和批量配方仍待接入，APP_VERIFIED NOT_RUN/PUBLISHED NO；原受控胜后source不是正常Boss胜利。地府候选main独立冻结，其App验收不借本局部测试背书。

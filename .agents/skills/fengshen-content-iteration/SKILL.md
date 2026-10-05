@@ -404,3 +404,7 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原角色再次入队不得用新模板覆盖旧角色。复用原CPU调用核已有最大HP/MP、状态与flag，再用统一StoryCharacterChange提案更新存档原角色；缺角色/未知最大值/重复效果拒绝，取消或重复对白不提交。8/80/25个原CPU案例及相关JVM已运行；NPC零玩家步还需拒绝同图异位和跨图，不能借演出补剧情捷径。原字体按活动CHR与实际编码复用旧已核字形，剩余仅辨认当前对白所需字形，空格控制码另核，非全字库完成；新内容仍须原导出/同产物App验证。
 
 - 场景NPC原OAM需保留非零码对应的实体黑；不能将所有黑像素透明化。原截图顶部裁8与硬件OAM y+1必须一致，当前源OAM的各非零像素码应映射为同一个真实截屏RGB，且全部非透明像素逐个匹配；原RGBA门禁不放宽。旧emulatorRgb与当前FCEUX截屏有微小RGB差异时先定位而非猜帧错位。三个源姿态已重建/像素匹配/回归；静态姿态不等于完整NPC走动，原图与PPU仅留忽略目录。新增RAM/map标签仍按原指针表核，不能由剧情地名猜。
+
+- 当前场景的tileset3两平面矩阵可复用既有probe-world-island-terrain.py的固定字节，仅在scoped wrapper改变地图批次与受控输出目录；原ROM不改，旧probe/hash/配方保留。probe-world-jiameng-terrain.py已实际执行四格网264及胜后室内64 CPU组合，原导出器定向validator/来源拒绝与完整旧c50再导出通过；这些不算Android正常路线。
+- 原observed_oam_graphic_recipe已经当前Linux/FCEUX原OAM、匹配ROM、实际截图执行，三actor全部非零像素匹配，并有隔离布局fixture回归。只能透明原pixel code0，非零黑色保持不透明；用实际NPC记录位置绑定身份，不假设14/24字节固定步长。原取证首次用了不存在的工作树缓存路径，须先查现有iteration_reader实际输入位置；禁止重新下载来掩盖路径错误。
+- 源码检查显式read_text(encoding="utf-8")，不能以Linux默认编码通过推断Windows中文源码可读；真实原Windows门禁已在薄修后通过，未削弱App验收。

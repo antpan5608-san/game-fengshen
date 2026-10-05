@@ -38,8 +38,26 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertFalse(recipe['normalPlayEvidence'])
         self.assertTrue(all('paletteCodes' in t for t in self.proof['graphics']['enemy158.png']['tiles']))
 
+    def test_same_original_terrain_probe_is_scoped_to_current_grids_and_room(self):
+        path='game-data/provenance/world-jiameng-terrain.json';p=ex.load(ROOT/path)
+        self.assertEqual(264,p['testCount'])
+        for mid in (145,146,147,148):
+            rule=ex.validate_world_hall_batch_terrain(self.reader,mid,path)
+            self.assertEqual(extract_map(self.reader,mid)['gridSha256'],rule['gridSha256'])
+        for mid in (37,76,149):
+            with self.assertRaises(ValueError):ex.validate_world_hall_batch_terrain(self.reader,mid,path)
+        room=p['postScriptRoom'];self.assertEqual(64,room['testCount']);self.assertEqual([],room['differences'])
+        raw=(ROOT/room['cpuExpectedPath']).read_bytes()
+        self.assertEqual(room['cpuExpectedSha256'],hashlib.sha256(raw).hexdigest())
+        for span in room['sources']:ex.checked_span(self.reader,span)
+        for row in raw.decode('ascii').splitlines()[1:]:
+            source,target,direction,blocked,plane=map(int,row.split('\t'))
+            self.assertIn(source,(0,1,2,5));self.assertIn(target,(0,1,2,5));self.assertIn(direction,(1,2,3,4))
+            self.assertEqual((int(target==1),0),(blocked,plane))
+
     def test_field_actor_recipes_keep_transparent_zero_and_actual_opaque_black(self):
-        self.assertEqual({'npc-jiameng-129.png','npc-jiameng-152.png','npc-jiameng-154.png'},set(self.proof['npcGraphics']))
+        self.assertEqual({'npc-jiameng-129.png','npc-jiameng-152.png','npc-jiameng-154.png',
+            'npc-jiameng-room37-130.png','npc-jiameng-room37-162.png','npc-jiameng-room37-163.png'},set(self.proof['npcGraphics']))
         for name,recipe in self.proof['npcGraphics'].items():
             image=Image.open(io.BytesIO(ex.scoped_observed_graphic(self.reader,recipe))).convert('RGBA')
             self.assertEqual((16,16),image.size);self.assertTrue(recipe['opaquePixelMatch'])
@@ -48,6 +66,27 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertTrue(any(p[3]==0 for p in image.getdata()))
             self.assertFalse(recipe['normalPlayEvidence'])
             self.assertTrue(all('attribute' in t for t in recipe['tiles']))
+
+    def test_oam_recipe_helper_preserves_black_flips_and_rejects_wrong_actor_stride(self):
+        # Synthetic layout from original tile bytes, not an App/normal screenshot.
+        recipe=self.proof['npcGraphics']['npc-jiameng-room37-130.png']
+        pixels=Image.open(io.BytesIO(ex.scoped_observed_graphic(self.reader,recipe))).convert('RGBA')
+        ram=bytearray(0x800);ppu=bytearray(0x4000);ram[0x418]=130
+        for i,tile in enumerate(recipe['tiles']):
+            dx,dy=tile['xy'];index=i+1;attribute=tile['attribute']
+            ram[0x214+4*i:0x218+4*i]=bytes([40+dy+7,index,attribute,32+dx])
+            ppu[0x1000+index*16:0x1000+(index+1)*16]=self.reader.data[tile['offset']:tile['offset']+16]
+        with tempfile.TemporaryDirectory()as td:
+            root=Path(td);(root/'ram.bin').write_bytes(ram);(root/'ppu.bin').write_bytes(ppu)
+            capture=Image.new('RGB',(64,64),(8,16,24));capture.paste(pixels,(32,40),pixels);capture.save(root/'fixture.png')
+            result=ex.observed_oam_graphic_recipe(self.reader,root/'fixture.png',root/'ram.bin',root/'ppu.bin',0x214,record_offset=0x418,entity_id=130)
+            self.assertEqual(recipe['rgbaSha256'],result['rgbaSha256'])
+            self.assertEqual(recipe['opaquePixelCount'],result['opaquePixelCount'])
+            for offset in (0x416,0x430,0x800):
+                with self.assertRaises(ValueError):
+                    ex.observed_oam_graphic_recipe(self.reader,root/'fixture.png',root/'ram.bin',root/'ppu.bin',0x214,record_offset=offset,entity_id=130)
+            with self.assertRaises(ValueError):
+                ex.observed_oam_graphic_recipe(self.reader,root/'fixture.png',root/'ram.bin',root/'ppu.bin',0x214,record_offset=0x418,entity_id=163)
 
     def test_current_dialogues_use_active_font_not_the_opening_charset(self):
         font=self.proof['font'];raw=b''.join(ex.checked_span(self.reader,s)for s in font['sources'])
@@ -63,6 +102,23 @@ class JiamengResourcesTest(unittest.TestCase):
             self.assertEqual([],decoded['unknownCodes']);self.assertEqual(t['text'],decoded['text'])
         self.assertEqual(bytes([255]*4),ex.checked_span(self.reader,font['controlCodes']['68']['source']))
         self.assertEqual('　',cs[68])
+
+    def test_post_script_room_uses_its_actual_font_and_context_not_cave_text(self):
+        room=self.proof['postScriptRoom'];font=room['font']
+        self.assertEqual([38,39],font['chr2kBanks'])
+        raw=b''.join(ex.checked_span(self.reader,s)for s in font['sources'])
+        cs={int(k):v for k,v in font['charset'].items()}
+        for glyph in font['glyphs']:
+            self.assertEqual(glyph['character'],cs[glyph['code']])
+            self.assertEqual(glyph['pixelsSha256'],hashlib.sha256(bytes(n for row in glyph_pixels(raw,0,glyph['code'])for n in row)).hexdigest())
+        for stream in room['dialogueStreams']:
+            actual=extract_text(self.reader,47,stream['messageIndex'])
+            self.assertEqual(actual['rawHex'],stream['rawHex']);self.assertEqual(actual['range'],stream['source']['record'])
+            decoded=decode_tokens(bytes.fromhex(stream['rawHex']),cs)
+            self.assertEqual([],decoded['unknownCodes']);self.assertEqual(stream['text'],decoded['text'])
+        self.assertEqual(196,room['contextId']);self.assertEqual(extract_npcs(self.reader,196),room['contextNpcSource'])
+        self.assertFalse(font['normalPlayEvidence']);self.assertEqual('罩',room['differences'][0]['historicalLabel'])
+        self.assertEqual('照',room['differences'][0]['currentScopedTranscription'])
 
     def test_original_completion_boundaries_remain_hash_bound_and_separate_from_app(self):
         proof=ex.load(ROOT/'game-data/provenance/world-jiameng-state.json')
