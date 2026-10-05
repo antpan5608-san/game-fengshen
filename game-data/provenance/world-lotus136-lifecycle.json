@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "lotus-healthy-first-bit-through-jiameng-post-battle-boundary",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "kind": "CONTROLLED_ORIGINAL_PREEXISTING_MAP_FLAG_NOT_NORMAL_VICTORY_OR_ANDROID",
+  "licenseStatus": "UNKNOWN",
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-lotus136-lifecycle.lua",
+    "sha256": "e13355d9814460870284781b3a4573643e058f7fbd4bf9b32ef0de0ced6a0f80",
+    "executedFileBytesIdentical": true,
+    "environment": "Existing FCEUX/Xvfb matching ROM; FENGSHEN_ROOT points to controlled private capture root"
+  },
+  "source": {
+    "path": "private-derived/world-jiameng-valid-field-script-controlled/validfield148-controlled-post-battle-stage3.fc8",
+    "sha256": "9cb9cbee639602b5f52849651e438e6f98a42587b3a0a00fa36d2275908bdf6c",
+    "kind": "CONTROLLED_ORIGINAL_POST_BATTLE_STAGE_NOT_NORMAL_BOSS_VICTORY"
+  },
+  "output": {
+    "path": "private-derived/world-lotus136-early-flag-script30-controlled/flag-lifecycle.tsv",
+    "sha256": "a459a4e7f71b56ccfabe2951afee1db6441310d0007d56d7dc547cda91584186",
+    "caseCount": 2
+  },
+  "observed": [
+    {
+      "flagBefore": 0,
+      "mapBefore": 148,
+      "flagAfter": 0,
+      "mapAfter": 37,
+      "yangStatusAfter": 64,
+      "map37Context": 196,
+      "capture": {
+        "path": "private-derived/world-lotus136-early-flag-script30-controlled/flag0-map37.fc8",
+        "sha256": "e506414d2d6baca2b14b5dfcf6902a47e103b104a9e0b7b8dc5779a603e0dc81"
+      }
+    },
+    {
+      "flagBefore": 1,
+      "mapBefore": 148,
+      "flagAfter": 1,
+      "mapAfter": 37,
+      "yangStatusAfter": 64,
+      "map37Context": 196,
+      "capture": {
+        "path": "private-derived/world-lotus136-early-flag-script30-controlled/flag1-map37.fc8",
+        "sha256": "74ac5501c8b859e2193841601a33aad5cc8a3665ef61e2adeb8339c25bc07467"
+      }
+    }
+  ],
+  "interpretation": [
+    "Native script30 end leaves map136 byte at 0x788 unchanged in these two isolated inputs.",
+    "The already verified actor47 selector checks bit1 before the illness branch. Do not invent a reset when entering the sick room."
+  ],
+  "limitations": [
+    "Does not prove normal pre-illness reachability of map136 or the complete early-visit route.",
+    "Other original event resets and full original lifecycle have not been established.",
+    "No raw ROM, state or capture included in public provenance; Android flow remains NOT_RUN."
+  ]
+}
