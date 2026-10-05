@@ -47,6 +47,7 @@ object OriginalNpcTalk {
         if(rule.actionId==50)return villageFour(before,rule)
         if(rule.actionId==52)return villageSix(before,rule)
         if(rule.actionId==31)return islandResidents(before,rule)
+        if(rule.actionId==58)return jiamengRoom(before,rule)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("信物数量异常")
@@ -58,6 +59,20 @@ object OriginalNpcTalk {
             if(count==1)rule.repeatDialogue else rule.firstDialogue,true)
     }
 
+    /** Original 10:CEF8: illness keeps the first message/bit clear. Healthy
+     * first talk selects first+1 and records only this actor's bit. No cure. */
+    private fun jiamengRoom(before:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        val first=when(rule.mapFlagId){"rom.map.37.flag.1"->0;"rom.map.37.flag.2"->2;else->null}
+        if(rule.mapId!=37||first==null||rule.witnessFlagId.isNotEmpty()||rule.itemId.isNotEmpty()||
+            rule.firstDialogue!="rom.dialogue.47.$first"||rule.repeatDialogue!="rom.dialogue.47.${first+1}")
+            return StoryFollowup.Result(before,null,false,"当前室内对白规则未核验")
+        val repeat=before.flags[rule.mapFlagId]==true
+        // The original reserved Yang slot reads zero before admission. Do not
+        // spawn a character or infer a new prerequisite from this read.
+        val sick=(before.characters.find{it.id=="yangjian"}?.statusMask?:0) and 64 != 0
+        val next=if(!repeat&&!sick)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+        return StoryFollowup.Result(next,if(repeat||!sick)rule.repeatDialogue else rule.firstDialogue,true)
+    }
     private fun isRoom116Rule(rule:OriginalNpcTalkDefinition)=rule.actionId==41&&rule.mapId==116&&
         rule.mapFlagId==ROOM116_ACTOR_FLAG&&rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
         rule.firstDialogue=="rom.dialogue.126.6"&&rule.repeatDialogue=="rom.dialogue.126.8"

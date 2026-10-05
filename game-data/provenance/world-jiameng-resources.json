@@ -14632,5 +14632,4032 @@
       38,
       32
     ]
+  },
+  "zone29": {
+    "behavior8Reuse": {
+      "androidRuntime": false,
+      "behavior": 8,
+      "cases": 1024,
+      "cpuExpectedPath": "android/app/src/test/resources/jiameng-zone29-state08-original.tsv",
+      "cpuExpectedSha256": "a648620ddc690d777d99ed1ff1fdf12f95f35003e8527223b72d040385b266cc",
+      "enemyId": 60,
+      "failures": 0,
+      "normalPlay": false,
+      "probePath": "tools/rom-extractor/probe-world-jiameng-zone29.py",
+      "probeSha256": "fa76feb20911f3f3c99092939cd52adc43f21eda053fdac786a5278bc8508377",
+      "scope": "Original common A0D2 status-priority routine with actual decoded behavior8; same-byte choice/recovery retain prior fixed original dispatch evidence",
+      "sharedEvidence": "game-data/provenance/world-status-bit8.json",
+      "sharedEvidenceSha256": "3a6d761970cd83921b7d24c6da5c2e0a4f65968858c3901a5600a31a56afe509",
+      "targetSlots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    "enemyRecords": [
+      {
+        "attack": 210,
+        "confidence": "HIGH",
+        "defense": 130,
+        "experienceReward": 886,
+        "hp": 663,
+        "id": "rom.enemy.60",
+        "moneyReward": 93,
+        "pointer": {
+          "cpuAddress": 60112,
+          "length": 2,
+          "meaning": "Enemy stat pointer",
+          "module": 1,
+          "offset": 60128,
+          "sha256": "472f8ffd59d4e5d1fe00b162662d6b966defe78d121b85c51b323f5235ed5209"
+        },
+        "range": {
+          "cpuAddress": 61306,
+          "length": 16,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+          "module": 1,
+          "offset": 61322,
+          "sha256": "3d8af90865309f5e953b51a775a242a026559873cd7c99d42196189e07982e38"
+        },
+        "rawHex": "9702d200820076035d003908f30a0001",
+        "remainingBytes": [
+          57,
+          8,
+          243,
+          10,
+          0,
+          1
+        ],
+        "remainingFieldSemantics": "UNKNOWN",
+        "romEnemyId": 60
+      },
+      {
+        "attack": 200,
+        "confidence": "HIGH",
+        "defense": 132,
+        "experienceReward": 791,
+        "hp": 698,
+        "id": "rom.enemy.61",
+        "moneyReward": 90,
+        "pointer": {
+          "cpuAddress": 60114,
+          "length": 2,
+          "meaning": "Enemy stat pointer",
+          "module": 1,
+          "offset": 60130,
+          "sha256": "5e37580d0f746b9b957ded843ce51a5646e0037f86eb4b9411bf8d80d420e668"
+        },
+        "range": {
+          "cpuAddress": 61322,
+          "length": 16,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+          "module": 1,
+          "offset": 61338,
+          "sha256": "6c65ed3f02a0326bd2a5fbc1720217990a28ccb63f985c9ce2e9cc05b7cc48b8"
+        },
+        "rawHex": "ba02c800840017035a003a00c0000000",
+        "remainingBytes": [
+          58,
+          0,
+          192,
+          0,
+          0,
+          0
+        ],
+        "remainingFieldSemantics": "UNKNOWN",
+        "romEnemyId": 61
+      },
+      {
+        "attack": 240,
+        "confidence": "HIGH",
+        "defense": 158,
+        "experienceReward": 934,
+        "hp": 732,
+        "id": "rom.enemy.62",
+        "moneyReward": 102,
+        "pointer": {
+          "cpuAddress": 60116,
+          "length": 2,
+          "meaning": "Enemy stat pointer",
+          "module": 1,
+          "offset": 60132,
+          "sha256": "fb22b35386e9f8c88c71374c5d70fb318b6cc3a31def800a923516de44ecdaea"
+        },
+        "range": {
+          "cpuAddress": 61338,
+          "length": 16,
+          "meaning": "Enemy record: five uint16le stats/rewards, six unresolved bytes",
+          "module": 1,
+          "offset": 61354,
+          "sha256": "16fd288c5cfb6be47e87a401e5fd31d52ece2c133ad3fe9f90c56aa754ad1c9d"
+        },
+        "rawHex": "dc02f0009e00a60366003c00cc050314",
+        "remainingBytes": [
+          60,
+          0,
+          204,
+          5,
+          3,
+          20
+        ],
+        "remainingFieldSemantics": "UNKNOWN",
+        "romEnemyId": 62
+      }
+    ],
+    "graphics": {
+      "enemy60.png": {
+        "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+        "captureSha256": "fe2f2696cd30d6fdb90030c17bf0a0a8feb5a39fcadf50c3fa7a38a735b0068f",
+        "height": 32,
+        "nameConfidence": "UNKNOWN; source-event title is not this ordinary enemy name",
+        "normalPlayEvidence": false,
+        "observedRect": [
+          112,
+          72,
+          32,
+          32
+        ],
+        "originalEnemyId": 60,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ]
+        },
+        "ppuSha256": "f547a911b0dca0214a967538276736c8c2194d20a995f8306cb734a3c32efcbe",
+        "rendererContextSource": {
+          "cpuAddress": 43442,
+          "length": 2,
+          "meaning": "Actual zone29 CHR context, not inherited test-source zone62",
+          "module": 1,
+          "offset": 43458,
+          "sha256": "16d2e875d57b917ebd0edc59d253b430a2a5727045ef0d6e7b381f7fd5d86d95"
+        },
+        "rgbaSha256": "7eae87bd207b438efdd6ac4d54823b69035127ed8fe98ad1cefd50b053d239e1",
+        "scriptSha256": "b26747ae031049c7e9ba87cfa09a8d3ae68690f734535a84544ceca2d6ea931e",
+        "sourceType": 71,
+        "tiles": [
+          {
+            "length": 16,
+            "offset": 843808,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "9b21665e03186fa1a000ccada3dad5de4ce9ae9ce75e262195d9871c282e5712",
+            "xy": [
+              0,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843824,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "b4b3aaaf0c37aa75dd9532c35bda9d6cbdf56e9569640780ead20b985ec44da0",
+            "xy": [
+              8,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843840,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "547ad9551febdfccac601e17e7c2db648dc67586aa9bf18a6ec4e0c5e68dfba9",
+            "xy": [
+              16,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 806128,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "a44f869b720be79dafbfd94382036b7bd2406e1c162d632f74cb4a67a081b37e",
+            "xy": [
+              24,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843872,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "532e16c385e77ec17e5f53dd848a6b4e68b37c42add32c20f6bfe1e7dd2687d1",
+            "xy": [
+              0,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843888,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "07505a3b045822189f9df03e11cdfbdb7bf46298e05660a9842e9e1c54e154c1",
+            "xy": [
+              8,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843904,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "b400f43d2b13fff37854e65ff2575dbecc6688f055dead5ae1bf4f2f4c0d4058",
+            "xy": [
+              16,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843920,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "abccfb9d2142ebf494e140477080678cc7e3af25b18fe1204e3e0abd097fe613",
+            "xy": [
+              24,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843936,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "67954d67fdf22ec1dae37fb92b38ab6a72d480df8fab04f9f13656e0fe1db9a4",
+            "xy": [
+              0,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843952,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "d4384e7af8717296358165f4d70c5f011d85e3a84c2a5f79ec92d0e5fb13b978",
+            "xy": [
+              8,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843968,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "144f4b08883b6edfb8270ea7d5d60b21b10f6e6a77f2ce6a213cf78937e770f3",
+            "xy": [
+              16,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 843984,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "0c2d32a928248fcab5fc4f53ac939377dbd771a7afebd6141c152792aa0d033c",
+            "xy": [
+              24,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844000,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "5164a036e83c6ea2be909173141ae0bf3b5c0f730760837b9ba34a10cdb2020d",
+            "xy": [
+              0,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844016,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "c9e441bd90838a1b4e3ed0d9d671f2ede834eba66207e580f638955048011455",
+            "xy": [
+              8,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844032,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "fb87a849df9221fab59a123df564cceeb733cebc1723d0e1ff81a54d7456bb2b",
+            "xy": [
+              16,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844048,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                150,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                178,
+                255,
+                207
+              ]
+            },
+            "sha256": "f82de23c6da03b1e30d5a393ba101619fef47a650777bb23fa716ed32c5f5d05",
+            "xy": [
+              24,
+              24
+            ]
+          }
+        ],
+        "transparentZero": false,
+        "width": 32
+      },
+      "enemy61.png": {
+        "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+        "captureSha256": "62c1edbd2a1077f85855bbcf6293255bcbadb3ffd5b91fb2d9afa82a0acfe91a",
+        "height": 40,
+        "nameConfidence": "UNKNOWN; source-event title is not this ordinary enemy name",
+        "normalPlayEvidence": false,
+        "observedRect": [
+          112,
+          72,
+          40,
+          40
+        ],
+        "originalEnemyId": 61,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ]
+        },
+        "ppuSha256": "bd79be83ffa7e570aba08399b6bbcc0b7340ab9f89b77e2ed8dde0ba8ce7f5f8",
+        "rendererContextSource": {
+          "cpuAddress": 43442,
+          "length": 2,
+          "meaning": "Actual zone29 CHR context, not inherited test-source zone62",
+          "module": 1,
+          "offset": 43458,
+          "sha256": "16d2e875d57b917ebd0edc59d253b430a2a5727045ef0d6e7b381f7fd5d86d95"
+        },
+        "rgbaSha256": "f9b3eeb180ebb17e9e7bd74c24a9556c841713c4eda4f555d257b87e9659dc1a",
+        "scriptSha256": "8b0226a3e16abc713719848b42409e7a9cb256f68fdf83f445708c4cecc5068c",
+        "sourceType": 72,
+        "tiles": [
+          {
+            "length": 16,
+            "offset": 795008,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ]
+            },
+            "sha256": "3b0e4842b28d6b39ec725a6459fb943f5f1d658f4d0ee991004dd50f2c182f31",
+            "xy": [
+              0,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845344,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "6af3db8c9917b84a84528ada11607c18dd0961b9d282a2d12c8e8c8480aa08fd",
+            "xy": [
+              8,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845360,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "5971fb9405f6eae0f75cfb4bd3915b3cf2f5cb0c87a36675dc8e6f89d18fba24",
+            "xy": [
+              16,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              24,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              32,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845520,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "1cf15e605673781c81d694f58cef2cd99b994d6c4919d66b10aad161a35e9784",
+            "xy": [
+              0,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845536,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "f36cbb3619c1d2b25fc7b330158a8e38a7057d27b4d1ab72a2965c1364be2c31",
+            "xy": [
+              8,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845552,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "eb1a4dadaa2296ec1754c9111723c85ff2512486cee559aa3bd65e12396119ef",
+            "xy": [
+              16,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845568,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "42b3ee8b525086ad49f694f176199c8d6952a353fc933ab2ca629ed629756454",
+            "xy": [
+              24,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              32,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845584,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "79d8ebd45d2ccaaadbf2aaea981339ea3706aa05b20dae141391b8aaca6b3eed",
+            "xy": [
+              0,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845600,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "1b286591da89b9372ee1cac5384cc289f1ebef7f411eef2c50b89177e9aa4415",
+            "xy": [
+              8,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845616,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "4b4fd0a0d5420175c29631c42d9d0347001cfeebe47d2b09d4634833bc83dff8",
+            "xy": [
+              16,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845632,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "a7624b078926e21ca03d09b35310f4f1b6dd29241d0acfb10a5a30acb8d6e121",
+            "xy": [
+              24,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              32,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845648,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "aa6b7258f50b995767a507c82eb3f2f5b50a0f7fd2879fc2a1759049ebcf92a0",
+            "xy": [
+              0,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845664,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ],
+              "3": [
+                199,
+                215,
+                255
+              ]
+            },
+            "sha256": "2b82840770077f4a21bc7fd53ca570fe6077364f6bada5b192f3255fd1a260f0",
+            "xy": [
+              8,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845680,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "7b40590d9efe6ed2b568a0029d2bead81bfa35a9012c8fb4179378e30f43c4a1",
+            "xy": [
+              16,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845696,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "c4fee00d8474482fe54968541241ed13208cbca9bdcf212f38224691273c35d8",
+            "xy": [
+              24,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845712,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ]
+            },
+            "sha256": "c01f0885ac5ce1a1db0cf65cad45336ea75d4bdbd7e425439ceffe5d07b36f03",
+            "xy": [
+              32,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845728,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "116dae24899c5e0a24f26fea908968043f5463523737154ce5e2be13c1992476",
+            "xy": [
+              8,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845744,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "3520a3f61f8a0317e02c6f246ee9d08d63644a16d52a17c428e479373bf5f6b8",
+            "xy": [
+              16,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845760,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "4c28b117de561057b7dff9e97d47bb95fcc6a824a725308f407ec53d03e9d722",
+            "xy": [
+              24,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845776,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                69,
+                0
+              ],
+              "2": [
+                255,
+                190,
+                178
+              ]
+            },
+            "sha256": "f2e3b56aad93a372f14b7092fc26ff6baf683e4336effaaaa028125bcb1d5c95",
+            "xy": [
+              32,
+              32
+            ]
+          }
+        ],
+        "transparentZero": false,
+        "width": 40
+      },
+      "enemy62.png": {
+        "captureKind": "CONTROLLED_ORIGINAL_FULL_GROUP_LOADER",
+        "captureSha256": "275432a75f39648db09c034f11911741eec69f530f123b473ae28bdee586bbf9",
+        "height": 72,
+        "nameConfidence": "UNKNOWN; source-event title is not this ordinary enemy name",
+        "normalPlayEvidence": false,
+        "observedRect": [
+          96,
+          56,
+          72,
+          72
+        ],
+        "originalEnemyId": 62,
+        "paletteCodes": {
+          "0": [
+            0,
+            0,
+            0
+          ]
+        },
+        "paletteLimitation": "Exact observed monochrome pixels; more than one original CHR code may display the same colour. No normal formation or other palette-state equivalence claimed.",
+        "ppuSha256": "4b1be8cce3dd04625de1c78aeb367cee30ff0ba2e726e678f18ab64740546877",
+        "rendererContextSource": {
+          "cpuAddress": 43442,
+          "length": 2,
+          "meaning": "Actual zone29 CHR context, not inherited test-source zone62",
+          "module": 1,
+          "offset": 43458,
+          "sha256": "16d2e875d57b917ebd0edc59d253b430a2a5727045ef0d6e7b381f7fd5d86d95"
+        },
+        "rgbaSha256": "85ebee97f2ce5a17dd017851dd1a26f018fa32b002dbf561c81a9be300b71414",
+        "scriptSha256": "9deb36a446b0f832672e37d08f25825b414e37c17b26da705bf52009daa2725e",
+        "sourceType": 73,
+        "tiles": [
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              8,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              16,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              24,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 586800,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                0,
+                0,
+                0
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "ced266e5f434586106c1e4d9cd7116afc399f8b20da2b37022820dac5c7443c0",
+            "xy": [
+              32,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              40,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              48,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              56,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              64,
+              0
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844144,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                0,
+                0
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "37d5d0e264c6dd505d6d9af23debedc56ea094ea0734adc810c227edadcac7b7",
+            "xy": [
+              8,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844160,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "d3ef97b2a8bc59e39ed50dd11977209d5f24979f1873a4bcba3b5ebf09525114",
+            "xy": [
+              16,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844176,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "88074d2ab2c8b57f5eed38b7a60a387e24a1c0279146795f3e7c4c70cc58e5a5",
+            "xy": [
+              24,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844192,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "87d9bd3e080de23936046578a062d7d53e97cee83028735c731f872f045a7e43",
+            "xy": [
+              32,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844208,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "5d15644cf38dd92d577c509527e56c233d1653a14225c1e9c259e0c91e557ed2",
+            "xy": [
+              40,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844224,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                0,
+                0
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "9a7753eaa1548018ce072387698b9b31dc4dbcf12b541953ab89ffa610715016",
+            "xy": [
+              48,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844240,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                0,
+                0
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "a2f1bcf544dd309ddc7d84e07bfdd8f13473a2fe69c305781ed942e92c7885fa",
+            "xy": [
+              56,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              64,
+              8
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844320,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "754060784154268c01e6fb6c0b1b5f3383a89dc6d2b167033e7ac6394060dfd5",
+            "xy": [
+              8,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844336,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "c6ed94fdd9fb7562944f1f7bd8cca06f9c0b75ac1081960bfca687b078912356",
+            "xy": [
+              16,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844352,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "01972e6d7b23a723f0d99ffff9bba3ec4202fb9fc3a7306c53be17e49c8b69af",
+            "xy": [
+              24,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844368,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "6f849e50cb5b10a3787d8bbccaac5a19cbb108a125e46bfc4347daa1820b0a26",
+            "xy": [
+              32,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844384,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "ed82b8f03686abc4fbddbcbd3941a002881b751c7b89b1dc2c3c5c21899da73a",
+            "xy": [
+              40,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844400,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "b03e63800366b89a22f2d5029b85f53a0c21f41133de4617ae43b55522a52e54",
+            "xy": [
+              48,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844416,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "4859c74520a1b8baefef4c97b91a3a38102e7609e21ab7199e3fddc3071a2619",
+            "xy": [
+              56,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              64,
+              16
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              8,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844496,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "2fdfccf985a7db47c5e9b66dbd9429499e81e4802d05d58b582ca1d02dc17972",
+            "xy": [
+              16,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844512,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "9a0a6bd3f3dce7ad53d870d907c7a556adb48aadd89da511dbcb3d5e92ad5b01",
+            "xy": [
+              24,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844528,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "64b7184cccb6c16e3e33f2832d01e00359d9cfc87f0b80a55b804c40f585bd77",
+            "xy": [
+              32,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844544,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "7ca1d0d8c6494d289434d9f7398d2ac4b8d325bb9dcb41a092e2f7f293810182",
+            "xy": [
+              40,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844560,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "10263e1faa3e4297cc4ebe0c2d027fe391a82b63266e9df81687b7c01688b7e4",
+            "xy": [
+              48,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844576,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "ac2e3322e48b0177c70e57993b58bfd7093ba53b8499eafd9327a73f015f09f0",
+            "xy": [
+              56,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              64,
+              24
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844656,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "de8588b58baea89e785c4ee31b16554b64083ba17cbd6ddaa0b36bdd71f5d2cf",
+            "xy": [
+              8,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844672,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "bda76b869f04aa9cd9436a5a755be85282e666abd1aca2d90769c6a73d65b28c",
+            "xy": [
+              16,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844688,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "95502e5c8ab09da75fb27e9ac653c5f6ffa7c55c786c1b1406439dc05298046f",
+            "xy": [
+              24,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844704,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "9803823348323e433bab3ddc09e3030df2cb049a17d8c2428c24bc85e63bb519",
+            "xy": [
+              32,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844720,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "6190bbcf11a8b447a032188382fbc2be661d9416573a785f751c473f3082d357",
+            "xy": [
+              40,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844736,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "075cf1a8ae92a6c2d34e1dba9d9c499e4efefde8e88e80352c8c30c18a27a025",
+            "xy": [
+              48,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844752,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "c6bdd2f8669d7f189a0c5595a737be75bc3653971228e425bd10378d6301cc33",
+            "xy": [
+              56,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 527488,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                0,
+                0
+              ],
+              "2": [
+                0,
+                0,
+                0
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "c8479fa658a6ca31a9ddf457c4a185b73c98a269cf1c546d542366ba2a3aedda",
+            "xy": [
+              64,
+              32
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844848,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "264427509a1262065dc28de4d28814c56587e7ad9a5cc7ba5c1737647df2f537",
+            "xy": [
+              0,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 700448,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                0,
+                0,
+                0
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "60c69a3e87bf5c4f1e546bec45f262690bcf5494c4ecac2616bf2f731afa152a",
+            "xy": [
+              8,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844880,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "40f351f00907aa32110979ca058e98144674cd833adc65fc3d221c65143ccc94",
+            "xy": [
+              16,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844896,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "e3f9778224b3ac90f63cd6f5d0eab3af54246005bd2b942b9d2dbe1cfa30eeb3",
+            "xy": [
+              24,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844912,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "4467e1c720e8424a0e6330c655f724128087da9e1b79360ce1e5ba7b28663e5d",
+            "xy": [
+              32,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844928,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "8826402c3571e1c7aee943e311eb8ec4028948ed97ec33cf7d9ece6927695544",
+            "xy": [
+              40,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844944,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "29fc9f33f021eb359d077d1740028a1b444a02bb6799f901ad9064be23029be3",
+            "xy": [
+              48,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844960,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "572e9442769b55128f6254e8fcd9a9da4247ef484fe401d68bf4282f09985162",
+            "xy": [
+              56,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844976,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "3c51ef83d7e852155f3a0c619548f538845e32f1b5d48762e24cb24db218fd19",
+            "xy": [
+              64,
+              40
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 844992,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "4fa29f6c7e67311d2702c69a54b8a538ffb6fca7bb8285b7a2525d26dd2862fe",
+            "xy": [
+              0,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 701088,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                0,
+                0,
+                0
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "9e9da4548f2b9e45e029e135d5e00499ef45ca3b933f8c4052f104c07cd71437",
+            "xy": [
+              8,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845024,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "8569f8d01ad4834db0ebb547337dc1d2433db3ed751424d54926cbfd032a4e26",
+            "xy": [
+              16,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845040,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "ac78ab64f1cca2c50a531cfac22a56c3229f681d170daf613b2ea238507021a6",
+            "xy": [
+              24,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845056,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "7c8e9613f4cdf7f8d314cb121b2d41159fea0e0a330b0bd2730e2fdf245634f6",
+            "xy": [
+              32,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845072,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "55370e2fd026461d08dbbc4ef6e34a81a8823bcc27adf92b2ef8f19ad9f9b571",
+            "xy": [
+              40,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845088,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "cf324ed2e21268161aa2b40ad25f89a9c5c307b04d7077bf160366785f949cfd",
+            "xy": [
+              48,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845104,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "4bf21bb111c2f07d2d9945b42116bb0c05a1d482f9173f8ecf14c6bc0b9a0be5",
+            "xy": [
+              56,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845120,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "92fa869d7099148b937dd131ba1bf61a1572aee7dd967ce706bd97fe6a12d46f",
+            "xy": [
+              64,
+              48
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845168,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "6df98984f8287fed5ff4e050ece44a3dde19aa454bd77b9cf4eed5b4178ebe76",
+            "xy": [
+              0,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845184,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "30090c80cf0bf95f0e4be2f8c9578fb2bdde63b90380ae596e677847f2b0bc84",
+            "xy": [
+              8,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845200,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "337bd9d0b922e5984509852afe9fcdb345292b25a3af9461ed1f80d47a85b438",
+            "xy": [
+              16,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845216,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "3bcd947dc8afe85aaa892d2fe71a88ee28b14bc255ae087650f865da723e8f7f",
+            "xy": [
+              24,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845232,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "779e0e9c19e4b6101c7fab66573fc0a48b1f5bcc8dbc9be256ba4f513b7fb0b8",
+            "xy": [
+              32,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845248,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "f759828dc0302fc3674efe1e159bf43edad5944d207f63346e85b2977d88d9da",
+            "xy": [
+              40,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845264,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "86a0698e16fce51a254beca7cbfe5639e95d239ba716f2d0d97903a5aa19f085",
+            "xy": [
+              48,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845280,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "de416fec85baeef4830aec131d1c07e7c22867f83c8b53de47809c51e4c94c10",
+            "xy": [
+              56,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845296,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "82d853cb9e36d4ee711f4b3a078ebb3e26b05a4aae8b9a2f36f0c8829f35153e",
+            "xy": [
+              64,
+              56
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 528166,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+            "xy": [
+              0,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845376,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "89dcff4611aa89e1590355040bd08b17b6f326c806f40ccce78c4eaef6c26e67",
+            "xy": [
+              8,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845392,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "d850c10c0829da24fa2ef44113728a363dfc37906de15e489871a3f760e8baa6",
+            "xy": [
+              16,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845408,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "2e1338e06cb76d23f131c5d5dee344a03f58c0f261a69db19012ed91043e4e10",
+            "xy": [
+              24,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845424,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "20c258b223cc6acfabe41ee32a869e8d7f78e4cd7eb9eedf125f715601843ed8",
+            "xy": [
+              32,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845440,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "d62583e639a250956e9d61f2d094f6dbf911e9e1084f6e7171795fb92088a095",
+            "xy": [
+              40,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845456,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "c3ecfcbb2afb9ae32d9d19610bbde4b1734f06a3d16b9d0e520bd85ead211c95",
+            "xy": [
+              48,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 845472,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                117,
+                117,
+                117
+              ],
+              "2": [
+                117,
+                117,
+                117
+              ],
+              "3": [
+                0,
+                0,
+                0
+              ]
+            },
+            "sha256": "9e75b46cfac59735d39cd559d5dd0b6f64c179859ffb61bc665c4b93c1ac5a62",
+            "xy": [
+              56,
+              64
+            ]
+          },
+          {
+            "length": 16,
+            "offset": 580208,
+            "paletteCodes": {
+              "0": [
+                0,
+                0,
+                0
+              ],
+              "1": [
+                0,
+                0,
+                0
+              ],
+              "2": [
+                0,
+                0,
+                0
+              ],
+              "3": [
+                117,
+                117,
+                117
+              ]
+            },
+            "sha256": "e19b4731cdfb904c8a5a144a3351965b2e37b27bceedb62ccafe5e1874d7416c",
+            "xy": [
+              64,
+              64
+            ]
+          }
+        ],
+        "transparentZero": false,
+        "width": 72
+      }
+    },
+    "groups": {
+      "groupCountRange": {
+        "cpuAddress": 45386,
+        "length": 1,
+        "meaning": "Original zone group count",
+        "module": 1,
+        "offset": 45402,
+        "sha256": "ef6cbd2161eaea7943ce8693b9824d23d1793ffb1c0fca05b600d3899b44c977"
+      },
+      "groupRootRange": {
+        "cpuAddress": 43440,
+        "length": 4,
+        "meaning": "Original zone group table and graphics context",
+        "module": 1,
+        "offset": 43456,
+        "sha256": "102910b5496d2fa59ba739b6b2a108e40de2148e3c80c8f102a1abcbf240a5b4"
+      },
+      "groups": [
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 60,
+              "slot": 3,
+              "sourceType": 71
+            }
+          ],
+          "id": 0,
+          "pointer": {
+            "cpuAddress": 44571,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44587,
+            "sha256": "cb823e7449f5fa67685ae54e0462bcec6e896128a4bc3b102cac572d459fa428"
+          },
+          "range": {
+            "cpuAddress": 47462,
+            "length": 3,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47478,
+            "sha256": "8e8064b3183c4bb25c9693ea7fbffbbd561df771130f837fd697920c5b55e67c"
+          },
+          "rawHex": "044700"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 61,
+              "slot": 2,
+              "sourceType": 72
+            },
+            {
+              "enemyId": 61,
+              "slot": 4,
+              "sourceType": 72
+            }
+          ],
+          "id": 1,
+          "pointer": {
+            "cpuAddress": 44573,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44589,
+            "sha256": "2b81cb592af117082c6901708059616f117559fde609e4a63e380ee20476e3b3"
+          },
+          "range": {
+            "cpuAddress": 47465,
+            "length": 5,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47481,
+            "sha256": "11d4dca2bb647e4af82d07c29ab2793dc1250b6102c693a3ed8997b150ea99a7"
+          },
+          "rawHex": "0348054800"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 2,
+              "sourceType": 73
+            }
+          ],
+          "id": 2,
+          "pointer": {
+            "cpuAddress": 44575,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44591,
+            "sha256": "af968844e52fc421655634e938e7312f7e9419678deef6223289de18a14da5de"
+          },
+          "range": {
+            "cpuAddress": 47470,
+            "length": 3,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47486,
+            "sha256": "6b3b576fd3445b725198ad20e26f956cf129d010b060bb6aab64c724c701aa50"
+          },
+          "rawHex": "034900"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 3,
+              "sourceType": 73
+            }
+          ],
+          "id": 3,
+          "pointer": {
+            "cpuAddress": 44577,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44593,
+            "sha256": "20ff820a3862e1512c3d6079ae20190bd46df0d71f3e7a3b6777600de19ad81a"
+          },
+          "range": {
+            "cpuAddress": 47473,
+            "length": 3,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47489,
+            "sha256": "ac571c76753e30179af6096f24a62a000d600611a359d7df4ea6befdf7d7a56b"
+          },
+          "rawHex": "044900"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 1,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 62,
+              "slot": 4,
+              "sourceType": 200
+            }
+          ],
+          "id": 4,
+          "pointer": {
+            "cpuAddress": 44579,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44595,
+            "sha256": "3b7e456e53ecd14a0917410e6792e0a629dfe42d7724fd5ccd2a701c43c42c14"
+          },
+          "range": {
+            "cpuAddress": 47476,
+            "length": 5,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47492,
+            "sha256": "754d11aa420bc038e3efd79a0fa9ac0adb4737d89ff44d1d3dca77c46f7c93c4"
+          },
+          "rawHex": "024905c800"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 2,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 62,
+              "slot": 5,
+              "sourceType": 200
+            }
+          ],
+          "id": 5,
+          "pointer": {
+            "cpuAddress": 44581,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44597,
+            "sha256": "d9c917d4cbc7576c80646a6908f4a3a16cc00dbf48b44b474d2b19f2d31a6189"
+          },
+          "range": {
+            "cpuAddress": 47481,
+            "length": 5,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47497,
+            "sha256": "5a6b5a8d08809fd3c4ef4307031c0f1b8b9c417f44cc93ee886d46af6bd7564c"
+          },
+          "rawHex": "034906c800"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 1,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 61,
+              "slot": 3,
+              "sourceType": 72
+            },
+            {
+              "enemyId": 60,
+              "slot": 5,
+              "sourceType": 71
+            }
+          ],
+          "id": 6,
+          "pointer": {
+            "cpuAddress": 44583,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44599,
+            "sha256": "891dcbabb54529c4216d04db7c5f20da8102f847a3524982dd7e7df7807197ac"
+          },
+          "range": {
+            "cpuAddress": 47486,
+            "length": 7,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47502,
+            "sha256": "fb85f55e3ddccc853297b5ee07bcd88005e43b6300b2aaf1dac467d373d92802"
+          },
+          "rawHex": "02490448064700"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 2,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 60,
+              "slot": 5,
+              "sourceType": 71
+            }
+          ],
+          "id": 7,
+          "pointer": {
+            "cpuAddress": 44585,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44601,
+            "sha256": "928da3ad2d951331c4d61d41d6ed0d7daf712730555b1b4dc6d0a14d9fdb2881"
+          },
+          "range": {
+            "cpuAddress": 47493,
+            "length": 5,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47509,
+            "sha256": "614137a446786bd08fee7f9ab38861f54c51a4f5b311b2aee6aa344bb5cde368"
+          },
+          "rawHex": "0349064700"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 61,
+              "slot": 1,
+              "sourceType": 72
+            }
+          ],
+          "id": 8,
+          "pointer": {
+            "cpuAddress": 44587,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44603,
+            "sha256": "d12aef7e0a8c2755f5aef62a9a5b4960ef2c973b4efebbb225e42f37f25413a1"
+          },
+          "range": {
+            "cpuAddress": 47498,
+            "length": 3,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47514,
+            "sha256": "025f4f6e6892a85ebc3751e21247c38ef5b50f93fa304a9e981eb12b846c12a6"
+          },
+          "rawHex": "024800"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 62,
+              "slot": 1,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 61,
+              "slot": 6,
+              "sourceType": 72
+            }
+          ],
+          "id": 9,
+          "pointer": {
+            "cpuAddress": 44589,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44605,
+            "sha256": "ced98a0b67a68ecdec1be40c90887ed507bf6ec8dadec6f4a3f3c9cb474c16d1"
+          },
+          "range": {
+            "cpuAddress": 47501,
+            "length": 5,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47517,
+            "sha256": "398cdbbc9e6671c973c22823511d9262888aa559585060cd3fdbab10d7070d18"
+          },
+          "rawHex": "0249074800"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 60,
+              "slot": 1,
+              "sourceType": 71
+            },
+            {
+              "enemyId": 62,
+              "slot": 3,
+              "sourceType": 73
+            },
+            {
+              "enemyId": 60,
+              "slot": 5,
+              "sourceType": 71
+            }
+          ],
+          "id": 10,
+          "pointer": {
+            "cpuAddress": 44591,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44607,
+            "sha256": "c8ccdd6354c3b62cc46d985e4e7ef164b7a44f037f5ebbe0f6aeeb776531dd78"
+          },
+          "range": {
+            "cpuAddress": 47506,
+            "length": 7,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47522,
+            "sha256": "1ba81105ee19a7d45707464a7091c631f58634a4afe014380c9318a304983c6f"
+          },
+          "rawHex": "02470449064700"
+        },
+        {
+          "duplicateSlots": [],
+          "entities": [
+            {
+              "enemyId": 60,
+              "slot": 1,
+              "sourceType": 71
+            },
+            {
+              "enemyId": 61,
+              "slot": 3,
+              "sourceType": 72
+            },
+            {
+              "enemyId": 62,
+              "slot": 5,
+              "sourceType": 73
+            }
+          ],
+          "id": 11,
+          "pointer": {
+            "cpuAddress": 44593,
+            "length": 2,
+            "meaning": "Original encounter group pointer",
+            "module": 1,
+            "offset": 44609,
+            "sha256": "876015c0e32ddaecaacaf18cd08e157da31b31fb4f105a6d1d75fcd373822b2a"
+          },
+          "range": {
+            "cpuAddress": 47513,
+            "length": 7,
+            "meaning": "Original slot/source pairs, 00 terminated",
+            "module": 1,
+            "offset": 47529,
+            "sha256": "69720cf7a8317b2aa82795516f015b2648a7b9476c08108e827be6317ed8dda0"
+          },
+          "rawHex": "02470448064900"
+        }
+      ],
+      "id": 29
+    },
+    "kind": "CONTROLLED_ORIGINAL_RENDERER_NOT_NORMAL_ROUTE",
+    "limitations": [
+      "Source event title is not an enemy name",
+      "Original behavior8 reuse requires identity60 proof; no altered stats/loot/encounter probability"
+    ],
+    "rejectedAttempt": "Inherited zone25/night CHR 136/153 gave incomplete sprites; retained privately, replaced by actual zone29 156/129, not guessed art"
   }
 }

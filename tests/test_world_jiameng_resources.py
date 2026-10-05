@@ -200,6 +200,48 @@ class JiamengResourcesTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'mixed graphic palette'):
                 ex.observed_graphic_recipe(self.reader,p,[0,0,recipe['width'],recipe['height']],True)
 
+    def test_zone29_keeps_all_original_groups_and_exact_graphic_pixels(self):
+        from forensics.fengshen246 import extract_encounter_groups
+        zone=self.proof['zone29'];self.assertEqual(extract_encounter_groups(self.reader,29),zone['groups'])
+        self.assertEqual(12,len(zone['groups']['groups']))
+        self.assertEqual({60,61,62},{m['enemyId']for g in zone['groups']['groups']for m in g['entities']})
+        for n,recipe in zone['graphics'].items():
+            self.assertFalse(recipe['normalPlayEvidence'])
+            self.assertEqual(recipe['originalEnemyId'],self.reader.read(1,0x9ea3+recipe['sourceType'])[0])
+            image=Image.open(io.BytesIO(ex.scoped_observed_graphic(self.reader,recipe))).convert('RGBA')
+            self.assertEqual(recipe['rgbaSha256'],ex.digest(image.tobytes()),n)
+        # Derived output checks exporter colour collapse; not a new gameplay capture.
+        recipe=zone['graphics']['enemy62.png']
+        with tempfile.TemporaryDirectory()as td:
+            f=Path(td)/'derived.png';f.write_bytes(ex.scoped_observed_graphic(self.reader,recipe))
+            regenerated=ex.observed_graphic_recipe(self.reader,f,[0,0,72,72],False,
+                per_tile_palette=True,allow_collapsed_palette=True)
+            self.assertEqual(recipe['rgbaSha256'],regenerated['rgbaSha256'])
+            with self.assertRaisesRegex(ValueError,'not matched'):
+                ex.observed_graphic_recipe(self.reader,f,[0,0,72,72],False,per_tile_palette=True)
+
+    def test_zone29_state08_reuses_original_priority_without_damage_or_other_target_changes(self):
+        enemy=dict(id=60,behaviorByte=8,behaviorEvidence='game-data/provenance/world-jiameng-resources.json')
+        ex.validate_world_jiameng_status8(self.reader,enemy)
+        for fields in ({'id':29},{'behaviorByte':9},{'requiredBindingMarker':5},{'specialBaseDamage':10}):
+            with self.subTest(fields=fields),self.assertRaises(ValueError):
+                ex.validate_world_jiameng_status8(self.reader,enemy|fields)
+
+    def test_scoped_special18_capability_keeps_parent_and_rejects_other_protection(self):
+        scene=json.loads((ROOT/'android/app/src/main/assets/development/scene.json').read_text(encoding='utf-8'))
+        item=next(i for i in scene['items']if i['id']=='rom.special.18');before=copy.deepcopy(item)
+        update=ex.world_jiameng_item_update(item);self.assertEqual(before,item)
+        self.assertEqual({'battleBindingUse'},set(update['fields']))
+        self.assertEqual(5,update['fields']['battleBindingUse']['bindingMarker'])
+        for n in (158,159,160,161):ex.validate_world_jiameng_binding(self.reader,dict(id=n,
+            requiredBindingMarker=5,bindingEvidence='game-data/provenance/world-jiameng-binding.json'))
+        for n,marker in ((157,5),(60,5),(158,2),(161,1)):
+            with self.subTest(n=n,marker=marker),self.assertRaises(ValueError):
+                ex.validate_world_jiameng_binding(self.reader,dict(id=n,requiredBindingMarker=marker,
+                    bindingEvidence='game-data/provenance/world-jiameng-binding.json'))
+        for fields in ({'maxCount':10},{'category':'medicine'},{'battleBindingUse':{}},{'originalId':13}):
+            with self.subTest(fields=fields),self.assertRaises(ValueError):ex.world_jiameng_item_update(item|fields)
+
     def test_wrong_tile_palette_span_and_overlapping_graphics_rejected(self):
         for kind in ('palette','span','overlap','missing','invalid-palette'):
             r=copy.deepcopy(self.proof['graphics']['enemy158.png'])

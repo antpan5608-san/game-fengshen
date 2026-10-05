@@ -31,6 +31,7 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var worldItemTarget:WorldObjectTarget?=null;internal set
     var automaticStoryOnly:Boolean=false;internal set
     var removedFlagId:String?=null;internal set
+    var visibleFlagId:String?=null;internal set
     var moneyTreasure:MoneyTreasureDefinition?=null;internal set
     var stateVariant:NpcStateVariant?=null;internal set
     var hiddenInvestigation:Boolean=false;internal set
@@ -123,19 +124,21 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
             n.scriptedActor=npc.scriptedActor;n.interactionDirection=npc.interactionDirection;n.clinicId=npc.clinicId
             n.originalTalk=npc.originalTalk;n.worldItemTarget=npc.worldItemTarget;n.automaticStoryOnly=npc.automaticStoryOnly
             n.removedFlagId=npc.removedFlagId;n.moneyTreasure=npc.moneyTreasure;n.stateVariant=npc.stateVariant
+            n.visibleFlagId=npc.visibleFlagId
             n.hiddenInvestigation=npc.hiddenInvestigation
         }else npc
     }
-    fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=npc.removedFlagId?.let{flags[it]!=true}
-        ?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true
+    fun npcVisible(npc:StoryNpc,flags:Map<String,Boolean>)=
+        (npc.visibleFlagId?.let{flags[it]==true}?:true)&&
+        (npc.removedFlagId?.let{flags[it]!=true}?:npc.worldItemTarget?.let{flags[it.removedFlagId]!=true}?:true)
     @Synchronized fun sceneForState(mapId:Int,flags:Map<String,Boolean>):Scene? {
         if(stateScene?.mapId==mapId&&stateFlags===flags)return stateScene
         val base=scenes[mapId]?:return null
         val removed=worldItemTargets().filter{it.mapId==mapId&&flags[it.removedFlagId]==true}
-            .map{it.y*base.width+it.x}.toSet()+npcs.filter{it.mapId==mapId&&it.removedFlagId?.let{f->flags[f]}==true}
+            .map{it.y*base.width+it.x}.toSet()+npcs.filter{it.mapId==mapId&&!npcVisible(it,flags)}
             .map{it.y*base.width+it.x}.toSet()
         var result=if(removed.isEmpty())base else base.copy(dynamicObjectCells=base.dynamicObjectCells-removed)
-        for(npc in npcs.filter{it.mapId==mapId})npc.stateVariant?.takeIf{flags[it.flagId]==true&&npcVisible(npc,flags)}?.let{v->
+        for(npc in npcs.filter{it.mapId==mapId})npc.stateVariant?.takeIf{it.activeIn(flags)&&npcVisible(npc,flags)}?.let{v->
             result=result.copy(dynamicObjectCells=(result.dynamicObjectCells-(npc.y*base.width+npc.x))+(v.y*base.width+v.x))
         }
         for(barrier in sceneBarriers)result=barrier.apply(result,flags)
@@ -300,6 +303,11 @@ object ContentLoader {
                 }
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}
+                npc.visibleFlagId=n.optString("visibleFlagId").takeIf{it.isNotEmpty()}
+                if(npc.visibleFlagId!=null)require(npc.id=="rom.npc.37.yang-bed"&&npc.mapId==37&&npc.x==3&&npc.y==5&&
+                    npc.visibleFlagId=="rom.npccontext.37.196"&&npc.removedFlagId==null&&npc.firstDialogue.isEmpty()&&
+                    npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&
+                    n.getString("jiamengResourceEvidence")=="game-data/provenance/world-jiameng-actors.json")
                 if(npc.automaticStoryOnly||npc.removedFlagId!=null){
                     val island=npc.mapId==76&&npc.id in (0..3).map{"rom.npc.76.$it"}&&
                         npc.removedFlagId=="rom.map.76.flag.128"&&
@@ -316,7 +324,13 @@ object ContentLoader {
                         npc.removedFlagId=="rom.npccontext.115.208"&&!npc.automaticStoryOnly
                     val jail=npc.mapId==116&&npc.id in (0..5).map{"rom.npc.116.$it"}&&!npc.automaticStoryOnly&&
                         npc.removedFlagId=="rom.npccontext.116.210"&&n.optString("automaticStoryEvidence")==OriginalNpcTalk.ROOM116_EVIDENCE
-                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women||jail)&&npc.firstEffects.isEmpty())
+                    val jiameng=n.optString("automaticStoryEvidence")=="game-data/provenance/world-jiameng-actors.json"&&when(npc.mapId){
+                        145->npc.id=="rom.npc.145.0"&&npc.x==4&&npc.y==10&&!npc.automaticStoryOnly&&npc.removedFlagId=="rom.npccontext.145.228"
+                        146->npc.id=="rom.npc.146.0"&&npc.x==2&&npc.y==4&&!npc.automaticStoryOnly&&npc.removedFlagId=="rom.npccontext.146.216"
+                        148->npc.id in (0..2).map{"rom.npc.148.$it"}&&npc.x==7+npc.id.substringAfterLast('.').toInt()&&npc.y==5&&
+                            npc.automaticStoryOnly&&npc.removedFlagId=="rom.npccontext.148.217"
+                        else->false}
+                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women||jail||jiameng)&&npc.firstEffects.isEmpty())
                 }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("moneyTreasure")?.let{t->
@@ -374,6 +388,12 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        58->require(t.getString("evidence")=="game-data/provenance/world-jiameng-actors.json"&&
+                            npc.mapId==37&&npc.id in listOf("rom.npc.37.0","rom.npc.37.1")&&
+                            npc.x==4+2*npc.id.substringAfterLast('.').toInt()&&npc.y==4&&rule.witnessFlagId.isEmpty()&&rule.itemId.isEmpty()&&
+                            rule.mapFlagId=="rom.map.37.flag.${1 shl npc.id.substringAfterLast('.').toInt()}"&&
+                            rule.firstDialogue=="rom.dialogue.47.${2*npc.id.substringAfterLast('.').toInt()}"&&
+                            rule.repeatDialogue=="rom.dialogue.47.${2*npc.id.substringAfterLast('.').toInt()+1}")
                         1->{
                             val gift=when(npc.mapId){163->9;164->8;else->error("Unknown original teacher")}
                             val proof=if(npc.mapId==163)"world-teacher163-binding" else "world-night8-resources"

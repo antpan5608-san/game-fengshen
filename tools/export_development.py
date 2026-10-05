@@ -215,7 +215,7 @@ def observed_oam_graphic_recipe(reader,capture_path,ram_path,ppu_path,oam_offset
         raise ValueError('OAM recipe did not preserve every original nonzero pixel')
     return recipe
 
-def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False,*,per_tile_palette=False):
+def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False,*,per_tile_palette=False,allow_collapsed_palette=False):
     """Bounded evidence helper for the existing ROM-tile recipe, never an image importer.
 
     Call only with a settled original capture and an explicitly reviewed rectangle.
@@ -233,13 +233,34 @@ def observed_graphic_recipe(reader,capture_path,rect,transparent_zero=False,*,pe
     if per_tile_palette:
         # Some real large enemies use multiple palettes. Keep the same bounded
         # ROM-tile recipe/reconstructor, with an exact palette on each 8x8 tile.
-        chr_start=reader.header['sections']['chr']['offset'];tiles=[]
+        chr_start=reader.header['sections']['chr']['offset'];tiles=[];collapsed={}
+        if allow_collapsed_palette:
+            # The original may assign one visible colour to several CHR codes.
+            # Retain the actual 16-byte ROM tile and reconstruct every pixel;
+            # do not invent a one-bit tile absent from the ROM.
+            for offset in range(chr_start,len(reader.data)-15,16):
+                tile_raw=reader.data[offset:offset+16]
+                for mask in range(1,8):
+                    projected=bytes((((a&(~b)&255)if mask&1 else 0)|
+                        (((~a)&b&255)if mask&2 else 0)|((a&b)if mask&4 else 0))
+                        for a,b in zip(tile_raw[:8],tile_raw[8:]))
+                    collapsed.setdefault(projected,(offset,tile_raw,mask))
         for yy in range(0,height,8):
             for xx in range(0,width,8):
                 colors=sorted(set(observed.crop((xx,yy,xx+8,yy+8)).getdata())-{(0,0,0)})
                 if len(colors)>3:raise ValueError('Mixed palette inside one original graphic tile')
                 found=None
+                if allow_collapsed_palette and len(colors)==1:
+                    projected=bytes(sum((observed.getpixel((xx+dx,yy+dy))!= (0,0,0))<<(7-dx)
+                        for dx in range(8))for dy in range(8))
+                    match=collapsed.get(projected)
+                    if match is not None:
+                        offset,tile_raw,mask=match
+                        found=dict(xy=[xx,yy],offset=offset,length=16,sha256=digest(tile_raw),
+                            paletteCodes={'0':[0,0,0],**{str(code):list(colors[0]if mask&(1<<(code-1))else(0,0,0))
+                                for code in (1,2,3)}})
                 for order in itertools.permutations((1,2,3),len(colors)):
+                    if found is not None:break
                     codes={(0,0,0):0,**dict(zip(colors,order))}
                     rows=[[codes[observed.getpixel((xx+dx,yy+dy))]for dx in range(8)]for dy in range(8)]
                     raw=bytes([sum((row[dx]&1)<<(7-dx)for dx in range(8))for row in rows]+
@@ -793,6 +814,123 @@ def validate_world_rebirth_script(reader,definition):
     if sum(c[3]!=0 for c in Image.open(io.BytesIO(raw)).convert('RGBA').getdata())!=204:
         raise ValueError('Scene actor pose is incomplete')
     return p
+
+def validate_world_jiameng_status8(reader,enemy):
+    path='game-data/provenance/world-jiameng-resources.json';p=load(ROOT/path);reuse=p['zone29']['behavior8Reuse']
+    shared_path='game-data/provenance/world-status-bit8.json';shared=load(ROOT/shared_path)
+    if p['romSha256']!=SHA256 or enemy['id']!=60 or enemy['behaviorByte']!=8 or \
+            enemy.get('behaviorEvidence')!=path or extract_enemy(reader,60)['remainingBytes'][1]!=8 or \
+            (reuse['enemyId'],reuse['behavior'],reuse['cases'],reuse['failures'],reuse['targetSlots'])!=(60,8,1024,0,[0,1,2,3]) or \
+            reuse['sharedEvidence']!=shared_path or digest((ROOT/shared_path).read_bytes())!=reuse['sharedEvidenceSha256'] or \
+            (shared['romSha256'],shared['enemyId'],shared['behavior'],shared['statusMask'])!=(SHA256,29,8,8) or \
+            any(k in enemy for k in ('iceBaseDamage','specialBaseDamage','requiredBindingMarker')):
+        raise ValueError('Enemy60 can only reuse its actual original shared behavior8')
+    for span in shared['sources']:checked_span(reader,span)
+    raw=(ROOT/reuse['cpuExpectedPath']).read_bytes()
+    if digest(raw)!=reuse['cpuExpectedSha256']or len(raw.splitlines())!=1025 or \
+            digest((ROOT/reuse['probePath']).read_bytes())!=reuse['probeSha256']:
+        raise ValueError('Enemy60 needs the executed four-target original status-priority boundary')
+    for index,row in enumerate(raw.decode('ascii').splitlines()[1:]):
+        target,status,after,hp,unchanged=map(int,row.split('\t'))
+        if(target,status,after,hp,unchanged)!=(index//256,index%256,8 if index%256 in(0,4,8)else index%256,369,1):
+            raise ValueError('Enemy60 must preserve non-targets, HP and original status priority')
+    return p
+
+def validate_world_jiameng_binding(reader,enemy):
+    """The existing special18 marker, scoped to four actual original targets."""
+    path='game-data/provenance/world-jiameng-binding.json';p=load(ROOT/path)
+    expected=dict(itemId='rom.special.18',originalId=18,bindingMarker=5,
+        originalTargets=[158,159,160,161],enabledGroups=[[158],[159,160,161]],
+        consumesAction=True,chooseTarget=False,reusable=True,quantityConsumed=0,
+        scope='Battle-local protection marker; not immobilization or guaranteed victory',
+        mapUse='NOT_ENABLED_BY_THIS_PROOF')
+    if p['romSha256']!=SHA256 or p['rules']!=expected or enemy['id'] not in expected['originalTargets'] or \
+            enemy.get('requiredBindingMarker')!=5 or enemy.get('bindingEvidence')!=path:
+        raise ValueError('Jiameng protection cannot affect another identity or marker')
+    if digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Jiameng binding probe differs from the executed boundary')
+    for span in p['sources']:checked_span(reader,span)
+    counts=[1536,120,16]
+    if [t['caseCount']for t in p['expected']]!=counts:
+        raise ValueError('Jiameng protection requires all executed marker/damage/context cases')
+    for t in p['expected']:
+        raw=(ROOT/t['path']).read_bytes()
+        if digest(raw)!=t['sha256']or len(raw.splitlines())!=t['caseCount']+1:
+            raise ValueError('Jiameng marker/damage/context expectations differ')
+    return p
+
+def validate_world_jiameng_actors(reader):
+    from forensics.fengshen246 import extract_npcs
+    path='game-data/provenance/world-jiameng-actors.json';p=load(ROOT/path)
+    resources=load(ROOT/'game-data/provenance/world-jiameng-resources.json')
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='jiameng-eight-field-actors-two-original-barriers-and-room37-talk58' or \
+            p['contextRecords']!={str(mid):extract_npcs(reader,mid)for mid in (145,215,228,146,216,148,217,37,196)} or \
+            reader.word(10,0xcb08+116)!=0xcef8 or p['graphics']!=resources['npcGraphics']:
+        raise ValueError('Jiameng actual actor contexts differ')
+    for span in p['sources']:checked_span(reader,span)
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!={
+            (10,0xcb08+116,2),(10,0xa160,42),(10,0xcef8,24),(10,0xcf1d,21),(0,0xa973,75),
+            (0,0xd493+290,2),(0,0xd493+74,2)} or \
+            p['probe']['path']!='tools/rom-extractor/probe-world-jiameng-room37.py' or \
+            digest((ROOT/p['probe']['path']).read_bytes())!=p['probe']['sha256']:
+        raise ValueError('Jiameng actor selection/filter lacks its executed source')
+    expected=[('jiameng-room37-talk58-original.tsv',2560,'d681673038973502e97242e446333b045375201e23ee52fe5c81d140e4e2262e'),
+        ('jiameng-map145-barriers-original.tsv',512,'23541bf35e9ad802a88cd29973347447ee55498e2c23588ac77b322fe924ba90')]
+    for table,(name,count,sha)in zip(p['expected'],expected):
+        raw=(ROOT/table['path']).read_bytes()
+        if table!=dict(path='android/app/src/test/resources/'+name,cases=count,sha256=sha,failures=0) or \
+                digest(raw)!=sha or len(raw.splitlines())!=count+1:
+            raise ValueError('Jiameng actor CPU expectations differ')
+    if len(p['expected'])!=2 or len(p['npcs'])!=8 or len(p['sceneBarriers'])!=2:
+        raise ValueError('Jiameng scoped actor count differs')
+    for n,mid,index in zip(p['npcs'],(145,146,148,148,148,37,37,37),(0,0,0,1,2,0,1,0)):
+        bed=n['id']=='rom.npc.37.yang-bed';record=extract_npcs(reader,196 if bed else mid)['records'][index]
+        sprite='npc-jiameng-room37-'if mid==37 else'npc-jiameng-'
+        if n['mapId']!=mid or n['id']!=(f'rom.npc.{mid}.{index}'if not bed else'rom.npc.37.yang-bed') or \
+                n['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')] or n['spriteId']!=record['entityByte'] or \
+                n['sprite']!=sprite+str(record['entityByte'])+'.png' or n['firstEffects'] or \
+                n['source']['record']!=record['range'] or n['jiamengResourceEvidence']!=path or n.get('scriptedActor'):
+            raise ValueError('Jiameng actual actor identity/position/side effects differ')
+        first,repeat={145:('rom.dialogue.155.0','rom.dialogue.155.0'),146:('rom.dialogue.156.2',None),
+            148:(f'rom.dialogue.148.{index+3}',None),37:('',None)if bed else(f'rom.dialogue.47.{index*2}',f'rom.dialogue.47.{index*2+1}')}[mid]
+        if(n['firstDialogue'],n.get('repeatDialogue'))!=(first,repeat):raise ValueError('Jiameng actor text differs')
+        if mid!=37:
+            removed={145:'rom.npccontext.145.228',146:'rom.npccontext.146.216',148:'rom.npccontext.148.217'}[mid]
+            if n.get('removedFlagId')!=removed or n.get('automaticStoryEvidence')!=path or bool(n.get('automaticStoryOnly'))!=(mid==148):
+                raise ValueError('Jiameng actual context removal differs')
+        elif bed:
+            if n.get('visibleFlagId')!='rom.npccontext.37.196' or n.get('originalTalk'):
+                raise ValueError('Bed actor must only appear in actual context196')
+        elif n.get('originalTalk')!=dict(actionId=58,mapFlagId=f'rom.map.37.flag.{1<<index}',witnessFlagId='',itemId='',evidence=path):
+            raise ValueError('Room37 action58 must not cure or invent a quest requirement')
+        if mid==145:
+            if n.get('stateVariant')!=dict(flagId='rom.npccontext.145.215',cell=[4,10],firstDialogue='rom.dialogue.155.1',
+                    repeatDialogue='rom.dialogue.155.1',sprite='npc-jiameng-154.png',evidence='game-data/provenance/world-jiameng-state.json'):
+                raise ValueError('Huang context215 actor must preserve its original form')
+        elif n.get('stateVariant'):raise ValueError('Unreviewed actor variant')
+    for barrier,record in zip(p['sceneBarriers'],extract_npcs(reader,145)['records'][1:]):
+        raw=bytes.fromhex(record['rawHex']);cell=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]
+        if barrier!=dict(id=f'rom.barrier.145.{raw[0]}',mapId=145,kind='JIAMENG_ACTOR_FILTER',cell=cell,
+                removedFlagId=f'rom.map.145.flag.{raw[13]}',recordSource=record['range'],evidence=path):
+            raise ValueError('Jiameng original two collision actors differ')
+    streams=resources['dialogueStreams']+resources['postScriptRoom']['dialogueStreams']
+    if len(p['dialogues'])!=len(streams):raise ValueError('Jiameng text count differs')
+    for dialogue,stream in zip(p['dialogues'],streams):
+        record=stream.get('source',{}).get('record',stream.get('range'))
+        if dialogue['id']!=f'rom.dialogue.{stream["group"]}.{stream["messageIndex"]}' or \
+                dialogue['text']!=stream['text'] or dialogue['source']['record']!=record:
+            raise ValueError('Jiameng actual font/text differs')
+        checked_span(reader,record)
+    return p
+
+def world_jiameng_item_update(item):
+    if (item['id'],item['originalId'],item['category'],item['maxCount'])!=('rom.special.18',18,'special',1) or \
+            'battleBindingUse'in item:
+        raise ValueError('Jiameng must extend the actual unchanged special18 parent')
+    raw=(json.dumps(item,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+    return dict(id=item['id'],baseDefinitionSha256=digest(raw),fields=dict(battleBindingUse=dict(
+        bindingMarker=5,target='four-generals-current-battle',reusable=True,consumesAction=True,
+        chooseTarget=False,evidence='game-data/provenance/world-jiameng-binding.json')))
 
 def world_jiameng_boss_definitions(reader):
     """Only observed actor2/event1 groups; existing settlement owns ordinary rewards."""
@@ -2381,6 +2519,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Enemy overlay loot differs')
             checked_span(reader,enemy['source'])
             if enemy['id'] in [152,153,154,155]:validate_world_island_binding(reader,enemy)
+            elif enemy['id'] in [158,159,160,161]:validate_world_jiameng_binding(reader,enemy)
             elif enemy['id']==157:
                 validate_world_queen117_resources(reader)
                 if enemy.get('requiredBindingMarker')!=2 or enemy.get('bindingEvidence')!='game-data/provenance/world-queen117-state.json':
@@ -2409,6 +2548,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             elif enemy['behaviorByte']==6:
                 validate_world_status16(reader,enemy)
             elif enemy['behaviorByte']==8:
+                if enemy['id']==60:
+                    validate_world_jiameng_status8(reader,enemy)
+                    continue
                 if enemy.get('behaviorEvidence')!='game-data/provenance/world-status-bit8.json' or 'iceBaseDamage' in enemy:
                     raise ValueError('Behavior8 requires its scoped status evidence')
                 proof=load(ROOT/enemy['behaviorEvidence'])
@@ -2484,6 +2626,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         combat['presentation']['graphics']+=overlay.get('graphics',[])
         for boss in overlay.get('bosses',[]):
             if boss['id'] in {b['id'] for b in combat.get('bosses',[])}:raise ValueError('Duplicate story battle')
+            if boss.get('source')=='game-data/provenance/world-jiameng-state.json':
+                validate_world_jiameng_boss(reader,boss)
+                combat.setdefault('bosses',[]).append(boss)
+                continue
             if boss.get('entryTrigger'):
                 trigger=boss['entryTrigger'];proof=load(ROOT/trigger['evidence'])
                 if proof['romSha256']!=SHA256:raise ValueError('Coordinate story ROM differs')
@@ -2735,7 +2881,15 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
-    if evidence.get('queen117CapabilityEvidence'):
+    if evidence.get('jiamengCapabilityEvidence'):
+        path='game-data/provenance/world-jiameng-binding.json'
+        matches=[i for i in scene['items']if i['id']=='rom.special.18']
+        if len(matches)!=1 or evidence['jiamengCapabilityEvidence']!=path or evidence.get('existingNpcCapabilityUpdates') or \
+                evidence.get('existingItemCapabilityUpdates')!=[world_jiameng_item_update(matches[0])]:
+            raise ValueError('Jiameng capability must preserve the complete actual special18 parent')
+        validate_world_jiameng_binding(reader,dict(id=158,requiredBindingMarker=5,bindingEvidence=path))
+        matches[0].update(evidence['existingItemCapabilityUpdates'][0]['fields'])
+    elif evidence.get('queen117CapabilityEvidence'):
         proof=validate_world_queen117_resources(reader)
         if evidence['queen117CapabilityEvidence']!='game-data/provenance/world-queen117-state.json'or \
                 evidence.get('existingItemCapabilityUpdates')!=proof['itemCapabilityUpdates']or \
@@ -2787,7 +2941,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('villageResourceEvidence')=='game-data/provenance/world-village-batch-resources.json':
+        if npc.get('jiamengResourceEvidence'):
+            proof=validate_world_jiameng_actors(reader)
+            if npc['jiamengResourceEvidence']!='game-data/provenance/world-jiameng-actors.json' or npc not in proof['npcs'] or \
+                    any(d not in scene['dialogues']for d in proof['dialogues']) or \
+                    any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
+                raise ValueError('Jiameng scoped actor/text/graphics differ')
+        elif npc.get('villageResourceEvidence')=='game-data/provenance/world-village-batch-resources.json':
             proof,_=validate_world_village_batch_resources(reader,npc['mapId'])
             if npc not in proof['npcs']or any(d not in scene['dialogues']for d in proof['dialogues'])or \
                     any(evidence['graphics'].get(n)!=g for n,g in proof['graphics'].items()):
@@ -2904,7 +3064,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
-        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-room116-state.json':
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-jiameng-actors.json':
+            if npc not in validate_world_jiameng_actors(reader)['npcs']:raise ValueError('Jiameng actor removal differs')
+        elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-room116-state.json':
             proof=validate_world_room116_resources(reader)
             if npc not in proof['npcs']:raise ValueError('Room116 actor removal differs')
         elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-queen117-state.json':
@@ -3006,6 +3168,15 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     elif evidence.get('existingObjectInteractionUpdates'):
         raise ValueError('Object operation update lacks original ferry rules')
     for barrier in evidence.get('sceneBarriers',[]):
+        if barrier.get('kind')=='JIAMENG_ACTOR_FILTER':
+            proof=validate_world_jiameng_actors(reader)
+            if barrier not in proof['sceneBarriers']:raise ValueError('Jiameng original blocker differs')
+            name=next(m['scene']for m in scene['maps']if m['id']==145);data=json.loads(result[name])
+            i=barrier['cell'][1]*data['width']+barrier['cell'][0]
+            if i not in data['dynamicObjectCells']:raise ValueError('Jiameng blocker must start as an original collision actor')
+            if any(b['id']==barrier['id']for b in scene.get('sceneBarriers',[])):raise ValueError('Duplicate Jiameng barrier')
+            scene.setdefault('sceneBarriers',[]).append(barrier)
+            continue
         if barrier.get('kind')=='CONTINENT_ACTOR_FILTER':
             from forensics.fengshen246 import extract_npcs
             proof=load(ROOT/barrier['evidence']);original=extract_npcs(reader,16)['records']

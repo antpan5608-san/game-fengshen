@@ -408,3 +408,6 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 当前场景的tileset3两平面矩阵可复用既有probe-world-island-terrain.py的固定字节，仅在scoped wrapper改变地图批次与受控输出目录；原ROM不改，旧probe/hash/配方保留。probe-world-jiameng-terrain.py已实际执行四格网264及胜后室内64 CPU组合，原导出器定向validator/来源拒绝与完整旧c50再导出通过；这些不算Android正常路线。
 - 原observed_oam_graphic_recipe已经当前Linux/FCEUX原OAM、匹配ROM、实际截图执行，三actor全部非零像素匹配，并有隔离布局fixture回归。只能透明原pixel code0，非零黑色保持不透明；用实际NPC记录位置绑定身份，不假设14/24字节固定步长。原取证首次用了不存在的工作树缓存路径，须先查现有iteration_reader实际输入位置；禁止重新下载来掩盖路径错误。
 - 源码检查显式read_text(encoding="utf-8")，不能以Linux默认编码通过推断Windows中文源码可读；真实原Windows门禁已在薄修后通过，未削弱App验收。
+
+- 新遇敌图形先核当前地图的原CHR上下文，不能套上一个取证存档的银行。原图数个非零码显示同色时，既有observed_graphic_recipe可限定allow_collapsed_palette/per_tile_palette，从匹配ROM原16字节块重建；RGBA/hash继续严格核，不生成伪原图块。该分支已对实际原截图和正反例运行，默认其他配方行为不变。
+- 新场景批次作为既有baseExport的子配方接入。原export_from_base严格验证目标pin，ci_apk.restore在空临时目录重建同一输出，旧PNG/音频逐字节比较；新普通敌人完整组表、掉落引用和地图默认遇敌阈值均保留。局部原CPU对白/角色过滤测试不能代替新Android正常路线；版本与具体资源状态仍由当前任务维护。

@@ -1,0 +1,1948 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scopeRevision": "jiameng-eight-field-actors-two-original-barriers-and-room37-talk58",
+  "kind": "CONTROLLED_ORIGINAL_CPU_AND_FONT_NOT_ANDROID_NORMAL_ROUTE",
+  "licenseStatus": "UNKNOWN",
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-jiameng-room37.py",
+    "sha256": "90b2f1113a02fecff734440da5202f0f998fe1a2cbf982bbd0d1739aedc14d69"
+  },
+  "expected": [
+    {
+      "path": "android/app/src/test/resources/jiameng-room37-talk58-original.tsv",
+      "cases": 2560,
+      "sha256": "d681673038973502e97242e446333b045375201e23ee52fe5c81d140e4e2262e",
+      "failures": 0
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng-map145-barriers-original.tsv",
+      "cases": 512,
+      "sha256": "23541bf35e9ad802a88cd29973347447ee55498e2c23588ac77b322fe924ba90",
+      "failures": 0
+    }
+  ],
+  "sources": [
+    {
+      "offset": 347020,
+      "length": 2,
+      "sha256": "773d7e1335133a2045fde57bd4d047039ae7da47b5dde5a4e291da36a8f9aee3",
+      "module": 10,
+      "cpuAddress": 52092,
+      "meaning": "Original action58 handler pointer"
+    },
+    {
+      "offset": 336240,
+      "length": 42,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838",
+      "module": 10,
+      "cpuAddress": 41312,
+      "meaning": "Original first/repeat selector"
+    },
+    {
+      "offset": 347912,
+      "length": 24,
+      "sha256": "5f170cb7a01259ae8a08f70307770cb787c8e332ce6eae6bdaba3a2c1c1e9740",
+      "module": 10,
+      "cpuAddress": 52984,
+      "meaning": "Original Yang illness flag conditional dialogue"
+    },
+    {
+      "offset": 347949,
+      "length": 21,
+      "sha256": "01c7443b6950e5413f6e5f5f5d413f5fb05c63e68c115f302ce43d3695c917ad",
+      "module": 10,
+      "cpuAddress": 53021,
+      "meaning": "Original pending-action clear and actor bit OR"
+    },
+    {
+      "offset": 10627,
+      "length": 75,
+      "sha256": "a5b60f47e7ecabd49d4c12713923d3f6db80cc3d15902164f49632c9243b9611",
+      "module": 0,
+      "cpuAddress": 43379,
+      "meaning": "Original collision actor flag filtering"
+    },
+    {
+      "offset": 21957,
+      "length": 2,
+      "sha256": "51477365cc119b9374ea0f720d1b642580a79ed3ac049c9274ac69aaa1e018bc",
+      "module": 0,
+      "cpuAddress": 54709,
+      "meaning": "Original map145 actor flag address"
+    },
+    {
+      "offset": 21741,
+      "length": 2,
+      "sha256": "c36a0ec9833044d4e1d52b67fbd9f24a8d956a173f25da0034b39a792a1249f3",
+      "module": 0,
+      "cpuAddress": 54493,
+      "meaning": "Original room37 actor flag address"
+    }
+  ],
+  "contextRecords": {
+    "145": {
+      "mapId": 145,
+      "pointer": {
+        "offset": 275523,
+        "length": 2,
+        "sha256": "4a9868967003d43ddf0f042f7746934a6e27d3464b9b32ac9d93bab42b295696",
+        "module": 8,
+        "cpuAddress": 46131,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 284689,
+        "length": 43,
+        "sha256": "8e1bc344fca3f011e0feb42b3b939239c0179191d819b47ef8ab70bddd54bca6",
+        "module": 8,
+        "cpuAddress": 55297,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "9800ff00b8001801858f01020000",
+          "range": {
+            "offset": 284689,
+            "length": 14,
+            "sha256": "231bf59f6cecd6128663427e0aa17474e5294454c351bf9702b001e6b2fc2d8e",
+            "module": 8,
+            "cpuAddress": 55297,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 152,
+          "xCandidate": 184,
+          "yCandidate": 280,
+          "animationProgramPointer": 36741,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "f8ffff00a800a800c48f01020004",
+          "range": {
+            "offset": 284703,
+            "length": 14,
+            "sha256": "9df0494734cbd3c0ebd3aa3b58c128b2ad372c9ccb6c178e9bb3f950754cf2e0",
+            "module": 8,
+            "cpuAddress": 55311,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 248,
+          "xCandidate": 168,
+          "yCandidate": 168,
+          "animationProgramPointer": 36804,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 2,
+          "rawHex": "f9ffff00b800a800c78f01020008",
+          "range": {
+            "offset": 284717,
+            "length": 14,
+            "sha256": "56c42ba97c58916a7ca862aebe3bc1d820963f71a3b574dc5321246b34708358",
+            "module": 8,
+            "cpuAddress": 55325,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 249,
+          "xCandidate": 184,
+          "yCandidate": 168,
+          "animationProgramPointer": 36807,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "215": {
+      "mapId": 215,
+      "pointer": {
+        "offset": 275663,
+        "length": 2,
+        "sha256": "0adc05f17f3f9d02562274335acd2f0a11971be88d0d60e39f9135bc74d8f2e6",
+        "module": 8,
+        "cpuAddress": 46271,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 284732,
+        "length": 43,
+        "sha256": "6c3b550fb5aca3ddc634934db4e746d557fcf93309b9e79636b1a341b70cc79f",
+        "module": 8,
+        "cpuAddress": 55340,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "9a01ff00b8001801a88f01020202",
+          "range": {
+            "offset": 284732,
+            "length": 14,
+            "sha256": "feac5cfcb4b3c508b38d5a4e5f90b7930de88a56deb40760dee38b743c3a11dd",
+            "module": 8,
+            "cpuAddress": 55340,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 154,
+          "xCandidate": 184,
+          "yCandidate": 280,
+          "animationProgramPointer": 36776,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "f8ffff00a800a800c48f01020004",
+          "range": {
+            "offset": 284746,
+            "length": 14,
+            "sha256": "9df0494734cbd3c0ebd3aa3b58c128b2ad372c9ccb6c178e9bb3f950754cf2e0",
+            "module": 8,
+            "cpuAddress": 55354,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 248,
+          "xCandidate": 168,
+          "yCandidate": 168,
+          "animationProgramPointer": 36804,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 2,
+          "rawHex": "f9ffff00b800a800c78f01020008",
+          "range": {
+            "offset": 284760,
+            "length": 14,
+            "sha256": "56c42ba97c58916a7ca862aebe3bc1d820963f71a3b574dc5321246b34708358",
+            "module": 8,
+            "cpuAddress": 55368,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 249,
+          "xCandidate": 184,
+          "yCandidate": 168,
+          "animationProgramPointer": 36807,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "228": {
+      "mapId": 228,
+      "pointer": {
+        "offset": 275689,
+        "length": 2,
+        "sha256": "a094b440981d134a28ef1501b14d55116870964d8dab45bf64fa03bed927003d",
+        "module": 8,
+        "cpuAddress": 46297,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 284746,
+        "length": 29,
+        "sha256": "d04f8a5caead7fb9355a1465f73eb7533c0059cfe48a7c07fe3808c2ead8638f",
+        "module": 8,
+        "cpuAddress": 55354,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "f8ffff00a800a800c48f01020004",
+          "range": {
+            "offset": 284746,
+            "length": 14,
+            "sha256": "9df0494734cbd3c0ebd3aa3b58c128b2ad372c9ccb6c178e9bb3f950754cf2e0",
+            "module": 8,
+            "cpuAddress": 55354,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 248,
+          "xCandidate": 168,
+          "yCandidate": 168,
+          "animationProgramPointer": 36804,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "f9ffff00b800a800c78f01020008",
+          "range": {
+            "offset": 284760,
+            "length": 14,
+            "sha256": "56c42ba97c58916a7ca862aebe3bc1d820963f71a3b574dc5321246b34708358",
+            "module": 8,
+            "cpuAddress": 55368,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 249,
+          "xCandidate": 184,
+          "yCandidate": 168,
+          "animationProgramPointer": 36807,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "146": {
+      "mapId": 146,
+      "pointer": {
+        "offset": 275525,
+        "length": 2,
+        "sha256": "59cb75ac47ddad3dc80c358936a18fe7e382df0058a7fa1569a16c1baf2e5261",
+        "module": 8,
+        "cpuAddress": 46133,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 284775,
+        "length": 15,
+        "sha256": "003131aacced504242638e339a602bdfc6a3eaa50b63a3f3269a656795cee373",
+        "module": 8,
+        "cpuAddress": 55383,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "8102ff009800b800ca8c01020304",
+          "range": {
+            "offset": 284775,
+            "length": 14,
+            "sha256": "2423eec8adaebad99588575e7971e9fec7c90d884a84458764b96081ecb23277",
+            "module": 8,
+            "cpuAddress": 55383,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 129,
+          "xCandidate": 152,
+          "yCandidate": 184,
+          "animationProgramPointer": 36042,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "216": {
+      "mapId": 216,
+      "pointer": {
+        "offset": 275665,
+        "length": 2,
+        "sha256": "3eec4657dcd851d29243e2e5434c4ebbe23e2ca1fc6784db932a28b9628509b2",
+        "module": 8,
+        "cpuAddress": 46273,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 282415,
+        "length": 1,
+        "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+        "module": 8,
+        "cpuAddress": 53023,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": []
+    },
+    "148": {
+      "mapId": 148,
+      "pointer": {
+        "offset": 275529,
+        "length": 2,
+        "sha256": "adc952584f4c6a5514ef39536ff5b15b801e6b0a47d17f28e87ab9c98591ee1e",
+        "module": 8,
+        "cpuAddress": 46137,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 284790,
+        "length": 43,
+        "sha256": "3297d7d08c020456d4fe01cb142eaa8c7fb36cf0c9be7858e739f61eba6da4d4",
+        "module": 8,
+        "cpuAddress": 55398,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "9affff00e800c800a88f01020000",
+          "range": {
+            "offset": 284790,
+            "length": 14,
+            "sha256": "e3f791751bbe56c9a98e00c413ed0d8eca6fed31953ad10a1febde2bde6551a5",
+            "module": 8,
+            "cpuAddress": 55398,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 154,
+          "xCandidate": 232,
+          "yCandidate": 200,
+          "animationProgramPointer": 36776,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "9affff00f800c800a88f01020000",
+          "range": {
+            "offset": 284804,
+            "length": 14,
+            "sha256": "2cb4dbec1398fd07209db4d69c86631b9274d2c245692240face10989d9ff09c",
+            "module": 8,
+            "cpuAddress": 55412,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 154,
+          "xCandidate": 248,
+          "yCandidate": 200,
+          "animationProgramPointer": 36776,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 2,
+          "rawHex": "9affff000801c800a88f01020000",
+          "range": {
+            "offset": 284818,
+            "length": 14,
+            "sha256": "701de364b720aacb1384d7f2b564570b41d328b0679a9fe917b0daf04e4f44c8",
+            "module": 8,
+            "cpuAddress": 55426,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 154,
+          "xCandidate": 264,
+          "yCandidate": 200,
+          "animationProgramPointer": 36776,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "217": {
+      "mapId": 217,
+      "pointer": {
+        "offset": 275667,
+        "length": 2,
+        "sha256": "3eec4657dcd851d29243e2e5434c4ebbe23e2ca1fc6784db932a28b9628509b2",
+        "module": 8,
+        "cpuAddress": 46275,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 282415,
+        "length": 1,
+        "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89",
+        "module": 8,
+        "cpuAddress": 53023,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": []
+    },
+    "37": {
+      "mapId": 37,
+      "pointer": {
+        "offset": 275307,
+        "length": 2,
+        "sha256": "7a43414341c6f9e6fd9522c6f9c78c8ca6dd1c76587dfcca93b62fdbb58c8a50",
+        "module": 8,
+        "cpuAddress": 45915,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 278940,
+        "length": 29,
+        "sha256": "eb339ffc7cfe5c980262db7d8bd6859f4ed32b18ab86d554c3c5bb5d256006cd",
+        "module": 8,
+        "cpuAddress": 49548,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "a2000106b800b800239202023a01",
+          "range": {
+            "offset": 278940,
+            "length": 14,
+            "sha256": "3207dcef20732a713a773966f803a697d522fd1f5818550c5aa5231f23c5a945",
+            "module": 8,
+            "cpuAddress": 49548,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 162,
+          "xCandidate": 184,
+          "yCandidate": 184,
+          "animationProgramPointer": 37411,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "a3020306d800b8003f9202023a02",
+          "range": {
+            "offset": 278954,
+            "length": 14,
+            "sha256": "de4c92587b81f461094284febaed6852dd5bd0821c6c980a7393f40af11e0197",
+            "module": 8,
+            "cpuAddress": 49562,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 163,
+          "xCandidate": 216,
+          "yCandidate": 184,
+          "animationProgramPointer": 37439,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    },
+    "196": {
+      "mapId": 196,
+      "pointer": {
+        "offset": 275625,
+        "length": 2,
+        "sha256": "ada16726aef4ce36c26013ab5d54aa13852270127b83e5538ea999d650b59330",
+        "module": 8,
+        "cpuAddress": 46233,
+        "meaning": "NPC list pointer"
+      },
+      "range": {
+        "offset": 278926,
+        "length": 43,
+        "sha256": "9a8a78653e05b294dd57041230a0ac557bb98a9e209f8ed34c1a2aa556066f79",
+        "module": 8,
+        "cpuAddress": 49534,
+        "meaning": "14-byte records terminated by FF"
+      },
+      "records": [
+        {
+          "index": 0,
+          "rawHex": "82ffff00a800c800e68c02020000",
+          "range": {
+            "offset": 278926,
+            "length": 14,
+            "sha256": "70e2dd061b5bd67d61cf5a9374e9b452c1311e8fa28726bac71403bb3fd3ca4b",
+            "module": 8,
+            "cpuAddress": 49534,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 130,
+          "xCandidate": 168,
+          "yCandidate": 200,
+          "animationProgramPointer": 36070,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 1,
+          "rawHex": "a2000106b800b800239202023a01",
+          "range": {
+            "offset": 278940,
+            "length": 14,
+            "sha256": "3207dcef20732a713a773966f803a697d522fd1f5818550c5aa5231f23c5a945",
+            "module": 8,
+            "cpuAddress": 49548,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 162,
+          "xCandidate": 184,
+          "yCandidate": 184,
+          "animationProgramPointer": 37411,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        },
+        {
+          "index": 2,
+          "rawHex": "a3020306d800b8003f9202023a02",
+          "range": {
+            "offset": 278954,
+            "length": 14,
+            "sha256": "de4c92587b81f461094284febaed6852dd5bd0821c6c980a7393f40af11e0197",
+            "module": 8,
+            "cpuAddress": 49562,
+            "meaning": "Fixed 14-byte NPC source record"
+          },
+          "entityByte": 163,
+          "xCandidate": 216,
+          "yCandidate": 184,
+          "animationProgramPointer": 37439,
+          "animationModule": 0,
+          "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+          "confidence": "HIGH"
+        }
+      ]
+    }
+  },
+  "npcs": [
+    {
+      "id": "rom.npc.145.0",
+      "mapId": 145,
+      "cell": [
+        4,
+        10
+      ],
+      "spriteId": 152,
+      "sprite": "npc-jiameng-152.png",
+      "firstDialogue": "rom.dialogue.155.0",
+      "repeatDialogue": "rom.dialogue.155.0",
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 284689,
+          "length": 14,
+          "sha256": "231bf59f6cecd6128663427e0aa17474e5294454c351bf9702b001e6b2fc2d8e",
+          "module": 8,
+          "cpuAddress": 55297,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "removedFlagId": "rom.npccontext.145.228",
+      "automaticStoryEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "stateVariant": {
+        "flagId": "rom.npccontext.145.215",
+        "cell": [
+          4,
+          10
+        ],
+        "firstDialogue": "rom.dialogue.155.1",
+        "repeatDialogue": "rom.dialogue.155.1",
+        "sprite": "npc-jiameng-154.png",
+        "evidence": "game-data/provenance/world-jiameng-state.json"
+      }
+    },
+    {
+      "id": "rom.npc.146.0",
+      "mapId": 146,
+      "cell": [
+        2,
+        4
+      ],
+      "spriteId": 129,
+      "sprite": "npc-jiameng-129.png",
+      "firstDialogue": "rom.dialogue.156.2",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 284775,
+          "length": 14,
+          "sha256": "2423eec8adaebad99588575e7971e9fec7c90d884a84458764b96081ecb23277",
+          "module": 8,
+          "cpuAddress": 55383,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "removedFlagId": "rom.npccontext.146.216",
+      "automaticStoryEvidence": "game-data/provenance/world-jiameng-actors.json"
+    },
+    {
+      "id": "rom.npc.148.0",
+      "mapId": 148,
+      "cell": [
+        7,
+        5
+      ],
+      "spriteId": 154,
+      "sprite": "npc-jiameng-154.png",
+      "firstDialogue": "rom.dialogue.148.3",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 284790,
+          "length": 14,
+          "sha256": "e3f791751bbe56c9a98e00c413ed0d8eca6fed31953ad10a1febde2bde6551a5",
+          "module": 8,
+          "cpuAddress": 55398,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "automaticStoryOnly": true,
+      "removedFlagId": "rom.npccontext.148.217",
+      "automaticStoryEvidence": "game-data/provenance/world-jiameng-actors.json"
+    },
+    {
+      "id": "rom.npc.148.1",
+      "mapId": 148,
+      "cell": [
+        8,
+        5
+      ],
+      "spriteId": 154,
+      "sprite": "npc-jiameng-154.png",
+      "firstDialogue": "rom.dialogue.148.4",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 284804,
+          "length": 14,
+          "sha256": "2cb4dbec1398fd07209db4d69c86631b9274d2c245692240face10989d9ff09c",
+          "module": 8,
+          "cpuAddress": 55412,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "automaticStoryOnly": true,
+      "removedFlagId": "rom.npccontext.148.217",
+      "automaticStoryEvidence": "game-data/provenance/world-jiameng-actors.json"
+    },
+    {
+      "id": "rom.npc.148.2",
+      "mapId": 148,
+      "cell": [
+        9,
+        5
+      ],
+      "spriteId": 154,
+      "sprite": "npc-jiameng-154.png",
+      "firstDialogue": "rom.dialogue.148.5",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 284818,
+          "length": 14,
+          "sha256": "701de364b720aacb1384d7f2b564570b41d328b0679a9fe917b0daf04e4f44c8",
+          "module": 8,
+          "cpuAddress": 55426,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "automaticStoryOnly": true,
+      "removedFlagId": "rom.npccontext.148.217",
+      "automaticStoryEvidence": "game-data/provenance/world-jiameng-actors.json"
+    },
+    {
+      "id": "rom.npc.37.0",
+      "mapId": 37,
+      "cell": [
+        4,
+        4
+      ],
+      "spriteId": 162,
+      "sprite": "npc-jiameng-room37-162.png",
+      "firstDialogue": "rom.dialogue.47.0",
+      "repeatDialogue": "rom.dialogue.47.1",
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 278940,
+          "length": 14,
+          "sha256": "3207dcef20732a713a773966f803a697d522fd1f5818550c5aa5231f23c5a945",
+          "module": 8,
+          "cpuAddress": 49548,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "originalTalk": {
+        "actionId": 58,
+        "mapFlagId": "rom.map.37.flag.1",
+        "witnessFlagId": "",
+        "itemId": "",
+        "evidence": "game-data/provenance/world-jiameng-actors.json"
+      }
+    },
+    {
+      "id": "rom.npc.37.1",
+      "mapId": 37,
+      "cell": [
+        6,
+        4
+      ],
+      "spriteId": 163,
+      "sprite": "npc-jiameng-room37-163.png",
+      "firstDialogue": "rom.dialogue.47.2",
+      "repeatDialogue": "rom.dialogue.47.3",
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 278954,
+          "length": 14,
+          "sha256": "de4c92587b81f461094284febaed6852dd5bd0821c6c980a7393f40af11e0197",
+          "module": 8,
+          "cpuAddress": 49562,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "originalTalk": {
+        "actionId": 58,
+        "mapFlagId": "rom.map.37.flag.2",
+        "witnessFlagId": "",
+        "itemId": "",
+        "evidence": "game-data/provenance/world-jiameng-actors.json"
+      }
+    },
+    {
+      "id": "rom.npc.37.yang-bed",
+      "mapId": 37,
+      "cell": [
+        3,
+        5
+      ],
+      "spriteId": 130,
+      "sprite": "npc-jiameng-room37-130.png",
+      "firstDialogue": "",
+      "repeatDialogue": null,
+      "firstEffects": [],
+      "jiamengResourceEvidence": "game-data/provenance/world-jiameng-actors.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "record": {
+          "offset": 278926,
+          "length": 14,
+          "sha256": "70e2dd061b5bd67d61cf5a9374e9b452c1311e8fa28726bac71403bb3fd3ca4b",
+          "module": 8,
+          "cpuAddress": 49534,
+          "meaning": "Fixed 14-byte NPC source record"
+        },
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "remainingUnknown": [
+          "Transient NPC animation; normal Android route not yet verified"
+        ]
+      },
+      "visibleFlagId": "rom.npccontext.37.196"
+    }
+  ],
+  "sceneBarriers": [
+    {
+      "id": "rom.barrier.145.248",
+      "mapId": 145,
+      "kind": "JIAMENG_ACTOR_FILTER",
+      "cell": [
+        3,
+        3
+      ],
+      "removedFlagId": "rom.map.145.flag.4",
+      "recordSource": {
+        "offset": 284703,
+        "length": 14,
+        "sha256": "9df0494734cbd3c0ebd3aa3b58c128b2ad372c9ccb6c178e9bb3f950754cf2e0",
+        "module": 8,
+        "cpuAddress": 55311,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-jiameng-actors.json"
+    },
+    {
+      "id": "rom.barrier.145.249",
+      "mapId": 145,
+      "kind": "JIAMENG_ACTOR_FILTER",
+      "cell": [
+        4,
+        3
+      ],
+      "removedFlagId": "rom.map.145.flag.8",
+      "recordSource": {
+        "offset": 284717,
+        "length": 14,
+        "sha256": "56c42ba97c58916a7ca862aebe3bc1d820963f71a3b574dc5321246b34708358",
+        "module": 8,
+        "cpuAddress": 55325,
+        "meaning": "Fixed 14-byte NPC source record"
+      },
+      "evidence": "game-data/provenance/world-jiameng-actors.json"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.155.0",
+      "text": "『這裏是佳夢關，已經封鎖，回去吧！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108704,
+          "length": 19,
+          "sha256": "7bac725bbf6aeef2b35875fabf67b94661bf74be0eddd55da5774f41988c5631",
+          "module": 3,
+          "cpuAddress": 43152,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101288,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35736,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101986,
+            "length": 2,
+            "sha256": "bb17a5367ff6498df1379e5013e7bc66f8c1f1742bca7180661fdd871e3b5fa4",
+            "module": 3,
+            "cpuAddress": 36434,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.155.1",
+      "text": "魔禮壽　『可惡小子，打死我的花狐貂，納命來！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108723,
+          "length": 24,
+          "sha256": "45bea73cfc5155bee7478474e43a563c58c6109dfe5859ca7a891dece35508bc",
+          "module": 3,
+          "cpuAddress": 43171,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101288,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35736,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101988,
+            "length": 2,
+            "sha256": "1570726cb4b526068128010b032752ed525b1c58fa14ae989841ac6ca1a55dd6",
+            "module": 3,
+            "cpuAddress": 36436,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.156.2",
+      "text": "小龍女　『謝謝你們來救我，很高興大家都平安無事，讓我們一起消滅魔家四將吧！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108747,
+          "length": 39,
+          "sha256": "8c3c81be472ad2a573d29112c3a879ecbcb95946f2a4bab006bced8b40343ed5",
+          "module": 3,
+          "cpuAddress": 43195,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101290,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35738,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101990,
+            "length": 2,
+            "sha256": "fd31f5558903fbe132dc4035d8976c36607f8adfd0fb71072163c4dc7e067c3d",
+            "module": 3,
+            "cpuAddress": 36438,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.3",
+      "text": "魔禮海　『就是他們打死老四和他的花狐貂，太可惡了！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108786,
+          "length": 27,
+          "sha256": "ff03cb5da98e5a1740f3e36f254bfe3fdf7245ff9893b203373e36f6f2fa5304",
+          "module": 3,
+          "cpuAddress": 43234,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101992,
+            "length": 2,
+            "sha256": "dc5f036a529621545084bd8f072d0fc508643a798eeb5a2979e052e7135f23d3",
+            "module": 3,
+            "cpuAddress": 36440,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.4",
+      "text": "魔禮紅　『一群不自量力的小鬼，嚐嚐老夫混元傘的威力！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108813,
+          "length": 28,
+          "sha256": "53abf6839ade72ed2d795e3d6ad47855d943551c5dee2f5039963e3701978b23",
+          "module": 3,
+          "cpuAddress": 43261,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101994,
+            "length": 2,
+            "sha256": "0aafbff86161aaadfa75f4d1da00896bee11bbeb5e15566d457d53b5a556800a",
+            "module": 3,
+            "cpuAddress": 36442,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.5",
+      "text": "魔禮青　『我這把青雲劍好久沒沾血了，就拿你們磨磨刀！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108841,
+          "length": 28,
+          "sha256": "1148ef6c0f9f8335980731d005fbcf84d16fd0045328b71439a0346449ef006a",
+          "module": 3,
+          "cpuAddress": 43289,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101996,
+            "length": 2,
+            "sha256": "fde5db8f06dd927b461d56417a5cf8948cb7c494d4170cdd757b5772b93e82e9",
+            "module": 3,
+            "cpuAddress": 36444,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.6",
+      "text": "打敗魔家四將後楊戬倒在地上",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108869,
+          "length": 14,
+          "sha256": "1a8b0bc0d7a1c9174ac8b4ceb0719463a40170515f346ee8b3ed06bb7172f0a9",
+          "module": 3,
+          "cpuAddress": 43317,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101998,
+            "length": 2,
+            "sha256": "804080359ad9a0556a0127bc6666df01e3be11fef679f9d72059179c01fcf84b",
+            "module": 3,
+            "cpuAddress": 36446,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.7",
+      "text": "小龍女　『楊戬！楊戬。。。你醒醒呀！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108883,
+          "length": 20,
+          "sha256": "255b0b5ebbf951e47cffcdaddeb6d51bba89afc19a5a81f10ebc06497c38a90b",
+          "module": 3,
+          "cpuAddress": 43331,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 102000,
+            "length": 2,
+            "sha256": "30d6d766d50922e50aced256f82f5d1128e6810e7178b71009f1283a6af04d15",
+            "module": 3,
+            "cpuAddress": 36448,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.158.8",
+      "text": "哪吒　　『糟糕！先將他扶到有人家的地方吧！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108903,
+          "length": 23,
+          "sha256": "c633accb03098d960a267b76a2f5859cf60a1245b4feb99250dbb4da9ff64e93",
+          "module": 3,
+          "cpuAddress": 43351,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101294,
+            "length": 2,
+            "sha256": "9b973d651e4b2c7d1662f343f4c340d1ce7b6a52a4e85a750d619cb4218ca35a",
+            "module": 3,
+            "cpuAddress": 35742,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 102002,
+            "length": 2,
+            "sha256": "1c61766198ee68183035d9ccb9969855d3e3685ba5501e3f5e146af86d9f2c4d",
+            "module": 3,
+            "cpuAddress": 36450,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.47.0",
+      "text": "『你的伙伴昏迷不醒而且身體發青，一定是中了劇毒！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108012,
+          "length": 26,
+          "sha256": "aaf002269f854283acc44c3ec566bcc771fd470956bc4f45b6e3f5c11a26900d",
+          "module": 3,
+          "cpuAddress": 42460,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101072,
+            "length": 2,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7",
+            "module": 3,
+            "cpuAddress": 35520,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101916,
+            "length": 2,
+            "sha256": "45357d0d1851a0c509a6db07be6ca7397fd995f6b5896f64bfc3002fadf10e94",
+            "module": 3,
+            "cpuAddress": 36364,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.47.1",
+      "text": "『你們氣色真好。』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108038,
+          "length": 10,
+          "sha256": "7cbf551cfc948d8fafb1d9f707625f3c3c6080d860fc6b6d9da94ce9b238bb18",
+          "module": 3,
+          "cpuAddress": 42486,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101072,
+            "length": 2,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7",
+            "module": 3,
+            "cpuAddress": 35520,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101918,
+            "length": 2,
+            "sha256": "57c029f60f528d0a4966d9be5dffd1a20ba804e0c31d83bd44dcaa390e603874",
+            "module": 3,
+            "cpuAddress": 36366,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.47.2",
+      "text": "『快去找大夫，我們會照顧他的！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108048,
+          "length": 17,
+          "sha256": "c6fb10f3e1e5d198526e26d193c7c0fe043ccd8b27347bb3f345c274d49dd790",
+          "module": 3,
+          "cpuAddress": 42496,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101072,
+            "length": 2,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7",
+            "module": 3,
+            "cpuAddress": 35520,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101920,
+            "length": 2,
+            "sha256": "20da2faea7f43ac1f0f5de113fbde94c9a8973b2026e3d3f15de0dbba1612964",
+            "module": 3,
+            "cpuAddress": 36368,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    },
+    {
+      "id": "rom.dialogue.47.3",
+      "text": "『一路上小心呀！』",
+      "source": {
+        "confidence": "ORIGINAL_ROM_FONT_VERIFIED",
+        "record": {
+          "offset": 108065,
+          "length": 10,
+          "sha256": "f526729ecd030779f5d74b12d5c52ff6f90172bf5042956da61bee6178bc8f3d",
+          "module": 3,
+          "cpuAddress": 42513,
+          "meaning": "C3-terminated text byte stream"
+        },
+        "pointerEvidence": [
+          {
+            "offset": 101072,
+            "length": 2,
+            "sha256": "6a3b3502773a73bf490a365320a12216cb02fe38c2a024faa6724fb21db757a7",
+            "module": 3,
+            "cpuAddress": 35520,
+            "meaning": "Text group pointer"
+          },
+          {
+            "offset": 101922,
+            "length": 2,
+            "sha256": "caf7643c720e7e626a793a7432580e7a11add533a142faf5859ffb16cdf95490",
+            "module": 3,
+            "cpuAddress": 36370,
+            "meaning": "Message pointer"
+          }
+        ],
+        "originalVerified": true,
+        "evidence": "game-data/provenance/world-jiameng-actors.json",
+        "verificationScope": "Scoped original active font/byte streams; controlled evidence, not Android normal play"
+      }
+    }
+  ],
+  "graphics": {
+    "npc-jiameng-154.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 872688,
+          "length": 16,
+          "sha256": "75902a6a1a45de42c7948a0374a274eac5492d51db4f51e9e47d6d4a8d142ec4",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 872704,
+          "length": 16,
+          "sha256": "bae8b1015c5ff24a218d5bd14411ccfaf5cb913c855e76aaa6a44a2b6571d931",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 872944,
+          "length": 16,
+          "sha256": "935842f997c0cca09b7c40d21e985031d4392d077d288dc36c5255624523d3c6",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 872960,
+          "length": 16,
+          "sha256": "3ed7fbcc35ca50d3188cff23518ebe77ccfbc3267be47f6743e1a2b24610878a",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "31e40a53580d4789fdb6d6a59cb14faea53a29a186ef1f228aef265da3fdcc47",
+      "captureSha256": "5c635f24835c341eff4021dd96101cc0d0ba63fa721c5acad5c18db00feebea8",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 218,
+      "oamHex": "608e0070608f0078689e0070689f0078",
+      "ramSha256": "93f9f185ebc01dbd17e6abd45c035047ed22f17adea88d82183569ddfe8310f0",
+      "ppuSha256": "6d1e180575e21ea022f59c4713b48db23d9fd885bce26d58f5014a10eb9a61ae",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    },
+    "npc-jiameng-129.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          219,
+          40,
+          0
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 864816,
+          "length": 16,
+          "sha256": "28e48ffee03907a9c12dff46117192474ff0f6f2bf8d0cf11094c0dd2b8d839b",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 864832,
+          "length": 16,
+          "sha256": "c4dc69d1de26acb7b9e6bc50dbba36a709c934f9ce57146a899560bd232d8853",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 865072,
+          "length": 16,
+          "sha256": "bfbf34438180f048f17a2181d3e1aac5de85e04faf9620e8adf8957add3652e9",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 865088,
+          "length": 16,
+          "sha256": "b6ae0e1ba2ba6ce88afd982b57d8cf5ac13b8d7782e93fa92c83fc7d6708a655",
+          "attribute": 0,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "64d14905a468aeddffc27496ec04f132a5bd5eb0ab47dacd89d56b3b238e1f08",
+      "captureSha256": "e22fb0752818d2aaae7e57d96f7f55d2e775ed08bc0a09a010482dedf78b4440",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 213,
+      "oamHex": "60220070602300786832007068330078",
+      "ramSha256": "4e4a160d9157c4037400da3d507e87fcc72d0206ecf761358c46ff8518669a74",
+      "ppuSha256": "e4b1d2efb696f6d53765926a57da44008656db3e2e113e6a1f109de3d19e82ef",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    },
+    "npc-jiameng-152.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        41,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 873520,
+          "length": 16,
+          "sha256": "cc07d0eaa85207de045fdb7c56ed5d333f0bca7b090b092cc3e295991be19bf0",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 873536,
+          "length": 16,
+          "sha256": "e967b8b0e3f7d5166e22112aad929cd6a781ac6b3df9b93045d4fb54f6dd637e",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 873776,
+          "length": 16,
+          "sha256": "77075f8b6844e2ed66ead39352bb5a8d38b70afe6d433693c1e59f6213f423b6",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 873792,
+          "length": 16,
+          "sha256": "c926abb1455edfc6ad06ff4471054f0b6900633f1b42ee9728ffe85240b666aa",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "eaed1aadf158dce5a2652d97f14fd26edf7fbe62cbaadeb09c9625b0ee7e912e",
+      "captureSha256": "92be28f137421cab6a8d65c8485fe78f959e3de480f6ccbfb1f56f1177085192",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 201,
+      "oamHex": "30c2017030c3017838d2017038d30178",
+      "ramSha256": "9c2b1f06c27dba059e6bb45ea91eaaa696d73edd38864dbbcd1e03449d45ce35",
+      "ppuSha256": "6d1e180575e21ea022f59c4713b48db23d9fd885bce26d58f5014a10eb9a61ae",
+      "limitation": "Transient NPC movement not animated; exact selected observed pose only. OAM y+1 and screenshot top crop8 applied. Captured palette RGB sampled consistently per original nonzero pixel code, not old emulator RGB values."
+    },
+    "npc-jiameng-room37-130.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        96,
+        105,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 865296,
+          "length": 16,
+          "sha256": "eef9d63a613d5d51c247e02b3a881f411f7ee3d0077893f8eab3295e217477ba",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 865312,
+          "length": 16,
+          "sha256": "eb74866c3bae5c5ea0406a0d57801e99f4982e0a8b984b29e1ac3b9bd4823185",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 865552,
+          "length": 16,
+          "sha256": "18df1c82ca9171531e02dabf7e5d0bf9fcc131f72319b8d2e7dafaee08d59acd",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 865568,
+          "length": 16,
+          "sha256": "064353e47998505c1178fd02f78c41a078e4b790d1861e8264666e19bb197da3",
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "6ea2724f1bb75729e512a3f114f4d52eca1cfc72a52184fc67f593c7914e2329",
+      "captureSha256": "23c89299ce0f6197ffa3676e380cbc240c3ea7ae17fe41c61804062b7470a6d0",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 228,
+      "oamHex": "70400160704101687850016078510168",
+      "actorRecordOffset": 1048,
+      "actorEntityId": 130,
+      "ramSha256": "e471686bd2de4b3bd8fc6d06f11564993c58f962f6173ab6d4787d23826ca9c7",
+      "ppuSha256": "032ffd0a1a8caed00cb8268ef507899cb0749664e4692b63d1903739e314cbe0"
+    },
+    "npc-jiameng-room37-162.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 871008,
+          "length": 16,
+          "sha256": "ef64e1b60a9a9467851630068f13d8b023b56ef05929e6ead0326f3117443a12",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 870992,
+          "length": 16,
+          "sha256": "780ed1129f9cde1fa6b9497daee203feef67288b6e2fd43f6b239fd57b1fa9f6",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 871264,
+          "length": 16,
+          "sha256": "ee769ca052d7dceb37062e559b4995ea3e4b476a43c5b4025a4f6535de814b05",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 871248,
+          "length": 16,
+          "sha256": "e1963b3d60fc7b9d646b6ce4361a213f4e5f07d942e5613de5c3d835430eff46",
+          "attribute": 66,
+          "flipX": true,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "1413c2fcd813c7698cb28f319533b12abc18c32cd6b28bc2845e76c8c14c6a97",
+      "captureSha256": "23c89299ce0f6197ffa3676e380cbc240c3ea7ae17fe41c61804062b7470a6d0",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 204,
+      "oamHex": "60a5427060a4427868b5427068b44278",
+      "actorRecordOffset": 1070,
+      "actorEntityId": 162,
+      "ramSha256": "e471686bd2de4b3bd8fc6d06f11564993c58f962f6173ab6d4787d23826ca9c7",
+      "ppuSha256": "032ffd0a1a8caed00cb8268ef507899cb0749664e4692b63d1903739e314cbe0"
+    },
+    "npc-jiameng-room37-163.png": {
+      "width": 16,
+      "height": 16,
+      "observedRect": [
+        96,
+        89,
+        16,
+        16
+      ],
+      "transparentZero": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ]
+      },
+      "tiles": [
+        {
+          "xy": [
+            0,
+            0
+          ],
+          "offset": 871504,
+          "length": 16,
+          "sha256": "6cef8cb2c769b6be564d78c9774b056500fe329625c62f4904929dd4f332e9d3",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            0
+          ],
+          "offset": 871520,
+          "length": 16,
+          "sha256": "6a6dd68bb201f9bac450c15d33a4a30578cdb436706b2396edeb192b774e3d3c",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            0,
+            8
+          ],
+          "offset": 871760,
+          "length": 16,
+          "sha256": "f5d01503e60837bc3b0d7d1c0bbf2ac2642b1b41b83dc7eade6378b100562b43",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false
+        },
+        {
+          "xy": [
+            8,
+            8
+          ],
+          "offset": 871776,
+          "length": 16,
+          "sha256": "cc629969fe8a9fca671ca9848f28485aca489a219657e7bce23f2ffa7f749cb5",
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false
+        }
+      ],
+      "rgbaSha256": "363db714a60fa5b1659d6170156b553cbedd750a61cb5770d774896d1689c6c1",
+      "captureSha256": "23c89299ce0f6197ffa3676e380cbc240c3ea7ae17fe41c61804062b7470a6d0",
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "normalPlayEvidence": false,
+      "opaquePixelMatch": true,
+      "opaquePixelCount": 188,
+      "oamHex": "60c4036060c5036868d4036068d50368",
+      "actorRecordOffset": 1092,
+      "actorEntityId": 163,
+      "ramSha256": "e471686bd2de4b3bd8fc6d06f11564993c58f962f6173ab6d4787d23826ca9c7",
+      "ppuSha256": "032ffd0a1a8caed00cb8268ef507899cb0749664e4692b63d1903739e314cbe0"
+    }
+  },
+  "limitations": [
+    "Room37 action58 does not cure, charge, remove or add a character",
+    "Static actors from actual records; walking/choreography remains provisional",
+    "Room37 bed appears only in actual context196",
+    "Not packaged or App verified yet"
+  ]
+}

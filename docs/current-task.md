@@ -65,3 +65,14 @@ R2冻结main dd310273b371e813b11198e665b6ff81e147d029，原run37270937736 build 
 独立佳梦关树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next：原script31五个真实触发位置均保留各自玩家格，3→4→5对白后战斗，无新增传送/玩家步/条件；script30到37(4,5)已核。原小龙女恢复发生首次交谈对白关闭时（8行RAM时间证据），不是提前回血。两场Boss定义/原数值、黄飞虎真实context145.215、三将组合/胜后原flag/杨戬OR64只接已有角色、special18 marker5已在原逻辑/导出限定校验中实现。13 Python来源/拒绝回归、52相关JVM方法/8suite及仪器编译PASS；旧c50 scope7 PASS。原始ROM/RAM/PPU仍忽略私有目录。
 
 新地图145..148和37、Boss/场景定义尚未PACKAGED/APP_VERIFIED/PUBLISHED；不能写可玩或正常胜利。下一动作：批量内容配方及原导出薄适配，保留四图原zone29完整12组（敌人60/61/62）和真实高阈值遇敌，补原敌图/状态8身份，随后严格干净重复导出与App验收。无不可替代资源/权限/平台阻塞，继续实施，不等待用户“继续”。
+
+
+## 当前有效独立检查点（2026-10-06 04:02:53 Asia/Shanghai）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82 STABLE；R2旧候选37270937736的base通过，但world在map63宝箱驱动未面向两个相邻对象时失败，continuation跳过，旧v83未发布。完整失败产物保留；仅修真实触控驱动为点选指定原actor，未改游戏碰撞/奖励/药品。新main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，构建37364795394成功，runtime执行中；inspect37364791739自动审批成功，runner查询排队中。不得移动main或用旧APK结果为新产物背书。
+
+独立佳梦关开发树work/world-jiameng-next：原地图145..148及胜后37通过原baseExport子配方生成c52内容325文件/61图，manifest 91fe425a73ee5cec55f469e9871d2b1e0efe4a5eba6054ef5f646fb43df423f8。固定原v27签名APK仅作导出基底，旧c50所有媒体逐字节复用；没有将新内容装入冻结R2。局部21 Python测试通过（严格pin、空目录原ci_apk.restore、错actor/flag/效果拒绝、原敌图/来源），11相关JVM方法与仪器编译通过；1024状态8、2560 room37 action58对白、512 map145 actor过滤原CPU用例通过，受控证据不是正常路线。
+
+新增实现：8原NPC、2原碰撞actor、17真实出口、7敌人/完整zone29四图12组、两Boss及原小龙女恢复/三将胜后到37脚本；原特殊18 marker5通过现有回合入口。Room37条件对白不收费/不治病/不增剧情锁；床上杨戬只在context196出现，保留既有角色。普通敌人60/61/62原名UNKNOWN，防具20参考名PROVISIONAL、装备主人/槽位未接入。原ROM/原图/PPU仍在忽略目录，没有公开上传。
+
+四层状态：新佳梦关IMPLEMENTED（局部逻辑/配方）；CONTENT_GENERATED（可重复325文件）；APK_PACKAGED/APP_VERIFIED/PUBLISHED均NOT_RUN。当前ci/content-source/runtime-scope仍旧c50，不将新golden误作当前候选。下一动作：增加ContentTest限定加载/条件演员/共享命令/存档回归，原恢复至隔离干净工作区构建候选；等待R2同源三job结果后按原发布门槛处理，再整合后续有限可玩区段，不停止等待用户继续。
