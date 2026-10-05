@@ -6,7 +6,21 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前检查点（2026-10-05）
+## 当前有效状态：R2冻结与世界接续 / SAVE-HISTORY（2026-10-06，北京时间）
+
+用户最新授权仍是WORLD-FULL-01连续实施，不以R2或存档历史完成结案。生产v82/0.8.12-playable-r1-stable，来源c461e7c121b6f535d85e2a245b82be1f6e42d786；服务器version.json实际读回82/STABLE/stable_acceptance=PASS/manual_acceptance=PENDING。当前正常已验终点为东海胜后小龙女入队→村2既有服务→保存/冷启；完整全世界仍PARTIAL/有效分母UNKNOWN。
+
+main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，R2原构建37364795394/build SUCCESS、runtime首段SUCCESS、runtime-world正在执行。候选v83/0.8.13-world-hell-r2、c50/56图/302文件、APK SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab；未完成三段验收/未发布，不修改候选源码。inspect37364791739与一次重试37367849461均approve SUCCESS但托管runner未领取inspect、无steps，实际annotation均为The job was not acquired by Runner of type hosted even after multiple attempts；查询NOT_AVAILABLE，不继续盲目重试、不称健康。GitHub当前云环境API身份/仓库/Actions读回成功，不能把runner调度失败归咎Token或绕过保护。优先继续候选实际失败分类或通过后的原审核/巡检/发布。
+
+独立开发树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next，开始提交300534a6e1a380d456007629ffd3f7d2b35b7a07；已备份work/world-jiameng-batch-continuation/987ba70a7967b929bd6de7b8b2937b9c71ad19a2。佳梦关与胜后37共5新增图、17独立出口、8NPC、两Boss/7敌定义已IMPLEMENTED/CONTENT_GENERATED(c52/61图/325文件，manifest91fe425a73ee5cec55f469e9871d2b1e0efe4a5eba6054ef5f646fb43df423f8)。从该开始提交git archive恢复的干净工作区已实际assembleDebug/assembleDebugAndroidTest成功（1m47s），仅DEBUG打包；正常Android游玩APP_VERIFIED=NOT_RUN/PUBLISHED=NO。当前CI content-source/runtime-scope继续固定c50，未把c52塞回R2。
+
+SAVE-HISTORY附带实现：Settings末尾“存档 / 回档”复用原模态入口与GameState/SaveSnapshot/saveJson；手动、前台5分钟AUTO、回档前共享最多20条，稳定ID/完整快照/hash、插入顺序最新在上。回档先验证目标，原场景恢复后当前saveJson与回档前历史同一SharedPreferences事务提交；失败恢复旧状态/原key，原迁移备份/云/外部CI checkpoint不清理。AUTO用单调时间/fake-clock、后台和失焦不计、无补生成、unsafe移动/战斗/渡船延后；无变化可跳过。8存档纯逻辑方法及最新全368 JVM方法（75套，0失败/错误/跳过）通过；Android codec、真实模态操作、损坏记录、保留20档与外部冷启动驱动已加入，实际App均NOT_RUN。未进入冻结R2，未关闭功能验收；本机无KVM，继续复用原Actions而不是重试软件AVD。
+
+当前世界真实顺序：原地府/十殿/重生→现有村3/杨戬/岛/后山/女儿村→清峰山/暗洞/女人国胜后及Huang攒心钉→佳梦关/魔家四将→37病中杨戬。已实现部分不重研，未完成正常链不冒称可玩。下一组村7/8/9/10入口/独立返程已以匹配ROM缓存和原控制器批次受控核对：16(16,65)→7(11,21)→16(16,65)；16(44,81)→8(3,16)→16(44,81)；16(39/40,81)→9(30,16)→16(40,81)；16(65/66,88)→10(19,22)→16(65,88)。控制位置/HP源明确非正常路线/非Android；未打包这四图。map7实体199实际对白13不同于raw6，保留具体待核，原对白已识别map7为磻溪，不能机械按普通NPC导入或从攻略制造任务条件。
+
+第一真实blocker：R2同候选三段正常App验收尚未完成，服务inspect另有托管runner调度限制。下一精确动作：读37364795394 job实际结果；FAIL读取对应断言/原片分类薄修，PASS原review/必要实际巡检/签名同hash发布。等待期间在本独立树继续已有世界的共享接续，限定核下一村庄动作/地图依赖；SAVE-HISTORY需同后续候选真实UI/force-stop/升级验证，复杂问题不阻塞已验证剧情阶段。旧字体/音频/一加13T/真实云恢复按原欠账保留。
+
+## 历史检查点（2026-10-05；不覆盖以上当前有效状态）
 
 用户最新连续授权：先在现有冻结R1范围完成有限STABLE验收并按原保护自动发布；发布后立即继续既有地府/十殿/重生/后续区域，不等待manual_acceptance或再次“继续”。不扩展R1候选；DEVELOPMENT HEAD与STABLE RELEASE分别维护，正常阶段验收与受控fixture严格区分。
 

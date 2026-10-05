@@ -11,6 +11,97 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** CONTROLLED emulator fixture, not normal main-story progression. Native buttons use the player entry. */
+    fun testControlledSaveHistoryManualRollbackAndActivityRestart(){
+        val(activity,v)=launch();val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        lateinit var a:SaveSnapshot
+        instrumentation.runOnMainSync{
+            val initial=v.currentSnapshot().copy(flags=v.currentSnapshot().flags+("opening.intro.seen" to true))
+            assertTrue(v.restoreSnapshot(initial));a=v.currentSnapshot()
+        }
+        fun dialog()=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as android.app.AlertDialog
+        fun history(){
+            if(v.layer==GameView.Layer.MAP)tap(v,center(layoutFor(v).buttons.getValue(Key.MENU)))
+            assertEquals(GameView.Layer.MENU,v.layer);tap(v,menuPoint(v,3))
+            instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),10,d.listView.adapter.getItemId(10))}
+            assertTrue(dialog().isShowing)
+            assertEquals("手动存档",dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).text.toString())
+        }
+        history()
+        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).performClick()}
+        val manual=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)).first()
+        assertEquals(SaveHistoryEntry.Kind.MANUAL,manual.kind);assertEquals(a,manual.snapshot)
+        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick();v.handleBack()}
+        val destination=v.content.scenes.getValue(0)
+        val b=a.copy(mapId=0,x=destination.spawnX*16+8,y=destination.spawnY*16+8,money=a.money+50,
+            inventory=a.inventory+(HerbUse.ID to 3),flags=a.flags+("fixture.history.flag" to true),
+            characters=a.characters.map{it.copy(level=it.level+1,experience=it.experience+20)},encounterSteps=7)
+        assertTrue(b.validate(v.content))
+        lateinit var actualB:SaveSnapshot
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(b));actualB=v.currentSnapshot()}
+        history()
+        instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
+        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick()}
+        assertEquals(actualB,v.currentSnapshot());assertEquals(1,SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)).size)
+        history()
+        instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
+        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_POSITIVE).performClick()}
+        assertEquals(a,v.currentSnapshot());assertEquals(a,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        val entries=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null));assertEquals(2,entries.size)
+        assertEquals(SaveHistoryEntry.Kind.BEFORE_RESTORE,entries.first().kind);assertEquals(actualB,entries.first().snapshot)
+        screenshot(v,"world-save-history-restored-controlled")
+        File(instrumentation.targetContext.getExternalFilesDir(null),"world-save-history-expected-save.json").writeText(a.json().toString())
+        instrumentation.runOnMainSync{activity.finish()};instrumentation.waitForIdleSync()
+        val(restarted,cold)=launch();assertEquals(a,cold.currentSnapshot())
+        assertEquals(entries,SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)))
+        instrumentation.runOnMainSync{restarted.finish()}
+    }
+    fun testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration(){
+        val(activity,v)=launch();val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        val original=v.currentSnapshot();val backup=original.json().toString()
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString("preContentMigration",backup).putString("preCloudRecovery",backup).commit())
+            repeat(21){n->
+                assertTrue(v.restoreSnapshot(original.copy(money=original.money+n)))
+                assertTrue(v.saveHistoryResult())
+            }
+        }
+        val entries=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null))
+        assertEquals(20,entries.size);assertEquals(original.money+20,entries.first().snapshot.money)
+        assertEquals(original.money+1,entries.last().snapshot.money)
+        val active=prefs.getString("saveJson",null);val current=v.currentSnapshot()
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString(SaveHistory.KEY,"{broken snapshot").commit())
+            assertFalse(v.restoreHistoryResult(entries.last().id));assertFalse(v.saveHistoryResult())
+        }
+        assertEquals(active,prefs.getString("saveJson",null));assertEquals(current,v.currentSnapshot())
+        assertEquals(backup,prefs.getString("preContentMigration",null));assertEquals(backup,prefs.getString("preCloudRecovery",null))
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString(SaveHistory.KEY,SaveHistory.encode(entries)).commit())
+            val invalid=entries.first().copy(snapshot=entries.first().snapshot.copy(mapId=999))
+            assertTrue(prefs.edit().putString(SaveHistory.KEY,SaveHistory.encode(listOf(invalid))).commit())
+            assertFalse(v.restoreHistoryResult(invalid.id))
+        }
+        assertEquals(active,prefs.getString("saveJson",null));assertEquals(current,v.currentSnapshot())
+        val tampered=JSONObject(SaveHistory.encode(entries));val row=tampered.getJSONArray("entries").getJSONObject(0)
+        row.put("snapshotJson",JSONObject(row.getString("snapshotJson")).put("money",0).toString())
+        instrumentation.runOnMainSync{
+            assertTrue(prefs.edit().putString(SaveHistory.KEY,tampered.toString()).commit())
+            assertFalse(v.restoreHistoryResult(entries.first().id))
+        }
+        assertEquals(active,prefs.getString("saveJson",null));assertEquals(current,v.currentSnapshot())
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    /** Invoke only after the original external recorder has force-stopped this isolated App. */
+    fun testSaveHistoryExternalColdStartMatchesRestoredSnapshot(){
+        val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-save-history-expected-save.json")
+        assertTrue(file.exists());val expected=SaveSnapshot.parse(file.readText(Charsets.UTF_8))
+        val(activity,v)=launch();assertEquals(expected,v.currentSnapshot())
+        val entries=SaveHistory.parse(instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString(SaveHistory.KEY,null))
+        assertTrue(entries.any{it.kind==SaveHistoryEntry.Kind.BEFORE_RESTORE})
+        screenshot(v,"world-save-history-external-cold-controlled")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     /** Bounded CI transport only: App-owned bytes, no launch or state restore. */
     fun testImportVerifiedCheckpointBytes(){
         val args=(instrumentation as android.test.InstrumentationTestRunner).arguments
