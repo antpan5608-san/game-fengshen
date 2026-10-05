@@ -2442,6 +2442,11 @@ class TouchTest:IsolatedGameTestCase(){
     fun testWorldHellVillageColdStartMatchesNormalSave(){normalWorldStoryContinuation(true,true,true)}
     /** Exact failed-run East normal/cold source; no HP, inventory or flag repair. */
     fun testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave(){
+        prepareR1VillageTwoVerifiedSource()
+        normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
+        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
+    }
+    private fun prepareR1VillageTwoVerifiedSource(){
         val fixture=JSONObject(instrumentation.context.assets.open("r1-village2-verified-east.json").bufferedReader().use{it.readText()})
         assertEquals("CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",fixture.getString("kind"))
         assertTrue(fixture.getBoolean("sourceNormalAndExternalColdVerified"))
@@ -2453,8 +2458,10 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(OriginalStatus.POISON,source.characters.single{it.id=="xiaolongnv"}.statusMask)
         val file=File(instrumentation.targetContext.getExternalFilesDir(null),"world-controlled-r1-village2-source.json")
         file.writeBytes(bytes)
+    }
+    fun testPersonalR1SmokeFromVerifiedEastSave(){
+        prepareR1VillageTwoVerifiedSource()
         normalWorldStoryContinuation(false,true,true,fixtureLabel="controlled-r1-village2")
-        normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
     }
     /** Personal smoke only: same sourced fixture, no mainline-completion claim. */
     fun testPersonalR1SmokeColdRestartMatchesVerifiedSave(){
