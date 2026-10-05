@@ -166,7 +166,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
     run_test testControlledMobileBattleHerbAndSave false
     run_test testUnrestorableSaveCannotBeOverwritten false
     run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
-    python tools/record_app_audio.py personal-r1-smoke testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
+    python tools/record_app_audio.py personal-r1-smoke testPersonalR1SmokeFromVerifiedEastSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
