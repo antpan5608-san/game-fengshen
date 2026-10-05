@@ -1,3 +1,42 @@
+## PLAYABLE-R1个人测试版交付（2026-10-05，人工验收待完成）
+
+PERSONAL_TEST_DELIVERY
+
+APK版本: v79 / 0.8.11-playable-r1-personal；已发布，quality=PERSONAL_TEST。
+下载入口: https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin?v=79；也可App内检查更新。
+SHA-256: 59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4
+来源提交: 96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb。
+内容: opening-segment-001-c51-r1；18张依赖地图/120内容文件。
+Manifest SHA-256: 427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805。
+
+本次实现范围: 保持冻结的开局/补给、南海及西北龙宫、85洞、东海胜后小龙女入队、村庄2和共享医馆；复用已有触控、成长/战斗信息、装备与用药。新增个人分级交付及迁移前原档保留，不再把全程自动通关作为个人交付前置。
+已实现且本版自测: 启动/内容加载、旧档覆盖升级、原档备份且不覆盖已有备份、买卖/装备、药草/双人解毒住宿、医馆进出取消、保存/外部停止/冷启继续。
+已实现但本版未做正常全路线验收: 连续龙宫/Boss/入队主线，交人工游玩；历史证据保留，不冒称本版完整通关。
+尚未完成: 全有效地图/服务及未接入剧情、物品/技能/NPC动态等累计欠账；十殿/重生/女人国等后续开发成果保留但不在本包。
+
+基础检查实际结果: 原Windows构建PASS；68次Python测试执行、335 JVM、17 Content测试全部通过；原包名/签名/版本/hash/资源引用/manifest及公网完整字节核对PASS。原reviewer/保护环境仍生效。
+短冒烟: 原KVM AOSP模拟器PASS；采用v76真实正常流程产生、已核源hash的隔离东海存档，明确CONTROLLED；使用真实触控完成补给/交易/住宿并保存，原录屏器外部force-stop/实际冷启/继续通过，不算本次正常通关。两段未改原片已核SHA，静音，不冒称声音验收。
+未执行的长测试: v77后续长测按用户授权取消，日志/产物保留；v79完整新游戏练级/全路线/Boss长测DEFERRED_TO_MANUAL，两个长job显式SKIPPED；stableAcceptance=NOT_RUN。v78冷启失败保留为测试驱动旧端点错误，修正后v79短测实际通过，不把旧FAIL改PASS。
+已知问题: 1.3×/2×字体部分角色名裁切；历史音频超时、v26下载异常根因仍UNCONFIRMED。真机/声音/长时体验NOT_RUN。
+存档备份和升级: v27→v79覆盖安装已实测，人物/金钱/物品/装备/位置/flag保持；不卸载、不清档。首次内容迁移前在App私有存储保留原saveJson，已有备份不覆盖；失败的原档保持保护，不动真实云进度。本轮没有新增用户恢复按钮。
+
+建议重点试玩（可从现有存档继续，无需每次新开档）:
+1. 更新后继续旧档，确认位置、人物、钱、物品和装备。
+2. 陈塘村商店/客栈进出；点选买卖、换装备和地图用药。
+3. 海底场所、后续龙宫与85洞的入口和返回。
+4. 东海胜后小龙女入队、双人战斗/补给及村庄2服务。
+5. 保存后完全关闭重开；体验触控和声音，问题提供位置、大致时间及截图/操作即可。
+
+服务端巡检: 开工/发布前实际27+26=3757事件、9普通真机会话，保留旧26下载错误的精确非阻断评估。02:01:19 UTC发布后实际79+27=1468事件、8普通真机会话，全部样本来自27，79暂无生产样本；不能据此证明79健康。日志仍仅两版，旧26按轮转退出并非根因修复。Language未修改。
+构建与运行证据: https://github.com/antpan5608-san/game-fengshen/actions/runs/37252974082；fengshen-signed-apk及fengshen-town02-runtime-evidence（artifact11321453443，截图/短原片/回执）。
+审批与发布: https://github.com/antpan5608-san/game-fengshen/actions/runs/37253618518；approve/publish SUCCESS，公网完整APK与审核产物逐字节一致。
+manual_acceptance: PENDING
+
+END_PERSONAL_TEST_DELIVERY
+
+
+WORLD-FULL-01仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN；累计十类权威欠账原段完整保留。后续c50/56图源码保留，R1核心存档/补给/驱动修复已回流既有开发线，不称全开发正常可玩。下方均为历史，不覆盖本次个人质量等级。
+
 ## PLAYABLE-R1最小复现修复（2026-10-04，未发布）
 
 v68/run37202777979原Windows构建255 Python方法/48组、release JVM335/68 suites及严格签名/内容校验PASS；base真实App在北宮勝後重進斷言FAILURE，後兩段SKIPPED。实际正常药草HP46→96、数量7→6与规则一致，驱动错误比较补给前状态，分类TEST_HARNESS；保留全部经济/角色/flag断言，改为补给后取比较点并在长路线前加入来源明确的隔离复现。医疗正常/冷启索引分名；已知c51-r1标记窄兼容。修复后335 JVM/仪器编译及32运行/5范围方法通过，v69尚在构建时静态发现低HP需二次补给的边界，申请取消后用两格普通触控隔离比较并加4HP受控例；新候选实际App待验，不写正常R1完成。正式仍v27，内容c51-r1/18依赖图/120文件不变；全开发c50及十类清单保留。当前动作仅见current-task。
