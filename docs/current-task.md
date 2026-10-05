@@ -6,7 +6,7 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效检查点（2026-10-05 05:52 UTC）
+## 当前有效检查点（2026-10-05 06:07 UTC）
 
 R1有限STABLE已完成并正式发布，按用户授权立即进入WORLD-HELL-R2，不等待人工验收或再次继续。旧R1候选/失败/准备状态已移入docs/history/world-full01-runtime-checkpoints.md，历史不得冒称当前。
 
@@ -32,7 +32,7 @@ PUBLISHED：生产仅R1 v82；c50尚未正式发布，原始有效地图分母UN
 
 ## 下一精确动作
 
-验证原PYBASE块对真实v82签名APK/原receipt/hash/content，通过后持久化本R2来源、原非force同树主分支整合；原android-build.yml构建新版本（必须大于82），保留三job同提交/同产物审核。冻结该R2候选进行地府→十殿→重生，等待CI时继续独立佳梦关依赖批次，不动候选来源。实际失败先分类/取原片再薄修，不改验收。
+原PYBASE块对真实v82签名APK/原receipt/hash/content已实际PASS，R2已非force整合到main 00d4f8cfabb3131a4a8b373c0e39e7a385ea8eac。v83/run37270133509的build在06:00 UTC失败：新增test_world_hell_scope默认read_text在Windows cp1252读取中文ContentTest.kt抛UnicodeDecodeError（TEST_HARNESS）；内容恢复c50/302及前57 Python方法已通过，三段App全部SKIPPED，不计App或候选PASS。现仅修显式UTF-8并补跨默认编码回归，保留原断言；修后冻结新来源重建v83（从未发布），原三job/同提交/同产物审核不变。冻结该R2候选进行地府→十殿→重生，等待CI时继续独立佳梦关依赖批次，不动候选来源。实际失败先分类/取原片再薄修，不改验收。
 
 后续固定接续：重生/队伍→既有山洞/村→女儿村→清峰山→暗洞→女人国→剩余原主线/地图/服务/结局。R2达标原保护发布后继续；只有全WORLD条件达成才COMPLETE。正常/受控、代码/打包/App/发布分列，manual PENDING不锁开发。平台实际中断前保存来源/content/正常终点/具体阻塞/精确动作及生产/开发边界，不假装无限后台。
 

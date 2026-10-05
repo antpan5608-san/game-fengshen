@@ -998,3 +998,7 @@ v79/c51-r1已发布PERSONAL_TEST，人工验收PENDING。本包冻结开局→�
 按用户新授权暂时冻结发布终点为东海胜后→小龙女真实入队→23(55,91)原门进入村2(30,19)→三店/住宿/双人战斗/医生真实门口与原返程→保存冷启。正常最终同候选证据尚NOT_RUN；v64历史前段PASS只用于选范围。当前R1内容严格由村2依赖加现有医生室20生成，全部后续地府/重生/女人国数据与逻辑在开发线保留，不将其作为R1运行PASS。阶段清单固定于ci/runtime-scope.json，动态结果以current-task为准。
 
 下方路线属于完整开发/历史成果，不能覆盖本阶段端点或把打包数量当可玩数量。
+
+## WORLD-HELL-R2 首次云构建失败（2026-10-05 06:00 UTC）
+
+v83 / 0.8.13-world-hell-r2，source00d4f8cfabb3131a4a8b373c0e39e7a385ea8eac，run37270133509/job111635178190。c50/302恢复及57既有Python方法通过；新增scope第7组中读取中文ContentTest.kt由Windows默认cp1252导致UnicodeDecodeError，分类TEST_HARNESS。build FAILURE，三段App SKIPPED，没有签名候选/发布。本地Linux此前通过不能证明Windows默认编码可靠。修复四处源码读取显式UTF-8并补默认编码不参与的回归，不改玩家内容/规则或删验收。生产保持v82。
