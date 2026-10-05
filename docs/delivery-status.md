@@ -1,5 +1,11 @@
 ## 当前进度补记（2026-10-06，北京时间；开发与发布分列）
 
+## 独立开发更新：c56实际调试包与局部标志生命周期
+
+源码80e6da1的干净archive/原restore/正确fengshenVersionCode与fengshenVersionName参数，aapt实核DEBUG84/0.8.14-west-boat-lotus-dev；33372423字节，SHA34124e65957835a81921e7c0493b730feb6e16f1623edcfc79b78b48079c8a98。c56/67依赖图/368文件manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9逐文件核验通过；389 JVM/81套和相关导出3方法通过。不是原签名/实际App/已发布；正常航行、治疗链与历史回档UI仍NOT_RUN。c55此前意图84但实际默认21的版本记录已纠正，未安装或发布，不背书覆盖升级。
+
+原script30后段受控两案保持136旗标0/1不变；仅这个事件边界已证，不能擅自清flag或宣称早访完整路线。依据world-lotus136-lifecycle.json，原状态/ROM不公开。生产仍v82，冻结R2三段尚未完成；十类权威欠账不因此关闭。
+
 ### 独立芙冰房屋增量（2026-10-06，北京时间；非发布报告）
 
 原地图41/42通过caller10独立房屋表接入现有World/存档；两演员条件对白、两隐藏调查与FE返程已实现。c54为66图/360文件、manifest31572398f6c383feda6c7c0d213ed094175287822d44482da03ebb0fb6c2a72b；96入口/64碰撞/2048对白/22取得CPU零差异、374 JVM/78套、3局部导出及仪器编译PASS。APP_VERIFIED/PUBLISHED均NO，生产v82和R2冻结不变。原神木桨ID14使用已取得受控菜单证据，但船运行/使用入口仍未实现，不称原版完整；Unicode和静态姿态PROVISIONAL。SAVE-HISTORY待实际App/外部冷启，十类欠账完整保留；精确下一动作和失败环境记录见current-task。

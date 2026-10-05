@@ -6,11 +6,21 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效接续（2026-10-06 07:19:25，北京时间）
+## 当前有效接续（2026-10-06 07:29:10，北京时间）
+
+WORLD-FULL-01持续IN_PROGRESS/PARTIAL；ALL_MAPS_USABLE=NO，有效分母UNKNOWN。生产仍v82，R2冻结main87bc56cb/run37364795394；build、runtime SUCCESS，runtime-world仍IN_PROGRESS，后段未开始。未发布、不改候选。此前两次inspect托管runner未领取，NOT_AVAILABLE，未取得本轮客户端样本；不能称健康。
+
+独立开发/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next，代码检查点80e6da159fb3ffcf59aedb16a86721d38ba27353；已安全备份远端work/world-jiameng-batch-continuation/984e96e01cc73763bdf1bb9ced9e7bc5ba70bf1a，同树15bca09967973857be6f8428882ffbacf8d2fb07。自由船/136/c56代码IMPLEMENTED；67依赖图/368内容文件PACKAGED，manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9。新相关3 Python/389 JVM与仪器编译通过，实际Android正常航行/雪莲治疗链/存档历史UI及冷启NOT_RUN，PUBLISHED=NO。
+
+干净git archive80e6→原ci_apk.restore默认assets/development→原wrapper编译与全389 JVM成功；另以正确-PfengshenVersionCode=84/-PfengshenVersionName=0.8.14-west-boat-lotus-dev重打debug/instrument 2秒成功，aapt实际版本84/0.8.14-west-boat-lotus-dev，org.fengshen.dev。最终debug APK33372423字节/SHA34124e65957835a81921e7c0493b730feb6e16f1623edcfc79b78b48079c8a98，原ci.content严格核全部368文件/67图及manifest一致。DEBUG不属于生产签名或运行验收，未安装、未发布。此前c55误用versionCode/name属性，实际生成默认21/0.8.1-town-01，记录已纠正；不使用旧版本调试包证明覆盖升级。
+
+新受控原版实验2案：script30从148后段至37病房，原136.flag1在输入0/1时分别仍0/1，Yang status64/context196；未清除早访健康标志。具体provenance world-lotus136-lifecycle.json，Lua实际执行字节固定，私有状态不公开。只核这个事件边界，不证明正常早访可达或全生命周期，也不擅自清flag/加剧情锁。下一精确动作：继续核实际治疗后玉泉山现场/师父信与火云洞原演员上下文、独立出口及必要事件；仅补真实缺口，保留已接171赠玉佩。R2实际结果PASS则原审核/巡检/签名同hash发布，FAIL原片分类薄修；开发不中断，不改Language/玩家云档。
+
+## 先前自由船接续（2026-10-06 07:19:25，北京时间）
 
 主任务WORLD-FULL-01持续IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO，有效分母UNKNOWN。生产仍v82，main/R2冻结87bc56cb，原run37364795394/build与runtime SUCCESS、runtime-world仍执行、continuation未开始；未发布、不用首段PASS代替完整R2。inspect两次托管runner未领取，NOT_AVAILABLE，没有取得当前客户端样本；不是Token失效或客户端健康结论。
 
-独立开发/workspace/game-fengshen-world-jiameng-next，work/world-jiameng-next，从eb61a0bd6bbba8542e40e5ceb5a54f623f137a3a继续，远端备份work/world-jiameng-batch-continuation/12b5030b78ebff5d0859df5eba238541d10905d3与eb61同树81eeaffe5ebdc00bad48eb0944195b3cf3752373。c55已在git archive eb61干净目录原restore默认assets/development→原wrapper assembleDebug/assembleDebugAndroidTest/全382 JVM通过26秒；DEBUG84 APK33077135字节/SHA8154403c330f695207fb2cd2ce0c59813fea39a23899626e3a45df0b6de9656c，360文件/66图及manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b严格一致。仅DEBUG、App NOT_RUN；不借它背书后续船代码。
+独立开发/workspace/game-fengshen-world-jiameng-next，work/world-jiameng-next，从eb61a0bd6bbba8542e40e5ceb5a54f623f137a3a继续，远端备份work/world-jiameng-batch-continuation/12b5030b78ebff5d0859df5eba238541d10905d3与eb61同树81eeaffe5ebdc00bad48eb0944195b3cf3752373。c55已在git archive eb61干净目录原restore默认assets/development→原wrapper assembleDebug/assembleDebugAndroidTest/全382 JVM通过26秒；DEBUG实际versionCode21/0.8.1-town-01（本地误用了versionCode/name参数，aapt已核实；仅构建/内容验证，未安装、未发布）APK33077135字节/SHA8154403c330f695207fb2cd2ce0c59813fea39a23899626e3a45df0b6de9656c，360文件/66图及manifest79bb2a1193127662b8500d6f28fc341282005420ea6328fe44e895cdc231f10b严格一致。仅DEBUG、App NOT_RUN；不借它背书后续船代码。
 
 本检查点IMPLEMENTED：复用World/Scene/ContentLoader/完整SaveSnapshot与原状态步成本，接自由船219四向原OAM图形、芙冰148接触出航与独立返回、船水类/两类岸边落岸再登与停车、136独立入出载具模式和47条件赠雪莲；原0/14场景使用与37治疗续段保留。桨不是登船前置，只扩原水域；脚行不能借新入口踏水，原fixed ferry218仅在真实pending点保留例外。原码头112/water5400 CPU零差异，原按键实际核中毒每次1点、普通码头步数+1，芙冰正常换图步数归0。单人死后有其他活人正常到落点，全队失能时停在原半完成地图/载具状态，做禁止行走的战败续接保存，不能算成功出航。原22-byte动态停车演员复制方向，未强画统一朝向。初始矩形fixture误用左/上开区间已修正fixture并保留失败，不改业务。
 
