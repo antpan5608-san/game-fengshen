@@ -89,7 +89,7 @@ class HellScopeTest(unittest.TestCase):
                 h.active_scope()
 
     def test_original_dispatch_runs_only_frozen_hell_batch_and_preserves_future_modes(self):
-        script=(ROOT/'ci/run-town02-runtime.sh').read_text()
+        script=(ROOT/'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
         start=script.index('if [[ "$stage" == all || "$stage" == base ]]; then\nrun_test testUpgradeKeepsPreviousSave')
         block=script[start:script.index('# Clinical sub-results',start)]
         prefix='''set -euo pipefail
@@ -132,14 +132,25 @@ pull_evidence(){ :; }
                 self.assertEqual(ok,run.returncode==0,run.stderr[-500:])
 
     def test_medical_endpoint_is_the_real_first_hall_source_and_content_methods_exist(self):
-        touch=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text()
+        touch=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt').read_text(encoding='utf-8')
         self.assertIn('normalSourceName="world-r1-medical-expected-save.json"',touch)
         self.assertIn('steps++<10000',touch)
         self.assertIn('never grant levels/money',touch)
-        content=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/ContentTest.kt').read_text()
+        content=(ROOT/'android/app/src/androidTest/java/org/fengshen/dev/ContentTest.kt').read_text(encoding='utf-8')
         for method in self.scope['contentTests']:self.assertIn('fun '+method+'(',content)
-        checker=(ROOT/'ci/check-reviewed-apk.ps1').read_text()
+        checker=(ROOT/'ci/check-reviewed-apk.ps1').read_text(encoding='utf-8')
         self.assertIn("@('PLAYABLE-R1','WORLD-HELL-R2')",checker)
         self.assertIn("'base,world,continuation'",checker)
+
+    def test_source_checks_use_utf8_independent_of_windows_default_encoding(self):
+        original=Path.read_text
+        checked=[]
+        def read(path,*args,**kwargs):
+            self.assertEqual('utf-8',kwargs.get('encoding'),str(path))
+            checked.append(path)
+            return original(path,*args,**kwargs)
+        with patch.object(Path,'read_text',autospec=True,side_effect=read):
+            self.test_medical_endpoint_is_the_real_first_hall_source_and_content_methods_exist()
+        self.assertEqual(3,len(checked))
 
 if __name__=='__main__':unittest.main()
