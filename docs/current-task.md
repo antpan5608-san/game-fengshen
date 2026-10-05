@@ -2,26 +2,29 @@
 
 task_id: PLAYABLE-R1
 parent_task: WORLD-FULL-01
-status: PARTIAL
+status: PERSONAL_TEST_DELIVERED
 quality: PERSONAL_TEST
 manual_acceptance: PENDING
+stable_acceptance: NOT_RUN
 
-用户2026-10-05正式修订：尽快交付个人测试版；完整长路线/剧情/真机/声音交用户人工验收，保留原长测试。原签名/同提交/同APK/hash/reviewer/环境保护不变。仅更新原两个Fengshen对象，不修改Language/玩家云进度。
+## 当前有效状态（2026-10-05 UTC）
 
-当前工作树 /workspace/game-fengshen-world-next，起始main7747010d；上一冻结7302040c/v77/run37248177285。用户授权后取消剩余长测试，build SUCCESS，runtime CANCELLED，world/continuation CANCELLED，不写PASS。取消前原Content17、升级、原生存储、医疗/双人解毒客栈、交易/装备/存档保护及touch-ux/f0正常冷启实际通过；完整新游戏南海路线未完成。签名产物/日志/已生成检查点仍保留，完整旧现场见history/world-full01-runtime-checkpoints.md。
+已按用户正式修订交付个人测试版v79/0.8.11-playable-r1-personal；完整剧情/真机/声音/长时体验交用户人工验收。18依赖图/120内容文件/c51-r1，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805，冻结范围未扩大。
 
-冻结范围不扩大：c51-r1/18张依赖地图/120文件，manifest427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805。已实现开局/村服务/南海/西北宫/85洞/东海/小龙女/地府村2/共享医疗；本轮新候选完整正常路线DEFERRED_TO_MANUAL。十殿/重生/女人国等c50/56图源码与资源保留既有独立开发线，不混入本个人包，不称已交付。
+实际APK来源96b1724b2fd4cfa6fc675d8ea8c86f1df403adeb；原build/runtime37252974082 SUCCESS，两个长job明确SKIPPED；原approve/publish37253618518 SUCCESS。APK SHA59564d2e1b8eee69059c699ffcedd3e63a1af07ce103b40b6c61207a0f4dc2b4/16632749字节，原包名org.fengshen.dev/原Signer5c460557保留。公网完整下载与审核字节相同，原ci_apk.verify独立包名/签名/版本/120文件/hash全部PASS。
 
-正式基线仍v27/c14/SHA5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353。最近实际inspect37247975418于00:33:57Z查询27/26=3757事件，普通真机9会话/模拟器0/测试0；仅旧26 ProtocolException1/rootUNCONFIRMED，精确非阻断评估保留，不能证明新候选健康。
+最低检查：Windows68 Python执行/335 JVM及17 Content PASS，真实原KVM短smoke的九项门禁全部PASS/SMOKE_PASS。起点为已核正常v76东海存档、明确CONTROLLED，不冒称本版正常通关。真实买卖/装备/药草/双人解毒住宿/医疗/保存/外部force-stop/实际冷启继续已验证；迁移前原saveJson保留、已有备份不覆盖、v27覆盖升级未卸载清档，真实云进度不动。原完整长测保留，v77按用户新授权取消，v78旧端点驱动失败保留，v79完整长路DEFERRED_TO_MANUAL。
 
-本轮最小修改：原scope/回执/两份workflow显式PERSONAL_TEST级别；原完整稳定门禁保留，个人短冒烟不伪造三段成功；原构建保留相关快检/全JVM/严格干净导出，其他后期导出仅稳定门禁。跨内容迁移前一次保留原saveJson到preContentMigration，已有备份不覆盖，失败保护原存档。
+实际巡检：01:38:55/02:01:00前27+26=3757事件/9普通真机会话，旧26 ProtocolException1根因UNCONFIRMED/精确非阻断评估；02:01:19后79+27=1468事件/8普通真机会话，全部27，79暂无生产样本。最近两版轮转清理失败0；不把旧错退出当前样本写根因已修。真机/声音/真实云恢复NOT_RUN；字体角色名裁切等P2继续欠账。
 
-下一动作：相关规则/审批正反例、仪器编译→同源签名个人候选→原KVM短冒烟（v76合法东海/中毒小龙女检查点明确CONTROLLED、真实买卖/解毒/住宿/医疗/外部force-stop和冷启）→原审批发布→公网完整字节验证/实际postflight→PERSONAL_TEST_DELIVERY。人工验收PENDING，不等长通关；后续WORLD-FULL仍PARTIAL，ALL_MAPS_USABLE=NO/分母UNKNOWN。
+下一可信覆盖基底已在ci/content-source.json.runtimeBaseline登记79；iteration.base仍不可变v27，未改导出来源/hash。发布后文档提交可不同于APK来源，不能把后续记录提交称为APK来源。
 
-唯一累计欠账：docs/delivery-status.md；已有路线：docs/original-playthrough-roadmap.md。没有自动关闭尚未实现内容或设备/声音验收。
+## 继续与边界
 
-本地实际检查：个人分级6方法、runtime37方法、scope5方法、CI安全16方法、录制边界4方法PASS；原审批32个真实隔离API案例PASS（稳定3job拒绝/个人短runtime拒绝/权限与来源均保留）。仪器最终编译已执行，见/tmp/r1-personal-final-instrument-compile.log；短冒烟/正式发布仍待原runner，不冒称App已通过。下一候选使用0.8.11-playable-r1-personal/versionCode78，目标内容及素材不变，源冻结后仅现场本地记录。
+累计未完成项唯一权威docs/delivery-status.md；完整正文PERSONAL_TEST_DELIVERY已在该文档顶部及artifacts/world-full01/personal-test-v79-delivery.txt。已有路线docs/original-playthrough-roadmap.md。当前用户反馈优先查询对应版本/时间日志→复现→修复→相关快回归，保留进度；不要求其证明技术根因。
 
-实际v78/run37252174601/source84c60142：签名build SUCCESS（68 Python执行/5快检组；不可变335 JVM/68 suites/0失败错误跳过），SHAee617384cf746971f76741157d1b4da978bf583e4ebef1aceaa6771b48dc896a，122 assets与v77逐字节一致。短冒烟runtime111582844546 FAILURE/NOT_PUBLISHED，后两长job显式SKIPPED。实际升级/首原档备份且不覆盖、Content17、交易装备/地图战斗药草/保护/医疗/有源双人村2全部PASS；外部host force-stop保存字节相等检查通过，但后续GameView测试期望旧normal端点(30,19)/encounter0，实际保存是此前内部Activity重进后(6,14)/encounter43，角色/物品/钱/flag逐项一致。分类TEST_HARNESS重复使用已移动的旧检查点，不声称App丢档。
+WORLD-FULL-01总体仍PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。既有c50/56图/302文件与十殿/重生/后续入队/女人国/地牢取证完整保留。已验证R1核心存档/双人补给/驱动/fixture及规则skill已回流/workspace/game-fengshen-world-island；后续固定从地府必要流程/重生接续，不回滚或重研、不污染本次冻结包。人工未全验不阻止隔离后续开发；稳定里程碑仍可运行原完整长测，未实现不能写已实现待验。
 
-最小修正：短smoke正常方法只执行有源补给/服务保存，外部record器再唯一执行force-stop/cold/合法继续；原提前内部Activity复现不删除且保留所有断言。下一候选79/0.8.11-playable-r1-personal，同范围/原签名/无游戏规则或素材变化；不再长练级。最新inspect37252198992/01:38:55Z仍27/26=3757事件/9普通真机会话/旧26 ProtocolException1，原Node精确评估ALLOW；正式仍27。
+当前新生产发布已完成；不因纯记录/skill另发APK，不修改Language，不reset/clean/清档或放宽签名/reviewer。旧现场与失败追溯继续docs/history/world-full01-runtime-checkpoints.md。
+
+可靠核心回流检查点：work/world-island/5e94b68f51a7c30de40443a4751af8d3de9d2d24，原c50内容pin/配方不变，仪器编译14秒PASS；这不是全56图Android正常路线通过或新发布。
