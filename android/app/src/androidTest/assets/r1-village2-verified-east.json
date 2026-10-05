@@ -1,0 +1,14 @@
+{
+  "kind": "CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",
+  "sourceCommit": "cfa5292488a95b84249e1985bce3be4ac803e6cb",
+  "sourceBuildRunId": "37239505694",
+  "sourceApkSha256": "f46035683ce74dde88439eaa6efdcf6c0f2d175ebc85c208c5a4a0b96cc82d4d",
+  "contentVersion": "opening-segment-001-c51-r1",
+  "manifestSha256": "427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805",
+  "sourceArtifactId": 11319866364,
+  "sourceSaveSha256": "84ab15c0acc25e5ec5dfcb5345a1978ce634cdfc27ec0e47b26c728dece31a01",
+  "savedJson": "{\"saveSchemaVersion\":1,\"contentVersion\":\"opening-segment-001-c51-r1\",\"mapId\":23,\"x\":872,\"y\":1464,\"direction\":\"UP\",\"characters\":[{\"id\":\"nezha\",\"level\":13,\"experience\":3447,\"hp\":36,\"maxHp\":128,\"mp\":0,\"strength\":36,\"stamina\":16,\"agility\":14,\"spirit\":10,\"maxMp\":0,\"equipment\":{\"rightHand\":3,\"leftHand\":-1,\"body\":2,\"feet\":28}},{\"id\":\"xiaolongnv\",\"level\":12,\"experience\":2100,\"hp\":90,\"maxHp\":92,\"mp\":44,\"strength\":22,\"stamina\":14,\"agility\":26,\"spirit\":43,\"maxMp\":44,\"equipment\":{\"rightHand\":19,\"leftHand\":-1,\"body\":11,\"feet\":38},\"statusMask\":2}],\"terrainMode\":0,\"inventory\":{\"rom.armor.0\":1,\"rom.armor.1\":1,\"rom.armor.11\":1,\"rom.item.0\":2,\"rom.medicine.6\":6,\"rom.special.11\":1,\"rom.weapon.2\":1},\"flags\":{\"opening.intro.seen\":true,\"rom.event.97.39.1\":true,\"rom.inventory.special.11.used\":true,\"rom.map.139.flag.128\":true,\"rom.map.139.flag.2\":true,\"rom.map.25.flag.1\":true,\"rom.map.25.flag.128\":true,\"rom.map.85.flag.128\":true,\"rom.map.95.flag.1\":true,\"rom.map.95.flag.128\":true,\"rom.npc.114.1\":true,\"rom.npc.114.2\":true,\"rom.npc.97.2\":true,\"runtime.session.map95.mechanism0\":true,\"runtime.story.rom.boss.141.continuation.0\":true,\"runtime.story.rom.boss.141.continuation.1\":true,\"runtime.story.rom.boss.141.continuation.10\":true,\"runtime.story.rom.boss.141.continuation.11\":true,\"runtime.story.rom.boss.141.continuation.2\":true,\"runtime.story.rom.boss.141.continuation.3\":true,\"runtime.story.rom.boss.141.continuation.4\":true,\"runtime.story.rom.boss.141.continuation.5\":true,\"runtime.story.rom.boss.141.continuation.6\":true,\"runtime.story.rom.boss.141.continuation.7\":true,\"runtime.story.rom.boss.141.continuation.8\":true,\"runtime.story.rom.boss.141.continuation.9\":true},\"money\":1320,\"encounterSteps\":0}",
+  "sourceNormalAndExternalColdVerified": true,
+  "overallSourceRun": "FAILED_LATER_IN_VILLAGE2",
+  "use": "Isolated original two-actor poison/supply/inn regression; not new mainline proof"
+}

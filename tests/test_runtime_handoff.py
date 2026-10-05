@@ -297,6 +297,7 @@ sleep(){ :; }
                     self.assertIn('--cold-test', line)
             if stage == 'base':
                 self.assertIn('TEST testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false', lines)
+                self.assertIn('TEST testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave false', lines)
                 self.assertIn('TEST testControlledNorthTravelFromVerifiedPalaceSave', lines)
                 for label, method in [('world-north','testNormalWorldSeaNorthFromVerifiedNorthPalaceSave'),
                                       ('world-village1','testNormalWorldVillageOneServicesFromVerifiedNorthPalaceSave')]:

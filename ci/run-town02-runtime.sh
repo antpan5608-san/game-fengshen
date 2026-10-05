@@ -157,6 +157,7 @@ if [[ "$stage" == all || "$stage" == base ]]; then
 run_test testUpgradeKeepsPreviousSave
 python tools/runtime_handoff.py probe --candidate artifacts/town02-runtime/candidate.json
 if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false; fi
+if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave false; fi
 run_test testTouchUxSelectionScrollAndAtomicEquipment
 run_test testTouchUxTradeGesturesAndResultEquivalence
 run_test testControlledHerbBoundariesAndSaveCompatibility
