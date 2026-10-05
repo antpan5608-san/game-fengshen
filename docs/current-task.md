@@ -49,3 +49,5 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 代码能力：统一原特殊物品profile追加special18/marker5，允许已核单158与三159..161组合；原回合调度/数量保留/取消不提交/敌人继续行动保留。修正Huang RAM $7E6实际map145而非旧map121标签；旧错误key只作带完成/global flag的只读兼容，明确false不重新激活演员。1656保护/效果+16 context原CPU通过；56相关JVM/仪器编译通过，5Python通过（含c50两次原导出严格相同）。当前c50仍56/302不变，没有将4新图塞入冻结候选，special18尚未由当前内容启用，佳梦关APP_VERIFIED=NOT_RUN/PUBLISHED=NO。
 
 下一独立动作：定向核魔礼寿胜后、原小龙女再次入队与三将event1胜后/杨戬病状态，再以原局部导出批次接145..148和必要actor/script；不猜奖品或原剧情条件。R1运行37261594942先按实际结果处理；正式发布后立即推进已备份R2地府连续验收。本任务依然IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO。
+
+佳梦关独立检查点：原CPU定向核8次魔礼寿胜后、80次小龙女再入队、25次三将胜后（均非正常路线）。原字体105字形/空格44与9段实际对白已复用/辨认并逐字节校验。共享StoryCharacterChange只改已存在角色的状态/HP/MP，保留等级、EXP、装备和队伍顺序；零步NPC演出禁止改变玩家位置。6个Python资源/来源回归及37个相关JVM方法通过，仪器代码编译通过；首次直接./gradlew因权限拒绝，使用bash gradlew成功（37s）。尚无新图打包/Android佳梦关游玩/发布。仍需通用手动NPC脚本接入与script30真实下一落点；先从此检查点继续，R1同候选37261594942仍执行中。

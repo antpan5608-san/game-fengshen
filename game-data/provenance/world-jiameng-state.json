@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_ANDROID_NORMAL_ROUTE",
+  "probe": {
+    "path": "tools/rom-extractor/probe-world-jiameng-state.py",
+    "sha256": "9604904c4923e9cf6bdc55e5345889572d8960160215df38b721e775e794416c"
+  },
+  "sources": [
+    {
+      "offset": 348797,
+      "length": 22,
+      "sha256": "9881a33773876674135b452cdcbb0c6ddb73f9e3925bff914795647e34d93558",
+      "module": 10,
+      "cpuAddress": 53869,
+      "meaning": "Actual source172 normal NPC battle entry"
+    },
+    {
+      "offset": 348819,
+      "length": 23,
+      "sha256": "6a4a04b8089837319bd0f3804f453f4c4ea37138df2691e2d781c467624a2f41",
+      "module": 10,
+      "cpuAddress": 53891,
+      "meaning": "After battle: result guard/actor154 removal/context145228/map bit2"
+    },
+    {
+      "offset": 348842,
+      "length": 46,
+      "sha256": "9547531ed3b4aced0fa57b51c88f3836c05a27fc50e8d683c2cb6dc7a7fbef5a",
+      "module": 10,
+      "cpuAddress": 53914,
+      "meaning": "Actual actor129 return: clear all Xiao status, full saved maxHP/MP, context146216/bit4"
+    },
+    {
+      "offset": 379988,
+      "length": 48,
+      "sha256": "97a106709fdadd3fe5feacd37df3a88170c85ae5b8af080b4cd376fbfdee3cde",
+      "module": 11,
+      "cpuAddress": 52292,
+      "meaning": "Actual three-victory: script30/Yang statusOR64/map145bits4,8/context148217/context101196"
+    },
+    {
+      "offset": 380046,
+      "length": 12,
+      "sha256": "5bd7d5a185d6fbb0975ff1f70ddac3ef1789663d1b33e175bbaab0479634fc86",
+      "module": 11,
+      "cpuAddress": 52350,
+      "meaning": "Actual next scene37/viewport minus3,minus2"
+    },
+    {
+      "offset": 22334,
+      "length": 2,
+      "sha256": "dde12454138143570a55716b7cdc99c7f811f2d0d24397d182d574a6dbbdfe16",
+      "module": 0,
+      "cpuAddress": 55086,
+      "meaning": "Map101 context pointer7D6"
+    },
+    {
+      "offset": 21957,
+      "length": 8,
+      "sha256": "cd562d10a21b1d355e8c8a54047c2017512f8e8c0d3f766960a7098ffde6a83b",
+      "module": 0,
+      "cpuAddress": 54709,
+      "meaning": "Flags for145..148"
+    }
+  ],
+  "rules": {
+    "firstBoss": {
+      "mapId": 145,
+      "sourceType": 172,
+      "enemySlots": {
+        "3": 158
+      },
+      "requiresOriginalContext": 215,
+      "mapFlagOnVictory": 2,
+      "npcContextAfterVictory": 228,
+      "actorRemoved": 154,
+      "additionalScriptReward": "NONE; ordinary battle reward/loot remain separate"
+    },
+    "xiaoReturn": {
+      "mapId": 146,
+      "actorId": 129,
+      "mapFlag": 4,
+      "npcContextAfter": 216,
+      "characterId": "xiaolongnv",
+      "statusMaskAfter": 0,
+      "hp": "RESTORE_SAVED_MAX_HP",
+      "mp": "RESTORE_SAVED_MAX_MP",
+      "preserve": "saved level/EXP/equipment/stats; no new template or reward"
+    },
+    "threeBosses": {
+      "mapId": 148,
+      "eventId": 1,
+      "sources": [
+        173,
+        174,
+        175
+      ],
+      "enemySlots": {
+        "0": 159,
+        "3": 160,
+        "6": 161
+      },
+      "postBattleBeforeScript30": {
+        "yangStatusOr": 64,
+        "map145FlagOr": 12,
+        "map148Context": 217,
+        "map101Context": 196
+      },
+      "nextMapId": 37,
+      "nextPosition": "Viewport -3,-2 observed in original code; final sprite coordinate/facing not yet verified"
+    }
+  },
+  "expected": [
+    {
+      "path": "android/app/src/test/resources/jiameng-first-victory-original.tsv",
+      "caseCount": 8,
+      "sha256": "d2bc53ea8346cf5f7f903feb49d2e27ee051b35880b7d00a4e363a417f01f2f0",
+      "failures": 0
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng-xiao-return-original.tsv",
+      "caseCount": 80,
+      "sha256": "0dfcdf7d47036fa5b55d2a431156c81cc620e93272891d28af72e5911c384dd2",
+      "failures": 0
+    },
+    {
+      "path": "android/app/src/test/resources/jiameng-three-victory-original.tsv",
+      "caseCount": 25,
+      "sha256": "9acf3557ce85e1d996a50f4acda715b95d2b33ed5135434e69f26108831177e7",
+      "failures": 0
+    }
+  ],
+  "limitations": [
+    "First activation approach, script30 complete coordinate/facing and post-save continuity still need verification",
+    "Original defeat capture not a victory route",
+    "Android normal route NOT_RUN",
+    "No added travel requirement inferred from recommended guide route"
+  ]
+}
