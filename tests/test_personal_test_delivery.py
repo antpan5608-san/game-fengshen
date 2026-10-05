@@ -8,6 +8,15 @@ ROOT=Path(__file__).resolve().parents[1]
 
 class PersonalDeliveryTest(unittest.TestCase):
     def setUp(self):
+        self.source_scope=h.active_scope()
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+        fixture=Path(self.tmp.name)/'runtime-scope.json'
+        scope=copy.deepcopy(self.source_scope);scope['quality']='PERSONAL_TEST'
+        fixture.write_text(json.dumps(scope))
+        pin=json.loads((ROOT/'ci/content-source.json').read_text())
+        pin['runtimeScope']['sha256']=h.digest(fixture)
+        (fixture.parent/'content-source.json').write_text(json.dumps(pin))
+        scope_patch=patch.object(h,'SCOPE_PATH',fixture);scope_patch.start();self.addCleanup(scope_patch.stop)
         self.scope=h.active_scope()
         self.candidate=dict(sourceCommit='c'*40,buildRunID='123',sha256='a'*64,
             contentHash=self.scope['manifestSha256'],contentVersion=self.scope['contentVersion'],
@@ -71,12 +80,19 @@ pull_evidence(){ :; }
 
     def test_source_bound_approval_quality_matches_scope_and_protections_remain(self):
         workflow=(ROOT/'.github/workflows/android-publish.yml').read_text()
-        self.assertIn('RELEASE_QUALITY: '+self.scope['quality'],workflow)
+        self.assertIn('RELEASE_QUALITY: '+self.source_scope['quality'],workflow)
         self.assertIn('environment: fengshen-production',workflow)
         self.assertIn('current_user_can_approve == true',workflow)
         self.assertIn('runtime_jobs=(runtime runtime-world runtime-continuation)',workflow)
         checker=(ROOT/'ci/check-reviewed-apk.ps1').read_text()
         self.assertLess(checker.index('signature/content/version failed revalidation'),checker.index("if($quality -eq 'PERSONAL_TEST')"))
         self.assertIn("'base,world,continuation'",checker)
+        publisher=(ROOT/'publish-apk.ps1').read_text()
+        self.assertIn("$metadata['quality']='STABLE'",publisher)
+        self.assertIn("$metadata['stable_acceptance']='PASS'",publisher)
+        build=(ROOT/'build-ci.ps1').read_text()
+        self.assertIn("if($scopeId -eq 'PLAYABLE-R1')",build)
+        self.assertIn('test_world_hell_route_driver.py',build)
+        self.assertIn(':app:testReleaseUnitTest',build)
 
 if __name__=='__main__':unittest.main()

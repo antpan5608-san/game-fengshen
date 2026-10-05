@@ -28,10 +28,16 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Existing content restoration failed'}
     $quality=python tools/runtime_handoff.py scope --field quality
     if($LASTEXITCODE -ne 0){throw 'Invalid delivery quality'}
-    if($quality -eq 'PERSONAL_TEST'){
-        foreach($pattern in @('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_playable_r1_scope.py','test_personal_test_delivery.py')){
+    $scopeId=python tools/runtime_handoff.py scope --field id
+    if($LASTEXITCODE -ne 0){throw 'Invalid dependency/test scope'}
+    if($scopeId -eq 'PLAYABLE-R1'){
+        # Frozen R1 verifies its exact export plus shared state/transport logic; later-region
+        # export suites remain available below for the full-development scope. STABLE
+        # still requires the original three actual same-candidate normal runtime jobs.
+        $patterns=@('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_playable_r1_scope.py','test_personal_test_delivery.py','test_world_trade_driver.py','test_world_hell_route_driver.py')
+        foreach($pattern in $patterns){
             & python -m unittest discover -s tests -p $pattern
-            if($LASTEXITCODE -ne 0){throw "Personal related regression failed: $pattern"}
+            if($LASTEXITCODE -ne 0){throw "Frozen R1 related regression failed: $pattern"}
         }
     }else{
     & python -m unittest discover -s tests -p test_ci_apk.py

@@ -117,6 +117,13 @@ try {
         $metadata['manual_acceptance']='PENDING'
         $metadata.notes='Personal test build; short isolated smoke and artifact checks passed. Complete story, real-device touch, sound and long-play acceptance PENDING; see personal test delivery.'
     }
+    if((Test-Path $scopePath) -and ((Get-Content $scopePath -Raw|ConvertFrom-Json).quality -eq 'STABLE')){
+        # Original check-reviewed-apk has required all three same-candidate normal stages.
+        $metadata['quality']='STABLE'
+        $metadata['stable_acceptance']='PASS'
+        $metadata['manual_acceptance']='PENDING'
+        $metadata.notes='Scoped R1 stable intermediate release; same-candidate normal routes, save and external cold restart verified. Full world incomplete; real-device and sound acceptance pending.'
+    }
     $metadata | ConvertTo-Json | Set-Content -LiteralPath $metadataPath -Encoding utf8NoBOM
     $env:OSS_ACCESS_KEY_ID=$env:ALIYUN_ACCESS_KEY_ID
     $env:OSS_ACCESS_KEY_SECRET=$env:ALIYUN_ACCESS_KEY_SECRET

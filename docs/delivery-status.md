@@ -1,3 +1,7 @@
+## WORLD-FULL-01 恢复连续主任务（2026-10-05）
+
+ACTIVE/PARTIAL，ALL_MAPS_USABLE=NO/有效分母UNKNOWN。v79 PERSONAL_TEST_DELIVERED是已发布里程碑，manual_acceptance=PENDING不作为后续前置。正在冻结现有R1范围完成同候选正常三阶段STABLE验收，未执行不能写PASS；之后自动发布并立即继续已有地府/十殿/重生等开发线。c50/56图/302文件及全部取证保留，不能用打包数称全可玩。当前任务仅docs/current-task.md，原十类权威欠账与历史失败在本文件下方完整保留。
+
 ## PLAYABLE-R1个人测试版交付（2026-10-05，人工验收待完成）
 
 PERSONAL_TEST_DELIVERY

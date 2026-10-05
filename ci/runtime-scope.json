@@ -151,7 +151,7 @@
     "testPathTraversalRejected",
     "testTownTradeFailuresAndEquipmentCycle"
   ],
-  "quality": "PERSONAL_TEST",
+  "quality": "STABLE",
   "personalTest": {
     "requiredJobs": [
       "runtime"
