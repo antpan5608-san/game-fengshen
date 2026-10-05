@@ -3434,6 +3434,26 @@ def inventory_target_from_base(base_apk,pin):
         'baseVersionCode':base['versionCode'],'baseApkSha256':base['apkSha256'],
         'appRuntime':'NOT_RUN','publication':'NOT_ASSESSED'}
 
+def attach_inventory_package(report,scene,package_source):
+    """Describe actual caller bindings without upgrading them to runtime proof."""
+    report['packageSource']=package_source
+    bindings=[]
+    catalog={field:{r['id']:r for r in scene.get(key,[])} for field,key in
+        [('shopId','shops'),('innId','inns'),('clinicId','clinics')]}
+    maps={m['id'] for m in scene.get('maps',[])}
+    for binding in scene.get('serviceBindings',[]):
+        fields=[field for field in catalog if binding.get(field)]
+        if len(fields)!=1:raise ValueError('Inventory requires one actual service binding')
+        field=fields[0];definition=catalog[field].get(binding[field])
+        if (definition is None or binding['callerMapId'] not in maps
+                or binding['interiorMapId'] not in maps
+                or definition['mapId']!=binding['interiorMapId']):
+            raise ValueError('Inventory service binding has an unresolved target')
+        bindings.append(dict(binding,definitionKind=field.removesuffix('Id'),
+            packaged=True,implementation='NOT_ASSESSED_BY_STATIC_INVENTORY',
+            appVerification='NOT_RUN',publication='NOT_ASSESSED'))
+    report['packagedServiceBindings']=bindings
+
 if __name__=='__main__':
     import argparse
     parser=argparse.ArgumentParser()
@@ -3453,12 +3473,12 @@ if __name__=='__main__':
         from forensics.fengshen246 import extract_world_inventory
         pin=load(ROOT/'ci/content-source.json')
         # Rebuild and verify the pinned target before describing it as packaged.
-        ids=[];package_source={'kind':'NOT_AVAILABLE','appRuntime':'NOT_RUN','publication':'NOT_ASSESSED'}
+        ids=[];scene={};package_source={'kind':'NOT_AVAILABLE','appRuntime':'NOT_RUN','publication':'NOT_ASSESSED'}
         if args.base_apk:
             scene,package_source=inventory_target_from_base(args.base_apk,pin)
             ids=[m['id'] for m in scene['maps']]
         report=extract_world_inventory(iteration_reader(),ids)
-        report['packageSource']=package_source
+        attach_inventory_package(report,scene,package_source)
         args.world_inventory.parent.mkdir(parents=True,exist_ok=True);save(args.world_inventory,report)
         print(json.dumps({k:report[k] for k in ['structuralGeometryCount','npcContextCount','effectiveMapCount','summary']}))
     elif args.base_apk:

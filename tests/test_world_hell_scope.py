@@ -44,6 +44,16 @@ class HellScopeTest(unittest.TestCase):
             (source['fileCount'],source['baseVersionCode'],source['appRuntime'],source['publication']))
         self.assertEqual(pin['manifestSha256'],source['manifestSha256'])
         self.assertEqual('REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE',source['kind'])
+        report={};ex.attach_inventory_package(report,scene,source)
+        bindings=report['packagedServiceBindings']
+        self.assertEqual(40,len(bindings))
+        self.assertEqual(set(range(7)),{b['callerMapId'] for b in bindings})
+        self.assertEqual(12,sum(b['definitionKind']=='clinic' for b in bindings))
+        self.assertTrue(all(b['packaged'] and b['appVerification']=='NOT_RUN'
+            and b['publication']=='NOT_ASSESSED' for b in bindings))
+        wrong=copy.deepcopy(scene);wrong['serviceBindings'][0]['shopId']='unimplemented'
+        with self.assertRaisesRegex(ValueError,'unresolved target'):
+            ex.attach_inventory_package({},wrong,source)
         with patch.object(ex,'digest',return_value='f'*64),self.assertRaisesRegex(ValueError,'Wrong reviewed inventory APK'):
             ex.inventory_target_from_base(path,pin)
 

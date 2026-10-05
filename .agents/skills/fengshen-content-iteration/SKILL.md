@@ -112,6 +112,8 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 
 清单的打包集合必须来自当前target，而不是较小的恢复输入：`inventory_target_from_base`先核原APK/signature/hash，再调用原`export_from_base`核target manifest。此CLI已在Linux既有JDK/ANDROID_SDK_ROOT实际运行，`test_world_hell_scope`验证当前target集合/文件数及错误基底拒绝，`test_world_inventory`仍要求未知分母和App NOT_RUN。`packageSource`标REPRODUCIBLE_TARGET_EXPORT_NOT_RELEASE，不能当成已发布APK；仅ROM服务枚举也不能把后来已接的caller硬编码成NOT_IMPLEMENTED。
 
+服务同样从目标`scene.serviceBindings`与实际shops/inns/clinics交叉引用，原inventory入口已生成caller/室内/定义绑定并验证错引用拒绝。PACKAGED不推断App业务通过或已发布。新场景局部复现可在隔离git archive目录复用匹配ROM缓存/原SDK，原`ci_apk.restore`→wrapper `assembleDebug`→`ci.content`核实际包；已实际成功，debug签名产物只证明干净构建/内容，不替代生产签名或KVM运行。
+
 F0原KVM正常三店→客栈取消/确认/离店→真实伤后药草与冷启已运行，实际发布同源同产物与公网完整字节复核成功。后续全场景按需缓存/换图预检本地单元通过，新增旧档保护App方法待runner，不能把编译当实际运行。完整artifact大于传输上限且blob/文件URL返回403时，原inspect有界服务画面提取已执行成功：旧收集器给town01画面加touch-ux-前缀，按真实文件名筛选后取回7张原App服务PNG并人工检查。先前筛选零图片和未保留F0原片仍是限制；后续必须核artifact实际文件，不能将测试PASS当录像已保留。不要无限重试或修改代理。
 
 
@@ -393,3 +395,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 用户反馈先查对应版本和时间的既有日志，再复现/修复/补快回归，不要求其证明技术根因；保留唯一好的迁移前原档和真实云进度。完整游玩、设备、声音及长体验仍标人工PENDING，取消/失败和未实现内容分别保留。
 
 - 外部冷启比较必须绑定刚保存的端点：实际个人smoke在内部Activity重进后已正常移动，却仍读旧normal端点，host字节恢复比较已过而测试坐标/encounter断言失败。保留原状态断言，正常smoke只做一次保存，然后由原录屏器唯一执行外部force-stop/cold/继续；该薄修已编译、快检、真实同候选短smoke与外部cold通过，并经原发布链路/公网字节复核。保留失败原片和源值，不能把之前未通过的cold改PASS。
+
+- 原NPC记录首字节是entityByte，不能当对白组；以原extract_npcs逐值核清单，当前四域正反例已运行。对白组须另查实际调度/活动font，Reference编号和相似拓扑仅是线索。清单CLI仍要求已有JDK/ANDROID_SDK_ROOT，缺SDK会明确拒绝，不关闭APK校验。
