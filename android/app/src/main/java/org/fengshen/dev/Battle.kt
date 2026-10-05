@@ -231,11 +231,27 @@ data class StoryBattleDefinition(val id:String,val npcId:String,val flagId:Strin
     var approach:StoryMovement?=null;internal set
     val approachFlag get()="runtime.story.$id.approach.complete"
     var finalizeWithoutDialogue:Boolean=false;internal set
+    var activationFlagId:String?=null;internal set
+    var additionalEntryTriggers:Set<StoryEntryTrigger> = emptySet();internal set
+    var victoryCharacterChanges:List<StoryCharacterChange> = emptyList();internal set
+    fun charactersOnVictory(before:List<CharacterState>):List<CharacterState>? {
+        // Original event1 writes the reserved Yang slot even when no saved actor
+        // exists. Preserve the actual roster; never invent a template or gate.
+        val changes=if(id=="rom.boss.159"&&npcId=="rom.npc.148.0"&&
+            victoryCharacterChanges==listOf(StoryCharacterChange("yangjian",statusOrMask=64)))
+            victoryCharacterChanges.filter{change->before.any{it.id==change.characterId}}
+            else victoryCharacterChanges
+        return applyStoryCharacterChanges(before,changes)
+    }
+    fun activeIn(flags:Map<String,Boolean>)=activationFlagId?.let{flag->
+        if(flag=="rom.npccontext.145.215")OriginalNpcTalk.hasHuangJiamengContext(flags) else flags[flag]==true
+    }?:true
     val pendingFlag get()=flagId+".dialogue.pending"
     fun pendingDialogue(flags:Map<String,Boolean>):String=continuation?.let{c->c.stage(id,flags)?.let{c.dialogueIds[it]}}?:victoryDialogue
     fun alreadyWon(flags:Map<String,Boolean>)=flags[flagId]==true||flags[pendingFlag]==true
     fun triggersAt(mapId:Int,x:Int,y:Int,flags:Map<String,Boolean>)=
-        !alreadyWon(flags)&&(entryTrigger==StoryEntryTrigger(mapId,x,y)||intro?.let{i->
+        activeIn(flags)&&!alreadyWon(flags)&&(entryTrigger==StoryEntryTrigger(mapId,x,y)||
+            StoryEntryTrigger(mapId,x,y) in additionalEntryTriggers||intro?.let{i->
             flags[i.flagId]==true&&i.continuation.destination?.let{it.mapId==mapId&&it.x==x&&it.y==y}==true}==true||
             approach?.destination?.let{flags[approachFlag]==true&&it.mapId==mapId&&it.x==x&&it.y==y}==true)
     fun validScopedContinuation(snapshot:SaveSnapshot):Boolean {

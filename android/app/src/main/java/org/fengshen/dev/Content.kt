@@ -35,7 +35,11 @@ data class StoryNpc(val id:String,val x:Int,val y:Int,val sprite:Bitmap,val firs
     var stateVariant:NpcStateVariant?=null;internal set
     var hiddenInvestigation:Boolean=false;internal set
 }
-data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String)
+data class NpcStateVariant(val flagId:String,val x:Int,val y:Int,val firstDialogue:String,val repeatDialogue:String) {
+    var sprite:Bitmap?=null;internal set
+    fun activeIn(flags:Map<String,Boolean>)=if(flagId=="rom.npccontext.145.215")
+        OriginalNpcTalk.hasHuangJiamengContext(flags) else flags[flagId]==true
+}
 data class MapObject(val id:String,val mapId:Int,val x:Int,val y:Int,val sprite:Bitmap,
     val itemTarget:WorldObjectTarget?=null)
 data class StoryText(val id:String,val text:String,val source:String)
@@ -114,7 +118,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
     fun npcsForState(mapId:Int,flags:Map<String,Boolean>)=npcs.filter{it.mapId==mapId}.map{npc->
         val v=npc.stateVariant
-        if(v!=null&&flags[v.flagId]==true)npc.copy(x=v.x,y=v.y,firstDialogue=v.firstDialogue,repeatDialogue=v.repeatDialogue).also{n->
+        if(v!=null&&v.activeIn(flags))npc.copy(x=v.x,y=v.y,sprite=v.sprite?:npc.sprite,
+            firstDialogue=v.firstDialogue,repeatDialogue=v.repeatDialogue).also{n->
             n.scriptedActor=npc.scriptedActor;n.interactionDirection=npc.interactionDirection;n.clinicId=npc.clinicId
             n.originalTalk=npc.originalTalk;n.worldItemTarget=npc.worldItemTarget;n.automaticStoryOnly=npc.automaticStoryOnly
             n.removedFlagId=npc.removedFlagId;n.moneyTreasure=npc.moneyTreasure;n.stateVariant=npc.stateVariant
@@ -352,8 +357,17 @@ object ContentLoader {
                             "rom.npc.116.0"->cell.contentEquals(intArrayOf(6,3))&&v.getString("firstDialogue")=="rom.dialogue.126.8"&&v.getString("repeatDialogue")=="rom.dialogue.126.8"
                             "rom.npc.116.3"->cell.contentEquals(intArrayOf(16,5))&&v.getString("firstDialogue")=="rom.dialogue.126.3"&&v.getString("repeatDialogue")=="rom.dialogue.126.3"
                             else->false}
-                    require(teacher163||teacher164||jail)
-                    npc.stateVariant=NpcStateVariant(v.getString("flagId"),cell[0],cell[1],v.getString("firstDialogue"),v.getString("repeatDialogue"))
+                    val jiameng=npc.id=="rom.npc.145.0"&&npc.mapId==145&&npc.x==4&&npc.y==10&&
+                        cell.contentEquals(intArrayOf(4,10))&&v.getString("flagId")=="rom.npccontext.145.215"&&
+                        npc.firstDialogue=="rom.dialogue.155.0"&&v.getString("firstDialogue")=="rom.dialogue.155.1"&&
+                        v.getString("repeatDialogue")=="rom.dialogue.155.1"&&
+                        v.optString("sprite")=="npc-jiameng-154.png"&&
+                        v.getString("evidence")=="game-data/provenance/world-jiameng-state.json"&&npc.firstEffects.isEmpty()
+                    require(teacher163||teacher164||jail||jiameng)
+                    require(!v.has("sprite")||jiameng)
+                    npc.stateVariant=NpcStateVariant(v.getString("flagId"),cell[0],cell[1],v.getString("firstDialogue"),v.getString("repeatDialogue")).also{
+                        if(jiameng)it.sprite=bitmap(v.getString("sprite"),16,16)
+                    }
                 }
                 n.optJSONObject("originalTalk")?.let{t->
                     val rule=OriginalNpcTalkDefinition(npc.mapId,t.getString("mapFlagId"),t.getString("witnessFlagId"),
@@ -699,6 +713,35 @@ object ContentLoader {
                             val mid=t.getInt("mapId");val x=t.getInt("x");val y=t.getInt("y")
                             require(mid in scenes&&x in 0 until scenes.getValue(mid).width&&y in 0 until scenes.getValue(mid).height)
                             StoryEntryTrigger(mid,x,y)
+                        }
+                        if(b.has("activationFlagId")){
+                            require(boss.id=="rom.boss.158"&&boss.npcId=="rom.npc.145.0"&&
+                                boss.flagId=="rom.map.145.flag.2"&&members==listOf(EncounterMember(3,158))&&
+                                b.getString("activationFlagId")=="rom.npccontext.145.215"&&
+                                b.getString("source")=="game-data/provenance/world-jiameng-state.json"&&boss.entryTrigger==null)
+                            boss.activationFlagId=b.getString("activationFlagId")
+                        }
+                        b.optJSONArray("additionalEntryTriggers")?.let{a->
+                            require(boss.id=="rom.boss.159"&&boss.npcId=="rom.npc.148.0"&&
+                                boss.flagId=="rom.map.148.flag.128"&&boss.entryTrigger==StoryEntryTrigger(148,8,6)&&
+                                members==listOf(EncounterMember(0,159),EncounterMember(3,160),EncounterMember(6,161))&&
+                                b.getString("source")=="game-data/provenance/world-jiameng-state.json")
+                            val points=(0 until a.length()).map{i->val t=a.getJSONObject(i)
+                                StoryEntryTrigger(t.getInt("mapId"),t.getInt("x"),t.getInt("y"))}
+                            require(points.size==5&&points.toSet()==setOf(StoryEntryTrigger(148,6,5),
+                                StoryEntryTrigger(148,10,5),StoryEntryTrigger(148,7,6),
+                                StoryEntryTrigger(148,8,6),StoryEntryTrigger(148,9,6)))
+                            boss.additionalEntryTriggers=points.toSet()
+                        }
+                        b.optJSONArray("victoryCharacterChanges")?.let{a->
+                            require(boss.id=="rom.boss.159"&&boss.npcId=="rom.npc.148.0"&&
+                                boss.flagId=="rom.map.148.flag.128"&&a.length()==1&&
+                                b.getString("source")=="game-data/provenance/world-jiameng-state.json")
+                            val change=a.getJSONObject(0)
+                            require(change.getString("characterId")=="yangjian"&&
+                                change.getInt("statusAndMask")==255&&change.getInt("statusOrMask")==64&&
+                                !change.getBoolean("restoreHp")&&!change.getBoolean("restoreMp"))
+                            boss.victoryCharacterChanges=listOf(StoryCharacterChange("yangjian",statusOrMask=64))
                         }
                         b.optJSONObject("intro")?.let{v->
                             if(boss.id=="rom.boss.157"){

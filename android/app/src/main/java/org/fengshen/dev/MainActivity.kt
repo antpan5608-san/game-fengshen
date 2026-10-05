@@ -490,8 +490,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             BattlePhase.VICTORY->{
                 battleResultBefore=current.hero
                 val partyBefore=current.party.associateBy{it.id}
+                if(storyBattle?.charactersOnVictory(current.charactersAfterBattle())==null&&storyBattle!=null){
+                    showNotice("剧情角色状态无法提交，奖励尚未结算");return
+                }
                 val reward=current.settle(money)?:return
-                characters=reward.characters;money=reward.money
+                characters=storyBattle?.charactersOnVictory(reward.characters)?:reward.characters;money=reward.money
                 val loot=BattleAcquisition.apply(current.inventoryAfterBattle(inventory),current.enemies.mapNotNull{it.definition.loot},
                     content.itemDefinitions.mapValues{it.value.category}){battleRandom.nextInt(256)}
                 inventory=loot.inventory
@@ -781,7 +784,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val before=currentSnapshot()
             commitStoryFollowup(before,OriginalNpcTalk.begin(before,rule,content.itemDefinitions[rule.itemId]),npc);return
         }
-        val story=content.battle?.storyBattles?.get(npc.id)
+        val story=content.battle?.storyBattles?.get(npc.id)?.takeIf{it.activeIn(flags)||it.alreadyWon(flags)}
         npc.moneyTreasure?.let{treasure->
             if(localSaveProtected){showNotice("原存档受保护，不能领取钱箱");return}
             val before=currentSnapshot();val result=WorldItems.openMoneyTreasure(before,treasure)
@@ -946,7 +949,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             commitStoryFollowup(before,StoryFollowup.advance(before,sceneStory,dialogueText?.id?:""),npc)
             return
         }
-        val story=npc?.let{content.battle?.storyBattles?.get(it.id)}
+        val story=npc?.let{content.battle?.storyBattles?.get(it.id)}?.takeIf{it.activeIn(flags)||it.alreadyWon(flags)}
         if(story!=null){
             story.intro?.takeIf{flags[it.pendingFlag]==true}?.let{intro->
                 if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
@@ -1000,7 +1003,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun showNotice(message:String){mapNotice=message;noticeUntil=SystemClock.uptimeMillis()+3500}
     private fun startStoryBattle(story:StoryBattleDefinition){
         val rules=content.battle?:return
-        if(story.alreadyWon(flags)||world.remaining!=0||characters.none{it.hp>0})return
+        if(!story.activeIn(flags)||story.alreadyWon(flags)||world.remaining!=0||characters.none{it.hp>0})return
         storyBattle=story;battleSavePending=false
         battle=createPartyBattle(story.group,rules)
         selectedBattleSlot=story.group.members.first().slot;battleMessage="${rules.enemies.getValue(story.group.members.first().enemyId).name} · 剧情战斗"
