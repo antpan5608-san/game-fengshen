@@ -6,6 +6,7 @@ case "$stage" in all|base|world|continuation) ;; *) echo "Unknown runtime stage"
 export FENGSHEN_RUNTIME_STAGE="$stage"
 scope_id=$(python tools/runtime_handoff.py scope --field id)
 export FENGSHEN_RUNTIME_SCOPE="$scope_id"
+quality=$(python tools/runtime_handoff.py scope --field quality)
 if [[ "$scope_id" == PLAYABLE-R1 && "$stage" == all ]]; then echo "Frozen R1 requires base/world/continuation jobs" >&2; exit 1; fi
 sdk="${ANDROID_HOME:?Existing runner SDK is required}"
 export ANDROID_SDK_ROOT="$sdk"
@@ -156,6 +157,36 @@ grep -Eq 'OK \([0-9]+ tests\)' artifacts/town02-runtime/testContent.txt
 if [[ "$stage" == all || "$stage" == base ]]; then
 run_test testUpgradeKeepsPreviousSave
 python tools/runtime_handoff.py probe --candidate artifacts/town02-runtime/candidate.json
+if [[ "$quality" == PERSONAL_TEST ]]; then
+    # Explicit short personal tier. Full normal routes remain below, unexecuted here.
+    run_test testContentMigrationKeepsFirstRecoverableBackup false
+    run_test testTouchUxSelectionScrollAndAtomicEquipment false
+    run_test testTouchUxTradeGesturesAndResultEquivalence false
+    run_test testControlledHerbBoundariesAndSaveCompatibility false
+    run_test testControlledMobileBattleHerbAndSave false
+    run_test testUnrestorableSaveCannotBeOverwritten false
+    run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
+    python tools/record_app_audio.py personal-r1-smoke testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
+    pull_evidence
+    python - <<'PYPERSONAL'
+import json,os,hashlib
+from pathlib import Path
+from tools.runtime_handoff import finish_personal,PERSONAL_GATES,review_personal
+r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
+r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
+recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
+proof=json.loads(recording.read_text())
+assert proof['normalAssertions']=='PASS' and proof['forceStopRestartEqual'] is True and proof['continuedExploration'] is True
+for segment in proof['segments']:
+    assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
+r.update({key:'PASS' for key in PERSONAL_GATES}) # Reached only after each mandatory actual command succeeds.
+r=finish_personal(r);review_personal(r)
+r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
+Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')
+print(json.dumps(r))
+PYPERSONAL
+    exit 0
+fi
 if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false; fi
 if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test testControlledR1VillageTwoPoisonSupplyAndInnFromVerifiedSave false; fi
 run_test testTouchUxSelectionScrollAndAtomicEquipment

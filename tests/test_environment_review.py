@@ -11,10 +11,10 @@ assert all(x not in inspection for x in ['publish-apk.ps1','register-release.ps1
 build=dict(status='completed',conclusion='success',event='workflow_dispatch',head_branch='main',head_sha='fixture-commit',path='.github/workflows/android-build.yml')
 pending=[dict(environment=dict(name='fengshen-production',id=123),current_user_can_approve=True)]
 cases=[]
-def case(name,modify=None,ok=False,token='fixture-token',run='123',digest='a'*64,targets=None,post_fail=False,operation='publish',build_job=True,runtime_job='success',world_job='success',continuation_job='success'):
+def case(name,modify=None,ok=False,token='fixture-token',run='123',digest='a'*64,targets=None,post_fail=False,operation='publish',build_job=True,runtime_job='success',world_job='success',continuation_job='success',quality='STABLE'):
     b=copy.deepcopy(build)
     if modify:b.update(modify)
-    cases.append(dict(name=name,build=b,pending=copy.deepcopy(pending if targets is None else targets),ok=ok,token=token,run=run,digest=digest,post_fail=post_fail,operation=operation,build_job=build_job,runtime_job=runtime_job,world_job=world_job,continuation_job=continuation_job))
+    cases.append(dict(name=name,build=b,pending=copy.deepcopy(pending if targets is None else targets),ok=ok,token=token,run=run,digest=digest,post_fail=post_fail,operation=operation,build_job=build_job,runtime_job=runtime_job,world_job=world_job,continuation_job=continuation_job,quality=quality))
 case('trusted main build approves exact production environment',ok=True)
 case('missing token rejected',token='')
 case('invalid build ID rejected',run='123;invalid')
@@ -43,6 +43,10 @@ case('inspect approves without build or hash',ok=True,run='',digest='',operation
 case('inspect still requires reviewer token',token='',operation='inspect')
 case('inspect API failure remains failure',post_fail=True,operation='inspect')
 case('unknown operation rejected',operation='other')
+case('personal tier requires actual short runtime but not long jobs',ok=True,world_job='skipped',continuation_job='skipped',quality='PERSONAL_TEST')
+case('personal failed smoke still rejected',runtime_job='failure',world_job='skipped',continuation_job='skipped',quality='PERSONAL_TEST')
+case('personal missing smoke still rejected',runtime_job='missing',world_job='skipped',continuation_job='skipped',quality='PERSONAL_TEST')
+case('unknown quality rejected',quality='UNKNOWN')
 results=[]
 with tempfile.TemporaryDirectory(prefix='fengshen-review-test-') as td:
     root=Path(td);(root/'approve.sh').write_text(script)
@@ -69,7 +73,7 @@ else:sys.exit(1)
     for c in cases:
         fixture=root/'fixture.json';fixture.write_text(json.dumps(c))
         calls=root/'calls.jsonl';calls.unlink(missing_ok=True)
-        env=dict(os.environ,PATH=str(root)+':'+os.environ['PATH'],GH_TOKEN=c['token'],BUILD_RUN_ID=c['run'],EXPECTED_SHA256=c['digest'],GITHUB_REPOSITORY='antpan5608-san/game-fengshen',GITHUB_SHA='fixture-commit',OPERATION=c['operation'],GITHUB_RUN_ID='999',RUNNER_TEMP=td,FIXTURE=str(fixture),CALLS=str(calls))
+        env=dict(os.environ,PATH=str(root)+':'+os.environ['PATH'],GH_TOKEN=c['token'],BUILD_RUN_ID=c['run'],EXPECTED_SHA256=c['digest'],GITHUB_REPOSITORY='antpan5608-san/game-fengshen',GITHUB_SHA='fixture-commit',OPERATION=c['operation'],RELEASE_QUALITY=c['quality'],GITHUB_RUN_ID='999',RUNNER_TEMP=td,FIXTURE=str(fixture),CALLS=str(calls))
         r=subprocess.run(['bash',str(root/'approve.sh')],env=env,text=True,capture_output=True,timeout=10)
         posted=[json.loads(line) for line in calls.read_text().splitlines() if '--method' in json.loads(line)] if calls.exists() else []
         assert (r.returncode==0)==c['ok'],(c['name'],r.returncode,r.stderr)

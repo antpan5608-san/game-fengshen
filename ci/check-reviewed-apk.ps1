@@ -7,11 +7,21 @@ if($apks.Count -ne 1){throw 'Expected exactly one reviewed APK'}
 $receipt=Get-Content (Join-Path $root 'artifacts/ci/apk-receipt.json') -Raw|ConvertFrom-Json
 if($receipt.sourceCommit -ne $env:GITHUB_SHA -or $receipt.buildRunID -ne $BuildRunID -or $receipt.sha256 -ne $ExpectedSha256 -or (Get-FileHash $apks[0].FullName).Hash.ToLowerInvariant() -ne $ExpectedSha256){throw 'Review provenance or APK bytes mismatch'}
 $runtime=Get-Content (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json') -Raw|ConvertFrom-Json
-if($runtime.sourceCommit -ne $env:GITHUB_SHA -or $runtime.buildRunID -ne $BuildRunID -or $runtime.sha256 -ne $ExpectedSha256 -or $runtime.contentHash -ne $receipt.contentHash -or $runtime.runtime -ne 'PASS' -or $runtime.upgrade -ne 'PASS' -or $runtime.normalHerbSupply -ne 'PASS' -or $runtime.touchUx -ne 'PASS' -or $runtime.phoneSizedLayout -ne 'PASS'){throw 'Runtime receipt must verify the same reviewed APK/source/content'}
-if(($runtime.completedStages -join ',') -ne 'base,world,continuation'){throw 'All same-candidate normal runtime stages must pass'}
+if($runtime.sourceCommit -ne $env:GITHUB_SHA -or $runtime.buildRunID -ne $BuildRunID -or $runtime.sha256 -ne $ExpectedSha256 -or $runtime.contentHash -ne $receipt.contentHash){throw 'Runtime receipt must bind the same reviewed APK/source/content'}
 $verified=Join-Path $root 'artifacts/ci/reverified.json'
 & python (Join-Path $root 'tools/ci_apk.py') verify --apk $apks[0].FullName --output $verified --code $receipt.versionCode --name $receipt.versionName
 if($LASTEXITCODE -ne 0){throw 'Reviewed signature/content/version failed revalidation'}
+
+$quality=python (Join-Path $root 'tools/runtime_handoff.py') scope --field quality
+if($LASTEXITCODE -ne 0){throw 'Invalid hash-bound runtime quality'}
+if($quality -eq 'PERSONAL_TEST'){
+    & python (Join-Path $root 'tools/runtime_handoff.py') review --receipt (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json')
+    if($LASTEXITCODE -ne 0){throw 'Personal minimum smoke/upgrade/backup gates failed'}
+    Write-Host 'PERSONAL_TEST; manual_acceptance=PENDING; stable acceptance NOT_RUN'
+    return
+}
+if($runtime.quality -eq 'PERSONAL_TEST' -or $runtime.runtime -ne 'PASS' -or $runtime.upgrade -ne 'PASS' -or $runtime.normalHerbSupply -ne 'PASS' -or $runtime.touchUx -ne 'PASS' -or $runtime.phoneSizedLayout -ne 'PASS'){throw 'Stable runtime receipt must verify the same reviewed APK/source/content'}
+if(($runtime.completedStages -join ',') -ne 'base,world,continuation'){throw 'All same-candidate normal stable runtime stages must pass'}
 
 # The exact R1 dependency manifest requires all shared and stage-specific gates; full gates remain below.
 if($runtime.runtimeScope -eq 'PLAYABLE-R1'){

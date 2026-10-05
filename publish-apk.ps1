@@ -111,6 +111,12 @@ try {
         apkUrl=$url; sha256=$hash; sizeBytes=$size; signerSha256=$expectedSigner;
         publishedAt=[DateTime]::UtcNow.ToString('o'); notes='Fengshen scoped development build; existing game content and saves preserved. Original-content gaps and OnePlus 13T verification remain; see delivery report.'}
     $metadataPath = Join-Path $work 'version.json'
+    $scopePath=Join-Path $PSScriptRoot 'ci/runtime-scope.json'
+    if((Test-Path $scopePath) -and ((Get-Content $scopePath -Raw|ConvertFrom-Json).quality -eq 'PERSONAL_TEST')){
+        $metadata['quality']='PERSONAL_TEST'
+        $metadata['manual_acceptance']='PENDING'
+        $metadata.notes='Personal test build; short isolated smoke and artifact checks passed. Complete story, real-device touch, sound and long-play acceptance PENDING; see personal test delivery.'
+    }
     $metadata | ConvertTo-Json | Set-Content -LiteralPath $metadataPath -Encoding utf8NoBOM
     $env:OSS_ACCESS_KEY_ID=$env:ALIYUN_ACCESS_KEY_ID
     $env:OSS_ACCESS_KEY_SECRET=$env:ALIYUN_ACCESS_KEY_SECRET

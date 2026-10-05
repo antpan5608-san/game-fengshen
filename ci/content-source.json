@@ -26,6 +26,6 @@
   },
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "b5cbb25d0d0f93d7343d2abb45869b948221e39455e0846b11b506c5397b718d"
+    "sha256": "6d6a582bd3052608f49a5cbf27526cbafab8611a8a310874ee3a8278e1b98574"
   }
 }
