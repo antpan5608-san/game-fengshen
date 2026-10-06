@@ -8,13 +8,13 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v84 / 0.8.14-c60-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: c61，SIGNED_APP_LEGACY_FIXTURE_FAILED_RETRY_PENDING_NOT_PUBLISHED
+published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: next UI batch，SCOPED_NOT_IMPLEMENTED_NOT_APP_VERIFIED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
-content_version: opening-segment-001-c60
-manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: 首次签名37513917589有20/21 Content通过，c1测试误保留依赖战斗的姜事件而移除combat，被生产guard正确拒绝；仅修合成fixture并增新事件缺战斗拒绝，待同源签名复测，未发布。
+content_version: opening-segment-001-c61
+manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
+first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
@@ -116,3 +116,9 @@ source8101fee / DEBUG37499759518失败：真实冷启before/after完整JSON equa
 source95607f417eeef0ade79288df11525aa5d31c81fb / run37513917589：build SUCCESS，411 release JVM/89 suites零失败错误跳过；正式APK85/0.8.15-jiang-personal，32,481,873字节/SHA58aff3da918b095e1e148054ee738b4166e5f83ac9df67604465baa2516a029a，原签名/包名/精确c61内容独立verify通过。runtime真实校验升级基底84、导出旧存档、同签名覆盖安装完成；Content21有20通过、1 ERROR于testPreviousContentWithoutCharacterNameStillLoads：合成c1 fixture删除combat却残留originalJiangJoin，Content.kt1074正确拒绝“Jiang physical rules missing”。后续upgrade一致/18个人门禁未运行，不得写签名App PASS或发布。
 
 仅让c1 fixture去掉其不存在的后期事件，并断言无Jiang能力；新增当前c61启用事件而缺combat必须原guard拒绝的反例。生产guard/旧档迁移/资源pin和21原方法均保留。4B新请求0片段/超时，Codex亲自核此一个文件；修正后仍须新冻结源码和同签名完整21+18门禁，不复用失败APK验收，v85尚未发布。下一UI只读检查发现当前全部区域上下文最多6敌、4队员；536组/20Boss是静态依赖，不是正常通关。
+
+## c61已发布，接续界面批次（2026-10-07，北京时间）
+
+v85/0.8.15-jiang-personal PUBLISHED_AND_VERIFIED，完整报告见[evidence/v85-jiang-personal.md](evidence/v85-jiang-personal.md)。原build37516065030/source230b999cb5c0269484f4c61b0bf58256d2ae800c与publish37518266540 SUCCESS，411 release JVM、21 Content及18同签名个人门禁PASS；32,481,873字节/SHA0fafb10d61fdd7511b8c84f875ea43bdb84db8ba9a8b72258767fb16a5d90baf，原包名签名/c61 manifest37f0/388文件严格核实。六段原App片SHA与cold/prefs/截图/末帧已核，公网全字节及原verify独立PASS。实际postflight2026-10-06T19:22:04.7418420Z NO_ISSUES_OBSERVED/errors{}/cleanup0，保留85/84；上报仍v84历史会话，v85真机/声音不推定通过。
+
+长期目标ACTIVE，PARTIAL、分母UNKNOWN、ALL_MAPS_USABLE NO；不因本版停止。下一界面批次复用现有Canvas/状态/交易及共享绘制命中，敌左我右、常驻一至四队员、独立状态/指令/详情和完整结果，默认点敌查看/先选攻击再目标，取消或浏览不耗行动；角色头像全名与真实经验/装备差值，物品能力/条件分类查找。当前71目录/14药品、536区域上下文组/最多6敌/20Boss定义仅静态范围。实际1/1.3/2字体与safeInset/四人/六敌/Boss画面、原手势/升级/cold必须另验，不标已实现。必要新增门禁及升级基底85随下一冻结版本一起审核，内容导出基底27不变。房间28/导航/原交互/全主线与十类欠账仍开放。

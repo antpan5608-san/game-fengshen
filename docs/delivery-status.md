@@ -1,4 +1,8 @@
-## 当前交付：c60个人阶段v84（2026-10-06 13:49 UTC）
+## 当前交付：c61个人阶段v85（2026-10-07，北京时间）
+
+IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED_AND_VERIFIED；[实际来源与交付报告](evidence/v85-jiang-personal.md)。build37516065030/source230b999cb5c0269484f4c61b0bf58256d2ae800c/publish37518266540全部SUCCESS，411 release JVM/21 Content/18同签名个人门禁PASS；原公网32,481,873字节、SHA0fafb10d61fdd7511b8c84f875ea43bdb84db8ba9a8b72258767fb16a5d90baf、包名/签名/c61内容/六段原片与完整cold等值独立核实；postflight19:22:04UTC errors{}/cleanup0，原权威保留85/84。PERSONAL_TEST/manual_acceptance PENDING，历史STABLE82；仅关闭本轮受控姜入队/四人局部引擎与cold保护，不关闭正常完整主线/全界面/72图可玩/真机/音频/十类累计欠账。上报仍v84历史会话，无v85真机验收。长期三终点ACTIVE/PARTIAL，下一界面批次继续current-task。以下历史过程保留，不覆盖此最新交付。
+
+## 上一交付：c60个人阶段v84（2026-10-06 13:49 UTC）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL、ALL_MAPS_USABLE=NO、有效地图分母UNKNOWN。c60存档历史回滚个人阶段IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED完成；v84 / 0.8.14-c60-personal实际发布，PERSONAL_TEST/manual_acceptance=PENDING，历史STABLE仍v82。原build37469698895/source704fc991b515f1c453f7413108ad795d350b3451、publish37471974396全部SUCCESS，公网全部31,659,184字节及签名/版本/内容独立复核，APK fad6f4d962c7faec836a0d3d5bb50def0be95c4912b51d984eb88e418a8b5e91，c60 manifest8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb，378文件/69依赖图。
 
