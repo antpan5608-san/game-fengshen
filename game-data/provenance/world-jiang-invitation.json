@@ -104,9 +104,9 @@
       "maxHp": 1608,
       "mp": 151,
       "maxMp": 151,
-      "strength": 109,
+      "strength": 235,
       "agility": 63,
-      "stamina": 160,
+      "stamina": 109,
       "spirit": 124,
       "equipment": {
         "rightHand": 44,
@@ -114,8 +114,18 @@
         "body": 24,
         "feet": 28
       },
-      "rawHandContribution": 100,
-      "rawArmorContribution": 235
+      "rawHandContribution": 160,
+      "rawArmorContribution": 100,
+      "rawEvasionContribution": 3,
+      "fieldMapping": {
+        "strength": "SRAM696A/696B",
+        "stamina": "RAM053E/053F",
+        "agility": "RAM0537",
+        "spirit": "RAM0543",
+        "rightHandContribution": "RAM054E/054F",
+        "bodyContribution": "RAM0556/0557",
+        "evasionContribution": "RAM055E/055F"
+      }
     },
     "continuation": {
       "joinBeforeFirstFollowupDialogue": true,
@@ -295,6 +305,7 @@
     "Controlled native positions/checkpoint; not NORMAL Android route",
     "Fourth actor learned spells, growth/portrait, equipment owner bindings and enemy targeting need scoped export/tests",
     "Map7 initial/dynamic context lifecycle and full script26 movement need remaining evidence",
-    "City121/142 optional rooms/services and native NPC script motion not yet converted"
+    "City121/142 optional rooms/services and native NPC script motion not yet converted",
+    "Early checkpoint confused stat/cache field meanings; corrected using existing Yang field mapping and actual fourth-slot initializer, not name-based inference"
   ]
 }

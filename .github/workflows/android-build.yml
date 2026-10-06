@@ -795,7 +795,7 @@ jobs:
           python -m pip install Pillow==11.3.0
           base=(artifacts/content-base/*-release.apk)
           [[ ${#base[@]} == 1 ]]
-          python tools/ci_apk.py restore --apk "${base[0]}" --next-code 84
+          python tools/ci_apk.py restore --apk "${base[0]}" --code 84
           bash android/gradlew -p android testDebugUnitTest --tests org.fengshen.dev.SaveHistoryTest assembleDebug assembleDebugAndroidTest -PfengshenVersionCode=84 -PfengshenVersionName=0.8.14-development-smoke --console=plain --max-workers=2
           python - <<'PYDEBUG'
           import hashlib,json
