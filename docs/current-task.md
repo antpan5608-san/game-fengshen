@@ -6,7 +6,33 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效接续（2026-10-06 07:52，北京时间）
+## 平台中断前可信接续（2026-10-06 00:52:44 UTC）
+
+当前执行环境实际报错：exec-server transport disconnected; failed to resume exec-server session: recovery timed out after 25s。一次只读pwd恢复请求持续未返回，已停止等待；没有reset/clean/重启环境或改变网络安全策略。此状态通过已连接GitHub内容接口保存在开发备份分支，不移动冻结main。不宣称Codex将在平台中断后无限后台执行。
+
+STABLE RELEASE仍实际v82 / 0.8.12-playable-r1-stable（c51-r1/18依赖图），APK SHA22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9；本轮公网version.json实际读回STABLE/stable_acceptance PASS/manual PENDING。正常可信终点：原开局→南/西/北龙宫→85洞→东海胜后小龙女→村2服务→保存/冷启；不是全世界。最新客户端inspect两次runner未领取，NOT_AVAILABLE，未得到新样本，不称生产健康。
+
+R2旧run37364795394/source87bc56cb：build/runtime SUCCESS、world FAILURE、continuation SKIPPED，未发布。现有GitHub连接器实际取回hall-batch小型artifact11381247933/ZIP SHA0fda5697ad0d756a7481fbf25b8a7a467fa4b73770fc261f4240a04b86283fb8及first-hall11381058064。实际TouchTest4072存活断言：第五批map65胜后哪吒HP15、小龙女HP0/status32，草0；源正常准备25/26级。分类TEST_HARNESS准备不足，未据此认定游戏Bug；六神丸效果尚未实现，不能算可用治疗。保留所有存活/各自EXP/钱/flag/冷启断言。
+
+修复本地源码44354821db8be77547286a2329c7dddc3c03818f；同树安全整合main8a55db8ffec25d2ff02699ee5daa8cc97053d587。仅正常自动训练目标32/有限25000步、first-hall录制18000秒、原world runner360分钟；真实战斗、商店和付费客栈完成准备，不改变游戏入口、成长表/伤害/敌人、遇敌、奖励或直接设置玩家等级。新增原OpeningBattle隔离比较：25级0/1000、32级1000/1000全员完成八场尾段，最低HP251；受控每殿30HP旅程余量不算正常Android证据。31相关JVM/7套、instrument编译、17handoff与实际Bash32审批隔离场景PASS；scope初轮7通过/1 SDK缺失，补既有SDK/JDK仅该项11.022秒PASS，8独立方法最终核过，不伪称首轮全绿。
+
+新原Actions run37395426221，00:42:49UTC启动，来源8a55db8ffec25d2ff02699ee5daa8cc97053d587：
+https://github.com/antpan5608-san/game-fengshen/actions/runs/37395426221
+最新真实API：build112050142905 SUCCESS；runtime112052289045 IN_PROGRESS，其余完整阶段尚未取得。候选83/0.8.13-world-hell-r2/c50，56依赖图302文件，manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0。新签名APK具体SHA待读本run不可变receipt，不能沿用旧4e4295哈希或旧运行PASS。main保持冻结，未触发发布、未覆盖既有两个生产对象。
+
+DEVELOPMENT HEAD独立：本地/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next/2b865ebca453eae8dd3d3021b059c3f6dec87ff7。源码此前同树备份本分支928ba9105229a9828fd416f9ccdc3f76691cdb7a；本次仅更新接续文档，功能树不变。c59/69依赖图378文件，manifestca4de36b2665e3166f518c3397870105776e323249c721f36b5aa807d55edadb；原船/136赠雪莲和37治疗/玉泉172/火云洞89丹药/井special1使用等IMPLEMENTED。全398 JVM/84套、3导出/严格空目录恢复与instrument编译PASS；干净git archive→原ci.restore默认development→wrapper DEBUG 21秒64任务PASS。DEBUG84/0.8.14-west-well8-dev/org.fengshen.dev、33926320字节/SHA9be71f5b45289ff823bbe525b52a3f9c265622dafc5c3fda3ecdf17d0c752d79。不是原生产签名；APP_VERIFIED/PUBLISHED NO，不称69图正常可达。
+
+最后独立原版受控实验（尚未接入新内容）：完整目标ROM缓存指纹f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25。西岐8井实际script25使用已实现，无回血/钱/EXP/入队/移动；磻溪7真实首谈17.13→17.6/action61置7fd=1，不入队。房屋38真实入口8(21,20)/class27，进入后初始玩家4,13；实际48.7“財產都給你”、38.flag16，未认定文王。此前“文王38”未核角色推断已纠正。房屋38返程尝试7,13向DOWN、4,13向DOWN/UP均未出图；原grid门候选4,12/class2，必须继续核独立原出口，不交换猜返程、不创造捷径。原始RAM/PPU/FC8/Lua只在忽略private-derived/world-*目录；不是正常原版全程或Android，不将原始数据公开。尚未确认真实文王位置/姜入队；房屋39原caller8/class26/入口16,11，仅静态数据读取，实际进入尚未成功。
+
+本地未提交文件必须保留：开发树docs/current-task.md、docs/history/world-full01-runtime-checkpoints.md、docs/original-playthrough-roadmap.md已作当前状态整理/房屋38推断纠正，平台中断前未能提交；不得用本远端文档直接覆盖它们。c59游戏代码及目标内容已提交、同树备份；此后只有受控取证/文档，尚无c60游戏实现。恢复先git status/worktree和本分支最新提交，只安全整合，不能reset/clean。最远佳梦关/魔家四将、全部c50后源码与取证完整保留。
+
+SAVE-HISTORY：共享完整快照、手动/前台5分钟AUTO/回档前保护/20历史已IMPLEMENTED/JVM；UI回档/外部cold/升级APP_VERIFIED NOT_RUN。历史音频UNCONFIRMED、字体P2、真机/声音/真实云恢复/有效分母与十类欠账仍docs/delivery-status.md，不因本次驱动修正或资料取回关闭。
+
+第一真实blocker与下一精确动作：恢复执行环境后先读取37395426221的原base/world/continuation及同候选receipt。全部通过则保留原reviewer/生产保护、实际inspect/pre/postflight、同源同签名同APK hash校验，自动发布83后立即接续独立开发；失败读该run真实txt/index分类薄修，旧候选证据不能给新产物背书。等待期间继续独立原房屋38返程与真实文王/磻溪条件核查，再按原批量导出/共享事件接入，不从18图重做。云直接artifact blob host仍CONNECT403，连接器小型artifact成功不是云GH_TOKEN或网络授权更新，不绕过代理或打印临时URL。原ROM/回放/凭据、Language和真实玩家云档保持隔离。
+
+## 以下为已保留历史记录，不能覆盖以上当前状态
+
+## 历史有效接续（2026-10-06 07:52，北京时间）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82/c51-r1；R2冻结main87bc56cb、run37364795394：build/runtime SUCCESS，runtime-world正在运行，continuation尚未开始、NOT_PUBLISHED。inspect两次原runner未领取，NOT_AVAILABLE，无本轮客户端样本；不改候选、不将首段PASS写完整R2。
 
@@ -18,7 +44,7 @@ c57局部内容GENERATED/RESTORE_VERIFIED：68依赖图/373文件，manifestd7b0
 
 下一精确动作：c57源50b2385已非force备份至work/world-jiameng-batch-continuation/b7638fcf3593b78cb880a4591500bcd5f298d67b，同树434d9cdb1afe30be982eba7a5e6ca94a3f3f4c4c。继续核火云洞：Reference127只是不同地图ID，实际候选ROM89有三演员、真实world16(219,144)→89(8,13)和独立89(8,13)→16(219,144)，当前只调查，未打包/未实现丹药。运行中受控原版probe不冒称正常路线。R2实际PASS后按原审核/巡检/签名/hash发布，失败取真实证据薄修。SAVE-HISTORY仍已实现/JVM验证，UI/外部冷启NOT_RUN；十类欠账仍delivery-status。不中断主任务，不改Language/真实云档。
 
-## 先前有效接续（2026-10-06 07:29:10，北京时间）
+## 历史接续接续（2026-10-06 07:29:10，北京时间）
 
 WORLD-FULL-01持续IN_PROGRESS/PARTIAL；ALL_MAPS_USABLE=NO，有效分母UNKNOWN。生产仍v82，R2冻结main87bc56cb/run37364795394；build、runtime SUCCESS，runtime-world仍IN_PROGRESS，后段未开始。未发布、不改候选。此前两次inspect托管runner未领取，NOT_AVAILABLE，未取得本轮客户端样本；不能称健康。
 
@@ -50,7 +76,7 @@ WORLD-FULL-01持续IN_PROGRESS/PARTIAL；ALL_MAPS_USABLE=NO，有效分母UNKNOW
 
 原受控船219两码头已实际按键落岸再登：16(24,44)DOWN→(24,45)/foot，UP回原船；(35,71)LEFT→(34,71)/foot，RIGHT回船，停车681A/B为原水格、681F=61。仅原受控位置，非Android或正常路线。下一动作：保存本技术检查点/干净构建，核登船/落岸步成本与原219图形、码头碰撞CPU后薄接World/Scene；导入136百草仙子形成雪莲治疗链。136/自由船尚未打包/未可玩，不用只增加名称宣称路线闭环。检查R2实际结论并按原保护继续发布或分类薄修；不以本检查点停止全世界任务。
 
-## 先前有效接续（2026-10-06 06:33:17，北京时间）
+## 历史接续接续（2026-10-06 06:33:17，北京时间）
 
 生产仍v82，APK来源c461e7c121b6f535d85e2a245b82be1f6e42d786；全世界IN_PROGRESS/PARTIAL/ALL_MAPS_USABLE=NO，有效地图分母UNKNOWN。main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，原R2候选83/37364795394：build、runtime SUCCESS，runtime-world仍IN_PROGRESS，continuation未开始；同候选APK SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab。未发布、不改候选，不以首段通过代替整段。inspect两次因托管runner未领取job而NOT_AVAILABLE；未取得本轮客户端样本，不称健康。
 
@@ -147,7 +173,7 @@ R1冻结内容：opening-segment-001-c51-r1，manifest427ea305b23eb8493d6df34c1a
 
 佳梦关NPC图形：152/154/129原OAM重建均逐个非透明像素匹配截图（201/218/213）；初次用旧FCEUX RGB表颜色不同导致拒绝，定位后从原像素码一致采样当前原图色值，保留透明0与实体黑，未近似调色或放宽RGBA门禁。8个资源正反例通过。新状态记录中7D6曾误标map101；按原0:D664表确认实际map37，map101用共享default7D0，已在未打包开发线改正并新增回归；实际context196加载130/162/163（病中杨戬和原两名NPC）。只读用户数据/冻结R1/原c50均未改变。已取得地图37真实交谈，NPC58暂无Android执行逻辑，后续按定向规则接续，不写已可玩。R1运行已通过base/world，continuation执行中；05:46实际巡检79/27共3115普通事件、9真机session/0测试/0模拟器，观察窗口未见ERROR、cleanup0，原Node评估ALLOW；不代表候选82健康/本轮手机验收。
 
-## 当前有效检查点（2026-10-05 07:04 UTC）
+## 历史有效检查点（2026-10-05 07:04 UTC）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、分母UNKNOWN。上文旧版本/阶段为历史记录。生产v82 STABLE已由原三job同APK正常阶段验收与受保护发布37269398974通过；来源c461e7c1、APK22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9，公网重新下载/签名/包名/hash/c51-r1校验通过。05:49:25 postflight82/79只有79事件1903、2普通真机会话，无82样本，不代表82健康。manual_acceptance=PENDING，已立即继续。
 
@@ -158,7 +184,7 @@ R2冻结main dd310273b371e813b11198e665b6ff81e147d029，原run37270937736 build 
 新地图145..148和37、Boss/场景定义尚未PACKAGED/APP_VERIFIED/PUBLISHED；不能写可玩或正常胜利。下一动作：批量内容配方及原导出薄适配，保留四图原zone29完整12组（敌人60/61/62）和真实高阈值遇敌，补原敌图/状态8身份，随后严格干净重复导出与App验收。无不可替代资源/权限/平台阻塞，继续实施，不等待用户“继续”。
 
 
-## 当前有效独立检查点（2026-10-06 04:02:53 Asia/Shanghai）
+## 历史有效独立检查点（2026-10-06 04:02:53 Asia/Shanghai）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82 STABLE；R2旧候选37270937736的base通过，但world在map63宝箱驱动未面向两个相邻对象时失败，continuation跳过，旧v83未发布。完整失败产物保留；仅修真实触控驱动为点选指定原actor，未改游戏碰撞/奖励/药品。新main冻结87bc56cba8f77cda99057eede28d1c933cb1d4e4，构建37364795394成功，runtime执行中；inspect37364791739自动审批成功，runner查询排队中。不得移动main或用旧APK结果为新产物背书。
 
@@ -175,7 +201,7 @@ WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN�
 
 R2新候选签名APK独立验证通过，v83/0.8.13-world-hell-r2，来源87bc56cb，run37364795394，SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab，c50/302文件和原签名不变。runtime仍执行，NOT_PUBLISHED。inspect37364791739审批成功但托管runner未领取任务而取消（runner_id0、无steps），服务端查询NOT_AVAILABLE；通过原inspect重试一次37367849461，审批成功，查询runner尚排队。不能把环境失败或无样本写健康。
 
-## 当前有效检查点（2026-10-06 08:20，北京时间）
+## 历史有效检查点（2026-10-06 08:20，北京时间）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82；冻结R2 run37364795394已结束：build/runtime成功，runtime-world失败，continuation跳过，NOT_PUBLISHED。正常路线失败分类尚待实际仪器/状态证据，不推断游戏Bug。GitHub API正常；原artifact下载到productionresultssa17.blob.core.windows.net被平台代理CONNECT HTTP403拒绝，已提出最小网络域名请求，不绕过代理、不输出签名URL。原inspect两次托管runner未领取，NOT_AVAILABLE，无当前生产样本。
 
@@ -187,7 +213,7 @@ c58/69依赖图378文件目标manifest b681c32ca8b59827d8e8ef3c41e84eae2e774c313
 
 四层：火云洞IMPLEMENTED/CONTENT_GENERATED；APK_PACKAGED待干净构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。原观察均CONTROLLED_ORIGINAL位置/库存fixture，不是正常主线或Android游玩；Unicode和静止pose PROVISIONAL，原ROM/PPU/RAM/FC8仅忽略缓存。下一动作优先取得R2失败证据薄修并原验收；不依赖该权限的独立工作继续核西岐井special1/event20→后续姜子牙条件，不编造地图/奖励/任务锁。SAVE-HISTORY仍已实现/JVM验证、UI与冷启NOT_RUN，十类累计欠账保留delivery-status。
 
-## 当前有效检查点（2026-10-06 08:25，北京时间）
+## 历史有效检查点（2026-10-06 08:25，北京时间）
 
 生产仍v82；R2候选37364795394/87bc56cb：build/runtime成功、runtime-world失败、continuation跳过、未发布。失败原始证据保留Actions，GitHub check输出只有“Normal route assertions did not pass”；不得凭此判断游戏Bug或通关。artifact重定向目标productionresultssa17.blob.core.windows.net被平台代理CONNECT403拒绝，环境HTTP unrestricted/enforced但仍有平台保护，已请求原安全网络配置放行实际域名，不绕过/打印URL/盲重试。inspect托管runner未领取仍NOT_AVAILABLE；本轮没有查询到新的生产客户端样本。
 
