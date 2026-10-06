@@ -1,21 +1,20 @@
 {
-  "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
-  "package": "org.fengshen.dev",
-  "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
-  "contentVersion": "opening-segment-001-c50",
-  "manifestSha256": "421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0",
+  "contentVersion": "opening-segment-001-c60",
   "iteration": {
     "base": {
-      "buildRunId": 36995827962,
-      "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
-      "versionCode": 27,
       "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
+      "buildRunId": 36995827962,
       "contentVersion": "opening-segment-001-c14",
-      "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495"
+      "manifestSha256": "9dc427b5764f67bf41a8ca4275c370202c4788ba4bc8932afbf82f08f2b99495",
+      "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
+      "versionCode": 27
     },
-    "provenance": "game-data/provenance/world-room116-content.json"
+    "provenance": "game-data/provenance/world-reference-repair-content.json"
   },
+  "manifestSha256": "8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb",
+  "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
+  "package": "org.fengshen.dev",
   "runtimeBaseline": {
     "buildRunId": 37261594942,
     "sourceCommit": "c461e7c121b6f535d85e2a245b82be1f6e42d786",
@@ -24,8 +23,9 @@
     "contentVersion": "opening-segment-001-c51-r1",
     "manifestSha256": "427ea305b23eb8493d6df34c1af3051bc6905f634b20a49d41e635266e67f805"
   },
+  "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "97022a0794481395814df72ff126ec7436cc16c7e78a2bdcee2799d36e7ba9dd"
+    "sha256": "704214c3c9f5c6a3c8a0ee6724418dece8947c2d43719b7a41175f1ea0f66767"
   }
 }

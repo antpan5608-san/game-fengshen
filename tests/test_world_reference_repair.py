@@ -1,5 +1,5 @@
 """Regression for the actual c59 loader failure, not a normal App route."""
-import copy,json,sys,unittest
+import copy,json,os,sys,unittest
 from pathlib import Path
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'tools'))
@@ -11,7 +11,7 @@ class ReferenceRepairTest(unittest.TestCase):
  def setUpClass(cls):
   cls.pin=ex.load(ROOT/'ci/golden-world-reference-repair-content.json')
   parent=ex.load(ROOT/'ci/golden-world-well8-content.json')
-  apk=Path('/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk')
+  apk=Path(os.environ.get('FENGSHEN_CONTENT_BASE_APK','/workspace/game-fengshen/artifacts/world-full01/f0-candidate/fengshen-remake-v27-release.apk'))
   base=ci.content(apk,cls.pin['iteration']['base'])
   cls.old=ex.export_from_base(base,parent['iteration']['provenance'],parent)
   cls.new=ex.export_from_base(base,cls.pin['iteration']['provenance'],cls.pin)

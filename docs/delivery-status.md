@@ -1630,3 +1630,14 @@ c59 opening-segment-001-c59/69依赖图378文件，目标manifest ca4de36b2665e3
 已取回原artifact11390352218：ContentLoader、五分钟前台AUTO、损坏及20档保留保护通过，手动回档TouchTest.kt:55失败，外部cold未完成。原巡检2026-10-06T08:54:55Z为NO_ISSUES_OBSERVED，8827普通事件、3真机会话、errors空、cleanup0，权威保留82/79；仅上传窗口，不是本轮App/手机验收。索引元数据刷新前后Git树完全相同，原大量M提示已消除，未覆盖源码。
 
 c60当前IMPLEMENTED/DEBUG_PACKAGED；完整APP_VERIFIED/PUBLISHED仍NO。后续先完成回档及本轮存档/旧档定向验证，再按原同源/同签名/同审核产物流程阶段发布。c61草案未启用，出口冲突、姜批次及十类累计欠账不关闭。
+
+
+## 2026-10-06 c60本地定向复测与PERSONAL_TEST准备
+
+- 用户电脑为唯一写入位置。线上仍v82，冻结v83/R2保留；v84仅计划，未打包/未发布。
+- source e069d26 / run37446746338 的原 development-smoke 实际成功。历史回档弹窗时序故障属于仪器，最小修复等待真实窗口焦点；生产输入失焦保护、完整状态、回档取消和旧档保护断言保留。井codec/手动保存/确认与取消/Activity重启/外部force-stop冷启通过。仅DEBUG隔离fixture，不能声称签名候选、真机、声音或完整正常剧情通过。
+- exact c60（manifest 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb）378文件、69依赖图已严格导出/空目录恢复。新增WORLD-C60-PERSONAL最低签名门禁，在原9项上增加井codec/回档/回档cold/损坏与保留4项，全部真实通过后才允许PERSONAL_TEST；manual_acceptance=PENDING，完整世界/长测/声音/一加13T继续未验，不把依赖图数当可玩图数。
+- 406本地JVM通过。65相关Python初跑64通过、1新增shell fixture参数错误，修复后该测试通过；签名release本地任务因没有签名密钥未执行，原Actions负责签名和同包验证。全部本地模型建议由Codex实际读取判定，模型建议不代替App或审核。
+- IMPLEMENTED: 定向仪器修复与签名验收配置；PACKAGED: PENDING；APP_VERIFIED: DEBUG定向PASS、signed PENDING；PUBLISHED: NO。累计十类欠账、c61出口证据冲突和后续加入/成长/装备保持未完成。
+
+冻结R2 run37408307126最终FAILED：runtime-world于2026-10-06 09:59 UTC发生Normal App recording budget exhausted，build/base成功不能替代world。未取消该运行，未发布v83；长路线欠账保留。c60原短级别验收独立且明确PERSONAL_TEST。

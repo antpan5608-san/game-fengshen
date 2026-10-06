@@ -65,6 +65,7 @@ class PersonalDeliveryTest(unittest.TestCase):
         from tests.test_runtime_handoff import existing_bash
         prefix='''set -euo pipefail
 quality=PERSONAL_TEST
+scope_id=PLAYABLE-R1
 python(){ printf 'PY %s\\n' "$*"; }
 run_test(){ printf 'TEST %s\\n' "$*"; [[ "$1" != "${FAIL_METHOD:-none}" ]]; }
 pull_evidence(){ :; }

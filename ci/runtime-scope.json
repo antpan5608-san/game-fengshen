@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "WORLD-HELL-R2",
+  "id": "WORLD-C60-PERSONAL",
   "parentTask": "WORLD-FULL-01",
-  "contentVersion": "opening-segment-001-c50",
-  "manifestSha256": "421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0",
+  "contentVersion": "opening-segment-001-c60",
+  "manifestSha256": "8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb",
   "mapIds": [
     0,
     1,
@@ -12,6 +12,9 @@
     4,
     5,
     6,
+    8,
+    9,
+    10,
     16,
     17,
     18,
@@ -20,6 +23,9 @@
     22,
     23,
     25,
+    37,
+    41,
+    42,
     60,
     61,
     62,
@@ -39,6 +45,7 @@
     85,
     86,
     87,
+    89,
     95,
     96,
     97,
@@ -54,25 +61,27 @@
     115,
     116,
     117,
+    136,
     139,
     141,
+    145,
+    146,
+    147,
+    148,
     158,
     159,
     163,
     164,
-    171
+    171,
+    172
   ],
   "endpoint": {
-    "mapId": 16,
-    "cell": [
-      238,
-      160
-    ],
+    "mapId": 2,
     "party": [
       "nezha",
       "xiaolongnv"
     ],
-    "sceneFlag": "rom.map.86.flag.128"
+    "bossFlag": "rom.map.95.flag.128"
   },
   "requiredJobs": [
     "runtime",
@@ -118,19 +127,11 @@
       "worldEastPalaceNormal",
       "worldEastPartyAndColdRestart",
       "worldHellVillageNormal",
-      "worldHellVillageColdRestart",
-      "playableR1MedicalNormal",
-      "playableR1MedicalColdRestart",
-      "worldFirstHallNormal",
-      "worldFirstHallColdRestart",
-      "worldSecondHallNormal",
-      "worldSecondHallColdRestart",
-      "worldHallBatchNormal",
-      "worldHallBatchColdRestart"
+      "worldHellVillageColdRestart"
     ],
     "continuation": [
-      "worldFinalHallsNormal",
-      "worldRebirthDialogueAndColdRestart"
+      "playableR1MedicalNormal",
+      "playableR1MedicalColdRestart"
     ]
   },
   "checkpoints": {
@@ -138,7 +139,7 @@
       "north-palace"
     ],
     "world": [
-      "hall-batch"
+      "hell-village2"
     ]
   },
   "deferredFullWorldGates": [
@@ -146,10 +147,15 @@
     "worldCave87FlowerNormal",
     "worldContinentBridgeAndZone16Normal",
     "worldContinentBridgeColdRestart",
+    "worldFinalHallsNormal",
+    "worldFirstHallColdRestart",
+    "worldFirstHallNormal",
     "worldFixedFerryColdRestartAndReverse",
     "worldFixedFerryIslandNormal",
     "worldForest101ColdRestart",
     "worldForest101Normal",
+    "worldHallBatchColdRestart",
+    "worldHallBatchNormal",
     "worldIslandOnceChestsAndColdRestart",
     "worldIslandOriginalLayersAndFourVillainsNormal",
     "worldMedicalConfusionNormal",
@@ -160,8 +166,11 @@
     "worldNightEightGiftAndCaveNormal",
     "worldQueenHuangOnceAndColdRestart",
     "worldQueenRouteAndBindingNormal",
+    "worldRebirthDialogueAndColdRestart",
     "worldRoom171GiftColdRestart",
     "worldRoom171Normal",
+    "worldSecondHallColdRestart",
+    "worldSecondHallNormal",
     "worldTree107ColdRestart",
     "worldTree107Normal",
     "worldVillageFiveColdRestart",
@@ -175,6 +184,7 @@
     "worldYangThreePartyAndColdRestart"
   ],
   "contentTests": [
+    "testPlayableR1FrozenDependenciesAndMedicalPartySave",
     "testControlledVillage2GirlEquipmentAndLegacyLootInventory",
     "testScopedHellZonesRetainEveryGroupAndSupportedStatusBehavior",
     "testControlledReusableWorldItemRestoresRemovedObjectState",
@@ -191,11 +201,34 @@
     "testCloudSessionTokenEncryptedAndCleared",
     "testPathTraversalRejected",
     "testTownTradeFailuresAndEquipmentCycle",
-    "testControlledFirstHallBarrierBattleAndColdFlags",
-    "testControlledSecondHallSpecialAndIndependentMapFlags",
-    "testControlledHallBatchGroundChestsAndIndependentRewards",
-    "testControlledSeventhHallSceneDamageProtectionAndSave",
-    "testControlledFinalHallAndRebirthDialogueSaveBoundaries"
+    "testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion",
+    "testJiamengOriginalMapsActorsAndBattleDefinitionsFixture",
+    "testJiamengSavedActorsDialogueAndManualReturnFixture"
   ],
-  "quality": "STABLE"
+  "quality": "PERSONAL_TEST",
+  "personalTest": {
+    "requiredJobs": [
+      "runtime"
+    ],
+    "completedStages": [
+      "personal-smoke"
+    ],
+    "gates": [
+      "upgrade",
+      "contentLoad",
+      "touchTransactions",
+      "partySupplyAndInn",
+      "medicalDoors",
+      "herbAndBattle",
+      "saveProtection",
+      "preMigrationBackup",
+      "externalColdRestart",
+      "well8ControlledCodec",
+      "saveHistoryRollback",
+      "saveHistoryExternalColdRestart",
+      "saveHistoryCorruptionRetention"
+    ],
+    "manual_acceptance": "PENDING"
+  },
+  "acceptanceScope": "CONTROLLED_FIXTURES_AND_SHORT_APP_SMOKE_NOT_FULL_WORLD_OR_STABLE"
 }

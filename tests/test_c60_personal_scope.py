@@ -3,6 +3,7 @@ import copy
 import hashlib
 import json
 import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -82,6 +83,35 @@ class C60PersonalScopeTest(unittest.TestCase):
         restored = {p.relative_to(self.folder/'empty-assets').as_posix(): p.read_bytes()
                     for p in (self.folder/'empty-assets').rglob('*') if p.is_file()}
         self.assertEqual(payload, restored)
+
+    def test_signed_c60_dispatch_requires_each_actual_save_command(self):
+        from tests.test_runtime_handoff import existing_bash
+        script = (ROOT/'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
+        start = script.index('if [[ "$quality" == PERSONAL_TEST ]]; then')
+        block = script[start:script.index('if [[ "$scope_id" == PLAYABLE-R1 ]]; then run_test', start)]
+        prefix = '''set -euo pipefail
+quality=PERSONAL_TEST
+scope_id=WORLD-C60-PERSONAL
+mkdir -p artifacts/town02-runtime
+timeout(){ shift; "$@"; }
+adb(){ [[ "${FAIL_AT:-none}" != loader ]] || return 1; printf 'OK (1 test)\\n'; }
+run_test(){ printf 'TEST %s\\n' "$*"; [[ "$1" != "${FAIL_AT:-none}" ]]; }
+python(){ printf 'PY %s\\n' "$*"; [[ "${2:-receipt}" != "${FAIL_AT:-none}" ]]; }
+pull_evidence(){ :; }
+'''
+        path = self.folder/'signed-smoke.sh'
+        path.write_text(prefix+block, encoding='utf-8', newline='\n')
+        for failure in ('none', 'loader', 'testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration', 'world-save-history', 'personal-r1-smoke'):
+            with self.subTest(failure=failure):
+                result = subprocess.run([existing_bash(), path.as_posix()], cwd=self.folder,
+                    env=dict(os.environ, FAIL_AT=failure), capture_output=True, text=True, timeout=10)
+                self.assertEqual(failure=='none', result.returncode==0, result.stderr)
+                if failure=='none':
+                    self.assertIn('CorruptionAndRetentionProtectActiveAndMigration false', result.stdout)
+                    self.assertIn('--controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot', result.stdout)
+                    self.assertIn('--cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave', result.stdout)
+                else:
+                    self.assertNotIn('PY -', result.stdout) # No receipt after any failed command.
 
 
 if __name__ == '__main__':

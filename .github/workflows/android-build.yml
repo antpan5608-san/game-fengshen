@@ -318,7 +318,9 @@ jobs:
           path: |
             artifacts/town02-runtime/*.json
             artifacts/town02-runtime/test*.txt
+            artifacts/town02-runtime/c60-well8-codec.txt
             artifacts/checkpoint-ui/personal-r1-smoke-*
+            artifacts/checkpoint-ui/world-save-history-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
           if-no-files-found: error
           retention-days: 14

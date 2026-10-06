@@ -36,7 +36,7 @@ jobs:
           BUILD_RUN_ID: ${{ inputs.build_run_id }}
           EXPECTED_SHA256: ${{ inputs.expected_sha256 }}
           OPERATION: ${{ inputs.mode }}
-          RELEASE_QUALITY: STABLE
+          RELEASE_QUALITY: PERSONAL_TEST
         shell: bash
         run: |
           set -euo pipefail
