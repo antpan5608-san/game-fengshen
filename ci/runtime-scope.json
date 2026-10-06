@@ -184,7 +184,7 @@
     "worldYangThreePartyAndColdRestart"
   ],
   "contentTests": [
-    "testPlayableR1FrozenDependenciesAndMedicalPartySave",
+    "testC60FrozenDependenciesAndMedicalPartySave",
     "testControlledVillage2GirlEquipmentAndLegacyLootInventory",
     "testScopedHellZonesRetainEveryGroupAndSupportedStatusBehavior",
     "testControlledReusableWorldItemRestoresRemovedObjectState",

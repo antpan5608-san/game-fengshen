@@ -270,7 +270,14 @@ class ContentTest:IsolatedGameTestCase(){
         val yang=c.joinCharacters.getValue("yangjian").copy(statusMask=64)
         val xiao=c.joinCharacters.getValue("xiaolongnv").copy(hp=0,mp=0,statusMask=64)
         val before=SaveSnapshot(c.scene.version,37,72,88,Key.UP,listOf(c.initialPlayer,xiao,yang),
-            mapOf(HerbUse.ID to 2,"rom.special.18" to 1),mapOf("rom.npccontext.37.196" to true),money=321)
+            mapOf(HerbUse.ID to 2,"rom.special.18" to 1,OriginalYangJoin.ITEM_ID to 1),
+            mapOf("rom.npccontext.37.196" to true,OriginalYangJoin.CONTEXT_FLAG to true,
+                OriginalYangJoin.USED_FLAG to true,"rom.map.110.flag.128" to true),money=321)
+        // An admitted joined actor carries its durable original join/item state.
+        // Keep rejecting the incomplete fixture that previously failed here.
+        assertFalse(before.copy(flags=before.flags-OriginalYangJoin.CONTEXT_FLAG).validate(c))
+        assertFalse(before.copy(flags=before.flags-OriginalYangJoin.USED_FLAG).validate(c))
+        assertFalse(before.copy(inventory=before.inventory-OriginalYangJoin.ITEM_ID).validate(c))
         assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
         val npc=c.npcs.single{it.id=="rom.npc.37.0"};val first=OriginalNpcTalk.begin(before,npc.originalTalk!!)
         assertTrue(first.applied);assertEquals(before,first.snapshot);assertEquals("rom.dialogue.47.0",first.nextDialogue)
@@ -279,7 +286,8 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals("rom.dialogue.47.1",repeat.nextDialogue);assertTrue(repeat.snapshot.validate(c))
         assertEquals(healthy.copy(flags=repeat.snapshot.flags),repeat.snapshot)
         assertEquals(repeat.snapshot,OriginalNpcTalk.begin(repeat.snapshot,npc.originalTalk!!).snapshot)
-        val script=c.sceneStories.getValue("rom.npc.146.0");val source=before.copy(mapId=146,x=40,y=88,flags=emptyMap())
+        val script=c.sceneStories.getValue("rom.npc.146.0")
+        val source=before.copy(mapId=146,x=40,y=88,flags=before.flags-"rom.npccontext.37.196")
         assertTrue(source.validate(c));assertFalse(script.automaticallyTriggersAt(source))
         val opened=StoryFollowup.begin(source,script);assertEquals(source.characters,opened.snapshot.characters)
         assertTrue(opened.snapshot.validate(c));val saved=SaveSnapshot.parse(opened.snapshot.json().toString())
@@ -303,6 +311,21 @@ class ContentTest:IsolatedGameTestCase(){
         assertEquals("opening-segment-001-c51-r1",c.scene.version)
         assertEquals(setOf("xiaolongnv"),c.joinCharacters.keys)
         assertEquals(setOf("rom.clinic.1.revival","rom.clinic.1.care","rom.clinic.2.revival","rom.clinic.2.care"),c.clinics.keys)
+        assertMedicalPartySave(c)
+    }
+    fun testC60FrozenDependenciesAndMedicalPartySave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(setOf(0,1,2,3,4,5,6,8,9,10,16,17,18,19,20,22,23,25,37,41,42,
+            60,61,62,63,64,65,66,67,68,69,70,74,76,77,78,79,85,86,87,89,95,96,97,98,
+            99,100,101,107,108,109,110,114,115,116,117,136,139,141,145,146,147,148,
+            158,159,163,164,171,172),c.scenes.keys)
+        assertEquals("opening-segment-001-c60",c.scene.version)
+        assertEquals(setOf("xiaolongnv","yangjian"),c.joinCharacters.keys)
+        assertEquals(listOf(1,2,3,4,5,6,8,9,10).flatMap{caller->
+            listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
+        assertMedicalPartySave(c)
+    }
+    private fun assertMedicalPartySave(c:Content){
         val room=c.scenes.getValue(20)
         assertEquals(setOf(0,2,5),room.walkableClasses)
         assertTrue(room.sourceEdges.isEmpty());assertTrue(room.targetEdges.isEmpty())
