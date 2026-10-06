@@ -47,6 +47,16 @@ def recording_result(videos,segments,controlled=False,controlled_kind='CONTROLLE
     if controlled:result.update(kind=controlled_kind,controlledAssertions='PASS')
     return result
 
+def assert_cold_boundary(before,after,evidence_path):
+    """Retain actual read-only isolated App states before enforcing full equality."""
+    different=sorted(k for k in before.keys()|after.keys()
+                     if k not in before or k not in after or before[k]!=after[k])
+    evidence={'kind':'ACTUAL_APP_EXTERNAL_COLD_BOUNDARY',
+              'before':before,'after':after,'differentTopLevelFields':different,
+              'equal':before==after}
+    evidence_path.write_text(json.dumps(evidence,indent=2)+'\n',encoding='utf-8')
+    assert before==after,'Cold restart changed saved state; see retained read-only boundary'
+
 def record_silent():
     """Portable branch of the existing recorder; video only, no audio claim."""
     cold_method='testHerbColdStartMatchesNormalSave';budget=1200
@@ -94,7 +104,7 @@ def record_silent():
     OUT.mkdir(parents=True,exist_ok=True)
     test_log=OUT/f'{prefix}-normal-test.txt'
     videos=[];segments=[]
-    test=None;video=None
+    test=None;video=None;cold_remote=None;cold_local=None
     try:
         with test_log.open('w') as log:
             test=subprocess.Popen(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class',f'org.fengshen.dev.TouchTest#{method}','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT)
@@ -136,13 +146,14 @@ def record_silent():
             (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result));return
         before=saved()
         cold_remote=f'/sdcard/{prefix}-cold-restart.mp4'
+        cold_local=OUT/f'{prefix}-cold-restart.mp4'
         cold_started=time.monotonic()
         cold_uptime=int(float(adb('shell','cat','/proc/uptime').decode().split()[0])*1000)
         video=subprocess.Popen(['adb','-s','emulator-5554','shell','screenrecord','--bit-rate','1000000','--time-limit','180',cold_remote],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
         time.sleep(.5)
         adb('shell','am','force-stop','org.fengshen.dev')
         adb('shell','am','start','-W','-n','org.fengshen.dev/.MainActivity');time.sleep(8)
-        assert saved()==before,'Cold restart changed saved state'
+        assert_cold_boundary(before,saved(),OUT/f'{prefix}-cold-boundary.json')
         cold_log=OUT/f'{prefix}-cold-start-test.txt'
         with cold_log.open('w') as log:
             subprocess.run(['adb','-s','emulator-5554','shell','am','instrument','-w','-e','keepFixtureForRestart','true','-e','class',f'org.fengshen.dev.TouchTest#{cold_method}','org.fengshen.dev.test/android.test.InstrumentationTestRunner'],stdout=log,stderr=subprocess.STDOUT,timeout=300,check=True)
@@ -176,6 +187,14 @@ def record_silent():
             pid=adb('shell','pidof','screenrecord').decode().strip()
             if pid.isdecimal():adb('shell','kill','-2',pid)
             video.wait(timeout=60)
+        if cold_remote and cold_local is not None and not cold_local.is_file():
+            # Preserve the original interrupted capture even when the equality
+            # guard fails; it is never a successful recording receipt.
+            try:
+                adb('pull',cold_remote,str(cold_local))
+                (OUT/f'{prefix}-failed-cold-frame.png').write_bytes(adb('exec-out','screencap','-p'))
+            except Exception as error:
+                print('FAILED_COLD_CAPTURE_COLLECTION: '+type(error).__name__)
         if test and test.poll() is None:test.terminate();test.wait(timeout=10)
         adb('shell','am','force-stop','org.fengshen.dev')
         for name,raw in backups.items():

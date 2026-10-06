@@ -2,9 +2,22 @@
 import json,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget,recording_result
+from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget,recording_result,assert_cold_boundary
 
 class RecordingBoundaryTests(unittest.TestCase):
+    def test_cold_boundary_keeps_actual_states_and_rejects_even_a_false_flag_addition(self):
+        import tempfile
+        before={'mapId':7,'flags':{'four':True},'characters':[{'id':'jiangziya','hp':1608}]}
+        after=dict(before,flags={'four':True,'three':False})
+        with tempfile.TemporaryDirectory()as tmp:
+            path=Path(tmp)/'cold.json'
+            with self.assertRaisesRegex(AssertionError,'Cold restart changed saved state'):
+                assert_cold_boundary(before,after,path)
+            evidence=json.loads(path.read_text(encoding='utf-8'))
+            self.assertEqual(before,evidence['before']);self.assertEqual(after,evidence['after'])
+            self.assertEqual(['flags'],evidence['differentTopLevelFields']);self.assertFalse(evidence['equal'])
+            assert_cold_boundary(before,before,path)
+            self.assertTrue(json.loads(path.read_text(encoding='utf-8'))['equal'])
     def test_jiang_controlled_kind_retains_explicit_normal_route_and_exploration_limits(self):
         result=recording_result([],[],True,'CONTROLLED_JIANG_INVITATION_SMOKE')
         self.assertEqual('CONTROLLED_JIANG_INVITATION_SMOKE',result['kind'])
