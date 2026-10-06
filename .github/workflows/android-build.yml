@@ -14,6 +14,12 @@ on:
       base_sha256:
         description: 'Reviewed base APK SHA-256 (verify-base only)'
         required: false
+      development_smoke_scope:
+        description: 'DEBUG only: full history checks or focused rollback/cold regression'
+        type: choice
+        options: [full, rollback]
+        default: full
+        required: false
       runtime_tests:
         description: 'Run the isolated TOWN-02 APK and covering-upgrade gate'
         type: boolean
@@ -442,7 +448,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && inputs.mode == 'build' && inputs.runtime_tests && needs.build.outputs.runtime_quality != 'PERSONAL_TEST'
     needs: [build, runtime]
     runs-on: ubuntu-24.04
-    timeout-minutes: 300
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -817,6 +823,7 @@ jobs:
         shell: bash
         env:
           FENGSHEN_RUNTIME_STAGE: development-smoke
+          FENGSHEN_DEVELOPMENT_SMOKE_SCOPE: ${{ inputs.development_smoke_scope || 'full' }}
         run: bash ci/run-town02-runtime.sh
       - name: Retain isolated App evidence only; no raw ROM or production credentials
         if: always()
@@ -828,6 +835,7 @@ jobs:
             artifacts/checkpoint-ui/*save-history*
             artifacts/town02-runtime/testControlledSaveHistory*.txt
             artifacts/town02-runtime/development-content-loader.txt
+            artifacts/town02-runtime/development-rollback-crash.txt
             artifacts/town02-runtime/emulator.txt
           if-no-files-found: ignore
           retention-days: 14

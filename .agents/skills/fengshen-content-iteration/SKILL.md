@@ -399,6 +399,11 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 原NPC记录首字节是entityByte，不能当对白组；以原extract_npcs逐值核清单，当前四域正反例已运行。对白组须另查实际调度/活动font，Reference编号和相似拓扑仅是线索。清单CLI仍要求已有JDK/ANDROID_SDK_ROOT，缺SDK会明确拒绝，不关闭APK校验。
 
+- 正常稳定路线遇到胜后存活断言失败，先看同候选txt/索引的实际HP、库存、状态与原奖励；合法部分战死不是自动结算Bug。已实核隔离HallRoutePreparationTest使用原OpeningBattle/固定原规则比较有界准备策略，但必须由真实训练/商店/付费休息在新同候选App实现；隔离比较不算正常路线PASS，不删原存活/各自EXP/一次性flag断言。
+- 云artifact重定向CONNECT403时，现有已连接GitHub只读artifact入口曾实际取回小型checkpoint ZIP（<32MiB），可核其hash并读取原txt/index；不打印临时下载URL，不将连接器成功等同当前云GH_TOKEN/网络策略验证通过。超大完整录像仍用原artifact入口，不绕过代理或另造原片。
+
+- 录制预算变更须同时核原run-town02-runtime.sh与record_app_audio.validate_recording_budget；test_record_app_boundary.py实际检查所有显式预算和上限正反例。首殿18000秒仅限该prefix，其他范围不扩；入口校验失败属于TEST_HARNESS，不是App路线失败，也不能复用旧产物PASS。
+
 - 大敌可能使用多palette。原observed_graphic_recipe的per_tile_palette模式按每8×8块找匹配ROM跨度并在scoped_observed_graphic核整体RGBA；已对真实魔礼寿280块运行，四图重建/错palette/span/重叠拒绝/派生fixture回环通过。原c50两次导出字节/hash保持。原片混入其他精灵时旧单palette拒绝，先缩定真实矩形，不能放宽整体RGBA。原图/PPU仍留忽略目录。
 - RAM context标签需用原0:D664指针表定位，不依据旧provenance名字猜场景。原event16写7E6对应145，121实际7D0；16个原CPU边界已运行。旧错误key做只读兼容时须由原完成/global flag约束且新明确false优先，不能覆盖真实存档或重复激活演员。
 

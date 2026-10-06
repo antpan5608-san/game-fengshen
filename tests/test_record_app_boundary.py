@@ -16,10 +16,20 @@ class RecordingBoundaryTests(unittest.TestCase):
         self.assertFalse(controlled['continuedExploration'])
         self.assertTrue(controlled['forceStopRestartEqual'])
     def test_only_scoped_first_preparation_and_hall_batch_have_a_longer_bounded_budget(self):
-        for prefix,budget in [('world-first-hall',9000),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
+        for prefix,budget in [('world-first-hall',18000),('world-first-hall',60),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
             self.assertIsNone(validate_recording_budget(prefix,budget))
-        for prefix,budget in [('world-first-hall',9001),('world-west',7200),('town02',3601),('world-hall-batch',7201),('world-hall-batch',59)]:
+        for prefix,budget in [('world-first-hall',18001),('world-first-hall',59),('world-first-hall',10**9),('world-west',7200),('town02',3601),('world-hall-batch',7201),('world-hall-batch',59)]:
             with self.assertRaises(ValueError):validate_recording_budget(prefix,budget)
+
+    def test_runtime_recording_commands_fit_their_scoped_budget(self):
+        import re
+        script=(Path(__file__).resolve().parents[1]/'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
+        commands=re.findall(r'^python tools/record_app_audio.py ([\w-]+) .*?--budget-seconds (\d+)$',script,re.M)
+        self.assertGreater(len(commands),10)
+        self.assertIn(('world-first-hall','18000'),commands)
+        for prefix,budget in commands:
+            with self.subTest(prefix=prefix,budget=budget):
+                validate_recording_budget(prefix,int(budget))
 
     def test_atomic_replacement_returns_only_the_actual_complete_save(self):
         state={'mapId':96,'x':248,'characters':[{'id':'nezha','hp':51}],'flags':{'won':True}}

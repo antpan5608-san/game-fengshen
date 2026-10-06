@@ -51,17 +51,19 @@ class TouchTest:IsolatedGameTestCase(){
         // AlertDialog posts dismissal callbacks; a new child is opened from
         // that callback, after performClick/performItemClick has returned.
         fun dialogAction(action:()->Unit){
-            instrumentation.runOnMainSync{action()}
+            var failure:Throwable?=null
+            instrumentation.runOnMainSync{try{action()}catch(error:Throwable){failure=error}}
+            failure?.let{throw it} // Report instrumentation failures on its test thread.
             instrumentation.waitForIdleSync()
         }
         fun history(){
             if(v.layer==GameView.Layer.MAP)tap(v,center(layoutFor(v).buttons.getValue(Key.MENU)))
             assertEquals(GameView.Layer.MENU,v.layer);tap(v,menuPoint(v,3))
             dialogAction{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),10,d.listView.adapter.getItemId(10))}
-            instrumentation.runOnMainSync{
-                assertTrue(dialog().isShowing)
-                assertEquals("手动存档",dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).text.toString())
-            }
+            var showing=false;var neutral:String?=null
+            dialogAction{val d=dialog();showing=d.isShowing;neutral=d.getButton(android.app.AlertDialog.BUTTON_NEUTRAL)?.text?.toString()}
+            assertTrue("History child dialog must be showing after settings dismissal",showing)
+            assertEquals("手动存档",neutral)
         }
         history()
         dialogAction{dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).performClick()}
@@ -199,6 +201,18 @@ class TouchTest:IsolatedGameTestCase(){
     }
     private fun tap(v:GameView,p:Pair<Float,Float>){send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p))}
     private fun layoutFor(v:GameView)=layout(v.width,v.height,v.resources.displayMetrics.density,v.safe,DisplayMode.FULL,ControlConfig())
+    private fun tapMapActor(v:GameView,npc:StoryNpc){
+        var point:Pair<Float,Float>?=null
+        instrumentation.runOnMainSync{
+            assertEquals(npc.mapId,v.world.mapId)
+            val at=v.world.destinationCell()
+            assertTrue(npc.interactionCell==at||kotlin.math.abs(at.first-npc.x)+kotlin.math.abs(at.second-npc.y)==1)
+            val actualUi=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+            point=actualUi.worldToScreen((npc.x*16+8).toFloat(),(npc.y*16+8).toFloat(),
+                v.world.camera(actualUi.viewWidth,actualUi.viewHeight))
+        }
+        tap(v,point!!)
+    }
     private fun center(b:Box)=Pair(b.x+b.w/2,b.y+b.h/2)
     private fun tabPoint(v:GameView,index:Int)=center(v.panelTabBounds(index))
     private fun menuPoint(v:GameView,row:Int):Pair<Float,Float>{
@@ -4089,7 +4103,7 @@ class TouchTest:IsolatedGameTestCase(){
                 // Prepare before crossing the lower bridge in the verified foot mode.
                 // Completed halls do not make a reverse supply route exist.
                 assertTrue("Use same-candidate first-hall normal preparation, never grant levels",
-                    v.currentSnapshot().characters.all{it.level>=25})
+                    v.currentSnapshot().characters.all{it.level>=32})
                 state("normal-earned-preparation-preserved-no-invented-village-return")
             }
             if(cold)for(mid in maps){
@@ -4128,10 +4142,13 @@ class TouchTest:IsolatedGameTestCase(){
                         val before=v.currentSnapshot();val treasure=npc.treasure!!
                         val item=v.content.itemDefinitions.getValue(treasure.itemId)
                         val expected=WorldItems.openTreasure(before,treasure,item)
-                        talk();assertEquals(GameView.Layer.MAP,v.layer)
+                        // Two original chests can flank the same approach cell.
+                        // A with sideways facing intentionally selects neither;
+                        // tap this stable actor through the existing phone path.
+                        tapMapActor(v,npc);assertEquals(GameView.Layer.MAP,v.layer)
                         val after=v.currentSnapshot();assertEquals(expected.inventory,after.inventory);assertEquals(expected.flags,after.flags)
                         assertEquals(before.money,after.money);assertEquals(before.characters,after.characters)
-                        talk();assertEquals(after.inventory,v.currentSnapshot().inventory);assertEquals(after.flags,v.currentSnapshot().flags)
+                        tapMapActor(v,npc);assertEquals(after.inventory,v.currentSnapshot().inventory);assertEquals(after.flags,v.currentSnapshot().flags)
                         state("normal-map-$mid-chest-${npc.id}-applied-${expected.applied}")
                         if(rebirth&&item.id==WorldItems.FIELD_PROTECTION_ID){
                             assertTrue("Acquire the real protection chest before crossing the hall",expected.applied)
@@ -4311,10 +4328,13 @@ class TouchTest:IsolatedGameTestCase(){
             buyAndEquip();restock();inn(2);training=true
             walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(54,93)
             var steps=0
-            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<25}){
-                // Actual v64: 355 earned wins / 7000 steps left EXP22406 below original T(25)=27750.
-                // Extend only isolated input budget; retain all real encounters, target level and rewards.
-                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<10000)
+            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<32}){
+                // Run37364795394 reached map65 legally, but level25/26 exhausted
+                // herbs and lost one actor. Keep all alive/share/reward assertions.
+                // Isolated HallRoutePreparationTest compares the unchanged c50
+                // rules; earn preparation via real battles/paid rest, never inject it.
+                // This bot target is optional preparation, not a gameplay entry lock.
+                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<25000)
                 val low=v.currentSnapshot().characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}
                 val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
                 if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){

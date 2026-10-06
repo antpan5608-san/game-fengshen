@@ -200,10 +200,45 @@ class RuntimeHandoffTest(unittest.TestCase):
                          self.root / 'failed-bundle', self.candidate)
         self.assertFalse((self.root / 'failed-bundle').exists())
 
+    def test_development_rollback_keeps_loader_failure_and_cold_gates(self):
+        script = (Path(__file__).resolve().parents[1] / 'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
+        start = script.index('if [[ "$stage" == development-smoke ]]; then\n    development_scope=')
+        block = script[start:script.index('\nbase=(', start)]
+        prefix = '''set -euo pipefail
+stage=development-smoke
+mkdir -p artifacts/town02-runtime
+adb(){ printf 'ADB %s\\n' "$*" >> calls.txt; if [[ "$*" == *"am instrument"* ]]; then [[ "${FAIL_LOADER:-0}" == 0 ]] && printf 'OK (1 test)\\n' || printf 'FAILURES!!!\\n'; fi; }
+run_test(){ printf 'TEST %s\\n' "$*" >> calls.txt; }
+python(){ printf 'PY %s\\n' "$*" >> calls.txt; [[ "${FAIL_ROLLBACK:-0}" == 0 ]]; }
+pull_evidence(){ printf 'PULL\\n' >> calls.txt; }
+'''
+        path = self.root / 'development-rollback.sh'
+        path.write_text(prefix + block, encoding='utf-8', newline='\n')
+        for scope, fail_loader, fail_rollback, success in [
+                ('full', '0', '0', True), ('rollback', '0', '0', True),
+                ('rollback', '1', '0', False), ('rollback', '0', '1', False), ('invalid', '0', '0', False)]:
+            with self.subTest(scope=scope, loader=fail_loader, rollback=fail_rollback):
+                calls = self.root / 'calls.txt'; calls.unlink(missing_ok=True)
+                result = subprocess.run([existing_bash(), path.as_posix()], cwd=self.root,
+                    env=dict(os.environ, FENGSHEN_DEVELOPMENT_SMOKE_SCOPE=scope,
+                             FAIL_LOADER=fail_loader, FAIL_ROLLBACK=fail_rollback),
+                    capture_output=True, text=True, timeout=10)
+                self.assertEqual(success, result.returncode == 0, result.stderr)
+                observed = calls.read_text() if calls.exists() else ''
+                if scope == 'invalid': self.assertEqual('', observed)
+                if scope == 'rollback': self.assertNotIn('FiveMinuteAutoSave', observed)
+                if scope == 'full': self.assertIn('FiveMinuteAutoSave false', observed)
+                if success:
+                    self.assertIn('ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion', observed)
+                    self.assertIn('--cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot', observed)
+                    self.assertIn('PULL', observed)
+                else: self.assertNotIn('PULL', observed)
+                if fail_rollback == '1': self.assertIn('logcat -d -b crash -s AndroidRuntime', observed)
+
     def test_actual_single_test_runner_passes_restore_mode_and_rejects_invalid_mode(self):
         script = (Path(__file__).resolve().parents[1] / 'ci/run-town02-runtime.sh').read_text()
         start = script.index('run_test(){')
-        block = script[start:script.index('\nif [[ "$stage" == all || "$stage" == base ]]; then\nadb install', start)]
+        block = script[start:script.index('\nif [[ "$stage" == development-smoke ]]; then', start)]
         prefix = '''set -euo pipefail
 mkdir -p artifacts/town02-runtime
 timeout(){ shift; "$@"; }

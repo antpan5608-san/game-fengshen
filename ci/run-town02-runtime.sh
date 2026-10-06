@@ -114,6 +114,8 @@ run_test(){
     fi
 }
 if [[ "$stage" == development-smoke ]]; then
+    development_scope="${FENGSHEN_DEVELOPMENT_SMOKE_SCOPE:-full}"
+    case "$development_scope" in full|rollback) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
     # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
     adb install -r android/app/build/outputs/apk/debug/app-debug.apk
     adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
@@ -121,9 +123,15 @@ if [[ "$stage" == development-smoke ]]; then
     adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
     cat artifacts/town02-runtime/development-content-loader.txt
     grep -q 'OK (1 test)' artifacts/town02-runtime/development-content-loader.txt || exit 1
-    run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
-    run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false
-    python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
+    if [[ "$development_scope" == full ]]; then
+        run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
+        run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false
+    fi
+    if ! python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300; then
+        adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/development-rollback-crash.txt
+        cat artifacts/town02-runtime/development-rollback-crash.txt
+        exit 1
+    fi
     pull_evidence
     exit 0
 fi
@@ -263,12 +271,12 @@ python tools/record_app_audio.py world-east-palace testNormalWorldEastPalacePart
 python tools/record_app_audio.py world-hell-village2 testNormalWorldHellVillageServicesFromVerifiedEastPartySave --silent --cold-test testWorldHellVillageColdStartMatchesNormalSave --budget-seconds 1200
 if [[ "$scope_id" == WORLD-HELL-R2 ]]; then
 python tools/record_app_audio.py world-r1-medical testNormalPlayableR1MedicalFromVerifiedVillageSave --silent --cold-test testPlayableR1MedicalColdStartMatchesNormalSave --budget-seconds 1200
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedMedicalSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedMedicalSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 18000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 fi
 if [[ "$scope_id" == WORLD-FULL-01 ]]; then
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 18000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600
