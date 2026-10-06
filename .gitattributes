@@ -9,3 +9,5 @@ android/gradlew text eol=lf
 android/gradlew.bat text eol=crlf
 *.jar binary
 tools/rom-extractor/probe-world-ferry.lua text eol=lf
+# This original-evidence probe is checked by its exact byte hash.
+tools/rom-extractor/probe-world-master172-investigation.lua text eol=lf

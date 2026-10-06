@@ -1,8 +1,8 @@
 # 本地迁移交接：当前唯一有效任务
 
-task_id: LOCAL-MIGRATION-HANDOFF
+task_id: LOCAL-AI-INTEGRATION
 parent_task: WORLD-FULL-01（暂停，未完成）
-status: WAITING_LOCAL_TAKEOVER
+status: LOCAL_TAKEOVER_IMPLEMENTED_PENDING_CODEX_ACTIVATION
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 ALL_MAPS_USABLE: NO
@@ -15,6 +15,10 @@ ALL_MAPS_USABLE: NO
 
 开发c60及未完成c61保留在work/world-jiameng-next，交接规则/文档位于work/local-migration-handoff。保存历史驱动修改在work/world-05bfcc05。累计未完成项目仍docs/delivery-status.md。
 
-下一条操作由用户电脑执行：安全保留现有本地修改和存档，fetch交接分支，阅读交接文档并核对SHA；私有资源通过安全渠道另行取得。当前云端任务交接结束后不自动续跑。
+电脑已接管：`F:\apps\game-fengshen` / `codex/local-ai-development`，来源交接提交 `ed442e8dcd1f7f33a68111532b73f9f29055c622`。旧目录原样保留并备份。匹配 ROM 与可信 v27 基底已验 hash；c60 的 378 文件已恢复，405 个 JVM 测试通过，DEBUG 应用及仪器包构建通过。c61 未启用，未发布 APK、未合并 main，原手动回档仪器失败仍保留，不在本轮修改游戏功能。
+
+局域网模型协作工具、项目高推理配置、结束检查和审查回执已实现。Codex 仍需加载可信项目与审阅 Hook，不能把“配置已写入”当成“自动检查已启用”。使用入口：[local-ai-usage.md](local-ai-usage.md)，实测与限制：[local-ai-validation.md](local-ai-validation.md)。云端原始取证目录仍保留，未整包迁出；不因此要求完整历史资源来阻塞当前可恢复资源与工具验证。
+
+当前任务只完成迁移和协作工具。游戏后续研发由电脑另按用户指定范围接续；云端任务已停止，不自动续跑。
 
 交接前完整状态保留：[历史快照](history/world-full01-before-local-migration-20261006.md)。该快照的“下一动作/自动发布”已过期，不是当前授权。

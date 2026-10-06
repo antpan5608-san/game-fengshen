@@ -1,0 +1,12 @@
+# This project only. Existing global user settings remain unchanged.
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+
+[mcp_servers.fengshenLocalAI]
+command = 'F:\apps\game-fengshen\.local-ai\venv\Scripts\python.exe'
+args = ['F:\apps\game-fengshen\tools\local-ai\mcp_server.py']
+cwd = 'F:\apps\game-fengshen'
+startup_timeout_sec = 30
+tool_timeout_sec = 650
+# The bridge uses the protected file under the current user's home by default.
+# Add env_vars only if you explicitly configure an override in the parent process.

@@ -25,6 +25,7 @@
 __pycache__/
 *.pyc
 .venv/
+.local-ai/
 .DS_Store
 local.properties
 .gradle/

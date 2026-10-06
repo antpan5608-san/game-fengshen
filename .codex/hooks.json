@@ -1,0 +1,18 @@
+{
+  "description": "Project-only check that the latest source snapshot has a Codex review decision. No model requests or source writes in this hook.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"F:/apps/game-fengshen/tools/local-ai/stop_hook.py\"",
+            "commandWindows": "python \"F:/apps/game-fengshen/tools/local-ai/stop_hook.py\"",
+            "timeout": 15,
+            "statusMessage": "Checking local code review receipt"
+          }
+        ]
+      }
+    ]
+  }
+}
