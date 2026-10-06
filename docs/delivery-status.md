@@ -1605,3 +1605,8 @@ c59 opening-segment-001-c59/69依赖图378文件，目标manifest ca4de36b2665e3
 失败保留：原井probe首轮DISPLAY与自有Xvfb编号不同导致ENV_DISPLAY错误，修启动参数后实际菜单/完成成功，未换模拟器或减断言；新JVM fixture首次缺字符串/to空格编译失败，修语法后原逻辑全通过；首次计算目标pin仍PENDING被拒绝，按原export_from_base生成方法先形成新manifest，再固定pin并默认严格重导出相同，不关闭CI hash校验。c58的旧能力断言仅适用于未启用worldUse，当前额外位置能力按真实verified定义核，经济和赠物断言不删。
 
 四层：c59 IMPLEMENTED/CONTENT_GENERATED/RESTORE_VERIFIED；APK_PACKAGED待干净源码构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。取证仅CONTROLLED_ORIGINAL真实菜单，不是完整正常路线或Android。下一精确动作：提交/干净构建并安全备份此检查点；继续磻溪7/context191/action61与必要后续文王38定向证据，保留原世界顺序。同时R2网络恢复后优先下载失败证据、分类薄修、重新冻结原验收/发布；不动当前冻结来源，不拿本地构建给运行背书。SAVE-HISTORY已实现/JVM、UI冷启NOT_RUN；十类欠账仍delivery-status，不关全地图/全主线/真机/音频/云恢复。
+
+
+## WORLD-FULL-01 2026-10-06 12:00北京时间恢复记录（非交付/非发布）
+
+稳定v82保留，v83新R2 run37408307126来源75ac819c正在原三段链路，未发布。独立c59实际启动FAIL定位Content.kt:573；c60仅修佳梦已导出158组文本的历史绑定引用及原FF/FF病床不可交谈声明，378文件/manifest8c56f689…、2正反局部导出测试和相关JVM/仪器编译PASS，App待同一DEBUG smoke，不提升正常游玩或存档APP_VERIFIED。姜入队新薄事务已定向测试，尚无新资源定义，不计新增可玩。十类权威清单和既有欠账保留；精确续跑见docs/current-task.md。

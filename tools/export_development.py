@@ -3858,6 +3858,32 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             loot=enemy.get('loot')
             if loot and item_categories.get(loot['itemId'])!=loot['category']:
                 raise ValueError('Encounter loot has no matching item definition')
+    if evidence.get('npcReferenceRepairEvidence'):
+        path='game-data/provenance/world-jiameng-reference-repair.json'
+        proof=load(ROOT/path)
+        if evidence['npcReferenceRepairEvidence']!=path or proof['romSha256']!=SHA256 or \
+                proof['scopeRevision']!='jiameng-actual-group158-durable-binding-aliases-and-untalkable-bed':
+            raise ValueError('Unreviewed dialogue binding repair')
+        from forensics.fengshen246 import extract_text,extract_npcs
+        expected=[(f'rom.dialogue.148.{i}',f'rom.dialogue.158.{i}',158,i)for i in range(3,9)]
+        if [(a['bindingId'],a['sourceId'],a['originalGroup'],a['message'])for a in proof['dialogueAliases']]!=expected:
+            raise ValueError('Reference repair cannot invent or rename original messages')
+        for alias in proof['dialogueAliases']:
+            original=extract_text(reader,158,alias['message'])
+            source=next((d for d in scene['dialogues']if d['id']==alias['sourceId']),None)
+            if source is None or source['source']['record']!=original['range'] or alias['sourceRecord']!=original['range'] or \
+                    digest(encoded(source))!=alias['baseDefinitionSha256'] or any(d['id']==alias['bindingId']for d in scene['dialogues']):
+                raise ValueError('Dialogue repair must alias the exact already sourced ROM text')
+            bound=json.loads(encoded(source));bound['id']=alias['bindingId']
+            bound['source'].update(bindingAliasOf=alias['sourceId'],originalTextGroup=158,bindingRepairEvidence=path)
+            scene['dialogues'].append(bound)
+        repair=proof['untalkableBed'];bed=next((n for n in scene['npcs']if n['id']==repair['id']),None)
+        record=extract_npcs(reader,196)['records'][0]
+        if repair['id']!='rom.npc.37.yang-bed' or bed is None or bed['source']['record']!=record['range'] or \
+                repair['record']!=record['range'] or repair['originalHex']!=record['rawHex'] or \
+                bytes.fromhex(record['rawHex'])[1:3]!=b'\xff\xff' or digest(encoded(bed))!=repair['baseDefinitionSha256']:
+            raise ValueError('Only the original FF/FF bed record can be declared untalkable')
+        bed.update(talkDisabled=True,untalkableEvidence=path)
     scene['limitations']=scene.get('limitations',[])+evidence.get('limitations',[])
     validate_world_exit_geometry(scene,result)
     result['scene.json']=encoded(scene)

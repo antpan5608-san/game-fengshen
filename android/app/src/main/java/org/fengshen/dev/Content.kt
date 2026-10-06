@@ -124,6 +124,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     fun worldItemTargets()=mapObjects.mapNotNull{it.itemTarget}+npcs.mapNotNull{it.worldItemTarget}+
         sceneItemUses().map{it.target}
     fun yangJoin()=itemDefinitions[OriginalYangJoin.ITEM_ID]?.worldUse?.yangJoin
+    var jiangJoin:OriginalJiangJoinDefinition?=null;internal set
     fun npcsForState(mapId:Int,flags:Map<String,Boolean>)=npcs.filter{it.mapId==mapId}.map{npc->
         val v=npc.stateVariant
         if(v!=null&&v.activeIn(flags))npc.copy(x=v.x,y=v.y,sprite=v.sprite?:npc.sprite,
@@ -330,9 +331,14 @@ object ContentLoader {
                         !n.has("originalTalk")&&!n.has("clinicId")&&!n.has("sceneStoryActor")&&!n.has("scriptedActor"))
                 }
                 npc.talkDisabled=n.optBoolean("talkDisabled",false)
-                if(npc.talkDisabled)require(n.getString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&
-                    npc.id=="rom.npc.10.6"&&npc.mapId==10&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
-                    npc.firstEffects.isEmpty()&&npc.treasure==null)
+                if(npc.talkDisabled){
+                    val village=n.optString("villageResourceEvidence")=="game-data/provenance/world-village-batch-resources.json"&&npc.id=="rom.npc.10.6"&&npc.mapId==10
+                    val bed=n.optString("untalkableEvidence")=="game-data/provenance/world-jiameng-reference-repair.json"&&
+                        npc.id=="rom.npc.37.yang-bed"&&npc.mapId==37&&npc.x==3&&npc.y==5&&
+                        n.optString("visibleFlagId")=="rom.npccontext.37.196"&&!n.has("originalTalk")
+                    require((village||bed)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&
+                        npc.firstEffects.isEmpty()&&npc.treasure==null)
+                }
                 if(npc.hiddenInvestigation){
                     val queen=npc.id=="rom.npc.115.5"&&npc.mapId==115&&npc.x==41&&npc.y==7&&
                         npc.treasure?.flagId=="rom.map.115.flag.2"&&npc.treasure?.itemId=="rom.weapon.23"&&
@@ -440,6 +446,15 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        45->{
+                            require(npc.id=="rom.npc.121.3"&&npc.mapId==121&&npc.x==23&&npc.y==12&&
+                                t.getString("evidence")==OriginalJiangJoin.EVIDENCE&&rule.mapFlagId==OriginalJiangJoin.KING_FLAG&&
+                                rule.witnessFlagId==OriginalSceneItems.PLAGUE_FLAG&&rule.itemId.isEmpty()&&
+                                rule.firstDialogue=="rom.dialogue.131.14"&&rule.repeatDialogue=="rom.dialogue.131.17")
+                            val m=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=m.keys().asSequence().associate{k->k.toInt()to m.getString(k)}
+                            require(rule.messageDialogues==listOf(14,16,17,18).associateWith{"rom.dialogue.131.$it"})
+                        }
                         47->{
                             require(npc.id=="rom.npc.136.0"&&npc.mapId==136&&npc.x==7&&npc.y==5&&
                                 t.getString("evidence")=="game-data/provenance/world-lotus136-state.json"&&
@@ -687,6 +702,14 @@ object ContentLoader {
                     extraCharacters.any{it.first.id=="yangjian"} else npc.originalTalk?.actionId==56))
         }
 
+        val jiangJoin=data.optJSONObject("originalJiangJoin")?.let{o->
+            val rule=OriginalJiangJoinDefinition(o.getString("evidence"))
+            require(rule.verified()&&o.getString("id")==rule.id&&o.getString("kingNpcId")==rule.kingNpcId)
+            require(setOf(7,121,142).all{it in scenes}&&rule.continuation.dialogueIds.all{it in dialogues})
+            require(extraCharacters.singleOrNull{it.first.id=="jiangziya"}?.second?.originalActorIndex==3)
+            require(npcs.single{it.id==rule.kingNpcId}.originalTalk?.actionId==45)
+            rule
+        }
         val equipmentDefinitions=(0 until itemArray.length()).mapNotNull{i->
             val o=itemArray.getJSONObject(i);val e=o.optJSONObject("equipment")?:return@mapNotNull null
             require(o.getJSONObject("source").getString("confidence") in setOf("GAMEPLAY_VERIFIED","PROVISIONAL_REFERENCE"))
@@ -1168,6 +1191,7 @@ object ContentLoader {
                     val resource=ResourceMap(listOf(name),1){bitmap(it,256,256)}
                     content.nightLightAtlas={resource.getValue(name)}
                 }
+                content.jiangJoin=jiangJoin
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
