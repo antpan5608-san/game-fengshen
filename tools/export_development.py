@@ -2730,6 +2730,98 @@ def validate_world_well8_resources(reader):
         if digest((ROOT/probe['path']).read_bytes())!=probe['sha256']:raise ValueError('Well executed probe differs')
     return p
 
+def validate_world_jiang_resources(reader):
+    """One mainline batch using existing scenes, dialogue, actor/growth and edges."""
+    from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
+    path='game-data/provenance/world-jiang-invitation.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='panxi-witness-city142-king121-original-jiang-join':
+        raise ValueError('Jiang original scoped identity differs')
+    for span in p['sources']+p['contextSources']:checked_span(reader,span)
+    if reader.word(0,0xd672)!=0x7d3 or reader.read(11,0xc704,73).hex()!=\
+            '8206070781070707830808079609090780000707040c040704080409040a96090807020905968308080702010607040b810708070201058182060907030105828308060700010583ff' or \
+            p['rules']['continuation']['dialogueMessages']!=[12,7,8,9,10,11]:
+        raise ValueError('Jiang must retain original contexts and complete message sequence')
+    for mid in (191,192):
+        if p['contexts'][str(mid)]!=extract_npcs(reader,mid)['records']:
+            raise ValueError('Panxi context actors cannot be reconstructed by list indices')
+    bridge=p['bridgeReuse'];bp=ROOT/bridge['path']
+    if bridge['path']!='game-data/provenance/world-village-batch-resources.json' or digest(bp.read_bytes())!=bridge['sha256']:
+        raise ValueError('Panxi town profile must reuse pinned shared bridge rules')
+    if [(f['group'],f['messages'],f['chr2kBanks'])for f in p['fonts']]!=[
+            (17,list(range(2,14)),[46,47]),(131,list(range(1,16)),[50,51]),(131,list(range(16,19)),[52,53])]:
+        raise ValueError('City original two font pages cannot be conflated')
+    expected_dialogues=[]
+    for font in p['fonts']:
+        raw=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+        if len(raw)!=4096 or [s['offset']for s in font['sources']]!=[524304+b*2048 for b in font['chr2kBanks']]:
+            raise ValueError('Scoped original font bank differs')
+        for glyph in font['glyphs']:
+            k=glyph['code']
+            if glyph['character']!=cs[k]or digest(bytes(v for row in glyph_pixels(raw,0,k)for v in row))!=glyph['pixelsSha256']:
+                raise ValueError('Scoped original glyph pixels differ')
+        for message in font['messages']:
+            t=extract_text(reader,font['group'],message);id=f'rom.dialogue.{font["group"]}.{message}'
+            d=next(d for d in p['dialogues']if d['id']==id)
+            if d['source']['record']!=t['range']or d['source']['pointerEvidence']!=t['pointerEvidence']or \
+                    d['source']['originalVerified']is not False or d['source']['fontBanks']!=font['chr2kBanks']or \
+                    decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text']:
+                raise ValueError('Original dialogue stream or provisional transcription differs')
+            expected_dialogues.append(id)
+    if [d['id']for d in p['dialogues']]!=expected_dialogues:raise ValueError('Extra or missing scoped dialogue')
+    if [m['mapId']for m in p['maps']]!=[7,121,142]or len(p['npcs'])!=16:
+        raise ValueError('Invitation batch cannot silently add other maps or actors')
+    for recipe in p['maps']:
+        mid=recipe['mapId'];m=extract_map(reader,mid)
+        palette=extract_default_map_palette(reader,mid)
+        expected_allowed={7:[0,*range(2,12)],121:[0,2],142:[0,*range(2,11)]}[mid]
+        if recipe['gridSha256']!=m['gridSha256']or recipe['palette']!=palette['palette']or recipe['walkableClasses']!=expected_allowed:
+            raise ValueError('Invitation map cannot open unknown walls or invent palettes')
+    for mid in (7,121):
+        records=extract_npcs(reader,mid)['records'];ns=[n for n in p['npcs']if n['mapId']==mid]
+        for n,record in zip(ns,records):
+            raw=checked_span(reader,record['range']);i=record['index']
+            first=13 if mid==7 and i==4 else raw[1]
+            if n['id']!=f'rom.npc.{mid}.{i}'or n['spriteId']!=raw[0]or n['source']['record']!=record['range']or \
+                    n['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')]or n['firstEffects']or \
+                    n['firstDialogue']!=f'rom.dialogue.{mid+10}.{first}':
+                raise ValueError('Invitation stable actor, pose or original text differs')
+            action=61 if mid==7 and i==4 else raw[12]
+            if action:
+                rule=n['originalTalk'];expected_flag=''if action==61 else f'rom.map.{mid}.flag.{raw[13]}'
+                if action not in(44,45,61)or rule['actionId']!=action or rule['evidence']!=path or \
+                        rule['mapFlagId']!=expected_flag or rule['itemId']or rule['witnessFlagId']!=\
+                        ('rom.global.7fd.nonzero'if action==61 else'rom.global.7c9.nonzero'):
+                    raise ValueError('Invitation NPC cannot infer a gift or different rule')
+            elif not n.get('readOnlyDialogue')or n.get('originalTalk')or n['repeatDialogue']is not None:
+                raise ValueError('Passive original NPC must remain without side effects')
+            if mid==7 and i in(4,5):
+                if n.get('removedFlagId')!='rom.npccontext.7.192':raise ValueError('Panxi actors must leave together at original context192')
+            elif n.get('removedFlagId'):raise ValueError('Foreign actor removal')
+    for name,g in p['graphics'].items():
+        if name not in {f'npc-jiang-{i}.png'for i in(150,152,199,247)}:raise ValueError('Foreign graphic')
+        scoped_observed_graphic(reader,g)
+    terrain=p['cityTerrain'];raw=(ROOT/terrain['cpuExpectedPath']).read_bytes()
+    if (terrain['mapId'],terrain['tilesetId'],terrain['mode'],terrain['testCount'],terrain['failures'])!=(142,6,0,484,0)or \
+            digest(raw)!=terrain['cpuExpectedSha256']or len(raw.splitlines())!=485:
+        raise ValueError('City directional collision lacks full original matrix')
+    for span in terrain['sources']:checked_span(reader,span)
+    seen=set();keys={1:'UP',2:'DOWN',3:'LEFT',4:'RIGHT'}
+    for row in raw.decode('ascii').splitlines()[1:]:
+        src,target,d,blocked,mode,occlusion=map(int,row.split('\t'));seen.add((src,target,d))
+        expected=int(target==1 or keys[d]in terrain['sourceEdges'].get(str(src),[])or keys[d]in terrain['targetEdges'].get(str(target),[]))
+        if (blocked,mode,occlusion)!=(expected,0,255 if src==2 else 0):
+            raise ValueError('City edges differ from executed original dispatch')
+    if seen!=set(itertools.product(range(11),range(11),range(1,5))):raise ValueError('Incomplete terrain domain')
+    cpu=p['localCpu'];raw=(ROOT/cpu['path']).read_bytes()
+    if cpu['caseCount']!=84 or cpu['failures']or digest(raw)!=cpu['sha256']or len(raw.splitlines())!=85 or \
+            digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+        raise ValueError('Guard CPU selector evidence differs')
+    for slot,record in p['equipmentLists'].items():
+        index=('rightHand','leftHand','body','feet').index(slot);ptr=reader.word(2,reader.word(2,0xef66)+2*index)
+        if record['source']['cpuAddress']!=ptr or list(checked_span(reader,record['source']))!=record['ids']+[255]:
+            raise ValueError('Actor3 equipment permission list differs')
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -2737,6 +2829,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     reader=iteration_reader();result=dict(payload)
     encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
     scene=json.loads(result['scene.json']);known={m['id'] for m in scene['maps']}
+    jiang=None
+    if evidence.get('jiangCapabilityEvidence'):
+        jiang=validate_world_jiang_resources(reader)
+        if evidence['jiangCapabilityEvidence']!='game-data/provenance/world-jiang-invitation.json'or \
+                any(evidence.get(k)!=jiang[k]for k in ('maps','npcs','dialogues','graphics','exits','items'))or \
+                evidence.get('originalJiangJoin')!={'evidence':evidence['jiangCapabilityEvidence']}:
+            raise ValueError('Invitation overlay differs from scoped batch')
     for span in evidence['ruleRanges']:checked_span(reader,span)
     for recipe in evidence.get('atlasCorrections',[]):
         mid=recipe['mapId'];original=extract_map(reader,mid)
@@ -2893,6 +2992,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             data['sourceEdges']=binding['sourceEdges'];data['targetEdges']=binding['targetEdges']
         if forest:
             data['sourceEdges']=proof['sourceEdges'];data['targetEdges']=proof['targetEdges']
+        if recipe.get('directionalProfileEvidence'):
+            if not jiang or mid!=142 or recipe['directionalProfileEvidence']!=evidence['jiangCapabilityEvidence']:
+                raise ValueError('Unreviewed directional profile')
+            data['sourceEdges']=jiang['cityTerrain']['sourceEdges'];data['targetEdges']=jiang['cityTerrain']['targetEdges']
         if recipe.get('unavailableRegions'):
             proof=load(ROOT/recipe['unavailableRegionEvidence'])
             if proof['romSha256']!=SHA256 or proof['zone8']['mapId']!=mid:
@@ -2907,6 +3010,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             if original['tilesetId']!=0:raise ValueError('Town directional profile on another tileset')
             town=extract_town_shops(reader)
             for field in ('sourceEdges','targetEdges'):data[field]=town[field]
+            if recipe.get('jiangTownBridgeEvidence'):
+                if not jiang or mid!=7 or recipe['jiangTownBridgeEvidence']!=evidence['jiangCapabilityEvidence']:
+                    raise ValueError('Foreign original town bridge profile')
+                bridge=load(ROOT/jiang['bridgeReuse']['path'])['bridge']
+                if allowed!=bridge['walkableClasses']:raise ValueError('Panxi bridge classes differ')
+                data['sourceEdges']={**data['sourceEdges'],**{int(k):v for k,v in bridge['sourceEdges'].items()}}
             if recipe.get('townBridgeCollisionEvidence'):
                 if recipe['townBridgeCollisionEvidence']=='game-data/provenance/world-village-batch-resources.json':
                     v,bridge=validate_world_village_batch_resources(reader,mid)
@@ -3463,7 +3572,32 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             old.update({k:update[k]for k in ('buyPrice','sellPrice')})
             old['source']=dict(old['source'],merchantPriceEvidence=provenance_path,
                                merchantPriceRange=update['priceSource'])
-    if evidence.get('jiamengCapabilityEvidence'):
+    if jiang:
+        if evidence.get('existingItemCapabilityUpdates')!=jiang['itemCapabilityUpdates']or evidence.get('existingNpcCapabilityUpdates'):
+            raise ValueError('Invitation equipment overlay differs')
+        from forensics.fengshen246 import extract_world_service_catalog
+        catalog={i['id']:i for i in extract_world_service_catalog(reader)['items']}
+        if [u['id']for u in jiang['itemCapabilityUpdates']]!=['rom.weapon.44','rom.armor.28']:
+            raise ValueError('Invitation only restores initial equipment capabilities')
+        for update in jiang['itemCapabilityUpdates']:
+            old=next(i for i in scene['items']if i['id']==update['id'])
+            if digest(encoded(old))!=update['baseDefinitionSha256']or set(update['fields'])!={'equipment'}:
+                raise ValueError('Invitation initial equipment parent differs')
+            equipment=update['fields']['equipment'];original=catalog[old['id']];slot=equipment['slot']
+            if 'jiangziya'not in equipment['allowedCharacters']or original['originalId']not in jiang['equipmentLists'][slot]['ids']:
+                raise ValueError('Jiang equipment permission differs')
+            if 'equipment'in old:
+                prior=old['equipment']
+                expected=dict(prior,allowedCharacters=prior['allowedCharacters']+['jiangziya'],
+                    ruleSources=prior.get('ruleSources',[])+[jiang['equipmentLists'][slot]['source']],ownerExtensionEvidence=evidence['jiangCapabilityEvidence'])
+                if equipment!=expected:raise ValueError('Existing feet stats or old owner changed')
+            elif equipment['allowedCharacters']!=['jiangziya']or equipment['attackBonus']!=original['contribution']or \
+                    equipment['defenseBonus']or equipment['evasionValue']or not equipment['operationEnabled']or equipment['crossHandOccupancy']:
+                raise ValueError('Original Jiang initial weapon contribution differs')
+            for span in equipment['ruleSources']:checked_span(reader,span)
+            old.update(update['fields'])
+        scene['originalJiangJoin']=evidence['originalJiangJoin']
+    elif evidence.get('jiamengCapabilityEvidence'):
         path='game-data/provenance/world-jiameng-binding.json'
         matches=[i for i in scene['items']if i['id']=='rom.special.18']
         if len(matches)!=1 or evidence['jiamengCapabilityEvidence']!=path or evidence.get('existingNpcCapabilityUpdates') or \
@@ -3545,7 +3679,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('sages89ResourceEvidence'):
+        if npc.get('jiangResourceEvidence'):
+            if not jiang or npc not in jiang['npcs']:raise ValueError('Foreign invitation actor')
+            if npc['spriteId']in(150,152,199,247):
+                if npc['sprite']!=f'npc-jiang-{npc["spriteId"]}.png':raise ValueError('Actor graphic identity differs')
+            elif not any(n.get('spriteId')==npc['spriteId']and n['sprite']==npc['sprite']for n in json.loads(payload['scene.json'])['npcs']):
+                raise ValueError('Shared actor graphic lacks same original sprite identity')
+        elif npc.get('sages89ResourceEvidence'):
             proof=validate_world_sages89_resources(reader)
             if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):
@@ -3689,7 +3829,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Scripted actor pose differs from original interception')
             if npc['source']['script']!=story['actorScriptSource']:
                 raise ValueError('Script actor and boss evidence differ')
-        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-jiameng-actors.json':
+        if npc.get('automaticStoryEvidence')=='game-data/provenance/world-jiang-invitation.json':
+            if not jiang or npc['id']not in('rom.npc.7.4','rom.npc.7.5')or npc not in jiang['npcs']:
+                raise ValueError('Panxi context actor differs')
+        elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-jiameng-actors.json':
             if npc not in validate_world_jiameng_actors(reader)['npcs']:raise ValueError('Jiameng actor removal differs')
         elif npc.get('automaticStoryEvidence')=='game-data/provenance/world-room116-state.json':
             proof=validate_world_room116_resources(reader)

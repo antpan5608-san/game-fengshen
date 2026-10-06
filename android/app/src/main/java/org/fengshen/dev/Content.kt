@@ -325,7 +325,10 @@ object ContentLoader {
                     val sages=n.optString("sages89ResourceEvidence")=="game-data/provenance/world-sages89-resources.json"&&
                         npc.mapId==89&&npc.id in listOf("rom.npc.89.1","rom.npc.89.2")&&
                         npc.firstDialogue=="rom.dialogue.99.${npc.id.substringAfterLast('.').toInt()+1}"
-                    require((master||sages)&&
+                    val jiang=n.optString("jiangResourceEvidence")==OriginalJiangJoin.EVIDENCE&&
+                        (npc.mapId==7&&npc.id in listOf("rom.npc.7.0","rom.npc.7.1","rom.npc.7.2","rom.npc.7.3","rom.npc.7.5")||
+                            npc.mapId==121&&npc.id in(4..9).map{"rom.npc.121.$it"})
+                    require((master||sages||jiang)&&
                         npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.treasure==null&&
                         npc.originalTalk==null&&npc.shopId==null&&npc.innId==null&&
                         !n.has("originalTalk")&&!n.has("clinicId")&&!n.has("sceneStoryActor")&&!n.has("scriptedActor"))
@@ -385,7 +388,9 @@ object ContentLoader {
                         148->npc.id in (0..2).map{"rom.npc.148.$it"}&&npc.x==7+npc.id.substringAfterLast('.').toInt()&&npc.y==5&&
                             npc.automaticStoryOnly&&npc.removedFlagId=="rom.npccontext.148.217"
                         else->false}
-                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women||jail||jiameng)&&npc.firstEffects.isEmpty())
+                    val panxi=n.optString("automaticStoryEvidence")==OriginalJiangJoin.EVIDENCE&&npc.mapId==7&&
+                        npc.id in listOf("rom.npc.7.4","rom.npc.7.5")&&npc.removedFlagId==OriginalJiangJoin.PANXI_FOUR_FLAG&&!npc.automaticStoryOnly
+                    require(((island||cave)&&npc.automaticStoryOnly||queen||huang||women||jail||jiameng||panxi)&&npc.firstEffects.isEmpty())
                 }
                 npc.clinicId=n.optString("clinicId").takeIf{it.isNotEmpty()}
                 n.optJSONObject("moneyTreasure")?.let{t->

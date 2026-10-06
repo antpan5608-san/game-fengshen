@@ -1,0 +1,5528 @@
+{
+  "additionalCharacters": [
+    {
+      "confidence": "CONTROLLED_ORIGINAL_INIT_STATIC_GROWTH",
+      "evidence": "game-data/provenance/world-jiang-invitation.json",
+      "initialState": {
+        "agility": 63,
+        "equipment": {
+          "body": 24,
+          "feet": 28,
+          "leftHand": -1,
+          "rightHand": 44
+        },
+        "experience": 190000,
+        "hp": 1608,
+        "id": "jiangziya",
+        "level": 38,
+        "maxHp": 1608,
+        "maxMp": 151,
+        "mp": 151,
+        "spirit": 124,
+        "stamina": 109,
+        "statusMask": 0,
+        "strength": 235
+      },
+      "name": "姜子牙",
+      "originalActorIndex": 3,
+      "portraitAsset": "npc-jiang-247.png",
+      "portraitScope": "OBSERVED_ORIGINAL_PANXI_NPC_SPRITE_NOT_NATIVE_STATUS_PORTRAIT"
+    }
+  ],
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-reference-repair-content.json",
+    "pinSha256": "cd75ada80d29be45c5804d529de74ccbcf776507b061ed5832c346abbe9d0ede",
+    "provenanceSha256": "d021793c1def74e3fff9056f926f892f5d633f2b6741c353a9552c73758269d6"
+  },
+  "baseManifestSha256": "8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb",
+  "combatOverlay": {
+    "characterGrowth": [
+      {
+        "knownMaxLevel": 80,
+        "limitEvidence": "game-data/provenance/world-jiang-invitation.json",
+        "originalActorIndex": 3,
+        "owner": "jiangziya",
+        "rows": [
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 3,
+            "level": 2,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55799,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375303,
+              "prg8kBank": 45,
+              "sha256": "fcf0abf81a9cebe07a18b39e77f46ff3cc1254ce0c8dc557d12fea51ee1eff15"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 12,
+            "thresholdSource": {
+              "cpuAddress": 57075,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376579,
+              "prg8kBank": 45,
+              "sha256": "d188f7fe1ef021a4a9fde3862624fcc86ed39b0eb4a0490102f6756ceaa70ba9"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 3,
+            "level": 3,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55806,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375310,
+              "prg8kBank": 45,
+              "sha256": "fcf0abf81a9cebe07a18b39e77f46ff3cc1254ce0c8dc557d12fea51ee1eff15"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 34,
+            "thresholdSource": {
+              "cpuAddress": 57078,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376582,
+              "prg8kBank": 45,
+              "sha256": "50add574851d94e166311d896a0069d8d7d63294066e1ab87634b6f92c1a7c4a"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 4,
+            "level": 4,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55813,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375317,
+              "prg8kBank": 45,
+              "sha256": "ad8653a45e1c7192f6225d594dddc1a4d298b2d2753e0dfcc8e5c1265011b5e5"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 101,
+            "thresholdSource": {
+              "cpuAddress": 57081,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376585,
+              "prg8kBank": 45,
+              "sha256": "14e473be39e791a7310fde93cfd08bbc06d3de7270ecc3ba30e582fff4fb1e68"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 4,
+            "level": 5,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55820,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375324,
+              "prg8kBank": 45,
+              "sha256": "ad8653a45e1c7192f6225d594dddc1a4d298b2d2753e0dfcc8e5c1265011b5e5"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 211,
+            "thresholdSource": {
+              "cpuAddress": 57084,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376588,
+              "prg8kBank": 45,
+              "sha256": "c1378b57f7081a322d90d8f114c03844ef1ece8119ec59e04e25c121ecf8bb94"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 5,
+            "level": 6,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55827,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375331,
+              "prg8kBank": 45,
+              "sha256": "87c4e15caf3063a9e53061ecabc1cee94ca31fa893eeac40f272a934a3d42907"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 375,
+            "thresholdSource": {
+              "cpuAddress": 57087,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376591,
+              "prg8kBank": 45,
+              "sha256": "a3e5910898f5c122f3a4df1ed972dce2f2eeafe951e390ecc140d0bcd9ba8d79"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 6,
+            "level": 7,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55834,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375338,
+              "prg8kBank": 45,
+              "sha256": "f39929ca7aa7cd3547bce563d940d60774a105796fc342d4399ffc7f53d85990"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 607,
+            "thresholdSource": {
+              "cpuAddress": 57090,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376594,
+              "prg8kBank": 45,
+              "sha256": "96567761da0540661865c0cca67af2e44cbe08a3aa220c70fa74b21f45b76c78"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 8,
+            "level": 8,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55841,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375345,
+              "prg8kBank": 45,
+              "sha256": "38fdbd49e2b5622b53bad39b98497390d12d22d3e402348e2a03feea798ab0dd"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 917,
+            "thresholdSource": {
+              "cpuAddress": 57093,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376597,
+              "prg8kBank": 45,
+              "sha256": "64c5d75f5312ed820575a044b999550e5c8a22e222b8dff6cc2c0aa63e90125d"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 9,
+            "level": 9,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55848,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375352,
+              "prg8kBank": 45,
+              "sha256": "d35ea33853b5b21f3709bfe58220284f511a56dbfe95bddc39c65b5efd138127"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 1320,
+            "thresholdSource": {
+              "cpuAddress": 57096,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376600,
+              "prg8kBank": 45,
+              "sha256": "50fa9013feed270f6dc3f3c2945fc152ff7de1c0ebacaaf862331316853c251d"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 10,
+            "level": 10,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55855,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375359,
+              "prg8kBank": 45,
+              "sha256": "fbb3ffeaf59b02007682544933e6322f0264816227a8506b4b0367e2c8ee6bef"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 1832,
+            "thresholdSource": {
+              "cpuAddress": 57099,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376603,
+              "prg8kBank": 45,
+              "sha256": "dd509e8c48b35513522aa517df9bf866309055531e5784187d639c65233539b0"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 12,
+            "level": 11,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55862,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375366,
+              "prg8kBank": 45,
+              "sha256": "9335200a366417653d4c697109ebfc6c58f285bc6252b7fda96922f2cdb3660b"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 2,
+            "threshold": 2468,
+            "thresholdSource": {
+              "cpuAddress": 57102,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376606,
+              "prg8kBank": 45,
+              "sha256": "53d5c95a29936e4783455c87ee5630d4e8ba536d8ffcc37e18fc4900c78a7c91"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 14,
+            "level": 12,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55869,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375373,
+              "prg8kBank": 45,
+              "sha256": "b77096c52ebbab5ddfff967b7caa4569c888c5b581eaf9aee9af5c1b4ed5af39"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 3,
+            "threshold": 3245,
+            "thresholdSource": {
+              "cpuAddress": 57105,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376609,
+              "prg8kBank": 45,
+              "sha256": "793245fe1beb1ef0b97fcd435b052e54c3c546e0e304d29e41819390456ad2cc"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 16,
+            "level": 13,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55876,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375380,
+              "prg8kBank": 45,
+              "sha256": "99cb530653fdc9e7c9afae8edb670c2239020e12303836c31fd3830642bfac4d"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 3,
+            "threshold": 4182,
+            "thresholdSource": {
+              "cpuAddress": 57108,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376612,
+              "prg8kBank": 45,
+              "sha256": "d2a023265592aedbf5628c2b4aa1cb1050ee3697e498beafaf04a2eca11502e2"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 18,
+            "level": 14,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55883,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375387,
+              "prg8kBank": 45,
+              "sha256": "8c292d19ec203fc27996110e0d29b25fb6a0af56e8d7bda570f64ff44eb7a03e"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 3,
+            "threshold": 5300,
+            "thresholdSource": {
+              "cpuAddress": 57111,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376615,
+              "prg8kBank": 45,
+              "sha256": "16c9c6386a6f65c7f4f7d425ad852c3ea41eee020e22294c7a27a848a7e445e6"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 20,
+            "level": 15,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55890,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375394,
+              "prg8kBank": 45,
+              "sha256": "fd0ab1da8dc1aee9d1fee41c025d308e71aa121882a3ff3d86c9318da3ef7a43"
+            },
+            "spirit": 3,
+            "stamina": 1,
+            "strength": 3,
+            "threshold": 6621,
+            "thresholdSource": {
+              "cpuAddress": 57114,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376618,
+              "prg8kBank": 45,
+              "sha256": "50ebf34ef316f51de6e8c8535887cc0f2a346e7cf2f73ea33a7e8c6d17faeba1"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 23,
+            "level": 16,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55897,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375401,
+              "prg8kBank": 45,
+              "sha256": "26e1139f56f106467f0691dbd1c7ba829393013194c7f9eecf1bdfd01b662282"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 4,
+            "threshold": 8167,
+            "thresholdSource": {
+              "cpuAddress": 57117,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376621,
+              "prg8kBank": 45,
+              "sha256": "739e5fb41080a1456d4c860b5063da0e57d81b988abbd4423a416adcccfbbdeb"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 25,
+            "level": 17,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55904,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375408,
+              "prg8kBank": 45,
+              "sha256": "c1e2f7fc15c412f74f80bd919c2154962cb47b46de3effced5dbe4e3d53e253a"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 4,
+            "threshold": 9966,
+            "thresholdSource": {
+              "cpuAddress": 57120,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376624,
+              "prg8kBank": 45,
+              "sha256": "efb18e9c9a1c3cf6768f209a4675d21f5a5383b142e9f1b293dde3b8d5e2f52d"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 28,
+            "level": 18,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55911,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375415,
+              "prg8kBank": 45,
+              "sha256": "f7eca74a31517410f44b7f2a1955b559a3edf5dc95b2df4bf68c86bc928b30d6"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 4,
+            "threshold": 12044,
+            "thresholdSource": {
+              "cpuAddress": 57123,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376627,
+              "prg8kBank": 45,
+              "sha256": "c109d86fd542e60751687a19a79594f7a01255d3bec09df39796355fb16e92e6"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 31,
+            "level": 19,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55918,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375422,
+              "prg8kBank": 45,
+              "sha256": "df24504212ef3e9c6bc78f4f943bacff8f95d65a7566a8a2b9e605dd96603d71"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 5,
+            "threshold": 14432,
+            "thresholdSource": {
+              "cpuAddress": 57126,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376630,
+              "prg8kBank": 45,
+              "sha256": "edb8c329ea72463ac128497c975e44864e9f72511b4daabd8a2d0f45f34ebc4f"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 34,
+            "level": 20,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55925,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375429,
+              "prg8kBank": 45,
+              "sha256": "883f0145c9eba52de44194b0749f9f29c119460b1efc740d5eb51e6f9749fbfa"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 5,
+            "threshold": 17161,
+            "thresholdSource": {
+              "cpuAddress": 57129,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376633,
+              "prg8kBank": 45,
+              "sha256": "88657b0a3c04be3d5c3569074479de6261c30caab261ffac81c924dc9c6cb820"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 37,
+            "level": 21,
+            "mp": 3,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55932,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375436,
+              "prg8kBank": 45,
+              "sha256": "29a9829cc236da56dfda8f5a7775cd25757b91d5665ab004717925bbe88ec9e5"
+            },
+            "spirit": 3,
+            "stamina": 2,
+            "strength": 5,
+            "threshold": 20267,
+            "thresholdSource": {
+              "cpuAddress": 57132,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376636,
+              "prg8kBank": 45,
+              "sha256": "16124201ba7147bcdfeaeb9fe5fb6b80f8d79e30fc5b6645ecc365a1db3fcf43"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 41,
+            "level": 22,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55939,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375443,
+              "prg8kBank": 45,
+              "sha256": "041c1a8dd2bd198de082e4d7361c62b59acdec370b0abd38b6484b5cf14fc2a6"
+            },
+            "spirit": 3,
+            "stamina": 3,
+            "strength": 6,
+            "threshold": 23788,
+            "thresholdSource": {
+              "cpuAddress": 57135,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376639,
+              "prg8kBank": 45,
+              "sha256": "694ed628cf37028ba46ca229a13c85c981cf6787e22999f0b5a11aba5d317540"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 44,
+            "level": 23,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55946,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375450,
+              "prg8kBank": 45,
+              "sha256": "31c510bc989caab8c4892632a7cfc0f99984937ff6302e8bcb386953dfbb8f27"
+            },
+            "spirit": 3,
+            "stamina": 3,
+            "strength": 6,
+            "threshold": 27764,
+            "thresholdSource": {
+              "cpuAddress": 57138,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376642,
+              "prg8kBank": 45,
+              "sha256": "357ee6e0453c55b3eec1935257ae52c6d9ab4924bbaafdd8c51af3a80d7f9f40"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 48,
+            "level": 24,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55953,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375457,
+              "prg8kBank": 45,
+              "sha256": "b3a80535baa7e6d5fe1d0c21f0e9dfb7da0d67a90ac5e9f2b8a17aedf1ebfb46"
+            },
+            "spirit": 3,
+            "stamina": 3,
+            "strength": 7,
+            "threshold": 32239,
+            "thresholdSource": {
+              "cpuAddress": 57141,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376645,
+              "prg8kBank": 45,
+              "sha256": "4df9f50c91ebdacadf54c1160805de59d46f01823ba990a0cffeda81a3defa2a"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 52,
+            "level": 25,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55960,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375464,
+              "prg8kBank": 45,
+              "sha256": "6ba47e110e9fc75e8181406a41286dbd25cdca295c28ab28074bb608f36a5368"
+            },
+            "spirit": 3,
+            "stamina": 3,
+            "strength": 7,
+            "threshold": 37259,
+            "thresholdSource": {
+              "cpuAddress": 57144,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376648,
+              "prg8kBank": 45,
+              "sha256": "fc48e0f3958907c532989639dd348d0ffe30491f5f354dddc6bb3a07b44b2a55"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 56,
+            "level": 26,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55967,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375471,
+              "prg8kBank": 45,
+              "sha256": "03775db90dacfdd828db377b2e2167a9f2fa55c87a6467f9df918948e8cadd45"
+            },
+            "spirit": 3,
+            "stamina": 4,
+            "strength": 8,
+            "threshold": 42877,
+            "thresholdSource": {
+              "cpuAddress": 57147,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376651,
+              "prg8kBank": 45,
+              "sha256": "2086ed734de16504c5caf755939ee4b3b7f1e23aad66f51b8c074687fa542e8b"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 60,
+            "level": 27,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55974,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375478,
+              "prg8kBank": 45,
+              "sha256": "6e183defe00667173f80c5f0455344eb6d5f0755df6881af129c8dc5e21864d3"
+            },
+            "spirit": 3,
+            "stamina": 4,
+            "strength": 8,
+            "threshold": 49148,
+            "thresholdSource": {
+              "cpuAddress": 57150,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376654,
+              "prg8kBank": 45,
+              "sha256": "d912205d67e33d88385ffd51451e3d1dd8fa9a3117ccf64b6af2d9a2286c36b6"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 64,
+            "level": 28,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55981,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375485,
+              "prg8kBank": 45,
+              "sha256": "9b0c393ebabdcb20c30b20138060f1c96e87301a8936fe4d057126c3308ab46a"
+            },
+            "spirit": 3,
+            "stamina": 4,
+            "strength": 9,
+            "threshold": 56129,
+            "thresholdSource": {
+              "cpuAddress": 57153,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376657,
+              "prg8kBank": 45,
+              "sha256": "5e2a19389468846943f929721b21f8f36e7e3de34e212c7a1b30b613de3c9de2"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 69,
+            "level": 29,
+            "mp": 4,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55988,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375492,
+              "prg8kBank": 45,
+              "sha256": "c1998b85f97d9158d8751d72125ffe9921c84391566d6076b06551e0d7c1d572"
+            },
+            "spirit": 3,
+            "stamina": 4,
+            "strength": 9,
+            "threshold": 63886,
+            "thresholdSource": {
+              "cpuAddress": 57156,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376660,
+              "prg8kBank": 45,
+              "sha256": "b1af562eb13a582dfcb36b43f5817b59c4d948777f75bbbfdd52255a6b133cc6"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 74,
+            "level": 30,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 55995,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375499,
+              "prg8kBank": 45,
+              "sha256": "5a9de8cad0935ac11625042565690bca2935b16f60e43db5c4e175930eed9dd7"
+            },
+            "spirit": 3,
+            "stamina": 5,
+            "strength": 10,
+            "threshold": 72486,
+            "thresholdSource": {
+              "cpuAddress": 57159,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376663,
+              "prg8kBank": 45,
+              "sha256": "2edee8fe6d343e0e0cd584cc9e2c21d8a95d46f9872e40936481be59ce2414e1"
+            }
+          },
+          {
+            "agility": 2,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 78,
+            "level": 31,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56002,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375506,
+              "prg8kBank": 45,
+              "sha256": "2d3b272a98a59ad262f42d5c3e96a1540f4479f2b806c40bf60ad5926b4836ca"
+            },
+            "spirit": 3,
+            "stamina": 5,
+            "strength": 10,
+            "threshold": 82004,
+            "thresholdSource": {
+              "cpuAddress": 57162,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376666,
+              "prg8kBank": 45,
+              "sha256": "5f2d8bb29e1aca6add2d7f90ee37427fe2d1eb2f3e02f9ba98811ab6d4b79bd8"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 83,
+            "level": 32,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56009,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375513,
+              "prg8kBank": 45,
+              "sha256": "a41292ccb840ab22dd9dba95e119fa21cbd66cab518e4cfb97e21784b967fa10"
+            },
+            "spirit": 3,
+            "stamina": 5,
+            "strength": 11,
+            "threshold": 92519,
+            "thresholdSource": {
+              "cpuAddress": 57165,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376669,
+              "prg8kBank": 45,
+              "sha256": "a56ffc16c74b82eac9aff820ba347a23ea6da6447147cc29d049acb051a2e7ea"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 88,
+            "level": 33,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56016,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375520,
+              "prg8kBank": 45,
+              "sha256": "eb7abdc57f671b3ea0750b15278a3ffae8105ca7c8eec955381b98526d8ab7ae"
+            },
+            "spirit": 3,
+            "stamina": 5,
+            "strength": 11,
+            "threshold": 104117,
+            "thresholdSource": {
+              "cpuAddress": 57168,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376672,
+              "prg8kBank": 45,
+              "sha256": "63ebe362041a148470f4137a47517d38672c146197d2e8891a2da5ae51c85862"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 94,
+            "level": 34,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56023,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375527,
+              "prg8kBank": 45,
+              "sha256": "ee8ef39f0a0bf5516a2fe689dc3b577af8c3b0b91838e8a4499a83437684ffa8"
+            },
+            "spirit": 4,
+            "stamina": 6,
+            "strength": 12,
+            "threshold": 116890,
+            "thresholdSource": {
+              "cpuAddress": 57171,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376675,
+              "prg8kBank": 45,
+              "sha256": "576fb6c046439680a24fc756e69b04f14902e87ef2c24f00867491f874355aa5"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 99,
+            "level": 35,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56030,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375534,
+              "prg8kBank": 45,
+              "sha256": "89ebf5ad5ea7f68c30b4d576b149a3d9472831137797ad0e7057471a249a4d77"
+            },
+            "spirit": 4,
+            "stamina": 6,
+            "strength": 13,
+            "threshold": 130936,
+            "thresholdSource": {
+              "cpuAddress": 57174,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376678,
+              "prg8kBank": 45,
+              "sha256": "82cc32b66be7fb0f0c6e112cd3fd47e8456227898b61d5e3c15edaa001d1bd52"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 105,
+            "level": 36,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56037,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375541,
+              "prg8kBank": 45,
+              "sha256": "49d03aef5ca7425927c8b5f97d6aea023a9e2fd37978b84f7cc40ce0ea950ff2"
+            },
+            "spirit": 4,
+            "stamina": 6,
+            "strength": 13,
+            "threshold": 146362,
+            "thresholdSource": {
+              "cpuAddress": 57177,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376681,
+              "prg8kBank": 45,
+              "sha256": "e18d1fb553e1eebd4f1d738786e39abe7e1be09d06c7bdb338f03067c707e550"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 110,
+            "level": 37,
+            "mp": 6,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56044,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375548,
+              "prg8kBank": 45,
+              "sha256": "04ccf7601afac46370aa42baf203881ded868cf921800bdf9ce79e8342088c98"
+            },
+            "spirit": 4,
+            "stamina": 7,
+            "strength": 14,
+            "threshold": 163283,
+            "thresholdSource": {
+              "cpuAddress": 57180,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376684,
+              "prg8kBank": 45,
+              "sha256": "0805bc560008f2a2fe67670d6df17d34bb8b89f8fe3d2a2d62db5dd3dbb9818c"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 116,
+            "level": 38,
+            "mp": 6,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56051,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375555,
+              "prg8kBank": 45,
+              "sha256": "3ee70b96c7dd29b82b1109b79483a36da2621ba486fadaf22fc4ca7a76b339b6"
+            },
+            "spirit": 4,
+            "stamina": 7,
+            "strength": 15,
+            "threshold": 181822,
+            "thresholdSource": {
+              "cpuAddress": 57183,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376687,
+              "prg8kBank": 45,
+              "sha256": "90a953013dfcaa88e9c71e123fe6a2ae47f8102ac2d6974a2ab1caf7ee90cb09"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 122,
+            "level": 39,
+            "mp": 6,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56058,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375562,
+              "prg8kBank": 45,
+              "sha256": "65e58f55964446c58a65c834fa0da51d9e8093063e94384a01715540c42a4aae"
+            },
+            "spirit": 4,
+            "stamina": 7,
+            "strength": 15,
+            "threshold": 202109,
+            "thresholdSource": {
+              "cpuAddress": 57186,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376690,
+              "prg8kBank": 45,
+              "sha256": "de9d07b59ceef6f3eabe9f448948c29306d50c391de36c926791d520311b8985"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 128,
+            "level": 40,
+            "mp": 6,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56065,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375569,
+              "prg8kBank": 45,
+              "sha256": "ab2a3c32ee716cf1b33baceff038757e759438fe865edde0c0cae203f45c0f1f"
+            },
+            "spirit": 4,
+            "stamina": 8,
+            "strength": 16,
+            "threshold": 224288,
+            "thresholdSource": {
+              "cpuAddress": 57189,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376693,
+              "prg8kBank": 45,
+              "sha256": "8d05f5050824416b1a206b83df7be1d62f4a8cbb1aeeed8594f81c55aa021528"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 135,
+            "level": 41,
+            "mp": 6,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56072,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375576,
+              "prg8kBank": 45,
+              "sha256": "d1bf3701e133a3f9080be93b0750ac41cd58d7878f97e27e8cf1b857aaf986da"
+            },
+            "spirit": 4,
+            "stamina": 8,
+            "strength": 17,
+            "threshold": 248510,
+            "thresholdSource": {
+              "cpuAddress": 57192,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376696,
+              "prg8kBank": 45,
+              "sha256": "8925035e4f7de14a18ba6499577393b881b72ab808ab07dcabfcdcc439098151"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 141,
+            "level": 42,
+            "mp": 7,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56079,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375583,
+              "prg8kBank": 45,
+              "sha256": "3084135db2309b5b19d01cae1d080c4e2bf45ef147813e389a065ce382c70155"
+            },
+            "spirit": 4,
+            "stamina": 9,
+            "strength": 18,
+            "threshold": 274939,
+            "thresholdSource": {
+              "cpuAddress": 57195,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376699,
+              "prg8kBank": 45,
+              "sha256": "35ad52bbbb123ce6691c27780b4700d96c736cdd899fedcbf1ad3cdbb52725af"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 148,
+            "level": 43,
+            "mp": 7,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56086,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375590,
+              "prg8kBank": 45,
+              "sha256": "4279adbe74f285850c71164e7926398263ece27bdec8dde487da28068e8bca8f"
+            },
+            "spirit": 4,
+            "stamina": 9,
+            "strength": 18,
+            "threshold": 303750,
+            "thresholdSource": {
+              "cpuAddress": 57198,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376702,
+              "prg8kBank": 45,
+              "sha256": "5797fcd18a262cb354d30ad13b2dcbce924c4187cd1380a36ebd0267738b7a41"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 155,
+            "level": 44,
+            "mp": 7,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56093,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375597,
+              "prg8kBank": 45,
+              "sha256": "4ca1dae5dbd4442e87578e2c2b4a36944e60793d99df437372c551d8b2d65ee1"
+            },
+            "spirit": 4,
+            "stamina": 9,
+            "strength": 19,
+            "threshold": 335132,
+            "thresholdSource": {
+              "cpuAddress": 57201,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376705,
+              "prg8kBank": 45,
+              "sha256": "eccc861f8144cee3a326efb1281d96d4e70ead28827c36d2e270de4f557a532a"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 162,
+            "level": 45,
+            "mp": 7,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56100,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375604,
+              "prg8kBank": 45,
+              "sha256": "7b401bc0ccf45e1da4406fccc5f9bfebe3ffc815a78785e933baeadccf93f669"
+            },
+            "spirit": 4,
+            "stamina": 10,
+            "strength": 20,
+            "threshold": 369287,
+            "thresholdSource": {
+              "cpuAddress": 57204,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376708,
+              "prg8kBank": 45,
+              "sha256": "35db6821494a9ccecf088880489bba069312b95b0c4e90ca71b7ce0392ca660a"
+            }
+          },
+          {
+            "agility": 4,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 169,
+            "level": 46,
+            "mp": 7,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56107,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375611,
+              "prg8kBank": 45,
+              "sha256": "68f7669432829526f11dbb09d11405e4506074c29327e8fb6db15ead00171c2b"
+            },
+            "spirit": 4,
+            "stamina": 10,
+            "strength": 21,
+            "threshold": 406431,
+            "thresholdSource": {
+              "cpuAddress": 57207,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376711,
+              "prg8kBank": 45,
+              "sha256": "19acf8d300dea3b71d279a5f4d72fde295a469a45967e4a6fca403ab705d26aa"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 176,
+            "level": 47,
+            "mp": 8,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56114,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375618,
+              "prg8kBank": 45,
+              "sha256": "5e998ed0e2583d5b2616a851389268c29f897ecd16065b8a610b0e7456721f8e"
+            },
+            "spirit": 4,
+            "stamina": 11,
+            "strength": 22,
+            "threshold": 446798,
+            "thresholdSource": {
+              "cpuAddress": 57210,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376714,
+              "prg8kBank": 45,
+              "sha256": "b4a4f1fcfb65e8f8ab9dae2d4ac9ff9aab176db5daad1e3570a13cef5a36b8ed"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 184,
+            "level": 48,
+            "mp": 8,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56121,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375625,
+              "prg8kBank": 45,
+              "sha256": "ae131229a7e1ef255a26698bf8c57ae67296346f7e615f05f29b3ec9a03b90ee"
+            },
+            "spirit": 5,
+            "stamina": 11,
+            "strength": 23,
+            "threshold": 490635,
+            "thresholdSource": {
+              "cpuAddress": 57213,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376717,
+              "prg8kBank": 45,
+              "sha256": "c289491baf172d2a032113ff5639557d427d9fbfe5fcfb322054022c243184d1"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 191,
+            "level": 49,
+            "mp": 8,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56128,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375632,
+              "prg8kBank": 45,
+              "sha256": "52d2fc2f06f2dea96d640f75c9113d56772dc2e10080525be07c2615c289c007"
+            },
+            "spirit": 5,
+            "stamina": 12,
+            "strength": 24,
+            "threshold": 538212,
+            "thresholdSource": {
+              "cpuAddress": 57216,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376720,
+              "prg8kBank": 45,
+              "sha256": "acc8c84832893643a7d353e12414060f94d05aa894b139babf33fe7646a4fd74"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 199,
+            "level": 50,
+            "mp": 8,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56135,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375639,
+              "prg8kBank": 45,
+              "sha256": "c98fc74527c18bbaa3d33fe7fd45e80ee9956911e3a417c455f3cf3fb125fad9"
+            },
+            "spirit": 5,
+            "stamina": 12,
+            "strength": 25,
+            "threshold": 589813,
+            "thresholdSource": {
+              "cpuAddress": 57219,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376723,
+              "prg8kBank": 45,
+              "sha256": "5eae3346f26bd038f1bfb36ed422725ba0e37eb0ceea35cd9355a49639aa250e"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 207,
+            "level": 51,
+            "mp": 9,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56142,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375646,
+              "prg8kBank": 45,
+              "sha256": "49b03ceaa057f291b36a00a03120dcd65bea7bc7cc6253d518b4dc18fe409cee"
+            },
+            "spirit": 5,
+            "stamina": 13,
+            "strength": 26,
+            "threshold": 645748,
+            "thresholdSource": {
+              "cpuAddress": 57222,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376726,
+              "prg8kBank": 45,
+              "sha256": "8833360f91ed1dc3e0e622957d416cdecf84329847d5e893dad152d77c164f15"
+            }
+          },
+          {
+            "agility": 5,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 215,
+            "level": 52,
+            "mp": 9,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56149,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375653,
+              "prg8kBank": 45,
+              "sha256": "739b1501e99f20bc4d67f57f07e93ec5ccd7c3ff7359928e694d5af6910d1602"
+            },
+            "spirit": 5,
+            "stamina": 13,
+            "strength": 27,
+            "threshold": 706344,
+            "thresholdSource": {
+              "cpuAddress": 57225,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376729,
+              "prg8kBank": 45,
+              "sha256": "af66d0ce3315ff7a721e895653b72c0705d5b753fee1eafef76090809d0b8206"
+            }
+          },
+          {
+            "agility": 6,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 223,
+            "level": 53,
+            "mp": 9,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56156,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375660,
+              "prg8kBank": 45,
+              "sha256": "48ea7850339de7168c110f1a5c884ce8d1e213070ee26c244bf2848419a28b98"
+            },
+            "spirit": 5,
+            "stamina": 14,
+            "strength": 27,
+            "threshold": 771955,
+            "thresholdSource": {
+              "cpuAddress": 57228,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376732,
+              "prg8kBank": 45,
+              "sha256": "a1c37c1d312a272a118f7f7a8591f9372364766dc31dfa2325815bf693fba71e"
+            }
+          },
+          {
+            "agility": 6,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 232,
+            "level": 54,
+            "mp": 9,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56163,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375667,
+              "prg8kBank": 45,
+              "sha256": "f4d4746217e3f47ecb8aad9f5e2f6c80f49b5c13c78c4c978d033ff03ad71609"
+            },
+            "spirit": 5,
+            "stamina": 14,
+            "strength": 29,
+            "threshold": 842959,
+            "thresholdSource": {
+              "cpuAddress": 57231,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376735,
+              "prg8kBank": 45,
+              "sha256": "4ff01d03ce46c50adc082d49bb5d825bef09ab5c2cae8b0a0edb0dfcf2a85299"
+            }
+          },
+          {
+            "agility": 6,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 240,
+            "level": 55,
+            "mp": 10,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56170,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375674,
+              "prg8kBank": 45,
+              "sha256": "05b896f1a4a1ec4a9022d7171287964b1e36fa3e87368dc1780c32f29c33f591"
+            },
+            "spirit": 5,
+            "stamina": 15,
+            "strength": 30,
+            "threshold": 919761,
+            "thresholdSource": {
+              "cpuAddress": 57234,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376738,
+              "prg8kBank": 45,
+              "sha256": "44cf0a11d4b9ef4a4212786ac871e4a37233beb42d1993d00412ecef420ef5c1"
+            }
+          },
+          {
+            "agility": 6,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 249,
+            "level": 56,
+            "mp": 10,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56177,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375681,
+              "prg8kBank": 45,
+              "sha256": "d4f8cd43a2e18bd4cd3ba906d218261a27ee7f38cac09ffedb8211d53e4e52ea"
+            },
+            "spirit": 5,
+            "stamina": 15,
+            "strength": 31,
+            "threshold": 1002794,
+            "thresholdSource": {
+              "cpuAddress": 57237,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376741,
+              "prg8kBank": 45,
+              "sha256": "89a67529aeabbb43a97f06e4de014d6d21958ac40dba695edf1fdd4330295879"
+            }
+          },
+          {
+            "agility": 6,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 258,
+            "level": 57,
+            "mp": 10,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56184,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375688,
+              "prg8kBank": 45,
+              "sha256": "a5818f5fd3ec41c070242e86187f184f2dd58900a24be82de30f86e00ecd9fc4"
+            },
+            "spirit": 5,
+            "stamina": 16,
+            "strength": 32,
+            "threshold": 1092523,
+            "thresholdSource": {
+              "cpuAddress": 57240,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376744,
+              "prg8kBank": 45,
+              "sha256": "fa0b2d731ced58be4f45e4c06a780970e7383523e6ccd78e140d4af20d8b166a"
+            }
+          },
+          {
+            "agility": 7,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 267,
+            "level": 58,
+            "mp": 10,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56191,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375695,
+              "prg8kBank": 45,
+              "sha256": "98e5402bf1ebea800f9fe8a8df69fd94889cc8cef20f4969a86946f1795fef10"
+            },
+            "spirit": 5,
+            "stamina": 16,
+            "strength": 33,
+            "threshold": 1189445,
+            "thresholdSource": {
+              "cpuAddress": 57243,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376747,
+              "prg8kBank": 45,
+              "sha256": "275523bebd3c72ee13617ea580a248811926cd17c4a733995176fb75aabbd18d"
+            }
+          },
+          {
+            "agility": 7,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 276,
+            "level": 59,
+            "mp": 11,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56198,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375702,
+              "prg8kBank": 45,
+              "sha256": "e0ca77307528bb43bd697995085478ea54cf307df266a1a287312717ba49d4be"
+            },
+            "spirit": 6,
+            "stamina": 17,
+            "strength": 34,
+            "threshold": 1294094,
+            "thresholdSource": {
+              "cpuAddress": 57246,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376750,
+              "prg8kBank": 45,
+              "sha256": "815c01b3e4041b516154ece5160071d08783c136c25482e8a084b50095f4adf7"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 85,
+            "level": 60,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56205,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375709,
+              "prg8kBank": 45,
+              "sha256": "7293003271461cbffc4d5eea7416f477a572e29e179ec7ad95a259fa2b5cb562"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 1407039,
+            "thresholdSource": {
+              "cpuAddress": 57249,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376753,
+              "prg8kBank": 45,
+              "sha256": "ce3234d7a2b5a4addc7096c578011d481b7ebb56650d68fb2429092ccb094eec"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 95,
+            "level": 61,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56212,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375716,
+              "prg8kBank": 45,
+              "sha256": "a9837cf373b751a16ec079ae5288749313056929d008949476a3482ccb064bc3"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 1528890,
+            "thresholdSource": {
+              "cpuAddress": 57252,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376756,
+              "prg8kBank": 45,
+              "sha256": "9c537c1ac6d0d02a64435695fdc1811a3786f42b26cfdf37d332a3f47d0988f2"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 104,
+            "level": 62,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56219,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375723,
+              "prg8kBank": 45,
+              "sha256": "3096a5fb89a5542bf5735bb7fe835ceaaa6fb5778664ca22dc53421f5fd0b194"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 1660301,
+            "thresholdSource": {
+              "cpuAddress": 57255,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376759,
+              "prg8kBank": 45,
+              "sha256": "b06f9a319e52ec5766bf157ee5af38c55c8302541c140c6fde31311846fbf7e3"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 114,
+            "level": 63,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56226,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375730,
+              "prg8kBank": 45,
+              "sha256": "7bccf6b92efa7f9ba693791e0348e84b30482567e063e5c3adb179c555180dbe"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 1801971,
+            "thresholdSource": {
+              "cpuAddress": 57258,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376762,
+              "prg8kBank": 45,
+              "sha256": "75e12349029930844f11478407a1e0993617115e3bc7d28d89018eca00d27d49"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 124,
+            "level": 64,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56233,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375737,
+              "prg8kBank": 45,
+              "sha256": "31a487722fd8b1561027a97ff8efc9e3874bdd1594233c9272e1283d96f1d52e"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 1954646,
+            "thresholdSource": {
+              "cpuAddress": 57261,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376765,
+              "prg8kBank": 45,
+              "sha256": "3a131008c8f72d2d8fdcbb890b4744403049dd354bf5a334c767abf7ade2db7e"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 134,
+            "level": 65,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56240,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375744,
+              "prg8kBank": 45,
+              "sha256": "a88e2a5a675baab6ea18f595af8deb277a4942a504b3bad3da946ee2e498232c"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 2119129,
+            "thresholdSource": {
+              "cpuAddress": 57264,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376768,
+              "prg8kBank": 45,
+              "sha256": "6d6c23b226adb83b4b0aaa6877cf379dbb8ded6c1eadca0b528f84b32aba7763"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 144,
+            "level": 66,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56247,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375751,
+              "prg8kBank": 45,
+              "sha256": "864aa286573a15ee7cb9fc73ddda146547be2c314ae72f8512271abd76871a90"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 2296273,
+            "thresholdSource": {
+              "cpuAddress": 57267,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376771,
+              "prg8kBank": 45,
+              "sha256": "9e12deeeb5bcc23fa6fddeba1d8edbf4c50e92e94db39a59e6d289288b834ac3"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 55,
+            "level": 67,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56254,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375758,
+              "prg8kBank": 45,
+              "sha256": "c56cabf5543c44fba6a29e647026100ce72fc98fad8291da0eb7843cf6e18bf9"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 2486996,
+            "thresholdSource": {
+              "cpuAddress": 57270,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376774,
+              "prg8kBank": 45,
+              "sha256": "981548382bec85bc6239b9e2b5b800f777d2d8fe647f2b55ca7ebaf4632ba70a"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 65,
+            "level": 68,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56261,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375765,
+              "prg8kBank": 45,
+              "sha256": "8071d4af4dc40d6e7413a3827662abfe2a398b19fa3c037d5abb7965ca22fc48"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 2692277,
+            "thresholdSource": {
+              "cpuAddress": 57273,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376777,
+              "prg8kBank": 45,
+              "sha256": "71e554b7efcdab86f3c744eff7d86e39252dbfd59a6745bfd8d6c04b78d69dd0"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 76,
+            "level": 69,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56268,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375772,
+              "prg8kBank": 45,
+              "sha256": "4811fd3b4fa7afbdcd0a2436d03d679ae437de4d424f95c56f3811b616870f1e"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 2913162,
+            "thresholdSource": {
+              "cpuAddress": 57276,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376780,
+              "prg8kBank": 45,
+              "sha256": "1b0f028ea4c08b08907733dd427ff4a74fe0ba2c28861e58ca18728bea570065"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 87,
+            "level": 70,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56275,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375779,
+              "prg8kBank": 45,
+              "sha256": "1de09c8fd39603fc05496cd3966048940581c4d93717dd178149a594d8eb225d"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 3150771,
+            "thresholdSource": {
+              "cpuAddress": 57279,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376783,
+              "prg8kBank": 45,
+              "sha256": "07e8e5f699b3fb5ebbaeaff672af8bdd6e60b2860b8a5f5e324d9647dedaa7ba"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 98,
+            "level": 71,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56282,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375786,
+              "prg8kBank": 45,
+              "sha256": "2d1967c71c185ad46c3f895cff5a244d8dd6b003c23504b32af74cd3c42eb90a"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 3406302,
+            "thresholdSource": {
+              "cpuAddress": 57282,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376786,
+              "prg8kBank": 45,
+              "sha256": "858c0a4bc954b20182eb89358a9394e4f8da7aca2cb5386a8cc794ee760319d9"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 109,
+            "level": 72,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56289,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375793,
+              "prg8kBank": 45,
+              "sha256": "cf82662549b7b1280d4f4b57714cb4f95cb21604abd80d90dbd95632caff5bed"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 3681036,
+            "thresholdSource": {
+              "cpuAddress": 57285,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376789,
+              "prg8kBank": 45,
+              "sha256": "c9fbd83f57f7764bd34baf6a7d2fc673bff70f459b9e7f34ccd845e394ca80e1"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 120,
+            "level": 73,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56296,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375800,
+              "prg8kBank": 45,
+              "sha256": "16971209b6991ffb0377ce9086d6c258411bc9ff17ae7e6e3e8b8692eef32739"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 3976339,
+            "thresholdSource": {
+              "cpuAddress": 57288,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376792,
+              "prg8kBank": 45,
+              "sha256": "e09620e5e3e6f05ed9350b5e267d70dd978beb0ba8d5a203e3ca7184a8b78a52"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 132,
+            "level": 74,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56303,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375807,
+              "prg8kBank": 45,
+              "sha256": "bcee7783035226ed41e8d35d9a96164040fd20380e3bc2ff8083396a289339b2"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 4293677,
+            "thresholdSource": {
+              "cpuAddress": 57291,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376795,
+              "prg8kBank": 45,
+              "sha256": "1aab5dafacebac328fc3f58b497eeab1a1c6ed2bf3fb9fb418aa7ff97efe3d8a"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 144,
+            "level": 75,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56310,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375814,
+              "prg8kBank": 45,
+              "sha256": "864aa286573a15ee7cb9fc73ddda146547be2c314ae72f8512271abd76871a90"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 4634611,
+            "thresholdSource": {
+              "cpuAddress": 57294,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376798,
+              "prg8kBank": 45,
+              "sha256": "788000b5c1c2af0fc561def94b71d50f0d64a10c1579aa082b038eb6514a09e9"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 155,
+            "level": 76,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56317,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375821,
+              "prg8kBank": 45,
+              "sha256": "cdbd24fe1dadbf3026241e9107e56d3b541dd0788c5c63ac6c649f6198d79fb0"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 5000812,
+            "thresholdSource": {
+              "cpuAddress": 57297,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376801,
+              "prg8kBank": 45,
+              "sha256": "a75df7d7525f91f0a1d55f7cea177a0b207f42eef27e7864b5d8f0a609a39b76"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 167,
+            "level": 77,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56324,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375828,
+              "prg8kBank": 45,
+              "sha256": "4da6a7d633d82bea6f7ed73f21149b774eb74f2328aa08b929ecbd87e8f291d3"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 5394067,
+            "thresholdSource": {
+              "cpuAddress": 57300,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376804,
+              "prg8kBank": 45,
+              "sha256": "43e37cfbbfe894a69504121edf4ed1ec55afeb3253f88afaa15a8a3c944613ec"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 179,
+            "level": 78,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56331,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375835,
+              "prg8kBank": 45,
+              "sha256": "0df57fceb313cc5bde58351bd9059ab4c76504cedba133d03fb573317d433916"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 5816283,
+            "thresholdSource": {
+              "cpuAddress": 57303,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376807,
+              "prg8kBank": 45,
+              "sha256": "11b25df5531984621b1bd70bc18d8d7bca1c1df8b62e1a04fb1ea40de735820b"
+            }
+          },
+          {
+            "agility": 3,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 192,
+            "level": 79,
+            "mp": 5,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56338,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375842,
+              "prg8kBank": 45,
+              "sha256": "8ad6bc23db776fac70cd3de55f5f56624522c375e5da9eae3fd0ffc41d3b0d23"
+            },
+            "spirit": 2,
+            "stamina": 6,
+            "strength": 10,
+            "threshold": 6269498,
+            "thresholdSource": {
+              "cpuAddress": 57306,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376810,
+              "prg8kBank": 45,
+              "sha256": "25d5530c016bee8e3a82f381bb523e8f456b8dcd507ad88d5d7416712e2a918f"
+            }
+          },
+          {
+            "agility": 1,
+            "evidence": "game-data/provenance/world-jiang-invitation.json",
+            "hp": 14,
+            "level": 80,
+            "mp": 1,
+            "runtimeVerified": false,
+            "source": {
+              "cpuAddress": 56345,
+              "length": 7,
+              "meaning": "Growth row; index 0 is not assumed to override new-game initialization",
+              "offset": 375849,
+              "prg8kBank": 45,
+              "sha256": "26fcd8d0cdd158b3baf3ae5046370e9969f30cebc558360eed4475517e5e5d52"
+            },
+            "spirit": 1,
+            "stamina": 1,
+            "strength": 1,
+            "threshold": 6755892,
+            "thresholdSource": {
+              "cpuAddress": 57309,
+              "length": 3,
+              "meaning": "uint24le cumulative experience candidate",
+              "offset": 376813,
+              "prg8kBank": 45,
+              "sha256": "ad14c0cffb244cd6687c72fa1da7bdab0cc2e1ea76ff58c41a50aa0a49b08dd0"
+            }
+          }
+        ]
+      }
+    ],
+    "characterMultiplierSources": {
+      "jiangziya": {
+        "pointer": {
+          "cpuAddress": 34173,
+          "length": 2,
+          "meaning": "Actor3 physical multiplier pointer",
+          "module": 9,
+          "offset": 296333,
+          "sha256": "a2e2de1c28d6d9a3ae23392c64d2a130ac2b676e6e967436086b2cc7e2a3959d"
+        },
+        "source": {
+          "cpuAddress": 34355,
+          "length": 36,
+          "meaning": "Actor3 physical multiplier thresholds",
+          "module": 9,
+          "offset": 296515,
+          "sha256": "09751c90bae191a59f5be5cbcaeb01081e20fed52679b537fba3e0f816eddeeb"
+        }
+      }
+    },
+    "characterMultiplierThresholds": {
+      "jiangziya": [
+        242,
+        230,
+        179,
+        128,
+        76,
+        51,
+        38,
+        25,
+        12,
+        12,
+        9,
+        7,
+        255,
+        255,
+        255,
+        243,
+        229,
+        217,
+        166,
+        89,
+        50,
+        37,
+        24,
+        24,
+        0,
+        0,
+        0,
+        255,
+        255,
+        255,
+        255,
+        242,
+        190,
+        126,
+        75,
+        49
+      ]
+    }
+  },
+  "dialogues": [
+    {
+      "id": "rom.dialogue.17.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36456,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102008,
+            "sha256": "e75ba1944a48db393d9311c4e256bbd547a56599118b199665a84215b412fe8e"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43413,
+          "length": 12,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 108965,
+          "sha256": "b96dcf19d2093b59d4d0e0e8d107e8a465e2a4a391dec78b14fec7a682624bdf"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『姜老爺很喜歡釣魚！』"
+    },
+    {
+      "id": "rom.dialogue.17.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36458,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102010,
+            "sha256": "cf836471f511ef879d0e4ff6bf5a12a0c39300f4cfb8ea0bdb36bf1c990d2754"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43425,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 108977,
+          "sha256": "5e3f5494733088034a1dceab7975546a0ce507f4036123c6e55e1c8ee24677dd"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『就憑你們是無法請出姜老爺的！』"
+    },
+    {
+      "id": "rom.dialogue.17.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36460,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102012,
+            "sha256": "de297b9c72e5464d967c50ce76caf063f8e5c0d721ecf6ccaaa38ad0b1de51a0"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43442,
+          "length": 13,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 108994,
+          "sha256": "d08ae09403b4c4b8587d7eede0345ffe711720f8617ad3e96e84c6555249af1c"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『這裏是磻溪，靠渭水。』"
+    },
+    {
+      "id": "rom.dialogue.17.5",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36462,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102014,
+            "sha256": "65ea327d92295196d0d79fd752dbac4100c22ce13ebca61ac37ed4a3935519d4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43455,
+          "length": 19,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109007,
+          "sha256": "d853d9bb42252c9ccf394791a67d84691cfcde5caac321cf3d2fa2b311f0b1ed"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『聽說西岐城的西伯侯很受百姓擁戴。』"
+    },
+    {
+      "id": "rom.dialogue.17.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36464,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102016,
+            "sha256": "c228ac5309d8eb697a7437ab63920184e69ccdd4c714ca713e999dabf83f4246"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43474,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109026,
+          "sha256": "5b06c4565b86cdd77d24dba10396a75cabd6fc6dbc2dd6e98b04d5739c40b6b5"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『老夫只想在此釣魚，你們走吧！』"
+    },
+    {
+      "id": "rom.dialogue.17.7",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36466,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102018,
+            "sha256": "fe344c87d21baa13ba7ae2e10edd4b53314c2d64c634b34fcca43f1adbdb4590"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43491,
+          "length": 15,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109043,
+          "sha256": "187f3f0f96c0f13bc05f875f2304c2a0ea0c31979cc9e7318e562fd8c33d28a4"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "姬昌　『你願意助我滅商嗎？』"
+    },
+    {
+      "id": "rom.dialogue.17.8",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36468,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102020,
+            "sha256": "23b7b5ab432c59241bb23f3a51abb07cd4cb380a4f13f046023575687cbaa280"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43506,
+          "length": 16,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109058,
+          "sha256": "0f02e586b3242316eda7b794dc6d6f6f472365f655f1dc237a017558f7513b0d"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "姜太公　『你願意幫我拉車嗎？』"
+    },
+    {
+      "id": "rom.dialogue.17.9",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36470,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102022,
+            "sha256": "f74f79ff91013986ccdb1d64dce72d6a044cb9fe4e6664c97e55dfd58155fde5"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43522,
+          "length": 19,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109074,
+          "sha256": "92c37d957dee297a00a4b7c422ec477303f100bf32f0d6853608073526c86446"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "姬昌立刻為姜子牙拉車，共行八十餘步。"
+    },
+    {
+      "id": "rom.dialogue.17.10",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36472,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102024,
+            "sha256": "3b413ec72695ed33c79daafcc6d5480b21cde4f6c24ef233e251ea8a50b49665"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43541,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109093,
+          "sha256": "e59ce4e9dbd2b92645febfaee3d12365daf69a817ba15554084dbae9f2b5bf63"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "姜太公下車告罪，願意助姬昌滅商。"
+    },
+    {
+      "id": "rom.dialogue.17.11",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36474,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102026,
+            "sha256": "680b7aa736346f28574d88d10ed123016189dab646658f890deb906f722d2ffe"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43558,
+          "length": 36,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109110,
+          "sha256": "23c7cffa7dcd76418867250f1a95c6634da2f054a1438fa49b82565b200c3819"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『哪吒！小龍女！楊戬！紂王昏庸虐暴，各地妖魔作亂，我們一起去討伐吧！』"
+    },
+    {
+      "id": "rom.dialogue.17.12",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36476,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102028,
+            "sha256": "3f5303cab726ce4a82f0d62cb05fbeca94131b8a22b4536a26859ab30cb8ea7c"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43594,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109146,
+          "sha256": "b4b47831f6a7f159319d56951cb96a1fa7fd3ee749d8e5684bc99da9dbdc8df4"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "姬昌一行人來到磻溪"
+    },
+    {
+      "id": "rom.dialogue.17.13",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          46,
+          47
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35460,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101012,
+            "sha256": "20c4f8168e007244fad1f5f0820330ad4ccb2f7618305b55ebe264d408bc1b9f"
+          },
+          {
+            "cpuAddress": 36478,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102030,
+            "sha256": "709f270b31e0a1c6a4d135079b91cd097cf401b0d9a2b22be9382def4fe037e4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43604,
+          "length": 32,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109156,
+          "sha256": "9183c4e54958fc96405ba3cb837191eb8e1365060c522f2401313c371aabf53d"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "哪吒　『紂王昏庸虐暴，各地妖魔作亂，你願意幫我們討伐紂王嗎？』"
+    },
+    {
+      "id": "rom.dialogue.131.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36546,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102098,
+            "sha256": "d71eceb36d6a50d15f530d8befacc10790d17b3b11d8e7300d0a27ad386ee846"
+          }
+        ],
+        "record": {
+          "cpuAddress": 43998,
+          "length": 23,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109550,
+          "sha256": "7601de19f0b77d04cadfdba0db2f512d6419d3bc94c6f1ba73def3dcdc7679c5"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『造鹿台勞民又傷財，紂王根本不為百姓著想。』"
+    },
+    {
+      "id": "rom.dialogue.131.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36548,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102100,
+            "sha256": "31a5a142bac61e116e33c1e066f848bb5f079f66871f27c1418af21d32097e4f"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44021,
+          "length": 27,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109573,
+          "sha256": "f648c8d7d6eeba3c5d140b0893ea95f78ac77f6167aa87abeb5eff7049ee0b28"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『西伯侯姬昌雖為臣子，但大家都擁戴他出兵消滅紂王。』"
+    },
+    {
+      "id": "rom.dialogue.131.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36550,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102102,
+            "sha256": "e97c81c6d8547ebf12f58b9aa9e2cd76c812aafa416b77cf7cbaba0f598cfaff"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44048,
+          "length": 23,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109600,
+          "sha256": "f4e55d0996a5af7e4068eee5e0fa915a0b4133f0ad0ea9a092228a7d31d960ec"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『朝廷裏忠心的大臣都被紂王處死，太可怕了！』"
+    },
+    {
+      "id": "rom.dialogue.131.4",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36552,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102104,
+            "sha256": "8d3fea1e6f3e2602cd0beb3e525505691fb48c27ba5b63680133375feaccc7a2"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44071,
+          "length": 16,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109623,
+          "sha256": "ecb4d76aa385d188a3c4095c21b3ce9a19b93bb0457f2f61513650d87cdb9b14"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『昏君無道，商朝一定會敗亡。』"
+    },
+    {
+      "id": "rom.dialogue.131.5",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36554,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102106,
+            "sha256": "c94b4016473d7888e162ee0ee383c19ce9abd7547f2a126ef63a142cacdabb8c"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44087,
+          "length": 13,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109639,
+          "sha256": "f34f8baede01693f7cf387c81cb735d01bb973d97cab94e7be0fe4269f9c574c"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『瘟疫使我們鬥志全失。』"
+    },
+    {
+      "id": "rom.dialogue.131.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36556,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102108,
+            "sha256": "ec3f92111192d73d6af4d508072053e2083ab164f95765218ec1578394058fa4"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44100,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109652,
+          "sha256": "c150c263075b1d592798098f613a33718fdce11032996d5f21e59275bdc1b15e"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『你們真是大好人。』"
+    },
+    {
+      "id": "rom.dialogue.131.7",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36558,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102110,
+            "sha256": "4787af87f23563c7dadb5cc4f3fc80287671360cc7704be512d65fe61817edd7"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44111,
+          "length": 15,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109663,
+          "sha256": "7917d2a9f1e8b219fc0b97278d9af32937b5a853528c83420e73ec27d713041c"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『姬昌愛民，大家都尊敬他。』"
+    },
+    {
+      "id": "rom.dialogue.131.8",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36560,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102112,
+            "sha256": "e8680f0017c40198c3cfc421bc7b79cd7bcaf679fe6ca55571d730e7d2631c98"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44126,
+          "length": 17,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109678,
+          "sha256": "884ea76a0515aaa605c6c10fff53bf70aa7dd61df43f8f0dcba8298047e385c3"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『我朋友在村子裏藏了一個東西。』"
+    },
+    {
+      "id": "rom.dialogue.131.9",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36562,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102114,
+            "sha256": "24d3e60d1474e6d7d84cf5e42b3b0b20069209276db3a2753c064e522d0da515"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44143,
+          "length": 14,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109695,
+          "sha256": "3f76a1909e9e4b210f643c893faee8b0c242fd6a734d76fbc16a13f60c8d5134"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『這場瘟疫已死了不少人。』"
+    },
+    {
+      "id": "rom.dialogue.131.10",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36564,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102116,
+            "sha256": "40921b9541dd60a2c48c9d33f1b40a39a08386affbd3b398458fca019d127eb1"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44157,
+          "length": 8,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109709,
+          "sha256": "e654f692e766b391d66fdaf7ad5b154499dc8e3693ee641ae2607017dd2b816f"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『咳呀。。。』"
+    },
+    {
+      "id": "rom.dialogue.131.11",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36566,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102118,
+            "sha256": "39da42a9afc270dbbf046cdf5bb34e79a024cda593c709e594af3e4fe8277c31"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44165,
+          "length": 15,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109717,
+          "sha256": "49a2d2d43455b5f5add2544612296b803a7457e46e5c61db14781a98ce73a4e7"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『每天上吐下瀉，我快死了！』"
+    },
+    {
+      "id": "rom.dialogue.131.12",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36568,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102120,
+            "sha256": "eeb43726aa8959fb637b8d56573a07597fed54184e75465807fbbf7dd3d09892"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44180,
+          "length": 9,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109732,
+          "sha256": "eea7bd2a943db69ca1c085d2009a9f01063b50c62a1a3f54c95941614846afd2"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『我又冷又熱。』"
+    },
+    {
+      "id": "rom.dialogue.131.13",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36570,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102122,
+            "sha256": "1ad757a64d3c8e90b40c82ee6c90a833eefdcb20f5a2a2cec2ad86f51dd097ee"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44189,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109741,
+          "sha256": "b7883148993fcc9d5d3bc4436c610c2240bb8a53fae4062f9571f19feccf6d9f"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『謝謝你們救了我』"
+    },
+    {
+      "id": "rom.dialogue.131.14",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36572,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102124,
+            "sha256": "f6adf132ea683d28d712552d2337845e83791e2af06de37826ac089a84cd1a96"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44199,
+          "length": 30,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109751,
+          "sha256": "09ccebaa851ef13318a6bad5f1bf411ddbe7662fce450f51104fed190fc46e43"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『我是西伯侯姬昌，目前全城瘟疫籠罩，你們要好好保重身體。』"
+    },
+    {
+      "id": "rom.dialogue.131.15",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          50,
+          51
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36574,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102126,
+            "sha256": "c70c27b23aeb19d4f78f2b55c4446ac174a9467acfa07fc0f7a40ab9a79462cf"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44229,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109781,
+          "sha256": "adc7f8ab35cf962ce9e7cfce683e6dc57091ac48799d75203e8b18e46053b7fc"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『西伯侯算卦很準。』"
+    },
+    {
+      "id": "rom.dialogue.131.16",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          52,
+          53
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36576,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102128,
+            "sha256": "b3038e2e7b5b16262708152177066793adc4bee9a2b78e6f0c3af55aa5bf5840"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44424,
+          "length": 30,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109976,
+          "sha256": "6e39315be8654478bfb36a9f832daa29b72e9cbcee1d46fc596d15a124a55e68"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『姜子牙不願出來嗎？嗯！。。。我跟你們一起去拜訪姜子牙！』"
+    },
+    {
+      "id": "rom.dialogue.131.17",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          52,
+          53
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36578,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102130,
+            "sha256": "014ee1df49029e875588461a01e8ef688106a6b42e432813ef7c18c9ec211165"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44454,
+          "length": 21,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110006,
+          "sha256": "94da7d2d0adb322f4d9664cf6fa38bfbe8ae9ff16f093f603e7f954ce3fda716"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『姜子牙！攻打朝歌城的大事就全靠你了！』"
+    },
+    {
+      "id": "rom.dialogue.131.18",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "fontBanks": [
+          52,
+          53
+        ],
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35688,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101240,
+            "sha256": "edd812a44e3c334199f7e1bacdd5c38a7cee15aa39ff17c8059265104f5d7664"
+          },
+          {
+            "cpuAddress": 36580,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102132,
+            "sha256": "d27f408ebf894e59cf28a1277760f8d255d0fe3246965e826ef0e49cc1f25299"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44376,
+          "length": 48,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109928,
+          "sha256": "8c681f4031b8da77a12a579d92da57269a94dc959bcc50b70634caefa9f7bac9"
+        },
+        "remainingUnknown": [
+          "Normal Android route and exact font rendering"
+        ]
+      },
+      "text": "『你們幫我救了全城百姓，內心非常感激，我剛剛算了一卦，在磻溪有一位智者，希望能得到他的幫助。』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "existingItemCapabilityUpdates": [
+    {
+      "baseDefinitionSha256": "e2b172fc06bae204285e8010c93bf247af5a8ecfbfdc16d8035440e28c8f6742",
+      "fields": {
+        "equipment": {
+          "allowedCharacters": [
+            "jiangziya"
+          ],
+          "attackBonus": 160,
+          "crossHandOccupancy": false,
+          "defenseBonus": 0,
+          "evasionValue": 0,
+          "evidence": "game-data/provenance/world-jiang-invitation.json",
+          "operationEnabled": true,
+          "originalActorIndexes": [
+            3
+          ],
+          "originalId": 44,
+          "originalPermittedSlots": [
+            "rightHand",
+            "leftHand"
+          ],
+          "ruleSources": [
+            {
+              "cpuAddress": 59834,
+              "length": 2,
+              "meaning": "Original equipment contribution",
+              "module": 2,
+              "offset": 92618,
+              "sha256": "20b64b56f584ec6c5184846cbeb974347b5e4c25cb49628ce1426fd0d2128ae7"
+            },
+            {
+              "cpuAddress": 61286,
+              "length": 2,
+              "meaning": "Actor3 slot list root",
+              "module": 2,
+              "offset": 94070,
+              "sha256": "d0d97e81a524f77644338b6d05193e2c0be146f0e81202ef8cf780f99e294212"
+            },
+            {
+              "cpuAddress": 61312,
+              "length": 8,
+              "meaning": "Actor3 four permitted-slot pointers",
+              "module": 2,
+              "offset": 94096,
+              "sha256": "a2cda3fd9b23c6121db9b8563de3c51835da31f72d221de76d51bb76b290deed"
+            },
+            {
+              "cpuAddress": 61420,
+              "length": 7,
+              "meaning": "Actor3 actual permitted slot IDs",
+              "module": 2,
+              "offset": 94204,
+              "sha256": "65cc2fc3a213aa54dabbe9539f50c438e6eb5dbe705dee0a2a340ccc765ac45c"
+            }
+          ],
+          "slot": "rightHand"
+        }
+      },
+      "id": "rom.weapon.44"
+    },
+    {
+      "baseDefinitionSha256": "be7745f78b923d0e948eee10965c6a59e07fed40aac86950f5dbfbb02ce998f7",
+      "fields": {
+        "equipment": {
+          "allowedCharacters": [
+            "nezha",
+            "jiangziya"
+          ],
+          "attackBonus": 0,
+          "attributeRange": {
+            "cpuAddress": 60429,
+            "length": 2,
+            "meaning": "Equipment contribution",
+            "module": 2,
+            "offset": 93213,
+            "sha256": "9b4fb24edd6d1d8830e272398263cdbf026b97392cc35387b991dc0248a628f9"
+          },
+          "characterSlotList": {
+            "cpuAddress": 61350,
+            "length": 10,
+            "meaning": "Nezha permitted equipment IDs",
+            "module": 2,
+            "offset": 94134,
+            "sha256": "afd6bca4e910e918d8846eb67c8e3fb140ce1712dcad964523e6028ed4f39845"
+          },
+          "defenseBonus": 0,
+          "evasionValue": 3,
+          "evidence": "game-data/provenance/town01.json",
+          "operationEnabled": true,
+          "originalId": 28,
+          "ownerExtensionEvidence": "game-data/provenance/world-jiang-invitation.json",
+          "ruleSources": [
+            {
+              "cpuAddress": 61432,
+              "length": 10,
+              "meaning": "Actor3 actual permitted slot IDs",
+              "module": 2,
+              "offset": 94216,
+              "sha256": "8e2a768a814f97a39005e213b87299f6eba24dd8a25174762fdc1b72149f43db"
+            }
+          ],
+          "slot": "feet"
+        }
+      },
+      "id": "rom.armor.28"
+    }
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56993,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 286385,
+        "sha256": "ece8c71b3cc3c850946ce3b0f7874d4b60af5cf8c3f8628daba83a54d39cbe6b"
+      },
+      "spawn": [
+        11,
+        21
+      ],
+      "toMapId": 7,
+      "trigger": [
+        16,
+        65
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57248,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 286640,
+        "sha256": "2a4c24e30997dcc45e800b8db9f368278a61c7785c167619d319be90e5c745fe"
+      },
+      "spawn": [
+        15,
+        43
+      ],
+      "toMapId": 142,
+      "trigger": [
+        42,
+        78
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 7,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56846,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 286238,
+        "sha256": "bcdf1a2b7ea3a790d154d8788eef001fa2a1ab97d010bfd96437e61dcb6cf471"
+      },
+      "spawn": [
+        16,
+        65
+      ],
+      "toMapId": 16,
+      "trigger": [
+        10,
+        22
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 7,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56851,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 286243,
+        "sha256": "7bcd37a7882268eb5d647aa35a43c5e19c24cd4d3cb3c74d618a44ff393325a6"
+      },
+      "spawn": [
+        16,
+        65
+      ],
+      "toMapId": 16,
+      "trigger": [
+        11,
+        22
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 7,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 56856,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 286248,
+        "sha256": "68a20e0cbe79ba36b446a25e6b5c95621284c9a732cf794c4b31d59efb8f1cce"
+      },
+      "spawn": [
+        16,
+        65
+      ],
+      "toMapId": 16,
+      "trigger": [
+        12,
+        22
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 58641,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288033,
+        "sha256": "7cdb3022ec7f07662becf0377fcf8550b1dbfa5b3c9ac9ba97151de85d77ac37"
+      },
+      "spawn": [
+        15,
+        16
+      ],
+      "toMapId": 142,
+      "trigger": [
+        23,
+        44
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 58646,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288038,
+        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
+      },
+      "spawn": [
+        3,
+        10
+      ],
+      "toMapId": 142,
+      "trigger": [
+        1,
+        29
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 58651,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288043,
+        "sha256": "c22bf63f67884b195ed3a63c81386004a70679c6531e380cbcab17dfa49ce79f"
+      },
+      "spawn": [
+        27,
+        10
+      ],
+      "toMapId": 142,
+      "trigger": [
+        45,
+        29
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "EDGE_RECORD",
+      "runtimeEvidence": "CONTROLLED_NATIVE_REAL_ENTRY_WITH_ORIGINAL_EDGE_DISPATCH",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        15,
+        43
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 59182,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288574,
+        "sha256": "bdb8de87d188b167f9f0310c1a41ff373dcd11a00460b79aeeeb321fbbc31c59"
+      },
+      "spawn": [
+        23,
+        44
+      ],
+      "toMapId": 121,
+      "trigger": [
+        15,
+        16
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 59187,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288579,
+        "sha256": "02579d7a4a668d3ec52fbd7d45180503f73a4d954b15a8cdc5de5448116c0396"
+      },
+      "spawn": [
+        45,
+        29
+      ],
+      "toMapId": 121,
+      "trigger": [
+        27,
+        10
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "VERIFIED",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 59192,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288584,
+        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+      },
+      "spawn": [
+        1,
+        29
+      ],
+      "toMapId": 121,
+      "trigger": [
+        3,
+        10
+      ]
+    }
+  ],
+  "graphics": {
+    "npc-jiang-150.png": {
+      "actorEntityId": 150,
+      "actorRecordOffset": 1114,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "4e54e76ae49b4b7ab56f7a6ca58e50ff2a9590f0e46b1b8e7443082450a06f0f",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60800370608103786890037068910378",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 217,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "ppuSha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6",
+      "ramSha256": "cff876d1d07c55807388a673b4e98bbf275aff406fb56592025caa865af52015",
+      "rgbaSha256": "a437cd4852839bde7e323304a26fada6a56ade9092dda828feb9d497977085c4",
+      "tiles": [
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872464,
+          "sha256": "d5fa38cbe46535ac215ef70462935ead093cbbccbd7f0e0e653caaed745a1d67",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872480,
+          "sha256": "7081864bf88159be93ed2638df3fb361e4f626e705093f2e20d7065a9eebddc3",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872720,
+          "sha256": "8b2fbb11d80abd136a3fccceeedc408b5d82eb8db8f28993a90acae5d45fe2a1",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 872736,
+          "sha256": "1c2c3a049b19640e815f11366e8ec384fa4ad65a98f0ea5499212510521ad551",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-jiang-152.png": {
+      "actorEntityId": 152,
+      "actorRecordOffset": 1180,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "4e54e76ae49b4b7ab56f7a6ca58e50ff2a9590f0e46b1b8e7443082450a06f0f",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "c0c54140c0c44148c8d54140c8d44148",
+      "observedRect": [
+        64,
+        185,
+        16,
+        16
+      ],
+      "opaquePixelCount": 221,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ]
+      },
+      "ppuSha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6",
+      "ramSha256": "cff876d1d07c55807388a673b4e98bbf275aff406fb56592025caa865af52015",
+      "rgbaSha256": "0946ab35e7cfbdb4ed6767320795a246dc55c3b55e1f5949a301ff57c9845d9d",
+      "tiles": [
+        {
+          "attribute": 65,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 873568,
+          "sha256": "2e3827430965b0522bc4e19376b6e1ea828a353051f0b4c1f59ea7f667d1b55f",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 65,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 873552,
+          "sha256": "2f7a0c55f1ed7bbb211902bcb035f5f0e8b819bc609d9a423cfc89589622ef21",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 65,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 873824,
+          "sha256": "3e148179614c178818c70bf1c68844c0330697a78dd259a86bbf7e0bf106fd0e",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 65,
+          "flipX": true,
+          "flipY": false,
+          "length": 16,
+          "offset": 873808,
+          "sha256": "710041eeeb5b7a2a8d1b3ac952f0b4158723f5fe61686f194beb02f6ba275c16",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-jiang-199.png": {
+      "actorEntityId": 199,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "fd4b1d2413e68de28ce134efee25432a4ef6a8b4c23d2c7049c5db92036c8e9f",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60e0037060e1037868f0037068f10378",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 33,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "ppuSha256": "7817d9fa874d039aad68d0f22105821d5db26757b17a63d18a63a0a32d66ae8f",
+      "ramSha256": "bcfcdb5acc039ff70fd391568ffdbf49a41ebf0e67c6d021342ae52fe25af94f",
+      "rgbaSha256": "6c442d8e8a437a2d1974734744d3a0e8eec4640ae72e1cd2d7bbb1449450438b",
+      "tiles": [
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 874000,
+          "sha256": "b48b24f2159687787697a92f2ace3519c0bfd35e44a6c550541ea991d025243c",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 874016,
+          "sha256": "5d34a03cb584e502b6cd8c433738cd5ab13cc55825853bfec8d489dacdb545d2",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 874256,
+          "sha256": "1c38e3412733e7dd8539079a1ed96c9a57fc92c4e59e519d476663c6a5da7ac7",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 783045,
+          "sha256": "4cbbd8ca5215b8d161aec181a74b694f4e24b001d5b081dc0030ed797a8973e0",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-jiang-247.png": {
+      "actorEntityId": 247,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "fd4b1d2413e68de28ce134efee25432a4ef6a8b4c23d2c7049c5db92036c8e9f",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60e2038060e3038868f2038068f30388",
+      "observedRect": [
+        128,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 190,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          255,
+          255,
+          255
+        ]
+      },
+      "ppuSha256": "7817d9fa874d039aad68d0f22105821d5db26757b17a63d18a63a0a32d66ae8f",
+      "ramSha256": "bcfcdb5acc039ff70fd391568ffdbf49a41ebf0e67c6d021342ae52fe25af94f",
+      "rgbaSha256": "5793b0cd9eab4ecfef93cb305660d134270bccdb380508867f268bd234d9d8aa",
+      "tiles": [
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 874032,
+          "sha256": "2db48034157edb6f1725de8b3c8f71aa91048b4f94b23880a08571fa55a4fd40",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 865888,
+          "sha256": "d76232e5aef0b44fbb5919798eee316debbcfc2969f90124a70bae0dd1f8e30c",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 874288,
+          "sha256": "0602bb78b8e313c7040c1a9b0d607aa2e07c3e31ed94e5b3c572c6436d5006c5",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 3,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 866144,
+          "sha256": "bf75e78d77873a081cd444752b71331bbbc0b10884666dcc003df0c6cd159455",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "items": [
+    {
+      "buyPrice": 5000,
+      "category": "armor",
+      "equipment": {
+        "allowedCharacters": [
+          "jiangziya"
+        ],
+        "attackBonus": 0,
+        "crossHandOccupancy": false,
+        "defenseBonus": 100,
+        "evasionValue": 0,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "operationEnabled": true,
+        "originalActorIndexes": [
+          3
+        ],
+        "originalId": 24,
+        "originalPermittedSlots": [
+          "body"
+        ],
+        "ruleSources": [
+          {
+            "cpuAddress": 60421,
+            "length": 2,
+            "meaning": "Original equipment contribution",
+            "module": 2,
+            "offset": 93205,
+            "sha256": "4658d6abbbaf7748c172ed5a3e003cdb8997648f88724834e41f75e54520e142"
+          },
+          {
+            "cpuAddress": 61286,
+            "length": 2,
+            "meaning": "Actor3 slot list root",
+            "module": 2,
+            "offset": 94070,
+            "sha256": "d0d97e81a524f77644338b6d05193e2c0be146f0e81202ef8cf780f99e294212"
+          },
+          {
+            "cpuAddress": 61312,
+            "length": 8,
+            "meaning": "Actor3 four permitted-slot pointers",
+            "module": 2,
+            "offset": 94096,
+            "sha256": "a2cda3fd9b23c6121db9b8563de3c51835da31f72d221de76d51bb76b290deed"
+          },
+          {
+            "cpuAddress": 61427,
+            "length": 5,
+            "meaning": "Actor3 actual permitted slot IDs",
+            "module": 2,
+            "offset": 94211,
+            "sha256": "3261c7aed0655b5cd90f753b181f5c7f3d9c8e359d357b0b389add1b57a1be68"
+          }
+        ],
+        "slot": "body"
+      },
+      "id": "rom.armor.24",
+      "maxCount": 10,
+      "name": "原版armor 24",
+      "originalId": 24,
+      "sellPrice": 2500,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "nameConfidence": "UNKNOWN",
+        "nameEvidence": {
+          "evidence": "game-data/provenance/world-jiang-invitation.json",
+          "kind": "ORIGINAL_STABLE_ID_NAME_NOT_DECODED"
+        },
+        "nameRange": {
+          "cpuAddress": 60679,
+          "length": 4,
+          "meaning": "Original terminated menu text",
+          "module": 2,
+          "offset": 93463,
+          "sha256": "4de8df62041e2a275c70956187d98c99fa7ba2d72e41a4bead700b3ecbdcf5fa"
+        },
+        "priceRange": {
+          "cpuAddress": 60333,
+          "length": 2,
+          "meaning": "Original unsigned purchase price",
+          "module": 2,
+          "offset": 93117,
+          "sha256": "f7c2620ee5b89ab58c77726af7bd52d4f3586ba891ef1ccd7e6a3e21ca9f9eb5"
+        }
+      }
+    }
+  ],
+  "jiangCapabilityEvidence": "game-data/provenance/world-jiang-invitation.json",
+  "limitations": [
+    "Original NPC cutscene movement/frame timing and optional city rooms not completed",
+    "Learned spells not inferred",
+    "Android new batch NOT_RUN"
+  ],
+  "maps": [
+    {
+      "directionalCollision": true,
+      "gridSha256": "f05c99354881b94dc09bf8900e07922f4cc379d6fb6c7e5b56b85928ab78cf1d",
+      "jiangTownBridgeEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "limitations": [
+        "Only original mainline entries in this batch; optional city rooms and services not yet connected"
+      ],
+      "mapId": 7,
+      "npcCells": [
+        455,
+        363,
+        584,
+        387,
+        346,
+        347
+      ],
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        11,
+        21
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "gridSha256": "8a016e8449bf0322874729c7ea4b2d02beb4f41466c7574a9e29c1944257674c",
+      "limitations": [
+        "Only original mainline entries in this batch; optional city rooms and services not yet connected"
+      ],
+      "mapId": 121,
+      "npcCells": [
+        988,
+        955,
+        1186,
+        599,
+        486,
+        1156,
+        883,
+        1805,
+        610,
+        1120
+      ],
+      "palette": [
+        14,
+        7,
+        39,
+        32,
+        25,
+        6,
+        22,
+        54,
+        25,
+        5,
+        21,
+        53,
+        25,
+        57,
+        56,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        23,
+        44
+      ],
+      "terrain": {
+        "evidence": "game-data/provenance/world-terrain.json",
+        "tileset": 4
+      },
+      "walkableClasses": [
+        0,
+        2
+      ]
+    },
+    {
+      "directionalProfileEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "gridSha256": "47d6ad77c80848d8c3b9c4420b25a11147310979c3528c11200dc4c1baba57ce",
+      "limitations": [
+        "Only original mainline entries in this batch; optional city rooms and services not yet connected"
+      ],
+      "mapId": 142,
+      "npcCells": [],
+      "palette": [
+        14,
+        22,
+        25,
+        55,
+        25,
+        0,
+        39,
+        6,
+        25,
+        8,
+        24,
+        40,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "spawn": [
+        15,
+        43
+      ],
+      "walkableClasses": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        7,
+        14
+      ],
+      "firstDialogue": "rom.dialogue.17.2",
+      "firstEffects": [],
+      "id": "rom.npc.7.0",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47875,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277267,
+          "sha256": "c3057bb88a98ea38942a30403065432484185cc7ab7d79a55a1d0f71ad27b98e"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-140-village10-1.png",
+      "spriteId": 140
+    },
+    {
+      "cell": [
+        11,
+        11
+      ],
+      "firstDialogue": "rom.dialogue.17.3",
+      "firstEffects": [],
+      "id": "rom.npc.7.1",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47889,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277281,
+          "sha256": "517e1bc99127563cb74da5edb1b66413dbcca2eb26fb1d4c3dcf1dcdf50c1796"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-141-lotus136.png",
+      "spriteId": 141
+    },
+    {
+      "cell": [
+        8,
+        18
+      ],
+      "firstDialogue": "rom.dialogue.17.4",
+      "firstEffects": [],
+      "id": "rom.npc.7.2",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47903,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277295,
+          "sha256": "979d95b97244b982c332ba3cf06570601ae7378cf73f5c4d436d690ec66af63d"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-143-village10-5.png",
+      "spriteId": 143
+    },
+    {
+      "cell": [
+        3,
+        12
+      ],
+      "firstDialogue": "rom.dialogue.17.5",
+      "firstEffects": [],
+      "id": "rom.npc.7.3",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47917,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277309,
+          "sha256": "42749dbefb719942719bb1a972c0a94baa67f49fae6612936e73b2424875298f"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-142-village5.png",
+      "spriteId": 142
+    },
+    {
+      "automaticStoryEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "cell": [
+        26,
+        10
+      ],
+      "firstDialogue": "rom.dialogue.17.13",
+      "firstEffects": [],
+      "id": "rom.npc.7.4",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "originalTalk": {
+        "actionId": 61,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "itemId": "",
+        "mapFlagId": "",
+        "witnessFlagId": "rom.global.7fd.nonzero"
+      },
+      "removedFlagId": "rom.npccontext.7.192",
+      "repeatDialogue": "rom.dialogue.17.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47931,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277323,
+          "sha256": "4d6d3c43057f8356a6752dace463ba7183411cf092ff30c8f8ed9ceb2c4508a6"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-199.png",
+      "spriteId": 199
+    },
+    {
+      "automaticStoryEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "cell": [
+        27,
+        10
+      ],
+      "firstDialogue": "rom.dialogue.17.6",
+      "firstEffects": [],
+      "id": "rom.npc.7.5",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 7,
+      "readOnlyDialogue": true,
+      "removedFlagId": "rom.npccontext.7.192",
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 47945,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 277337,
+          "sha256": "fc0e25888ca5351fb7038c417d84bbde38f0bf19860e4e20cee3024f734d4763"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-247.png",
+      "spriteId": 247
+    },
+    {
+      "cell": [
+        28,
+        20
+      ],
+      "firstDialogue": "rom.dialogue.131.5",
+      "firstEffects": [],
+      "id": "rom.npc.121.0",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "originalTalk": {
+        "actionId": 44,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.121.flag.1",
+        "messageDialogues": {
+          "0": "rom.dialogue.131.5",
+          "1": "rom.dialogue.131.6",
+          "2": "rom.dialogue.131.6"
+        },
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.131.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54539,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 283931,
+          "sha256": "a7e54aaf3d8e17991237c81b26d45bcc6840d156aaf91b4633c6ef911b75d0b5"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        43,
+        19
+      ],
+      "firstDialogue": "rom.dialogue.131.10",
+      "firstEffects": [],
+      "id": "rom.npc.121.1",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "originalTalk": {
+        "actionId": 44,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.121.flag.2",
+        "messageDialogues": {
+          "0": "rom.dialogue.131.10",
+          "1": "rom.dialogue.131.11",
+          "2": "rom.dialogue.131.13"
+        },
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.131.13",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54553,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 283945,
+          "sha256": "79d8a64c78b4b29cd45a3f4ed774c87366071a3e25d74170022fe20dd7df420e"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        34,
+        24
+      ],
+      "firstDialogue": "rom.dialogue.131.11",
+      "firstEffects": [],
+      "id": "rom.npc.121.2",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "originalTalk": {
+        "actionId": 44,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.121.flag.4",
+        "messageDialogues": {
+          "0": "rom.dialogue.131.11",
+          "1": "rom.dialogue.131.12",
+          "2": "rom.dialogue.131.6"
+        },
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.131.6",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54567,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 283959,
+          "sha256": "39271a31ebacda0eb6917bc70fef6ee5b8246e0bfb613926ff74e89a6072edd5"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        23,
+        12
+      ],
+      "firstDialogue": "rom.dialogue.131.14",
+      "firstEffects": [],
+      "id": "rom.npc.121.3",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "originalTalk": {
+        "actionId": 45,
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "itemId": "",
+        "mapFlagId": "rom.map.121.flag.16",
+        "messageDialogues": {
+          "14": "rom.dialogue.131.14",
+          "16": "rom.dialogue.131.16",
+          "17": "rom.dialogue.131.17",
+          "18": "rom.dialogue.131.18"
+        },
+        "witnessFlagId": "rom.global.7c9.nonzero"
+      },
+      "repeatDialogue": "rom.dialogue.131.17",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54581,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 283973,
+          "sha256": "494926ea2385cb3f1ed6f32bbce1b49d9e95dbf4edd0d40162b97e1a897bed65"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-150.png",
+      "spriteId": 150
+    },
+    {
+      "cell": [
+        6,
+        10
+      ],
+      "firstDialogue": "rom.dialogue.131.1",
+      "firstEffects": [],
+      "id": "rom.npc.121.4",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54595,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 283987,
+          "sha256": "39e802077458a1ec8e4c5c03f57eb65b1d99a8f764ad4f115d347d5072887eb8"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        4,
+        24
+      ],
+      "firstDialogue": "rom.dialogue.131.2",
+      "firstEffects": [],
+      "id": "rom.npc.121.5",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54609,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284001,
+          "sha256": "1743cd449903676af26b0cd8174cc079e06de4d480743f25eafad2a574545766"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        19,
+        18
+      ],
+      "firstDialogue": "rom.dialogue.131.4",
+      "firstEffects": [],
+      "id": "rom.npc.121.6",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54623,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284015,
+          "sha256": "a8ab74c2c54464765db4a01e2a20ded727657de03eb72def4e25e16b4f2adc06"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        29,
+        37
+      ],
+      "firstDialogue": "rom.dialogue.131.7",
+      "firstEffects": [],
+      "id": "rom.npc.121.7",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54637,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284029,
+          "sha256": "af22552dfa415a7d40cc9026215dc59e5b12039b42033ced2d6f86fbcfb60d84"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        34,
+        12
+      ],
+      "firstDialogue": "rom.dialogue.131.9",
+      "firstEffects": [],
+      "id": "rom.npc.121.8",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54651,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284043,
+          "sha256": "9da437d914de2b5a2ccc2aa72792c9f4c95260372e6f5cc6678ce7b8b68313a8"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    },
+    {
+      "cell": [
+        16,
+        23
+      ],
+      "firstDialogue": "rom.dialogue.131.15",
+      "firstEffects": [],
+      "id": "rom.npc.121.9",
+      "jiangResourceEvidence": "game-data/provenance/world-jiang-invitation.json",
+      "mapId": 121,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
+        "record": {
+          "cpuAddress": 54665,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 284057,
+          "sha256": "3e15bea30f6da0f2d49c092caa4469ff955f824eb800e9e6c73193366a23f64f"
+        },
+        "remainingUnknown": [
+          "Original dynamic NPC movement and per-frame facing not reproduced",
+          "Normal Android route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-jiang-152.png",
+      "spriteId": 152
+    }
+  ],
+  "originalJiangJoin": {
+    "evidence": "game-data/provenance/world-jiang-invitation.json"
+  },
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [],
+  "scopeRevision": "panxi-city-king-original-invitation-batch",
+  "taskId": "WORLD-FULL-01"
+}
