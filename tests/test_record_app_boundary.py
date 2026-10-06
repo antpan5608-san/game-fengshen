@@ -2,9 +2,19 @@
 import json,sys,unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget
+from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget,recording_result
 
 class RecordingBoundaryTests(unittest.TestCase):
+    def test_controlled_rollback_recording_cannot_claim_normal_route_or_continued_exploration(self):
+        normal=recording_result([],[],False)
+        controlled=recording_result([],[],True)
+        self.assertEqual('PASS',normal['normalAssertions'])
+        self.assertTrue(normal['continuedExploration'])
+        self.assertEqual('NOT_APPLICABLE',controlled['normalAssertions'])
+        self.assertEqual('PASS',controlled['controlledAssertions'])
+        self.assertEqual('CONTROLLED_SAVE_HISTORY_SMOKE',controlled['kind'])
+        self.assertFalse(controlled['continuedExploration'])
+        self.assertTrue(controlled['forceStopRestartEqual'])
     def test_only_scoped_first_preparation_and_hall_batch_have_a_longer_bounded_budget(self):
         for prefix,budget in [('world-first-hall',9000),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
             self.assertIsNone(validate_recording_budget(prefix,budget))

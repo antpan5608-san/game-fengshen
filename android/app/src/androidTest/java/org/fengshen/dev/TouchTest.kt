@@ -11,6 +11,30 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** CONTROLLED state, real foreground five-minute clock; no timer injection. */
+    fun testControlledSaveHistoryRealForegroundFiveMinuteAutoSave(){
+        val(activity,v)=launch()
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        lateinit var expected:SaveSnapshot
+        instrumentation.runOnMainSync{
+            val scene=v.content.scenes.getValue(0)
+            assertTrue(v.restoreSnapshot(v.currentSnapshot().copy(mapId=0,x=scene.spawnX*16+8,y=scene.spawnY*16+8,
+                flags=v.currentSnapshot().flags+("opening.intro.seen" to true))))
+            assertTrue(v.saveHistoryResult());expected=v.currentSnapshot()
+        }
+        val started=SystemClock.elapsedRealtime()
+        var automatic:SaveHistoryEntry?=null
+        while(SystemClock.elapsedRealtime()-started<330000&&automatic==null){
+            SystemClock.sleep(500)
+            automatic=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)).firstOrNull{it.kind==SaveHistoryEntry.Kind.AUTO}
+        }
+        assertNotNull("Actual foreground timer did not save within its bounded allowance",automatic)
+        assertTrue("Auto save must not fire before five real minutes",SystemClock.elapsedRealtime()-started>=300000)
+        assertEquals(expected,automatic!!.snapshot)
+        assertEquals(expected,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        screenshot(v,"world-save-history-real-five-minute-auto-controlled")
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     /** CONTROLLED emulator fixture, not normal main-story progression. Native buttons use the player entry. */
     fun testControlledSaveHistoryManualRollbackAndActivityRestart(){
         val(activity,v)=launch();val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)

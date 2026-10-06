@@ -2,11 +2,15 @@
 # One isolated AVD per sequential stage of the existing workflow; no publication credentials.
 set -euo pipefail
 stage="${FENGSHEN_RUNTIME_STAGE:-all}"
-case "$stage" in all|base|world|continuation) ;; *) echo "Unknown runtime stage" >&2; exit 1;; esac
+case "$stage" in all|base|world|continuation|development-smoke) ;; *) echo "Unknown runtime stage" >&2; exit 1;; esac
 export FENGSHEN_RUNTIME_STAGE="$stage"
-scope_id=$(python tools/runtime_handoff.py scope --field id)
+if [[ "$stage" == development-smoke ]]; then
+    scope_id=DEVELOPMENT_ONLY;quality=NOT_PUBLISHED
+else
+    scope_id=$(python tools/runtime_handoff.py scope --field id)
+    quality=$(python tools/runtime_handoff.py scope --field quality)
+fi
 export FENGSHEN_RUNTIME_SCOPE="$scope_id"
-quality=$(python tools/runtime_handoff.py scope --field quality)
 if [[ ( "$scope_id" == PLAYABLE-R1 || "$scope_id" == WORLD-HELL-R2 ) && "$stage" == all ]]; then echo "Frozen R1 requires base/world/continuation jobs" >&2; exit 1; fi
 sdk="${ANDROID_HOME:?Existing runner SDK is required}"
 export ANDROID_SDK_ROOT="$sdk"
@@ -97,6 +101,28 @@ done
 adb shell wm size 960x540
 adb shell wm density 160
 sleep 10
+run_test(){
+    local keep_fixture="${2:-true}"
+    case "$keep_fixture" in true|false) ;; *) echo "Invalid isolated fixture retention mode" >&2; exit 1;; esac
+    if ! timeout 1200 adb shell am instrument -w -e keepFixtureForRestart "$keep_fixture" -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1; then
+        cat "artifacts/town02-runtime/$1.txt"; exit 1
+    fi
+    cat "artifacts/town02-runtime/$1.txt"
+    if ! grep -q 'OK (1 test)' "artifacts/town02-runtime/$1.txt"; then
+        adb logcat -d -s AndroidRuntime | tail -n 60
+        exit 1
+    fi
+}
+if [[ "$stage" == development-smoke ]]; then
+    # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
+    adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+    adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
+    run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false
+    python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
+    pull_evidence
+    exit 0
+fi
 base=(artifacts/runtime-base/*-release.apk)
 candidate=(artifacts/ci/*-release.apk)
 testapk=(artifacts/runtime-test/*.apk)
@@ -124,18 +150,7 @@ from tools import ci_apk as ci
 cert=ci.command([ci.tool('apksigner'),'verify','--print-certs',sys.argv[1]])
 assert re.findall(r'Signer #\d+ certificate SHA-256 digest: ([a-f0-9]+)',cert)==[ci.CONFIG['signerSha256']], 'Test APK must have the existing signature'
 PY
-run_test(){
-    local keep_fixture="${2:-true}"
-    case "$keep_fixture" in true|false) ;; *) echo "Invalid isolated fixture retention mode" >&2; exit 1;; esac
-    if ! timeout 1200 adb shell am instrument -w -e keepFixtureForRestart "$keep_fixture" -e class "org.fengshen.dev.TouchTest#$1" org.fengshen.dev.test/android.test.InstrumentationTestRunner > "artifacts/town02-runtime/$1.txt" 2>&1; then
-        cat "artifacts/town02-runtime/$1.txt"; exit 1
-    fi
-    cat "artifacts/town02-runtime/$1.txt"
-    if ! grep -q 'OK (1 test)' "artifacts/town02-runtime/$1.txt"; then
-        adb logcat -d -s AndroidRuntime | tail -n 60
-        exit 1
-    fi
-}
+
 if [[ "$stage" == all || "$stage" == base ]]; then
 adb install -r "${base[0]}"
 adb install -r "${testapk[0]}"
