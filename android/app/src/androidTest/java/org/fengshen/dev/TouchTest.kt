@@ -5341,22 +5341,28 @@ class TouchTest:IsolatedGameTestCase(){
         fun json(box:Box)=JSONObject().put("x",box.x).put("y",box.y).put("width",box.w).put("height",box.h)
         fun source(count:Int)=base.copy(mapId=7,x=23*16+8,y=7*16+8,direction=Key.DOWN,characters=actors.take(count),
             inventory=mapOf(OriginalYangJoin.ITEM_ID to 1,HerbUse.ID to 7),money=8342,interiorContext=null,terrainMode=0,
-            flags=mapOf("opening.intro.seen" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+            flags=mapOf("opening.intro.seen" to true,OriginalYangJoin.CONTEXT_FLAG to (count>=3),OriginalYangJoin.USED_FLAG to (count>=3),
                 OriginalSceneItems.PLAGUE_FLAG to true,OriginalJiangJoin.PANXI_FLAG to true,OriginalJiangJoin.KING_FLAG to true,
                 OriginalJiangJoin.PANXI_FOUR_FLAG to (count==4),OriginalJiangJoin.PANXI_THREE_FLAG to (count==3),"rom.map.7.flag.128" to true))
         for(count in 1..4)for(group in listOf(six,boss)){
+            val fixture=source(count)
+            assertTrue("Layout fixture must satisfy the original actor/context and scene guards: party=$count",fixture.validate(c))
             lateinit var fight:OpeningBattle
             val presentation=BattlePresentation()
+            var restored=false
             instrumentation.runOnMainSync{
                 field("battle",null);field("layer",GameView.Layer.MAP)
-                assertTrue(v.restoreSnapshot(source(count)))
-                fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
-                    .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
-                GameView::class.java.getDeclaredMethod("resetBattleUiSelection").apply{isAccessible=true}.invoke(v)
-                field("battle",fight);field("battlePresentation",presentation);field("battleID","controlled-party-font-$font-$count-${group.id}")
-                field("battleInfoOpen",false);field("battleItemsOpen",false);field("battleCommitted",false);field("storyBattle",null)
-                field("layer",GameView.Layer.BATTLE);presentation.tick(400)
+                restored=v.restoreSnapshot(fixture)
+                if(restored){
+                    fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
+                        .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
+                    GameView::class.java.getDeclaredMethod("resetBattleUiSelection").apply{isAccessible=true}.invoke(v)
+                    field("battle",fight);field("battlePresentation",presentation);field("battleID","controlled-party-font-$font-$count-${group.id}")
+                    field("battleInfoOpen",false);field("battleItemsOpen",false);field("battleCommitted",false);field("storyBattle",null)
+                    field("layer",GameView.Layer.BATTLE);presentation.tick(400)
+                }
             }
+            assertTrue("Restore the validated layout fixture on the actual GameView: party=$count",restored)
             val before=v.currentSnapshot();val layout=scene()
             val targets=layout.partyCards+layout.touch.commands+layout.touch.enemies
             for(box in targets){assertTrue(box.w>=48*dp&&box.h>=48*dp)
@@ -5385,7 +5391,9 @@ class TouchTest:IsolatedGameTestCase(){
                 .put("enemies",org.json.JSONArray(fight.enemies.map{it.definition.id})).put("frame",json(layout.touch.frame))
                 .put("cards",org.json.JSONArray(layout.partyCards.map{json(it)})).put("enemyField",json(layout.enemyField)).put("allyField",json(layout.allyField)))
         }
-        instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);assertTrue(v.restoreSnapshot(source(4)))}
+        var rewardSourceRestored=false
+        instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);rewardSourceRestored=v.restoreSnapshot(source(4))}
+        assertTrue("Restore the valid four-actor reward fixture",rewardSourceRestored)
         verifyControlledJiangFourActorBattle(v,"-phone-$font")
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-party-phone-$font.json").writeText(
             JSONObject().put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)

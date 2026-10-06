@@ -28,6 +28,10 @@ first_real_blocker: c61已完成原签名验收/发布/公网全字节/postfligh
 
 本机当前未检测到adb设备，真机触控/音频/真实云账号与正常新游戏至结局均未完成；长期目标ACTIVE，继续独立开发，不重复索取执行/发布授权。
 
+DEBUG37528802859/source640a3c8已实际执行并失败，未签名/未发布。2 Content、姜受控邀请与外部cold（含原四人输入/RNG/过期回调/一次奖励/详情/继续检查）、手势/药草/战败/秘宝/全08自动推进以及旧手机字体1×方法通过；不能把通过部分当整批PASS。新一至四人矩阵在第一个单人source恢复断言失败，1.3×/2×未运行。实际异常为仪器runOnMainSync中的junit断言；原OriginalYangJoinDefinition.validPending要求context与杨戬实际在队一一对应，一/两人fixture错误写context=true，原保存保护正确拒绝。生产校验、世界碰撞及状态恢复不改，只让fixture的context/used与count>=3一致并预先验证；恢复失败在测试线程报告，保留原失败证据。
+
+原artifact11443882054已实际取得：两段原MP4完整SHA通过，cold完整状态equal且无差异，边界SHA dddd784ae0e0303fc8037ed133c166b688d82a7cb55d5eca62492a1c203c63b3。已目视实际四人战场/结果与2640×1216字体1×Boss图，以及原片末帧；正常录制末帧为测试结束后的Android桌面，不冒称剧情画面。实际phone GameView为2640×1080/density3，该事实与截图分辨率分开记录。四人结果图确见24dp头像与首行EXP重叠4dp，正把EXP基线放在头像底部以下；银两文案同时派生实际settlement money差额，原奖励算法/诊断语义/一次保存不变。新修正需重新审查、编译和实际App/三字体复测；新的完整界面、真机与签名发布仍待验。
+
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
 已直接核实来源窗口01a11191-f8b7-7db1-8c6c-b39fd4634e01的人类长期要求及最新“Implement the proposed plan.”。完整批准计划、界面详细子计划与确认ID保存于 [fengshen-long-running-completion.md](plans/fengshen-long-running-completion.md)。实际长期目标已建立且ACTIVE，不设用户未要求的token预算。旧点击寻路文件保留为详细子计划及历史，固定版本先后由本轮自主安排取代。

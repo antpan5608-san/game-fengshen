@@ -586,6 +586,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     showNotice("剧情角色状态无法提交，奖励尚未结算");return
                 }
                 val reward=current.settle(money)?:return
+                val gainedMoney=reward.money-money
                 battleResultParty=reward.characters.filter{it.id in partyBefore}.map{it to reward.experienceByCharacter.getValue(it.id)}
                 characters=storyBattle?.charactersOnVictory(reward.characters)?:reward.characters;money=reward.money
                 val loot=BattleAcquisition.apply(current.inventoryAfterBattle(inventory),current.enemies.mapNotNull{it.definition.loot},
@@ -596,11 +597,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     // set their map flag only after the victory text, never on first approach.
                     flags=story.rewardFlags(flags)
                 }
-                battleMessage="胜利！经验 +${reward.experience}  银两 +${current.enemies.sumOf{it.definition.moneyReward}}"+
+                battleMessage="胜利！经验 +${reward.experience}  银两 +$gainedMoney"+
                     (if(reward.levels.isEmpty())"" else "  等级 ${reward.levels.last()}")+
                     loot.acquired.joinToString(""){"  获得 ${content.itemNames[it]?:it}"}+
                     if(loot.skipped.isEmpty())"" else "  物品数量/格数已满，掉落未取得"
-                battleResultLines=listOf("胜利！", "总经验 ${reward.experience} · 银两 +${current.enemies.sumOf{it.definition.moneyReward}}")+
+                battleResultLines=listOf("胜利！", "总经验 ${reward.experience} · 银两 +$gainedMoney")+
                     reward.characters.filter{it.id in partyBefore}.flatMap{player->val before=partyBefore.getValue(player.id);listOf(
                         "${heroName(player.id)} EXP +${reward.experienceByCharacter.getValue(player.id)} · 累计 ${before.experience} → ${player.experience}",
                         if(before.level==player.level)"等级 ${player.level}" else "升级 ${before.level} → ${player.level}",growthProgress(player).summary)}+
@@ -2296,7 +2297,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val icon=Box(card.x+6*dp,card.y+6*dp,24*dp,24*dp);portrait(c,hero,icon)
                 val nameH=max(24f,13*font*1.25f)*dp;val gainH=max(20f,12*font*1.25f)*dp
                 battleLine(c,"${heroName(hero.id)} Lv.${hero.level}",Box(icon.x+30*dp,card.y+2*dp,card.w-42*dp,nameH),13f)
-                battleLine(c,"EXP +$gain · 累计 ${hero.experience}",Box(card.x+8*dp,card.y+2*dp+nameH,card.w-16*dp,gainH),12f)
+                val gainY=max(card.y+2*dp+nameH,icon.y+icon.h+2*dp)
+                battleLine(c,"EXP +$gain · 累计 ${hero.experience}",Box(card.x+8*dp,gainY,card.w-16*dp,gainH),12f)
                 if(ch>max(90f,68*font)*dp)battleLine(c,growthProgress(hero).summary,
                     Box(card.x+8*dp,card.y+max(60f,42*font)*dp,card.w-16*dp,max(24f,18*font)*dp),11f)
             }
