@@ -5,6 +5,13 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from record_app_audio import read_saved_boundary,SavedBoundaryUnavailable,validate_recording_budget,recording_result
 
 class RecordingBoundaryTests(unittest.TestCase):
+    def test_jiang_controlled_kind_retains_explicit_normal_route_and_exploration_limits(self):
+        result=recording_result([],[],True,'CONTROLLED_JIANG_INVITATION_SMOKE')
+        self.assertEqual('CONTROLLED_JIANG_INVITATION_SMOKE',result['kind'])
+        self.assertEqual('NOT_APPLICABLE',result['normalAssertions'])
+        self.assertEqual('PASS',result['controlledAssertions'])
+        self.assertFalse(result['continuedExploration'])
+        with self.assertRaises(ValueError):recording_result([],[],True,'NORMAL_WORLD_PASS')
     def test_controlled_rollback_recording_cannot_claim_normal_route_or_continued_exploration(self):
         normal=recording_result([],[],False)
         controlled=recording_result([],[],True)

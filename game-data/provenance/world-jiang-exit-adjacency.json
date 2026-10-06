@@ -1,0 +1,225 @@
+{
+  "correctedProbe": {
+    "sha256": "46a94a0c4d642eefe425d181b3c5b5687d8ee013e9590aa589c0df7742ff9d3f",
+    "sizeBytes": 2862
+  },
+  "correctedResults": {
+    "sha256": "13c3aea9700f29fcae82781f56491d6713f31d88db20d1f5a02cb41243725885",
+    "sizeBytes": 403
+  },
+  "failedDepartures": [
+    {
+      "direction": "DOWN",
+      "result": [
+        15,
+        43
+      ],
+      "resultMap": 142,
+      "source": [
+        15,
+        43
+      ],
+      "sourceMap": 142
+    },
+    {
+      "direction": "UP",
+      "result": [
+        3,
+        11
+      ],
+      "resultMap": 142,
+      "source": [
+        3,
+        11
+      ],
+      "sourceMap": 142
+    },
+    {
+      "direction": "DOWN",
+      "result": [
+        1,
+        28
+      ],
+      "resultMap": 121,
+      "source": [
+        1,
+        28
+      ],
+      "sourceMap": 121
+    }
+  ],
+  "inactiveLeftRecords": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 58646,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288038,
+        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
+      },
+      "spawn": [
+        3,
+        10
+      ],
+      "toMapId": 142,
+      "trigger": [
+        1,
+        29
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 59192,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288584,
+        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+      },
+      "spawn": [
+        1,
+        29
+      ],
+      "toMapId": 121,
+      "trigger": [
+        3,
+        10
+      ]
+    }
+  ],
+  "kind": "CONTROLLED_NATIVE_SOURCE_POSE_AND_REAL_KEYS_NOT_ANDROID_NOT_NORMAL_ROUTE",
+  "limitations": [
+    "Source positions written in an isolated native checkpoint before real joypad; no normal-route claim",
+    "Only five tested south cells admitted; other south x unknown",
+    "Original south FF FF record retains no coordinate anchor; [15,43] was the entry spawn, not an observed departure",
+    "Two left records retained as record-only, not enabled",
+    "Native raw RAM/PNG/FC8 not restored; no new native capture claim",
+    "Existing Android EDGE matches current cell+direction; original key duration/animation not reproduced"
+  ],
+  "oldProbe": {
+    "sha256": "97901a097e337f671ee5a509a6d572e4eb5577d151e3b744e03ceb2193849c78",
+    "sizeBytes": 2450
+  },
+  "oldResults": {
+    "sha256": "f8c6adaa5999c5a75a4776e154a68b03133489fdbc8de62f4ae5ce31b5085af9",
+    "sizeBytes": 295
+  },
+  "originalSouthRecord": {
+    "arrivalDirection": "DOWN",
+    "confidence": "SOURCE_RECORD_ONLY",
+    "direction": "DOWN",
+    "fromMapId": 142,
+    "kind": "EDGE_RECORD",
+    "runtimeEvidence": "CONTROLLED_NATIVE_REAL_ENTRY_WITH_ORIGINAL_EDGE_DISPATCH",
+    "source": {
+      "cpuAddress": 59177,
+      "length": 5,
+      "meaning": "Independent original city edge return",
+      "module": 8,
+      "offset": 288569,
+      "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+    },
+    "spawn": [
+      42,
+      78
+    ],
+    "toMapId": 16,
+    "trigger": [
+      15,
+      43
+    ],
+    "triggerMode": "EDGE"
+  },
+  "schemaVersion": 1,
+  "sourceRetrieval": {
+    "executedItem": "exec-b96de092-e52d-4aeb-960a-81f35d5bd7ee",
+    "method": "Recorded original diff/replacements/stdout restored with original inventory size+SHA; original commands not rerun",
+    "thread": "01a0f618-47fd-7721-a083-c962ead7b090",
+    "turn": "01a10f33-5a86-76f5-bd7c-fb240b2a49e2"
+  },
+  "southDepartures": [
+    {
+      "arrivalDirection": "DOWN",
+      "destinationMap": 16,
+      "direction": "DOWN",
+      "encounterSteps": 0,
+      "source": [
+        13,
+        42
+      ],
+      "spawn": [
+        42,
+        78
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "destinationMap": 16,
+      "direction": "DOWN",
+      "encounterSteps": 0,
+      "source": [
+        14,
+        42
+      ],
+      "spawn": [
+        42,
+        78
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "destinationMap": 16,
+      "direction": "DOWN",
+      "encounterSteps": 0,
+      "source": [
+        15,
+        42
+      ],
+      "spawn": [
+        42,
+        78
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "destinationMap": 16,
+      "direction": "DOWN",
+      "encounterSteps": 0,
+      "source": [
+        16,
+        42
+      ],
+      "spawn": [
+        42,
+        78
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "destinationMap": 16,
+      "direction": "DOWN",
+      "encounterSteps": 0,
+      "source": [
+        17,
+        42
+      ],
+      "spawn": [
+        42,
+        78
+      ]
+    }
+  ]
+}

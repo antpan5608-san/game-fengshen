@@ -2730,12 +2730,74 @@ def validate_world_well8_resources(reader):
         if digest((ROOT/probe['path']).read_bytes())!=probe['sha256']:raise ValueError('Well executed probe differs')
     return p
 
+def validate_world_jiang_exit_adjacency(reader, evidence):
+    """Admit only the recorded native departure cells, keeping failed records inert."""
+    binding=evidence.get('exitAdjacencyEvidence',{})
+    path='game-data/provenance/world-jiang-exit-adjacency.json'
+    if binding.get('path')!=path or digest((ROOT/path).read_bytes())!=binding.get('sha256'):
+        raise ValueError('Jiang departure derivation hash differs')
+    proof=load(ROOT/path)
+    identities={'correctedProbe':('46a94a0c4d642eefe425d181b3c5b5687d8ee013e9590aa589c0df7742ff9d3f',2862),
+        'correctedResults':('13c3aea9700f29fcae82781f56491d6713f31d88db20d1f5a02cb41243725885',403),
+        'oldProbe':('97901a097e337f671ee5a509a6d572e4eb5577d151e3b744e03ceb2193849c78',2450),
+        'oldResults':('f8c6adaa5999c5a75a4776e154a68b03133489fdbc8de62f4ae5ce31b5085af9',295)}
+    if proof.get('schemaVersion')!=1 or proof.get('kind')!='CONTROLLED_NATIVE_SOURCE_POSE_AND_REAL_KEYS_NOT_ANDROID_NOT_NORMAL_ROUTE' or \
+            any(proof.get(k)!={'sha256':h,'sizeBytes':n}for k,(h,n)in identities.items()):
+        raise ValueError('Jiang original recorded probe identity differs')
+    expected=[dict(source=[x,42],direction='DOWN',destinationMap=16,spawn=[42,78],
+        arrivalDirection='DOWN',encounterSteps=0)for x in range(13,18)]
+    failed=[dict(sourceMap=142,source=[15,43],direction='DOWN',resultMap=142,result=[15,43]),
+        dict(sourceMap=142,source=[3,11],direction='UP',resultMap=142,result=[3,11]),
+        dict(sourceMap=121,source=[1,28],direction='DOWN',resultMap=121,result=[1,28])]
+    if proof.get('southDepartures')!=expected or proof.get('failedDepartures')!=failed:
+        raise ValueError('Jiang departure set cannot infer extra cells or erase native failures')
+    south=proof['originalSouthRecord']
+    if south['fromMapId']!=142 or south['toMapId']!=16 or south['spawn']!=[42,78] or \
+            south['source']['offset']!=288569 or checked_span(reader,south['source'])!=bytes.fromhex('ffff102a4e'):
+        raise ValueError('Original south record bytes differ; its FF fields are not a source cell')
+    inactive=proof['inactiveLeftRecords']
+    if evidence.get('inactiveExitRecords')!=inactive or len(inactive)!=2:
+        raise ValueError('Jiang failed left records must remain explicitly inactive')
+    for row,frm,trigger,to,spawn in zip(inactive,(121,142),([1,29],[3,10]),(142,121),([3,10],[1,29])):
+        if (row['fromMapId'],row['trigger'],row['toMapId'],row['spawn'])!=(frm,trigger,to,spawn) or \
+                list(checked_span(reader,row['source']))!=trigger+[to]+spawn:
+            raise ValueError('Original inactive left record differs')
+    derived=[]
+    for departure in expected:
+        derived.append(dict(south,confidence='VERIFIED',kind='OBSERVED_EDGE_DEPARTURE',trigger=departure['source'],
+            resetEncounterSteps=True,adjacencyEvidence=path,runtimeEvidence='CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY'))
+    admitted=[row for row in evidence['exits']if row['kind']=='OBSERVED_EDGE_DEPARTURE']
+    if admitted!=derived or any((row['fromMapId'],row['trigger'])in((121,[1,29]),(142,[3,10]))
+            or row['kind']=='EDGE_RECORD'for row in evidence['exits']):
+        raise ValueError('Jiang runtime exits must use only the five checked departures; lefts stay inactive')
+    return proof
+
+
 def validate_world_jiang_resources(reader):
     """One mainline batch using existing scenes, dialogue, actor/growth and edges."""
     from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
     path='game-data/provenance/world-jiang-invitation.json';p=load(ROOT/path)
     if p['romSha256']!=SHA256 or p['scopeRevision']!='panxi-witness-city142-king121-original-jiang-join':
         raise ValueError('Jiang original scoped identity differs')
+    validate_world_jiang_exit_adjacency(reader,p)
+    binding=p.get('fourPartyEvidence',{})
+    four_path='game-data/provenance/world-jiang-four-party.json'
+    if binding.get('path')!=four_path or digest((ROOT/four_path).read_bytes())!=binding.get('sha256'):
+        raise ValueError('Jiang fourth actor requires its exact scoped battle CPU proof')
+    four=load(ROOT/four_path)
+    if (four.get('romSha256'),four.get('totalCases'),four.get('failures'),four.get('targetCases'),
+            four.get('multiplierCases'),four.get('schedulerCases'),four.get('experienceCases'),
+            four.get('recoveryCases'))!=(SHA256,8903,0,4096,3584,64,135,1024):
+        raise ValueError('Jiang four-slot battle evidence coverage differs')
+    for span in four['sources']:checked_span(reader,span)
+    for path_key,hash_key in (('probePath','probeSha256'),('resultsPath','resultsSha256'),
+            ('sharedTsvPath','sharedTsvSha256'),('multiplierPath','multiplierSha256')):
+        file=(ROOT/four[path_key]).resolve()
+        if not file.is_relative_to(ROOT) or digest(file.read_bytes())!=four[hash_key]:
+            raise ValueError('Jiang executed battle probe or original CPU expectation bytes differ')
+    if len((ROOT/four['resultsPath']).read_bytes().splitlines())!=7681 or \
+            len((ROOT/four['sharedTsvPath']).read_bytes().splitlines())!=1224:
+        raise ValueError('Jiang original CPU expectations are incomplete')
     for span in p['sources']+p['contextSources']:checked_span(reader,span)
     if reader.word(0,0xd672)!=0x7d3 or reader.read(11,0xc704,73).hex()!=\
             '8206070781070707830808079609090780000707040c040704080409040a96090807020905968308080702010607040b810708070201058182060907030105828308060700010583ff' or \
@@ -2834,7 +2896,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         jiang=validate_world_jiang_resources(reader)
         if evidence['jiangCapabilityEvidence']!='game-data/provenance/world-jiang-invitation.json'or \
                 any(evidence.get(k)!=jiang[k]for k in ('maps','npcs','dialogues','graphics','exits','items'))or \
-                evidence.get('originalJiangJoin')!={'evidence':evidence['jiangCapabilityEvidence']}:
+                evidence.get('originalJiangJoin')!={'evidence':evidence['jiangCapabilityEvidence']} or \
+                any(evidence.get(k)!=jiang.get(k)for k in ('exitAdjacencyEvidence','inactiveExitRecords','fourPartyEvidence')):
             raise ValueError('Invitation overlay differs from scoped batch')
     for span in evidence['ruleRanges']:checked_span(reader,span)
     for recipe in evidence.get('atlasCorrections',[]):
@@ -3106,6 +3169,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         elif exit['kind']=='EXIT_RECORD':
             if list(raw)!=exit['trigger']+[exit['toMapId']]+exit['spawn']:
                 raise ValueError('Original exit record differs')
+        elif exit['kind']=='OBSERVED_EDGE_DEPARTURE':
+            if not jiang or exit not in jiang['exits'] or exit.get('triggerMode')!='EDGE' or \
+                    exit.get('adjacencyEvidence')!=jiang['exitAdjacencyEvidence']['path']:
+                raise ValueError('Observed departure requires bounded Jiang native source-pose evidence')
+            # The validator above binds original FF FF bytes and the five tested
+            # current cells. Do not reuse the entry spawn or infer a whole edge.
         elif exit['kind']=='EDGE_RECORD':
             original=extract_map(reader,exit['fromMapId']);x,y=exit['trigger'];direction=exit.get('direction')
             boundary=(direction=='LEFT' and x==0 or direction=='RIGHT' and x==original['width']-1 or
@@ -3596,7 +3665,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Original Jiang initial weapon contribution differs')
             for span in equipment['ruleSources']:checked_span(reader,span)
             old.update(update['fields'])
-        scene['originalJiangJoin']=evidence['originalJiangJoin']
+        scene['originalJiangJoin']=dict(evidence['originalJiangJoin'],id='rom.event.7.21',kingNpcId='rom.npc.121.3')
     elif evidence.get('jiamengCapabilityEvidence'):
         path='game-data/provenance/world-jiameng-binding.json'
         matches=[i for i in scene['items']if i['id']=='rom.special.18']

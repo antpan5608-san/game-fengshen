@@ -1,15 +1,15 @@
 package org.fengshen.dev
 
-/** Pure decisions from the target ROM's scoped two- and three-actor battle paths.
+/** Pure decisions from the target ROM's scoped one- through four-actor battle paths.
  * Values use original actor identity and enemy slot, never an enemy definition ID.
  * This object neither samples randomness nor changes HP, inventory, EXP or saves.
- * See game-data/provenance/world-two-party.json for source spans and limits. */
+ * See world-two-party.json and world-jiang-four-party.json for source spans/limits. */
 object OriginalPartyRules {
     /** 1:8B0E..8B47 / 9:927C..92A8: bit40 actors retain their original
      * record and HP but are omitted from the active battle identities. */
     fun present(character:CharacterState)=character.statusMask and 64==0
     fun battleCharacters(roster:List<CharacterState>):List<CharacterState> {
-        require(roster.size in 1..3&&roster.map{it.id}.distinct().size==roster.size)
+        require(roster.size in 1..4&&roster.map{it.id}.distinct().size==roster.size)
         return roster.filter(::present)
     }
     fun restoreBattleCharacters(roster:List<CharacterState>,active:List<CharacterState>):List<CharacterState> {
@@ -21,7 +21,7 @@ object OriginalPartyRules {
     data class Actor(val originalActorIndex:Int,val partySlot:Int,val hp:Int,val status:Int,
                      val agility:Int,val command:Int=0) {
         init {
-            require(originalActorIndex in 0..2 && partySlot in 0..2)
+            require(originalActorIndex in 0..3 && partySlot in 0..3)
             require(hp in 0..65535 && status in 0..255 && agility in 0..255 && command in 0..255)
         }
     }
@@ -31,7 +31,7 @@ object OriginalPartyRules {
     data class Recovery(val statusByActorIndex:Map<Int,Int>,val randomByte:Int)
 
     private fun checkActors(actors:List<Actor>) {
-        require(actors.size in 1..3)
+        require(actors.size in 1..4)
         require(actors.map{it.originalActorIndex}.distinct().size==actors.size)
         require(actors.map{it.partySlot}.sorted()==actors.indices.toList())
     }
@@ -136,7 +136,7 @@ object OriginalPartyRules {
      * an error; a different actor's table is never used as a fallback. */
     fun physicalMultiplier(originalActorIndex:Int,rawLevel:Int,randomByte:Int,
                            thresholdsByOwner:Map<Int,List<Int>>):Int {
-        require(originalActorIndex in 0..2);checkByte(rawLevel);checkByte(randomByte)
+        require(originalActorIndex in 0..3);checkByte(rawLevel);checkByte(randomByte)
         val table=requireNotNull(thresholdsByOwner[originalActorIndex]){"Missing actor multiplier table"}
         require(table.size==36 && table.all{it in 0..255})
         val row=(rawLevel.coerceAtMost(79)/5).coerceAtMost(11)

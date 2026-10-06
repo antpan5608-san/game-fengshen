@@ -379,9 +379,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     val inputHero:CharacterState? get()=partyStates.firstOrNull{p->p.id !in commands&&
         OriginalPartyRules.collectsCommand(originalActors().first{it.originalActorIndex==originalIndices.getValue(p.id)})}
     fun configureParty(characters:List<CharacterState>,indices:Map<String,Int>,weapons:Map<String,Int>,armors:Map<String,Int>){
-        require(!configured&&phase==BattlePhase.TARGET&&commands.isEmpty()&&characters.size in 1..3&&characters.first()==hero)
+        require(!configured&&phase==BattlePhase.TARGET&&commands.isEmpty()&&characters.size in 1..4&&characters.first()==hero)
         require(characters.map{it.id}.distinct().size==characters.size&&characters.all{it.id in indices&&it.id in weapons&&it.id in armors})
-        require(characters.map{indices.getValue(it.id)}.toSet().size==characters.size&&characters.all{indices.getValue(it.id) in 0..2})
+        require(characters.map{indices.getValue(it.id)}.toSet().size==characters.size&&characters.all{indices.getValue(it.id) in 0..3})
         require(characters.size==1||characters.all{content.physicalFor(it.id)!=null&&content.growthFor(it.id).isNotEmpty()})
         val active=OriginalPartyRules.battleCharacters(characters)
         require(active.isNotEmpty()&&active.first()==hero){"Current controlled character is unavailable"}

@@ -56,6 +56,41 @@ class PartyBattleTest {
         assertEquals(26013,reward.characters[2].experience);assertEquals(24,reward.characters[2].level)
         assertNull(b.settle(reward.money))
     }
+    @Test fun fourthActorRequiresFourCommandsAndReceivesOwnOriginalShareOnce(){
+        val yang=hero.copy(id="yangjian",level=24,experience=26000,hp=495,maxHp=495,agility=28)
+        val jiang=CharacterState("jiangziya",38,190000,1608,1608,151,235,109,63,124,
+            maxMp=151,equipment=EquipmentState(44,-1,24,28))
+        val party=listOf(hero,girl,yang,jiang)
+        val enemy=EnemyDefinition(18,"fixture",50,25,0,39,13,255,0)
+        val group=EncounterGroup(1,listOf(EncounterMember(3,18)))
+        val thresholds=javaClass.getResourceAsStream("/world-jiang-multiplier-original.tsv")!!.bufferedReader()
+            .use{it.readText().trim()}.split('\t').map{it.toInt()}
+        val own=PhysicalRules(physical.weaponHitThreshold+(44 to 64),thresholds)
+        val rules=BattleContent(23,emptyList(),listOf(group),mapOf(18 to enemy),
+            listOf(GrowthRow(13,2010,8,0,2,1,1,0,false)),0,6,50,16,
+            enemyAgility=mapOf(18 to 1),escapeEnabled=true,physicalRules=physical).also{
+            it.characterPhysicalRules=mapOf("xiaolongnv" to physical,"yangjian" to physical,"jiangziya" to own)
+            it.characterGrowth=mapOf("xiaolongnv" to listOf(GrowthRow(13,2525,6,4,1,1,2,2,false)),
+                "yangjian" to listOf(GrowthRow(25,29899,56,3,9,4,2,2,false)),
+                "jiangziya" to listOf(GrowthRow(39,250000,30,3,3,2,1,2,false))) // Isolated threshold fixture.
+        }
+        val fight=OpeningBattle(group,rules,hero,0,0).also{it.configureParty(party,
+            party.mapIndexed{i,p->p.id to i}.toMap(),party.associate{it.id to if(it.id=="jiangziya")160 else 0},
+            party.associate{it.id to if(it.id=="jiangziya")100 else 0})}
+        for(id in party.take(3).map{it.id}){
+            assertEquals(id,fight.inputHero!!.id)
+            assertNull(fight.attack(3){error("No RNG before every real actor confirms")})
+            assertEquals(50,fight.enemies.single().hp);assertEquals(party,fight.party)
+        }
+        assertEquals("jiangziya",fight.inputHero!!.id)
+        var rolls=0;val turn=fight.attack(3){rolls++;0}!!
+        assertEquals(1,rolls);assertEquals("jiangziya",turn.actions.first().actorId)
+        assertEquals(BattlePhase.VICTORY,turn.phase)
+        val reward=fight.settle(100)!!
+        assertEquals(113,reward.money);assertEquals(party.associate{it.id to 9},reward.experienceByCharacter)
+        assertEquals(party.map{it.experience+9},reward.characters.map{it.experience})
+        assertNull(fight.settle(reward.money))
+    }
     @Test fun firstCommandQueuesWithoutHpRandomOrRewardsThenFasterActorWins(){
         val b=make();var rolls=0
         assertEquals("nezha",b.inputHero!!.id)

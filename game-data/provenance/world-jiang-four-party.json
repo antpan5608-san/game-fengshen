@@ -1,0 +1,85 @@
+{
+  "cases": 7680,
+  "experienceCases": 135,
+  "failures": 0,
+  "kind": "CONTROLLED_ORIGINAL_CPU_NOT_ANDROID",
+  "limitations": [
+    "Fixed bytes, no NMI/timing equivalence",
+    "Actual four-person App battle requires separate checks"
+  ],
+  "multiplierCases": 3584,
+  "multiplierPath": "android/app/src/test/resources/world-jiang-multiplier-original.tsv",
+  "multiplierSha256": "468403a4921e491974f825236780bde48af774a32e1d0d2ae9c7bc0500ae5de4",
+  "privateSharedJsonSha256": "cf9813a8a281f97d452a9ffdf53a9a8f21b9a4c0653e0ecdfd0b5fc501a4467c",
+  "probePath": "tools/rom-extractor/probe-world-jiang-four-party.py",
+  "probeSha256": "96e2a87f13226d4640112d925daacc637bff9a7994327f5c86d54b149734baef",
+  "recoveryCases": 1024,
+  "resultsPath": "android/app/src/test/resources/world-jiang-four-party-original.tsv",
+  "resultsSha256": "f209609ecfa6226df0210498fd6c8286eb587e1d63d1fc190c8559d79defb9c9",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "schedulerCases": 64,
+  "schemaVersion": 1,
+  "sharedTsvPath": "android/app/src/test/resources/world-jiang-four-party-shared-original.tsv",
+  "sharedTsvSha256": "bfddcc30aa149d053c5db43a6cb5bb5254b60544ed1e394dd013ff2e7ca1fc3f",
+  "sources": [
+    {
+      "cpuAddress": 36530,
+      "length": 91,
+      "meaning": "Original four-slot target dispatch",
+      "module": 9,
+      "offset": 298690,
+      "sha256": "4eb4db8983ee958b789ea1bfd47538de245037700579bc0f4421fd1c0893bd6f"
+    },
+    {
+      "cpuAddress": 34088,
+      "length": 79,
+      "meaning": "Original actor3 physical multiplier dispatch",
+      "module": 9,
+      "offset": 296248,
+      "sha256": "5559b0bfacd0e9152430e3dcf465d82538786265e7311bebe51f6978d8c8d2e6"
+    },
+    {
+      "cpuAddress": 34173,
+      "length": 2,
+      "meaning": "Original actor3 multiplier pointer",
+      "module": 9,
+      "offset": 296333,
+      "sha256": "a2e2de1c28d6d9a3ae23392c64d2a130ac2b676e6e967436086b2cc7e2a3959d"
+    },
+    {
+      "cpuAddress": 34355,
+      "length": 36,
+      "meaning": "Original actor3 multiplier thresholds",
+      "module": 9,
+      "offset": 296515,
+      "sha256": "09751c90bae191a59f5be5cbcaeb01081e20fed52679b537fba3e0f816eddeeb"
+    },
+    {
+      "cpuAddress": 32844,
+      "length": 217,
+      "meaning": "Original eleven-entry four-actor scheduler",
+      "module": 9,
+      "offset": 295004,
+      "sha256": "641c1d6e8e87835e0299f01f891264ffc9f9b1a8dd83a8c29cd6e38931a30d28"
+    },
+    {
+      "cpuAddress": 44562,
+      "length": 147,
+      "meaning": "Original present living EXP distribution",
+      "module": 9,
+      "offset": 306722,
+      "sha256": "7aff0e68554574f3096c350419d3a7f07c1d66e320a73811011ccbbfa739cd6c"
+    },
+    {
+      "cpuAddress": 42655,
+      "length": 73,
+      "meaning": "Original four-slot sequential status recovery",
+      "module": 9,
+      "offset": 304815,
+      "sha256": "62c8c4c89793239399b2a10d366c6025f57c7e742435d6e4b66aef56f2c77158"
+    }
+  ],
+  "targetCases": 4096,
+  "taskId": "WORLD-FULL-01",
+  "totalCases": 8903
+}

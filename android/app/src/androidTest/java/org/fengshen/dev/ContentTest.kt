@@ -325,6 +325,57 @@ class ContentTest:IsolatedGameTestCase(){
             listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
         assertMedicalPartySave(c)
     }
+    fun testC61FrozenDependenciesAndMedicalPartySave(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals(setOf(0,1,2,3,4,5,6,7,8,9,10,16,17,18,19,20,22,23,25,37,41,42,
+            60,61,62,63,64,65,66,67,68,69,70,74,76,77,78,79,85,86,87,89,95,96,97,98,
+            99,100,101,107,108,109,110,114,115,116,117,121,136,139,141,142,145,146,147,148,
+            158,159,163,164,171,172),c.scenes.keys)
+        assertEquals("opening-segment-001-c61",c.scene.version)
+        assertEquals(setOf("xiaolongnv","yangjian","jiangziya"),c.joinCharacters.keys)
+        assertEquals(listOf(1,2,3,4,5,6,8,9,10).flatMap{caller->
+            listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
+        assertMedicalPartySave(c)
+    }
+    /** Loaded c61 source-cell edges and durable event codec; no normal mainline claim. */
+    fun testControlledJiangInvitationCodecAndDepartureBoundaries(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val rule=c.jiangJoin!!;val jiang=c.joinCharacters.getValue("jiangziya")
+        val before=SaveSnapshot(c.scene.version,121,23*16+8,13*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
+            mapOf(OriginalYangJoin.ITEM_ID to 1,HerbUse.ID to 7),mapOf(OriginalYangJoin.CONTEXT_FLAG to true,
+                OriginalYangJoin.USED_FLAG to true,OriginalSceneItems.PLAGUE_FLAG to true,
+                OriginalJiangJoin.PANXI_FLAG to true),money=8342,encounterSteps=113)
+        assertTrue(before.validate(c))
+        var result=OriginalJiangJoin.begin(before,rule)
+        for(message in rule.continuation.dialogueIds){
+            val cold=SaveSnapshot.parse(result.snapshot.json().toString())
+            assertEquals(result.snapshot,cold);assertTrue(cold.validate(c));assertTrue(rule.validPending(cold))
+            val bad=OriginalJiangJoin.advance(cold,rule,"wrong.dialogue",jiang)
+            assertFalse(bad.applied);assertEquals(cold,bad.snapshot)
+            result=OriginalJiangJoin.advance(cold,rule,message,jiang);assertTrue(result.applied)
+        }
+        assertEquals(OriginalJiangJoin.FULL_PARTY,result.snapshot.characters.map{it.id})
+        assertEquals(CharacterState("jiangziya",38,190000,1608,1608,151,235,109,63,124,
+            maxMp=151,equipment=EquipmentState(44,-1,24,28)),result.snapshot.characters.last())
+        assertEquals(before.inventory,result.snapshot.inventory);assertEquals(before.money,result.snapshot.money)
+        assertTrue(result.snapshot.validate(c));assertEquals(result.snapshot,SaveSnapshot.parse(result.snapshot.json().toString()))
+        assertFalse(OriginalJiangJoin.advance(result.snapshot,rule,rule.continuation.dialogueIds.last(),jiang).applied)
+        val departures=c.exits.filter{it.fromMapId==142&&it.toMapId==16}
+        assertEquals((13..17).map{it to 42},departures.map{it.triggerX to it.triggerY})
+        for(x in 13..17){
+            val w=World(c.scenes,c.exits,142)
+            assertTrue(w.tryRestore(142,x*16+8,42*16+8,0,Key.DOWN))
+            w.tick(Key.DOWN);assertEquals(16,w.mapId)
+            assertEquals(42*16+8,w.x);assertEquals(78*16+8,w.y);assertEquals(Key.DOWN,w.direction)
+            assertTrue(departures.single{it.triggerX==x}.resetEncounterSteps)
+        }
+        assertFalse(c.exits.any{it.fromMapId==142&&it.triggerX==3&&it.triggerY==10})
+        assertFalse(c.exits.any{it.fromMapId==121&&it.triggerX==1&&it.triggerY==29})
+        val landing=World(c.scenes,c.exits,142)
+        assertTrue(landing.tryRestore(142,15*16+8,43*16+8,0,Key.DOWN))
+        landing.tick(Key.DOWN);assertEquals(142,landing.mapId) // Tested failed native pose; no auto-bounce.
+    }
     private fun assertMedicalPartySave(c:Content){
         val room=c.scenes.getValue(20)
         assertEquals(setOf(0,2,5),room.walkableClasses)

@@ -17,7 +17,7 @@ on:
       development_smoke_scope:
         description: 'DEBUG only: full history checks or focused rollback/cold regression'
         type: choice
-        options: [full, rollback]
+        options: [full, rollback, jiang]
         default: full
         required: false
       runtime_tests:
@@ -775,6 +775,8 @@ jobs:
     if: inputs.mode == 'development-smoke' && (github.ref == 'refs/heads/work/world-jiameng-batch-continuation' || github.ref == 'refs/heads/codex/local-ai-development')
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    env:
+      FENGSHEN_DEVELOPMENT_SMOKE_SCOPE: ${{ inputs.development_smoke_scope || 'full' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -804,19 +806,21 @@ jobs:
           base=(artifacts/content-base/*-release.apk)
           [[ ${#base[@]} == 1 ]]
           python - "${base[0]}" <<'PYRESTORE'
-          import json,sys
+          import json,sys,os
           from pathlib import Path
           from tools import ci_apk as ci
-          ci.CONFIG=json.loads(Path('ci/golden-world-reference-repair-content.json').read_text())
+          pin='ci/golden-world-jiang-content.json' if os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE']=='jiang' else 'ci/golden-world-reference-repair-content.json'
+          ci.CONFIG=json.loads(Path(pin).read_text())
           ci.restore(Path(sys.argv[1]),next_code=84)
           PYRESTORE
           bash android/gradlew -p android testDebugUnitTest --tests org.fengshen.dev.SaveHistoryTest assembleDebug assembleDebugAndroidTest -PfengshenVersionCode=84 -PfengshenVersionName=0.8.14-development-smoke --console=plain --max-workers=2
           python - <<'PYDEBUG'
-          import hashlib,json
+          import hashlib,json,os
           from pathlib import Path
           from tools import ci_apk as ci
           apk=Path('android/app/build/outputs/apk/debug/app-debug.apk')
-          ci.CONFIG=json.loads(Path('ci/golden-world-reference-repair-content.json').read_text())
+          pin='ci/golden-world-jiang-content.json' if os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE']=='jiang' else 'ci/golden-world-reference-repair-content.json'
+          ci.CONFIG=json.loads(Path(pin).read_text())
           ci.content(apk,ci.CONFIG)
           Path('artifacts/development-smoke').mkdir(parents=True,exist_ok=True)
           Path('artifacts/development-smoke/debug-content.json').write_text(json.dumps(dict(kind='DEBUG_ONLY_NOT_PUBLISHED',sha256=hashlib.sha256(apk.read_bytes()).hexdigest(),contentVersion=ci.CONFIG['contentVersion'],manifestSha256=ci.CONFIG['manifestSha256'])))
@@ -836,6 +840,7 @@ jobs:
             artifacts/development-smoke/*
             artifacts/checkpoint-ui/*save-history*
             artifacts/checkpoint-ui/personal-r1-smoke-*
+            artifacts/checkpoint-ui/world-jiang-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/town02-runtime/testControlledSaveHistory*.txt
             artifacts/town02-runtime/testTouchUxSelectionScrollAndAtomicEquipment.txt

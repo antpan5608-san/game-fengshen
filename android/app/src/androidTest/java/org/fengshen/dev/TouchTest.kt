@@ -182,6 +182,107 @@ class TouchTest:IsolatedGameTestCase(){
     private fun inExistingEncounterRegion(content:BattleContent,mapId:Int,x:Int,y:Int)=
         content.zones.any{it.contains(mapId,x,y)}||
             (mapId==content.zoneMapId&&content.zoneRects.any{it.contains(x,y)})
+    private fun jiangDialogueId(v:GameView)=
+        (GameView::class.java.getDeclaredField("dialogueText").apply{isAccessible=true}.get(v) as? StoryText)?.id
+    private fun completeJiangMessage(v:GameView,id:String){
+        assertEquals(id,jiangDialogueId(v));var pages=0
+        while(v.layer==GameView.Layer.DIALOGUE&&jiangDialogueId(v)==id){
+            assertTrue("Bounded original Jiang dialogue pages",pages++<32)
+            tap(v,Pair(v.width*.5f,v.height*.5f))
+        }
+    }
+    /** Explicit isolated three-actor fixture, actual touch join, saved mid-dialogue. */
+    fun testControlledJiangInvitationPendingAtColdBoundary(){
+        val(activity,v)=launch();val c=v.content;val rule=c.jiangJoin!!
+        val source=SaveSnapshot(c.scene.version,121,23*16+8,13*16+8,Key.UP,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
+            mapOf(OriginalYangJoin.ITEM_ID to 1,HerbUse.ID to 7),mapOf("opening.intro.seen" to true,
+                OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+                OriginalSceneItems.PLAGUE_FLAG to true,OriginalJiangJoin.PANXI_FLAG to true),money=8342,encounterSteps=113)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source));v.persistState()}
+        val before=v.currentSnapshot();tapMapActor(v,c.npcs.single{it.id==rule.kingNpcId})
+        assertEquals(GameView.Layer.DIALOGUE,v.layer);assertEquals("rom.dialogue.131.16",jiangDialogueId(v))
+        val pending=v.currentSnapshot();assertEquals(before.characters,pending.characters)
+        val middle=Pair(v.width*.5f,v.height*.5f)
+        send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_CANCEL,listOf(middle))
+        send(v,MotionEvent.ACTION_UP,listOf(middle));assertEquals(pending,v.currentSnapshot())
+        instrumentation.runOnMainSync{v.handleBack()};assertEquals(pending,v.currentSnapshot())
+        if(v.layer==GameView.Layer.MAP)tapMapActor(v,c.npcs.single{it.id==rule.kingNpcId})
+        assertEquals(pending,v.currentSnapshot()) // Closing/reopening must retain the exact pending stage.
+        assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        completeJiangMessage(v,"rom.dialogue.131.16")
+        val joined=v.currentSnapshot();assertEquals(OriginalJiangJoin.FULL_PARTY,joined.characters.map{it.id})
+        assertEquals(c.joinCharacters.getValue("jiangziya"),joined.characters.last())
+        assertEquals(before.characters,joined.characters.take(3));assertEquals(before.money,joined.money)
+        assertEquals(before.inventory,joined.inventory);assertEquals(7,joined.mapId)
+        assertEquals("rom.dialogue.17.12",jiangDialogueId(v));assertTrue(rule.validPending(joined))
+        send(v,MotionEvent.ACTION_UP,listOf(middle));assertEquals(joined,v.currentSnapshot())
+        val out=File(instrumentation.targetContext.getExternalFilesDir(null),"world-jiang-pending-expected-save.json")
+        out.writeText(joined.json().toString());screenshot(v,"world-jiang-controlled-four-actor-pending-cold-boundary")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
+    /** Recorder launches after real external force-stop; resume exact pending data. */
+    fun testJiangExternalColdStartMatchesPendingAndCompletesOnce(){
+        val expected=SaveSnapshot.parse(File(instrumentation.targetContext.getExternalFilesDir(null),
+            "world-jiang-pending-expected-save.json").readText())
+        val(activity,v)=launch(false);val rule=v.content.jiangJoin!!
+        assertEquals(expected,v.currentSnapshot());assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertEquals("rom.dialogue.17.12",jiangDialogueId(v));screenshot(v,"world-jiang-controlled-cold-exact-pending")
+        for(id in rule.continuation.dialogueIds.drop(1))completeJiangMessage(v,id)
+        val after=v.currentSnapshot();assertEquals(GameView.Layer.MAP,v.layer)
+        assertEquals(expected.characters,after.characters);assertEquals(expected.money,after.money)
+        assertEquals(expected.inventory,after.inventory);assertTrue(after.flags["rom.map.7.flag.128"]==true)
+        assertTrue(after.flags[rule.pendingFlag]!=true)
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(v.width*.5f,v.height*.5f)));assertEquals(after,v.currentSnapshot())
+        assertEquals(after,SaveSnapshot.parse(instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+            .getString("saveJson",null)!!));screenshot(v,"world-jiang-controlled-cold-complete-no-double-join")
+        verifyControlledJiangFourActorBattle(v)
+        instrumentation.runOnMainSync{activity.finish()}
+    }
+    private fun verifyControlledJiangFourActorBattle(v:GameView){
+        // Explicit battle fixture, using the real production party constructor
+        // and native loaded stats/owner tables; not a normal map encounter claim.
+        val before=v.currentSnapshot();val rules=v.content.battle!!;val group=rules.groups.first()
+        var fight:OpeningBattle?=null;val p=BattlePresentation()
+        instrumentation.runOnMainSync{
+            fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
+                .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
+            fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+            field("battle",fight);field("battlePresentation",p);field("battleID","controlled-jiang-four-party")
+            field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
+            v.input.clear();p.tick(400)
+        }
+        assertEquals(before.characters,fight!!.party);assertEquals(4,fight!!.party.size)
+        screenshot(v,"world-jiang-controlled-four-actor-battle-ready")
+        val beforeEnemy=fight!!.enemies.map{it.hp}
+        repeat(3){i->
+            assertEquals(before.characters[i].id,fight!!.inputHero!!.id)
+            tap(v,center(v.battleTargetBounds(fight!!.enemies.first{it.hp>0}.slot)))
+            assertEquals(i+1,fight!!.inputRevision);assertEquals(beforeEnemy,fight!!.enemies.map{it.hp})
+            assertEquals(before.characters,fight!!.party)
+        }
+        assertEquals("jiangziya",fight!!.inputHero!!.id)
+        val deadline=SystemClock.elapsedRealtime()+60000
+        while(fight!!.phase==BattlePhase.TARGET){
+            assertTrue("Bounded actual four-actor physical smoke",SystemClock.elapsedRealtime()<deadline)
+            if(p.screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))
+                tap(v,center(v.battleTargetBounds(fight!!.enemies.first{it.hp>0}.slot)))
+            SystemClock.sleep(40)
+        }
+        assertEquals(BattlePhase.VICTORY,fight!!.phase)
+        var committed=false
+        while(!committed){
+            instrumentation.runOnMainSync{committed=p.screen==BattlePresentation.Screen.RESULT&&
+                GameView::class.java.getDeclaredField("battleCommitted").apply{isAccessible=true}.getBoolean(v)}
+            assertTrue(SystemClock.elapsedRealtime()<deadline);if(!committed)SystemClock.sleep(40)
+        }
+        val settled=v.currentSnapshot();assertEquals(OriginalJiangJoin.FULL_PARTY,settled.characters.map{it.id})
+        assertTrue(settled.validate(v.content));assertEquals(before.inventory,settled.inventory)
+        assertEquals(before.money+fight!!.enemies.sumOf{it.definition.moneyReward},settled.money)
+        screenshot(v,"world-jiang-controlled-four-actor-victory")
+        send(v,MotionEvent.ACTION_UP,listOf(Pair(v.width*.5f,v.height*.5f)))
+        assertEquals(settled,v.currentSnapshot())
+    }
     private fun launch(dismissOpening:Boolean=true):Pair<MainActivity,GameView>{
         val activity=instrumentation.startActivitySync(Intent(instrumentation.targetContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         var view:GameView?=null

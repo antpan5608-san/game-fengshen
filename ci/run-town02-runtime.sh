@@ -115,10 +115,20 @@ run_test(){
 }
 if [[ "$stage" == development-smoke ]]; then
     development_scope="${FENGSHEN_DEVELOPMENT_SMOKE_SCOPE:-full}"
-    case "$development_scope" in full|rollback) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
+    case "$development_scope" in full|rollback|jiang) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
     # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
     adb install -r android/app/build/outputs/apk/debug/app-debug.apk
     adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    if [[ "$development_scope" == jiang ]]; then
+        # Inactive bounded c61 recipe: loader/codec plus actual controlled touch
+        # and external force-stop. This never creates a release receipt.
+        adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testC61FrozenDependenciesAndMedicalPartySave,org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
+        cat artifacts/town02-runtime/development-content-loader.txt
+        grep -q 'OK (2 tests)' artifacts/town02-runtime/development-content-loader.txt || exit 1
+        python tools/record_app_audio.py world-jiang testControlledJiangInvitationPendingAtColdBoundary --silent --controlled-jiang --cold-test testJiangExternalColdStartMatchesPendingAndCompletesOnce --budget-seconds 300
+        pull_evidence
+        exit 0
+    fi
     # Expose the existing loader's exact failed invariant before waiting for UI.
     adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion,org.fengshen.dev.ContentTest#testC60FrozenDependenciesAndMedicalPartySave,org.fengshen.dev.ContentTest#testJiamengSavedActorsDialogueAndManualReturnFixture org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
     cat artifacts/town02-runtime/development-content-loader.txt

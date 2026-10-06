@@ -1769,6 +1769,10 @@
       }
     }
   },
+  "exitAdjacencyEvidence": {
+    "path": "game-data/provenance/world-jiang-exit-adjacency.json",
+    "sha256": "8357c6813f0f1bbe95d7254033fa86130a61ca3def980f4bf4f0c7fea1e1d5a5"
+  },
   "exits": [
     {
       "arrivalDirection": "UP",
@@ -1921,30 +1925,6 @@
       "kind": "EXIT_RECORD",
       "resetEncounterSteps": true,
       "source": {
-        "cpuAddress": 58646,
-        "length": 5,
-        "meaning": "Independent original route exit row",
-        "module": 8,
-        "offset": 288038,
-        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
-      },
-      "spawn": [
-        3,
-        10
-      ],
-      "toMapId": 142,
-      "trigger": [
-        1,
-        29
-      ]
-    },
-    {
-      "arrivalDirection": "DOWN",
-      "confidence": "VERIFIED",
-      "fromMapId": 121,
-      "kind": "EXIT_RECORD",
-      "resetEncounterSteps": true,
-      "source": {
         "cpuAddress": 58651,
         "length": 5,
         "meaning": "Independent original route exit row",
@@ -1961,32 +1941,6 @@
         45,
         29
       ]
-    },
-    {
-      "arrivalDirection": "DOWN",
-      "confidence": "VERIFIED",
-      "direction": "DOWN",
-      "fromMapId": 142,
-      "kind": "EDGE_RECORD",
-      "runtimeEvidence": "CONTROLLED_NATIVE_REAL_ENTRY_WITH_ORIGINAL_EDGE_DISPATCH",
-      "source": {
-        "cpuAddress": 59177,
-        "length": 5,
-        "meaning": "Independent original city edge return",
-        "module": 8,
-        "offset": 288569,
-        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
-      },
-      "spawn": [
-        42,
-        78
-      ],
-      "toMapId": 16,
-      "trigger": [
-        15,
-        43
-      ],
-      "triggerMode": "EDGE"
     },
     {
       "arrivalDirection": "UP",
@@ -2037,28 +1991,144 @@
       ]
     },
     {
-      "arrivalDirection": "UP",
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
       "confidence": "VERIFIED",
+      "direction": "DOWN",
       "fromMapId": 142,
-      "kind": "EXIT_RECORD",
+      "kind": "OBSERVED_EDGE_DEPARTURE",
       "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
       "source": {
-        "cpuAddress": 59192,
+        "cpuAddress": 59177,
         "length": 5,
-        "meaning": "Independent original route exit row",
+        "meaning": "Independent original city edge return",
         "module": 8,
-        "offset": 288584,
-        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
       },
       "spawn": [
-        1,
-        29
+        42,
+        78
       ],
-      "toMapId": 121,
+      "toMapId": 16,
       "trigger": [
-        3,
-        10
-      ]
+        13,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        14,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        15,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        16,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        17,
+        42
+      ],
+      "triggerMode": "EDGE"
     }
   ],
   "fonts": [
@@ -4480,6 +4550,10 @@
       ]
     }
   ],
+  "fourPartyEvidence": {
+    "path": "game-data/provenance/world-jiang-four-party.json",
+    "sha256": "69533f5adf50bf5d124ee9e87773198ce37e9da381cefec70eb171cb531038c0"
+  },
   "graphics": {
     "npc-jiang-150.png": {
       "actorEntityId": 150,
@@ -4931,6 +5005,58 @@
       "sha256": "386d25280770253ddced21c1bed6b244d68b294fa4e49f3f2a248ae7fbf01ba5"
     }
   },
+  "inactiveExitRecords": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 58646,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288038,
+        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
+      },
+      "spawn": [
+        3,
+        10
+      ],
+      "toMapId": 142,
+      "trigger": [
+        1,
+        29
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 59192,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288584,
+        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+      },
+      "spawn": [
+        1,
+        29
+      ],
+      "toMapId": 121,
+      "trigger": [
+        3,
+        10
+      ]
+    }
+  ],
   "initialCharacter": {
     "actorIndex": 3,
     "agility": 63,
@@ -5138,7 +5264,8 @@
       "originalId": 24,
       "sellPrice": 2500,
       "source": {
-        "confidence": "PROVISIONAL_ROM_STATIC",
+        "confidence": "PROVISIONAL_REFERENCE",
+        "confidenceDetail": "ROM_STATIC_NOT_GAMEPLAY_VERIFIED; compatible existing loader category",
         "nameConfidence": "UNKNOWN",
         "nameEvidence": {
           "evidence": "game-data/provenance/world-jiang-invitation.json",
@@ -5170,7 +5297,11 @@
     "Map7 initial/dynamic context lifecycle and full script26 movement need remaining evidence",
     "City121/142 optional rooms/services and native NPC script motion not yet converted",
     "Early checkpoint confused stat/cache field meanings; corrected using existing Yang field mapping and actual fourth-slot initializer, not name-based inference",
-    "Stored RAM level37 is zero-based; Android/display level38 uses the existing growth convention"
+    "Stored RAM level37 is zero-based; Android/display level38 uses the existing growth convention",
+    "Source positions written in an isolated native checkpoint before real joypad; no normal-route claim",
+    "Only five tested south cells admitted; other south x unknown",
+    "Original south FF FF record retains no coordinate anchor; [15,43] was the entry spawn, not an observed departure",
+    "Two left records retained as record-only, not enabled"
   ],
   "localCpu": {
     "caseCount": 84,
@@ -5928,109 +6059,6 @@
     }
   ],
   "palettes": {
-    "7": {
-      "backgroundSelector": 7,
-      "confidence": "STATIC_ROM_DEFAULT_ONLY",
-      "mapId": 7,
-      "palette": [
-        14,
-        39,
-        55,
-        25,
-        25,
-        33,
-        50,
-        48,
-        25,
-        22,
-        9,
-        25,
-        25,
-        0,
-        16,
-        48,
-        14,
-        14,
-        54,
-        22,
-        25,
-        14,
-        54,
-        43,
-        25,
-        14,
-        38,
-        34,
-        25,
-        14,
-        38,
-        32
-      ],
-      "remainingUnknown": [
-        "Scripted palette/lighting transitions and non-default event states"
-      ],
-      "routineEvidence": [
-        {
-          "cpuAddress": 43001,
-          "length": 44,
-          "meaning": "Signed map ID selector dispatch",
-          "module": 0,
-          "offset": 10249,
-          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478"
-        },
-        {
-          "cpuAddress": 41872,
-          "length": 110,
-          "meaning": "Original queued background then sprite palette writes",
-          "module": 0,
-          "offset": 9120,
-          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d"
-        }
-      ],
-      "source": [
-        {
-          "cpuAddress": 57553,
-          "length": 2,
-          "meaning": "Map background/sprite palette selector pair",
-          "module": 0,
-          "offset": 24801,
-          "sha256": "0a6361b3a802f55cd5ae06101c88a1e216320fe11cc0cfe1d791eed08a1200fd"
-        },
-        {
-          "cpuAddress": 58292,
-          "length": 2,
-          "meaning": "Background palette pointer",
-          "module": 0,
-          "offset": 25540,
-          "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293"
-        },
-        {
-          "cpuAddress": 58424,
-          "length": 2,
-          "meaning": "Sprite palette pointer",
-          "module": 0,
-          "offset": 25672,
-          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
-        },
-        {
-          "cpuAddress": 58458,
-          "length": 16,
-          "meaning": "Original default background colors",
-          "module": 0,
-          "offset": 25706,
-          "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0"
-        },
-        {
-          "cpuAddress": 58634,
-          "length": 16,
-          "meaning": "Original sprite colors",
-          "module": 0,
-          "offset": 25882,
-          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
-        }
-      ],
-      "spriteSelector": 0
-    },
     "121": {
       "backgroundSelector": 47,
       "confidence": "STATIC_ROM_DEFAULT_ONLY",
@@ -6225,6 +6253,109 @@
           "module": 0,
           "offset": 26474,
           "sha256": "ff572413e40e0af5e4f52a4296977768d942ce3d5509e6195541708f12a74f2a"
+        },
+        {
+          "cpuAddress": 58634,
+          "length": 16,
+          "meaning": "Original sprite colors",
+          "module": 0,
+          "offset": 25882,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+        }
+      ],
+      "spriteSelector": 0
+    },
+    "7": {
+      "backgroundSelector": 7,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "mapId": 7,
+      "palette": [
+        14,
+        39,
+        55,
+        25,
+        25,
+        33,
+        50,
+        48,
+        25,
+        22,
+        9,
+        25,
+        25,
+        0,
+        16,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "routineEvidence": [
+        {
+          "cpuAddress": 43001,
+          "length": 44,
+          "meaning": "Signed map ID selector dispatch",
+          "module": 0,
+          "offset": 10249,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478"
+        },
+        {
+          "cpuAddress": 41872,
+          "length": 110,
+          "meaning": "Original queued background then sprite palette writes",
+          "module": 0,
+          "offset": 9120,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d"
+        }
+      ],
+      "source": [
+        {
+          "cpuAddress": 57553,
+          "length": 2,
+          "meaning": "Map background/sprite palette selector pair",
+          "module": 0,
+          "offset": 24801,
+          "sha256": "0a6361b3a802f55cd5ae06101c88a1e216320fe11cc0cfe1d791eed08a1200fd"
+        },
+        {
+          "cpuAddress": 58292,
+          "length": 2,
+          "meaning": "Background palette pointer",
+          "module": 0,
+          "offset": 25540,
+          "sha256": "3a38497f4815fbc8a3d519d7be825b5766d4724949554fec2731ef9fac10a293"
+        },
+        {
+          "cpuAddress": 58424,
+          "length": 2,
+          "meaning": "Sprite palette pointer",
+          "module": 0,
+          "offset": 25672,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+        },
+        {
+          "cpuAddress": 58458,
+          "length": 16,
+          "meaning": "Original default background colors",
+          "module": 0,
+          "offset": 25706,
+          "sha256": "2edb1db8c6902be532150149bd21085b1eac05cd59845798fd6ffb412f51bba0"
         },
         {
           "cpuAddress": 58634,

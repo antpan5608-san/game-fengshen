@@ -38,11 +38,13 @@ def read_saved_boundary(read_pref,pause=time.sleep,attempts=20):
             if attempt+1<attempts:pause(.1)
     raise SavedBoundaryUnavailable(f'Actual persisted save unavailable after {attempts} reads ({last})')
 
-def recording_result(videos,segments,controlled=False):
+def recording_result(videos,segments,controlled=False,controlled_kind='CONTROLLED_SAVE_HISTORY_SMOKE'):
+    if controlled_kind not in ('CONTROLLED_SAVE_HISTORY_SMOKE','CONTROLLED_JIANG_INVITATION_SMOKE'):
+        raise ValueError('Unknown controlled recording kind')
     result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
         'segments':segments,'normalAssertions':'NOT_APPLICABLE' if controlled else 'PASS',
         'forceStopRestartEqual':True,'continuedExploration':not controlled,'originalPreferencesRestored':True}
-    if controlled:result.update(kind='CONTROLLED_SAVE_HISTORY_SMOKE',controlledAssertions='PASS')
+    if controlled:result.update(kind=controlled_kind,controlledAssertions='PASS')
     return result
 
 def record_silent():
@@ -58,12 +60,19 @@ def record_silent():
     prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
     validate_recording_budget(prefix,budget)
     method=sys.argv[2] if len(sys.argv)>2 else 'testNormalHerbSupplyLoop'
+    controlled_kind='CONTROLLED_SAVE_HISTORY_SMOKE'
     controlled='--controlled-save-history' in sys.argv
     if controlled:
         sys.argv.remove('--controlled-save-history')
         assert not comparison and prefix=='world-save-history'
         assert method=='testControlledSaveHistoryManualRollbackAndActivityRestart'
         assert cold_method=='testSaveHistoryExternalColdStartMatchesRestoredSnapshot'
+    if '--controlled-jiang' in sys.argv:
+        assert not controlled and not comparison
+        controlled=True;controlled_kind='CONTROLLED_JIANG_INVITATION_SMOKE'
+        sys.argv.remove('--controlled-jiang')
+        assert prefix=='world-jiang' and method=='testControlledJiangInvitationPendingAtColdBoundary'
+        assert cold_method=='testJiangExternalColdStartMatchesPendingAndCompletesOnce'
     def adb(*args,**kwargs):
         return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,timeout=90,**kwargs).stdout
     assert b'ranchu' in adb('shell','getprop','ro.hardware'), 'Isolated emulator only'
@@ -152,7 +161,7 @@ def record_silent():
             'savedWorldBefore':before,'savedWorldAfter':saved(),
             'boundaryScope':'Same controlled rollback save before and after external cold restart' if controlled else 'Same normal save before external force-stop and after actual restart/continued movement',
             'limit':'Capture start approximate; actual frames in retained MP4'})
-        result=recording_result(videos,segments,controlled)
+        result=recording_result(videos,segments,controlled,controlled_kind)
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result))
     except Exception:

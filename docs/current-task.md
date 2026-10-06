@@ -14,7 +14,7 @@ frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: c60个人阶段已交付；c61草案南出口及两个左出口与原运行证据冲突，先修正，再定向导出与App验证。
+first_real_blocker: c60个人阶段已交付；c61出口/加载定义与四人战斗上限已修正，真实同候选App入队/外部冷启/四人战斗尚待运行，不能发布。
 
 ## 当前用户授权（2026-10-06）
 
@@ -40,6 +40,14 @@ IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED均完成。v84 / 0.8.14-c60
 - 下一动作：原巡检→审查弹窗切换和真实失败录像→实际复现/分类→最小修复→存档/回档/Activity重启/外部cold/旧档升级定向验收→同候选签名内容与原发布门槛→发布及公网完整字节复核/postflight。
 
 ## 后续批次
+
+### 用户已授权开发队列（2026-10-06）
+
+已实际核实来源窗口01a11191-f8b7-7db1-8c6c-b39fd4634e01的用户入队、点击寻路和“Implement the proposed plan.”指令。完整原计划及交接实施规格保存于 [v84-feedback-click-navigation.md](plans/v84-feedback-click-navigation.md)，状态AUTHORIZED_QUEUED_NOT_IMPLEMENTED_NOT_APP_VERIFIED。本窗口继续游戏唯一写入者；保留c61当前工作，完成必要验证后主动接续，不再等待相同继续授权。
+
+执行顺序：当前c61验收 → 房间map28/统一交互基础/c60全部70物品能力清单 → 点击寻路与到达选项 → 牛黄丸战斗与剩余物品分批。既有四方向移动、碰撞/模式/遭遇/每步结算、存档与原发布保护复用；每批完成真实验收后发布个人测试版。牛黄丸地图原版二次尝试扣除不擅自改成bug，未核战斗不能套地图规则。
+
+已定偏好：原指令保留触控快捷；对象到达只显示选项，确认才执行；默认隐藏摇杆、设置可开、实体方向保留；遇敌终止、战后重新点击。完整规格和验收细节以计划文件为准，尚未实现或验证项不得关闭。
 
 c61草案尚未启用。先纠正142南出口原证据row42到43与草案EDGE43到44/VERIFIED冲突；保留左侧未换图失败，不猜出口。姜邀请/加入/成长/装备与7/142/121配方须正确pin、空目录恢复/hash核验、相关测试和真实App短冒烟。完整累计欠账继续 `docs/delivery-status.md`，不得把依赖图数写成已可玩图数。
 

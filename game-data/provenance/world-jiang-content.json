@@ -4012,6 +4012,10 @@
       "id": "rom.armor.28"
     }
   ],
+  "exitAdjacencyEvidence": {
+    "path": "game-data/provenance/world-jiang-exit-adjacency.json",
+    "sha256": "8357c6813f0f1bbe95d7254033fa86130a61ca3def980f4bf4f0c7fea1e1d5a5"
+  },
   "exits": [
     {
       "arrivalDirection": "UP",
@@ -4164,30 +4168,6 @@
       "kind": "EXIT_RECORD",
       "resetEncounterSteps": true,
       "source": {
-        "cpuAddress": 58646,
-        "length": 5,
-        "meaning": "Independent original route exit row",
-        "module": 8,
-        "offset": 288038,
-        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
-      },
-      "spawn": [
-        3,
-        10
-      ],
-      "toMapId": 142,
-      "trigger": [
-        1,
-        29
-      ]
-    },
-    {
-      "arrivalDirection": "DOWN",
-      "confidence": "VERIFIED",
-      "fromMapId": 121,
-      "kind": "EXIT_RECORD",
-      "resetEncounterSteps": true,
-      "source": {
         "cpuAddress": 58651,
         "length": 5,
         "meaning": "Independent original route exit row",
@@ -4204,32 +4184,6 @@
         45,
         29
       ]
-    },
-    {
-      "arrivalDirection": "DOWN",
-      "confidence": "VERIFIED",
-      "direction": "DOWN",
-      "fromMapId": 142,
-      "kind": "EDGE_RECORD",
-      "runtimeEvidence": "CONTROLLED_NATIVE_REAL_ENTRY_WITH_ORIGINAL_EDGE_DISPATCH",
-      "source": {
-        "cpuAddress": 59177,
-        "length": 5,
-        "meaning": "Independent original city edge return",
-        "module": 8,
-        "offset": 288569,
-        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
-      },
-      "spawn": [
-        42,
-        78
-      ],
-      "toMapId": 16,
-      "trigger": [
-        15,
-        43
-      ],
-      "triggerMode": "EDGE"
     },
     {
       "arrivalDirection": "UP",
@@ -4280,30 +4234,150 @@
       ]
     },
     {
-      "arrivalDirection": "UP",
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
       "confidence": "VERIFIED",
+      "direction": "DOWN",
       "fromMapId": 142,
-      "kind": "EXIT_RECORD",
+      "kind": "OBSERVED_EDGE_DEPARTURE",
       "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
       "source": {
-        "cpuAddress": 59192,
+        "cpuAddress": 59177,
         "length": 5,
-        "meaning": "Independent original route exit row",
+        "meaning": "Independent original city edge return",
         "module": 8,
-        "offset": 288584,
-        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
       },
       "spawn": [
-        1,
-        29
+        42,
+        78
       ],
-      "toMapId": 121,
+      "toMapId": 16,
       "trigger": [
-        3,
-        10
-      ]
+        13,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        14,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        15,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        16,
+        42
+      ],
+      "triggerMode": "EDGE"
+    },
+    {
+      "adjacencyEvidence": "game-data/provenance/world-jiang-exit-adjacency.json",
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "direction": "DOWN",
+      "fromMapId": 142,
+      "kind": "OBSERVED_EDGE_DEPARTURE",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "CONTROLLED_NATIVE_TESTED_SOURCE_POSE_ONLY",
+      "source": {
+        "cpuAddress": 59177,
+        "length": 5,
+        "meaning": "Independent original city edge return",
+        "module": 8,
+        "offset": 288569,
+        "sha256": "a2fee9fb8d33b17e26be4522488e6d7cf2f4599fb31adbd5725190deb6b62c27"
+      },
+      "spawn": [
+        42,
+        78
+      ],
+      "toMapId": 16,
+      "trigger": [
+        17,
+        42
+      ],
+      "triggerMode": "EDGE"
     }
   ],
+  "fourPartyEvidence": {
+    "path": "game-data/provenance/world-jiang-four-party.json",
+    "sha256": "69533f5adf50bf5d124ee9e87773198ce37e9da381cefec70eb171cb531038c0"
+  },
   "graphics": {
     "npc-jiang-150.png": {
       "actorEntityId": 150,
@@ -4677,6 +4751,58 @@
       "width": 16
     }
   },
+  "inactiveExitRecords": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 121,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 58646,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288038,
+        "sha256": "c4829be4e3320f47e31fa290618c3e60a8b9c913ab776433031775c7cc819caa"
+      },
+      "spawn": [
+        3,
+        10
+      ],
+      "toMapId": 142,
+      "trigger": [
+        1,
+        29
+      ]
+    },
+    {
+      "arrivalDirection": "UP",
+      "confidence": "SOURCE_RECORD_ONLY",
+      "fromMapId": 142,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "runtimeEvidence": "FAILED_NATIVE_EDGE_NOT_ENABLED",
+      "source": {
+        "cpuAddress": 59192,
+        "length": 5,
+        "meaning": "Independent original route exit row",
+        "module": 8,
+        "offset": 288584,
+        "sha256": "34979b65da763e4daee43ff0ac9a0c3c89971bb546eee82d36dca1f26411780e"
+      },
+      "spawn": [
+        1,
+        29
+      ],
+      "toMapId": 121,
+      "trigger": [
+        3,
+        10
+      ]
+    }
+  ],
   "items": [
     {
       "buyPrice": 5000,
@@ -4740,7 +4866,8 @@
       "originalId": 24,
       "sellPrice": 2500,
       "source": {
-        "confidence": "PROVISIONAL_ROM_STATIC",
+        "confidence": "PROVISIONAL_REFERENCE",
+        "confidenceDetail": "ROM_STATIC_NOT_GAMEPLAY_VERIFIED; compatible existing loader category",
         "nameConfidence": "UNKNOWN",
         "nameEvidence": {
           "evidence": "game-data/provenance/world-jiang-invitation.json",
@@ -4769,7 +4896,11 @@
   "limitations": [
     "Original NPC cutscene movement/frame timing and optional city rooms not completed",
     "Learned spells not inferred",
-    "Android new batch NOT_RUN"
+    "Android new batch NOT_RUN",
+    "Source positions written in an isolated native checkpoint before real joypad; no normal-route claim",
+    "Only five tested south cells admitted; other south x unknown",
+    "Original south FF FF record retains no coordinate anchor; [15,43] was the entry spawn, not an observed departure",
+    "Two left records retained as record-only, not enabled"
   ],
   "maps": [
     {
