@@ -42,6 +42,20 @@ class C60PersonalScopeTest(unittest.TestCase):
         self.assertTrue(all(receipt[key]=='PASS' for key in h.C60_PERSONAL_GATES))
         self.assertFalse(any(receipt.get(key)=='PASS' for key in h.WORLD_KEYS+h.CONTINUATION_KEYS))
 
+    def test_active_scope_hash_matches_git_checkout_bytes(self):
+        payload = (ROOT/'ci/runtime-scope.json').read_bytes()
+        def object_hash(arguments, content):
+            return subprocess.run(['git', 'hash-object', *arguments, '--stdin'], cwd=ROOT,
+                input=content, capture_output=True, check=True, timeout=10).stdout.strip()
+        # Detect Windows-authored CRLF even when the working-tree pin agrees with it.
+        self.assertEqual(object_hash(['--no-filters'], payload),
+                         object_hash(['--path=ci/runtime-scope.json'], payload))
+        pin = json.loads((ROOT/'ci/content-source.json').read_text(encoding='utf-8'))
+        self.assertEqual(hashlib.sha256(payload).hexdigest(), pin['runtimeScope']['sha256'])
+        crlf = payload.replace(b'\n', b'\r\n')
+        self.assertNotEqual(object_hash(['--no-filters'], crlf),
+                            object_hash(['--path=ci/runtime-scope.json'], crlf))
+
     def test_every_save_gate_is_required_in_creation_and_review(self):
         proposed = dict(self.candidate, **{key: 'PASS' for key in h.personal_gates(self.scope)})
         receipt = h.finish_personal(proposed)
