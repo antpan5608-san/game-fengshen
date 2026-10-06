@@ -35,6 +35,7 @@ object OriginalNpcTalk {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
         if(before.mapId!=rule.mapId)return reject("当前场景已变化")
         if(rule.actionId==45)return OriginalJiangJoin.begin(before,OriginalJiangJoinDefinition(OriginalJiangJoin.EVIDENCE))
+        if(rule.actionId==61)return OriginalJiangJoin.beginPanxi(before,rule)
         if(rule.actionId==41)return room116(before,rule)
         if(rule.actionId==43)return huang117(before,rule,item)
         if(rule.actionId==1)return teacher163(before,rule,item)
@@ -51,7 +52,7 @@ object OriginalNpcTalk {
         if(rule.actionId==52)return villageSix(before,rule)
         if(rule.actionId==31)return islandResidents(before,rule)
         if(rule.actionId==58)return jiamengRoom(before,rule)
-        if(rule.actionId in listOf(53,54))return westernVillageWitness(before,rule)
+        if(rule.actionId in listOf(44,53,54))return westernVillageWitness(before,rule)
         if(rule.actionId in listOf(55,56))return westernHouseWitness(before,rule)
         if(rule.actionId==47)return lotus136(before,rule,item)
         if(rule.actionId!=17)return reject("当前对话规则未接入")
@@ -131,6 +132,9 @@ object OriginalNpcTalk {
             8 to "rom.map.8.flag.1"->Triple(53,"rom.dialogue.18.2","rom.dialogue.18.11")
             8 to "rom.map.8.flag.8"->Triple(53,"rom.dialogue.18.5","rom.dialogue.18.12")
             9 to "rom.map.9.flag.1"->Triple(54,"rom.dialogue.19.12","rom.dialogue.19.4")
+            121 to "rom.map.121.flag.1"->Triple(44,"rom.dialogue.131.5","rom.dialogue.131.6")
+            121 to "rom.map.121.flag.2"->Triple(44,"rom.dialogue.131.10","rom.dialogue.131.13")
+            121 to "rom.map.121.flag.4"->Triple(44,"rom.dialogue.131.11","rom.dialogue.131.6")
             else->null
         }
         if(expected==null||rule.actionId!=expected.first||rule.firstDialogue!=expected.second||
@@ -138,6 +142,14 @@ object OriginalNpcTalk {
             return StoryFollowup.Result(before,null,false,"当前村民条件对白未核验")
         val witnessed=before.flags[rule.witnessFlagId]==true||(0..7).any{
             before.flags["rom.global.7c9.${1 shl it}"]==true
+        }
+        if(rule.actionId==44){
+            val first=rule.firstDialogue.substringAfterLast('.').toInt()
+            if(rule.messageDialogues!=mapOf(0 to rule.firstDialogue,1 to "rom.dialogue.131.${first+1}",2 to rule.repeatDialogue))
+                return StoryFollowup.Result(before,null,false,"守卫原版对白选择未核验")
+            val seen=before.flags[rule.mapFlagId]==true
+            val next=if(!seen&&witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before
+            return StoryFollowup.Result(next,if(seen)rule.repeatDialogue else if(witnessed)rule.messageDialogues.getValue(1)else rule.firstDialogue,true)
         }
         val repeat=before.flags[rule.mapFlagId]==true||witnessed
         val next=if(witnessed)before.copy(flags=before.flags+(rule.mapFlagId to true))else before

@@ -433,3 +433,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 原物品目标可能是玩家当前位置而非NPC：已实际运行probe-world-well8.py的472位置/4消耗/1024阶段、受控原菜单和完整对白，复用OriginalSceneItems位置目标与共享StoryFollowup/pending校验，不造一个NPC或面向要求。目标scene开放范围与原谓词分开记录；原“不查map”不得写成“只允许此map”。无NPC的对白恢复用现有nullable openDialogue，结束仍同存档事务；ContentTest codec已编译但尚未App运行。新内容首次目标hash未固定时只用原导出器生成模式计算manifest，明确固定pin后再默认严格重导出/空restore；旧pin与旧媒体保持，不让CI跳过校验。
 
 - 实际DEBUG加载曾在NPC引用require失败，原隔离入口先运行已有ContentTest可获得准确ContentLoader行号，再运行UI冒烟；打包hash成功不等于启动。缺失历史绑定时保留原内容pin，用有界局部export新增明确aliasOf/真实ROM文本group与source，FF/FF对象只声明已核不可交谈，不删除验证或伪造对白。上述诊断、局部导出/严格restore及正反回归已执行；新的App复测仍待runner。
+
+- 实际五分钟前台AUTO测试曾以不变快照等待AUTO而失败：原SaveHistory有已测试的最近快照去重。验证自动保存需先制造明确隔离状态变化，再使用真实时间；去重与计时分别验证，不为测试删除运行规则。此fixture修正已编译，App重跑结果仍待runner。
