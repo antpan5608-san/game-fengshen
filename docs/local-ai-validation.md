@@ -14,7 +14,7 @@
 | Android 内容/存档 codec | 原 `ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion` 实际执行，`OK (1 test)`；这是受控 loader/codec 测试，不是正常剧情、真机或完整地图验收 |
 | 协作工具 | 26 项真实检查通过，涵盖新增/删除/已提交变化、过期回执、超长 Unicode 分块、身份后缀预算、路径/私有数据范围、只读草稿、缓存/参数失效、503 重试、401、不完整输出降级、双客户端串行、同快照报告并发写入、有限 Stop 续调，以及函数检索/原行号/片段选择 |
 | MCP | SDK 客户端完成 STDIO 协商、工具发现、真实草稿与审查调用；包括 `search_project_code` / 同义入口 `search_project`、`draft_code`、`review_changes`、`record_review_decision`、`review_status` |
-| Codex 项目配置 | 项目文件为 `gpt-6.1-sol` / `high`；实际配置检查提示新目录尚需可信项目记录，项目专用 MCP/Hook 不能据此称已自动启用。Hook 还需所有者审阅精确定义 |
+| Codex 项目配置 | 用户追加最大权限授权后，实际读取为完全访问、无需审批、`gpt-6.1-sol` / `high`，项目层没有 disabledReason、本地 MCP enabled；当前 Stop 定义已核对并登记哈希，`hooks/list` 返回 enabled/trusted |
 | 保留的云端 CI | R2 run `37408307126` 最后本轮查询仍 `in_progress`，build/runtime 成功、runtime-world 运行中；未取消、重新触发或审批发布 |
 
 真实故障已修正：Windows 自动换行造成证据脚本指纹不一致；文件锁读取另一进程锁定字节导致并发失败；草稿/审查提示混用；审查分块未预留模型/文档身份后缀；同快照报告共用临时文件导致并发提交失败；命令行和 Hook JSON 中文输出受 Windows 默认编码影响。修正后重新验证，包括实际子进程的计划模式、失败响应及状态 JSON 解析，没有关闭校验或把截断输出视为通过。
@@ -39,10 +39,10 @@
 
 本机完整记录位于忽略的 `.local-ai/`：`android-build.log`、`android-start-smoke.json`、截图、`all-workflow-tests.log`、两版 4B 草稿、9B 草稿及检查记录、`reviews/` 和 `state.sqlite3`。建议与 Codex 决策按代码快照绑定；最终覆盖状态/降级原因以数据库回执为准，不把早期 partial 改写为通过。
 
-最终代码快照 `d2e34f85de8265a6cac024bfd3debc88bf4d19d513290631134e35e2c9e26247`：本地审查 16 片段，未覆盖项 0。Codex 逐条核对建议，通过真实 MCP 记录 `reviewed` 回执；再次调用状态工具为 `current`，直接执行 Stop 检查返回 `continue: true`。这是工具调用验证，项目自动加载仍待下述启用步骤。
+工具实现快照 `d2e34f85de8265a6cac024bfd3debc88bf4d19d513290631134e35e2c9e26247`：本地审查 16 片段，未覆盖项 0。Codex 逐条核对建议，通过真实 MCP 记录 `reviewed` 回执；再次调用状态工具为 `current`，直接执行 Stop 检查返回 `continue: true`。追加权限授权记录后的快照为 `0c13a1c18102ba95801455c7fa9281064f927e915552e48c309094408dba9077`，该增量也已单独审查；启用状态见上表。
 
 控制电脑实际约 8GB 内存，与局域网模型服务器的约 32GB 是不同机器。首次界面截图还在开发内容校验阶段；重查时模拟器 Quickstep 出现 ANR，增大临时 VM 内存又导致主机资源不足。完整界面冒烟未通过，不把 Activity 启动和受控 loader 测试升级为完整 App 验收。本轮保持游戏源码及稳定 APK，保留失败记录；后续 App 验收继续使用已有云端 CI 或资源充足的隔离设备。
 
 云端 741 份原始取证仍未整包传输。用户真实存档、签名私钥、手机、声音、全世界正常路线、覆盖升级均未在本轮新增验收。原 c60 手动回档弹窗仪器失败保留，c61 草案矛盾尚未修复，本轮不扩展游戏工作。
 
-自动联动启用等待项目可信记录及 Hook 所有者审阅。另一窗口已完成模型参数专项调优：留出验收原配置与候选均为 18/48，当前源码草稿可验证 6/20；保留原 4B 配置，接口已冻结。详见 [专项说明](local-ai-optimization.md)。
+最大权限及项目/Hook 信任已按追加授权配置并经 Codex 接口确认；已有聊天需重新打开项目加载配置。另一窗口已完成模型参数专项调优：留出验收原配置与候选均为 18/48，当前源码草稿可验证 6/20；保留原 4B 配置，接口已冻结。详见 [专项说明](local-ai-optimization.md)。

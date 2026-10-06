@@ -10,9 +10,9 @@
 
 代码与开发环境在电脑，Codex 的高推理仍使用云端；`local-code` 两个别名的推理在局域网服务器执行。
 
-Codex 要求该目录先成为可信项目，才会加载项目配置。当前已验证配置文件与独立 MCP 连接；是否已自动加载，以 Codex 实际配置和工具列表为准。项目可信记录与 Hook 的信任是两件事。
+用户已授权最大执行权限。全局默认为 `sandbox_mode="danger-full-access"`、`approval_policy="never"`；本仓库可信记录已新增，实际配置读取确认项目层正常加载，`fengshenLocalAI` 已启用。已有聊天重新打开项目以加载配置。模型及工具仍配置在项目内。
 
-首次启用结束检查时，在项目内通过 `/hooks` 或 Codex 的 Hooks 管理界面审阅 `.codex/hooks.json`，信任其中这一条 Stop 命令。它只读取代码指纹和本机回执，不调用模型、不改源码。禁止绕过 Hook 信任；定义变化后需要重新审阅。官方规则见 [Codex Hooks](https://learn.chatgpt.com/docs/hooks)。
+按此次用户授权，已核对 `.codex/hooks.json` 中唯一的 Stop 命令，并通过 Codex 配置接口登记当前定义哈希；`hooks/list` 确认其启用且为 `trusted`。它只检查代码指纹和本机回执，不调用模型、不改源码。可以用 `/hooks` 查看；定义变化后需核对新的定义并更新信任，不能复用旧哈希。官方规则见 [Codex Hooks](https://learn.chatgpt.com/docs/hooks)。
 
 ## 每轮使用
 

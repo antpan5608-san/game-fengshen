@@ -2,7 +2,7 @@
 
 task_id: LOCAL-AI-INTEGRATION
 parent_task: WORLD-FULL-01（暂停，未完成）
-status: LOCAL_TAKEOVER_IMPLEMENTED_PENDING_CODEX_ACTIVATION
+status: LOCAL_TAKEOVER_AND_LOCAL_AI_ACTIVATED
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 ALL_MAPS_USABLE: NO
@@ -17,7 +17,7 @@ ALL_MAPS_USABLE: NO
 
 电脑已接管：`F:\apps\game-fengshen` / `codex/local-ai-development`，来源交接提交 `ed442e8dcd1f7f33a68111532b73f9f29055c622`。旧目录原样保留并备份。匹配 ROM 与可信 v27 基底已验 hash；c60 的 378 文件已恢复，405 个 JVM 测试通过，DEBUG 应用及仪器包构建通过。c61 未启用，未发布 APK、未合并 main，原手动回档仪器失败仍保留，不在本轮修改游戏功能。
 
-局域网模型协作工具、项目高推理配置、结束检查和审查回执已实现。Codex 仍需加载可信项目与审阅 Hook，不能把“配置已写入”当成“自动检查已启用”。使用入口：[local-ai-usage.md](local-ai-usage.md)，实测与限制：[local-ai-validation.md](local-ai-validation.md)。云端原始取证目录仍保留，未整包迁出；不因此要求完整历史资源来阻塞当前可恢复资源与工具验证。
+局域网模型协作工具、项目高推理配置、结束检查和审查回执已实现。用户追加最大权限授权后，已新增本仓库可信记录；Codex 实际配置验证为完全访问、无需审批、gpt-6.1-sol / high、本地 MCP 已启用。已核对的 Stop 定义按当前哈希启用，Codex 返回 trusted。已有聊天重新打开项目后加载最新配置。使用入口：[local-ai-usage.md](local-ai-usage.md)，实测与限制：[local-ai-validation.md](local-ai-validation.md)。云端原始取证目录仍保留，未整包迁出；不因此要求完整历史资源来阻塞当前可恢复资源与工具验证。
 
 当前任务只完成迁移和协作工具。游戏后续研发由电脑另按用户指定范围接续；云端任务已停止，不自动续跑。
 
