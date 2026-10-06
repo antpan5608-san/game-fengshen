@@ -2660,6 +2660,45 @@ class TouchTest:IsolatedGameTestCase(){
     fun testPersonalR1SmokeColdRestartMatchesVerifiedSave(){
         normalWorldStoryContinuation(true,true,true,fixtureLabel="controlled-r1-village2")
     }
+    /** Only an explicitly sourced R1 replay may migrate this one metadata field.
+     * Normal same-candidate continuations and cold starts keep exact equality. */
+    private fun expectedReplaySnapshot(source:SaveSnapshot,v:GameView,controlled:Boolean,cold:Boolean):SaveSnapshot {
+        assertTrue("Replay source must pass current scene/actor/state validation",source.validate(v.content))
+        if(source.contentVersion==v.content.scene.version)return source
+        assertTrue("Only first controlled replay may migrate a version marker",controlled&&!cold)
+        assertEquals("opening-segment-001-c51-r1",source.contentVersion)
+        assertEquals("opening-segment-001-c60",v.content.scene.version)
+        return source.copy(contentVersion=v.content.scene.version)
+    }
+    private fun replayLoadMetadata(index:JSONObject,source:SaveSnapshot,currentVersion:String):JSONObject = index
+        .put("stateChangesAtLoad",source.contentVersion!=currentVersion)
+        .put("contentVersionOnlyMigrated",source.contentVersion!=currentVersion)
+        .put("gameplayStateChangesAtLoad",false)
+        .put("expectedLoadedSnapshot",source.copy(contentVersion=currentVersion).json())
+    private fun assertStoryReplaySource(source:SaveSnapshot,cold:Boolean,east:Boolean){
+        assertEquals(true,source.flags["rom.event.97.39.1"])
+        for(flag in listOf("rom.map.139.flag.128","rom.map.139.flag.2","rom.inventory.special.11.used",
+            "rom.map.25.flag.1","rom.map.25.flag.128"))assertEquals(true,source.flags[flag])
+        val caveFlag="rom.map.85.flag.128"
+        assertEquals(cold||east,source.flags[caveFlag]==true)
+        assertTrue(source.flags[caveFlag+".dialogue.pending"]!=true)
+        assertEquals(1,source.inventory[WorldItems.ID])
+    }
+    fun testControlledR1ReplayVersionMarkerBounds(){
+        val fixture=JSONObject(instrumentation.context.assets.open("r1-medical-verified-village.json").bufferedReader().use{it.readText()})
+        val bytes=fixture.getString("savedJson").toByteArray(Charsets.UTF_8)
+        assertEquals(fixture.getString("sourceSaveSha256"),java.security.MessageDigest.getInstance("SHA-256")
+            .digest(bytes).joinToString(""){"%02x".format(it)})
+        val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8));val(activity,v)=launch()
+        val expected=source.copy(contentVersion=v.content.scene.version)
+        assertEquals(expected,expectedReplaySnapshot(source,v,true,false))
+        assertNotNull(runCatching{expectedReplaySnapshot(source,v,false,false)}.exceptionOrNull())
+        assertNotNull(runCatching{expectedReplaySnapshot(source,v,true,true)}.exceptionOrNull())
+        assertNotNull(runCatching{expectedReplaySnapshot(source.copy(contentVersion="opening-segment-001-c50"),v,true,false)}.exceptionOrNull())
+        assertEquals(expected,expectedReplaySnapshot(expected,v,false,true))
+        assertEquals(source,SaveSnapshot.parse(bytes.toString(Charsets.UTF_8)))
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     fun testNormalPlayableR1MedicalFromVerifiedVillageSave(){normalPlayableR1Medical(false)}
     fun testPlayableR1MedicalColdStartMatchesNormalSave(){normalPlayableR1Medical(true)}
 
@@ -2686,22 +2725,22 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue(file.exists());val bytes=file.readBytes();val source=SaveSnapshot.parse(bytes.toString(Charsets.UTF_8))
         val hash=java.security.MessageDigest.getInstance("SHA-256").digest(bytes).joinToString(""){"%02x".format(it)}
         val(activity,v)=launch()
-        assertEquals(v.content.scene.version,source.contentVersion)
+        val expected=expectedReplaySnapshot(source,v,kind=="CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE",cold)
         assertEquals(2,source.mapId);assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
         assertEquals(true,source.flags["rom.map.95.flag.128"])
         if(!cold)instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
-        assertEquals(source,v.currentSnapshot())
+        assertEquals(expected,v.currentSnapshot())
         val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
         fun state(name:String){
             val snapshot=v.currentSnapshot()
             events.put(org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.uptimeMillis()).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("snapshot",snapshot.json()))
-            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
+            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(replayLoadMetadata(org.json.JSONObject()
                 .put("kind",if(kind=="CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE")
                     if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else kind
                     else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY"else kind)
-                .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json())
-                .put("stateChangesAtLoad",false).put("normalInputsOnly",true).put("events",events).toString())
+                .put("sourceFile",file.name).put("sourceSha256",hash).put("sourceSnapshot",source.json()),source,expected.contentVersion)
+                .put("normalInputsOnly",true).put("events",events).toString())
             screenshot(v,"world-$label-${if(cold)"cold-" else ""}$name")
         }
         fun walk(tx:Int,ty:Int){
@@ -3282,17 +3321,12 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue("The same candidate's preceding normal recording must produce this checkpoint",sourceFile.exists())
         val sourceBytes=sourceFile.readBytes();val source=SaveSnapshot.parse(sourceBytes.toString(Charsets.UTF_8))
         val sourceHash=java.security.MessageDigest.getInstance("SHA-256").digest(sourceBytes).joinToString(""){"%02x".format(it)}
-        assertEquals(true,source.flags["rom.event.97.39.1"])
-        for(flag in listOf("rom.map.139.flag.128","rom.map.139.flag.2","rom.inventory.special.11.used",
-            "rom.map.25.flag.1","rom.map.25.flag.128"))assertEquals(true,source.flags[flag])
+        assertStoryReplaySource(source,cold,east)
         val caveFlag="rom.map.85.flag.128"
-        assertEquals(cold||east,source.flags[caveFlag]==true)
-        assertTrue(source.flags[caveFlag+".dialogue.pending"]!=true)
-        assertEquals(1,source.inventory[WorldItems.ID])
         val(activity,v)=launch()
         if(!cold)instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(source))}
         assertEquals(if(cold)"External force-stop must preserve the complete normal save" else
-            "No resources or flags may be changed at continuation load",source,v.currentSnapshot())
+            "Only the admitted controlled replay version marker may change at load",expectedReplaySnapshot(source,v,fixtureLabel!=null,cold),v.currentSnapshot())
         val events=org.json.JSONArray();val started=SystemClock.elapsedRealtime()
         var fights=0;var battleHerbs=0;var bossHerbs=0;var bossEntries=0
         var capturedBossAttack=false;var capturedBattleHerb=false
@@ -3306,10 +3340,10 @@ class TouchTest:IsolatedGameTestCase(){
             if(capture)screenshot(v,"world-$label-$name")
             events.put(org.json.JSONObject().put("name",name).put("elapsedMs",SystemClock.elapsedRealtime()-started)
                 .put("androidUptimeMs",SystemClock.elapsedRealtime()).put("snapshot",v.currentSnapshot().json()))
-            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(org.json.JSONObject()
+            File(root,"world-$label-${if(cold)"cold" else "normal"}-index.json").writeText(replayLoadMetadata(org.json.JSONObject()
                 .put("kind",if(fixtureLabel!=null)if(cold)"CONTROLLED_ACTIVITY_RESTART_OF_VERIFIED_SAVE"else"CONTROLLED_REPLAY_OF_VERIFIED_NORMAL_SAVE"
                     else if(cold)"EXTERNAL_COLD_RESTART_AND_NORMAL_REENTRY" else "CONTINUATION_FROM_VERIFIED_SAVE").put("sourceFile",sourceFile.name)
-                .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()).put("stateChangesAtLoad",false)
+                .put("sourceSha256",sourceHash).put("sourceSnapshot",source.json()),source,v.content.scene.version)
                 .put("events",events).put("fights",fights).put("battleHerbs",battleHerbs).put("bossHerbs",bossHerbs)
                 .put("bossEntries",bossEntries).put("bossAttackObserved",capturedBossAttack).put("bossHerbObserved",capturedBattleHerb)
                 .put("bossIceObserved",capturedBossIce).put("bossSpecialObserved",capturedBossSpecial).put("twoActorBattles",twoActorBattles)

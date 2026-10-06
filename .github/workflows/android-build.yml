@@ -835,7 +835,12 @@ jobs:
           path: |
             artifacts/development-smoke/*
             artifacts/checkpoint-ui/*save-history*
+            artifacts/checkpoint-ui/personal-r1-smoke-*
+            artifacts/checkpoint-ui/touch-ux-*
             artifacts/town02-runtime/testControlledSaveHistory*.txt
+            artifacts/town02-runtime/testTouchUxSelectionScrollAndAtomicEquipment.txt
+            artifacts/town02-runtime/testControlledR1ReplayVersionMarkerBounds.txt
+            artifacts/town02-runtime/testControlledPlayableR1MedicalDoorReentryFromVerifiedSave.txt
             artifacts/town02-runtime/development-content-loader.txt
             artifacts/town02-runtime/development-rollback-crash.txt
             artifacts/town02-runtime/emulator.txt

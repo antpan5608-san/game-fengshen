@@ -64,7 +64,7 @@ C60_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 16, 17, 18, 19, 20, 22, 23, 25, 37
     60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 76, 77, 78, 79, 85, 86, 87, 89, 95,
     96, 97, 98, 99, 100, 101, 107, 108, 109, 110, 114, 115, 116, 117, 136, 139, 141, 145,
     146, 147, 148, 158, 159, 163, 164, 171, 172]
-C60_PERSONAL_GATES = ['well8ControlledCodec', 'saveHistoryRollback',
+C60_PERSONAL_GATES = ['controlledReplayVersionMarker', 'well8ControlledCodec', 'saveHistoryRollback',
                       'saveHistoryExternalColdRestart', 'saveHistoryCorruptionRetention']
 
 

@@ -26,6 +26,6 @@
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "0eead088937ed1f45d616a97d43cde1db96cf8c020ac9edc2c773b106bd2a97f"
+    "sha256": "a19142982aff6bb9e65e84a667f09c0b3bb2d51bb7942a5bed9c1b6defa06dfc"
   }
 }

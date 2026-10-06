@@ -124,6 +124,9 @@ if [[ "$stage" == development-smoke ]]; then
     cat artifacts/town02-runtime/development-content-loader.txt
     grep -Eq 'OK \([0-9]+ tests?\)' artifacts/town02-runtime/development-content-loader.txt || exit 1
     run_test testTouchUxSelectionScrollAndAtomicEquipment false
+    run_test testControlledR1ReplayVersionMarkerBounds false
+    run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
+    python tools/record_app_audio.py personal-r1-smoke testPersonalR1SmokeFromVerifiedEastSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
     if [[ "$development_scope" == full ]]; then
         run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
         run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false
@@ -193,6 +196,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
     run_test testControlledHerbBoundariesAndSaveCompatibility false
     run_test testControlledMobileBattleHerbAndSave false
     run_test testUnrestorableSaveCannotBeOverwritten false
+    if [[ "$scope_id" == WORLD-C60-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
     run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
     if [[ "$scope_id" == WORLD-C60-PERSONAL ]]; then
         # Run on this signed candidate; DEBUG observations cannot satisfy these gates.

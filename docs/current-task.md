@@ -57,3 +57,7 @@ source e069d26 / development-smoke run37446746338实际SUCCESS：井codec、手�
 run37449645306/source62fe4f6正式签名build通过（406 release JVM/零失败，APK490203a902d3b31877049606c1dc6a320ab3efac93dbd58ace0f0a42dd813e87），但runtime20项ContentTest有2失败，未发布。旧R1精确18图断言与c60不匹配，新增c60精确69图/2角色/18诊疗定义测试并复用原诊疗存档断言，旧R1保持原精确范围。佳梦关fixture加入杨戬却缺少已有原入队context/used/item19，原SaveSnapshot校验正确拒绝；修复fixture的持久入队状态并新增三种缺失拒绝断言，生产规则保留。定向DEBUG重测后须新来源签名重测全部最低门禁。
 
 新签名run37452828584/source022b651：build/406 release JVM通过，20 ContentTest、覆盖升级与迁移备份通过，随后touch装备仪器固定60次滑动预算在c60完整70物品目录耗尽，目标weapon2仍只露28px（要求至少48dp）。实际记录表明目标排序index51，保持原UI/48dp/选择与交易完整状态断言，只按现有modalLayout实际maxScroll和手势距离计算有界预算；失败时保留隔离截图与焦点/层级诊断。DEBUG定向加入原装备触控测试，随后同来源重新签名验证；未发布BF1B旧候选。
+
+run37456878420/source11fc：build成功，20 Content/覆盖升级/备份、滚动装备、交易、药草、战斗、不可恢复保护均通过；诊疗旧R1 fixture的c51-r1标记与当前c60被仪器错误要求相同，未发布。仅明确controlled首次回放允许已核51-r1→60版本字段变化，先用当前scene/actor/state校验原档；normal同候选及cold保持精确一致，其他旧/未来标记拒绝。比较全SaveSnapshot只改contentVersion，原fixture字节/hash不动，index如实记marker变化及gameplay未变。新增边界拒绝仪器，DEBUG提前检查诊疗与personal完整cold录制并保留触控/诊疗证据，生产迁移/存档规则不变。
+
+本轮将controlledReplayVersionMarker作为第14个个人必需门禁（原13项保留）；旧真实fixture输入字节/hash不变，普通同候选与cold禁止跨标记回放。新增字段后大续跑仪器触发JVM单方法大小上限，已仅抽取原源状态断言及元数据写入帮助函数，未删正常路径/资源/取消/冷启动断言；编译与App需再次真实执行。

@@ -223,6 +223,7 @@
       "saveProtection",
       "preMigrationBackup",
       "externalColdRestart",
+      "controlledReplayVersionMarker",
       "well8ControlledCodec",
       "saveHistoryRollback",
       "saveHistoryExternalColdRestart",
