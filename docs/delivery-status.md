@@ -1,3 +1,13 @@
+## 当前交付：c60个人阶段v84（2026-10-06 13:49 UTC）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL、ALL_MAPS_USABLE=NO、有效地图分母UNKNOWN。c60存档历史回滚个人阶段IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED完成；v84 / 0.8.14-c60-personal实际发布，PERSONAL_TEST/manual_acceptance=PENDING，历史STABLE仍v82。原build37469698895/source704fc991b515f1c453f7413108ad795d350b3451、publish37471974396全部SUCCESS，公网全部31,659,184字节及签名/版本/内容独立复核，APK fad6f4d962c7faec836a0d3d5bb50def0be95c4912b51d984eb88e418a8b5e91，c60 manifest8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb，378文件/69依赖图。
+
+406 release JVM/20 Content及14同签名个人门禁PASS，含覆盖升级、历史回滚、真实外部force-stop恢复、损坏和20档保留、药草战斗、触控交易/双人住宿/诊疗。四段真实MP4逐段SHA及cold/prefs保留均核；短游玩是已核存档隔离受控回放，不是完整正常主线。原postflight13:49:11UTC NO_ISSUES_OBSERVED/errors{}/cleanup0，原日志保留84/82；历史会话不能证明v84手机健康。仅关闭本阶段存档UI/回滚/cold/升级欠账；真机/声音/长体验/全量地图与十类总清单仍保留。
+
+已接续c61，现为inactive草案复现/原证据纠错：142南应从y42按DOWN，x13..17已有原受控按键记录；15,43旧原记录失败，两个left失败不能激活。388文件/72依赖图仅导出复现，尚未新候选打包/App/发布，不能算72图已可玩。具体唯一下一动作与本轮来源见current-task。
+
+以下旧R2/独立开发记录保留历史，不覆盖上述最新交付。
+
 ## 当前有效R2接续（2026-10-06 00:41 UTC）
 
 WORLD-FULL-01仍IN_PROGRESS/PARTIAL、ALL_MAPS_USABLE=NO、分母UNKNOWN。生产v82不变；R2 run37364795394原world失败，continuation跳过，未发布。实际失败map65胜后小龙女倒下/草0，分类TEST_HARNESS准备不足；仅薄改正常练级目标/运行预算，全部原经济/存活/EXP/剧情断言保留。31相关JVM和仪器编译PASS，新App仍待重新冻结候选。c50内容hash未改；独立c59/69依赖图已安全提交/干净DEBUG，不能称正常可达69图。详细原失败/原片入口/隔离方法及最精确下一动作见current-task与history/world-full01-runtime-checkpoints。十类欠账未因本驱动修正关闭，SAVE-HISTORY UI/cold仍NOT_RUN；不变Language/玩家云档。

@@ -8,12 +8,13 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-current_candidate_version: v84 / 0.8.14-c60-personal，PLANNED_NOT_PACKAGED_NOT_PUBLISHED
+published_personal_version: v84 / 0.8.14-c60-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: c61，PLANNED_NOT_PACKAGED_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: DEBUG手动回档与外部冷启已通过；c60签名候选覆盖升级和同包最低门禁尚待构建执行，不能发布。
+first_real_blocker: c60个人阶段已交付；c61草案南出口及两个左出口与原运行证据冲突，先修正，再定向导出与App验证。
 
 ## 当前用户授权（2026-10-06）
 
@@ -21,7 +22,17 @@ first_real_blocker: DEBUG手动回档与外部冷启已通过；c60签名候选�
 
 本机目录 `F:/apps/game-fengshen`，分支 `codex/local-ai-development`。Codex gpt-6.1-sol/high和本地4B辅助工具已接入、完全访问/无需执行审批/可信目录及当前Stop定义已启用。当前聊天cwd为local-llm，实际操作均指定游戏根目录；同一审查流程可用原manage.py/CLI，不改全局模型。
 
-## 首批：c60与存档回档
+## c60当前交付（2026-10-06 13:49 UTC）
+
+IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED均完成。v84 / 0.8.14-c60-personal，quality=PERSONAL_TEST，manual_acceptance=PENDING；不是新的STABLE里程碑，历史稳定版仍v82。原build37469698895及publish37471974396全部SUCCESS，source704fc991b515f1c453f7413108ad795d350b3451，APK SHA fad6f4d962c7faec836a0d3d5bb50def0be95c4912b51d984eb88e418a8b5e91，31,659,184字节。实际公网下载全部字节、原package/signer/版本、c60 manifest/378文件均独立复核；69是依赖图数，不是69图正常可玩。
+
+406 release JVM零失败/错误/跳过；20 ContentTest及全部14同签名候选个人门禁PASS：覆盖升级、内容加载、触控交易、双人补给住宿、诊疗进退、药草战斗、不可恢复存档保护、迁移前备份、外部cold、受控版本字段边界、井codec、历史回滚、回滚外部cold、损坏与20档保留。实际短冒烟使用已核正常存档的隔离受控回放，四段原MP4逐段SHA验证、cold完整状态一致及原偏好恢复；实际截图与录像末帧已人工查看。不得把受控回放当新候选正常完整主线或真机/音频通过；长流程、声音、一加13T人工仍待验。
+
+原postflight 2026-10-06T13:49:11Z：NO_ISSUES_OBSERVED，errors为空、cleanupFailures=0，原两版保留为84/82；样本来自此前已上报会话，不构成v84新真机验收。下载继续原两对象入口和覆盖升级，勿卸载清档。
+
+下一批c61：已从旧实际命令恢复原Lua两份与TSV两份，全部size+SHA与741清单匹配，本机私有保留。修正脚本46a94a0c4d642eefe425d181b3c5b5687d8ee013e9590aa589c0df7742ff9d3f明确x13..17,y42,DOWN→16(42,78)/steps0；旧脚本97901a097e337f671ee5a509a6d572e4eb5577d151e3b744e03ceb2193849c78及295字节日志f8c6adaa5999c5a75a4776e154a68b03133489fdbc8de62f4ae5ce31b5085af9确认15,43向下不换图；403字节修正日志13c3aea9700f29fcae82781f56491d6713f31d88db20d1f5a02cb41243725885确认两个left仍失败。原RAM/PNG/FC8未恢复，不伪称已复跑原路线。以原5字节记录为source，另行固定实际departure derivation，不制造全宽出口，不启用left。原84guard CPU重新执行同29ed0ebd3150c448e9045bf59ba8152961d6a99311f375079a96d9be25b7e940、零差异；原inactive c61配方bde171/388文件/72依赖图已复现，保留冲突待修，尚未App或发布。
+
+## 首批历史过程：c60与存档回档
 
 - 线上实际查询仍v82，SHA `22ca9c1d78ac562789f9b6337089d1f1e2b48b7201705a34ec75746890fce4d9`。冻结R2 run37408307126：build/runtime成功，runtime-world已失败（09:59 UTC原录屏预算耗尽），保留原冻结来源和失败；不得用旧候选替代本轮c60。
 - 原artifact11390352218 / run37413317670 / source06b95cdaabc398c60eecc008eaaea83d93c816c0已实际取回。ContentLoader、真实五分钟前台AUTO（304.649秒）、损坏/20档保留保护通过；手动回档在TouchTest.kt:55失败，外部cold尚未完成。原断言和原视频保留，不从编译或JVM推断App通过。
