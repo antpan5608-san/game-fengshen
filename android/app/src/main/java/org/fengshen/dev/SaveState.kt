@@ -240,8 +240,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
         if(content.sceneItemUses().any{!it.validPending(this)})return false
-        for(originalId in listOf(0,14)){
-            val rule=OriginalSceneItemDefinition(OriginalSceneItems.EVIDENCE,originalId)
+        for(originalId in listOf(0,1,14)){
+            val rule=OriginalSceneItemDefinition(if(originalId==1)OriginalSceneItems.WELL_EVIDENCE else OriginalSceneItems.EVIDENCE,originalId)
             if(flags[rule.pendingFlag]==true&&content.sceneItemUses().none{it.id==rule.id})return false
         }
         if(!OriginalNpcTalk.validRoom116Pending(this))return false

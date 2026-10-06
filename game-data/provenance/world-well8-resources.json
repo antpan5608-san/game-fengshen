@@ -1,0 +1,1197 @@
+{
+  "controlledEvidence": {
+    "androidEvidence": false,
+    "captures": [
+      {
+        "path": "private-derived/world-west-potion-well-controlled/02-real-village-entry.png",
+        "sha256": "ed7c7c750d5936ca4e67e220f88d4e03597100bb97ab20db27dab8e5ee5371d5"
+      },
+      {
+        "path": "private-derived/world-west-potion-well-controlled/03-controlled-at-well.png",
+        "sha256": "bb01240d55a5b9bd10173c1be788603034d3b4d30b94d77e122e0ea610b8a28e"
+      },
+      {
+        "path": "private-derived/world-west-potion-well-controlled/menu-09-A.png",
+        "sha256": "1b1d60ccc31f37bc13bc2034506429f58d88163174b034cb2d77eb5f38eb1970"
+      },
+      {
+        "path": "private-derived/world-west-potion-well-controlled/menu-16-A.png",
+        "sha256": "c04d6ceec660c6d05044645ebb3c39b0586e07d20ba57ff3584b14a3fd806e0c"
+      },
+      {
+        "path": "private-derived/world-west-potion-well-followup-controlled/followup-02-A.png",
+        "sha256": "f39e2dadaa58bae0e19b49eceab3f2b58a4f9b487f0fc37a89c703f2e59ce5c2"
+      }
+    ],
+    "context38After": 229,
+    "firstQtyByte": 1,
+    "global7c9After": 1,
+    "kind": "CONTROLLED_VALID_ORIGINAL_POTION_SOURCE_POSITION_FIXTURE_REAL_VILLAGE_ENTRY_ITEM_MENU_AND_FOLLOWUP_NOT_NORMAL_ANDROID",
+    "map8FlagAfter": 128,
+    "normalPlayEvidence": false,
+    "partyBytesUnchanged": true,
+    "playerPositionUnchanged": true,
+    "probes": [
+      {
+        "path": "tools/rom-extractor/probe-world-well8-use.lua",
+        "sha256": "a65d0343a0c2f345cea12041017253dd03d7f9d607629267cdf00ed45c1d95cb"
+      },
+      {
+        "path": "tools/rom-extractor/probe-world-well8-followup.lua",
+        "sha256": "2ee410bafcf29a4c7e36d9a15739eb5800d688182acde6802690d42e87dee980"
+      }
+    ],
+    "usedQtyByte": 128
+  },
+  "cpu": [
+    {
+      "caseCount": 472,
+      "failures": 0,
+      "kind": "dispatch",
+      "path": "android/app/src/test/resources/world-well8-dispatch-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-well8.py",
+      "probeSha256": "ad358587315b52073c39304793fd24ce1c028c7ed44ef89721fb6c9b4c21723a",
+      "sha256": "9574404845d01c5e26d62243be793c6698395d85ecb8cecc56651dc883eaba72"
+    },
+    {
+      "caseCount": 4,
+      "failures": 0,
+      "kind": "consumption",
+      "path": "android/app/src/test/resources/world-well8-consumption-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-well8.py",
+      "probeSha256": "ad358587315b52073c39304793fd24ce1c028c7ed44ef89721fb6c9b4c21723a",
+      "sha256": "1d85f23e3f276a80baab0fbe3663d65750496c02d9059b4b89bc62005f7291ab"
+    },
+    {
+      "caseCount": 1024,
+      "failures": 0,
+      "kind": "event",
+      "path": "android/app/src/test/resources/world-well8-event-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-well8.py",
+      "probeSha256": "ad358587315b52073c39304793fd24ce1c028c7ed44ef89721fb6c9b4c21723a",
+      "sha256": "188a0de922f0c22f7080f5dce2e977f07ce12565be44665d486c979e43d36b59"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.18.14",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36508,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102060,
+            "sha256": "d40dbd08aa300f1eb8e3f7c38defc8cb809a76577e0877f17f15147d823a7b0e"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44240,
+          "length": 20,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109792,
+          "sha256": "5afac1edcc7f038ec50eec3506ed99b6e48db9b5078fb48e51a3be6cdeb49b69"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "哪吒將丹藥投入井中，不久瘟疫便消除了。"
+    },
+    {
+      "id": "rom.dialogue.18.15",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36510,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102062,
+            "sha256": "40e5389a2d9ef7fceb0bc2e38b4a44b84b354626cf34903f0898515467d7e6f8"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44260,
+          "length": 7,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109812,
+          "sha256": "0454f344a35ddae2331a92cedeff3e9d480d2ec34f9d5b5194eef9b404042245"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "太乙真人到。"
+    },
+    {
+      "id": "rom.dialogue.18.16",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36512,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102064,
+            "sha256": "1d2488e5b7232d434e17344aef46a4156cae0cb83c55d382894a18261a6263ac"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44267,
+          "length": 104,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109819,
+          "sha256": "8222e7d087978e7dd1ed03b7c96bb13295fb69112fa73c7ea84cd33837958789"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "『哪吒！這些日子斬妖除魔救了很多人，為師很高興。因為神界和人間都犯了殺劫，所以會有一場人神大劫難，你們現在要去找姜太公，他是神界指派唯一有封神能力的人，將你們所收服的妖怪封入封神台內，才能結束這場大劫難。』"
+    },
+    {
+      "id": "rom.dialogue.18.17",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36514,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102066,
+            "sha256": "48812965bba9c2d072e8917a020736adf7fc07287377a767d0854ca904557eb3"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44371,
+          "length": 5,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109923,
+          "sha256": "dd05a4db259c97f73ad083b4342cb6780986f924c3c5b2b329ae977b5f236f96"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "姬昌到。"
+    },
+    {
+      "id": "rom.dialogue.18.18",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36516,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102068,
+            "sha256": "d27f408ebf894e59cf28a1277760f8d255d0fe3246965e826ef0e49cc1f25299"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44376,
+          "length": 48,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109928,
+          "sha256": "8c681f4031b8da77a12a579d92da57269a94dc959bcc50b70634caefa9f7bac9"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "『你們幫我救了全城百姓，內心非常感激，我剛剛算了一卦，在磻溪有一位智者，希望能得到他的幫助。』"
+    }
+  ],
+  "font": {
+    "charset": {
+      "0": "丹",
+      "1": "投",
+      "2": "中",
+      "3": "瘟",
+      "4": "便",
+      "5": "乙",
+      "6": "些",
+      "7": "斬",
+      "8": "多",
+      "9": "高",
+      "10": "因",
+      "11": "間",
+      "12": "犯",
+      "13": "以",
+      "14": "現",
+      "15": "找",
+      "16": "是",
+      "17": "派",
+      "18": "力",
+      "19": "服",
+      "20": "台",
+      "21": "結",
+      "22": "姬",
+      "23": "百",
+      "24": "心",
+      "25": "常",
+      "26": "激",
+      "27": "卦",
+      "28": "溪",
+      "29": "智",
+      "30": "希",
+      "31": "得",
+      "40": "哪",
+      "41": "將",
+      "42": "不",
+      "43": "太",
+      "44": "妖",
+      "45": "很",
+      "46": "界",
+      "47": "場",
+      "48": "在",
+      "49": "他",
+      "50": "幫",
+      "51": "城",
+      "52": "到",
+      "53": "有",
+      "54": "封",
+      "55": "我",
+      "56": "子",
+      "57": "姜",
+      "58": "人",
+      "59": "一",
+      "60": "了",
+      "68": "　",
+      "128": "藥",
+      "129": "井",
+      "130": "久",
+      "131": "疫",
+      "132": "消",
+      "133": "真",
+      "134": "日",
+      "135": "魔",
+      "136": "師",
+      "137": "興",
+      "138": "和",
+      "139": "都",
+      "140": "殺",
+      "141": "會",
+      "142": "要",
+      "143": "公",
+      "144": "指",
+      "145": "唯",
+      "146": "收",
+      "147": "怪",
+      "148": "才",
+      "149": "束",
+      "150": "昌",
+      "151": "姓",
+      "152": "非",
+      "153": "感",
+      "154": "算",
+      "155": "磻",
+      "156": "位",
+      "157": "者",
+      "158": "望",
+      "159": "助",
+      "168": "吒",
+      "169": "入",
+      "170": "除",
+      "171": "這",
+      "172": "救",
+      "173": "為",
+      "174": "所",
+      "175": "難",
+      "176": "去",
+      "177": "內",
+      "178": "全",
+      "179": "剛",
+      "180": "劫",
+      "181": "大",
+      "182": "能",
+      "184": "們",
+      "185": "的",
+      "186": "神",
+      "187": "你"
+    },
+    "chr2kBanks": [
+      52,
+      53
+    ],
+    "glyphs": [
+      {
+        "character": "丹",
+        "code": 0,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d19502b239ebc6564c941a508007f1b560c6a5c07b8ecfcf52fc2fe325c22b4f"
+      },
+      {
+        "character": "投",
+        "code": 1,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "953c3deb07776a554175c78a6bb65471f9f5f7dcbef9c49b8eb7fdfb22bcd77b"
+      },
+      {
+        "character": "中",
+        "code": 2,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3c3f250e8d8868d909c01444db51f736bfbd6bb0195877a0623c489d886fb83f"
+      },
+      {
+        "character": "瘟",
+        "code": 3,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "67986f59ec4b3a147148f35fae281e72ab20ea28bf57d269761c32f43c3b4f8d"
+      },
+      {
+        "character": "便",
+        "code": 4,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "32e1770c78f60e0fc01b43ac4076ff9720614981052771c120449988643ef028"
+      },
+      {
+        "character": "乙",
+        "code": 5,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "46095adf14165d1538e7ab28c6419a11fe17b7782b1f110a4a85ba52e91ba740"
+      },
+      {
+        "character": "些",
+        "code": 6,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "02af8bc9807ca43cb2480d3b403e6c9704c480789d1b183664efd320c792f558"
+      },
+      {
+        "character": "斬",
+        "code": 7,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "21e1e76b9f6831f803c16e45bd9537ac2100e575525dc85781175b208778714f"
+      },
+      {
+        "character": "多",
+        "code": 8,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6ab2e8752586d11d30506aca5434a14482c0d66a1abbb01415a589526d216e4b"
+      },
+      {
+        "character": "高",
+        "code": 9,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d4a2d0c3d06e14f82026ad35785622c099a83cb7ad85bb64091dfd761ffa329d"
+      },
+      {
+        "character": "因",
+        "code": 10,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "b36e665673ec985f3a5aa1934ffd8e2b1393874a91d0f44ed55461d6645ae88a"
+      },
+      {
+        "character": "間",
+        "code": 11,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "50b12cc813a251578d92a02fb484304a129020213894a02f550895930a6182dd"
+      },
+      {
+        "character": "犯",
+        "code": 12,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "815bea11bd64726ee526451bf202eb2eb523c96eaadd5b96af4253dc2fef4ca7"
+      },
+      {
+        "character": "以",
+        "code": 13,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "00ed0121affda5e65e1914608b9740ed5347823b417d28a747a97c6a55261aa5"
+      },
+      {
+        "character": "現",
+        "code": 14,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1c6a034ad54e19f9427423e80db45132e7da50be618ba09a60d4d8adc6caa665"
+      },
+      {
+        "character": "找",
+        "code": 15,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "a3fa9107976d9785838806fa5719ad1c31471356ade7893f97cb408989b6b817"
+      },
+      {
+        "character": "是",
+        "code": 16,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      },
+      {
+        "character": "派",
+        "code": 17,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "938dffa0b33bdf78c5f6a45fa646ab90004a5698c98bfa13b18b43467573cfc2"
+      },
+      {
+        "character": "力",
+        "code": 18,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ae056383b85879715f7b9bbfec4e29aca3f8f246af54ada11d3350e4cd25a696"
+      },
+      {
+        "character": "服",
+        "code": 19,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e4ffc9e10357780b87d618dfb93bbf87b43b6e1711296d4f06cf5d6700023c01"
+      },
+      {
+        "character": "台",
+        "code": 20,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "061ccfe8f5b31b2dc3482d7b9e956b36f8cad266172350364bf0d0e3662045ff"
+      },
+      {
+        "character": "結",
+        "code": 21,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "48ce0adff382fb494c5e67436b6279c5ffbb352a36ebecd9e2a4ac471da0ae07"
+      },
+      {
+        "character": "姬",
+        "code": 22,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "75a1214d8b492025f1403b551d563ac0f0dd7effe06095041dc59a0eca1bb939"
+      },
+      {
+        "character": "百",
+        "code": 23,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d3f3c24343204d6d429c10bc64c344c41b2cc139836c03786423c8fa78ef8f66"
+      },
+      {
+        "character": "心",
+        "code": 24,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6aafd097a47f1f90930d3222a17a33d4474c9f1f6c34037fd43e745b19807beb"
+      },
+      {
+        "character": "常",
+        "code": 25,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "fc4ab8d5c9f08b42021991ad3dc60ccecef9a724af8e6319a689fe03a8aa8350"
+      },
+      {
+        "character": "激",
+        "code": 26,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "dd5392e4a26ae0f9e26dc32254be272fdf5da1d76155547331cf273d1fd6fce7"
+      },
+      {
+        "character": "卦",
+        "code": 27,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "b17572d12025c9f3eaf2604825d4b4631d4a6cbeb90c4eda56bee46804dd4970"
+      },
+      {
+        "character": "溪",
+        "code": 28,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "68e5235716ccfb8158e3e4ae88f894315b9bad35770b914866897b372f496553"
+      },
+      {
+        "character": "智",
+        "code": 29,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9856957cacf1b9220c384869387e7356d36ee08e26423c8edd77df9f1b8d6e75"
+      },
+      {
+        "character": "希",
+        "code": 30,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "bea84bb4a3d11d11eddec6a8be0548640225775706d85827ed7d54a6711cf550"
+      },
+      {
+        "character": "得",
+        "code": 31,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c8a72a252ee65db7db0bd3e40df2196e87feae4993e7113fd2eaa1f53e6241c1"
+      },
+      {
+        "character": "哪",
+        "code": 40,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "33730ccd49b417d33ab1510286017b263911cffde2a80afa27674e6930e61ac2"
+      },
+      {
+        "character": "將",
+        "code": 41,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82"
+      },
+      {
+        "character": "不",
+        "code": 42,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "8dcebfe880db18259e1679e1623abd40bd0f03a28ec2461a0fbe057fd78ae5ba"
+      },
+      {
+        "character": "太",
+        "code": 43,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e7c0eae4dc2c4be60887eef9bc7c812fe4b8278a550df1023ebdf09297cdfe31"
+      },
+      {
+        "character": "妖",
+        "code": 44,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "464ab9f2f093365db0a899a469e6730ee3557da9d9b67fde7cc028ee66914d9a"
+      },
+      {
+        "character": "很",
+        "code": 45,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e0df8da78f9e9352c56225d7ccba239dfc287fb8ade46f21e0443c9f01d20afb"
+      },
+      {
+        "character": "界",
+        "code": 46,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3dd53e9bb8f84911c65ff6fafd4b005100ed80b3a35f9a21593ec1e5d34b8029"
+      },
+      {
+        "character": "場",
+        "code": 47,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "fed352272312abd93b5c186f38cddb1145aa8b8d4a708f5f236ea3717a81234a"
+      },
+      {
+        "character": "在",
+        "code": 48,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e9dfbd88c2ff4258cfc99f0d7e51d852c2d6eede71ced528d3602578f3170cfb"
+      },
+      {
+        "character": "他",
+        "code": 49,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f6fc364766690ccba0c3cc072bb99168ea6f8259bfdc668a93bd38c5bf8ecf33"
+      },
+      {
+        "character": "幫",
+        "code": 50,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "7ecf7c040a9c5721552b8c6ee36f0d55b2fdcd2f6a162dfaa940f51895693808"
+      },
+      {
+        "character": "城",
+        "code": 51,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "15856edca60d5be70c240d4fb48cfd67b195a1304606f4eaaf69fcbc3bc6747d"
+      },
+      {
+        "character": "到",
+        "code": 52,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "dbe2fd48836acf4b7e5e58806298026177e3d52ebf08ec6214876ec0f7cc0f64"
+      },
+      {
+        "character": "有",
+        "code": 53,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6a1c2ee41e0c90cfc986a0b8ad9ebcdf9291884295654691b87a54e57ca3ca23"
+      },
+      {
+        "character": "封",
+        "code": 54,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2c681966fc8ff3ee1c893bddd6a3d364535e6a3beb3b3c8ea13126d7d8afb23c"
+      },
+      {
+        "character": "我",
+        "code": 55,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "bb27154b46f70e2d5d33a6ae4fe77fa5fda5ebd8c32eb8b0fd88a18dccee1655"
+      },
+      {
+        "character": "子",
+        "code": 56,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9e72153187ef49d6425b95c2455c3d74c94a6c3cb9035fd37061b57ef3c631d8"
+      },
+      {
+        "character": "姜",
+        "code": 57,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "8636d8724e2e377664fceb88afd09db34ce5eb8fc7d4394bab36f3de7cbc9a91"
+      },
+      {
+        "character": "人",
+        "code": 58,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "41c4003157cff12f4d7b0efd35d831df06857579f4435f9c38d26899ff713df5"
+      },
+      {
+        "character": "一",
+        "code": 59,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+      },
+      {
+        "character": "了",
+        "code": 60,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9044fb0f558afb7d7de5447bf2981a73c9e46024cd68b381484927280dc4151d"
+      },
+      {
+        "character": "藥",
+        "code": 128,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f3dbdd1a72de2613bfb884eb47ad2b3c5b8cf61e7a833b85a6f8a0743c0d42f1"
+      },
+      {
+        "character": "井",
+        "code": 129,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1ad4fc84b97fc988afc3d4e391da01b95bf8d8a00be9f00a6957f96838c2c860"
+      },
+      {
+        "character": "久",
+        "code": 130,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "548ec4e39499cf362398591f5e856446a11e730bbd61edc3978eb191fca2c209"
+      },
+      {
+        "character": "疫",
+        "code": 131,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "93680e330daf27d73a4fa0b9e1d0b24130a5ef6dda926d962542dcefb54115cc"
+      },
+      {
+        "character": "消",
+        "code": 132,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "bdef279fa759731336903d095b71ab15e003923ae173ec6a7deb595c29968514"
+      },
+      {
+        "character": "真",
+        "code": 133,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e877d8db8c8c2f3c9d08a36e122913eeb7d71d5bdaa77a648871f565242f9fcc"
+      },
+      {
+        "character": "日",
+        "code": 134,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3411e7fc49b9ec86640d569bfecf8347a4958369e3b060d2f4a26370fd0fc109"
+      },
+      {
+        "character": "魔",
+        "code": 135,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2e0f0a2038574860181daa5619de0220d483eec3cbc250e1dcd6531dde635106"
+      },
+      {
+        "character": "師",
+        "code": 136,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "477a1233e39a4a2057d13ac782bcb421940adff6ca4e47fc884041902569d74c"
+      },
+      {
+        "character": "興",
+        "code": 137,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "cfaf91fef0b3dc8a4c9aed34f31f6c717019ae8cb021953fda02d1bca06ca785"
+      },
+      {
+        "character": "和",
+        "code": 138,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "5714745a4a840dd2b5db28573710a5057c4f0f9ab258fe9f4015079b7b1c0f98"
+      },
+      {
+        "character": "都",
+        "code": 139,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "80ef4a92fb130173bbbf1b51b5897fd670c48c92c714a450c4803e2f4c591b0d"
+      },
+      {
+        "character": "殺",
+        "code": 140,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "102df822f58b347edafcb7be80fdd47c82c41c97d9122be00dffa1cb4e23dedc"
+      },
+      {
+        "character": "會",
+        "code": 141,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "db4fe0555411a09f4015deb42cf5ea949030c502c173d162fad20ea0f3740067"
+      },
+      {
+        "character": "要",
+        "code": 142,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+      },
+      {
+        "character": "公",
+        "code": 143,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1b8ca61dce14c83816708a1fedc0eafca94ff12b47608c4ad22b1a69202df7a9"
+      },
+      {
+        "character": "指",
+        "code": 144,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "5894a4e9a12bb3f50bbe8f9f010b5d7b027f104ae5bd70481a204a8a62acf445"
+      },
+      {
+        "character": "唯",
+        "code": 145,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9ab077c16e7afb8f456e399aaa7294884dc8650d8fc5cd03103ad1547cc8776d"
+      },
+      {
+        "character": "收",
+        "code": 146,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "810ec5f248489caf1a6f87463c24f61e5393ff1d1b5365240d9d2ff34fcc7f31"
+      },
+      {
+        "character": "怪",
+        "code": 147,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d25df422ceec4bd9eec491b123f6cd4b6dc4ab4d384eb136e335cf3cefda58d6"
+      },
+      {
+        "character": "才",
+        "code": 148,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6b103092847f8276fca2ff6b363dca1b7d6fdc920118a3333f3ea8aaa8b45e83"
+      },
+      {
+        "character": "束",
+        "code": 149,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9e8cc6784a7201cfd0510f9a95c5065d479dca8a9bab49d4c473dc6a7d54a6e3"
+      },
+      {
+        "character": "昌",
+        "code": 150,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "42858fc564e5cd4bc6b53571f54f99dbb9deb926681a637c78892f3f86b6fb03"
+      },
+      {
+        "character": "姓",
+        "code": 151,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "011c39d6cd1ac485137ef3174c751189be5ba6637942071949827d1daf505eb6"
+      },
+      {
+        "character": "非",
+        "code": 152,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c0c0cc380988df90aa55d7f420fc7656b2cf43d0f7a08a96ca6d53460ff5b215"
+      },
+      {
+        "character": "感",
+        "code": 153,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d5cbd427f3ae21961f5dfd043ca4b0b859b031cf71cb51b5f07db81181a1af87"
+      },
+      {
+        "character": "算",
+        "code": 154,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "0ce227908f88071bb1ceb007e9f685eefad98d83f2fd73d39cdc24d6ab2f1634"
+      },
+      {
+        "character": "磻",
+        "code": 155,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2573410fc01aa4c823148606c599430d79391cb0bed60d38398855e6005815a5"
+      },
+      {
+        "character": "位",
+        "code": 156,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "24264447b19bd96340e0606187c3067549524039b446de3332203ca56685533e"
+      },
+      {
+        "character": "者",
+        "code": 157,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6ab8b686d82872e24e7f99d7fb63df8a6264fe8242392db4fba36f9ba455b31e"
+      },
+      {
+        "character": "望",
+        "code": 158,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9b10b5372e0ccb597937657c9e7cc9b6502e82da4f8848620bb914ecc001e968"
+      },
+      {
+        "character": "助",
+        "code": 159,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3982a1e1187a77882fab3d0635ab34465dfe42e569d7e5853c2c926283a57216"
+      },
+      {
+        "character": "吒",
+        "code": 168,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d7d627e6511da4cd44a01f9d94baf176db2080f5b6e399d06a47df21d2783a1b"
+      },
+      {
+        "character": "入",
+        "code": 169,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e6fc76ba9b8d59b0dd06da183d10219686d2c963dffc4f8c77c548904a402872"
+      },
+      {
+        "character": "除",
+        "code": 170,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2b677612a04fca5ceab58d2fd0bee911528c33723d7bc233dd81d723781fc6cb"
+      },
+      {
+        "character": "這",
+        "code": 171,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "character": "救",
+        "code": 172,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2ec4f2d71e416f2159b3c180a80fe52520e1dca8c183b293b804291b12c1247e"
+      },
+      {
+        "character": "為",
+        "code": 173,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "03b8800a631857dd24fcbf182dd8197105fbd265fb10f1ed1b7376df3358f6a1"
+      },
+      {
+        "character": "所",
+        "code": 174,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3c302a2611f8a665bb003e16e2e1ab12a963fbe232573645b0e640e078c08e1a"
+      },
+      {
+        "character": "難",
+        "code": 175,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "6a916517f2a2a982a97624b00ee80fcc62de7f3efe9ee86474c8582cf3cada70"
+      },
+      {
+        "character": "去",
+        "code": 176,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f6c6b7503d108018b96667a235cc947b653ef64aaabc96291f259792c9905fb9"
+      },
+      {
+        "character": "內",
+        "code": 177,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f10854910aed6983fd9d334dbf733b4b2259b6f42b1f84a659fa6c20d115ef3e"
+      },
+      {
+        "character": "全",
+        "code": 178,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "32645ff826d296bf5fc964839c399e1a1748bfaf68dbfa8bae2504f7007287d8"
+      },
+      {
+        "character": "剛",
+        "code": 179,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ba08bc19d21e1805d7e657e3985d138ea966d3301dda75a9bd8eab26c71c0f21"
+      },
+      {
+        "character": "劫",
+        "code": 180,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9646279bc97b07b5506b14fc012234a21eb37b34db4eae5b8a863244dfa1353b"
+      },
+      {
+        "character": "大",
+        "code": 181,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "18b5668cc28938c7131e9fccb189c81bc2becee1d79e37135260922e3ac517ba"
+      },
+      {
+        "character": "能",
+        "code": 182,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "170fcfaff377a34697ca9b8e8c26e0c5dce93d9433e00d75080b89349561dbca"
+      },
+      {
+        "character": "們",
+        "code": 184,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ce27f8df3e920a1a689762de2c8f644efd4f51cf6a376fd7edf866ca4f9c286c"
+      },
+      {
+        "character": "的",
+        "code": 185,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "character": "神",
+        "code": 186,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f62036d25ccf7cdcaaeef392f191afa52c8ddcad18b4310a1298990af11c10c7"
+      },
+      {
+        "character": "你",
+        "code": 187,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c569a4af12967c9c6a2a8892a125c80758fa60e4c2976f43ba435c34c86c71b9"
+      }
+    ],
+    "ppu0000Matches": true,
+    "ppuSha256": "bac2f8519d78f4e7023fe88add2403b7650b0d3c193bfc5ddd9bdfb9958a0ab5",
+    "sources": [
+      {
+        "length": 4096,
+        "meaning": "Actual original well event script25 font52/53",
+        "offset": 630800,
+        "sha256": "daf6a4f05288441bee9cea162275f4348624dca793a41cd74850585d11fe0349"
+      }
+    ]
+  },
+  "itemCapabilityUpdates": [
+    {
+      "baseDefinitionSha256": "892b58bcd04e2492c70dbcf81f73e6181204a0c6a40a21ec78f82ad5fa268faf",
+      "fields": {
+        "description": "站在西岐井的原版使用位置投藥；接原版救瘟疫与後續对白。",
+        "source": {
+          "confidence": "PROVISIONAL_REFERENCE",
+          "evidence": "game-data/provenance/world-sages89-resources.json",
+          "nameEvidence": {
+            "captureSha256": "b9143b753fffbbfead3873ca66a722bbd2fa4d085ec20049d5a79c26b474c1bf",
+            "kind": "CONTROLLED_ORIGINAL_REAL_ITEM_MENU_STABLE_ID1"
+          },
+          "nameRange": {
+            "cpuAddress": 59413,
+            "length": 5,
+            "meaning": "Original special1 menu name",
+            "module": 2,
+            "offset": 92197,
+            "sha256": "8553e2774134584a30edf9b8b9d492bcb0c28abac39daa248104feb152beb633"
+          },
+          "remainingUnknown": [
+            "Original dynamic NPC/cutscene pose not equivalent",
+            "Normal Android well menu/cold restart NOT_RUN",
+            "Native coordinate predicate also accepts other map IDs; only evidenced village8 event exposed"
+          ],
+          "sceneUsageEvidence": "game-data/provenance/world-well8-resources.json",
+          "verifiedFields": [
+            "name",
+            "stableId",
+            "originalBeforeTextGift"
+          ]
+        },
+        "worldUse": {
+          "evidence": "game-data/provenance/world-well8-resources.json",
+          "reusable": false,
+          "targetSpriteId": 0,
+          "usedFlagId": "rom.inventory.special.1.used"
+        }
+      },
+      "id": "rom.special.1"
+    }
+  ],
+  "remainingUnknown": [
+    "NPC script25 movement/pose not equivalent in Android",
+    "Full normal original/Android well route and cold restart NOT_RUN",
+    "Other native map coordinate matches not exposed without scene event evidence",
+    "Unicode transcription PROVISIONAL"
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "completionFlag": "rom.map.8.flag.128",
+    "consumeCount": 1,
+    "contextBeforeText": "rom.npccontext.38.229",
+    "dialogueIds": [
+      "rom.dialogue.18.14",
+      "rom.dialogue.18.15",
+      "rom.dialogue.18.16",
+      "rom.dialogue.18.17",
+      "rom.dialogue.18.18"
+    ],
+    "eventId": 20,
+    "experienceReward": 0,
+    "exposedSceneId": 8,
+    "globalBeforeText": "rom.global.7c9.nonzero",
+    "healing": false,
+    "itemId": "rom.special.1",
+    "moneyReward": 0,
+    "nativeChecksActor": false,
+    "nativeChecksFacing": false,
+    "nativeChecksMap": false,
+    "nativeCoordinates": [
+      13,
+      26
+    ],
+    "originalItemId": 1,
+    "originalNpcCutscenePresentation": "NOT_IMPLEMENTED",
+    "partyChange": false,
+    "playerSteps": 0,
+    "playerTravel": false,
+    "quantityAfterSuccessfulUse": 128,
+    "retainsEmptyUsedRow": true,
+    "scriptId": 25
+  },
+  "schemaVersion": 1,
+  "scopeRevision": "well8-potion1-event20-script25-durable-original-state",
+  "sources": [
+    {
+      "cpuAddress": 57979,
+      "length": 13,
+      "meaning": "Original Camera-to-current-cell",
+      "module": 2,
+      "offset": 90763,
+      "sha256": "ff3f994dcb963b7b1cce303e8ae14b9a05fe3d31c73888900997fddb2c1ee43a"
+    },
+    {
+      "cpuAddress": 58022,
+      "length": 31,
+      "meaning": "Original Item1 coordinate predicate; no map/actor/facing check",
+      "module": 2,
+      "offset": 90806,
+      "sha256": "d9a93b3a8e28265ebb710490364687d136b34bcd5f19147ef7cf63164c99df61"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 110,
+      "meaning": "Original Successful special item consumption",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "97e9d0d4e1043f265de4cae694be309d8ebb64c225bc4d9105f4418ef3e58ec2"
+    },
+    {
+      "cpuAddress": 52102,
+      "length": 2,
+      "meaning": "Original Event20 pointer",
+      "module": 11,
+      "offset": 379798,
+      "sha256": "a3f7bcd1d2562c5a5ddccef5c4eb242a764f596d38475d44570102bee4f2a900"
+    },
+    {
+      "cpuAddress": 54013,
+      "length": 20,
+      "meaning": "Original Event20 phases/script25/context38",
+      "module": 11,
+      "offset": 381709,
+      "sha256": "9c2141ad5283517f7c5122543653044d2d0edd1eb3608c8465c4ed3c0e0738f4"
+    },
+    {
+      "cpuAddress": 53050,
+      "length": 11,
+      "meaning": "Original Wait for script completion",
+      "module": 11,
+      "offset": 380746,
+      "sha256": "23fda734f78e9d5f31f55e3fea6f957cb5ad33185b1ed33d59ccaa98f5359b61"
+    },
+    {
+      "cpuAddress": 49880,
+      "length": 2,
+      "meaning": "Original Script25 pointer",
+      "module": 11,
+      "offset": 377576,
+      "sha256": "f5199ff2575f5df59a160521226a328f0f6b30ddf2bb0bbd2070b524b676f2fa"
+    },
+    {
+      "cpuAddress": 50905,
+      "length": 43,
+      "meaning": "Original Script25 five messages/NPC commands",
+      "module": 11,
+      "offset": 378601,
+      "sha256": "c96364f544cf364d2d01b1ad442478b828db1d3d8a199cce33f1e9a032ff6b01"
+    },
+    {
+      "cpuAddress": 52634,
+      "length": 45,
+      "meaning": "Original Completion mapflag OR128",
+      "module": 11,
+      "offset": 380330,
+      "sha256": "975e2af8b80d143bbb59fffc4262935763527a4b095ec31e59cec85e0c77d99a"
+    },
+    {
+      "cpuAddress": 52206,
+      "length": 40,
+      "meaning": "Original Script selection",
+      "module": 11,
+      "offset": 379902,
+      "sha256": "c03366cde3876fde96c6cd2a64cf8ecb7b46ca3f7927015faa118dc50e8739c1"
+    },
+    {
+      "cpuAddress": 54960,
+      "length": 2,
+      "meaning": "Original Scene38 actor context pointer",
+      "module": 0,
+      "offset": 22208,
+      "sha256": "f4a6a1602eabff758a1c650d5b03b955cd4f976a9ea80d54ffd5a10fb3ed4753"
+    }
+  ],
+  "taskId": "WORLD-FULL-01"
+}
