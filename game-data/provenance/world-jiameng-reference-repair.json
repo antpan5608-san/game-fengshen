@@ -1,0 +1,123 @@
+{
+  "diagnosis": {
+    "kind": "DEVELOPMENT_CONTENT_REFERENCE_BUG_NOT_PRODUCTION_V82",
+    "loaderLine": 573,
+    "runId": 37410735864,
+    "source": "087e0448c30ee0a75958157c4b3070c9025d086c"
+  },
+  "dialogueAliases": [
+    {
+      "baseDefinitionSha256": "47003e0a13e9d29efbefdfc423987aefa42f77d5d8f5ebd63b08742afedaa29b",
+      "bindingId": "rom.dialogue.148.3",
+      "message": 3,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.3",
+      "sourceRecord": {
+        "cpuAddress": 43234,
+        "length": 27,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108786,
+        "sha256": "ff03cb5da98e5a1740f3e36f254bfe3fdf7245ff9893b203373e36f6f2fa5304"
+      }
+    },
+    {
+      "baseDefinitionSha256": "c1e9137e7c7c4d3b7a19bb9b1d74e43195bb6020af3014d5c3cc643aebdc9b06",
+      "bindingId": "rom.dialogue.148.4",
+      "message": 4,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.4",
+      "sourceRecord": {
+        "cpuAddress": 43261,
+        "length": 28,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108813,
+        "sha256": "53abf6839ade72ed2d795e3d6ad47855d943551c5dee2f5039963e3701978b23"
+      }
+    },
+    {
+      "baseDefinitionSha256": "b3922b4e760133ed80841afb4d8f491435b2222bda921eca4a947fb23bc08fbb",
+      "bindingId": "rom.dialogue.148.5",
+      "message": 5,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.5",
+      "sourceRecord": {
+        "cpuAddress": 43289,
+        "length": 28,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108841,
+        "sha256": "1148ef6c0f9f8335980731d005fbcf84d16fd0045328b71439a0346449ef006a"
+      }
+    },
+    {
+      "baseDefinitionSha256": "17f7166ec2fc47d7d93647a6a6b93a8fe4d816240bcf0802218ae5b2f7a6a6ba",
+      "bindingId": "rom.dialogue.148.6",
+      "message": 6,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.6",
+      "sourceRecord": {
+        "cpuAddress": 43317,
+        "length": 14,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108869,
+        "sha256": "1a8b0bc0d7a1c9174ac8b4ceb0719463a40170515f346ee8b3ed06bb7172f0a9"
+      }
+    },
+    {
+      "baseDefinitionSha256": "1c0c2a35c61e5ab2758fba93d69fb1ce8614d5c0ce5c9d1029b9ed86c1cc47b1",
+      "bindingId": "rom.dialogue.148.7",
+      "message": 7,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.7",
+      "sourceRecord": {
+        "cpuAddress": 43331,
+        "length": 20,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108883,
+        "sha256": "255b0b5ebbf951e47cffcdaddeb6d51bba89afc19a5a81f10ebc06497c38a90b"
+      }
+    },
+    {
+      "baseDefinitionSha256": "affa53d42802a4ae0b0bc173c412722855ce232e5153fa721a3a3a34be548517",
+      "bindingId": "rom.dialogue.148.8",
+      "message": 8,
+      "originalGroup": 158,
+      "sourceId": "rom.dialogue.158.8",
+      "sourceRecord": {
+        "cpuAddress": 43351,
+        "length": 23,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 108903,
+        "sha256": "c633accb03098d960a267b76a2f5859cf60a1245b4feb99250dbb4da9ff64e93"
+      }
+    }
+  ],
+  "licenseStatus": "UNKNOWN",
+  "notes": [
+    "Historical runtime binding IDs retained; actual ROM text group is158, not148. This is explicit binding aliasing, not new dialogue or guessed text.",
+    "Original bed record FF/FF is not a talkable NPC; keep its object, visibility, collision and scene-item target.",
+    "Original canonical c59 evidence and content pins remain immutable; repair is a new scoped export."
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "schemaVersion": 1,
+  "scopeRevision": "jiameng-actual-group158-durable-binding-aliases-and-untalkable-bed",
+  "taskId": "WORLD-FULL-01",
+  "untalkableBed": {
+    "baseDefinitionSha256": "239f5bf458549a5e07aac2cf5ad46a6c9f38931331c0997af71f6d6713653a00",
+    "id": "rom.npc.37.yang-bed",
+    "originalHex": "82ffff00a800c800e68c02020000",
+    "record": {
+      "cpuAddress": 49534,
+      "length": 14,
+      "meaning": "Fixed 14-byte NPC source record",
+      "module": 8,
+      "offset": 278926,
+      "sha256": "70e2dd061b5bd67d61cf5a9374e9b452c1311e8fa28726bac71403bb3fd3ca4b"
+    }
+  }
+}

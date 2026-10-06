@@ -952,6 +952,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             }
         }
 
+        content.jiangJoin?.let{rule->
+            if(flags[rule.pendingFlag]==true&&rule.validPending(currentSnapshot())){
+                val stage=rule.continuation.stage(rule.id,flags)?:return@let
+                openDialogue(content.dialogues.getValue(rule.continuation.dialogueIds[stage]),
+                    if(stage==0)content.npcs.single{it.id==rule.kingNpcId}else null);return
+            }
+        }
         content.yangJoin()?.let{rule->
             if(flags[rule.pendingFlag]==true){
                 val stage=rule.continuation.stage(rule.id,flags)
@@ -1028,6 +1035,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()
             commitStoryFollowup(before,OriginalSceneItems.advance(before,rule,dialogueText?.id?:""),npc);return
+        }
+        content.jiangJoin?.takeIf{flags[it.pendingFlag]==true}?.let{rule->
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot();val result=OriginalJiangJoin.advance(before,rule,dialogueText?.id?:"",
+                content.joinCharacters["jiangziya"])
+            commitStoryFollowup(before,result,if(result.snapshot.mapId==121)npc else null);return
         }
         content.yangJoin()?.let{rule->
             if(npc?.id==rule.npcId&&flags[rule.pendingFlag]==true){

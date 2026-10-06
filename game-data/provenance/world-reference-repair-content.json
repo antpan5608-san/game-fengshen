@@ -1,0 +1,23 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-well8-content.json",
+    "pinSha256": "3c81002ef34bbe3080acabfda1e86ee0d12f7805f119cad16cdadc5c5be33f2b",
+    "provenanceSha256": "9c47c3ac0966e2b4dfcf79c0b3a7aaad3799deb3f338d66400255c345cda067c"
+  },
+  "baseManifestSha256": "ca4de36b2665e3166f518c3397870105776e323249c721f36b5aa807d55edadb",
+  "dialogues": [],
+  "exits": [],
+  "graphics": {},
+  "items": [],
+  "limitations": [
+    "Six historical Jiameng runtime binding IDs explicitly alias actual ROM group158; sources retain real offsets."
+  ],
+  "maps": [],
+  "npcReferenceRepairEvidence": "game-data/provenance/world-jiameng-reference-repair.json",
+  "npcs": [],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [],
+  "scopeRevision": "jiameng-loader-reference-repair",
+  "taskId": "WORLD-FULL-01"
+}
