@@ -400,3 +400,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 正常稳定路线遇到胜后存活断言失败，先看同候选txt/索引的实际HP、库存、状态与原奖励；合法部分战死不是自动结算Bug。已实核隔离HallRoutePreparationTest使用原OpeningBattle/固定原规则比较有界准备策略，但必须由真实训练/商店/付费休息在新同候选App实现；隔离比较不算正常路线PASS，不删原存活/各自EXP/一次性flag断言。
 - 云artifact重定向CONNECT403时，现有已连接GitHub只读artifact入口曾实际取回小型checkpoint ZIP（<32MiB），可核其hash并读取原txt/index；不打印临时下载URL，不将连接器成功等同当前云GH_TOKEN/网络策略验证通过。超大完整录像仍用原artifact入口，不绕过代理或另造原片。
+
+- 录制预算变更须同时核原run-town02-runtime.sh与record_app_audio.validate_recording_budget；test_record_app_boundary.py实际检查所有显式预算和上限正反例。首殿18000秒仅限该prefix，其他范围不扩；入口校验失败属于TEST_HARNESS，不是App路线失败，也不能复用旧产物PASS。
