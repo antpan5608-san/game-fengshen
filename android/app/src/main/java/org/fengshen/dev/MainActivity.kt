@@ -105,12 +105,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleItemListScroll=0f
     private var battleItemDetailScroll=0f
     private var battleInfoOpen=false
+    private var battleInfoHeroId:String?=null
+    private var battleAttackSelection:BattleTouchCommand?=null
     private var battleInfoScroll=0f
     private var battleInfoListScroll=0f
     private var battleResultScroll=0f
     private var battleNotice=""
     private var battleResultBefore:CharacterState?=null
     private var battleResultLines:List<String> = emptyList()
+    private var battleResultDetails=false
+    private var battleResultParty:List<Pair<CharacterState,Int>> = emptyList()
     private val diagnosedExperience=mutableSetOf<String>()
     fun growthProgress(hero:CharacterState)=experienceProgress(hero,content.battle?.growthFor(hero.id)?:emptyList(),
         hero.id,content.battle?.maxLevelFor(hero.id))
@@ -137,8 +141,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v){historyClock.pause();finishPendingStep()};input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){historyClock.pause();finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
+    var active=false;set(v){field=v;if(!v){historyClock.pause();finishPendingStep()};input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){historyClock.pause();finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
     var layer=Layer.MAP;private set
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
@@ -150,6 +154,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val paint=Paint().apply{isFilterBitmap=false;isAntiAlias=false}
     private val overlayPaint=Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint=Paint(Paint.ANTI_ALIAS_FLAG).apply{color=Color.WHITE;typeface=Typeface.create("sans-serif",Typeface.NORMAL)}
+    private val battleLinePaint=android.text.TextPaint(Paint.ANTI_ALIAS_FLAG)
     private val menuTouch=mutableMapOf<Int,Int>()
     private val panelTouch=mutableMapOf<Int,Int>()
     private val hudTouch=mutableSetOf<Int>()
@@ -196,7 +201,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val error=world.transitionFailure
             Diagnostics.record("map_transition","ERROR",JSONObject().put("success",success).put("fromMapId",from).put("mapId",to),
                 error?.javaClass?.simpleName?:"target_map_or_spawn_unavailable",error?.stackTrace?.take(12)?.joinToString("\n")?:"")}}
-    fun relayout(){clearBattleGesture();battlePresentation.invalidateInput();ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
+    fun relayout(){clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
     fun currentSnapshot()=SaveSnapshot(content.scene.version,world.mapId,world.x,world.y,world.direction,characters,inventory,flags,money,encounter?.steps?:0,world.interiorContext,world.terrainMode)
     fun hasMeaningfulLocalSave():Boolean = hadPersistedAtStart || world.mapId!=114 ||
         world.x!=content.scene.spawnX*16+8 || world.y!=content.scene.spawnY*16+8 || characters!=listOf(content.initialPlayer) ||
@@ -335,7 +340,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){historyClock.pause();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){historyClock.pause();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -363,7 +368,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 }
                 if(battlePresentation.screen==BattlePresentation.Screen.RESULT&&battleCommitted&&
                     (storyBattle==null||storyBattle?.finalizeWithoutDialogue==true)&&
-                    !battleSavePending&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
+                    !battleSavePending&&!battleResultDetails&&!battleInfoOpen&&!battleItemsOpen&&battlePresentation.resultElapsedMs>=ordinaryResultDuration())closeBattle()
             }
         } else clock.reset()
         if(layoutMapId!=world.mapId){ui=layout(width,height,resources.displayMetrics.density,safe,mode,config,world.scene.width*16,world.scene.height*16);layoutMapId=world.mapId}
@@ -497,7 +502,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battle=createPartyBattle(group,rules)
         selectedBattleSlot=group.members.first().slot
         battleMessage="遭遇敌群 ${group.id} · 选择目标后攻击"
-        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;clearBattleGesture();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
@@ -546,6 +551,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     /** Accepted input can queue the first actor without resolving a turn or consuming RNG. */
     private fun showSubmittedBattleCommand(current:OpeningBattle,beforeRevision:Int,turn:BattleTurn?):Boolean {
         if(turn==null&&current.inputRevision==beforeRevision)return false
+        battleAttackSelection=null
+        if(turn==null&&battlePresentation.screen==BattlePresentation.Screen.TARGET)battlePresentation.back()
+        if(turn==null&&battlePresentation.screen==BattlePresentation.Screen.COMMAND)battlePresentation.selectCommand(0)
         input.clear();clearBattleGesture();battleTouch.clear();battlePresentation.invalidateInput()
         battleNotice=if(turn==null)"${current.inputHero?.let{heroName(it.id)}?:"队伍"}：选择指令" else ""
         if(turn!=null)battlePresentation.present(turn)
@@ -553,6 +561,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun attackBattle(slot:Int){
         if(battleInfoOpen||battleItemsOpen||battlePresentation.screen !in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))return
+        if(!attackSelected())return
         val current=battle?:return;val revision=current.inputRevision
         val turn=current.attack(slot){battleRandom.nextInt(256)}
         if(showSubmittedBattleCommand(current,revision,turn)&&turn!=null)audio.effect("attack")
@@ -577,6 +586,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     showNotice("剧情角色状态无法提交，奖励尚未结算");return
                 }
                 val reward=current.settle(money)?:return
+                battleResultParty=reward.characters.filter{it.id in partyBefore}.map{it to reward.experienceByCharacter.getValue(it.id)}
                 characters=storyBattle?.charactersOnVictory(reward.characters)?:reward.characters;money=reward.money
                 val loot=BattleAcquisition.apply(current.inventoryAfterBattle(inventory),current.enemies.mapNotNull{it.definition.loot},
                     content.itemDefinitions.mapValues{it.value.category}){battleRandom.nextInt(256)}
@@ -622,13 +632,20 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun ordinaryResultDuration()=maxOf(2200L,battleResultLines.sumOf{it.length}.toLong()*45L)
     private fun closeBattle(){
+        val hadSelection=attackSelected();battleAttackSelection=null
+        if(hadSelection&&battlePresentation.screen==BattlePresentation.Screen.COMMAND){
+            battleNotice="请选择指令；点击敌人查看信息";battlePresentation.invalidateInput();clearBattleGesture();return
+        }
         if(battleItemsOpen){battleItemsOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput();clearBattleGesture();return}
-        if(battleInfoOpen){battleInfoOpen=false;battlePresentation.invalidateInput();clearBattleGesture();return}
+        if(battleInfoOpen){battleInfoOpen=false;battlePresentation.resetResultTimer();battlePresentation.invalidateInput();clearBattleGesture();return}
+        if(battleResultDetails&&battlePresentation.screen==BattlePresentation.Screen.RESULT){
+            battleResultDetails=false;battleResultScroll=0f;battlePresentation.resetResultTimer();battlePresentation.invalidateInput();return
+        }
         if(battlePresentation.screen==BattlePresentation.Screen.TARGET){battlePresentation.back();battleTouch.clear();return}
         if(battlePresentation.screen!=BattlePresentation.Screen.RESULT||!battleCommitted)return
         if(battleSavePending){battleSavePending=!persistStateResult();if(battleSavePending)return}
         val story=storyBattle;storyBattle=null
-        battle=null;clearBattleGesture();layer=Layer.MAP;input.clear();clock.reset()
+        battle=null;battleResultDetails=false;battleResultParty=emptyList();battleInfoHeroId=null;clearBattleGesture();layer=Layer.MAP;input.clear();clock.reset()
         audio.scene(world.mapId)
         if(story!=null&&flags[story.flagId+".dialogue.pending"]==true){
             val npc=content.npcs.first{it.id==story.npcId}
@@ -636,10 +653,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     private fun confirmBattle(){
+        if(battleInfoOpen||battleItemsOpen)return
         when(battlePresentation.screen){
-            BattlePresentation.Screen.COMMAND->when(battlePresentation.command){0->battlePresentation.targets();4->escapeBattle()}
+            BattlePresentation.Screen.COMMAND->when(battlePresentation.command){0->{
+                val current=battle?:return;battlePresentation.targets()
+                battleAttackSelection=BattleTouchCommand(battleID,battlePresentation.revision,"attack-mode")
+                    .also{it.actorId=current.inputHero?.id;it.inputRevision=current.inputRevision}
+            };4->escapeBattle()}
             BattlePresentation.Screen.TARGET->attackBattle(selectedBattleSlot)
-            BattlePresentation.Screen.RESULT->closeBattle()
+            BattlePresentation.Screen.RESULT->{battleResultDetails=false;closeBattle()}
             else->Unit
         }
         battleTouch.clear()
@@ -675,8 +697,24 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val detail=Box(list.x+list.w+8*dp,list.y,l.frame.x+l.frame.w-8*dp-(list.x+list.w+8*dp),list.h)
         return l.copy(list=list,detail=detail,rowHeight=row)
     }
-    private fun battleLayout()=battleTouchLayout(ui.safe,resources.displayMetrics.density,
+    private fun battleScene()=battleSceneLayout(ui.safe,resources.displayMetrics.density,
         resources.configuration.fontScale,battle?.enemies?.size?:1,battle?.party?.size?:1)
+    private fun battleLayout()=battleScene()?.touch?:battleTouchLayout(ui.safe,resources.displayMetrics.density,
+        resources.configuration.fontScale,battle?.enemies?.size?:1,battle?.party?.size?:1)
+    fun battlePartyCardBounds(id:String):Box {
+        val current=battle?:return Box(0f,0f,0f,0f)
+        val i=current.party.indexOfFirst{it.id==id}
+        return battleScene()?.partyCards?.getOrNull(i)?:Box(0f,0f,0f,0f)
+    }
+    private fun attackSelected():Boolean {
+        val selection=battleAttackSelection?:return false;val current=battle?:return false
+        return selection.battleId==battleID&&selection.revision==battlePresentation.revision&&
+            selection.actorId!=null&&selection.actorId==current.inputHero?.id&&selection.inputRevision==current.inputRevision
+    }
+    private fun clearAttackChoice(){battleAttackSelection=null
+        if(battlePresentation.screen==BattlePresentation.Screen.TARGET)battlePresentation.back()}
+    private fun resetBattleUiSelection(){battleAttackSelection=null;battleInfoHeroId=null
+        battleResultDetails=false;battleResultParty=emptyList()}
     private fun battleBox():Box {
         val a=battleLayout().arena;val scale=min(a.w/256f,a.h/132f)
         return Box(a.x+(a.w-256*scale)/2,a.y,256*scale,240*scale)
@@ -687,6 +725,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun battleEnemyBox(enemy:BattleEnemy):Box {
         val graphic=content.enemyGraphics[enemy.definition.id]
+        battleScene()?.let{scene->
+            val current=battle!!;val cell=scene.touch.enemies[current.enemies.indexOfFirst{it.slot==enemy.slot}]
+            val dp=resources.displayMetrics.density
+            val target=if(current.enemies.size==1)Box(cell.x+4*dp,cell.y+4*dp,cell.w-8*dp,max(1f,cell.h-38*dp))
+                else Box(cell.x+4*dp,cell.y+4*dp,max(1f,min(cell.w*.35f,48*dp)),cell.h-8*dp)
+            val w=(graphic?.width?:32).toFloat();val h=(graphic?.height?:40).toFloat()
+            val fit=min(target.w/w,target.h/h)
+            val scale=if(fit>=1f)floor(fit)else fit
+            return Box(target.x+(target.w-w*scale)/2,target.y+(target.h-h*scale)/2,w*scale,h*scale)
+        }
         // A captured single-enemy origin is not a shared origin for every instance in a group.
         // Keep the existing slot layout for ordinary groups; the sole Boss retains its origin.
         val origin=content.enemyOrigins[enemy.definition.id]?.takeIf{battle?.enemies?.size==1}
@@ -696,6 +744,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun battleHit(x:Float,y:Float):BattleTouchCommand? {
         val current=battle?:return null;val screen=battlePresentation.screen;val l=battleLayout()
         fun cmd(kind:String,slot:Int?=null,item:String?=null,target:String?=null)=BattleTouchCommand(battleID,battlePresentation.revision,kind,slot,item,target)
+            .also{it.actorId=current.inputHero?.id;it.inputRevision=current.inputRevision}
         if(battleItemsOpen){
             val items=battleItemLayout()
             if(items.close.contains(x,y))return cmd("close-items")
@@ -709,33 +758,55 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battleInfoOpen){
             val info=battleInfoLayout()
             if(info.close.contains(x,y))return cmd("close-info")
+            if(battleInfoHeroId!=null){
+                current.party.withIndex().firstOrNull{(i,_)->val row=info.visibleRow(i,battleInfoListScroll)
+                    row.contains(x,y)&&row.h>=48*resources.displayMetrics.density}?.let{return cmd("party-info",target=it.value.id)}
+                return when{info.detail.contains(x,y)->cmd("info-scroll");info.list.contains(x,y)->cmd("info-list-scroll");else->null}
+            }
             current.enemies.firstOrNull{battleTargetBounds(it.slot).contains(x,y)&&battleTargetBounds(it.slot).h>=48*resources.displayMetrics.density}?.let{return cmd("info-target",it.slot)}
             return when{info.detail.contains(x,y)->cmd("info-scroll",selectedBattleSlot)
                 info.list.contains(x,y)->cmd("info-list-scroll");else->null}
         }
-        if(screen==BattlePresentation.Screen.RESULT)return if(l.result.contains(x,y))cmd("result") else null
+        if(screen==BattlePresentation.Screen.RESULT){
+            if(!battleCommitted)return null
+            battleScene()?.resultFooter?.let{footer->if(footer.contains(x,y))return cmd(if(x<footer.x+footer.w/2)"result-details"else"result")}
+            return if(l.result.contains(x,y))cmd(if(battleResultDetails)"result-scroll"else"result") else null
+        }
+        current.party.firstOrNull{battlePartyCardBounds(it.id).contains(x,y)}?.let{return cmd("party-info",target=it.id)}
         if(screen !in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET))return null
         l.commands.indexOfFirst{it.contains(x,y)}.takeIf{it>=0}?.let{index->return cmd(listOf("attack-mode","magic","items","escape","info")[index])}
-        current.enemies.firstOrNull{it.hp>0&&battleTargetBounds(it.slot).contains(x,y)}?.let{return cmd("attack",it.slot)}
+        current.enemies.firstOrNull{battleTargetBounds(it.slot).contains(x,y)}?.let{
+            return cmd(if(attackSelected()&&it.hp>0)"attack"else"inspect-target",it.slot)}
         // Overlapping original graphics have a separate non-overlapping >=48dp instance row above commands.
         val hit=current.enemies.filter{it.hp>0&&battleEnemyBox(it).contains(x,y)}
         return if(hit.size==1&&battleEnemyBox(hit.single()).w>=48*resources.displayMetrics.density&&
-            battleEnemyBox(hit.single()).h>=48*resources.displayMetrics.density)cmd("attack",hit.single().slot) else null
+            battleEnemyBox(hit.single()).h>=48*resources.displayMetrics.density)
+            cmd(if(attackSelected())"attack"else"inspect-target",hit.single().slot) else null
     }
     private fun submitBattle(cmd:BattleTouchCommand){
-        if(cmd.battleId!=battleID||cmd.revision!=battlePresentation.revision)return
+        val current=battle?:return
+        if(cmd.battleId!=battleID||cmd.revision!=battlePresentation.revision||cmd.actorId!=current.inputHero?.id||
+            cmd.inputRevision!=current.inputRevision)return
         clearBattleGesture()
         when(cmd.kind){
-            "attack"->{selectedBattleSlot=cmd.slot?:return;attackBattle(selectedBattleSlot)}
-            "escape"->escapeBattle()
-            "info"->{battleInfoOpen=true;battleInfoScroll=0f;battleInfoListScroll=0f;battlePresentation.invalidateInput()}
-            "close-info"->{battleInfoOpen=false;battlePresentation.invalidateInput()}
+            "attack"->{if(!attackSelected())return;selectedBattleSlot=cmd.slot?:return;attackBattle(selectedBattleSlot)}
+            "escape"->{clearAttackChoice();escapeBattle()}
+            "info","inspect-target"->{clearAttackChoice();battleInfoHeroId=null;cmd.slot?.let{selectedBattleSlot=it}
+                battleInfoOpen=true;battleInfoScroll=0f;battleInfoListScroll=0f;battlePresentation.invalidateInput()}
+            "party-info"->{if(current.party.none{it.id==cmd.targetId})return
+                clearAttackChoice();battleInfoHeroId=cmd.targetId;battleInfoOpen=true;battleInfoScroll=0f;battleInfoListScroll=0f;battlePresentation.invalidateInput()}
+            "close-info"->{battleInfoOpen=false;battlePresentation.resetResultTimer();battlePresentation.invalidateInput()}
             "info-target"->{selectedBattleSlot=cmd.slot?:return;battleInfoScroll=0f;battlePresentation.invalidateInput()}
             "info-scroll","info-list-scroll"->Unit
-            "result"->closeBattle()
-            "attack-mode"->{battleNotice="点击存活敌人或对应信息条，攻击一次";battlePresentation.invalidateInput()}
-            "magic"->{battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
-            "items"->{battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
+            "result"->{battleResultDetails=false;closeBattle()}
+            "result-details"->{battleResultDetails=!battleResultDetails;battleResultScroll=0f;battlePresentation.resetResultTimer();battlePresentation.invalidateInput()}
+            "result-scroll"->Unit
+            "attack-mode"->{if(current.inputHero==null)return;battleNotice="攻击：请选择存活敌人"
+                if(battlePresentation.screen==BattlePresentation.Screen.COMMAND){battlePresentation.selectCommand(0);battlePresentation.targets()}
+                else battlePresentation.invalidateInput()
+                battleAttackSelection=cmd.copy(revision=battlePresentation.revision).also{it.actorId=cmd.actorId;it.inputRevision=cmd.inputRevision}}
+            "magic"->{clearAttackChoice();battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
+            "items"->{clearAttackChoice();battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "close-items"->{battleItemsOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput()}
             "select-medicine"->{if(cmd.itemId !in battleMedicines())return;selectedBattleItem=cmd.itemId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "medicine-target"->{val current=battle?:return;if(current.party.none{it.id==cmd.targetId})return
@@ -781,7 +852,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                             else if(item.detail.contains(g.x,g.y))battleItemDetailScroll=max(0f,battleItemDetailScroll+g.lastY-y)
                         }else if(battleInfoOpen){
                             val info=battleInfoLayout()
-                            if(info.list.contains(g.x,g.y))battleInfoListScroll=(battleInfoListScroll+g.lastY-y).coerceIn(0f,info.maxScroll(battle?.enemies?.size?:0))
+                            val count=if(battleInfoHeroId!=null)battle?.party?.size?:0 else battle?.enemies?.size?:0
+                            if(info.list.contains(g.x,g.y))battleInfoListScroll=(battleInfoListScroll+g.lastY-y).coerceIn(0f,info.maxScroll(count))
                             else if(info.detail.contains(g.x,g.y))battleInfoScroll=max(0f,battleInfoScroll+g.lastY-y)
                         }
                         else if(battlePresentation.screen==BattlePresentation.Screen.RESULT)battleResultScroll=max(0f,battleResultScroll+g.lastY-y)
@@ -1124,7 +1196,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         storyBattle=story;battleSavePending=false
         battle=createPartyBattle(story.group,rules)
         selectedBattleSlot=story.group.members.first().slot;battleMessage="${rules.enemies.getValue(story.group.members.first().enemyId).name} · 剧情战斗"
-        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;clearBattleGesture();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
             .put("mapId",world.mapId).put("storyBattle",story.id))
@@ -2054,6 +2126,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val screen=battlePresentation.screen;val action=battlePresentation.action;val dp=resources.displayMetrics.density
         if(battleInfoOpen){drawBattleInformation(c,current);return}
         if(battleItemsOpen){drawBattleItems(c,current);return}
+        battleScene()?.let{drawBattleScene(c,current,it);return}
         c.drawColor(Color.BLACK);paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
         val horizon=if(current.enemies.any{it.definition.id in content.blackBattleEnemyIds})null else content.battleHorizons[world.mapId]?:content.battleHorizon
         horizon?.takeIf{screen!=BattlePresentation.Screen.RESULT}?.let{image->c.drawBitmap(image,null,RectF(b.x,b.y,b.x+b.w,b.y+32*scale),paint)}
@@ -2095,7 +2168,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             BattlePresentation.Screen.ACTING->action?.let{step->
                 val actor=if(step.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.STATUS,BattleActionKind.HEAL))step.targetId else step.actorId
                 (if(current.party.size>1&&actor!=null)heroName(actor)+" · " else "")+step.text}?:""
-            else->"${current.inputHero?.let{heroName(it.id)}?:"队伍"}：点击敌人攻击"}
+            else->"${current.inputHero?.let{heroName(it.id)}?:"队伍"}：先选指令；点击敌人查看信息"}
         val partyLines=current.party.map{player->
             val hp=action?.partyHp?.get(player.id)?:if(player.id==current.hero.id)action?.heroHp?:player.hp else player.hp
             val status=action?.partyStatus?.get(player.id)?:if(player.id==current.hero.id)action?.heroStatusMask?:player.statusMask else player.statusMask
@@ -2112,6 +2185,126 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
         if(action?.kind==BattleActionKind.SPECIAL){overlayPaint.color=0x33ffffff;c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
         textPaint.color=Color.WHITE
+    }
+    /** Single-line labels keep full details in the independent scrollable layer. */
+    private fun battleLine(c:Canvas,value:String,box:Box,sp:Float=12f,color:Int=Color.WHITE){
+        textPaint.textSize=sp*resources.displayMetrics.scaledDensity;textPaint.color=color
+        battleLinePaint.set(textPaint)
+        val text=android.text.TextUtils.ellipsize(value,battleLinePaint,max(1f,box.w),android.text.TextUtils.TruncateAt.END).toString()
+        c.save();c.clipRect(box.x,box.y,box.x+box.w,box.y+box.h)
+        c.drawText(text,box.x,box.y-textPaint.fontMetrics.ascent,textPaint);c.restore()
+    }
+    private fun drawBattleScene(c:Canvas,current:OpeningBattle,scene:BattleSceneLayout){
+        val l=scene.touch;val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
+        val screen=battlePresentation.screen;val action=battlePresentation.action
+        c.drawColor(Color.BLACK);overlayPaint.alpha=255;paint.alpha=255;paint.isFilterBitmap=false
+        if(screen==BattlePresentation.Screen.RESULT){drawBattleSceneResult(c,current,scene);return}
+        val blackScene=current.enemies.any{it.definition.id in content.blackBattleEnemyIds}
+        overlayPaint.color=if(blackScene)Color.BLACK else 0xff111c22.toInt();c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)
+        val horizon=if(blackScene)null
+            else content.battleHorizons[world.mapId]?:content.battleHorizon
+        horizon?.let{image->val scale=min(l.arena.w/image.width,l.arena.h/image.height)
+            val x=l.arena.x+(l.arena.w-image.width*scale)/2
+            c.drawBitmap(image,null,RectF(x,l.arena.y,x+image.width*scale,l.arena.y+image.height*scale),paint)}
+        val message=when{
+            screen==BattlePresentation.Screen.ENTRY->"敌人出现了！"
+            screen==BattlePresentation.Screen.ACTING->action?.let{step->
+                val id=if(step.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.STATUS,BattleActionKind.HEAL))step.targetId else step.actorId
+                (if(current.party.size>1&&id!=null)heroName(id)+" · "else"")+step.text}?:"行动中"
+            attackSelected()->"${current.inputHero?.let{heroName(it.id)}?:"队伍"} · 攻击：请选择存活敌人"
+            battleNotice.isNotEmpty()->battleNotice
+            else->"${current.inputHero?.let{heroName(it.id)}?:"队伍"} · 请选择指令；点击敌人查看信息"}
+        battleLine(c,message,scene.prompt,13f)
+        for((i,enemy)in current.enemies.withIndex()){
+            val cell=l.enemies[i];val hp=battleVisibleHp(enemy.slot)?:0
+            overlayPaint.color=if(selectedBattleSlot==enemy.slot)0xdd244d49.toInt()else if(blackScene)0xcc000000.toInt()else 0xcc18252e.toInt()
+            c.drawRect(cell.x,cell.y,cell.x+cell.w,cell.y+cell.h,overlayPaint)
+            val sprite=battleEnemyBox(enemy)
+            val impact=action?.targetSlot==enemy.slot&&action.kind==BattleActionKind.DAMAGE
+            if(hp>0||impact){
+                val shift=if(action?.actorSlot==enemy.slot)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
+                paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
+                content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
+                paint.alpha=255
+            }
+            val x=if(current.enemies.size==1)cell.x+6*dp else cell.x+min(cell.w*.35f,48*dp)+10*dp
+            val y=if(current.enemies.size==1)cell.y+cell.h-32*dp else cell.y+4*dp
+            val name=enemy.definition.name+(if(current.enemies.count{it.definition.id==enemy.definition.id}>1)" ${enemy.slot+1}"else"")
+            battleLine(c,if(hp>0)name else "$name · 倒下",Box(x,y,max(1f,cell.x+cell.w-6*dp-x),max(26*dp,16*font*dp)),12f)
+            gauge(c,Box(x,cell.y+cell.h-8*dp,max(1f,cell.x+cell.w-6*dp-x),4*dp),hp,enemy.definition.hp,0xffc55758.toInt())
+        }
+        for((i,hero)in current.party.withIndex()){
+            val view=battlePartyView(hero,heroName(hero.id),action,current.inputHero?.id,current.hero.id)
+            val field=scene.allySprites[i];val size=min(48*dp,min(field.w-8*dp,field.h-8*dp)).coerceAtLeast(dp)
+            val moving=action?.kind==BattleActionKind.ATTACK&&action.actorSlot==null&&
+                (action.actorId==hero.id||(action.actorId==null&&hero.id==current.hero.id))
+            val shift=if(moving)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
+            val sprite=Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2-shift,size,size)
+            if(view.hp>0)portrait(c,hero,sprite)
+            if(action?.targetId==hero.id){overlayPaint.color=0xffcfab54.toInt();overlayPaint.style=Paint.Style.STROKE
+                overlayPaint.strokeWidth=2*dp;c.drawRect(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h,overlayPaint)
+                overlayPaint.style=Paint.Style.FILL}
+            val card=scene.partyCards[i]
+            overlayPaint.color=if(view.active)0xff244d49.toInt()else 0xff18252e.toInt()
+            c.drawRect(card.x,card.y,card.x+card.w,card.y+card.h,overlayPaint)
+            if(view.active){overlayPaint.color=0xffcfab54.toInt();c.drawRect(card.x,card.y,card.x+3*dp,card.y+card.h,overlayPaint)}
+            val icon=Box(card.x+6*dp,card.y+4*dp,24*dp,24*dp);portrait(c,hero,icon)
+            val title="${view.name} Lv.${view.level}"+(if(view.status==0)""else" · ${OriginalStatus.label(view.status)}")
+            battleLine(c,title,Box(icon.x+icon.w+6*dp,card.y+4*dp,card.w-42*dp,max(24*dp,17*font*dp)),13f)
+            val x=card.x+8*dp;val w=card.w-16*dp;val y=card.y+card.h-max(18f,14*font)*dp-4*dp
+            battleLine(c,"HP ${view.hp}",Box(x,y,w*.58f,max(18f,14*font)*dp),11f)
+            battleLine(c,"MP ${view.mp}",Box(x+w*.6f,y,w*.4f,max(18f,14*font)*dp),11f)
+            gauge(c,Box(x,card.y+card.h-5*dp,w*.56f,3*dp),view.hp,view.maxHp,0xffc55758.toInt())
+            gauge(c,Box(x+w*.6f,card.y+card.h-5*dp,w*.4f,3*dp),view.mp,view.maxMp,0xff638cce.toInt())
+        }
+        val waiting=screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)
+        listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->
+            touchButton(c,l.commands[i],title,waiting&&i!=1,selected=i==0&&attackSelected())}
+        if(action?.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.MISS,BattleActionKind.HEAL)){
+            val target=action?.targetSlot?.let{slot->current.enemies.firstOrNull{it.slot==slot}?.let{battleEnemyBox(it)}}
+                ?:scene.allySprites.getOrNull(current.party.indexOfFirst{it.id==action?.targetId})?:scene.allyField
+            battleLine(c,if(action?.kind==BattleActionKind.MISS)"MISS"else(action?.hpDelta?:0).toString(),
+                Box(target.x,target.y,target.w,max(28*dp,24*font*dp)),16f,
+                if(action?.kind==BattleActionKind.HEAL)0xff72d3c5.toInt()else 0xffffb3a7.toInt())
+        }
+        if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa
+            c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
+        if(action?.kind==BattleActionKind.SPECIAL){overlayPaint.color=0x33ffffff
+            c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
+        overlayPaint.alpha=255
+    }
+    private fun drawBattleSceneResult(c:Canvas,current:OpeningBattle,scene:BattleSceneLayout){
+        val l=scene.touch;val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
+        if(battleResultDetails){
+            c.save();c.clipRect(l.result.x,l.result.y,l.result.x+l.result.w,l.result.y+l.result.h)
+            var y=l.result.y+8*dp-battleResultScroll
+            for(line in battleResultLines)y+=touchText(c,line,Box(l.result.x+12*dp,y,l.result.w-24*dp,1f),14f)+4*dp
+            battleResultScroll=battleResultScroll.coerceAtMost(max(0f,y+battleResultScroll-l.result.y-l.result.h));c.restore()
+        }else{
+            val title=battleResultLines.firstOrNull()?:battleMessage
+            val summary=battleResultLines.getOrNull(1)?:""
+            val titleH=max(24f,19*font)*dp;val summaryH=max(24f,18*font)*dp
+            battleLine(c,title,Box(l.result.x+8*dp,l.result.y+4*dp,l.result.w-16*dp,titleH),15f)
+            val summaryY=l.result.y+titleH+8*dp;val top=summaryY+summaryH+4*dp
+            battleLine(c,summary,Box(l.result.x+8*dp,summaryY,l.result.w-16*dp,summaryH),12f)
+            val entries=battleResultParty
+            val columns=if(entries.size==1)1 else 2;val rows=max(1,(entries.size+columns-1)/columns)
+            val cw=(l.result.w-12*dp)/columns;val ch=(l.result.y+l.result.h-top-8*dp)/rows
+            for((i,entry)in entries.withIndex()){
+                val(hero,gain)=entry;val card=Box(l.result.x+4*dp+(i%columns)*cw,top+(i/columns)*ch,cw-4*dp,ch-4*dp)
+                overlayPaint.color=0xff18252e.toInt();c.drawRect(card.x,card.y,card.x+card.w,card.y+card.h,overlayPaint)
+                val icon=Box(card.x+6*dp,card.y+6*dp,24*dp,24*dp);portrait(c,hero,icon)
+                val nameH=max(24f,13*font*1.25f)*dp;val gainH=max(20f,12*font*1.25f)*dp
+                battleLine(c,"${heroName(hero.id)} Lv.${hero.level}",Box(icon.x+30*dp,card.y+2*dp,card.w-42*dp,nameH),13f)
+                battleLine(c,"EXP +$gain · 累计 ${hero.experience}",Box(card.x+8*dp,card.y+2*dp+nameH,card.w-16*dp,gainH),12f)
+                if(ch>max(90f,68*font)*dp)battleLine(c,growthProgress(hero).summary,
+                    Box(card.x+8*dp,card.y+max(60f,42*font)*dp,card.w-16*dp,max(24f,18*font)*dp),11f)
+            }
+        }
+        val footer=scene.resultFooter;val left=Box(footer.x,footer.y,(footer.w-8*dp)/2,footer.h)
+        val right=Box(left.x+left.w+8*dp,footer.y,left.w,footer.h)
+        touchButton(c,left,if(battleResultDetails)"奖励摘要"else"奖励详情",battleCommitted)
+        touchButton(c,right,if(battleSavePending)"重试保存"else if(storyBattle!=null)"继续剧情"else"继续",battleCommitted)
     }
     fun battleHerbCount()=max(0,(inventory[HerbUse.ID]?:0)-(battle?.herbsConsumed?:0))
     private fun battleMedicines()=content.itemDefinitions.values.filter{(it.category=="medicine"||it.battleBindingUse!=null)&&
@@ -2186,6 +2379,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         touchButton(c,l.primary,if(id==null)"先选择物品" else if(binding)"对${item?.battleBindingUse?.targetLabel}使用"else target?.let{"使用于${heroName(it.id)}"}?:"没有合法目标",enabled)
     }
     private fun drawBattleInformation(c:Canvas,current:OpeningBattle){
+        if(battleInfoHeroId!=null){drawBattlePartyInformation(c,current);return}
         val l=battleInfoLayout();val dp=resources.displayMetrics.density
         c.drawColor(Color.BLACK)
         touchText(c,"敌人信息",Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
@@ -2203,6 +2397,30 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             "攻击 ${enemy.definition.attack} · 防御 ${enemy.definition.defense}",
             content.battle?.enemyAgility?.get(enemy.definition.id)?.let{"敏捷 $it"}?:"敏捷数据未接入",
             if(enemy.definition.id in 4..7)"名称有来源暂定；属性来自现有数据" else "HP/属性显示为移动端信息增强")
+        c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
+        var y=l.detail.y-battleInfoScroll
+        for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
+        battleInfoScroll=battleInfoScroll.coerceAtMost(max(0f,y+battleInfoScroll-l.detail.y-l.detail.h));c.restore()
+    }
+    private fun drawBattlePartyInformation(c:Canvas,current:OpeningBattle){
+        val l=battleInfoLayout();val dp=resources.displayMetrics.density
+        c.drawColor(Color.BLACK);overlayPaint.alpha=255
+        battleLine(c,"队员信息",Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,l.close.h),15f)
+        touchButton(c,l.close,"关闭")
+        c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
+        for((i,hero)in current.party.withIndex()){
+            val row=l.row(i,battleInfoListScroll)
+            overlayPaint.color=if(hero.id==battleInfoHeroId)0xff244d49.toInt()else 0xff18252e.toInt()
+            c.drawRect(row.x,row.y,row.x+row.w,row.y+row.h,overlayPaint)
+            val icon=Box(row.x+6*dp,row.y+6*dp,24*dp,24*dp);portrait(c,hero,icon)
+            battleLine(c,heroName(hero.id),Box(icon.x+30*dp,row.y+4*dp,row.w-42*dp,row.h-8*dp),13f)
+        };c.restore()
+        val hero=current.party.firstOrNull{it.id==battleInfoHeroId}?:return
+        val view=battlePartyView(hero,heroName(hero.id),battlePresentation.action,current.inputHero?.id,current.hero.id)
+        val lines=listOf("${view.name} · 等级 ${view.level}","HP ${view.hp}/${view.maxHp}","MP ${view.mp}/${view.maxMp?:"上限待接入"}",
+            "状态 ${OriginalStatus.label(view.status)}",growthProgress(hero).summary,"累计经验 ${hero.experience}",
+            "攻击 ${hero.strength+equipmentBonus(hero,"rightHand")} · 防御 ${hero.stamina+equipmentBonus(hero,"body")}",
+            "敏捷 ${hero.agility} · 精神 ${hero.spirit}","只读当前行动，不消耗物品或行动")
         c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
         var y=l.detail.y-battleInfoScroll
         for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp

@@ -690,6 +690,7 @@ class BattlePresentation {
     private var elapsed=0L
     val elapsedMs get()=elapsed
     var resultElapsedMs=0L;private set
+    fun resetResultTimer(){if(screen==Screen.RESULT)resultElapsedMs=0}
     val actionDurationMs get()=duration(action)
     private fun duration(step:BattleActionStep?)=when(step?.kind){
         BattleActionKind.ATTACK->450L;BattleActionKind.ICE,BattleActionKind.SPECIAL->650L;BattleActionKind.DAMAGE,BattleActionKind.HEAL->500L

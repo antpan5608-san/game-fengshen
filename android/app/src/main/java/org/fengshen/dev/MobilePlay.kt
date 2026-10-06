@@ -51,7 +51,10 @@ fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int,partyCount:Int
         Box(f.x,f.y,f.w,status.y-f.y),13*dp*fontScale)
 }
 
-data class BattleTouchCommand(val battleId:String,val revision:Int,val kind:String,val slot:Int?=null,val itemId:String?=null,val targetId:String?=null)
+data class BattleTouchCommand(val battleId:String,val revision:Int,val kind:String,val slot:Int?=null,val itemId:String?=null,val targetId:String?=null) {
+    var actorId:String?=null;internal set
+    var inputRevision:Int=-1;internal set
+}
 
 /** Same target boxes for item drawing and input; first two retain their geometry. */
 fun battlePartyTargetHeader(dp:Float,fontScale:Float,partyCount:Int):Float {

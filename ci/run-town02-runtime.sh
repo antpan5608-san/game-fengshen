@@ -123,11 +123,11 @@ run_test(){
 }
 if [[ "$stage" == development-smoke ]]; then
     development_scope="${FENGSHEN_DEVELOPMENT_SMOKE_SCOPE:-full}"
-    case "$development_scope" in full|rollback|jiang) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
+    case "$development_scope" in full|rollback|jiang|battle-ui) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
     # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
     adb install -r android/app/build/outputs/apk/debug/app-debug.apk
     adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-    if [[ "$development_scope" == jiang ]]; then
+    if [[ "$development_scope" == jiang || "$development_scope" == battle-ui ]]; then
         # Inactive bounded c61 recipe: loader/codec plus actual controlled touch
         # and external force-stop. This never creates a release receipt.
         adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testC61FrozenDependenciesAndMedicalPartySave,org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
@@ -137,6 +137,31 @@ if [[ "$stage" == development-smoke ]]; then
             adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/development-jiang-crash.txt
             cat artifacts/town02-runtime/development-jiang-crash.txt
             exit 1
+        fi
+        if [[ "$development_scope" == battle-ui ]]; then
+            run_test testControlledMobileBattleTouchAndSnapshots false
+            run_test testControlledMobileBattleHerbAndSave false
+            run_test testControlledNanhaiVictoryFlagAndResumeOnce false
+            run_test testControlledBindingItemSelectionCancelAndSingleActorCommand false
+            run_test testControlledWholly08PartyAdvancesWithoutTouchCommand false
+            # The AVD's real hardware/skin is already 2640x1216. Record actual
+            # screenshots and GameView dimensions; wm intent alone is no proof.
+            adb shell wm size 2640x1216
+            adb shell wm density 480
+            adb shell wm size > artifacts/town02-runtime/phone-display.txt
+            adb shell wm density >> artifacts/town02-runtime/phone-display.txt
+            for font in 1.0 1.3 2.0; do
+                adb shell settings put system font_scale "$font"
+                sleep 3
+                run_test testMobileBattlePhoneSizeAndLargeFont false
+                cp artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont-font-$font.txt"
+                run_test testControlledBattlePartyPhoneSizeAndLargeFont false
+                cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
+                pull_evidence
+            done
+            adb shell settings put system font_scale 1.0
+            adb shell wm size 960x540
+            adb shell wm density 160
         fi
         pull_evidence
         exit 0

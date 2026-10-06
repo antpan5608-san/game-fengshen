@@ -243,6 +243,44 @@ pull_evidence(){ printf 'PULL\\n' >> calls.txt; }
                 if fail_personal == '1': self.assertNotIn('PY tools/record_app_audio.py world-save-history', observed)
                 if fail_rollback == '1': self.assertIn('logcat -d -b crash -s AndroidRuntime', observed)
 
+    def test_development_battle_ui_stops_on_app_or_font_failure(self):
+        """Execute the original dispatch block; shell fixtures are not App acceptance."""
+        script = (Path(__file__).resolve().parents[1] / 'ci/run-town02-runtime.sh').read_text(encoding='utf-8')
+        start = script.index('if [[ "$stage" == development-smoke ]]; then\n    development_scope=')
+        block = script[start:script.index('\nbase=(', start)]
+        prefix = '''set -euo pipefail
+stage=development-smoke
+mkdir -p artifacts/town02-runtime
+adb(){ printf 'ADB %s\\n' "$*" >> calls.txt; if [[ "$*" == *"am instrument"* ]]; then [[ "${FAIL_AT:-none}" == loader ]] && printf 'FAILURES!!!\\n' || printf 'OK (2 tests)\\n'; fi; }
+run_test(){ printf 'TEST %s FONT %s\\n' "$*" "${font:-default}" >> calls.txt; printf 'OK (1 test)\\n' > "artifacts/town02-runtime/$1.txt"; [[ "${FAIL_AT:-none}" != "$1" && "${FAIL_AT:-none}" != "$1:${font:-default}" ]]; }
+python(){ printf 'PY %s\\n' "$*" >> calls.txt; [[ "${FAIL_AT:-none}" != cold ]]; }
+pull_evidence(){ printf 'PULL\\n' >> calls.txt; }
+sleep(){ :; }
+'''
+        path = self.root / 'development-battle-ui.sh'
+        path.write_text(prefix + block, encoding='utf-8', newline='\n')
+        for failure in ['none', 'loader', 'cold', 'testControlledMobileBattleTouchAndSnapshots',
+                        'testControlledWholly08PartyAdvancesWithoutTouchCommand',
+                        'testControlledBattlePartyPhoneSizeAndLargeFont:1.3']:
+            with self.subTest(failure=failure):
+                calls = self.root / 'calls.txt'; calls.unlink(missing_ok=True)
+                result = subprocess.run([existing_bash(), path.as_posix()], cwd=self.root,
+                    env=dict(os.environ, FENGSHEN_DEVELOPMENT_SMOKE_SCOPE='battle-ui', FAIL_AT=failure),
+                    capture_output=True, text=True, timeout=10)
+                self.assertEqual(failure == 'none', result.returncode == 0, result.stderr)
+                observed = calls.read_text()
+                if failure == 'none':
+                    self.assertIn('--cold-test testJiangExternalColdStartMatchesPendingAndCompletesOnce', observed)
+                    for font in ['1.0', '1.3', '2.0']:
+                        self.assertIn('TEST testMobileBattlePhoneSizeAndLargeFont false FONT ' + font, observed)
+                        self.assertIn('TEST testControlledBattlePartyPhoneSizeAndLargeFont false FONT ' + font, observed)
+                    self.assertIn('ADB shell settings put system font_scale 1.0', observed)
+                if failure in ['loader', 'cold', 'testControlledMobileBattleTouchAndSnapshots',
+                               'testControlledWholly08PartyAdvancesWithoutTouchCommand']:
+                    self.assertNotIn('TEST testControlledBattlePartyPhoneSizeAndLargeFont', observed)
+                if failure.endswith(':1.3'):
+                    self.assertNotIn('FONT 2.0', observed)
+
     def test_actual_single_test_runner_passes_restore_mode_and_rejects_invalid_mode(self):
         script = (Path(__file__).resolve().parents[1] / 'ci/run-town02-runtime.sh').read_text()
         start = script.index('run_test(){')

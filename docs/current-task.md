@@ -9,12 +9,24 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: next UI batch，SCOPED_NOT_IMPLEMENTED_NOT_APP_VERIFIED
+current_candidate_version: v86 battle UI batch，LOCAL_IMPLEMENTED_NOT_APP_VERIFIED_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
 manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
 first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
+
+## 下一批战斗界面（开发中，尚未App验收）
+
+按长期授权自主拆分为可验收版本：下一版先完成敌左我右、当前队员状态卡、明确动作后选目标、敌人/队员只读信息和四人奖励摘要/独立详情。角色装备、物品分类搜索与能力说明、可展开行动记录及更小窗口的降级适配继续后续UI批次；不能据此关闭整个界面方案或累计欠账。内容仍为c61，原manifest和388文件/72依赖图保持；v86 / 0.8.16-battle-ui-personal是待验证版本，不是已发布包。
+
+共享几何/只读投影已提交d33570e；实际216个安全窗口/字体/队员/敌数组合通过。已接入原GameView：默认点敌人看信息；选择攻击绑定battleID、角色ID、呈现revision和inputRevision，提交后下一角色重新选指令。原攻击、排序、随机、药草、奖励、存档算法不改；渲染不结算。原素材/黑底/行动快照复用。奖励详情暂停自动离场，B返回摘要、A或明确继续按钮离场。
+
+414 debug JVM/90 suites实际零失败、错误、跳过；最终debug和instrument APK编译3m5s通过。19原交接/分派fixture（含全08失败停止）、4c61精确范围保护、13发布决策检查通过；先前误写不存在的test_world_scope模块造成的导入失败保留，已改用实际c61检查，不能称该失败批次整体PASS。此前4B完整改动轮实际返回8片段后超时，全部建议已读，Codex覆盖未审代码并登记codex_fallback，未冒称该轮完整通过；后续物理键/未提交按钮细节已重新审查，snapshot b675dc27cba303b2e1d0002e0cace55da9b8e784e926eba234f232d845a46d23，6个全新4B片段/无未覆盖，全部读完并登记reviewed决定。编译和本地审查不代替App验收。
+
+原只读inspect37524966943实际SUCCESS：2026-10-06T20:15:13Z，NO_ISSUES_OBSERVED/errors为空/cleanupFailures=0，权威版本85/84；样本仍来自此前v84，不证明v85或新UI真机健康。DEBUG battle-ui入口已经接入原工作流：保持c61严格pin和原姜入队/外部cold，追加真实触摸、一次奖励、战败、秘宝、全08自动推进，以及实际2640×1216硬件/skin、1/1.3/2字体的一至四人/六敌/原Boss和四人结果检查。每个字体保留独立日志、尺寸JSON和真实截图。该新App运行仍NOT_RUN；必须实际读结果并目视原图后才能写App通过，再启用同源签名候选范围、基底85及原发布流程。
+
+本机当前未检测到adb设备，真机触控/音频/真实云账号与正常新游戏至结局均未完成；长期目标ACTIVE，继续独立开发，不重复索取执行/发布授权。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
