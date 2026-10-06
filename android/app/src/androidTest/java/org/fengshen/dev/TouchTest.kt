@@ -3973,7 +3973,7 @@ class TouchTest:IsolatedGameTestCase(){
                 // Prepare before crossing the lower bridge in the verified foot mode.
                 // Completed halls do not make a reverse supply route exist.
                 assertTrue("Use same-candidate first-hall normal preparation, never grant levels",
-                    v.currentSnapshot().characters.all{it.level>=25})
+                    v.currentSnapshot().characters.all{it.level>=32})
                 state("normal-earned-preparation-preserved-no-invented-village-return")
             }
             if(cold)for(mid in maps){
@@ -4198,10 +4198,13 @@ class TouchTest:IsolatedGameTestCase(){
             buyAndEquip();restock();inn(2);training=true
             walkTo(30,19);assertEquals(23,v.world.mapId);walkTo(54,93)
             var steps=0
-            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<25}){
-                // Actual v64: 355 earned wins / 7000 steps left EXP22406 below original T(25)=27750.
-                // Extend only isolated input budget; retain all real encounters, target level and rewards.
-                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<10000)
+            while(!gear.all{equipped(it)}||v.currentSnapshot().characters.any{it.level<32}){
+                // Run37364795394 reached map65 legally, but level25/26 exhausted
+                // herbs and lost one actor. Keep all alive/share/reward assertions.
+                // Isolated HallRoutePreparationTest compares the unchanged c50
+                // rules; earn preparation via real battles/paid rest, never inject it.
+                // This bot target is optional preparation, not a gameplay entry lock.
+                assertTrue("Real first-hall normal preparation exhausted; never grant levels/money",steps++<25000)
                 val low=v.currentSnapshot().characters.any{it.hp<=it.maxHp*3/4||it.statusMask and OriginalStatus.POISON!=0}
                 val readyMoney=gear.any{!equipped(it)&&v.currentSnapshot().money>=v.content.itemDefinitions.getValue(it).buyPrice!!+200}
                 if(low||readyMoney||(v.currentSnapshot().inventory[AntidoteUse.ID]?:0)<4){
