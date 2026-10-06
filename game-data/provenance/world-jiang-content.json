@@ -2319,7 +2319,33 @@
         75,
         49
       ]
-    }
+    },
+    "weaponHits": [
+      {
+        "originalId": 7,
+        "source": {
+          "cpuAddress": 39752,
+          "length": 1,
+          "meaning": "Weapon7 original hit threshold",
+          "module": 9,
+          "offset": 301912,
+          "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+        },
+        "threshold": 51
+      },
+      {
+        "originalId": 44,
+        "source": {
+          "cpuAddress": 39789,
+          "length": 1,
+          "meaning": "Weapon44 original hit threshold",
+          "module": 9,
+          "offset": 301949,
+          "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+        },
+        "threshold": 51
+      }
+    ]
   },
   "dialogues": [
     {

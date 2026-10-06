@@ -43,6 +43,20 @@ class JiangExportTest(unittest.TestCase):
     with self.subTest(field=field,value=value),self.assertRaisesRegex(ValueError,'loader-facing table and cap evidence'):
      ex.extend_world_characters(self.reader,json.loads(self.parent['scene.json']),
        json.loads(self.parent['combat.json']),recipe['additionalCharacters'],overlay)
+ def test_operable_hit_lookups_match_native_and_missing_or_forged_extensions_are_rejected(self):
+  recipe=ex.load(ROOT/self.pin['iteration']['provenance'])
+  ex.validate_world_jiang_hit_extensions(self.reader,recipe)
+  scene=json.loads(self.payload['scene.json']);hits=json.loads(self.payload['combat.json'])['physicalRules']['weaponHitThreshold']
+  for item in scene['items']:
+   if item['category']=='weapon'and item.get('equipment')and item['equipment'].get('operationEnabled',True):
+    self.assertEqual(self.reader.read(9,0x9b41+item['originalId'])[0],hits[str(item['originalId'])])
+  for kind in ('missing7','missing44','threshold','address','hash'):
+   bad=copy.deepcopy(recipe);entries=bad['combatOverlay']['weaponHits']
+   if kind.startswith('missing'):entries[:]=[v for v in entries if v['originalId']!=int(kind[7:])]
+   elif kind=='threshold':entries[-1]['threshold']+=1
+   elif kind=='address':entries[-1]['source']['cpuAddress']-=1
+   else:entries[-1]['source']['sha256']='0'*64
+   with self.subTest(kind=kind),self.assertRaises(ValueError):ex.validate_world_jiang_hit_extensions(self.reader,bad)
  def test_only_five_tested_source_cells_are_runtime_edges_and_failed_lefts_stay_inert(self):
   scene=json.loads(self.payload['scene.json'])
   edges=[x for x in scene['exits']if x['fromMapId']==142 and x['toMapId']==16]

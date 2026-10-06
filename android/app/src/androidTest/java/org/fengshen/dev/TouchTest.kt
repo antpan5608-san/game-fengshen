@@ -194,6 +194,7 @@ class TouchTest:IsolatedGameTestCase(){
     /** Explicit isolated three-actor fixture, actual touch join, saved mid-dialogue. */
     fun testControlledJiangInvitationPendingAtColdBoundary(){
         val(activity,v)=launch();val c=v.content;val rule=c.jiangJoin!!
+        verifyControlledPanxiOwnedDialogue(v)
         val source=SaveSnapshot(c.scene.version,121,23*16+8,13*16+8,Key.UP,
             listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
             mapOf(OriginalYangJoin.ITEM_ID to 1,HerbUse.ID to 7),mapOf("opening.intro.seen" to true,
@@ -219,6 +220,29 @@ class TouchTest:IsolatedGameTestCase(){
         val out=File(instrumentation.targetContext.getExternalFilesDir(null),"world-jiang-pending-expected-save.json")
         out.writeText(joined.json().toString());screenshot(v,"world-jiang-controlled-four-actor-pending-cold-boundary")
         instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
+    private fun verifyControlledPanxiOwnedDialogue(v:GameView){
+        // Explicit fixture; real actor tap and page completion, not a normal route.
+        val c=v.content;val npc=c.npcs.single{it.id=="rom.npc.7.4"};val scene=c.scenes.getValue(7)
+        val pose=listOf(Triple(npc.x,npc.y-1,Key.DOWN),Triple(npc.x,npc.y+1,Key.UP),
+            Triple(npc.x-1,npc.y,Key.RIGHT),Triple(npc.x+1,npc.y,Key.LEFT)).first{(x,y,direction)->
+                scene.check(x,y)==null&&(npc.interactionDirection==null||npc.interactionDirection==direction)&&
+                    c.npcs.none{it.mapId==7&&it.x==x&&it.y==y}}
+        val s=SaveSnapshot(c.scene.version,7,pose.first*16+8,pose.second*16+8,pose.third,
+            listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian")),
+            mapOf(OriginalYangJoin.ITEM_ID to 1,HerbUse.ID to 7),mapOf("opening.intro.seen" to true,
+                OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+                OriginalSceneItems.PLAGUE_FLAG to true),money=8342,encounterSteps=113)
+        instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(s))}
+        val before=v.currentSnapshot();tapMapActor(v,npc)
+        val pending=v.currentSnapshot();assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertEquals("rom.dialogue.17.13",jiangDialogueId(v))
+        instrumentation.runOnMainSync{v.handleBack()};assertEquals(pending,v.currentSnapshot())
+        assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        completeJiangMessage(v,"rom.dialogue.17.13");completeJiangMessage(v,"rom.dialogue.17.6")
+        assertEquals(GameView.Layer.MAP,v.layer)
+        assertEquals(before.copy(flags=before.flags+(OriginalJiangJoin.PANXI_FLAG to true)),v.currentSnapshot())
+        screenshot(v,"world-jiang-controlled-panxi-owned-pages-no-resource-change")
     }
     /** Recorder launches after real external force-stop; resume exact pending data. */
     fun testJiangExternalColdStartMatchesPendingAndCompletesOnce(){

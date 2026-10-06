@@ -1070,6 +1070,13 @@ object ContentLoader {
                     }
                 }
         }else null
+        if(jiangJoin!=null){
+            val physical=battle?.physicalRules?:error("Jiang physical rules missing")
+            require(equipmentDefinitions.values.filter{it.operationEnabled&&itemDefinitions.getValue(it.itemId).category=="weapon"}
+                .all{it.originalId in physical.weaponHitThreshold}){"Operable weapon hit lookup missing"}
+            require((listOf(initialPlayer)+extraCharacters.map{it.first})
+                .all{(it.equipment?.rightHand?:0) in physical.weaponHitThreshold}){"Initial weapon hit lookup missing"}
+        }
         val sceneStories=data.optJSONArray("sceneStories")?.let{a->
             (0 until a.length()).map{i->
                 val o=a.getJSONObject(i)

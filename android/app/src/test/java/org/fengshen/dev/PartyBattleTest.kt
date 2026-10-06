@@ -65,7 +65,7 @@ class PartyBattleTest {
         val group=EncounterGroup(1,listOf(EncounterMember(3,18)))
         val thresholds=javaClass.getResourceAsStream("/world-jiang-multiplier-original.tsv")!!.bufferedReader()
             .use{it.readText().trim()}.split('\t').map{it.toInt()}
-        val own=PhysicalRules(physical.weaponHitThreshold+(44 to 64),thresholds)
+        val own=PhysicalRules(physical.weaponHitThreshold+(44 to 51),thresholds)
         val rules=BattleContent(23,emptyList(),listOf(group),mapOf(18 to enemy),
             listOf(GrowthRow(13,2010,8,0,2,1,1,0,false)),0,6,50,16,
             enemyAgility=mapOf(18 to 1),escapeEnabled=true,physicalRules=physical).also{

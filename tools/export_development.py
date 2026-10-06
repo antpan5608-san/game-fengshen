@@ -484,6 +484,14 @@ def extend_world_growth(reader, combat, proof, provenance_path):
     combat['growthLimit']={'owner':'nezha','level':proof['maxLevel'],'confidence':proof['confidence'],
         'evidence':provenance_path,'source':cap}
 
+def validate_world_jiang_hit_extensions(reader,evidence):
+    # Frozen c61 repairs the two operable lookups missing from its c60 parent.
+    expected=[dict(originalId=n,threshold=reader.read(9,0x9b41+n)[0],
+        source=reader.span(9,0x9b41+n,1,f'Weapon{n} original hit threshold'))for n in (7,44)]
+    if evidence.get('combatOverlay',{}).get('weaponHits')!=expected:
+        raise ValueError('Jiang operable weapon hit extensions differ from original source')
+    for hit in expected:checked_span(reader,hit['source'])
+
 def extend_world_characters(reader, scene, combat, additions, overlay):
     """Validate a joined actor against its scoped initialization, own growth and ROM pointers."""
     from forensics.fengshen246 import extract_growth_candidates
@@ -2894,6 +2902,7 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
     jiang=None
     if evidence.get('jiangCapabilityEvidence'):
         jiang=validate_world_jiang_resources(reader)
+        validate_world_jiang_hit_extensions(reader,evidence)
         if evidence['jiangCapabilityEvidence']!='game-data/provenance/world-jiang-invitation.json'or \
                 any(evidence.get(k)!=jiang[k]for k in ('maps','npcs','dialogues','graphics','exits','items'))or \
                 evidence.get('originalJiangJoin')!={'evidence':evidence['jiangCapabilityEvidence']} or \

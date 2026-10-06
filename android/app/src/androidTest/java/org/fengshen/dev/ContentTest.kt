@@ -333,6 +333,22 @@ class ContentTest:IsolatedGameTestCase(){
             158,159,163,164,171,172),c.scenes.keys)
         assertEquals("opening-segment-001-c61",c.scene.version)
         assertEquals(setOf("xiaolongnv","yangjian","jiangziya"),c.joinCharacters.keys)
+        for(id in listOf(7,44))assertEquals(51,c.battle!!.physicalRules!!.weaponHitThreshold[id])
+        // A self-consistent package hash must not conceal a missing operative
+        // lookup that would otherwise crash only when its actor executes.
+        val original=AssetSource(instrumentation.targetContext.assets)
+        for(id in listOf(7,44)){
+            val combat=JSONObject(original.read("combat.json").toString(Charsets.UTF_8))
+            combat.getJSONObject("physicalRules").getJSONObject("weaponHitThreshold").remove(id.toString())
+            val bytes=combat.toString().toByteArray(Charsets.UTF_8)
+            val manifest=JSONObject(original.read("manifest.json").toString(Charsets.UTF_8))
+            manifest.getJSONObject("files").put("combat.json",java.security.MessageDigest.getInstance("SHA-256")
+                .digest(bytes).joinToString(""){"%02x".format(it)})
+            val fake=object:ContentSource{override fun read(name:String)=when(name){
+                "combat.json"->bytes;"manifest.json"->manifest.toString().toByteArray(Charsets.UTF_8);else->original.read(name)}}
+            val failure=runCatching{ContentLoader.load(fake)}.exceptionOrNull()
+            assertNotNull(failure);assertTrue(failure!!.message.orEmpty().contains("weapon hit lookup"))
+        }
         assertEquals(listOf(1,2,3,4,5,6,8,9,10).flatMap{caller->
             listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
         assertMedicalPartySave(c)
