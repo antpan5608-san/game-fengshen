@@ -45,9 +45,17 @@ class OriginalJiangJoinTest {
         assertEquals(Key.UP,current.snapshot.direction);assertEquals(0,current.snapshot.encounterSteps)
         assertEquals(s.money,current.snapshot.money);assertEquals(s.inventory,current.snapshot.inventory)
         val joined=current.snapshot
+        assertEquals(false,joined.flags[OriginalJiangJoin.PANXI_THREE_FLAG])
+        assertEquals(true,joined.flags[OriginalJiangJoin.PANXI_FOUR_FLAG])
+        assertEquals(joined.flags,OriginalNpcTalk.flagsAfterMapLoad(joined.mapId,joined.characters.size,joined.flags))
         assertFalse(OriginalJiangJoin.advance(joined,rule,"rom.dialogue.131.16",jiang).applied)
         for(message in (listOf(12)+(7..11)).map{"rom.dialogue.17.$it"}){
             assertTrue(rule.validPending(current.snapshot));assertEquals(message,current.nextDialogue)
+            // Every durable pending stage must survive actual map reconstruction,
+            // including false-key presence, without weakening full-state equality.
+            val pending=current.snapshot
+            assertEquals(pending,pending.copy(flags=OriginalNpcTalk.flagsAfterMapLoad(
+                pending.mapId,pending.characters.size,pending.flags)))
             current=OriginalJiangJoin.advance(current.snapshot,rule,message,jiang);assertTrue(current.applied)
         }
         assertNull(current.nextDialogue);assertTrue(current.snapshot.flags["rom.map.7.flag.128"]==true)

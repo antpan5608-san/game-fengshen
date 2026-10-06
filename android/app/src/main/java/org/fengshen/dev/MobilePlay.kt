@@ -34,7 +34,7 @@ data class BattleTouchLayout(val frame:Box,val arena:Box,val status:Box,val comm
 fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int):BattleTouchLayout =
     battleTouchLayout(safe,dp,fontScale,count,1)
 fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int,partyCount:Int):BattleTouchLayout {
-    require(partyCount in 1..2)
+    require(partyCount in 1..4)
     val pad=8*dp;val f=Box(safe.x+pad,safe.y+pad,safe.w-2*pad,safe.h-2*pad)
     val commandH=max(48f,18f*fontScale+20)*dp
     val statusH=max(64f,16f*(partyCount+1)*fontScale+18)*dp

@@ -41,12 +41,13 @@ class MobilePlayTest {
     }
     private fun overlaps(a:Box,b:Box)=a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y
     @Test fun battleTargetsAreIndependentAndFitAllFonts(){
-        for(font in listOf(1f,1.3f,2f))for(n in listOf(1,3,7))for(window in listOf(Box(0f,0f,960f,540f),Box(90f,0f,2460f,1216f))){
-            val dp=if(window.w>1000)3f else 1f;val l=battleTouchLayout(window,dp,font,n)
-            val targets=l.commands+l.enemies
+        for(font in listOf(1f,1.3f,2f))for(n in listOf(1,3,7))for(partyCount in 1..4)for(window in listOf(Box(0f,0f,960f,540f),Box(90f,0f,2460f,1216f))){
+            val dp=if(window.w>1000)3f else 1f;val l=battleTouchLayout(window,dp,font,n,partyCount)
+            val targets=l.commands+l.enemies+listOf(l.status)
             targets.forEach{assertTrue(it.w>=48*dp);assertTrue(it.h>=48*dp);assertTrue(it.y+it.h<=window.y+window.h)}
             for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlaps(targets[i],targets[j]))
             assertTrue(l.arena.h>0);assertTrue(l.arena.y+l.arena.h<=l.enemies.first().y)
+            assertTrue(l.status.y>=window.y);assertTrue(l.arena.y+l.arena.h<=l.status.y)
         }
     }
     @Test fun actionSnapshotsDoNotRevealLaterEnemyOrHeroHp(){

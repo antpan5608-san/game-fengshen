@@ -98,6 +98,8 @@ object OriginalJiangJoin {
         if(!result.applied||stage!=0)return result
         return result.copy(snapshot=result.snapshot.copy(mapId=7,x=23*16+8,y=7*16+8,direction=Key.UP,
             terrainMode=0,interiorContext=null,encounterSteps=0,characters=before.characters+requireNotNull(template),
-            flags=(result.snapshot.flags-PANXI_THREE_FLAG)+(PANXI_FOUR_FLAG to true)))
+            // This script enters map7 just like a map load. Persist both
+            // reconstructed context bits now so reloading remains idempotent.
+            flags=OriginalNpcTalk.flagsAfterMapLoad(7,4,result.snapshot.flags)))
     }
 }
