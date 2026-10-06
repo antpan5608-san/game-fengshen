@@ -1,0 +1,15 @@
+message	case	potionQtyByte	grantFailed	firstRowId	firstRowQtyByte
+0	empty	1	0	1	1
+0	existing	1	1	1	1
+0	used-positive	129	1	1	129
+0	used-zero	1	0	1	1
+0	used-snow	1	0	1	1
+0	full	0	1	2	1
+0	one-free	1	0	2	1
+1	empty	0	0	0	0
+1	existing	1	0	1	1
+1	used-positive	129	0	1	129
+1	used-zero	128	0	1	128
+1	used-snow	0	0	0	128
+1	full	0	0	2	1
+1	one-free	0	0	2	1

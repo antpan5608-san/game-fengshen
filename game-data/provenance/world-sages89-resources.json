@@ -1,0 +1,1274 @@
+{
+  "controlledEvidence": {
+    "androidEvidence": false,
+    "captures": [
+      {
+        "path": "private-derived/world-sages89-entry-talk-controlled/01-original-entry.png",
+        "sha256": "66404bd3ae4bcdade57ac16f334073bca553dedd178191295be97f14b383df46"
+      },
+      {
+        "path": "private-derived/world-sages89-adjacent-talk-controlled/00-real-center-adjacent.png",
+        "sha256": "bbeeed22861c9c57cf8ba11bb2ac85bba0a631ce4eef1fc0f4cee3385784d268"
+      },
+      {
+        "path": "private-derived/world-sages89-adjacent-talk-controlled/02-first-talk.png",
+        "sha256": "db0b0fb473c30bb9112852fd018e58fbc7b5b3356f43a95ecf35582eeb1bc6a5"
+      },
+      {
+        "path": "private-derived/world-sages89-potion-menu-controlled/menu-06-A.png",
+        "sha256": "b9143b753fffbbfead3873ca66a722bbd2fa4d085ec20049d5a79c26b474c1bf"
+      },
+      {
+        "path": "private-derived/world-sages89-independent-return-controlled/01-real-independent-return.png",
+        "sha256": "145473c5f4d36f13b315170e28fe038263cd7a2ccc28081a730635074182faa6"
+      }
+    ],
+    "firstTalkAfter": {
+      "firstRowId": 1,
+      "flag89": 1,
+      "qty": 1
+    },
+    "firstTalkBefore": {
+      "flag89": 0,
+      "qty": 128,
+      "snowRowId": 0
+    },
+    "kind": "CONTROLLED_ORIGINAL_CURE_RAM_AND_POSITION_REAL_KEYS_NOT_NORMAL_ANDROID",
+    "normalPlayEvidence": false,
+    "originalIllegalSceneUseConsumes": false,
+    "probes": [
+      {
+        "path": "tools/rom-extractor/probe-world-sages89-entry.lua",
+        "sha256": "dbe21e12d20875143587eefc8640da10204e86089e205e5e0b771d8bd65c4b32"
+      },
+      {
+        "path": "tools/rom-extractor/probe-world-sages89-talk.lua",
+        "sha256": "498d69065a6ba4c73d2e003c927496e6295efdf7fb01a2ee8872240866254705"
+      },
+      {
+        "path": "tools/rom-extractor/probe-world-sages89-menu.lua",
+        "sha256": "5704053724375ca6ff7b940d0cbb0a27c6f60d360cfe129e2d0e28900f419af7"
+      },
+      {
+        "path": "tools/rom-extractor/probe-world-sages89-return.lua",
+        "sha256": "18e6d54b06e8bd9914fef77dbf44d8e9234f725a9b466185fe7b282d6a92338c"
+      }
+    ],
+    "repeatNoNewGift": true
+  },
+  "cpu": [
+    {
+      "caseCount": 256,
+      "failures": 0,
+      "kind": "selector",
+      "path": "android/app/src/test/resources/world-sages89-selector-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-sages89.py",
+      "probeSha256": "793ad7e2bd3360da9766d7340f357236ec79ef147274b621ee0da5f9c0324e14",
+      "sha256": "d39d31819c67cc247e28eb6bfaac9543af51561e8419a5f7ceeb6cff96320a0f"
+    },
+    {
+      "caseCount": 14,
+      "failures": 0,
+      "kind": "gift",
+      "path": "android/app/src/test/resources/world-sages89-gift-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-sages89.py",
+      "probeSha256": "793ad7e2bd3360da9766d7340f357236ec79ef147274b621ee0da5f9c0324e14",
+      "sha256": "7c1488e8a20f71014b913253f80923815beb24dc37564ea546b21c262746d7b9"
+    },
+    {
+      "caseCount": 128,
+      "failures": 0,
+      "kind": "terrain",
+      "path": "android/app/src/test/resources/world-sages89-terrain-original.tsv",
+      "probePath": "tools/rom-extractor/probe-world-sages89.py",
+      "probeSha256": "793ad7e2bd3360da9766d7340f357236ec79ef147274b621ee0da5f9c0324e14",
+      "sha256": "482197823aef1d54b9737edfdd2be0d77a24be91b5ecf20919caae4ae62dae69"
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "rom.dialogue.99.0",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35624,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101176,
+            "sha256": "d04f198cd87ca93b780cd65949d2daab506a41d2d45ad57e97c0ea8df10fc933"
+          },
+          {
+            "cpuAddress": 36618,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102170,
+            "sha256": "32f6169590a6c8c09ffb9c04eb68470def62e996a84095c9ddff524bd43134bf"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44841,
+          "length": 19,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110393,
+          "sha256": "4975a8e7ffef3c3edffd9373a9fa5c7d05024a7ce6646ab3e5d69932701e4028"
+        },
+        "remainingUnknown": [
+          "Android exact glyph rendering and normal mainline NOT_RUN"
+        ]
+      },
+      "text": "『這是救瘟疫的丹藥，趕快到西岐城。』"
+    },
+    {
+      "id": "rom.dialogue.99.1",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35624,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101176,
+            "sha256": "d04f198cd87ca93b780cd65949d2daab506a41d2d45ad57e97c0ea8df10fc933"
+          },
+          {
+            "cpuAddress": 36620,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102172,
+            "sha256": "4b2c13f27bae2cdac63b749438a95bd138b3cd04d00cb0f8bc929f54f621a94d"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44860,
+          "length": 10,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110412,
+          "sha256": "073bf97d11aa5f09008490451ed71429df9cd1fa0ba41102a08ed40ac2290f6a"
+        },
+        "remainingUnknown": [
+          "Android exact glyph rendering and normal mainline NOT_RUN"
+        ]
+      },
+      "text": "『趕快到西岐城。』"
+    },
+    {
+      "id": "rom.dialogue.99.2",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35624,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101176,
+            "sha256": "d04f198cd87ca93b780cd65949d2daab506a41d2d45ad57e97c0ea8df10fc933"
+          },
+          {
+            "cpuAddress": 36622,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102174,
+            "sha256": "455e1d3b9b711a6f6c79fd759e86906966b57f23eab28238a395ec89b9bbf361"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44870,
+          "length": 11,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110422,
+          "sha256": "8287ff287b4f9da20d0bf50ef117b1b5428ee3d34f6c5b501d01ed30a4d1df5d"
+        },
+        "remainingUnknown": [
+          "Android exact glyph rendering and normal mainline NOT_RUN"
+        ]
+      },
+      "text": "『將丹藥投入井中。』"
+    },
+    {
+      "id": "rom.dialogue.99.3",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35624,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101176,
+            "sha256": "d04f198cd87ca93b780cd65949d2daab506a41d2d45ad57e97c0ea8df10fc933"
+          },
+          {
+            "cpuAddress": 36624,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102176,
+            "sha256": "850277de642371a421a7c4e65439c6dcc9d8847fb562b01ded02bfc446ee39a1"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44881,
+          "length": 14,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 110433,
+          "sha256": "e3c059d9dd34cf4dff58927e5312f6da830aaa62995c02b07487a0a13f0a0d3c"
+        },
+        "remainingUnknown": [
+          "Android exact glyph rendering and normal mainline NOT_RUN"
+        ]
+      },
+      "text": "『民眾拿水喝，即可解毒。』"
+    }
+  ],
+  "exits": [
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 16,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 57128,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 286520,
+        "sha256": "863114676d53beaecb54798c7c10c93808f56a030a6367d689a189f5866a5e2e"
+      },
+      "spawn": [
+        8,
+        13
+      ],
+      "toMapId": 89,
+      "trigger": [
+        219,
+        144
+      ]
+    },
+    {
+      "arrivalDirection": "DOWN",
+      "confidence": "VERIFIED",
+      "fromMapId": 89,
+      "kind": "EXIT_RECORD",
+      "resetEncounterSteps": true,
+      "source": {
+        "cpuAddress": 58248,
+        "length": 5,
+        "meaning": "Original five-byte exit row",
+        "module": 8,
+        "offset": 287640,
+        "sha256": "035da077ee24289145c5e598d67c01a3c83a951ff96f490d2890c251a5e88e2f"
+      },
+      "spawn": [
+        219,
+        144
+      ],
+      "toMapId": 16,
+      "trigger": [
+        8,
+        13
+      ]
+    }
+  ],
+  "font": {
+    "charset": {
+      "21": "救",
+      "22": "投",
+      "23": "井",
+      "24": "眾",
+      "25": "喝",
+      "26": "可",
+      "35": "中",
+      "36": "瘟",
+      "39": "藥",
+      "40": "快",
+      "48": "岐",
+      "49": "水",
+      "51": "到",
+      "68": "　",
+      "149": "將",
+      "150": "入",
+      "151": "民",
+      "152": "拿",
+      "153": "即",
+      "154": "解",
+      "163": "毒",
+      "164": "疫",
+      "166": "丹",
+      "167": "趕",
+      "175": "西",
+      "176": "城",
+      "180": "這",
+      "181": "的",
+      "182": "是"
+    },
+    "chr2kBanks": [
+      56,
+      57
+    ],
+    "glyphs": [
+      {
+        "character": "救",
+        "code": 21,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2ec4f2d71e416f2159b3c180a80fe52520e1dca8c183b293b804291b12c1247e"
+      },
+      {
+        "character": "投",
+        "code": 22,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "953c3deb07776a554175c78a6bb65471f9f5f7dcbef9c49b8eb7fdfb22bcd77b"
+      },
+      {
+        "character": "井",
+        "code": 23,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1ad4fc84b97fc988afc3d4e391da01b95bf8d8a00be9f00a6957f96838c2c860"
+      },
+      {
+        "character": "眾",
+        "code": 24,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "a22cd5e379546a51e93d59ff5c423207e2b2b18edee5743f447ab57faeb00d29"
+      },
+      {
+        "character": "喝",
+        "code": 25,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "854c38c9f8dd632203c5137a4485c9b88e8ece8e9966295f79a7cd19ec973583"
+      },
+      {
+        "character": "可",
+        "code": 26,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "fb52d2a53dac23009f4411776249dc9e95f97d8ece35f2269f1e1613e56477d8"
+      },
+      {
+        "character": "中",
+        "code": 35,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "3c3f250e8d8868d909c01444db51f736bfbd6bb0195877a0623c489d886fb83f"
+      },
+      {
+        "character": "瘟",
+        "code": 36,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "67986f59ec4b3a147148f35fae281e72ab20ea28bf57d269761c32f43c3b4f8d"
+      },
+      {
+        "character": "藥",
+        "code": 39,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f3dbdd1a72de2613bfb884eb47ad2b3c5b8cf61e7a833b85a6f8a0743c0d42f1"
+      },
+      {
+        "character": "快",
+        "code": 40,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9857f724c51496cac025edcaf959f21dc58c47468e77dbbf48bff36b0821c384"
+      },
+      {
+        "character": "岐",
+        "code": 48,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "9c6a96b5805120322e09c50594210cf79c28c20302e9edfbbcbc9d763eadbb48"
+      },
+      {
+        "character": "水",
+        "code": 49,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "f54e580c80190c6ffa1696bb65e964d7b47058aecdacc95ed4b1bed37ebe9862"
+      },
+      {
+        "character": "到",
+        "code": 51,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "dbe2fd48836acf4b7e5e58806298026177e3d52ebf08ec6214876ec0f7cc0f64"
+      },
+      {
+        "character": "將",
+        "code": 149,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "1f524f5a9a3f99382fb8ed1897fb7246b422857612266b0389cf6f89afeecf82"
+      },
+      {
+        "character": "入",
+        "code": 150,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e6fc76ba9b8d59b0dd06da183d10219686d2c963dffc4f8c77c548904a402872"
+      },
+      {
+        "character": "民",
+        "code": 151,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "36ac80aa3094b79dbc55f8a9f74845a1f8f2947dfc7a8b39800e5cddbeb773c5"
+      },
+      {
+        "character": "拿",
+        "code": 152,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "ed23ce773e16991d12189155a23fdfba05b6b5f699b943a89ebc5460c62309fd"
+      },
+      {
+        "character": "即",
+        "code": 153,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "abbd9053a72b7412c6df1ad7c6de895cd6219bb4e60ee4429d35b54d3031f7f7"
+      },
+      {
+        "character": "解",
+        "code": 154,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "c62b18b4bc25e8cbf6a8a23f82ff05c17985e82764efaf41ad3edd092e1f08a0"
+      },
+      {
+        "character": "毒",
+        "code": 163,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "b6354939124a40b429811ac1894af09b05cea09e9c2538f5b5e681bc676199f9"
+      },
+      {
+        "character": "疫",
+        "code": 164,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "93680e330daf27d73a4fa0b9e1d0b24130a5ef6dda926d962542dcefb54115cc"
+      },
+      {
+        "character": "丹",
+        "code": 166,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d19502b239ebc6564c941a508007f1b560c6a5c07b8ecfcf52fc2fe325c22b4f"
+      },
+      {
+        "character": "趕",
+        "code": 167,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d00051fb63caf63f6bff4f1a6c85fdc5a8539a10d9750c832e563495eaf5dad0"
+      },
+      {
+        "character": "西",
+        "code": 175,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "d7cdf6ae61e67249117469b0a2b00b7148da8732861a46e53a96e591f5551e5c"
+      },
+      {
+        "character": "城",
+        "code": 176,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "15856edca60d5be70c240d4fb48cfd67b195a1304606f4eaaf69fcbc3bc6747d"
+      },
+      {
+        "character": "這",
+        "code": 180,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "e282dbfd64f3994a103fa4d02e35fff59dd467e1218ce1586bdabcc4f491cd4c"
+      },
+      {
+        "character": "的",
+        "code": 181,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "2112665d6907c551a990548a30061f6f60f0a361709b90cf833db4381fb1f1f3"
+      },
+      {
+        "character": "是",
+        "code": 182,
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "pixelsSha256": "85259610c1da8e45276a2762e05ec93ad39e019aee4a8b789788f75c9a8554d0"
+      }
+    ],
+    "ppu0000Matches": true,
+    "ppuSha256": "d1ab5c80ae476acd0c0eec90162dc67c3a0a0487c951b1970e2adcd52c0053b3",
+    "sources": [
+      {
+        "length": 4096,
+        "meaning": "Actual original group99 PPU0000 font banks56/57",
+        "offset": 638992,
+        "sha256": "7d1daa2c33870be3c6b00c9e7a08fa1fab044ef2536db70503b105842190c3f5"
+      }
+    ]
+  },
+  "graphics": {
+    "npc-174-sages89.png": {
+      "actorEntityId": 174,
+      "actorRecordOffset": 1048,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "bbeeed22861c9c57cf8ba11bb2ac85bba0a631ce4eef1fc0f4cee3385784d268",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "60800170608101786890017068910178",
+      "observedRect": [
+        112,
+        89,
+        16,
+        16
+      ],
+      "opaquePixelCount": 203,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          190,
+          178
+        ],
+        "3": [
+          89,
+          251,
+          154
+        ]
+      },
+      "ppuSha256": "803ca2a0dafa2f0e042a7b4c26af970510d96a0b460c0a4619d8f8a2ed321867",
+      "ramSha256": "24336cfdce7ec57b84c3d15a5a8c5ba306d32a019405a22066979f4454a269d4",
+      "rgbaSha256": "0020531e046fdac261164d565152a8e6c87b864fbe3bf74cdc218daf0feee129",
+      "tiles": [
+        {
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024016,
+          "sha256": "e3432c6011e7704d7e5295403bf38ef5e5cedaa390a361868c41c5635ff0085c",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024032,
+          "sha256": "eb43b5a02af16e2c91557f798083ceda622099fd51d38fb3b185151979b84262",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024272,
+          "sha256": "223b1637f205198219301fbf529a714a37d3e755782d49722f265537d7e626d2",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 1,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024288,
+          "sha256": "5e57bd93a2d1073a68582bb09f1d8e7cabc6025ee6abf36d87180f3765807914",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-175-sages89.png": {
+      "actorEntityId": 175,
+      "actorRecordOffset": 1070,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "bbeeed22861c9c57cf8ba11bb2ac85bba0a631ce4eef1fc0f4cee3385784d268",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "50a2025050a3025858b2025058b30258",
+      "observedRect": [
+        80,
+        73,
+        16,
+        16
+      ],
+      "opaquePixelCount": 187,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ]
+      },
+      "ppuSha256": "803ca2a0dafa2f0e042a7b4c26af970510d96a0b460c0a4619d8f8a2ed321867",
+      "ramSha256": "24336cfdce7ec57b84c3d15a5a8c5ba306d32a019405a22066979f4454a269d4",
+      "rgbaSha256": "897a1dced6ce5bf3157e451b8914b85ba043a38a511f5b700d36c1bdbf873853",
+      "tiles": [
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024560,
+          "sha256": "65bf440094e12e912da26b2e8453172e53e69d371c62f630222ea592a0840880",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024576,
+          "sha256": "9a6276816b9486433efeaab2ebaa0e6709556afad31b68fdeb17537dc80c3de3",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024816,
+          "sha256": "fce6955abfbf966b231c495a8fb122aeebfc4ca0611353307713419e0a7db53b",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1024832,
+          "sha256": "d503272c8595463bf2d208390b028261fd50e11e0d8662032ae9921b68ffa774",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    },
+    "npc-176-sages89.png": {
+      "actorEntityId": 176,
+      "actorRecordOffset": 1092,
+      "captureKind": "CONTROLLED_ORIGINAL_OAM_OPAQUE_MATCH_NOT_NORMAL_ROUTE",
+      "captureSha256": "bbeeed22861c9c57cf8ba11bb2ac85bba0a631ce4eef1fc0f4cee3385784d268",
+      "height": 16,
+      "normalPlayEvidence": false,
+      "oamHex": "50c2029050c3029858d2029058d30298",
+      "observedRect": [
+        144,
+        73,
+        16,
+        16
+      ],
+      "opaquePixelCount": 195,
+      "opaquePixelMatch": true,
+      "paletteCodes": {
+        "0": [
+          0,
+          0,
+          0
+        ],
+        "1": [
+          0,
+          0,
+          0
+        ],
+        "2": [
+          255,
+          117,
+          97
+        ],
+        "3": [
+          93,
+          150,
+          255
+        ]
+      },
+      "ppuSha256": "803ca2a0dafa2f0e042a7b4c26af970510d96a0b460c0a4619d8f8a2ed321867",
+      "ramSha256": "24336cfdce7ec57b84c3d15a5a8c5ba306d32a019405a22066979f4454a269d4",
+      "rgbaSha256": "cd5b5aba234d37dfe8319b5e851eda56a1635a908d5ca0ada2d08cc1db308939",
+      "tiles": [
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025072,
+          "sha256": "9ee42cd6e0cb12a9b9491a956323021bfe5fae19b7f052a28e81f659160545f5",
+          "xy": [
+            0,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025088,
+          "sha256": "3ba396e8319f1ba15d4e74b586211e3b23279d9eb8c1a92c67b944f388bfd6a7",
+          "xy": [
+            8,
+            0
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025328,
+          "sha256": "0ca6f6e5a529849b47ce295425c3bdc754b2349f3929e8ca118ccc49392c34ab",
+          "xy": [
+            0,
+            8
+          ]
+        },
+        {
+          "attribute": 2,
+          "flipX": false,
+          "flipY": false,
+          "length": 16,
+          "offset": 1025344,
+          "sha256": "de9313a4e140b8ecd26ebcb142bba07f0dca8198f3e56817325a9a174ac2f62a",
+          "xy": [
+            8,
+            8
+          ]
+        }
+      ],
+      "transparentZero": true,
+      "width": 16
+    }
+  },
+  "items": [
+    {
+      "category": "special",
+      "description": "火雲洞贈予的丹藥；投入西岐的井，使用流程尚未接入。",
+      "id": "rom.special.1",
+      "maxCount": 1,
+      "name": "丹藥",
+      "originalId": 1,
+      "sages89ResourceEvidence": "game-data/provenance/world-sages89-resources.json",
+      "source": {
+        "confidence": "PROVISIONAL_REFERENCE",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "nameEvidence": {
+          "captureSha256": "b9143b753fffbbfead3873ca66a722bbd2fa4d085ec20049d5a79c26b474c1bf",
+          "kind": "CONTROLLED_ORIGINAL_REAL_ITEM_MENU_STABLE_ID1"
+        },
+        "nameRange": {
+          "cpuAddress": 59413,
+          "length": 5,
+          "meaning": "Original special1 menu name",
+          "module": 2,
+          "offset": 92197,
+          "sha256": "8553e2774134584a30edf9b8b9d492bcb0c28abac39daa248104feb152beb633"
+        },
+        "remainingUnknown": [
+          "World use and plague event not yet implemented",
+          "Normal Android gift NOT_RUN"
+        ],
+        "verifiedFields": [
+          "name",
+          "stableId",
+          "originalBeforeTextGift"
+        ]
+      }
+    }
+  ],
+  "map": {
+    "gridSha256": "463bc46d6bdfd8aa6311be1ab9cf09da0c4053e31ceb28b2abecc68e773ccf65",
+    "height": 15,
+    "mapId": 89,
+    "palette": [
+      14,
+      17,
+      22,
+      54,
+      14,
+      6,
+      22,
+      17,
+      14,
+      6,
+      22,
+      54,
+      14,
+      17,
+      33,
+      48,
+      14,
+      14,
+      54,
+      22,
+      14,
+      14,
+      54,
+      43,
+      14,
+      14,
+      38,
+      34,
+      14,
+      14,
+      38,
+      32
+    ],
+    "staticPalette": {
+      "backgroundSelector": 33,
+      "confidence": "STATIC_ROM_DEFAULT_ONLY",
+      "mapId": 89,
+      "palette": [
+        14,
+        17,
+        22,
+        54,
+        25,
+        6,
+        22,
+        17,
+        25,
+        6,
+        22,
+        54,
+        25,
+        17,
+        33,
+        48,
+        14,
+        14,
+        54,
+        22,
+        25,
+        14,
+        54,
+        43,
+        25,
+        14,
+        38,
+        34,
+        25,
+        14,
+        38,
+        32
+      ],
+      "remainingUnknown": [
+        "Scripted palette/lighting transitions and non-default event states"
+      ],
+      "routineEvidence": [
+        {
+          "cpuAddress": 43001,
+          "length": 44,
+          "meaning": "Signed map ID selector dispatch",
+          "module": 0,
+          "offset": 10249,
+          "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478"
+        },
+        {
+          "cpuAddress": 41872,
+          "length": 110,
+          "meaning": "Original queued background then sprite palette writes",
+          "module": 0,
+          "offset": 9120,
+          "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d"
+        }
+      ],
+      "source": [
+        {
+          "cpuAddress": 57717,
+          "length": 2,
+          "meaning": "Map background/sprite palette selector pair",
+          "module": 0,
+          "offset": 24965,
+          "sha256": "8f67d6297ed1da42e485a7330c18cac5f4bf223d85ddccb1dded039a40571849"
+        },
+        {
+          "cpuAddress": 58344,
+          "length": 2,
+          "meaning": "Background palette pointer",
+          "module": 0,
+          "offset": 25592,
+          "sha256": "2fe791834f8be3290ea9d94ede2751695643c2246f8c0fe2cc7adee462db3074"
+        },
+        {
+          "cpuAddress": 58424,
+          "length": 2,
+          "meaning": "Sprite palette pointer",
+          "module": 0,
+          "offset": 25672,
+          "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+        },
+        {
+          "cpuAddress": 58922,
+          "length": 16,
+          "meaning": "Original default background colors",
+          "module": 0,
+          "offset": 26170,
+          "sha256": "879c622c2c082685dc1eb3d9178f3579ca668538747b3a37028f6f05fde64689"
+        },
+        {
+          "cpuAddress": 58634,
+          "length": 16,
+          "meaning": "Original sprite colors",
+          "module": 0,
+          "offset": 25882,
+          "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+        }
+      ],
+      "spriteSelector": 0
+    },
+    "tilesetId": 3,
+    "walkableClasses": [
+      0,
+      4,
+      8
+    ],
+    "width": 16
+  },
+  "npcRecords": [
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38025,
+      "confidence": "HIGH",
+      "entityByte": 174,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 0,
+      "range": {
+        "cpuAddress": 52840,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 282232,
+        "sha256": "5e44e4eb29968ee57db02c7536faa11f9dc031126c52599d405f784b9ab42895"
+      },
+      "rawHex": "ae000100f800c800899401020101",
+      "xCandidate": 248,
+      "yCandidate": 200
+    },
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38053,
+      "confidence": "HIGH",
+      "entityByte": 175,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 1,
+      "range": {
+        "cpuAddress": 52854,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 282246,
+        "sha256": "e9c4f432632f5ff32218881689953a5253645feee32832cc2efa3664e5c314ce"
+      },
+      "rawHex": "af02ff00d800b800a59401020000",
+      "xCandidate": 216,
+      "yCandidate": 184
+    },
+    {
+      "animationModule": 0,
+      "animationProgramPointer": 38081,
+      "confidence": "HIGH",
+      "entityByte": 176,
+      "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+      "index": 2,
+      "range": {
+        "cpuAddress": 52868,
+        "length": 14,
+        "meaning": "Fixed 14-byte NPC source record",
+        "module": 8,
+        "offset": 282260,
+        "sha256": "cf864d7de4f26964bd612f033769dc110b95fc6bff118486d8f8f3f68811a83e"
+      },
+      "rawHex": "b003ff001801b800c19401020000",
+      "xCandidate": 280,
+      "yCandidate": 184
+    }
+  ],
+  "npcs": [
+    {
+      "cell": [
+        8,
+        5
+      ],
+      "firstDialogue": "rom.dialogue.99.0",
+      "firstEffects": [],
+      "id": "rom.npc.89.0",
+      "mapId": 89,
+      "originalTalk": {
+        "actionId": 1,
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "itemId": "rom.special.1",
+        "mapFlagId": "rom.map.89.flag.1",
+        "witnessFlagId": ""
+      },
+      "repeatDialogue": "rom.dialogue.99.1",
+      "sages89ResourceEvidence": "game-data/provenance/world-sages89-resources.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "record": {
+          "cpuAddress": 52840,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 282232,
+          "sha256": "5e44e4eb29968ee57db02c7536faa11f9dc031126c52599d405f784b9ab42895"
+        },
+        "remainingUnknown": [
+          "Exact original idle timing/Android normal route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-174-sages89.png",
+      "spriteId": 174
+    },
+    {
+      "cell": [
+        6,
+        4
+      ],
+      "firstDialogue": "rom.dialogue.99.2",
+      "firstEffects": [],
+      "id": "rom.npc.89.1",
+      "mapId": 89,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "sages89ResourceEvidence": "game-data/provenance/world-sages89-resources.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "record": {
+          "cpuAddress": 52854,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 282246,
+          "sha256": "e9c4f432632f5ff32218881689953a5253645feee32832cc2efa3664e5c314ce"
+        },
+        "remainingUnknown": [
+          "Exact original idle timing/Android normal route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-175-sages89.png",
+      "spriteId": 175
+    },
+    {
+      "cell": [
+        10,
+        4
+      ],
+      "firstDialogue": "rom.dialogue.99.3",
+      "firstEffects": [],
+      "id": "rom.npc.89.2",
+      "mapId": 89,
+      "readOnlyDialogue": true,
+      "repeatDialogue": null,
+      "sages89ResourceEvidence": "game-data/provenance/world-sages89-resources.json",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_STATIC",
+        "evidence": "game-data/provenance/world-sages89-resources.json",
+        "record": {
+          "cpuAddress": 52868,
+          "length": 14,
+          "meaning": "Fixed 14-byte NPC source record",
+          "module": 8,
+          "offset": 282260,
+          "sha256": "cf864d7de4f26964bd612f033769dc110b95fc6bff118486d8f8f3f68811a83e"
+        },
+        "remainingUnknown": [
+          "Exact original idle timing/Android normal route NOT_RUN"
+        ]
+      },
+      "sprite": "npc-176-sages89.png",
+      "spriteId": 176
+    }
+  ],
+  "remainingUnknown": [
+    "World use/plague event20/07c9 not implemented",
+    "Android normal route/cold restart NOT_RUN",
+    "Unicode transcription and static idle timing PROVISIONAL",
+    "Arrival visual facing uses existing adapter; native animation timing not equivalent"
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rules": {
+    "actionId": 1,
+    "emptyUsedSnowRowReplaced": true,
+    "firstMessage": 0,
+    "flagBeforeGift": true,
+    "flagId": "rom.map.89.flag.1",
+    "fullInventoryKeepsFlag": true,
+    "itemId": "rom.special.1",
+    "noCureNoRewardFromOtherSages": true,
+    "noEntryPrerequisite": true,
+    "npcId": "rom.npc.89.0",
+    "repeatMessage": 1
+  },
+  "schemaVersion": 1,
+  "scopeRevision": "sages89-original-action1-potion-and-independent-firecloud-route",
+  "sources": [
+    {
+      "cpuAddress": 41312,
+      "length": 42,
+      "meaning": "Original first/repeat NPC selector",
+      "module": 10,
+      "offset": 336240,
+      "sha256": "92bbeaa158a55fd4db68ebfbce3fbaab5d37c9f8356dad7d68bfcfdd40cd9838"
+    },
+    {
+      "cpuAddress": 52100,
+      "length": 12,
+      "meaning": "Original action1 flag before gift",
+      "module": 10,
+      "offset": 347028,
+      "sha256": "4ae7ebfb14eb1e9b44a367a9bb28598fba64cc9735d125430de1262b5d92dbd1"
+    },
+    {
+      "cpuAddress": 53033,
+      "length": 15,
+      "meaning": "Original current map flag OR",
+      "module": 10,
+      "offset": 347961,
+      "sha256": "c95e536c43726109601b129508690c5c9a8014e4ae4624cc067eadf5c42b66eb"
+    },
+    {
+      "cpuAddress": 46373,
+      "length": 19,
+      "meaning": "Original map89 dialogue0 special1 before-text gift",
+      "module": 2,
+      "offset": 79157,
+      "sha256": "3c62f05b9a8cffa51d13c98d0ecb39e1915f6544ed7c1156bfc6bf79320b9457"
+    },
+    {
+      "cpuAddress": 46606,
+      "length": 9,
+      "meaning": "Original special category grant",
+      "module": 2,
+      "offset": 79390,
+      "sha256": "32a94591860b2720bd8b016f8cb66c147609b95c1601b93f9cceea83a1870ebe"
+    },
+    {
+      "cpuAddress": 41195,
+      "length": 169,
+      "meaning": "Original inventory grant and empty used-row reuse",
+      "module": 2,
+      "offset": 73979,
+      "sha256": "dbe4dc6c7e546cabe99df068b2bc4e23db2af0fad2cee705d61e80de2b867c08"
+    },
+    {
+      "cpuAddress": 41360,
+      "length": 12,
+      "meaning": "Original category capacity/base pointers",
+      "module": 2,
+      "offset": 74144,
+      "sha256": "fa05d3f842c7d9460e773f64918413e3d9a8601f91ed7add8a844145d6ed738c"
+    },
+    {
+      "cpuAddress": 60896,
+      "length": 1,
+      "meaning": "Original map89 absent encounter zone",
+      "module": 0,
+      "offset": 28144,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    },
+    {
+      "cpuAddress": 61088,
+      "length": 1,
+      "meaning": "Original map89 absent encounter selector",
+      "module": 0,
+      "offset": 28336,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    }
+  ],
+  "taskId": "WORLD-FULL-01",
+  "terrainSources": [
+    {
+      "cpuAddress": 51864,
+      "length": 29,
+      "meaning": "Original source terrain selector",
+      "module": 0,
+      "offset": 19112,
+      "sha256": "7f7b52159e43153d312e0990e7d91b76464d343e06c7f0722d33ccfa35c9c168"
+    },
+    {
+      "cpuAddress": 52359,
+      "length": 215,
+      "meaning": "Original tileset3 source direction/plane",
+      "module": 0,
+      "offset": 19607,
+      "sha256": "a118646fa613c07d783eeb31976365917292580ea2c333942ec1762bb48382b5"
+    },
+    {
+      "cpuAddress": 52789,
+      "length": 29,
+      "meaning": "Original target terrain selector",
+      "module": 0,
+      "offset": 20037,
+      "sha256": "a818ffcd9acd2975918296da69ec06757325b2d7edbf495d93bc597defd87f8f"
+    },
+    {
+      "cpuAddress": 53401,
+      "length": 153,
+      "meaning": "Original upper-plane target",
+      "module": 0,
+      "offset": 20649,
+      "sha256": "028a66c214d87469fc1161db986e50c24087eae0a0fa441cd0346489bdf1b9bf"
+    },
+    {
+      "cpuAddress": 53780,
+      "length": 115,
+      "meaning": "Original ground target/occlusion",
+      "module": 0,
+      "offset": 21028,
+      "sha256": "fc726076185b454cb84a59fc1d05d3899ed7ff15afde7b7c3301b872aefa9f83"
+    }
+  ]
+}

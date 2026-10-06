@@ -13,6 +13,31 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Original Firecloud loader and gift codec, CONTROLLED not a normal pilgrimage. */
+    fun testControlledSages89GiftAndFullInventoryRepeat(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertTrue(89 in c.scenes);assertEquals(3,c.npcs.filter{it.mapId==89}.size)
+        val npc=c.npcs.single{it.id=="rom.npc.89.0"};val rule=npc.originalTalk!!
+        val item=c.itemDefinitions.getValue("rom.special.1");assertEquals("丹藥",item.name)
+        assertNull(item.worldUse);assertNull(item.herbUse);assertNull(item.battleBindingUse)
+        val party=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian"))
+        val flags=mapOf(OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+            "rom.inventory.special.0.used" to true,"rom.map.37.flag.128" to true)
+        val before=SaveSnapshot(c.scene.version,89,8*16+8,6*16+8,Key.UP,party,
+            mapOf(OriginalYangJoin.ITEM_ID to 1,"rom.special.0" to 0),flags,money=9090,encounterSteps=0)
+        assertTrue(before.validate(c));val gift=OriginalNpcTalk.begin(before,rule,item)
+        assertTrue(gift.applied);assertEquals("rom.dialogue.99.0",gift.nextDialogue)
+        assertTrue(gift.snapshot.validate(c));assertEquals(gift.snapshot,SaveSnapshot.parse(gift.snapshot.json().toString()))
+        assertEquals(1,gift.snapshot.inventory[item.id]);assertFalse(gift.snapshot.inventory.containsKey("rom.special.0"))
+        assertFalse(gift.snapshot.flags.containsKey("rom.inventory.special.0.used"))
+        assertEquals(before.money,gift.snapshot.money);assertEquals(before.characters,gift.snapshot.characters)
+        val repeat=OriginalNpcTalk.begin(gift.snapshot,rule,item);assertTrue(repeat.applied)
+        assertEquals(gift.snapshot,repeat.snapshot);assertEquals("rom.dialogue.99.1",repeat.nextDialogue)
+        assertTrue(c.npcsForState(89,gift.snapshot.flags).filter{it.id!=npc.id}.all{it.readOnlyDialogue})
+        assertEquals(2,c.exits.count{it.fromMapId==89||it.fromMapId==16&&it.toMapId==89})
+        assertTrue(before.copy(contentVersion="opening-segment-001-c57").validate(c))
+        Log.i("FengshenSages89Test","CONTROLLED_LOADER_GIFT_CODEC_NOT_NORMAL_MAINLINE")
+    }
     /** Actual scoped alternative room; CONTROLLED loader/codec, not normal cure/mainline. */
     fun testControlledMaster172ArrivalLetterAndSavedExplicitMap(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

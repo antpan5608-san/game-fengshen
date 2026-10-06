@@ -12,11 +12,11 @@ WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN�
 
 独立开发树/workspace/game-fengshen-world-jiameng-next、work/world-jiameng-next，从6ea732ed继续。当前IMPLEMENTED：原B9D2/F598仅在新入图时按当前雪莲0 USED行及队伍<4将171选为172，恢复显式保存的171不重选；共享World/ContentLoader，无治疗完成flag前置。map172与171真实网格/tileset2完全相同，复用既有36原CPU碰撞矩阵；三对象/独立172(7,14)→101(32,12)/182三段文本接续。信179原命令为调查/message2，不是普通谈话/message5；现有直接对象交互承载调查，不发奖、不设NPC-seen剧情flag。Unicode/静态弟子姿态PROVISIONAL，动态NPC尚未等价。
 
-c57局部内容GENERATED/RESTORE_VERIFIED：68依赖图/373文件，manifestd7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a；c56基底manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9分别固定，旧媒体逐字节保留。新原CPU256案/相关2 JVM、全391 JVM/82套0失败/错误/跳过、仪器编译、3导出方法41.240秒及严格空目录恢复通过。新源码APK干净构建待执行，APP_VERIFIED/PUBLISHED均NO；不要借前一80e6/c56 debug包背书本轮。旧ContentTest神木桨worldUse必null断言只对旧未启用内容有效，按真实freeBoatEnabled核新sceneScript；分类TEST_HARNESS旧能力断言，不删除原规则/经济断言。
+c57局部内容GENERATED/RESTORE_VERIFIED：68依赖图/373文件，manifestd7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a；c56基底manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9分别固定，旧媒体逐字节保留。新原CPU256案/相关2 JVM、全391 JVM/82套0失败/错误/跳过、仪器编译、3导出方法41.240秒及严格空目录恢复通过。源码50b23851c8a231f090287dd1da2647108e17d6d7已完成干净archive/原restore默认development/原wrapper debug与instrument构建23秒PASS；aapt实核DEBUG84/0.8.14-west-master172-dev/org.fengshen.dev，33649571字节/SHAfddcddd30fc3b06043021472de6ea73016b7f9495e9fad7418ef5985563cdb13，原ci.content全部373文件/68图及manifest一致。仅DEBUG打包，不是原发布签名或运行验收，APP_VERIFIED/PUBLISHED均NO；不要借前一80e6/c56 debug包背书本轮。旧ContentTest神木桨worldUse必null断言只对旧未启用内容有效，按真实freeBoatEnabled核新sceneScript；分类TEST_HARNESS旧能力断言，不删除原规则/经济断言。
 
 原版证据为CONTROLLED_ORIGINAL：实际受控治疗源库存/flag移至正常加载世界状态，真实门入101/172；37.flag0/128均入172，调查A/down×3/A真实读182.2两页且库存/队伍/map172.flag/7c8不变，独立DOWN返回101；不是正常原版全程或Android证据。必要输入已在忽略缓存，完整ROM及RAM/PPU/FC8不进公开Git。当前只保存派生数字矩阵/hash/OAM配方与实际Lua。
 
-下一精确动作：提交此可复现检查点并git archive→原ci_apk.restore→正确fengshenVersionCode/Name参数编译验包；同步备份独立树。继续核火云洞：Reference127只是不同地图ID，实际候选ROM89有三演员、真实world16(219,144)→89(8,13)和独立89(8,13)→16(219,144)，当前只调查，未打包/未实现丹药。运行中受控原版probe不冒称正常路线。R2实际PASS后按原审核/巡检/签名/hash发布，失败取真实证据薄修。SAVE-HISTORY仍已实现/JVM验证，UI/外部冷启NOT_RUN；十类欠账仍delivery-status。不中断主任务，不改Language/真实云档。
+下一精确动作：c57源50b2385已非force备份至work/world-jiameng-batch-continuation/b7638fcf3593b78cb880a4591500bcd5f298d67b，同树434d9cdb1afe30be982eba7a5e6ca94a3f3f4c4c。继续核火云洞：Reference127只是不同地图ID，实际候选ROM89有三演员、真实world16(219,144)→89(8,13)和独立89(8,13)→16(219,144)，当前只调查，未打包/未实现丹药。运行中受控原版probe不冒称正常路线。R2实际PASS后按原审核/巡检/签名/hash发布，失败取真实证据薄修。SAVE-HISTORY仍已实现/JVM验证，UI/外部冷启NOT_RUN；十类欠账仍delivery-status。不中断主任务，不改Language/真实云档。
 
 ## 先前有效接续（2026-10-06 07:29:10，北京时间）
 
@@ -174,3 +174,15 @@ WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN�
 独立佳梦关检查点92a5131b8589d868cf24498eae43810a38bb8aa3已由API非force备份到work/world-jiameng-batch-continuation/a5220c8665c0b14a754e8fe3fa186bf7598bfb8c，精确树09343219b12f0fb15824ae307b494880b468ebe2。新增两个ContentTest验证真实加载、61图中的本段/zone29/Boss/条件演员/原旧档及零步NPC恢复，已编译但App NOT_RUN；19相关JVM方法通过（7 activation/2 room talk/6 character change/4 scene story）。原context196卧床actor FF/FF无交谈，不打开伪空对白，保持真实显示/碰撞。
 
 R2新候选签名APK独立验证通过，v83/0.8.13-world-hell-r2，来源87bc56cb，run37364795394，SHA4e429554b26ba4edecb90dbf4789467ca019ae38f150d0da5dd0e9a7965220ab，c50/302文件和原签名不变。runtime仍执行，NOT_PUBLISHED。inspect37364791739审批成功但托管runner未领取任务而取消（runner_id0、无steps），服务端查询NOT_AVAILABLE；通过原inspect重试一次37367849461，审批成功，查询runner尚排队。不能把环境失败或无样本写健康。
+
+## 当前有效检查点（2026-10-06 08:20，北京时间）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82；冻结R2 run37364795394已结束：build/runtime成功，runtime-world失败，continuation跳过，NOT_PUBLISHED。正常路线失败分类尚待实际仪器/状态证据，不推断游戏Bug。GitHub API正常；原artifact下载到productionresultssa17.blob.core.windows.net被平台代理CONNECT HTTP403拒绝，已提出最小网络域名请求，不绕过代理、不输出签名URL。原inspect两次托管runner未领取，NOT_AVAILABLE，无当前生产样本。
+
+独立c57已经git archive50b2385干净构建：原ci_apk.restore默认development→原wrapper64任务23秒PASS。实际aapt为org.fengshen.dev/84/0.8.14-west-master172-dev，DEBUG APK SHA fddcddd30fc3b06043021472de6ea73016b7f9495e9fad7418ef5985563cdb13、33649571字节；68图373文件目标manifest严格通过。不是原签名或App运行。远端work/world-jiameng-batch-continuation/b7638fcf与50b2385同树备份。
+
+新增火云洞ROM89（Reference127不是目标ROMID）：原真实16(219,144)→89(8,13)，独立返回89(8,13)→16(219,144)。共享tileset3碰撞、三原演员174/175/176及99四段原字形转录；首谈action1/mask1在显示前置flag并尝试赠special1丹藥，满包保持flag、复谈不重赠。原零数量USED雪莲行被丹药覆盖时移除当前行见证，不凭历史37flag继续选择172；多未知空行顺序拒绝猜测。两位仅对白，不增NPC-seen/奖品或入洞前置。实际原菜单确认丹藥名称，当前位置不可使用未消耗；井使用尚未实现。
+
+c58/69依赖图378文件目标manifest b681c32ca8b59827d8e8ef3c41e84eae2e774c313c7993e72adcdee58a047ceb；基底c57/d7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a分别固定，不变媒体逐字节复用。原CPU256 selector/14 gift/128地形零差异、相关4 JVM方法、全395 JVM/83套0失败错误跳过与仪器编译PASS。局部3导出/空目录restore于正确SDK/JDK环境41.305秒全部PASS；首次旧scene16整份不变断言漏真实新增219,144出口格，分类TEST_HARNESS，改为只允许两条原记录映射该同一格，其余JSON严格不变；复测未设SDK时报ENV_SETUP，补既有SDK/JDK重测，不放宽签名或hash。
+
+四层：火云洞IMPLEMENTED/CONTENT_GENERATED；APK_PACKAGED待干净构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。原观察均CONTROLLED_ORIGINAL位置/库存fixture，不是正常主线或Android游玩；Unicode和静止pose PROVISIONAL，原ROM/PPU/RAM/FC8仅忽略缓存。下一动作优先取得R2失败证据薄修并原验收；不依赖该权限的独立工作继续核西岐井special1/event20→后续姜子牙条件，不编造地图/奖励/任务锁。SAVE-HISTORY仍已实现/JVM验证、UI与冷启NOT_RUN，十类累计欠账保留delivery-status。
