@@ -795,13 +795,20 @@ jobs:
           python -m pip install Pillow==11.3.0
           base=(artifacts/content-base/*-release.apk)
           [[ ${#base[@]} == 1 ]]
-          python tools/ci_apk.py restore --apk "${base[0]}" --code 84
+          python - "${base[0]}" <<'PYRESTORE'
+          import json,sys
+          from pathlib import Path
+          from tools import ci_apk as ci
+          ci.CONFIG=json.loads(Path('ci/golden-world-well8-content.json').read_text())
+          ci.restore(Path(sys.argv[1]),next_code=84)
+          PYRESTORE
           bash android/gradlew -p android testDebugUnitTest --tests org.fengshen.dev.SaveHistoryTest assembleDebug assembleDebugAndroidTest -PfengshenVersionCode=84 -PfengshenVersionName=0.8.14-development-smoke --console=plain --max-workers=2
           python - <<'PYDEBUG'
           import hashlib,json
           from pathlib import Path
           from tools import ci_apk as ci
           apk=Path('android/app/build/outputs/apk/debug/app-debug.apk')
+          ci.CONFIG=json.loads(Path('ci/golden-world-well8-content.json').read_text())
           ci.content(apk,ci.CONFIG)
           Path('artifacts/development-smoke').mkdir(parents=True,exist_ok=True)
           Path('artifacts/development-smoke/debug-content.json').write_text(json.dumps(dict(kind='DEBUG_ONLY_NOT_PUBLISHED',sha256=hashlib.sha256(apk.read_bytes()).hexdigest(),contentVersion=ci.CONFIG['contentVersion'],manifestSha256=ci.CONFIG['manifestSha256'])))

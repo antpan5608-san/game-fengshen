@@ -42,3 +42,5 @@ exact_next_action: 安全备份当前独立源码→原workflow该开发分支de
 实际新定向ROM证据：16(42,78)→142(15,43)→121(23,44)；121.3/150(23,12)才是原王对话action45。原cure非零/Panxi7fd/party<4/本地flag16控制message14/16/17/18。已真实按键执行入队：第四槽37级/EXP190000/HP1608/MP151/STR235/AGI63/STA109/SPIRIT124，原event21/script26回7(23,7)，对白17.7..11后7.flag128、context192，正常数量/已有三人记录保持。256selector/36Panxi/32initializer原CPU案例0差异；受控位置/原版，不是Android正常验收。详game-data/provenance/world-jiang-invitation.json。不再将房屋38推断作文王；其原独立出入已确认。
 
 隔离存档冒烟首轮run37409730568/source5e7b6b63在restore CLI参数处FAIL：--next-code不支持，App NOT_RUN，分类TEST_HARNESS。实际--help确认接口是--code，按原工具修正并在当前SDK/JDK环境实际restore验证；不改存档架构或生产候选。早期姜初始化字段映射把装备cache当属性，已按既有Yang originalFieldMapping及同ROM装备贡献表纠正：STR235/STA109、右160/身100/迴避3；数值CPU写址验证保持，尚未装入游戏定义。
+
+实际复用ci.restore并显式读取既有ci/golden-world-well8-content.json后，当前SDK/JDK本地成功恢复c59/378/manifestca4de36b…；默认CI pin仍c50属于冻结R2，不能把默认restore输出称为c59。隔离smoke在原workflow显式固定c59，不改main pin或关闭hash。
