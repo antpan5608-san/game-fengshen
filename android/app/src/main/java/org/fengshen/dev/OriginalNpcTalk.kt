@@ -234,10 +234,13 @@ object OriginalNpcTalk {
 
     private fun teacher163(before:SaveSnapshot,rule:OriginalNpcTalkDefinition,item:ItemDefinition?):StoryFollowup.Result {
         fun reject(message:String)=StoryFollowup.Result(before,null,false,message)
-        val gift=when(rule.mapId){163->9;164->8;else->return reject("师父赠予规则未核验")}
+        val gift=when(rule.mapId){163->9;164->8;89->1;else->return reject("师父赠予规则未核验")}
         val group=rule.mapId+10
-        if(rule.mapFlagId!="rom.map.${rule.mapId}.flag.2"||rule.witnessFlagId.isNotEmpty()||
-            rule.itemId!="rom.special.$gift"||rule.firstDialogue!="rom.dialogue.$group.2"||rule.repeatDialogue!="rom.dialogue.$group.3")
+        val mask=if(rule.mapId==89)1 else 2
+        val first=if(rule.mapId==89)0 else 2
+        val repeat=if(rule.mapId==89)1 else 3
+        if(rule.mapFlagId!="rom.map.${rule.mapId}.flag.$mask"||rule.witnessFlagId.isNotEmpty()||
+            rule.itemId!="rom.special.$gift"||rule.firstDialogue!="rom.dialogue.$group.$first"||rule.repeatDialogue!="rom.dialogue.$group.$repeat")
             return reject("师父赠予规则未核验")
         val count=before.inventory[rule.itemId]?:0
         if(count !in 0..1)return reject("秘宝数量异常")
@@ -246,6 +249,20 @@ object OriginalNpcTalk {
             return reject("秘宝取得定义未接入")
         // Actual action1 writes the flag BEFORE B481's gift. A full category
         // keeps that flag and the original text; it cannot invent a retry gift.
+        if(rule.mapId==89&&count==0&&InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category)){
+            // Original A0EB reuses the current empty USED row. This segment has
+            // a retained snow row; do not keep its old ID as a future map witness.
+            val emptyUsed=before.inventory.filter{(id,n)->n==0&&InventoryCapacity.category(id)=="special"&&
+                before.flags["rom.inventory.special.${id.substringAfterLast('.')}.used"]==true}.keys
+            if(emptyUsed.size>1||emptyUsed.any{it !in setOf("rom.special.0",item.id)})
+                return reject("旧存档的原版空物品格顺序未接入，原状态已保留")
+            val replaced=emptyUsed.singleOrNull()
+            val inventory=(if(replaced==null)before.inventory else before.inventory-replaced)+(item.id to 1)
+            val flags=(if(replaced==null)before.flags else before.flags-
+                "rom.inventory.special.${replaced.substringAfterLast('.')}.used")-
+                "rom.inventory.special.1.used"+(rule.mapFlagId to true)
+            return StoryFollowup.Result(before.copy(inventory=inventory,flags=flags),rule.firstDialogue,true)
+        }
         val next=before.copy(flags=before.flags+(rule.mapFlagId to true),
             inventory=if(count==0&&InventoryCapacity.hasCategorySlot(before.inventory,item.id,item.category))
                 before.inventory+(item.id to 1)else before.inventory)

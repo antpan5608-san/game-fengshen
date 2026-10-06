@@ -427,3 +427,5 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 
 - 原新入图选择与cold restore分开：先对实际header前分派/当前USED库存行执行有界CPU矩阵，再用World无副作用arrivalResolver接新门；tryRestore显式旧map不重选。地图选择不能从对白推断病旗。共享地图网格/tileset相同且原碰撞矩阵相同可复用，其它出口必须分别核原记录与真实按键，不能交换坐标。已实际执行256 CPU、对应JVM/World失败保留与原局部export/空restore；新的Android加载/正常流程仍要当前产物验收。
 - 原可见信件的investigation消息不等于普通talk消息；核真实菜单指令和raw记录字段。无奖励/flag的消息用限定readOnlyDialogue，避免通用NPC-seen标志制造剧情状态；原ROM、PPU和savestate继续仅在忽略目录。已有字体哈希复用后对未知字形目视转录并标PROVISIONAL，不从Reference地图ID推定ROM地图。
+
+- 对当前原action1赠特殊物品，先核selector置旗与实际赠物先后，再复用OriginalNpcTalk既有赠物入口；原满包可能已置旗且复谈不重赠，不自动退款/重试。probe-world-sages89.py已实际运行256/14/128有界CPU矩阵，相关JVM/仪器编译通过；原零数量USED行覆盖使旧当前行见证失效，不能用历史剧情flag代替。新真实出口可增加旧scene的transitionCells/enabledCells，回归应只允许原独立记录映射出的精确增量，其余数据和媒体不变，不能机械要求整份sceneJSON不变。App仍须当前产物实验。

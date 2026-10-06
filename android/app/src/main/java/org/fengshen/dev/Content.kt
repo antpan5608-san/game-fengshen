@@ -318,9 +318,13 @@ object ContentLoader {
                 npc.hiddenInvestigation=n.optBoolean("hiddenInvestigation",false)
                 npc.readOnlyDialogue=n.optBoolean("readOnlyDialogue",false)
                 if(npc.readOnlyDialogue){
-                    require(n.optString("master172ResourceEvidence")=="game-data/provenance/world-master172-resources.json"&&
+                    val master=n.optString("master172ResourceEvidence")=="game-data/provenance/world-master172-resources.json"&&
                         npc.mapId==172&&npc.id in listOf("rom.npc.172.0","rom.npc.172.1","rom.npc.172.2")&&
-                        npc.firstDialogue=="rom.dialogue.182.${npc.id.substringAfterLast('.')}"&&
+                        npc.firstDialogue=="rom.dialogue.182.${npc.id.substringAfterLast('.')}"
+                    val sages=n.optString("sages89ResourceEvidence")=="game-data/provenance/world-sages89-resources.json"&&
+                        npc.mapId==89&&npc.id in listOf("rom.npc.89.1","rom.npc.89.2")&&
+                        npc.firstDialogue=="rom.dialogue.99.${npc.id.substringAfterLast('.').toInt()+1}"
+                    require((master||sages)&&
                         npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.treasure==null&&
                         npc.originalTalk==null&&npc.shopId==null&&npc.innId==null&&
                         !n.has("originalTalk")&&!n.has("clinicId")&&!n.has("sceneStoryActor")&&!n.has("scriptedActor"))
@@ -474,12 +478,13 @@ object ContentLoader {
                             rule.firstDialogue=="rom.dialogue.47.${2*npc.id.substringAfterLast('.').toInt()}"&&
                             rule.repeatDialogue=="rom.dialogue.47.${2*npc.id.substringAfterLast('.').toInt()+1}")
                         1->{
-                            val gift=when(npc.mapId){163->9;164->8;else->error("Unknown original teacher")}
-                            val proof=if(npc.mapId==163)"world-teacher163-binding" else "world-night8-resources"
+                            val gift=when(npc.mapId){163->9;164->8;89->1;else->error("Unknown original teacher")}
+                            val proof=when(npc.mapId){163->"world-teacher163-binding";89->"world-sages89-resources";else->"world-night8-resources"}
+                            val sage=npc.mapId==89
                             require(t.getString("evidence")=="game-data/provenance/$proof.json"&&
-                                npc.id=="rom.npc.${npc.mapId}.1"&&rule.mapFlagId=="rom.map.${npc.mapId}.flag.2"&&
+                                npc.id=="rom.npc.${npc.mapId}.${if(sage)0 else 1}"&&rule.mapFlagId=="rom.map.${npc.mapId}.flag.${if(sage)1 else 2}"&&
                                 rule.witnessFlagId.isEmpty()&&rule.itemId=="rom.special.$gift"&&
-                                rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.2"&&rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.3")
+                                rule.firstDialogue=="rom.dialogue.${npc.mapId+10}.${if(sage)0 else 2}"&&rule.repeatDialogue=="rom.dialogue.${npc.mapId+10}.${if(sage)1 else 3}")
                         }
                         41->require(t.getString("evidence")==OriginalNpcTalk.ROOM116_EVIDENCE&&
                             npc.id=="rom.npc.116.0"&&npc.mapId==116&&npc.x==5&&npc.y==3&&

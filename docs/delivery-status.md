@@ -1579,3 +1579,15 @@ v53不可变签名artifact11276415922已实际取回并独立核包名/签名/c3
 ## WORLD-FULL自由船与香榭居开发检查点（2026-10-06 07:19:25，北京时间）
 
 c56/67依赖图/368文件，manifestdcd26f903afe7deffd5eebfc5c64518823f09f7234e46cebd816fd7404d05ce9，原baseExport/空目录restore及3相关回归通过；389 JVM/81套通过，instrument编译通过。World/Scene原船、停车/返程、136条件赠雪莲接既有使用链；原CPU/OAM和死亡成本已受控核，Android航行与治疗仍NOT_RUN。生产v82/R2冻结run未完成，未发布，不关闭全地图、全剧情或手机验收；具体来源/失败与下一动作见current-task当前有效状态。
+
+## 当前有效检查点（2026-10-06 08:20，北京时间）
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82；冻结R2 run37364795394已结束：build/runtime成功，runtime-world失败，continuation跳过，NOT_PUBLISHED。正常路线失败分类尚待实际仪器/状态证据，不推断游戏Bug。GitHub API正常；原artifact下载到productionresultssa17.blob.core.windows.net被平台代理CONNECT HTTP403拒绝，已提出最小网络域名请求，不绕过代理、不输出签名URL。原inspect两次托管runner未领取，NOT_AVAILABLE，无当前生产样本。
+
+独立c57已经git archive50b2385干净构建：原ci_apk.restore默认development→原wrapper64任务23秒PASS。实际aapt为org.fengshen.dev/84/0.8.14-west-master172-dev，DEBUG APK SHA fddcddd30fc3b06043021472de6ea73016b7f9495e9fad7418ef5985563cdb13、33649571字节；68图373文件目标manifest严格通过。不是原签名或App运行。远端work/world-jiameng-batch-continuation/b7638fcf与50b2385同树备份。
+
+新增火云洞ROM89（Reference127不是目标ROMID）：原真实16(219,144)→89(8,13)，独立返回89(8,13)→16(219,144)。共享tileset3碰撞、三原演员174/175/176及99四段原字形转录；首谈action1/mask1在显示前置flag并尝试赠special1丹藥，满包保持flag、复谈不重赠。原零数量USED雪莲行被丹药覆盖时移除当前行见证，不凭历史37flag继续选择172；多未知空行顺序拒绝猜测。两位仅对白，不增NPC-seen/奖品或入洞前置。实际原菜单确认丹藥名称，当前位置不可使用未消耗；井使用尚未实现。
+
+c58/69依赖图378文件目标manifest b681c32ca8b59827d8e8ef3c41e84eae2e774c313c7993e72adcdee58a047ceb；基底c57/d7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a分别固定，不变媒体逐字节复用。原CPU256 selector/14 gift/128地形零差异、相关4 JVM方法、全395 JVM/83套0失败错误跳过与仪器编译PASS。局部3导出/空目录restore于正确SDK/JDK环境41.305秒全部PASS；首次旧scene16整份不变断言漏真实新增219,144出口格，分类TEST_HARNESS，改为只允许两条原记录映射该同一格，其余JSON严格不变；复测未设SDK时报ENV_SETUP，补既有SDK/JDK重测，不放宽签名或hash。
+
+四层：火云洞IMPLEMENTED/CONTENT_GENERATED；APK_PACKAGED待干净构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。原观察均CONTROLLED_ORIGINAL位置/库存fixture，不是正常主线或Android游玩；Unicode和静止pose PROVISIONAL，原ROM/PPU/RAM/FC8仅忽略缓存。下一动作优先取得R2失败证据薄修并原验收；不依赖该权限的独立工作继续核西岐井special1/event20→后续姜子牙条件，不编造地图/奖励/任务锁。SAVE-HISTORY仍已实现/JVM验证、UI与冷启NOT_RUN，十类累计欠账保留delivery-status。

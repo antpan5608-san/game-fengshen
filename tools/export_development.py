@@ -2578,6 +2578,100 @@ def validate_world_master172_resources(reader):
         raise ValueError('Master172 read-only original investigation evidence differs')
     return p
 
+def validate_world_sages89_resources(reader):
+    """One original Firecloud batch through the shared map, terrain and gift code."""
+    from forensics.fengshen246 import extract_npcs,extract_default_map_palette,extract_text,decode_tokens,glyph_pixels
+    path='game-data/provenance/world-sages89-resources.json';p=load(ROOT/path)
+    m=extract_map(reader,89);palette=extract_default_map_palette(reader,89)
+    expected_rules=dict(npcId='rom.npc.89.0',actionId=1,flagId='rom.map.89.flag.1',itemId='rom.special.1',
+        firstMessage=0,repeatMessage=1,flagBeforeGift=True,fullInventoryKeepsFlag=True,
+        emptyUsedSnowRowReplaced=True,noCureNoRewardFromOtherSages=True,noEntryPrerequisite=True)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='sages89-original-action1-potion-and-independent-firecloud-route' or \
+            p['rules']!=expected_rules or m['tilesetId']!=3 or p['map']!=dict(mapId=89,width=16,height=15,
+                tilesetId=3,gridSha256=m['gridSha256'],staticPalette=palette,
+                palette=[palette['palette'][0]if i%4==0 else v for i,v in enumerate(palette['palette'])],walkableClasses=[0,4,8]):
+        raise ValueError('Firecloud map or original one-time gift differs')
+    required={(10,0xa160,42),(10,0xcb84,12),(10,0xcf29,15),(2,0xb525,19),(2,0xb60e,9),
+        (2,0xa0eb,169),(2,0xa190,12),(0,0xed87+89,1),(0,0xee47+89,1)}
+    terrain_required={(0,0xca98,29),(0,0xcc87,215),(0,0xce35,29),(0,0xd099,153),(0,0xd214,115)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required or \
+            {(s['module'],s['cpuAddress'],s['length'])for s in p['terrainSources']}!=terrain_required or \
+            reader.read(0,0xed87+89,1)!=b'\xff' or reader.read(0,0xee47+89,1)!=b'\xff':
+        raise ValueError('Firecloud original gift/terrain/encounter dispatch differs')
+    for s in p['sources']+p['terrainSources']:checked_span(reader,s)
+    if [(c['kind'],c['caseCount'])for c in p['cpu']]!=[('selector',256),('gift',14),('terrain',128)]:
+        raise ValueError('Firecloud bounded original CPU matrix differs')
+    for cpu in p['cpu']:
+        raw=(ROOT/cpu['path']).read_bytes()
+        if cpu['failures'] or digest(raw)!=cpu['sha256'] or len(raw.splitlines())!=cpu['caseCount']+1 or \
+                cpu['probePath']!='tools/rom-extractor/probe-world-sages89.py' or \
+                digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+            raise ValueError('Firecloud executed CPU expectations differ')
+        if cpu['kind']=='selector':
+            for flag,line in enumerate(raw.decode('ascii').splitlines()[1:]):
+                if list(map(int,line.split('\t')))!=[flag,1 if flag&1 else 0,flag|1]:
+                    raise ValueError('Firecloud first/repeat flag differs')
+        elif cpu['kind']=='terrain':
+            for line in raw.decode('ascii').splitlines()[1:]:
+                mid,mode,source,target,direction,blocked,after=map(int,line.split('\t'))
+                expected=(1,1)if mode else(int(target==1 or source==4 and direction in (1,3)or source==8 and direction in (1,4)),0)
+                if mid!=89 or mode not in (0,1) or source not in (0,1,4,8) or target not in (0,1,4,8) or \
+                        direction not in (1,2,3,4) or (blocked,after)!=expected:
+                    raise ValueError('Firecloud must reuse actual direction/plane handling')
+    font=b''.join(checked_span(reader,s)for s in p['font']['sources']);charset={int(k):v for k,v in p['font']['charset'].items()}
+    if p['font']['chr2kBanks']!=[56,57] or font!=reader.data[524304+56*2048:524304+58*2048] or \
+            not p['font']['ppu0000Matches'] or {g['code']for g in p['font']['glyphs']}!={c for c in charset if not c&64}:
+        raise ValueError('Firecloud original font/context differs')
+    for g in p['font']['glyphs']:
+        if charset[g['code']]!=g['character'] or digest(bytes(v for row in glyph_pixels(font,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Firecloud glyph pixels differ')
+    if [d['id']for d in p['dialogues']]!=[f'rom.dialogue.99.{i}'for i in range(4)]:
+        raise ValueError('Firecloud actual text set differs')
+    for i,d in enumerate(p['dialogues']):
+        original=extract_text(reader,99,i)
+        if d['source']['record']!=original['range'] or d['source']['pointerEvidence']!=original['pointerEvidence'] or \
+                d['text']!=decode_tokens(bytes.fromhex(original['rawHex']),charset)['text']:
+            raise ValueError('Firecloud message source differs')
+    records=extract_npcs(reader,89)['records']
+    if p['npcRecords']!=records or len(p['npcs'])!=3 or len(p['graphics'])!=3 or len(p['items'])!=1:
+        raise ValueError('Firecloud actor/item count differs')
+    for i,(n,record)in enumerate(zip(p['npcs'],records)):
+        raw=bytes.fromhex(record['rawHex'])
+        if n['id']!=f'rom.npc.89.{i}' or n['mapId']!=89 or n['cell']!=[(record[k]-120)//16 for k in ('xCandidate','yCandidate')] or \
+                n['spriteId']!=raw[0] or n['source']['record']!=record['range'] or n['firstEffects'] or \
+                n['firstDialogue']!=f'rom.dialogue.99.{raw[1]}' or n['sages89ResourceEvidence']!=path:
+            raise ValueError('Firecloud actor message/position/effects differs')
+        if i==0:
+            if n.get('readOnlyDialogue') or n['repeatDialogue']!='rom.dialogue.99.1' or n['originalTalk']!=dict(
+                    actionId=1,mapFlagId='rom.map.89.flag.1',witnessFlagId='',itemId='rom.special.1',evidence=path):
+                raise ValueError('Firecloud original before-text grant differs')
+        elif n.get('originalTalk') or n['repeatDialogue'] is not None or n.get('readOnlyDialogue') is not True:
+            raise ValueError('Other sages cannot heal, gift or add a quest lock')
+        g=p['graphics'][n['sprite']]
+        if g['actorEntityId']!=raw[0] or not g['opaquePixelMatch'] or g['normalPlayEvidence']:
+            raise ValueError('Firecloud sprite lacks actual opaque OAM match')
+        scoped_observed_graphic(reader,g)
+    item=p['items'][0];pointer=reader.word(2,reader.word(2,0xe610)+2)
+    if any(item.get(k)!=v for k,v in dict(id='rom.special.1',name='丹藥',category='special',originalId=1,maxCount=1,
+            sages89ResourceEvidence=path).items()) or item['source']['nameRange']!=reader.span(2,pointer,5,'Original special1 menu name') or \
+            item.get('worldUse') or item.get('herbUse') or item.get('battleBindingUse') or item.get('buyPrice') or \
+            item['source']['nameEvidence']['kind']!='CONTROLLED_ORIGINAL_REAL_ITEM_MENU_STABLE_ID1':
+        raise ValueError('Potion cannot become a guessed heal, purchasable item or unverified event')
+    checked_span(reader,item['source']['nameRange'])
+    if len(p['exits'])!=2:raise ValueError('Firecloud requires independent entry and return')
+    for e,frm,addr,values in zip(p['exits'],(16,89),(0xdf28,0xe388),([219,144,89,8,13],[8,13,16,219,144])):
+        if e['source']!=reader.span(8,addr,5,'Original five-byte exit row') or list(checked_span(reader,e['source']))!=values or \
+                e['fromMapId']!=frm or e['trigger']!=values[:2] or e['toMapId']!=values[2] or e['spawn']!=values[3:] or \
+                e['resetEncounterSteps'] is not True or e.get('requiredFlagId'):
+            raise ValueError('Firecloud exit cannot swap coordinates or invent an entry condition')
+    ev=p['controlledEvidence']
+    if ev['normalPlayEvidence'] or ev['androidEvidence'] or ev['firstTalkBefore']!=dict(snowRowId=0,qty=128,flag89=0) or \
+            ev['firstTalkAfter']!=dict(firstRowId=1,qty=1,flag89=1):
+        raise ValueError('Firecloud controlled first gift evidence differs')
+    for probe in ev['probes']:
+        if digest((ROOT/probe['path']).read_bytes())!=probe['sha256']:raise ValueError('Firecloud executed probe differs')
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -2621,6 +2715,13 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             for field,idfield in [('trigger','fromMapId'),('spawn','toMapId')]:
                 if exit[idfield]==mid:transitions.add(exit[field][1]*original['width']+exit[field][0])
         allowed=recipe['walkableClasses']
+        if recipe.get('sages89ResourceEvidence'):
+            proof=validate_world_sages89_resources(reader)
+            if mid!=89 or recipe['sages89ResourceEvidence']!='game-data/provenance/world-sages89-resources.json' or \
+                    allowed!=[0,4,8] or recipe['palette']!=proof['map']['palette'] or set(collision)!={0,1,4,8} or \
+                    recipe.get('directionalCollision') or recipe.get('terrain')!=dict(tileset=3,evidence=recipe['sages89ResourceEvidence']) or \
+                    recipe['npcCells']!=[n['cell'][1]*16+n['cell'][0]for n in proof['npcs']]:
+                raise ValueError('Firecloud cannot change original room collision/palette/actors')
         if recipe.get('master172ResourceEvidence'):
             proof=validate_world_master172_resources(reader)
             if mid!=172 or recipe['master172ResourceEvidence']!='game-data/provenance/world-master172-resources.json' or \
@@ -2780,6 +2881,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 for span in proof['sources']:checked_span(reader,span)
                 if set(collision)!={int(c) for c in proof['classCounts']} or set(allowed)!=set(collision)-{1}:
                     raise ValueError('Hell hall ground classes differ')
+            elif terrain['tileset']==3 and mid==89:
+                if terrain['evidence']!='game-data/provenance/world-sages89-resources.json':
+                    raise ValueError('Firecloud requires its actual scoped direction/plane matrix')
+                validate_world_sages89_resources(reader)
             elif terrain['tileset']==3 and proof.get('scopeRevision') in ('hell-halls61-through68-ground-and-upper-plane-bridge-zero',
                     'seventh-hall-side-rooms-ground-and-upper-plane-bridge-zero','map86-rebirth-ground-and-upper-plane-bridge-zero',
                     'island76-through78-ground-and-upper-plane-bridge-zero',
@@ -3188,6 +3293,10 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 if len(matches)!=1 or digest(encoded(matches[0]))!=item['baseDefinitionSha256']:
                     raise ValueError('Existing item reuse differs from reviewed base definition')
             if item['category']=='special':
+                if item.get('sages89ResourceEvidence')=='game-data/provenance/world-sages89-resources.json':
+                    if item not in validate_world_sages89_resources(reader)['items']:
+                        raise ValueError('Potion lacks its exact original gift/menu evidence')
+                    continue
                 if item.get('sceneItemEvidence')=='game-data/provenance/world-west-scene-items.json':
                     if item not in validate_world_scene_items(reader)['items']:
                         raise ValueError('Scene special item lacks scoped original menu proof')
@@ -3367,7 +3476,12 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
         if {r['id'] for r in old}&{r['id'] for r in added}:raise ValueError('Overlapping world object ID')
         scene[name]=old+added
     for npc in evidence.get('npcs',[]):
-        if npc.get('master172ResourceEvidence'):
+        if npc.get('sages89ResourceEvidence'):
+            proof=validate_world_sages89_resources(reader)
+            if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
+                    any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):
+                raise ValueError('Firecloud actor/dialogue/graphic differs')
+        elif npc.get('master172ResourceEvidence'):
             proof=validate_world_master172_resources(reader)
             if npc not in proof['npcs'] or any(d not in scene['dialogues']for d in proof['dialogues']) or \
                     any(evidence['graphics'].get(k)!=g for k,g in proof['graphics'].items()):
