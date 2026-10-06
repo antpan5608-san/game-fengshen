@@ -60,6 +60,16 @@ R2_STAGE_GATES = dict(base=R1_BASE_KEYS,world=R2_WORLD_KEYS,continuation=R2_CONT
 R2_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 16, 17, 18, 19, 20, 22, 23, 25, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 76, 77, 78, 79, 85, 86, 87, 95, 96, 97, 98, 99, 100, 101, 107, 108, 109, 110, 114, 115, 116, 117, 139, 141, 158, 159, 163, 164, 171]
 PERSONAL_GATES = ['upgrade', 'contentLoad', 'touchTransactions', 'partySupplyAndInn',
                   'medicalDoors', 'herbAndBattle', 'saveProtection', 'preMigrationBackup', 'externalColdRestart']
+C60_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 16, 17, 18, 19, 20, 22, 23, 25, 37, 41, 42,
+    60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 74, 76, 77, 78, 79, 85, 86, 87, 89, 95,
+    96, 97, 98, 99, 100, 101, 107, 108, 109, 110, 114, 115, 116, 117, 136, 139, 141, 145,
+    146, 147, 148, 158, 159, 163, 164, 171, 172]
+C60_PERSONAL_GATES = ['well8ControlledCodec', 'saveHistoryRollback',
+                      'saveHistoryExternalColdRestart', 'saveHistoryCorruptionRetention']
+
+
+def personal_gates(scope):
+    return PERSONAL_GATES + (C60_PERSONAL_GATES if scope['id'] == 'WORLD-C60-PERSONAL' else [])
 
 
 def personal_quality(scope=None):
@@ -71,9 +81,10 @@ def finish_personal(proposed):
     scope = active_scope(proposed)
     if not personal_quality(scope):
         raise ValueError('Personal delivery requires the exact authorized personal scope')
-    if any(proposed.get(key) != 'PASS' for key in PERSONAL_GATES):
+    gates = personal_gates(scope)
+    if any(proposed.get(key) != 'PASS' for key in gates):
         raise ValueError('Personal delivery minimum smoke/upgrade/backup gate did not pass')
-    result = dict(binding(proposed), **{key: proposed[key] for key in PERSONAL_GATES})
+    result = dict(binding(proposed), **{key: proposed[key] for key in gates})
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -90,7 +101,7 @@ def review_personal(receipt):
         raise ValueError('Personal smoke cannot claim stable or manual acceptance')
     if receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH) or receipt.get('runtimeScope') != scope['id']:
         raise ValueError('Personal receipt scope/hash mismatch')
-    if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in PERSONAL_GATES):
+    if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in personal_gates(scope)):
         raise ValueError('Actual personal minimum gates are required')
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
@@ -118,6 +129,17 @@ def active_scope(candidate=None):
         expected_points={'base':['north-palace'],'world':['hall-batch']}
         if scope.get('quality') != 'STABLE':
             raise ValueError('Hell/rebirth milestone requires actual stable normal stages')
+    elif scope.get('id') == 'WORLD-C60-PERSONAL':
+        expected_maps = C60_MAP_IDS
+        # End of the existing controlled short smoke, not a new normal-story claim.
+        expected_endpoint = dict(mapId=2, party=['nezha', 'xiaolongnv'], bossFlag='rom.map.95.flag.128')
+        expected_gates = R1_STAGE_GATES
+        expected_points = {'base': ['north-palace'], 'world': ['hell-village2']}
+        if (scope.get('quality') != 'PERSONAL_TEST'
+                or scope.get('contentVersion') != 'opening-segment-001-c60'
+                or scope.get('manifestSha256') != '8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb'
+                or scope.get('acceptanceScope') != 'CONTROLLED_FIXTURES_AND_SHORT_APP_SMOKE_NOT_FULL_WORLD_OR_STABLE'):
+            raise ValueError('c60 personal scope cannot claim stable/full-world acceptance or a different target')
     else:
         raise ValueError('Unknown authorized frozen milestone')
     if (reference != dict(path='ci/runtime-scope.json',sha256=digest(SCOPE_PATH))
@@ -136,7 +158,7 @@ def active_scope(candidate=None):
     if scope.get('quality', 'STABLE') not in ('STABLE', 'PERSONAL_TEST'):
         raise ValueError('Unknown delivery quality')
     if scope.get('quality') == 'PERSONAL_TEST' and scope.get('personalTest') != dict(
-            requiredJobs=['runtime'], completedStages=['personal-smoke'], gates=PERSONAL_GATES,
+            requiredJobs=['runtime'], completedStages=['personal-smoke'], gates=personal_gates(scope),
             manual_acceptance='PENDING'):
         raise ValueError('Personal minimum gates cannot be silently weakened')
     return scope

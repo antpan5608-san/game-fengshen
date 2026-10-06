@@ -57,6 +57,18 @@ class TouchTest:IsolatedGameTestCase(){
             instrumentation.waitForIdleSync()
         }
         fun history(){
+            // Native window dismissal/focus delivery can continue after a
+            // Looper idle barrier. Do not inject focus or tap behind that window.
+            var ready=false
+            val deadline=SystemClock.elapsedRealtime()+5000
+            while(!ready&&SystemClock.elapsedRealtime()<deadline){
+                instrumentation.runOnMainSync{
+                    ready=v.active&&v.focused&&v.hasWindowFocus()&&
+                        GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v)==null
+                }
+                if(!ready)SystemClock.sleep(25)
+            }
+            assertTrue("Game window must regain real focus before reopening history",ready)
             if(v.layer==GameView.Layer.MAP)tap(v,center(layoutFor(v).buttons.getValue(Key.MENU)))
             assertEquals(GameView.Layer.MENU,v.layer);tap(v,menuPoint(v,3))
             dialogAction{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),10,d.listView.adapter.getItemId(10))}
