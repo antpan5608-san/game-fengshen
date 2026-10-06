@@ -66,10 +66,77 @@ C60_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 16, 17, 18, 19, 20, 22, 23, 25, 37
     146, 147, 148, 158, 159, 163, 164, 171, 172]
 C60_PERSONAL_GATES = ['controlledReplayVersionMarker', 'well8ControlledCodec', 'saveHistoryRollback',
                       'saveHistoryExternalColdRestart', 'saveHistoryCorruptionRetention']
+C61_MAP_IDS = sorted(C60_MAP_IDS + [7, 121, 142])
+C61_PERSONAL_GATES = ['jiangInvitationCodec', 'jiangControlledTouchJoin',
+                      'jiangExternalColdRestart', 'jiangFourPartyBattle']
+C61_PROOF_KEYS = ('jiangRecordingSha256', 'jiangColdBoundarySha256')
+C61_CONTENT_TESTS = [
+    'testC61FrozenDependenciesAndMedicalPartySave',
+    'testControlledVillage2GirlEquipmentAndLegacyLootInventory',
+    'testScopedHellZonesRetainEveryGroupAndSupportedStatusBehavior',
+    'testControlledReusableWorldItemRestoresRemovedObjectState',
+    'testControlledSceneMechanismSessionSerialization',
+    'testOpeningCombatPackageExecutesEveryRomGroup', 'testBundledAndDirectoryUseSameLoader',
+    'testTamperedContentRejected', 'testPreviousContentWithoutCharacterNameStillLoads',
+    'testScopedEastPartyAndContinuationLoadAndSerialize', 'testOriginalOpeningExitAndCollision',
+    'testWorld01NormalRouteAndRepeatedRoundTrips',
+    'testWorld01SpecialEntranceDoesNotOpenOtherUnknownTerrain',
+    'testDevelopmentInitialCharacterFields', 'testCloudSessionTokenEncryptedAndCleared',
+    'testPathTraversalRejected', 'testTownTradeFailuresAndEquipmentCycle',
+    'testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion',
+    'testJiamengOriginalMapsActorsAndBattleDefinitionsFixture',
+    'testJiamengSavedActorsDialogueAndManualReturnFixture',
+    'testControlledJiangInvitationCodecAndDepartureBoundaries']
 
 
 def personal_gates(scope):
-    return PERSONAL_GATES + (C60_PERSONAL_GATES if scope['id'] == 'WORLD-C60-PERSONAL' else [])
+    return (PERSONAL_GATES
+            + (C60_PERSONAL_GATES if scope['id'] in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL') else [])
+            + (C61_PERSONAL_GATES if scope['id'] == 'WORLD-C61-PERSONAL' else []))
+
+
+def validate_jiang_digests(receipt):
+    for key in C61_PROOF_KEYS:
+        value = receipt.get(key)
+        if not isinstance(value, str) or len(value) != 64 or any(c not in '0123456789abcdef' for c in value):
+            raise ValueError('Missing actual Jiang proof digest: ' + key)
+
+
+def jiang_proof_digests(directory):
+    """Verify the original controlled App recorder and its complete cold boundary."""
+    recording_path = directory / 'world-jiang-recording.json'
+    boundary_path = directory / 'world-jiang-cold-boundary.json'
+    proof, boundary = read_json(recording_path), read_json(boundary_path)
+    if (proof.get('kind') != 'CONTROLLED_JIANG_INVITATION_SMOKE'
+            or proof.get('controlledAssertions') != 'PASS'
+            or proof.get('normalAssertions') != 'NOT_APPLICABLE'
+            or proof.get('forceStopRestartEqual') is not True
+            or proof.get('continuedExploration') is not False
+            or proof.get('originalPreferencesRestored') is not True):
+        raise ValueError('Jiang requires actual controlled App/cold smoke, not normal-route claims')
+    if (boundary.get('kind') != 'ACTUAL_APP_EXTERNAL_COLD_BOUNDARY'
+            or boundary.get('equal') is not True or boundary.get('differentTopLevelFields') != []
+            or not isinstance(boundary.get('before'), dict)
+            or boundary['before'] != boundary.get('after')):
+        raise ValueError('Jiang cold restart must preserve the entire actual saved state')
+    before = boundary['before']
+    if (before.get('contentVersion') != 'opening-segment-001-c61' or before.get('mapId') != 7
+            or [c.get('id') for c in before.get('characters', [])] != ['nezha','xiaolongnv','yangjian','jiangziya']
+            or before.get('flags', {}).get('rom.event.7.21.dialogue.pending') is not True):
+        raise ValueError('Jiang cold proof is not the declared four-party pending endpoint')
+    names = ['world-jiang-normal-00.mp4', 'world-jiang-cold-restart.mp4']
+    segments = proof.get('segments', [])
+    if len(segments) != 2 or proof.get('videos') != ['artifacts/checkpoint-ui/' + n for n in names]:
+        raise ValueError('Jiang requires both original App video segments')
+    for segment, name in zip(segments, names):
+        path = directory / name
+        if (segment.get('file') != 'artifacts/checkpoint-ui/' + name or path.is_symlink()
+                or not path.is_file() or path.stat().st_size == 0
+                or hashlib.sha256(path.read_bytes()).hexdigest() != segment.get('sha256')):
+            raise ValueError('Jiang original App video missing or changed')
+    if (segments[0].get('savedWorldAfter') != before or segments[1].get('savedWorldBefore') != before):
+        raise ValueError('Jiang recorder and external cold proof describe different saves')
+    return dict(jiangRecordingSha256=digest(recording_path), jiangColdBoundarySha256=digest(boundary_path))
 
 
 def personal_quality(scope=None):
@@ -85,6 +152,9 @@ def finish_personal(proposed):
     if any(proposed.get(key) != 'PASS' for key in gates):
         raise ValueError('Personal delivery minimum smoke/upgrade/backup gate did not pass')
     result = dict(binding(proposed), **{key: proposed[key] for key in gates})
+    if scope['id'] == 'WORLD-C61-PERSONAL':
+        validate_jiang_digests(proposed)
+        result.update({key: proposed[key] for key in C61_PROOF_KEYS})
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -103,6 +173,8 @@ def review_personal(receipt):
         raise ValueError('Personal receipt scope/hash mismatch')
     if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in personal_gates(scope)):
         raise ValueError('Actual personal minimum gates are required')
+    if scope['id'] == 'WORLD-C61-PERSONAL':
+        validate_jiang_digests(receipt)
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
     if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
@@ -129,17 +201,22 @@ def active_scope(candidate=None):
         expected_points={'base':['north-palace'],'world':['hall-batch']}
         if scope.get('quality') != 'STABLE':
             raise ValueError('Hell/rebirth milestone requires actual stable normal stages')
-    elif scope.get('id') == 'WORLD-C60-PERSONAL':
-        expected_maps = C60_MAP_IDS
+    elif scope.get('id') in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL'):
+        c61 = scope['id'] == 'WORLD-C61-PERSONAL'
+        expected_maps = C61_MAP_IDS if c61 else C60_MAP_IDS
         # End of the existing controlled short smoke, not a new normal-story claim.
         expected_endpoint = dict(mapId=2, party=['nezha', 'xiaolongnv'], bossFlag='rom.map.95.flag.128')
         expected_gates = R1_STAGE_GATES
         expected_points = {'base': ['north-palace'], 'world': ['hell-village2']}
         if (scope.get('quality') != 'PERSONAL_TEST'
-                or scope.get('contentVersion') != 'opening-segment-001-c60'
-                or scope.get('manifestSha256') != '8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb'
+                or scope.get('contentVersion') != ('opening-segment-001-c61' if c61 else 'opening-segment-001-c60')
+                or scope.get('manifestSha256') != ('37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557' if c61 else '8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb')
                 or scope.get('acceptanceScope') != 'CONTROLLED_FIXTURES_AND_SHORT_APP_SMOKE_NOT_FULL_WORLD_OR_STABLE'):
-            raise ValueError('c60 personal scope cannot claim stable/full-world acceptance or a different target')
+            raise ValueError('Personal scope cannot claim stable/full-world acceptance or a different target')
+        if c61 and (scope.get('controlledEndpoint') != dict(mapId=7,
+                party=['nezha','xiaolongnv','yangjian','jiangziya'], sceneFlag='rom.map.7.flag.128')
+                or scope.get('contentTests') != C61_CONTENT_TESTS):
+            raise ValueError('c61 controlled endpoint or mandatory content tests changed')
     else:
         raise ValueError('Unknown authorized frozen milestone')
     if (reference != dict(path='ci/runtime-scope.json',sha256=digest(SCOPE_PATH))

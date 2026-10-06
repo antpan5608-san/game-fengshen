@@ -218,9 +218,9 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
     run_test testControlledHerbBoundariesAndSaveCompatibility false
     run_test testControlledMobileBattleHerbAndSave false
     run_test testUnrestorableSaveCannotBeOverwritten false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
     run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL ]]; then
         # Run on this signed candidate; DEBUG observations cannot satisfy these gates.
         timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c60-well8-codec.txt 2>&1
         cat artifacts/town02-runtime/c60-well8-codec.txt
@@ -229,11 +229,21 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
         python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
     fi
     python tools/record_app_audio.py personal-r1-smoke testPersonalR1SmokeFromVerifiedEastSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
+    if [[ "$scope_id" == WORLD-C61-PERSONAL ]]; then
+        timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c61-jiang-codec.txt 2>&1
+        cat artifacts/town02-runtime/c61-jiang-codec.txt
+        grep -q 'OK (1 test)' artifacts/town02-runtime/c61-jiang-codec.txt
+        if ! python tools/record_app_audio.py world-jiang testControlledJiangInvitationPendingAtColdBoundary --silent --controlled-jiang --cold-test testJiangExternalColdStartMatchesPendingAndCompletesOnce --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/c61-jiang-crash.txt
+            cat artifacts/town02-runtime/c61-jiang-crash.txt
+            exit 1
+        fi
+    fi
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
 from pathlib import Path
-from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,review_personal,active_scope
+from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,review_personal,active_scope,jiang_proof_digests
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -242,7 +252,7 @@ assert proof['normalAssertions']=='PASS' and proof['forceStopRestartEqual'] is T
 for segment in proof['segments']:
     assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
 r.update({key:'PASS' for key in PERSONAL_GATES}) # Reached only after each mandatory actual command succeeds.
-if active_scope(r)['id']=='WORLD-C60-PERSONAL':
+if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL'):
     history_recording=Path('artifacts/checkpoint-ui/world-save-history-recording.json')
     history=json.loads(history_recording.read_text())
     assert history['kind']=='CONTROLLED_SAVE_HISTORY_SMOKE' and history['controlledAssertions']=='PASS'
@@ -252,6 +262,9 @@ if active_scope(r)['id']=='WORLD-C60-PERSONAL':
         assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
     r.update({key:'PASS' for key in C60_PERSONAL_GATES})
     r['saveHistoryRecordingSha256']=hashlib.sha256(history_recording.read_bytes()).hexdigest()
+if active_scope(r)['id']=='WORLD-C61-PERSONAL':
+    r.update(jiang_proof_digests(Path('artifacts/checkpoint-ui')))
+    r.update({key:'PASS' for key in C61_PERSONAL_GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

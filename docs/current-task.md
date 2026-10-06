@@ -9,12 +9,12 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v84 / 0.8.14-c60-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: c61，IMPLEMENTED_DEBUG_COLD_FAILED_NOT_SIGNED_NOT_PUBLISHED
+current_candidate_version: c61，APP_VERIFIED_DEBUG_CONTROLLED_SIGNED_PENDING_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: DEBUG37499759518实际cold完整等值及中段/最终对白已通过，随后四人战斗Process crashed；先取原AndroidRuntime堆栈并修复，再签名验收，当前未发布。
+first_real_blocker: 四人武器44缺命中表的真实崩溃已修复；DEBUG37511781139已实际通过全部姜局部门禁。下一步同源签名v85的21 Content/旧14+姜4门禁，未签名/未发布；完整剧情/UI及外部验收仍未完成。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
@@ -44,7 +44,7 @@ IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED均完成。v84 / 0.8.14-c60
 
 ## c61当前真实验收状态（2026-10-07，北京时间）
 
-v84仍为已发布个人版。c61尚未签名或发布，活跃CI内容pin仍c60；inactive c61 manifest为34de87f4983c6fe34ed91f866a27129f73458063499d287336bfa041d8bdb5d0，388文件/72依赖图，不是72图完整可玩。
+v84仍为已发布个人版。c61尚未签名或发布；本轮DEBUG实际通过后已启用精确c61个人签名验收scope，manifest为37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557（旧34de87仅历史候选），388文件/72依赖图，不是72图完整可玩。
 
 DEBUG37482355271在环境阶段exit1，未留具体原因；不得猜测SDK版本故障。DEBUG37484779330实际进入AVD后ContentLoader.kt1054因成长表缺evidence失败，已补原来源字段、缺失/错来源拒绝并严格恢复，5项导出测试PASS159.602s，source0655f81。DEBUG37489153639真实Content2及首段受控入队PASS，录像/四人中段对白截图/expected-save已保留，但原录制器完整saved-before/after等值失败，外部cold方法和四人战斗未执行。OK(1 test)只证明第一段，不覆盖冷启失败。
 
@@ -102,3 +102,11 @@ run37456878420/source11fc：build成功，20 Content/覆盖升级/备份、滚�
 ## c61最新真实运行（2026-10-07，北京时间）
 
 source8101fee / DEBUG37499759518失败：真实冷启before/after完整JSON equal=true/差异字段空；实际pending及完成无重复入队截图已核，随后四人battle-ready后instrument报告Process crashed。不能由cold通过写整轮App PASS；签名85/发布仍未完成。原before/after、两段MP4、失败日志/截图均保留。a3da978修正3/4队员物品目标为共享2x2绘制/命中几何，保留旧两人精确位置；411 JVM零失败/错误/跳过及仪器编译通过，4B全部4建议片段已读并登记决定，实际UI仍待同来源验收。418cbab在原jiang DEBUG失败分支收集隔离AndroidRuntime堆栈并exit1，8项录制检查/Bash语法通过；原发布与完整等值门槛不变，接续真实新DEBUG。代码检查发现原初始武器44不在已导出hit表中，暂作待堆栈核实线索，不猜阈值或放宽拒绝。
+
+## c61 DEBUG实际通过及签名候选接续（2026-10-07，北京时间）
+
+原DEBUG37506904472保留实际fatal：PhysicalRules.hits缺武器44。匹配ROM核武器7/44均51，已补精确span与所有可操作/初始武器表完整性拒绝；6项导出/篡改/空restore、411 JVM零失败/错误/跳过及仪器编译通过。source3aa7e97035dd97fd6ec6e6b72c2e94efe01d1be1 / DEBUG37511781139真实SUCCESS：2 Content、潘溪两页/B保护完整资源状态、原邀请触控/四人入队、中途external force-stop完整JSON equal=true/差异空、完成不重入队、四目标只选择、前三指令不结算、第四人实际原武器44攻击及一次胜利结算均通过。原两段MP4逐字节SHA、截图与实际末帧已检查；这是受控局部App冒烟，不是正常完整主线/真机/音频。
+
+正式候选规划v85/0.8.15-jiang-personal：保留内容导出基底27，实际升级基底84/704fc991/37469698895/fad6f4d；c61 manifest37f0f7bb/388文件/72依赖图，旧14个人门禁加姜codec/触控入队/外部cold/四人战斗4项，21 Content测试。两个原录制与cold-boundary SHA必须留在签名runtime receipt并复核；不能用DEBUG替代。同源main/原审核与签名/仅两对象/公网完整字节/postflight保持，尚未签名或发布。
+
+本地4B本轮0片段/服务身份不可用，管理窗口已实际只读核Ollama停止、GPU训练服务占用5212MiB并持锁；未抢占训练。Codex亲自覆盖所有未审代码并登记codex_fallback，不能写4B审查通过。实际旧胜利摘要四人内容有裁切，已列入下一界面批次；当前只关闭此次崩溃/局部布局能力，不关闭全界面或累计欠账。长期目标ACTIVE，签名发布后继续。

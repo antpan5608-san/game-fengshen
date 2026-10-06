@@ -1668,3 +1668,11 @@ run37456878420/source11fc：build成功，20 Content/覆盖升级/备份、滚�
 ## c61冷启失败补充（2026-10-07，北京时间）
 
 当前最先阻断为DEBUG37489153639外部cold完整存档等值失败。真实Content2与首段受控四人入队通过，不能据此写整体App PASS；cold方法/四人战斗/签名85/发布均未完成。原失败日志、首段原片、pending截图和expected-save已保留；2eae8c5仅补只读before/after及中断冷启原片，不放宽等值。已完成成长表缺evidence修正及5项严格导出回归；inactive c61精确manifest34de87f4983c6fe34ed91f866a27129f73458063499d287336bfa041d8bdb5d0，388文件/72依赖图。当前实际阶段与后续门禁以current-task为准。
+
+## 2026-10-07 c60已发布与c61真实DEBUG验收（北京时间）
+
+v84/0.8.14-c60-personal已沿原流程PUBLISHED_AND_VERIFIED：source704fc991b515f1c453f7413108ad795d350b3451，build37469698895/publish37471974396 SUCCESS，APK31,659,184字节/SHA fad6f4d962c7faec836a0d3d5bb50def0be95c4912b51d984eb88e418a8b5e91。406 release JVM、20 Content及旧14个人门禁真实PASS；公网全包/包名/签名/版本/c60内容与postflight独立核实。quality PERSONAL_TEST/manual_acceptance PENDING，历史STABLE仍v82，声音/真机/正常完整剧情不推定通过。此前未发布描述保留为当时历史。
+
+c61原cold唯一flags差异及武器44缺hit实际AndroidRuntime崩溃分别已修复，旧失败原片/堆栈保留。原source3aa7e97035dd97fd6ec6e6b72c2e94efe01d1be1/DEBUG37511781139 SUCCESS：Content2、Panxi明确两页/B保护、受控邀请入队、external force-stop完整cold等值、结束不重复入队、四目标选择无消耗、四人实际原战斗/一次胜利真实通过。6导出/原hit/span篡改/388文件空restore与411 JVM通过；受控App原片/截图/末帧已实际查看。四人胜利文本仍有裁切，界面全改、正常主线和十类累计欠账均未关闭。
+
+v85签名候选现在规划WORLD-C61-PERSONAL，精确manifest37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557，72依赖图/388文件，不是72图正常可玩；原内容基底27不变，实际升级基底84。签名同候选必须21 Content+旧14+新姜4门禁，并保存原录像/cold boundary两个SHA；67相关Python、Bash检查、仪器编译通过。最新4B0片段/服务离线，全部9未覆盖代码由Codex亲自核并记录真实codex_fallback；不声称模型审查PASS。签名构建/发布/公网校验仍待执行，当前线上84。长期三终点目标ACTIVE，每版原发布后继续。

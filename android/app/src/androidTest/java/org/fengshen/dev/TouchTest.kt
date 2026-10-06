@@ -2806,7 +2806,8 @@ class TouchTest:IsolatedGameTestCase(){
         if(source.contentVersion==v.content.scene.version)return source
         assertTrue("Only first controlled replay may migrate a version marker",controlled&&!cold)
         assertEquals("opening-segment-001-c51-r1",source.contentVersion)
-        assertEquals("opening-segment-001-c60",v.content.scene.version)
+        assertTrue("Only explicitly admitted personal targets may replay old verified bytes",
+            v.content.scene.version in listOf("opening-segment-001-c60","opening-segment-001-c61"))
         return source.copy(contentVersion=v.content.scene.version)
     }
     private fun replayLoadMetadata(index:JSONObject,source:SaveSnapshot,currentVersion:String):JSONObject = index
