@@ -1131,6 +1131,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()
     }
     private fun canDismissDialogue():Boolean {
+        // This original invitation owns a durable scripted continuation. Its
+        // pending save requires the checked map/pose; do not expose movement
+        // while that continuation still owns input.
+        if(content.jiangJoin?.let{flags[it.pendingFlag]==true}==true)return false
         if(dialogueNpc?.originalTalk?.actionId==41&&flags[OriginalNpcTalk.ROOM116_PENDING_FLAG]==true)return false
         if(dialogueNpc?.originalTalk?.actionId==43&&flags[OriginalNpcTalk.HUANG_PENDING_FLAG]==true)return false
         dialogueNpc?.let{content.sceneStories[it.id]}?.let{if(flags[it.pendingFlag]==true)return false}

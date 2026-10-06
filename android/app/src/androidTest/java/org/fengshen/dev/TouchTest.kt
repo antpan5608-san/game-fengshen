@@ -207,8 +207,7 @@ class TouchTest:IsolatedGameTestCase(){
         send(v,MotionEvent.ACTION_DOWN,listOf(middle));send(v,MotionEvent.ACTION_CANCEL,listOf(middle))
         send(v,MotionEvent.ACTION_UP,listOf(middle));assertEquals(pending,v.currentSnapshot())
         instrumentation.runOnMainSync{v.handleBack()};assertEquals(pending,v.currentSnapshot())
-        if(v.layer==GameView.Layer.MAP)tapMapActor(v,c.npcs.single{it.id==rule.kingNpcId})
-        assertEquals(pending,v.currentSnapshot()) // Closing/reopening must retain the exact pending stage.
+        assertEquals(pending,v.currentSnapshot())
         assertEquals(GameView.Layer.DIALOGUE,v.layer)
         completeJiangMessage(v,"rom.dialogue.131.16")
         val joined=v.currentSnapshot();assertEquals(OriginalJiangJoin.FULL_PARTY,joined.characters.map{it.id})
@@ -228,6 +227,9 @@ class TouchTest:IsolatedGameTestCase(){
         val(activity,v)=launch(false);val rule=v.content.jiangJoin!!
         assertEquals(expected,v.currentSnapshot());assertEquals(GameView.Layer.DIALOGUE,v.layer)
         assertEquals("rom.dialogue.17.12",jiangDialogueId(v));screenshot(v,"world-jiang-controlled-cold-exact-pending")
+        instrumentation.runOnMainSync{v.handleBack()}
+        assertEquals(expected,v.currentSnapshot());assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertEquals("rom.dialogue.17.12",jiangDialogueId(v)) // Pending pose cannot become movable/unsavable.
         for(id in rule.continuation.dialogueIds.drop(1))completeJiangMessage(v,id)
         val after=v.currentSnapshot();assertEquals(GameView.Layer.MAP,v.layer)
         assertEquals(expected.characters,after.characters);assertEquals(expected.money,after.money)

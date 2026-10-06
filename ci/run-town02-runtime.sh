@@ -19,8 +19,16 @@ mkdir -p artifacts/town02-runtime
 export ANDROID_AVD_HOME="${RUNNER_TEMP:-$PWD/artifacts/town02-runtime}/fengshen-town02-avd"
 mkdir -p "$ANDROID_AVD_HOME"
 sdkmanager="$sdk/cmdline-tools/latest/bin/sdkmanager"
-(set +o pipefail; yes | "$sdkmanager" --licenses) > artifacts/town02-runtime/sdk-licenses.txt 2>&1
-"$sdkmanager" 'emulator' 'platform-tools' 'build-tools;35.0.0' 'system-images;android-30;default;x86_64' > artifacts/town02-runtime/sdk-setup.txt 2>&1
+if ! (set +o pipefail; yes | "$sdkmanager" --licenses) > artifacts/town02-runtime/sdk-licenses.txt 2>&1; then
+    tail -n 80 artifacts/town02-runtime/sdk-licenses.txt
+    echo 'Android SDK license preparation failed; App validation NOT_RUN' >&2
+    exit 1
+fi
+if ! "$sdkmanager" 'emulator' 'platform-tools' 'build-tools;35.0.0' 'system-images;android-30;default;x86_64' > artifacts/town02-runtime/sdk-setup.txt 2>&1; then
+    tail -n 80 artifacts/town02-runtime/sdk-setup.txt
+    echo 'Android SDK package preparation failed; App validation NOT_RUN' >&2
+    exit 1
+fi
 printf 'no\n' | "$sdk/cmdline-tools/latest/bin/avdmanager" create avd --name fengshen-town02-ci --package 'system-images;android-30;default;x86_64' --device pixel_5 --path "$ANDROID_AVD_HOME/fengshen-town02-ci.avd"
 python - <<'PYAVD'
 import os
