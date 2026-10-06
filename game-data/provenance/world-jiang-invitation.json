@@ -98,7 +98,7 @@
     "initializedCharacter": {
       "id": "jiangziya",
       "originalActorIndex": 3,
-      "level": 37,
+      "level": 38,
       "experience": 190000,
       "hp": 1608,
       "maxHp": 1608,
@@ -125,7 +125,8 @@
         "rightHandContribution": "RAM054E/054F",
         "bodyContribution": "RAM0556/0557",
         "evasionContribution": "RAM055E/055F"
-      }
+      },
+      "storedLevel": 37
     },
     "continuation": {
       "joinBeforeFirstFollowupDialogue": true,
@@ -306,6 +307,7 @@
     "Fourth actor learned spells, growth/portrait, equipment owner bindings and enemy targeting need scoped export/tests",
     "Map7 initial/dynamic context lifecycle and full script26 movement need remaining evidence",
     "City121/142 optional rooms/services and native NPC script motion not yet converted",
-    "Early checkpoint confused stat/cache field meanings; corrected using existing Yang field mapping and actual fourth-slot initializer, not name-based inference"
+    "Early checkpoint confused stat/cache field meanings; corrected using existing Yang field mapping and actual fourth-slot initializer, not name-based inference",
+    "Stored RAM level37 is zero-based; Android/display level38 uses the existing growth convention"
   ]
 }

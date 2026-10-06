@@ -827,6 +827,7 @@ jobs:
             artifacts/development-smoke/*
             artifacts/checkpoint-ui/*save-history*
             artifacts/town02-runtime/testControlledSaveHistory*.txt
+            artifacts/town02-runtime/development-content-loader.txt
             artifacts/town02-runtime/emulator.txt
           if-no-files-found: ignore
           retention-days: 14
