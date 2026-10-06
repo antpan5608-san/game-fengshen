@@ -988,3 +988,17 @@ WORLD-FULL-01仍IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN�
 c58/69依赖图378文件目标manifest b681c32ca8b59827d8e8ef3c41e84eae2e774c313c7993e72adcdee58a047ceb；基底c57/d7b02d3418c41df87dba62884724ae0f0583cbcc9c1ef5cea3ba64d686daec4a分别固定，不变媒体逐字节复用。原CPU256 selector/14 gift/128地形零差异、相关4 JVM方法、全395 JVM/83套0失败错误跳过与仪器编译PASS。局部3导出/空目录restore于正确SDK/JDK环境41.305秒全部PASS；首次旧scene16整份不变断言漏真实新增219,144出口格，分类TEST_HARNESS，改为只允许两条原记录映射该同一格，其余JSON严格不变；复测未设SDK时报ENV_SETUP，补既有SDK/JDK重测，不放宽签名或hash。
 
 四层：火云洞IMPLEMENTED/CONTENT_GENERATED；APK_PACKAGED待干净构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。原观察均CONTROLLED_ORIGINAL位置/库存fixture，不是正常主线或Android游玩；Unicode和静止pose PROVISIONAL，原ROM/PPU/RAM/FC8仅忽略缓存。下一动作优先取得R2失败证据薄修并原验收；不依赖该权限的独立工作继续核西岐井special1/event20→后续姜子牙条件，不编造地图/奖励/任务锁。SAVE-HISTORY仍已实现/JVM验证、UI与冷启NOT_RUN，十类累计欠账保留delivery-status。
+
+## 当前有效检查点（2026-10-06 08:25，北京时间）
+
+生产仍v82；R2候选37364795394/87bc56cb：build/runtime成功、runtime-world失败、continuation跳过、未发布。失败原始证据保留Actions，GitHub check输出只有“Normal route assertions did not pass”；不得凭此判断游戏Bug或通关。artifact重定向目标productionresultssa17.blob.core.windows.net被平台代理CONNECT403拒绝，环境HTTP unrestricted/enforced但仍有平台保护，已请求原安全网络配置放行实际域名，不绕过/打印URL/盲重试。inspect托管runner未领取仍NOT_AVAILABLE；本轮没有查询到新的生产客户端样本。
+
+独立c58源码eb38c7b已提交，远端work/world-jiameng-batch-continuation/7f9940ea与其同树。干净git archive→原restore默认development→原wrapper assembleDebug/assembleDebugAndroidTest 22秒64任务PASS，实际org.fengshen.dev/84/0.8.14-west-sages89-dev、DEBUG APK 33921780字节/SHA fc6a77891f82de5d9510f864098ae326ed54620ceaf12ad45343f633327722ac，69图378文件/manifest b681c32ca8b59827d8e8ef3c41e84eae2e774c313c7993e72adcdee58a047ceb严格验包。DEBUG不算原签名、实际App或正式交付。
+
+新增西岐井丹药1：原真实进入8后用受控位置13,26执行实际物品菜单，event20/script25，数量1→128（空USED行），7c9=1；18.14..18五段对白，完成8.flag128、context38=229，玩家位置/队伍属性与奖励不变。共享OriginalSceneItems、ContentLoader、明确物品动作/StoryFollowup/SaveSnapshot接位置目标，不捏造一个井NPC。当前地图8可用；原CPU谓词本身不查map/朝向/actor，其他地图同坐标未有场景事件证据，明确属本适配未开放范围，不宣传原版地图锁。取消/错位置/无物品不耗；对话pending保存、阶段拒绝错序与重复，完成不重复扣物品。旧雪莲0/桨14的NPC目标保持；未补丹药回血、钱、EXP、入队或移动。原script25 NPC走位与姿态仍未等价，Unicode转录PROVISIONAL。
+
+c59 opening-segment-001-c59/69依赖图378文件，目标manifest ca4de36b2665e3166f518c3397870105776e323249c721f36b5aa807d55edadb；基底c58 hash单独固定。旧地图/素材/服务/战斗逐字节或版本字段外保持，仅special1能力、5对白、来源更新。原CPU472坐标/4消耗/1024阶段均0差异；局部11 JVM方法、全398 JVM/84 suites/0失败错误跳过与仪器编译PASS；3导出/篡改拒绝/严格空目录restore 42.328秒PASS。新增ContentTest pending codec/旧内容兼容已编译，实际运行NOT_RUN。保存校验新增item1 pending缺定义拒绝，不重写迁移系统；所有旧原断言保留。
+
+失败保留：原井probe首轮DISPLAY与自有Xvfb编号不同导致ENV_DISPLAY错误，修启动参数后实际菜单/完成成功，未换模拟器或减断言；新JVM fixture首次缺字符串/to空格编译失败，修语法后原逻辑全通过；首次计算目标pin仍PENDING被拒绝，按原export_from_base生成方法先形成新manifest，再固定pin并默认严格重导出相同，不关闭CI hash校验。c58的旧能力断言仅适用于未启用worldUse，当前额外位置能力按真实verified定义核，经济和赠物断言不删。
+
+四层：c59 IMPLEMENTED/CONTENT_GENERATED/RESTORE_VERIFIED；APK_PACKAGED待干净源码构建；APP_VERIFIED NOT_RUN/PUBLISHED NO。取证仅CONTROLLED_ORIGINAL真实菜单，不是完整正常路线或Android。下一精确动作：提交/干净构建并安全备份此检查点；继续磻溪7/context191/action61与必要后续文王38定向证据，保留原世界顺序。同时R2网络恢复后优先下载失败证据、分类薄修、重新冻结原验收/发布；不动当前冻结来源，不拿本地构建给运行背书。SAVE-HISTORY已实现/JVM、UI冷启NOT_RUN；十类欠账仍delivery-status，不关全地图/全主线/真机/音频/云恢复。

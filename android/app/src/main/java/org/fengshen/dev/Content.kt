@@ -604,13 +604,14 @@ object ContentLoader {
                 },o.optJSONObject("worldUse")?.let{use->
                     val id=o.getString("id");val special=o.getString("category")=="special"&&o.getInt("maxCount")==1
                     require(special)
-                    val sceneItem=id in setOf("rom.special.0","rom.special.14")
+                    val sceneItem=id in setOf("rom.special.0","rom.special.1","rom.special.14")
                     if(sceneItem){
                         val original=o.getInt("originalId")
-                        require(id=="rom.special.$original"&&original in setOf(0,14)&&!use.getBoolean("reusable")&&
-                            use.getInt("targetSpriteId")==if(original==0)130 else 162)
+                        require(id=="rom.special.$original"&&original in setOf(0,1,14)&&!use.getBoolean("reusable")&&
+                            use.getInt("targetSpriteId")==when(original){0->130;1->0;else->162})
                         require(use.getString("usedFlagId")=="rom.inventory.special.$original.used"&&
-                            use.getString("evidence")==OriginalSceneItems.EVIDENCE&&!o.has("buyPrice")&&!o.has("sellPrice"))
+                            use.getString("evidence")==if(original==1)OriginalSceneItems.WELL_EVIDENCE else OriginalSceneItems.EVIDENCE)
+                        require(!o.has("buyPrice")&&!o.has("sellPrice"))
                     }else require(use.getBoolean("reusable"))
                     if(sceneItem)Unit
                     else if(id==WorldItems.ID)require(o.getInt("originalId")==11&&use.getInt("targetSpriteId")==226&&use.getString("evidence").isNotBlank())
@@ -674,6 +675,11 @@ object ContentLoader {
                 rule.continuation.dialogueIds.all{it in dialogues}&&extraCharacters.any{it.first.id=="yangjian"})
         }
         for(rule in itemDefinitions.values.mapNotNull{it.worldUse?.sceneScript}){
+            if(rule.locationTarget){
+                require(rule.verified()&&8 in sceneFiles&&rule.continuation.dialogueIds.all{it in dialogues}&&
+                    npcs.none{it.id==rule.npcId})
+                continue
+            }
             val target=rule.target;val npc=npcs.single{it.id==rule.npcId}
             require(rule.verified()&&npc.mapId==target.mapId&&npc.x==target.x&&npc.y==target.y&&
                 rule.continuation.dialogueIds.all{it in dialogues}&&

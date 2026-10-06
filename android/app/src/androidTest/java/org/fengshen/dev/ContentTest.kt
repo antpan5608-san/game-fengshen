@@ -14,12 +14,39 @@ import org.json.JSONObject
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
     /** Original Firecloud loader and gift codec, CONTROLLED not a normal pilgrimage. */
+    fun testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val item=c.itemDefinitions.getValue("rom.special.1");val rule=item.worldUse!!.sceneScript!!
+        assertTrue(rule.verified());assertTrue(rule.locationTarget)
+        assertEquals(0,rule.target.spriteId);assertTrue(c.npcs.none{it.id==rule.npcId})
+        assertEquals((14..18).map{"rom.dialogue.18.$it"},rule.continuation.dialogueIds)
+        val before=SaveSnapshot(c.scene.version,8,13*16+8,26*16+8,Key.LEFT,
+            listOf(c.initialPlayer),mapOf(item.id to 1),mapOf("unrelated" to true),money=331)
+        assertTrue(before.validate(c));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+        var s=OriginalSceneItems.begin(before,item,rule.target,true).snapshot
+        assertEquals(0,s.inventory[item.id]);assertTrue(s.flags[OriginalSceneItems.PLAGUE_FLAG]==true)
+        for(message in rule.continuation.dialogueIds){
+            assertTrue(s.validate(c));val cold=SaveSnapshot.parse(s.json().toString())
+            assertEquals(s,cold);assertTrue(rule.validPending(cold));assertTrue(cold.validate(c))
+            assertFalse(OriginalSceneItems.begin(cold,item,rule.target,true).applied)
+            val result=OriginalSceneItems.advance(cold,rule,message);assertTrue(result.applied);s=result.snapshot
+        }
+        assertTrue(s.validate(c));assertEquals(s,SaveSnapshot.parse(s.json().toString()))
+        assertTrue(s.flags["rom.map.8.flag.128"]==true);assertTrue(s.flags[OriginalSceneItems.WELL_CONTEXT]==true)
+        assertEquals(before.characters,s.characters);assertEquals(before.money,s.money)
+        assertEquals(before.x,s.x);assertEquals(before.y,s.y)
+        assertFalse(OriginalSceneItems.advance(s,rule,"rom.dialogue.18.18").applied)
+        val legacy=before.copy(contentVersion="opening-segment-001-c58")
+        assertTrue(legacy.validate(c));assertEquals(before.characters,SaveSnapshot.parse(legacy.json().toString()).characters)
+    }
+
     fun testControlledSages89GiftAndFullInventoryRepeat(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         assertTrue(89 in c.scenes);assertEquals(3,c.npcs.filter{it.mapId==89}.size)
         val npc=c.npcs.single{it.id=="rom.npc.89.0"};val rule=npc.originalTalk!!
         val item=c.itemDefinitions.getValue("rom.special.1");assertEquals("丹藥",item.name)
-        assertNull(item.worldUse);assertNull(item.herbUse);assertNull(item.battleBindingUse)
+        if(item.worldUse!=null){assertTrue(item.worldUse.sceneScript!!.verified());assertTrue(item.worldUse.sceneScript!!.locationTarget)}
+        assertNull(item.herbUse);assertNull(item.battleBindingUse)
         val party=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),c.joinCharacters.getValue("yangjian"))
         val flags=mapOf(OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
             "rom.inventory.special.0.used" to true,"rom.map.37.flag.128" to true)
@@ -105,7 +132,8 @@ class ContentTest:IsolatedGameTestCase(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
         assertTrue("Requires the actual scene-item candidate content",c.itemDefinitions.containsKey("rom.special.0"))
         assertEquals("神木槳",c.itemNames["rom.special.14"])
-        assertEquals(setOf(0,14),c.sceneItemUses().map{it.originalItemId}.toSet())
+        assertEquals(if(c.itemDefinitions["rom.special.1"]?.worldUse?.sceneScript!=null)setOf(0,1,14)else setOf(0,14),
+            c.sceneItemUses().map{it.originalItemId}.toSet())
         val templates=listOf(c.initialPlayer,c.joinCharacters.getValue("xiaolongnv"),
             c.joinCharacters.getValue("yangjian").copy(hp=1,mp=0,statusMask=64))
         for(id in listOf(0,14)){

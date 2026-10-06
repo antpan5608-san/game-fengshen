@@ -1,0 +1,671 @@
+{
+  "baseExport": {
+    "kind": "PINNED_LOCAL_RECIPE_FROM_SAME_REVIEWED_APK_NOT_CANDIDATE_APK",
+    "pinPath": "ci/golden-world-sages89-content.json",
+    "pinSha256": "86c85c2334feae98132c2e98cd012f21db728201dc29b1661454a95b45c3aa68",
+    "provenanceSha256": "0e075bae8b98a3c84c7ef6c6ff932ab09de048bf18d758da087979912b95d72f"
+  },
+  "baseManifestSha256": "b681c32ca8b59827d8e8ef3c41e84eae2e774c313c7993e72adcdee58a047ceb",
+  "dialogues": [
+    {
+      "id": "rom.dialogue.18.14",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36508,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102060,
+            "sha256": "d40dbd08aa300f1eb8e3f7c38defc8cb809a76577e0877f17f15147d823a7b0e"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44240,
+          "length": 20,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109792,
+          "sha256": "5afac1edcc7f038ec50eec3506ed99b6e48db9b5078fb48e51a3be6cdeb49b69"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "哪吒將丹藥投入井中，不久瘟疫便消除了。"
+    },
+    {
+      "id": "rom.dialogue.18.15",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36510,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102062,
+            "sha256": "40e5389a2d9ef7fceb0bc2e38b4a44b84b354626cf34903f0898515467d7e6f8"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44260,
+          "length": 7,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109812,
+          "sha256": "0454f344a35ddae2331a92cedeff3e9d480d2ec34f9d5b5194eef9b404042245"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "太乙真人到。"
+    },
+    {
+      "id": "rom.dialogue.18.16",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36512,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102064,
+            "sha256": "1d2488e5b7232d434e17344aef46a4156cae0cb83c55d382894a18261a6263ac"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44267,
+          "length": 104,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109819,
+          "sha256": "8222e7d087978e7dd1ed03b7c96bb13295fb69112fa73c7ea84cd33837958789"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "『哪吒！這些日子斬妖除魔救了很多人，為師很高興。因為神界和人間都犯了殺劫，所以會有一場人神大劫難，你們現在要去找姜太公，他是神界指派唯一有封神能力的人，將你們所收服的妖怪封入封神台內，才能結束這場大劫難。』"
+    },
+    {
+      "id": "rom.dialogue.18.17",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36514,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102066,
+            "sha256": "48812965bba9c2d072e8917a020736adf7fc07287377a767d0854ca904557eb3"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44371,
+          "length": 5,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109923,
+          "sha256": "dd05a4db259c97f73ad083b4342cb6780986f924c3c5b2b329ae977b5f236f96"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "姬昌到。"
+    },
+    {
+      "id": "rom.dialogue.18.18",
+      "source": {
+        "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+        "evidence": "game-data/provenance/world-well8-resources.json",
+        "originalVerified": false,
+        "pointerEvidence": [
+          {
+            "cpuAddress": 35462,
+            "length": 2,
+            "meaning": "Text group pointer",
+            "module": 3,
+            "offset": 101014,
+            "sha256": "a80e3277f2dbf67d7b26a86e26d5e140687a6871f14e296c80c1d21886406967"
+          },
+          {
+            "cpuAddress": 36516,
+            "length": 2,
+            "meaning": "Message pointer",
+            "module": 3,
+            "offset": 102068,
+            "sha256": "d27f408ebf894e59cf28a1277760f8d255d0fe3246965e826ef0e49cc1f25299"
+          }
+        ],
+        "record": {
+          "cpuAddress": 44376,
+          "length": 48,
+          "meaning": "C3-terminated text byte stream",
+          "module": 3,
+          "offset": 109928,
+          "sha256": "8c681f4031b8da77a12a579d92da57269a94dc959bcc50b70634caefa9f7bac9"
+        },
+        "remainingUnknown": [
+          "Exact Android font and original NPC movement presentation",
+          "Normal Android mainline NOT_RUN"
+        ]
+      },
+      "text": "『你們幫我救了全城百姓，內心非常感激，我剛剛算了一卦，在磻溪有一位智者，希望能得到他的幫助。』"
+    }
+  ],
+  "emulatorRgb": [
+    [
+      116,
+      116,
+      116
+    ],
+    [
+      36,
+      24,
+      140
+    ],
+    [
+      0,
+      0,
+      168
+    ],
+    [
+      68,
+      0,
+      156
+    ],
+    [
+      140,
+      0,
+      116
+    ],
+    [
+      168,
+      0,
+      16
+    ],
+    [
+      164,
+      0,
+      0
+    ],
+    [
+      124,
+      8,
+      0
+    ],
+    [
+      64,
+      44,
+      0
+    ],
+    [
+      0,
+      68,
+      0
+    ],
+    [
+      0,
+      80,
+      0
+    ],
+    [
+      0,
+      60,
+      20
+    ],
+    [
+      24,
+      60,
+      92
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      188,
+      188,
+      188
+    ],
+    [
+      0,
+      112,
+      236
+    ],
+    [
+      32,
+      56,
+      236
+    ],
+    [
+      128,
+      0,
+      240
+    ],
+    [
+      188,
+      0,
+      188
+    ],
+    [
+      228,
+      0,
+      88
+    ],
+    [
+      216,
+      40,
+      0
+    ],
+    [
+      200,
+      76,
+      12
+    ],
+    [
+      136,
+      112,
+      0
+    ],
+    [
+      0,
+      148,
+      0
+    ],
+    [
+      0,
+      168,
+      0
+    ],
+    [
+      0,
+      144,
+      56
+    ],
+    [
+      0,
+      128,
+      136
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      60,
+      188,
+      252
+    ],
+    [
+      92,
+      148,
+      252
+    ],
+    [
+      204,
+      136,
+      252
+    ],
+    [
+      244,
+      120,
+      252
+    ],
+    [
+      252,
+      116,
+      180
+    ],
+    [
+      252,
+      116,
+      96
+    ],
+    [
+      252,
+      152,
+      56
+    ],
+    [
+      240,
+      188,
+      60
+    ],
+    [
+      128,
+      208,
+      16
+    ],
+    [
+      76,
+      220,
+      72
+    ],
+    [
+      88,
+      248,
+      152
+    ],
+    [
+      0,
+      232,
+      216
+    ],
+    [
+      120,
+      120,
+      120
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      252,
+      252,
+      252
+    ],
+    [
+      168,
+      228,
+      252
+    ],
+    [
+      196,
+      212,
+      252
+    ],
+    [
+      212,
+      200,
+      252
+    ],
+    [
+      252,
+      196,
+      252
+    ],
+    [
+      252,
+      196,
+      216
+    ],
+    [
+      252,
+      188,
+      176
+    ],
+    [
+      252,
+      216,
+      168
+    ],
+    [
+      252,
+      228,
+      160
+    ],
+    [
+      224,
+      252,
+      160
+    ],
+    [
+      168,
+      240,
+      188
+    ],
+    [
+      176,
+      252,
+      204
+    ],
+    [
+      156,
+      252,
+      240
+    ],
+    [
+      196,
+      196,
+      196
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "existingItemCapabilityUpdates": [
+    {
+      "baseDefinitionSha256": "892b58bcd04e2492c70dbcf81f73e6181204a0c6a40a21ec78f82ad5fa268faf",
+      "fields": {
+        "description": "站在西岐井的原版使用位置投藥；接原版救瘟疫与後續对白。",
+        "source": {
+          "confidence": "PROVISIONAL_REFERENCE",
+          "evidence": "game-data/provenance/world-sages89-resources.json",
+          "nameEvidence": {
+            "captureSha256": "b9143b753fffbbfead3873ca66a722bbd2fa4d085ec20049d5a79c26b474c1bf",
+            "kind": "CONTROLLED_ORIGINAL_REAL_ITEM_MENU_STABLE_ID1"
+          },
+          "nameRange": {
+            "cpuAddress": 59413,
+            "length": 5,
+            "meaning": "Original special1 menu name",
+            "module": 2,
+            "offset": 92197,
+            "sha256": "8553e2774134584a30edf9b8b9d492bcb0c28abac39daa248104feb152beb633"
+          },
+          "remainingUnknown": [
+            "Original dynamic NPC/cutscene pose not equivalent",
+            "Normal Android well menu/cold restart NOT_RUN",
+            "Native coordinate predicate also accepts other map IDs; only evidenced village8 event exposed"
+          ],
+          "sceneUsageEvidence": "game-data/provenance/world-well8-resources.json",
+          "verifiedFields": [
+            "name",
+            "stableId",
+            "originalBeforeTextGift"
+          ]
+        },
+        "worldUse": {
+          "evidence": "game-data/provenance/world-well8-resources.json",
+          "reusable": false,
+          "targetSpriteId": 0,
+          "usedFlagId": "rom.inventory.special.1.used"
+        }
+      },
+      "id": "rom.special.1"
+    }
+  ],
+  "limitations": [
+    "NPC script25 movement/pose not equivalent in Android",
+    "Full normal original/Android well route and cold restart NOT_RUN",
+    "Other native map coordinate matches not exposed without scene event evidence",
+    "Unicode transcription PROVISIONAL"
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "ruleRanges": [
+    {
+      "cpuAddress": 57979,
+      "length": 13,
+      "meaning": "Original Camera-to-current-cell",
+      "module": 2,
+      "offset": 90763,
+      "sha256": "ff3f994dcb963b7b1cce303e8ae14b9a05fe3d31c73888900997fddb2c1ee43a"
+    },
+    {
+      "cpuAddress": 58022,
+      "length": 31,
+      "meaning": "Original Item1 coordinate predicate; no map/actor/facing check",
+      "module": 2,
+      "offset": 90806,
+      "sha256": "d9a93b3a8e28265ebb710490364687d136b34bcd5f19147ef7cf63164c99df61"
+    },
+    {
+      "cpuAddress": 41516,
+      "length": 110,
+      "meaning": "Original Successful special item consumption",
+      "module": 2,
+      "offset": 74300,
+      "sha256": "97e9d0d4e1043f265de4cae694be309d8ebb64c225bc4d9105f4418ef3e58ec2"
+    },
+    {
+      "cpuAddress": 52102,
+      "length": 2,
+      "meaning": "Original Event20 pointer",
+      "module": 11,
+      "offset": 379798,
+      "sha256": "a3f7bcd1d2562c5a5ddccef5c4eb242a764f596d38475d44570102bee4f2a900"
+    },
+    {
+      "cpuAddress": 54013,
+      "length": 20,
+      "meaning": "Original Event20 phases/script25/context38",
+      "module": 11,
+      "offset": 381709,
+      "sha256": "9c2141ad5283517f7c5122543653044d2d0edd1eb3608c8465c4ed3c0e0738f4"
+    },
+    {
+      "cpuAddress": 53050,
+      "length": 11,
+      "meaning": "Original Wait for script completion",
+      "module": 11,
+      "offset": 380746,
+      "sha256": "23fda734f78e9d5f31f55e3fea6f957cb5ad33185b1ed33d59ccaa98f5359b61"
+    },
+    {
+      "cpuAddress": 49880,
+      "length": 2,
+      "meaning": "Original Script25 pointer",
+      "module": 11,
+      "offset": 377576,
+      "sha256": "f5199ff2575f5df59a160521226a328f0f6b30ddf2bb0bbd2070b524b676f2fa"
+    },
+    {
+      "cpuAddress": 50905,
+      "length": 43,
+      "meaning": "Original Script25 five messages/NPC commands",
+      "module": 11,
+      "offset": 378601,
+      "sha256": "c96364f544cf364d2d01b1ad442478b828db1d3d8a199cce33f1e9a032ff6b01"
+    },
+    {
+      "cpuAddress": 52634,
+      "length": 45,
+      "meaning": "Original Completion mapflag OR128",
+      "module": 11,
+      "offset": 380330,
+      "sha256": "975e2af8b80d143bbb59fffc4262935763527a4b095ec31e59cec85e0c77d99a"
+    },
+    {
+      "cpuAddress": 52206,
+      "length": 40,
+      "meaning": "Original Script selection",
+      "module": 11,
+      "offset": 379902,
+      "sha256": "c03366cde3876fde96c6cd2a64cf8ecb7b46ca3f7927015faa118dc50e8739c1"
+    },
+    {
+      "cpuAddress": 54960,
+      "length": 2,
+      "meaning": "Original Scene38 actor context pointer",
+      "module": 0,
+      "offset": 22208,
+      "sha256": "f4a6a1602eabff758a1c650d5b03b955cd4f976a9ea80d54ffd5a10fb3ed4753"
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "well8-potion1-event20-script25-durable-original-state",
+  "taskId": "WORLD-FULL-01",
+  "well8CapabilityEvidence": "game-data/provenance/world-well8-resources.json"
+}

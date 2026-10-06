@@ -2672,6 +2672,64 @@ def validate_world_sages89_resources(reader):
         if digest((ROOT/probe['path']).read_bytes())!=probe['sha256']:raise ValueError('Firecloud executed probe differs')
     return p
 
+def validate_world_well8_resources(reader):
+    """One evidenced coordinate event; no invented NPC, quest lock or reward."""
+    from forensics.fengshen246 import extract_text,glyph_pixels,decode_tokens
+    path='game-data/provenance/world-well8-resources.json';p=load(ROOT/path)
+    if p['romSha256']!=SHA256 or p['scopeRevision']!='well8-potion1-event20-script25-durable-original-state':
+        raise ValueError('Well source differs')
+    required={(2,0xe27b,13),(2,0xe2a6,31),(2,0xa22c,110),(11,0xcb86,2),(11,0xd2fd,20),
+        (11,0xcf3a,11),(11,0xc2d8,2),(11,0xc6d9,43),(11,0xcd9a,45),(11,0xcbee,40),(0,0xd6b0,2)}
+    if {(s['module'],s['cpuAddress'],s['length'])for s in p['sources']}!=required:
+        raise ValueError('Well scoped native dispatch missing')
+    for s in p['sources']:checked_span(reader,s)
+    if reader.word(11,0xcb86)!=0xd2fd or reader.word(11,0xc2d8)!=0xc6d9 or reader.word(0,0xd6b0)!=0x7d5 or \
+            reader.read(11,0xc6d9,43).hex()!='8000040e040f84050707010580000607041084050007058480000411961f070701050412060700070596ff':
+        raise ValueError('Well event20/script25 context differs')
+    rules=dict(itemId='rom.special.1',originalItemId=1,eventId=20,scriptId=25,nativeCoordinates=[13,26],
+        nativeChecksMap=False,nativeChecksFacing=False,nativeChecksActor=False,exposedSceneId=8,consumeCount=1,
+        quantityAfterSuccessfulUse=128,retainsEmptyUsedRow=True,globalBeforeText='rom.global.7c9.nonzero',
+        contextBeforeText='rom.npccontext.38.229',completionFlag='rom.map.8.flag.128',
+        dialogueIds=[f'rom.dialogue.18.{i}'for i in range(14,19)],playerSteps=0,playerTravel=False,
+        healing=False,moneyReward=0,experienceReward=0,partyChange=False,originalNpcCutscenePresentation='NOT_IMPLEMENTED')
+    if p['rules']!=rules or len(p['cpu'])!=3:raise ValueError('Well cannot infer a different predicate, heal, move or reward')
+    for cpu,kind,count in zip(p['cpu'],('dispatch','consumption','event'),(472,4,1024)):
+        raw=(ROOT/cpu['path']).read_bytes()
+        if cpu['kind']!=kind or cpu['caseCount']!=count or cpu['failures'] or digest(raw)!=cpu['sha256'] or \
+                len(raw.splitlines())!=count+1 or cpu['probePath']!='tools/rom-extractor/probe-world-well8.py' or \
+                digest((ROOT/cpu['probePath']).read_bytes())!=cpu['probeSha256']:
+            raise ValueError('Well CPU expectations differ')
+    font=p['font'];raw=b''.join(checked_span(reader,s)for s in font['sources']);cs={int(k):v for k,v in font['charset'].items()}
+    if len(raw)!=4096 or font['chr2kBanks']!=[52,53] or font['sources'][0]['offset']!=524304+52*2048 or \
+            {g['code']for g in font['glyphs']}!={k for k in cs if not k&64}:
+        raise ValueError('Well actual font/glyph coverage differs')
+    for g in font['glyphs']:
+        if g['character']!=cs[g['code']] or digest(bytes(v for row in glyph_pixels(raw,0,g['code'])for v in row))!=g['pixelsSha256']:
+            raise ValueError('Well original glyph differs')
+    if [d['id']for d in p['dialogues']]!=rules['dialogueIds']:raise ValueError('Well actual message order differs')
+    for d,i in zip(p['dialogues'],range(14,19)):
+        t=extract_text(reader,18,i)
+        if d['source']['record']!=t['range'] or d['source']['pointerEvidence']!=t['pointerEvidence'] or \
+                decode_tokens(bytes.fromhex(t['rawHex']),cs)['text']!=d['text'] or d['source']['originalVerified']is not False:
+            raise ValueError('Well text must retain exact original stream and provisional transcription')
+    old=validate_world_sages89_resources(reader)['items'][0]
+    encoded=lambda value:(json.dumps(value,ensure_ascii=False,sort_keys=True,indent=2)+'\n').encode('utf-8')
+    updates=p['itemCapabilityUpdates']
+    if len(updates)!=1 or updates[0]['id']!=old['id'] or updates[0]['baseDefinitionSha256']!=digest(encoded(old)):
+        raise ValueError('Well existing stable potion definition differs')
+    fields=updates[0]['fields'];source=fields.get('source',{})
+    if set(fields)!={'description','worldUse','source'} or fields['description']!='站在西岐井的原版使用位置投藥；接原版救瘟疫与後續对白。' or \
+            fields['worldUse']!=dict(targetSpriteId=0,reusable=False,usedFlagId='rom.inventory.special.1.used',evidence=path) or \
+            source.get('sceneUsageEvidence')!=path or any(source.get(k)!=v for k,v in old['source'].items()if k!='remainingUnknown'):
+        raise ValueError('Well capability cannot invent an actor, price, heal or different source')
+    ev=p['controlledEvidence']
+    if ev['normalPlayEvidence'] or ev['androidEvidence'] or not ev['partyBytesUnchanged'] or not ev['playerPositionUnchanged'] or \
+            (ev['firstQtyByte'],ev['usedQtyByte'],ev['global7c9After'],ev['map8FlagAfter'],ev['context38After'])!=(1,128,1,128,229):
+        raise ValueError('Well controlled evidence boundary differs')
+    for probe in ev['probes']:
+        if digest((ROOT/probe['path']).read_bytes())!=probe['sha256']:raise ValueError('Well executed probe differs')
+    return p
+
 def export_world_from_base(payload,evidence,provenance_path,target_pin):
     """Batch scene/service overlays on reviewed media; no raw captures in CI inputs."""
     if digest(payload['manifest.json'])!=evidence['baseManifestSha256']:
@@ -3423,6 +3481,17 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             matches=[v for v in scene['items']if v['id']==update['id']]
             if len(matches)!=1 or digest(encoded(matches[0]))!=update['baseDefinitionSha256']:
                 raise ValueError('Scene item capability parent differs')
+            matches[0].update(update['fields'])
+    elif evidence.get('well8CapabilityEvidence'):
+        proof=validate_world_well8_resources(reader)
+        if evidence['well8CapabilityEvidence']!='game-data/provenance/world-well8-resources.json' or \
+                evidence.get('existingItemCapabilityUpdates')!=proof['itemCapabilityUpdates'] or \
+                evidence.get('existingNpcCapabilityUpdates') or evidence.get('dialogues')!=proof['dialogues']:
+            raise ValueError('Well capability must retain its exact original existing item and messages')
+        for update in proof['itemCapabilityUpdates']:
+            matches=[v for v in scene['items']if v['id']==update['id']]
+            if len(matches)!=1 or digest(encoded(matches[0]))!=update['baseDefinitionSha256']:
+                raise ValueError('Well potion parent differs from fixed original gift definition')
             matches[0].update(update['fields'])
     elif evidence.get('queen117CapabilityEvidence'):
         proof=validate_world_queen117_resources(reader)

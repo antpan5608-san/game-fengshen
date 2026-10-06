@@ -963,7 +963,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
 
         content.sceneItemUses().firstOrNull{flags[it.pendingFlag]==true&&it.validPending(currentSnapshot())}?.let{rule->
             val stage=rule.continuation.stage(rule.id,flags)?:return@let
-            openDialogue(content.dialogues.getValue(rule.continuation.dialogueIds[stage]),content.npcs.single{it.id==rule.npcId});return
+            openDialogue(content.dialogues.getValue(rule.continuation.dialogueIds[stage]),
+                if(rule.locationTarget)null else content.npcs.single{it.id==rule.npcId});return
         }
         val scenePending=content.sceneStories.values.firstOrNull{flags[it.pendingFlag]==true}
         if(scenePending!=null){
@@ -997,7 +998,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         commitStoryFollowup(before,StoryFollowup.begin(before,story),content.npcs.first{it.id==story.npcId})
         return true
     }
-    private fun commitStoryFollowup(before:SaveSnapshot,result:StoryFollowup.Result,npc:StoryNpc) {
+    private fun commitStoryFollowup(before:SaveSnapshot,result:StoryFollowup.Result,npc:StoryNpc?) {
         if(!result.applied){showNotice(result.error?:"剧情状态已变化");return}
         if(!result.snapshot.validate(content)||!applySnapshotState(result.snapshot)){
             showNotice("剧情落点或队伍不可恢复，原状态已保留");return
@@ -1006,7 +1007,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(!applySnapshotState(before))localSaveProtected=true
             showNotice("保存失败，请重试继续对话");return
         }
-        if((npc.id in content.sceneStories||content.battle?.storyBattles?.get(npc.id)?.intro!=null)&&OriginalStatus.allDisabled(characters)){
+        if(npc!=null&&(npc.id in content.sceneStories||content.battle?.storyBattles?.get(npc.id)?.intro!=null)&&OriginalStatus.allDisabled(characters)){
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(result.nextDialogue!=null)openDialogue(content.dialogues.getValue(result.nextDialogue),npc)
@@ -1023,10 +1024,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
-        content.sceneItemUses().firstOrNull{it.npcId==npc?.id&&flags[it.pendingFlag]==true}?.let{rule->
+        content.sceneItemUses().firstOrNull{(it.npcId==npc?.id||it.locationTarget&&npc==null)&&flags[it.pendingFlag]==true}?.let{rule->
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()
-            commitStoryFollowup(before,OriginalSceneItems.advance(before,rule,dialogueText?.id?:""),npc!!);return
+            commitStoryFollowup(before,OriginalSceneItems.advance(before,rule,dialogueText?.id?:""),npc);return
         }
         content.yangJoin()?.let{rule->
             if(npc?.id==rule.npcId&&flags[rule.pendingFlag]==true){
@@ -1248,7 +1249,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val snapshot=currentSnapshot();val mapMenu=panelReturnLayer in listOf(Layer.MAP,Layer.MENU)
             val target=content.worldItemTargets().asSequence()
                 .firstOrNull{WorldItems.available(snapshot,item,rule,it,mapMenu)}
-            val reason=if(rule.yangJoin!=null){
+            val reason=if(rule.sceneScript?.locationTarget==true){
+                OriginalSceneItems.unavailable(snapshot,item,rule.sceneScript!!.target,mapMenu)?:""
+            }else if(rule.yangJoin!=null){
                 val original=content.worldItemTargets().firstOrNull{it.id==rule.yangJoin!!.npcId}
                 if(original==null)"原版目标尚未接入" else OriginalYangJoin.unavailable(snapshot,item,original,mapMenu)?:""
             }else when{!mapMenu->"仅支持地图/菜单使用";(inventory[id]?:0)<=0->"已无该物品";
@@ -1340,7 +1343,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(rule.sceneScript!=null){
                     val result=OriginalSceneItems.begin(before,item,target,panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
                     if(!result.applied){feedback(result.error?:"当前不可使用");return}
-                    closePanel();commitStoryFollowup(before,result,content.npcs.single{it.id==target.id});return
+                    closePanel();commitStoryFollowup(before,result,
+                        if(rule.sceneScript!!.locationTarget)null else content.npcs.single{it.id==target.id});return
                 }
                 if(rule.yangJoin!=null){
                     val result=OriginalYangJoin.begin(before,item,target,content.joinCharacters["yangjian"],panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
