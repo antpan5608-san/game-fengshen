@@ -1002,3 +1002,15 @@ v79/c51-r1已发布PERSONAL_TEST，人工验收PENDING。本包冻结开局→�
 ## WORLD-HELL-R2 首次云构建失败（2026-10-05 06:00 UTC）
 
 v83 / 0.8.13-world-hell-r2，source00d4f8cfabb3131a4a8b373c0e39e7a385ea8eac，run37270133509/job111635178190。c50/302恢复及57既有Python方法通过；新增scope第7组中读取中文ContentTest.kt由Windows默认cp1252导致UnicodeDecodeError，分类TEST_HARNESS。build FAILURE，三段App SKIPPED，没有签名候选/发布。本地Linux此前通过不能证明Windows默认编码可靠。修复四处源码读取显式UTF-8并补默认编码不参与的回归，不改玩家内容/规则或删验收。生产保持v82。
+
+## R2第五批胜后失败分类及最小正常驱动修复（2026-10-06 00:41 UTC）
+
+run37364795394/source87bc56cb最终FAIL：原build/runtime通过，world失败，continuation跳过，未发布。实际小型hall-batch artifact11381247933/ZIP SHA0fda5697ad0d756a7481fbf25b8a7a467fa4b73770fc261f4240a04b86283fb8经现有连接器取回；真实txt报TouchTest4072，map65胜利末哪吒15/小龙女0/status32、草0。source522023945623941247150a5e0525910bce332372b7489647459a07d526b3d48c为同候选正常第二殿检查点，25/26级。first-hall11381058064实际484场/142.034分钟，正常源13/12级练至25/26；不是脚本崩溃或任意注入状态。六神丸10的使用逻辑尚未实现，不能声称已有救治。
+
+分类TEST_HARNESS正常准备不足，保留合法部分战死的原结算，不删存活/EXP/奖励/冷启断言。原OpeningBattle隔离诊断实际两轮：200案25/28均0、30级89、32/35各200；扩1000案30级433、31级993、32级1000，后者最低HP251。随后精简成HallRoutePreparationTest：25/32各1000受控尾段，原八Boss/成长/命中/伤害不变，每殿扣30HP隔离余量，不冒充实际旅程。正常驱动薄改为真实练级32、25000步/18000秒上限及原world job360分钟，无游戏入口锁/状态赋值。相关31 JVM/7套0失败错误跳过、instrument编译11秒PASS；新App仍NOT_RUN，同旧失败产物不可背书。
+
+当前云gh API正常，artifact blob host CONNECT403仍限制；连接器只读成功不等于云网络策略改变。inspect两次runner未领取，NOT_AVAILABLE，无新样本，不称健康。c50 hash和原包签名/审核/最近两版/两个生产对象保护不变，生产v82继续。独立最远c59已有源码2b865ebc/同树远端928ba910安全备份、69依赖图378文件/398 JVM/干净DEBUG已核，新增App/发布仍NO。下一精准动作为提交本最小修复、冻结原R2重新构建三段验收，达到原门槛自动发布并继续WORLD-FULL。
+
+本地原scope8方法首轮7通过/1 ENV_SETUP：未为该Python进程显式传ANDROID_SDK_ROOT，原验包明确拒绝，非游戏或签名故障；仅失败项补既有SDK/JDK定向重试。原handoff17方法及真实Bash reviewer隔离32场景全部PASS；后者脚本自行执行场景，unittest discovery计数0不能误写成未运行或32 unittest。
+
+SDK/JDK补齐后仅原失败scope验包/库存项实际重试11.022秒PASS；8个独立scope方法最终均验证，不能把初轮写单次8通过。公网version.json于本次实际读回82/STABLE/stable_acceptance PASS/manual PENDING，未覆盖正式对象。

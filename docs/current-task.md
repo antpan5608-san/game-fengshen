@@ -6,7 +6,21 @@ overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
 
-## 当前有效检查点（2026-10-05 06:07 UTC）
+## 当前有效接续（2026-10-06 00:41 UTC）
+
+WORLD-FULL-01 IN_PROGRESS/PARTIAL，ALL_MAPS_USABLE=NO、有效分母UNKNOWN。生产仍v82/c51-r1；R2原source87bc56cb/run37364795394已FAIL：build/runtime SUCCESS、runtime-world FAILURE、continuation SKIPPED，候选83未发布。c50/56依赖图302文件及manifest421d100c70db77cb60210eff5e8de49dc8af36990d10e0cf88b1f9200d4174b0保持，不能拿首段PASS证明全地府已验收。
+
+已通过现有GitHub连接器实际取回hall-batch小型artifact11381247933（ZIP SHA0fda5697ad0d756a7481fbf25b8a7a467fa4b73770fc261f4240a04b86283fb8）和first-hall11381058064；当前云gh API可读，云直接artifact host仍CONNECT403。连接器成功不代表当前云网络授权改变；两次原inspect未取得runner，NOT_AVAILABLE，不能写生产健康。失败原文TouchTest4072：第五批Boss/map65获胜时哪吒HP15、小龙女HP0/status32，药草0。已获得正常奖励，未完成对话/后殿；不能删全员存活/各自EXP断言放行。
+
+分类TEST_HARNESS（正常自动路线准备不足）；未据此认定GAME_BUG。源检查点正常获得两人25/26级，草8、六神丸10但六神丸效果尚未实现，不能当可用治疗。纯隔离原OpeningBattle比较25级0/1000、32级1000/1000全员通过八场尾段（每殿另扣30HP受控旅程余量，非正常App），最低最终HP251。仅把原正常first-hall练级目标改为两人32级、有限步数25000/录制18000秒和原world runner360分钟；全部通过真实战斗/商店/付费客栈，不直接修改等级/EXP/库存/RNG，不新增游戏入口锁，不变敌人/成长/伤害。新候选必须从头取得同候选三段真实结果，旧原片不背书。
+
+本地31相关JVM方法/7套0失败错误跳过、原instrument APK编译已PASS；共享经济/药草/双人奖励/六殿flag/原地形断言保留。Python原scope初轮7通过/1 SDK未设置错误（ENV_SETUP），仅该项补既有SDK/JDK重试11.022秒PASS；交接17方法及实际Bash审批隔离32场景PASS，保留原reviewer/三段门槛。下一精确动作：完成最小修复提交→原main安全整合→原签名构建83/0.8.13-world-hell-r2及三段门禁；达到原审核/实际巡检/hash要求再自动发布，不停在技术检查点。
+
+独立后续安全保留在work/world-jiameng-next/2b865ebca453eae8dd3d3021b059c3f6dec87ff7、远端work/world-jiameng-batch-continuation/928ba9105229a9828fd416f9ccdc3f76691cdb7a（同树）。c59/69依赖图378文件/manifestca4de36b2665e3166f518c3397870105776e323249c721f36b5aa807d55edadb；神木/杨戬治疗/自由船/136/172/火云洞89/井丹药1已有实现与干净DEBUG打包，全398 JVM通过，APP_VERIFIED/PUBLISHED NO。井script25/NPC走位未等价；磻溪7正常谈话action61仅置7fd/两段文本，不是姜入队，下一依赖文王38仍定向核查。SAVE-HISTORY已实现/JVM，历史UI/回档外部cold尚NOT_RUN。等待R2时只在独立线接续，不改变冻结来源；不修改Language/玩家云档。
+
+## 历史记录：R1发布与首次R2接续
+
+## 历史有效检查点（2026-10-05 06:07 UTC）
 
 R1有限STABLE已完成并正式发布，按用户授权立即进入WORLD-HELL-R2，不等待人工验收或再次继续。旧R1候选/失败/准备状态已移入docs/history/world-full01-runtime-checkpoints.md，历史不得冒称当前。
 

@@ -244,12 +244,12 @@ python tools/record_app_audio.py world-east-palace testNormalWorldEastPalacePart
 python tools/record_app_audio.py world-hell-village2 testNormalWorldHellVillageServicesFromVerifiedEastPartySave --silent --cold-test testWorldHellVillageColdStartMatchesNormalSave --budget-seconds 1200
 if [[ "$scope_id" == WORLD-HELL-R2 ]]; then
 python tools/record_app_audio.py world-r1-medical testNormalPlayableR1MedicalFromVerifiedVillageSave --silent --cold-test testPlayableR1MedicalColdStartMatchesNormalSave --budget-seconds 1200
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedMedicalSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedMedicalSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 18000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 fi
 if [[ "$scope_id" == WORLD-FULL-01 ]]; then
-python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 9000
+python tools/record_app_audio.py world-first-hall testNormalWorldFirstHallFromVerifiedHellVillageSave --silent --cold-test testWorldFirstHallColdRestartAndRepeatNoReward --budget-seconds 18000
 python tools/record_app_audio.py world-second-hall testNormalWorldSecondHallFromVerifiedFirstHallSave --silent --cold-test testWorldSecondHallColdRestartAndRepeatNoReward --budget-seconds 2400
 python tools/record_app_audio.py world-hall-batch testNormalWorldHallBatchFromVerifiedSecondHallSave --silent --cold-test testWorldHallBatchColdRestartAndRepeatNoReward --budget-seconds 7200
 python tools/record_app_audio.py world-rebirth testNormalWorldFinalHallsAndRebirthFromVerifiedHallBatchSave --silent --cold-test testWorldRebirthColdRestartAndContinueMatchesNormalSave --budget-seconds 3600

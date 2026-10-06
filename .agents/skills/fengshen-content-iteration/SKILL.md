@@ -397,3 +397,6 @@ FCEUX gui.savescreenshotas调度下一帧；调用后先推进一帧再切source
 - 外部冷启比较必须绑定刚保存的端点：实际个人smoke在内部Activity重进后已正常移动，却仍读旧normal端点，host字节恢复比较已过而测试坐标/encounter断言失败。保留原状态断言，正常smoke只做一次保存，然后由原录屏器唯一执行外部force-stop/cold/继续；该薄修已编译、快检、真实同候选短smoke与外部cold通过，并经原发布链路/公网字节复核。保留失败原片和源值，不能把之前未通过的cold改PASS。
 
 - 原NPC记录首字节是entityByte，不能当对白组；以原extract_npcs逐值核清单，当前四域正反例已运行。对白组须另查实际调度/活动font，Reference编号和相似拓扑仅是线索。清单CLI仍要求已有JDK/ANDROID_SDK_ROOT，缺SDK会明确拒绝，不关闭APK校验。
+
+- 正常稳定路线遇到胜后存活断言失败，先看同候选txt/索引的实际HP、库存、状态与原奖励；合法部分战死不是自动结算Bug。已实核隔离HallRoutePreparationTest使用原OpeningBattle/固定原规则比较有界准备策略，但必须由真实训练/商店/付费休息在新同候选App实现；隔离比较不算正常路线PASS，不删原存活/各自EXP/一次性flag断言。
+- 云artifact重定向CONNECT403时，现有已连接GitHub只读artifact入口曾实际取回小型checkpoint ZIP（<32MiB），可核其hash并读取原txt/index；不打印临时下载URL，不将连接器成功等同当前云GH_TOKEN/网络策略验证通过。超大完整录像仍用原artifact入口，不绕过代理或另造原片。
