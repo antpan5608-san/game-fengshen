@@ -117,6 +117,10 @@ if [[ "$stage" == development-smoke ]]; then
     # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
     adb install -r android/app/build/outputs/apk/debug/app-debug.apk
     adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    # Expose the existing loader's exact failed invariant before waiting for UI.
+    adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
+    cat artifacts/town02-runtime/development-content-loader.txt
+    grep -q 'OK (1 test)' artifacts/town02-runtime/development-content-loader.txt || exit 1
     run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
     run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false
     python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
