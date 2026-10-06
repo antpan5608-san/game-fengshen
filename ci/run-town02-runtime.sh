@@ -133,7 +133,11 @@ if [[ "$stage" == development-smoke ]]; then
         adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testC61FrozenDependenciesAndMedicalPartySave,org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
         cat artifacts/town02-runtime/development-content-loader.txt
         grep -q 'OK (2 tests)' artifacts/town02-runtime/development-content-loader.txt || exit 1
-        python tools/record_app_audio.py world-jiang testControlledJiangInvitationPendingAtColdBoundary --silent --controlled-jiang --cold-test testJiangExternalColdStartMatchesPendingAndCompletesOnce --budget-seconds 300
+        if ! python tools/record_app_audio.py world-jiang testControlledJiangInvitationPendingAtColdBoundary --silent --controlled-jiang --cold-test testJiangExternalColdStartMatchesPendingAndCompletesOnce --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/development-jiang-crash.txt
+            cat artifacts/town02-runtime/development-jiang-crash.txt
+            exit 1
+        fi
         pull_evidence
         exit 0
     fi

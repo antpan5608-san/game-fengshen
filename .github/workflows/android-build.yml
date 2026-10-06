@@ -848,6 +848,7 @@ jobs:
             artifacts/town02-runtime/testControlledPlayableR1MedicalDoorReentryFromVerifiedSave.txt
             artifacts/town02-runtime/development-content-loader.txt
             artifacts/town02-runtime/development-rollback-crash.txt
+            artifacts/town02-runtime/development-jiang-crash.txt
             artifacts/town02-runtime/sdk-licenses.txt
             artifacts/town02-runtime/sdk-setup.txt
             artifacts/town02-runtime/emulator.txt
