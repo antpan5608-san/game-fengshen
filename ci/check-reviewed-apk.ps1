@@ -15,7 +15,7 @@ if($LASTEXITCODE -ne 0){throw 'Reviewed signature/content/version failed revalid
 $quality=python (Join-Path $root 'tools/runtime_handoff.py') scope --field quality
 if($LASTEXITCODE -ne 0){throw 'Invalid hash-bound runtime quality'}
 if($quality -eq 'PERSONAL_TEST'){
-    & python (Join-Path $root 'tools/runtime_handoff.py') review --receipt (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json')
+    & python (Join-Path $root 'tools/runtime_handoff.py') review --receipt (Join-Path $root 'artifacts/runtime-review/town02-runtime/runtime-receipt.json') --evidence (Join-Path $root 'artifacts/runtime-review/checkpoint-ui')
     if($LASTEXITCODE -ne 0){throw 'Personal minimum smoke/upgrade/backup gates failed'}
     Write-Host 'PERSONAL_TEST; manual_acceptance=PENDING; stable acceptance NOT_RUN'
     return

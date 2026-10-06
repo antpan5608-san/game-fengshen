@@ -320,11 +320,13 @@ jobs:
             artifacts/town02-runtime/test*.txt
             artifacts/town02-runtime/c60-well8-codec.txt
             artifacts/town02-runtime/c61-jiang-*.txt
+            artifacts/town02-runtime/phone-display.txt
             artifacts/checkpoint-ui/personal-r1-smoke-*
             artifacts/checkpoint-ui/world-save-history-*
             artifacts/checkpoint-ui/world-jiang-*
             artifacts/checkpoint-ui/touch-ux-world-jiang-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
+            artifacts/checkpoint-ui/mobile-*
           if-no-files-found: error
           retention-days: 14
 

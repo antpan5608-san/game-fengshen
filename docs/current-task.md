@@ -9,7 +9,7 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86 battle UI batch，LOCAL_IMPLEMENTED_NOT_APP_VERIFIED_NOT_PUBLISHED
+current_candidate_version: v86 battle UI batch，DEBUG_APP_VERIFIED_PERSONAL_SIGNED_CANDIDATE_PENDING_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
@@ -39,6 +39,14 @@ DEBUG37532230585/source0bd8f7b整批实际FAILED，未签名/未发布：前九�
 DEBUG37534942876/source5ae9d3f实际SUCCESS，artifact已取回并独立核验：24个三字体/一至四人/六敌或原Boss场景与三次四人输入/RNG/过期回调/一次奖励/详情/A-B检查通过；五个独立手势/药草/胜后一次/秘宝/全08方法、两个Content与原姜仪器/外部cold同样通过。原两MP4完整SHA通过，recording SHA 7d6544b28a2a2b4395f37e5496837d44a4d594b80b0e9f273b73ed59d8d73c7d/cold完整等值SHA dddd784ae0e0303fc8037ed133c166b688d82a7cb55d5eca62492a1c203c63b3。实际目视三个字体的四人六敌/Boss及奖励/详情，共12原PNG；编号完整、两列四人姓名/HP-MP与结果文字可读。2×字体下原敌图较小，48dp实例命中和完整只读详情保持；不声称所有设备/真机/声音或正常全剧情通过。
 
 人工检查此前原PNG另见四人战斗物品两行目标占满空间，1.3×/2×药效详情几乎零高度；虽然目标点击通过，不能冒称可读。现在仅对宽安全区三/四人改为一行目标卡，完整名字及当前/最大HP独立两行，紧凑单行标题，两条核心药效/消耗行与确认按钮分区；未知战斗药效继续明确未实现，单/双人原布局保留。秘宝没有角色目标时不预留空白目标区，不改使用条件/flags/消耗/调度。新增12个几何回归及415 debug JVM/90 suites零失败、错误、跳过，debug/instrument编译4m10s通过；新4B snapshot b9d767a8860e2bd116b145e7e0df31ee6c91b2fc21b79ec11802e9111586ba56六个全新片段/无未覆盖，全部读完并登记reviewed。真实四人药草选择/滚动/物理A/RNG/完整名字和HP检查已编译，三字体新App仍待运行；本轮新签名UI scope、覆盖基底85和发布尚未启用。
+
+DEBUG37536614672/source19a82d9实际SUCCESS：三字体24个原生场景与四人完整姓名/目标HP、药草选择/滚动/物理A不消耗行动或RNG、原一次奖励/详情/冷启均通过。实际目视三张新物品原PNG，1×/1.3×完整规则可见，2×完整目标名字及HP和两条核心药效/满HP消耗提示同时可读，其余条件通过原详情滚动；独立完整校验87张2640×1216 PNG、六个实际尺寸/字体JSON和11份仪器日志，UI proof f53732e762bab4066cef5346a92c08de59c184f225179c7de1a78c3e6b622cd7。原MP4完整SHA与cold等值通过，recording aa82d7a40f9794c287c6655ac303cc85022af71243f63c658db36d39d82742e4/cold dddd784ae0e0303fc8037ed133c166b688d82a7cb55d5eca62492a1c203c63b3。进入物品时的旧攻击提示另做纯显示清理，新签名候选仍需重验，不能把DEBUG证据当签名通过。
+
+已准备并启用独立WORLD-C61-UI-PERSONAL：保留历史c61 golden、c61精确manifest、21 Content及全部旧18个人门禁，新增八个UI门禁，共26。三字体原生矩阵、五个独立手势/规则方法在同一签名候选真实执行；原发布checker需重算87原PNG/六JSON/11日志完整字节证明，不能只看摘要格式。坏图、改字节、缺文件、错字体/窗口/队员/重叠、漏旧门禁、失败日志及伪称真机/音频的拒绝测试已实际执行。初批44测试仅因未设置可信基底环境而一项KeyError，其他43通过；指定现有v27后该旧378文件精确导出/空恢复回归实际PASS90.954s。后续12原图字节/新scope/c61拒绝方法PASS16.986s。原恢复基底仍27，覆盖升级基底改为实际已发布/独立完整字节核验的85（build37516065030/source230b999/hash0fafb10...）；没有修改旧媒体、规则或玩家存档。
+
+原inspect37537480186 SUCCESS，实际2026-10-06T21:58:30Z聚合摘要NO_ISSUES_OBSERVED/errors{}/cleanup0、权威85/84；4892上报事件仍来自此前v84，一条真实设备会话不构成v85/新界面的真机验收。原Node release-assessment实际ALLOW，无已确认新增问题。新的正式scope与显示清理正在最终审查/编译，尚未签名、打包或发布；本机无手机/音频和正常新游戏至原结局证据，全部长期欠账保持ACTIVE。
+
+最终来源检查：415 debug JVM/90 suites零失败、错误、跳过，debug/instrument编译2m16s通过；启用实际UI范围后的44个相关回归PASS232.735s，13原发布决策检查PASS4.852s。4B snapshot d2d85f8e3cf88640011600c38f57bbf400a2bb4c6fadf78e72f7dd0cfa8c9e5e完整18个全新片段/无未覆盖，全部实际读完，按源码、真实检查和上述测试记录reviewed决定；不采纳移除旧姜证据/强制门禁、把人工改VERIFIED、将几何scope当玩家存档等错误建议。原图/JSON先读取同一份有界字节进行解析、像素解码和hash，发布入口必须重算同候选原文件证明。当前正式候选冻结后沿原main/同源签名/App/审核APK/两对象链路执行；签名App与发布状态仍待实际结果，不把DEBUG或模型建议写为签名通过。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 

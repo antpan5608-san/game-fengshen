@@ -243,9 +243,9 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
     run_test testControlledHerbBoundariesAndSaveCompatibility false
     run_test testControlledMobileBattleHerbAndSave false
     run_test testUnrestorableSaveCannotBeOverwritten false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
     run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
         # Run on this signed candidate; DEBUG observations cannot satisfy these gates.
         timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c60-well8-codec.txt 2>&1
         cat artifacts/town02-runtime/c60-well8-codec.txt
@@ -254,7 +254,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
         python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
     fi
     python tools/record_app_audio.py personal-r1-smoke testPersonalR1SmokeFromVerifiedEastSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
-    if [[ "$scope_id" == WORLD-C61-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
         timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c61-jiang-codec.txt 2>&1
         cat artifacts/town02-runtime/c61-jiang-codec.txt
         grep -q 'OK (1 test)' artifacts/town02-runtime/c61-jiang-codec.txt
@@ -264,11 +264,36 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             exit 1
         fi
     fi
+    if [[ "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
+        # Same signed candidate, after every original save/upgrade/cold gate.
+        run_test testControlledMobileBattleTouchAndSnapshots false
+        run_test testControlledMobileBattleHerbAndSave false
+        run_test testControlledNanhaiVictoryFlagAndResumeOnce false
+        run_test testControlledBindingItemSelectionCancelAndSingleActorCommand false
+        run_test testControlledWholly08PartyAdvancesWithoutTouchCommand false
+        adb shell wm size 2640x1216
+        adb shell wm density 480
+        adb shell wm size > artifacts/town02-runtime/phone-display.txt
+        adb shell wm density >> artifacts/town02-runtime/phone-display.txt
+        for font in 1.0 1.3 2.0; do
+            adb shell settings put system font_scale "$font"
+            sleep 3
+            run_test testMobileBattlePhoneSizeAndLargeFont false
+            cp artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont-font-$font.txt"
+            run_test testControlledBattlePartyPhoneSizeAndLargeFont false
+            cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
+            pull_evidence
+        done
+        adb shell settings put system font_scale 1.0
+        adb shell wm size 960x540
+        adb shell wm density 160
+    fi
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
 from pathlib import Path
 from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,review_personal,active_scope,jiang_proof_digests
+from tools import battle_ui_evidence as ui
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -277,7 +302,7 @@ assert proof['normalAssertions']=='PASS' and proof['forceStopRestartEqual'] is T
 for segment in proof['segments']:
     assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
 r.update({key:'PASS' for key in PERSONAL_GATES}) # Reached only after each mandatory actual command succeeds.
-if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL'):
+if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL',ui.UI_SCOPE):
     history_recording=Path('artifacts/checkpoint-ui/world-save-history-recording.json')
     history=json.loads(history_recording.read_text())
     assert history['kind']=='CONTROLLED_SAVE_HISTORY_SMOKE' and history['controlledAssertions']=='PASS'
@@ -287,9 +312,12 @@ if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL'):
         assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
     r.update({key:'PASS' for key in C60_PERSONAL_GATES})
     r['saveHistoryRecordingSha256']=hashlib.sha256(history_recording.read_bytes()).hexdigest()
-if active_scope(r)['id']=='WORLD-C61-PERSONAL':
+if active_scope(r)['id'] in ('WORLD-C61-PERSONAL',ui.UI_SCOPE):
     r.update(jiang_proof_digests(Path('artifacts/checkpoint-ui')))
     r.update({key:'PASS' for key in C61_PERSONAL_GATES})
+if active_scope(r)['id']==ui.UI_SCOPE:
+    r.update(ui.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime')))
+    r.update({key:'PASS' for key in ui.UI_GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

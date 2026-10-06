@@ -806,7 +806,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 else battlePresentation.invalidateInput()
                 battleAttackSelection=cmd.copy(revision=battlePresentation.revision).also{it.actorId=cmd.actorId;it.inputRevision=cmd.inputRevision}}
             "magic"->{clearAttackChoice();battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
-            "items"->{clearAttackChoice();battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
+            "items"->{clearAttackChoice();battleNotice="";battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "close-items"->{battleItemsOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput()}
             "select-medicine"->{if(cmd.itemId !in battleMedicines())return;selectedBattleItem=cmd.itemId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "medicine-target"->{val current=battle?:return;if(current.party.none{it.id==cmd.targetId})return

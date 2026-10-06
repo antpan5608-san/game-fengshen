@@ -12,6 +12,11 @@ import shutil
 import subprocess
 from pathlib import Path
 
+if __package__:
+    from . import battle_ui_evidence as battle_ui
+else:
+    import battle_ui_evidence as battle_ui
+
 STAGES = ('base', 'world', 'continuation')
 CHECKPOINTS = {'base': ('north-palace',), 'world': ('ferry', 'yang-join')}
 WORLD_KEYS = (
@@ -91,8 +96,9 @@ C61_CONTENT_TESTS = [
 
 def personal_gates(scope):
     return (PERSONAL_GATES
-            + (C60_PERSONAL_GATES if scope['id'] in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL') else [])
-            + (C61_PERSONAL_GATES if scope['id'] == 'WORLD-C61-PERSONAL' else []))
+            + (C60_PERSONAL_GATES if scope['id'] in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL', battle_ui.UI_SCOPE) else [])
+            + (C61_PERSONAL_GATES if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE) else [])
+            + (battle_ui.UI_GATES if scope['id'] == battle_ui.UI_SCOPE else []))
 
 
 def validate_jiang_digests(receipt):
@@ -100,6 +106,12 @@ def validate_jiang_digests(receipt):
         value = receipt.get(key)
         if not isinstance(value, str) or len(value) != 64 or any(c not in '0123456789abcdef' for c in value):
             raise ValueError('Missing actual Jiang proof digest: ' + key)
+
+
+def validate_battle_ui_digest(receipt):
+    value = receipt.get(battle_ui.UI_PROOF_KEY)
+    if not isinstance(value, str) or len(value) != 64 or any(c not in '0123456789abcdef' for c in value):
+        raise ValueError('Missing actual three-font battle UI proof digest')
 
 
 def jiang_proof_digests(directory):
@@ -152,9 +164,12 @@ def finish_personal(proposed):
     if any(proposed.get(key) != 'PASS' for key in gates):
         raise ValueError('Personal delivery minimum smoke/upgrade/backup gate did not pass')
     result = dict(binding(proposed), **{key: proposed[key] for key in gates})
-    if scope['id'] == 'WORLD-C61-PERSONAL':
+    if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
         validate_jiang_digests(proposed)
         result.update({key: proposed[key] for key in C61_PROOF_KEYS})
+    if scope['id'] == battle_ui.UI_SCOPE:
+        validate_battle_ui_digest(proposed)
+        result[battle_ui.UI_PROOF_KEY] = proposed[battle_ui.UI_PROOF_KEY]
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -173,8 +188,12 @@ def review_personal(receipt):
         raise ValueError('Personal receipt scope/hash mismatch')
     if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in personal_gates(scope)):
         raise ValueError('Actual personal minimum gates are required')
-    if scope['id'] == 'WORLD-C61-PERSONAL':
+    if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
         validate_jiang_digests(receipt)
+    if scope['id'] == battle_ui.UI_SCOPE:
+        validate_battle_ui_digest(receipt)
+        if receipt.get('audio') != 'NOT_RUN' or receipt.get('onePlus13T') != 'NOT_RUN':
+            raise ValueError('Emulator UI proof cannot claim phone or audio acceptance')
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
     if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
@@ -201,8 +220,8 @@ def active_scope(candidate=None):
         expected_points={'base':['north-palace'],'world':['hall-batch']}
         if scope.get('quality') != 'STABLE':
             raise ValueError('Hell/rebirth milestone requires actual stable normal stages')
-    elif scope.get('id') in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL'):
-        c61 = scope['id'] == 'WORLD-C61-PERSONAL'
+    elif scope.get('id') in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
+        c61 = scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE)
         expected_maps = C61_MAP_IDS if c61 else C60_MAP_IDS
         # End of the existing controlled short smoke, not a new normal-story claim.
         expected_endpoint = dict(mapId=2, party=['nezha', 'xiaolongnv'], bossFlag='rom.map.95.flag.128')
@@ -217,6 +236,12 @@ def active_scope(candidate=None):
                 party=['nezha','xiaolongnv','yangjian','jiangziya'], sceneFlag='rom.map.7.flag.128')
                 or scope.get('contentTests') != C61_CONTENT_TESTS):
             raise ValueError('c61 controlled endpoint or mandatory content tests changed')
+        if scope['id'] == battle_ui.UI_SCOPE and scope.get('battleUiAcceptance') != dict(
+                kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY', screen=[2640, 1216],
+                window=[2640, 1080], safe=[2640, 936], density=3, fonts=[1.0, 1.3, 2.0],
+                nativeCasesPerFont=8, requiredScreenshotsPerFont=29,
+                requiredInstrumentLogs=battle_ui.log_names(), proofKey=battle_ui.UI_PROOF_KEY):
+            raise ValueError('Exact battle UI acceptance cannot omit fonts, native cases, screenshots or logs')
     else:
         raise ValueError('Unknown authorized frozen milestone')
     if (reference != dict(path='ci/runtime-scope.json',sha256=digest(SCOPE_PATH))
@@ -475,6 +500,10 @@ def main():
         receipt = read_json(args.receipt)
         if personal_quality(scope):
             review_personal(receipt)
+            if scope['id'] == battle_ui.UI_SCOPE:
+                proofs = battle_ui.proof_digests(args.evidence, args.receipt.parent)
+                if any(receipt.get(key) != value for key, value in proofs.items()):
+                    raise ValueError('Raw battle UI artifacts differ from this reviewed candidate proof')
             print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
             return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):
