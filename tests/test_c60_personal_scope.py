@@ -56,6 +56,16 @@ class C60PersonalScopeTest(unittest.TestCase):
         self.assertNotEqual(object_hash(['--no-filters'], crlf),
                             object_hash(['--path=ci/runtime-scope.json'], crlf))
 
+    def test_executed_probe_bytes_survive_windows_checkout(self):
+        proof = json.loads((ROOT/'game-data/provenance/world-sages89-resources.json').read_text(encoding='utf-8'))
+        for probe in proof['controlledEvidence']['probes']:
+            with self.subTest(path=probe['path']):
+                # Exercise Git's real smudge filter with the Windows runner setting.
+                payload = subprocess.run(['git', '-c', 'core.autocrlf=true', 'cat-file',
+                    '--filters', 'HEAD:'+probe['path']], cwd=ROOT, capture_output=True,
+                    check=True, timeout=10).stdout
+                self.assertEqual(probe['sha256'], hashlib.sha256(payload).hexdigest())
+
     def test_every_save_gate_is_required_in_creation_and_review(self):
         proposed = dict(self.candidate, **{key: 'PASS' for key in h.personal_gates(self.scope)})
         receipt = h.finish_personal(proposed)

@@ -1643,3 +1643,5 @@ c60当前IMPLEMENTED/DEBUG_PACKAGED；完整APP_VERIFIED/PUBLISHED仍NO。后续
 冻结R2 run37408307126最终FAILED：runtime-world于2026-10-06 09:59 UTC发生Normal App recording budget exhausted，build/base成功不能替代world。未取消该运行，未发布v83；长路线欠账保留。c60原短级别验收独立且明确PERSONAL_TEST。
 
 签名候选run37448200402/source58c8c0d在scope预校验阶段被拒绝：工作树CRLF与Git/CI的LF字节不同，未进入签名/App验收，未发布。已固定ci/*scope.json为LF并重算实际提交格式hash；保留原拒绝门禁。下一候选须重新构建。
+
+第二候选run37448833000/sourcec434f81通过scope pin后，导出火云洞时被executed probe hash门禁拒绝：Windows autocrlf将未固定的Lua从Git LF转换CRLF。实际Git/本地字节均与原执行hash一致；只固定Lua checkout为LF，不改原取证hash、规则或内容。新增真实Git autocrlf/smudge回归，签名/App仍未执行，不发布。
