@@ -256,6 +256,18 @@ class TouchTest:IsolatedGameTestCase(){
         }
         assertEquals(before.characters,fight!!.party);assertEquals(4,fight!!.party.size)
         screenshot(v,"world-jiang-controlled-four-actor-battle-ready")
+        tap(v,center(v.battleCommandBounds(2)))
+        for(hero in fight!!.party){
+            val box=v.battleItemTargetBounds(hero.id)
+            assertTrue(box.x>=0&&box.x+box.w<=v.width&&box.y>=0&&box.y+box.h<=v.height)
+            tap(v,center(box))
+            assertEquals(hero.id,GameView::class.java.getDeclaredField("selectedBattleTarget")
+                .apply{isAccessible=true}.get(v))
+            assertEquals(0,fight!!.inputRevision);assertEquals(before.characters,fight!!.party)
+            assertEquals(before.inventory,v.currentSnapshot().inventory)
+        }
+        screenshot(v,"world-jiang-controlled-four-actor-item-targets-selection-only")
+        tap(v,center(v.battleItemCloseBounds()))
         val beforeEnemy=fight!!.enemies.map{it.hp}
         repeat(3){i->
             assertEquals(before.characters[i].id,fight!!.inputHero!!.id)

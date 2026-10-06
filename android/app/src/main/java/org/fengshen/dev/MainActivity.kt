@@ -2120,7 +2120,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         val l=touchModalLayout(ui.safe,dp,font,0,0,false)
         val header=max(96f,(15f+12f)*font*1.25f+28f)*dp+
-            if((battle?.party?.size?:0)>1)max(48f,12f*font*2.5f+16f)*dp else 0f
+            battlePartyTargetHeader(dp,font,battle?.party?.size?:1)
         val y=l.frame.y+header+8*dp;val bottom=l.frame.y+l.frame.h-8*dp
         return l.copy(list=l.list.copy(y=y,h=bottom-y),detail=l.detail.copy(y=y,h=max(1f,l.primary.y-8*dp-y)))
     }
@@ -2130,8 +2130,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val party=battle?.party?:return Box(0f,0f,0f,0f);val i=party.indexOfFirst{it.id==id}
         if(party.size<=1||i<0)return Box(0f,0f,0f,0f)
         val l=battleItemLayout();val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
-        val h=max(48f,12f*font*2.5f+16f)*dp;val gap=8*dp;val w=(l.frame.w-3*gap)/2
-        return Box(l.frame.x+gap+i*(w+gap),l.list.y-h-gap,w,h)
+        return battlePartyTargetBoxes(l.frame,l.list.y,dp,font,party.size)[i]
     }
     fun battleItemBounds(id:String)=battleItemLayout().visibleRow(battleMedicines().indexOf(id),battleItemListScroll)
     fun battleItemUseBounds()=battleItemLayout().primary

@@ -50,6 +50,23 @@ class MobilePlayTest {
             assertTrue(l.status.y>=window.y);assertTrue(l.arena.y+l.arena.h<=l.status.y)
         }
     }
+    @Test fun allFourItemTargetsFitTwoRowsAndOldTwoTargetsStayIdentical(){
+        for(font in listOf(1f,1.3f,2f))for(count in 1..4){
+            val frame=Box(24f,24f,2412f,1168f);val dp=3f
+            val header=battlePartyTargetHeader(dp,font,count);val listTop=frame.y+300*dp
+            val boxes=battlePartyTargetBoxes(frame,listTop,dp,font,count)
+            assertEquals(if(count==1)0 else count,boxes.size)
+            boxes.forEach{b->assertTrue(b.w>=48*dp&&b.h>=48*dp)
+                assertTrue(b.x>=frame.x&&b.x+b.w<=frame.x+frame.w)
+                assertTrue(b.y>=frame.y&&b.y+b.h<=listTop-8*dp)}
+            for(i in boxes.indices)for(j in i+1 until boxes.size)assertFalse(overlaps(boxes[i],boxes[j]))
+            if(count==2){
+                val h=kotlin.math.max(48f,12f*font*2.5f+16f)*dp;val gap=8*dp;val w=(frame.w-3*gap)/2
+                assertEquals(h,header)
+                assertEquals((0..1).map{i->Box(frame.x+gap+i*(w+gap),listTop-h-gap,w,h)},boxes)
+            }
+        }
+    }
     @Test fun actionSnapshotsDoNotRevealLaterEnemyOrHeroHp(){
         val enemies=listOf(EnemyDefinition(2,"same",20,10,2,1,1,255,0),EnemyDefinition(3,"same",20,10,2,1,1,255,0))
         val c=BattleContent(16,emptyList(),emptyList(),enemies.associateBy{it.id},growth,2,6,50,16)

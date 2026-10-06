@@ -52,4 +52,20 @@ fun battleTouchLayout(safe:Box,dp:Float,fontScale:Float,count:Int,partyCount:Int
 }
 
 data class BattleTouchCommand(val battleId:String,val revision:Int,val kind:String,val slot:Int?=null,val itemId:String?=null,val targetId:String?=null)
+
+/** Same target boxes for item drawing and input; first two retain their geometry. */
+fun battlePartyTargetHeader(dp:Float,fontScale:Float,partyCount:Int):Float {
+    require(partyCount in 1..4)
+    if(partyCount==1)return 0f
+    val rows=(partyCount+1)/2;val height=max(48f,12f*fontScale*2.5f+16f)*dp
+    return rows*height+(rows-1)*8*dp
+}
+fun battlePartyTargetBoxes(frame:Box,listTop:Float,dp:Float,fontScale:Float,partyCount:Int):List<Box> {
+    val header=battlePartyTargetHeader(dp,fontScale,partyCount)
+    if(partyCount==1)return emptyList()
+    val gap=8*dp;val h=max(48f,12f*fontScale*2.5f+16f)*dp;val w=(frame.w-3*gap)/2
+    return (0 until partyCount).map{i->Box(frame.x+gap+(i%2)*(w+gap),
+        listTop-header-gap+(i/2)*(h+gap),w,h)}
+}
+
 data class BattleTouchGesture(val pointer:Int,val x:Float,val y:Float,val command:BattleTouchCommand,var cancelled:Boolean=false,var lastY:Float=y)
