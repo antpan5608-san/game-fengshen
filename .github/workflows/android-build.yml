@@ -5,7 +5,7 @@ on:
       mode:
         description: 'build creates a candidate; verify-base only restores a trusted existing APK'
         type: choice
-        options: [build, verify-base]
+        options: [build, verify-base, development-smoke]
         default: build
         required: true
       base_build_run_id:
@@ -31,7 +31,7 @@ permissions:
   contents: read
   actions: read
 concurrency:
-  group: fengshen-cloud-build
+  group: ${{ inputs.mode == 'development-smoke' && format('fengshen-development-smoke-{0}', github.ref) || 'fengshen-cloud-build' }}
   cancel-in-progress: false
 jobs:
   build:
@@ -760,5 +760,66 @@ jobs:
             artifacts/checkpoint-ui/world-island-*.json
             artifacts/checkpoint-ui/world-island-*-test.txt
             artifacts/world-island-review-clips/*
+          if-no-files-found: ignore
+          retention-days: 14
+
+  development-smoke:
+    if: inputs.mode == 'development-smoke' && github.ref == 'refs/heads/work/world-jiameng-batch-continuation'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: fengshen-signed-apk
+          path: artifacts/content-base
+          run-id: 36995827962
+          github-token: ${{ github.token }}
+      - name: Restore existing pinned development content and build DEBUG only
+        shell: bash
+        env:
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_HOME }}
+        run: |
+          set -euo pipefail
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
+          python -m pip install Pillow==11.3.0
+          base=(artifacts/content-base/*-release.apk)
+          [[ ${#base[@]} == 1 ]]
+          python tools/ci_apk.py restore --apk "${base[0]}" --next-code 84
+          bash android/gradlew -p android testDebugUnitTest --tests org.fengshen.dev.SaveHistoryTest assembleDebug assembleDebugAndroidTest -PfengshenVersionCode=84 -PfengshenVersionName=0.8.14-development-smoke --console=plain --max-workers=2
+          python - <<'PYDEBUG'
+          import hashlib,json
+          from pathlib import Path
+          from tools import ci_apk as ci
+          apk=Path('android/app/build/outputs/apk/debug/app-debug.apk')
+          ci.content(apk,ci.CONFIG)
+          Path('artifacts/development-smoke').mkdir(parents=True,exist_ok=True)
+          Path('artifacts/development-smoke/debug-content.json').write_text(json.dumps(dict(kind='DEBUG_ONLY_NOT_PUBLISHED',sha256=hashlib.sha256(apk.read_bytes()).hexdigest(),contentVersion=ci.CONFIG['contentVersion'],manifestSha256=ci.CONFIG['manifestSha256'])))
+          PYDEBUG
+      - name: Existing KVM runtime with controlled history rollback and external cold restart
+        shell: bash
+        env:
+          FENGSHEN_RUNTIME_STAGE: development-smoke
+        run: bash ci/run-town02-runtime.sh
+      - name: Retain isolated App evidence only; no raw ROM or production credentials
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: fengshen-development-save-history-smoke
+          path: |
+            artifacts/development-smoke/*
+            artifacts/checkpoint-ui/*save-history*
+            artifacts/town02-runtime/testControlledSaveHistory*.txt
+            artifacts/town02-runtime/emulator.txt
           if-no-files-found: ignore
           retention-days: 14

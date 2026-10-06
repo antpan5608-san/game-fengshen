@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "taskId": "WORLD-FULL-01",
+  "scopeRevision": "panxi-witness-city142-king121-original-jiang-join",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "licenseStatus": "UNKNOWN",
+  "status": "EVIDENCE_READY_NOT_CONTENT_OR_APP_VERIFIED",
+  "sources": [
+    {
+      "offset": 347475,
+      "length": 49,
+      "sha256": "97083b3fa1ae493bd89022516a45bf46195513c0d6e226bcfbeb8eea95ab6999",
+      "module": 10,
+      "cpuAddress": 52547,
+      "meaning": "Original king cure/party/Panxi selector"
+    },
+    {
+      "offset": 347936,
+      "length": 13,
+      "sha256": "410310d0bdcd1888d5fd0f5e1ef9aea31807a068199fd93619ae6f3ff8f1f0ce",
+      "module": 10,
+      "cpuAddress": 53008,
+      "meaning": "Original Panxi witness and action scheduling"
+    },
+    {
+      "offset": 349652,
+      "length": 158,
+      "sha256": "b1adf718cc31df662c608c7089c942a9f9e6419e9a7ef534f5fc361c51a02955",
+      "module": 10,
+      "cpuAddress": 54724,
+      "meaning": "Original fourth actor initializer and event21"
+    },
+    {
+      "offset": 381729,
+      "length": 15,
+      "sha256": "2b96089c730707b29c3c784bdcdfd02cc090b498640e221a84980843a9003312",
+      "module": 11,
+      "cpuAddress": 54033,
+      "meaning": "Original event21 initializer"
+    },
+    {
+      "offset": 378644,
+      "length": 64,
+      "sha256": "ab86023c129bb3e109bcabbcda05b5daaa5f50c9daa53f7cb1dce8d7cd7aa0ae",
+      "module": 11,
+      "cpuAddress": 50948,
+      "meaning": "Original script26 start; remaining extent must be traced before export"
+    }
+  ],
+  "actor": {
+    "index": 3,
+    "rawHex": "960e1100e80138014d8f01022d10",
+    "range": {
+      "offset": 283973,
+      "length": 14,
+      "sha256": "494926ea2385cb3f1ed6f32bbce1b49d9e95dbf4edd0d40162b97e1a897bed65",
+      "module": 8,
+      "cpuAddress": 54581,
+      "meaning": "Fixed 14-byte NPC source record"
+    },
+    "entityByte": 150,
+    "xCandidate": 488,
+    "yCandidate": 312,
+    "animationProgramPointer": 36685,
+    "animationModule": 0,
+    "fieldSemantics": "PARTIAL; bytes8..9 are animation data, not an event code routine",
+    "confidence": "HIGH"
+  },
+  "rules": {
+    "panxi": {
+      "mapId": 7,
+      "observedNpcContext": 191,
+      "actionId": 61,
+      "global7FD": 1,
+      "firstMessage": 13,
+      "repeatMessage": 6,
+      "noJoin": true
+    },
+    "king": {
+      "mapId": 121,
+      "npcIndex": 3,
+      "actorId": 150,
+      "cell": [
+        23,
+        12
+      ],
+      "actionId": 45,
+      "mapFlagMask": 16,
+      "requiresNonzeroGlobal7C9": true,
+      "requiresPanxiForJoin": true,
+      "partyBelow4": true,
+      "invitationMessage": 16,
+      "beforePanxiMessage": 18,
+      "fullPartyOrRepeatMessage": 17,
+      "eventId": 21,
+      "scriptId": 26
+    },
+    "initializedCharacter": {
+      "id": "jiangziya",
+      "originalActorIndex": 3,
+      "level": 37,
+      "experience": 190000,
+      "hp": 1608,
+      "maxHp": 1608,
+      "mp": 151,
+      "maxMp": 151,
+      "strength": 109,
+      "agility": 63,
+      "stamina": 160,
+      "spirit": 124,
+      "equipment": {
+        "rightHand": 44,
+        "leftHand": -1,
+        "body": 24,
+        "feet": 28
+      },
+      "rawHandContribution": 100,
+      "rawArmorContribution": 235
+    },
+    "continuation": {
+      "joinBeforeFirstFollowupDialogue": true,
+      "mapId": 7,
+      "observedFirstAndFinalCell": [
+        23,
+        7
+      ],
+      "dialogueGroup": 17,
+      "dialogueMessages": [
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "completedMapFlagMask": 128,
+      "panxiContextAfter": 192,
+      "encounterStepsAfter": 0,
+      "noMoneyOrItemAwardObserved": true
+    }
+  },
+  "routes": [
+    {
+      "fromMapId": 16,
+      "trigger": [
+        42,
+        78
+      ],
+      "toMapId": 142,
+      "spawn": [
+        15,
+        43
+      ],
+      "source": {
+        "offset": 286640,
+        "length": 5,
+        "sha256": "2a4c24e30997dcc45e800b8db9f368278a61c7785c167619d319be90e5c745fe",
+        "module": 8,
+        "cpuAddress": 57248,
+        "meaning": "Original world to city outer gate row"
+      }
+    },
+    {
+      "fromMapId": 142,
+      "trigger": [
+        15,
+        16
+      ],
+      "toMapId": 121,
+      "spawn": [
+        23,
+        44
+      ],
+      "source": {
+        "offset": 288574,
+        "length": 5,
+        "sha256": "bdb8de87d188b167f9f0310c1a41ff373dcd11a00460b79aeeeb321fbbc31c59",
+        "module": 8,
+        "cpuAddress": 59182,
+        "meaning": "Original city outer to inner gate row"
+      }
+    },
+    {
+      "fromMapId": 121,
+      "trigger": [
+        23,
+        44
+      ],
+      "toMapId": 142,
+      "spawn": [
+        15,
+        16
+      ],
+      "source": {
+        "offset": 288033,
+        "length": 5,
+        "sha256": "7cdb3022ec7f07662becf0377fcf8550b1dbfa5b3c9ac9ba97151de85d77ac37",
+        "module": 8,
+        "cpuAddress": 58641,
+        "meaning": "Independent inner to outer exit row"
+      }
+    }
+  ],
+  "cpu": [
+    {
+      "path": "android/app/src/test/resources/world-jiang-king-selector-original.tsv",
+      "caseCount": 256,
+      "failures": 0,
+      "sha256": "e2f4fc90064db30dcb5471d0de6c0af3725f5f64a49e4215b7b6aa5b247da9ed",
+      "probePath": "tools/rom-extractor/probe-world-jiang-invitation.py",
+      "probeSha256": "97b6c20c289d8a32c7d8fe640d9a2aa41fa4d6e444a779ba3aa52dfec6f97713"
+    },
+    {
+      "path": "android/app/src/test/resources/world-jiang-panxi-selector-original.tsv",
+      "caseCount": 36,
+      "failures": 0,
+      "sha256": "204e623222b7e91f2434d96a7d39a1758c88a82d10243d265f89a0c81b904cfc",
+      "probePath": "tools/rom-extractor/probe-world-jiang-invitation.py",
+      "probeSha256": "97b6c20c289d8a32c7d8fe640d9a2aa41fa4d6e444a779ba3aa52dfec6f97713"
+    },
+    {
+      "path": "android/app/src/test/resources/world-jiang-initializer-original.tsv",
+      "caseCount": 32,
+      "failures": 0,
+      "sha256": "281593e10875cc75ffc101882f3c00fb1848bd29c0875c03e632e999d8ce0977",
+      "probePath": "tools/rom-extractor/probe-world-jiang-invitation.py",
+      "probeSha256": "97b6c20c289d8a32c7d8fe640d9a2aa41fa4d6e444a779ba3aa52dfec6f97713"
+    }
+  ],
+  "controlledCaptures": [
+    {
+      "path": "private-derived/world-king121-join-controlled/01-real-city142-entry",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "c825c6f50e9446e9ca05c360fbf96c3462bf0ffeb59a2dba32f1b9a63d2c4b2f",
+        ".png": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9",
+        ".fc8": "36d1df6b397f863716edefaf9ce7dcdf1ec7ec06c4045bad71af3ebc2f3d972e"
+      }
+    },
+    {
+      "path": "private-derived/world-king121-join-controlled/02-real-city121-entry",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "7f1e61ce9c29150cc98d715af833c6c3ac276b5445b647be41a46e60bac28fd0",
+        ".png": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990",
+        ".fc8": "aee3283e503f9bfd043f14d5e5a50a165a964c4696fc29c8f49fcb2728d6c43a"
+      }
+    },
+    {
+      "path": "private-derived/world-king121-join-controlled/talk-02-A",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "643596d452003d46931f2a2c9229174f96e98fe67ede9a88c6d612e427f8f17e",
+        ".png": "bf52e5f47d6fe0262b89f7ac28e64d176d68f33d8de9549ef4d7045527920c01",
+        ".fc8": "4a5136567cfe27780d3367d0222cad237ddc03b9fb8e29f9ba9180a84eca08f9"
+      }
+    },
+    {
+      "path": "private-derived/world-king121-join-controlled/talk-04-A",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "5137af0730e29f8c1bd6a3b6df6a326aec972d83122060262fa067a4e47b2ed7",
+        ".png": "5587f59e5d429d9aeb4ca312af217e94eed101f2de23e154327a1ef58aaadfa8",
+        ".fc8": "bb2b48e2743bfbf9a4f0edc15ef730adfe3bac74dc17f50482f946ccfb364452"
+      }
+    },
+    {
+      "path": "private-derived/world-king121-join-controlled/talk-10-A",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "25818f1ff3dacdd6c6aed7a8a2bb6e1227d14fa3e151a5ea55049b6ee2c69ce0",
+        ".png": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776",
+        ".fc8": "ab15eda6d986093bdbdc7ea3660b9ff9f5fb48bd7eebf2c8d6379684915a863e"
+      }
+    },
+    {
+      "path": "private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "35613fd65b73dd9762e8e67accebd1c0ba90f0d5a82cc40cec483bf00e64a53c",
+        ".png": "ec24bf81f7b8a78dee4c1f7fbe4566fe74d56eda92caed0c771d22d853a6d9c3",
+        ".fc8": "20ffad1f5baad54c4919bb3e2e8a9b74acbe1ce2fe2778ed2b4dca68621d4814"
+      }
+    },
+    {
+      "path": "private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return",
+      "kind": "CONTROLLED_NATIVE_REAL_KEYS_NOT_ANDROID",
+      "hashes": {
+        "-ram.bin": "659a5476cf3dd9feda56714023e6a3f359eb7d0b11aa999f8422ead77144d99e",
+        ".png": "c7f3a610d6189f4a7adf441257efac911dcb7cc709594e6ce6bf57efdbc020ef",
+        ".fc8": "30642bb3fa343dce92eb18ee2b74721390e8fd9559f0411675919e46e32ec25c"
+      }
+    }
+  ],
+  "limitations": [
+    "Controlled native positions/checkpoint; not NORMAL Android route",
+    "Fourth actor learned spells, growth/portrait, equipment owner bindings and enemy targeting need scoped export/tests",
+    "Map7 initial/dynamic context lifecycle and full script26 movement need remaining evidence",
+    "City121/142 optional rooms/services and native NPC script motion not yet converted"
+  ]
+}

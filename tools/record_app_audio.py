@@ -38,6 +38,13 @@ def read_saved_boundary(read_pref,pause=time.sleep,attempts=20):
             if attempt+1<attempts:pause(.1)
     raise SavedBoundaryUnavailable(f'Actual persisted save unavailable after {attempts} reads ({last})')
 
+def recording_result(videos,segments,controlled=False):
+    result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
+        'segments':segments,'normalAssertions':'NOT_APPLICABLE' if controlled else 'PASS',
+        'forceStopRestartEqual':True,'continuedExploration':not controlled,'originalPreferencesRestored':True}
+    if controlled:result.update(kind='CONTROLLED_SAVE_HISTORY_SMOKE',controlledAssertions='PASS')
+    return result
+
 def record_silent():
     """Portable branch of the existing recorder; video only, no audio claim."""
     cold_method='testHerbColdStartMatchesNormalSave';budget=1200
@@ -51,6 +58,12 @@ def record_silent():
     prefix=sys.argv[1] if len(sys.argv)>1 else 'town02'
     validate_recording_budget(prefix,budget)
     method=sys.argv[2] if len(sys.argv)>2 else 'testNormalHerbSupplyLoop'
+    controlled='--controlled-save-history' in sys.argv
+    if controlled:
+        sys.argv.remove('--controlled-save-history')
+        assert not comparison and prefix=='world-save-history'
+        assert method=='testControlledSaveHistoryManualRollbackAndActivityRestart'
+        assert cold_method=='testSaveHistoryExternalColdStartMatchesRestoredSnapshot'
     def adb(*args,**kwargs):
         return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,timeout=90,**kwargs).stdout
     assert b'ranchu' in adb('shell','getprop','ro.hardware'), 'Isolated emulator only'
@@ -99,7 +112,8 @@ def record_silent():
                 segments.append({'file':videos[-1],'sha256':hashlib.sha256(local.read_bytes()).hexdigest(),
                     'startedAndroidUptimeMs':uptime_ms,'durationSeconds':round(time.monotonic()-segment_started,3),
                     'savedWorldBefore':boundary_before,'savedWorldAfter':saved(),
-                    'boundaryScope':('Pre-launch isolated baseline; normal new-game begins at its indexed marker' if len(videos)==1 else 'Continuing the same normal controller flow'),
+                    'boundaryScope':('Isolated controlled save-history fixture; no normal route claim' if controlled else
+                        'Pre-launch isolated baseline; normal new-game begins at its indexed marker' if len(videos)==1 else 'Continuing the same normal controller flow'),
                     'saveLimit':'Read-only persisted world checkpoints; during battle live action HP is visible in raw frames',
                     'limit':'Capture start approximate; actual frames in retained MP4'})
         observed=test_log.read_text(encoding='utf-8',errors='replace')
@@ -133,13 +147,12 @@ def record_silent():
         cold_local=OUT/f'{prefix}-cold-restart.mp4';adb('pull',cold_remote,str(cold_local))
         cold_name=str(cold_local.relative_to(ROOT));videos.append(cold_name)
         segments.append({'file':cold_name,'sha256':hashlib.sha256(cold_local.read_bytes()).hexdigest(),
-            'phase':'EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE',
+            'phase':'EXTERNAL_FORCE_STOP_CONTROLLED_SAVE_RESTORE_COLD_RESTART' if controlled else 'EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE',
             'startedAndroidUptimeMs':cold_uptime,'durationSeconds':round(time.monotonic()-cold_started,3),
             'savedWorldBefore':before,'savedWorldAfter':saved(),
-            'boundaryScope':'Same normal save before external force-stop and after actual restart/continued movement',
+            'boundaryScope':'Same controlled rollback save before and after external cold restart' if controlled else 'Same normal save before external force-stop and after actual restart/continued movement',
             'limit':'Capture start approximate; actual frames in retained MP4'})
-        result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
-            'segments':segments,'normalAssertions':'PASS','forceStopRestartEqual':True,'continuedExploration':True,'originalPreferencesRestored':True}
+        result=recording_result(videos,segments,controlled)
         (OUT/f'{prefix}-recording.json').write_text(json.dumps(result,indent=2)+'\n')
         print(json.dumps(result))
     except Exception:
