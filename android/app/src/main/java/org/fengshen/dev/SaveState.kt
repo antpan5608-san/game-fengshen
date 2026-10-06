@@ -268,9 +268,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
          * This admits their version marker only; scene, actor, inventory, caller
          * and flag-dependent position checks remain mandatory below. */
         fun compatibleContentVersion(saved:String,current:String)=saved==current||saved=="opening-to-world-b1"||
-            saved=="opening-segment-001-c51-r1"||saved=="opening-segment-001-c52"||saved=="opening-segment-001-c53"||
-            saved=="opening-segment-001-c54"||saved=="opening-segment-001-c55"||
-            saved in (1..50).map{"opening-segment-001-c$it"}
+            saved=="opening-segment-001-c51-r1"||
+            saved in (1..60).map{"opening-segment-001-c$it"}
         fun parse(text:String):SaveSnapshot {
             val o=JSONObject(text);require(o.getInt("saveSchemaVersion")==1)
             val chars=o.getJSONArray("characters");require(chars.length() in 1..4)

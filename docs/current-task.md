@@ -35,3 +35,5 @@ exact_next_action: 当前开发改动安全提交/同树备份→原workflow独�
 c59自由船/香榭136/雪莲治疗/玉泉172/火云89/西岐井成果保留。69依赖图不等于69图正常可达。匹配ROM缓存f3596ffd…仅受控目录；原PPU/RAM/FC8不公开，不读取不存在F盘。真机/声音/真实云恢复NOT_RUN，音频UNCONFIRMED，十类累计欠账仍docs/delivery-status.md。不得reset/clean/清档、修改Language或真实云档。当前任务连续推进，不在R2失败、发布或存档小功能完成处结案。
 
 历史原状态与失败详见docs/history/world-full01-c59-loader-checkpoint-20261006.md；同源冻结规则及发布证据仍原docs/android-ci.md/docs/delivery-status.md。
+
+12:06北京时间：c60 smoke37411637218/source94e9cae3实际ContentLoader与井事件完整事务/codec通过到测试第40行，旧c58 marker被compatibleContentVersion拒绝；分类DEVELOPMENT_SAVE_COMPATIBILITY_BUG，旧白名单漏56..59，不删断言。现补明确已知schema1 1..60，保留地图/角色/物品/剧情/位置完整校验并加未来/未知拒绝回归。AUTO/回档尚未执行，新App复测待原runner。
