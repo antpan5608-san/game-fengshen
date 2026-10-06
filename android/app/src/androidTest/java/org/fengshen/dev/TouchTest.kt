@@ -48,18 +48,27 @@ class TouchTest:IsolatedGameTestCase(){
             assertTrue(v.restoreSnapshot(initial));a=v.currentSnapshot()
         }
         fun dialog()=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as android.app.AlertDialog
+        // AlertDialog posts dismissal callbacks; a new child is opened from
+        // that callback, after performClick/performItemClick has returned.
+        fun dialogAction(action:()->Unit){
+            instrumentation.runOnMainSync{action()}
+            instrumentation.waitForIdleSync()
+        }
         fun history(){
             if(v.layer==GameView.Layer.MAP)tap(v,center(layoutFor(v).buttons.getValue(Key.MENU)))
             assertEquals(GameView.Layer.MENU,v.layer);tap(v,menuPoint(v,3))
-            instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),10,d.listView.adapter.getItemId(10))}
-            assertTrue(dialog().isShowing)
-            assertEquals("手动存档",dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).text.toString())
+            dialogAction{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),10,d.listView.adapter.getItemId(10))}
+            instrumentation.runOnMainSync{
+                assertTrue(dialog().isShowing)
+                assertEquals("手动存档",dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).text.toString())
+            }
         }
         history()
-        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).performClick()}
+        dialogAction{dialog().getButton(android.app.AlertDialog.BUTTON_NEUTRAL).performClick()}
         val manual=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)).first()
         assertEquals(SaveHistoryEntry.Kind.MANUAL,manual.kind);assertEquals(a,manual.snapshot)
-        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick();v.handleBack()}
+        dialogAction{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick()}
+        instrumentation.runOnMainSync{v.handleBack()}
         val destination=v.content.scenes.getValue(0)
         val b=a.copy(mapId=0,x=destination.spawnX*16+8,y=destination.spawnY*16+8,money=a.money+50,
             inventory=a.inventory+(HerbUse.ID to 3),flags=a.flags+("fixture.history.flag" to true),
@@ -68,12 +77,12 @@ class TouchTest:IsolatedGameTestCase(){
         lateinit var actualB:SaveSnapshot
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(b));actualB=v.currentSnapshot()}
         history()
-        instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
-        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick()}
+        dialogAction{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
+        dialogAction{dialog().getButton(android.app.AlertDialog.BUTTON_NEGATIVE).performClick()}
         assertEquals(actualB,v.currentSnapshot());assertEquals(1,SaveHistory.parse(prefs.getString(SaveHistory.KEY,null)).size)
         history()
-        instrumentation.runOnMainSync{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
-        instrumentation.runOnMainSync{dialog().getButton(android.app.AlertDialog.BUTTON_POSITIVE).performClick()}
+        dialogAction{val d=dialog();d.listView.performItemClick(d.listView.getChildAt(0),0,d.listView.adapter.getItemId(0))}
+        dialogAction{dialog().getButton(android.app.AlertDialog.BUTTON_POSITIVE).performClick()}
         assertEquals(a,v.currentSnapshot());assertEquals(a,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
         val entries=SaveHistory.parse(prefs.getString(SaveHistory.KEY,null));assertEquals(2,entries.size)
         assertEquals(SaveHistoryEntry.Kind.BEFORE_RESTORE,entries.first().kind);assertEquals(actualB,entries.first().snapshot)
