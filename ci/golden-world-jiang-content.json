@@ -12,7 +12,7 @@
     },
     "provenance": "game-data/provenance/world-jiang-content.json"
   },
-  "manifestSha256": "d5e325e90969fba158b8257715da7fa3b30b06df6f0ac1e00e730474afc82d22",
+  "manifestSha256": "34de87f4983c6fe34ed91f866a27129f73458063499d287336bfa041d8bdb5d0",
   "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
   "package": "org.fengshen.dev",
   "runtimeBaseline": {

@@ -508,8 +508,8 @@ def extend_world_characters(reader, scene, combat, additions, overlay):
         original=original_groups[index]
         if table['originalActorIndex']!=index or proof['actorIndex']!=index or table['knownMaxLevel']!=proof['maxLevel']:
             raise ValueError('Growth owner or max level differs')
-        if table.get('limitEvidence')!=actor['evidence']:
-            raise ValueError('Joined growth must include its actual loader-facing cap evidence')
+        if table.get('evidence')!=actor['evidence'] or table.get('limitEvidence')!=actor['evidence']:
+            raise ValueError('Joined growth must include its actual loader-facing table and cap evidence')
         for field in ('growthRange','thresholdRange'):
             if proof[field]!=original[field]:raise ValueError('Joined growth range differs')
             checked_span(reader,proof[field])

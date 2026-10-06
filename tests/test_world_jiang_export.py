@@ -30,6 +30,19 @@ class JiangExportTest(unittest.TestCase):
    if not name.endswith('.json'):self.assertEqual(raw,self.payload[name],name)
   self.assertEqual({'evidence':ex.load(ROOT/self.pin['iteration']['provenance'])['jiangCapabilityEvidence'],
       'id':'rom.event.7.21','kingNpcId':'rom.npc.121.3'},new['originalJiangJoin'])
+ def test_joined_growth_requires_real_loader_table_and_cap_evidence(self):
+  recipe=ex.load(ROOT/self.pin['iteration']['provenance'])
+  table=next(t for t in json.loads(self.payload['combat.json'])['characterGrowth']if t['owner']=='jiangziya')
+  self.assertEqual('game-data/provenance/world-jiang-invitation.json',table['evidence'])
+  self.assertEqual(table['evidence'],table['limitEvidence'])
+  for field in ('evidence','limitEvidence'):
+   for value in (None,'game-data/provenance/unrelated.json'):
+    overlay=copy.deepcopy(recipe['combatOverlay'])
+    if value is None:overlay['characterGrowth'][0].pop(field)
+    else:overlay['characterGrowth'][0][field]=value
+    with self.subTest(field=field,value=value),self.assertRaisesRegex(ValueError,'loader-facing table and cap evidence'):
+     ex.extend_world_characters(self.reader,json.loads(self.parent['scene.json']),
+       json.loads(self.parent['combat.json']),recipe['additionalCharacters'],overlay)
  def test_only_five_tested_source_cells_are_runtime_edges_and_failed_lefts_stay_inert(self):
   scene=json.loads(self.payload['scene.json'])
   edges=[x for x in scene['exits']if x['fromMapId']==142 and x['toMapId']==16]

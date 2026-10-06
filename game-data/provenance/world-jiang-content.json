@@ -39,6 +39,7 @@
   "combatOverlay": {
     "characterGrowth": [
       {
+        "evidence": "game-data/provenance/world-jiang-invitation.json",
         "knownMaxLevel": 80,
         "limitEvidence": "game-data/provenance/world-jiang-invitation.json",
         "originalActorIndex": 3,
