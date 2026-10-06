@@ -32,6 +32,35 @@ object OriginalJiangJoin {
     const val PANXI_FOUR_FLAG="rom.npccontext.7.192"
     val PRIOR_PARTY=listOf("nezha","xiaolongnv","yangjian")
     val FULL_PARTY=PRIOR_PARTY+"jiangziya"
+    const val PANXI_PENDING="runtime.story.7.panxi.dialogue.pending"
+    private const val PANXI_ID="rom.event.7.panxi61"
+    private val panxiContinuation=StoryContinuation(listOf("rom.dialogue.17.13","rom.dialogue.17.6"),null,null,emptySet())
+    fun validPanxiPending(s:SaveSnapshot):Boolean {
+        if(s.flags[PANXI_PENDING]!=true)return true
+        val stage=panxiContinuation.stage(PANXI_ID,s.flags)?:return false
+        return s.mapId==7&&s.characters.size in 1..3&&s.flags[PANXI_FLAG]==true&&
+            s.flags[PANXI_THREE_FLAG]==true&&s.flags[PANXI_FOUR_FLAG]!=true&&
+            panxiContinuation.dialogueIds.indices.drop(stage).none{s.flags[panxiContinuation.stageKey(PANXI_ID,it)]==true}
+    }
+    fun panxiDialogue(s:SaveSnapshot)=panxiContinuation.stage(PANXI_ID,s.flags)?.let{panxiContinuation.dialogueIds[it]}
+    fun beginPanxi(s:SaveSnapshot,rule:OriginalNpcTalkDefinition):StoryFollowup.Result {
+        if(rule.actionId!=61||rule.mapId!=7||rule.firstDialogue!="rom.dialogue.17.13"||
+            rule.repeatDialogue!="rom.dialogue.17.6"||rule.mapFlagId.isNotEmpty()||rule.itemId.isNotEmpty()||
+            rule.witnessFlagId!=PANXI_FLAG||s.mapId!=7||s.characters.size !in 1..3||
+            s.flags[PANXI_THREE_FLAG]!=true||s.flags[PANXI_FOUR_FLAG]==true||!validPanxiPending(s))
+            return StoryFollowup.Result(s,null,false,"磻溪交谈对象或阶段已变化")
+        if(s.flags[PANXI_PENDING]==true)return StoryFollowup.Result(s,panxiDialogue(s),true)
+        // CF10 writes the witness before text13. D6EC then displays text6;
+        // this happens on every talk, with no map claim bit or party change.
+        val clean=s.flags-panxiContinuation.stageKey(PANXI_ID,0)-panxiContinuation.stageKey(PANXI_ID,1)
+        return StoryFollowup.Result(s.copy(flags=clean+mapOf(PANXI_FLAG to true,PANXI_PENDING to true)),
+            panxiContinuation.dialogueIds.first(),true)
+    }
+    fun advancePanxi(s:SaveSnapshot,dialogue:String):StoryFollowup.Result {
+        if(!validPanxiPending(s))return StoryFollowup.Result(s,null,false,"磻溪交谈阶段已变化")
+        return StoryFollowup.advance(s,PANXI_ID,PANXI_PENDING,panxiContinuation,dialogue,emptyMap()){
+            it-PANXI_PENDING-panxiContinuation.stageKey(PANXI_ID,0)-panxiContinuation.stageKey(PANXI_ID,1)}
+    }
     internal fun cured(flags:Map<String,Boolean>)=flags[OriginalSceneItems.PLAGUE_FLAG]==true||
         (0..7).any{flags["rom.global.7c9.${1 shl it}"]==true}
     fun begin(before:SaveSnapshot,rule:OriginalJiangJoinDefinition):StoryFollowup.Result {

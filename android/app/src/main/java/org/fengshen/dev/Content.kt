@@ -446,6 +446,23 @@ object ContentLoader {
                         t.getString("itemId"),npc.firstDialogue,npc.repeatDialogue?:error("Original talk needs its repeat message"))
                     rule.actionId=t.getInt("actionId");require(npc.firstEffects.isEmpty())
                     when(rule.actionId){
+                        61->require(npc.id=="rom.npc.7.4"&&npc.mapId==7&&npc.x==26&&npc.y==10&&
+                            t.getString("evidence")==OriginalJiangJoin.EVIDENCE&&rule.mapFlagId.isEmpty()&&
+                            rule.witnessFlagId==OriginalJiangJoin.PANXI_FLAG&&rule.itemId.isEmpty()&&
+                            rule.firstDialogue=="rom.dialogue.17.13"&&rule.repeatDialogue=="rom.dialogue.17.6")
+                        44->{
+                            val i=npc.id.substringAfterLast('.').toInt()
+                            require(npc.mapId==121&&i in 0..2&&npc.id=="rom.npc.121.$i"&&
+                                t.getString("evidence")==OriginalJiangJoin.EVIDENCE&&
+                                rule.mapFlagId=="rom.map.121.flag.${1 shl i}"&&rule.itemId.isEmpty()&&
+                                rule.witnessFlagId==OriginalSceneItems.PLAGUE_FLAG&&
+                                rule.firstDialogue=="rom.dialogue.131.${listOf(5,10,11)[i]}"&&
+                                rule.repeatDialogue=="rom.dialogue.131.${listOf(6,13,6)[i]}")
+                            val m=t.getJSONObject("messageDialogues")
+                            rule.messageDialogues=m.keys().asSequence().associate{k->k.toInt()to m.getString(k)}
+                            require(rule.messageDialogues==mapOf(0 to rule.firstDialogue,
+                                1 to "rom.dialogue.131.${listOf(6,11,12)[i]}",2 to rule.repeatDialogue))
+                        }
                         45->{
                             require(npc.id=="rom.npc.121.3"&&npc.mapId==121&&npc.x==23&&npc.y==12&&
                                 t.getString("evidence")==OriginalJiangJoin.EVIDENCE&&rule.mapFlagId==OriginalJiangJoin.KING_FLAG&&

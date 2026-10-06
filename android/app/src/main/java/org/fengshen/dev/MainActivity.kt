@@ -940,6 +940,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return true
     }
     fun startOpeningIfNeeded(){
+        if(flags[OriginalJiangJoin.PANXI_PENDING]==true&&OriginalJiangJoin.validPanxiPending(currentSnapshot())){
+            content.npcs.firstOrNull{it.id=="rom.npc.7.4"&&it.originalTalk?.actionId==61}?.let{npc->
+                OriginalJiangJoin.panxiDialogue(currentSnapshot())?.let{openDialogue(content.dialogues.getValue(it),npc);return}
+            }
+        }
         if(flags[OriginalNpcTalk.ROOM116_PENDING_FLAG]==true&&OriginalNpcTalk.validRoom116Pending(currentSnapshot())){
             content.npcs.firstOrNull{it.id=="rom.npc.116.0"&&it.originalTalk?.actionId==41}?.let{npc->
                 openDialogue(content.dialogues.getValue(OriginalNpcTalk.room116PendingDialogue(flags)),npc);return
@@ -1031,6 +1036,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val pages=dialogueLines()
         if(dialoguePage+1<pages.size){dialoguePage++;return}
         val npc=dialogueNpc
+        if(flags[OriginalJiangJoin.PANXI_PENDING]==true){
+            if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
+            val before=currentSnapshot()
+            commitStoryFollowup(before,OriginalJiangJoin.advancePanxi(before,dialogueText?.id?:""),npc);return
+        }
         content.sceneItemUses().firstOrNull{(it.npcId==npc?.id||it.locationTarget&&npc==null)&&flags[it.pendingFlag]==true}?.let{rule->
             if(localSaveProtected){showNotice("原存档受保护，不能提交剧情");return}
             val before=currentSnapshot()

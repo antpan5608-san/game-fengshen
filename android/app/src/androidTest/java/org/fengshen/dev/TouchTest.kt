@@ -16,13 +16,17 @@ class TouchTest:IsolatedGameTestCase(){
         val(activity,v)=launch()
         val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
         lateinit var expected:SaveSnapshot
+        val started=SystemClock.elapsedRealtime()
         instrumentation.runOnMainSync{
             val scene=v.content.scenes.getValue(0)
             assertTrue(v.restoreSnapshot(v.currentSnapshot().copy(mapId=0,x=scene.spawnX*16+8,y=scene.spawnY*16+8,
                 flags=v.currentSnapshot().flags+("opening.intro.seen" to true))))
-            assertTrue(v.saveHistoryResult());expected=v.currentSnapshot()
+            assertTrue(v.saveHistoryResult())
+            // Isolated changed-state fixture: unchanged AUTO deliberately
+            // coalesces with the latest manual snapshot (JVM covered).
+            assertTrue(v.restoreSnapshot(v.currentSnapshot().copy(money=v.currentSnapshot().money+1)))
+            expected=v.currentSnapshot()
         }
-        val started=SystemClock.elapsedRealtime()
         var automatic:SaveHistoryEntry?=null
         while(SystemClock.elapsedRealtime()-started<330000&&automatic==null){
             SystemClock.sleep(500)

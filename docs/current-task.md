@@ -5,7 +5,7 @@ status: IN_PROGRESS
 overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
-updated_at: 2026-10-06 12:00 北京时间
+updated_at: 2026-10-06 12:19 北京时间
 
 stable_version: v82 / 0.8.12-playable-r1-stable
 stable_source: c461e7c121b6f535d85e2a245b82be1f6e42d786
@@ -37,3 +37,5 @@ c59自由船/香榭136/雪莲治疗/玉泉172/火云89/西岐井成果保留。6
 历史原状态与失败详见docs/history/world-full01-c59-loader-checkpoint-20261006.md；同源冻结规则及发布证据仍原docs/android-ci.md/docs/delivery-status.md。
 
 12:06北京时间：c60 smoke37411637218/source94e9cae3实际ContentLoader与井事件完整事务/codec通过到测试第40行，旧c58 marker被compatibleContentVersion拒绝；分类DEVELOPMENT_SAVE_COMPATIBILITY_BUG，旧白名单漏56..59，不删断言。现补明确已知schema1 1..60，保留地图/角色/物品/剧情/位置完整校验并加未来/未知拒绝回归。AUTO/回档尚未执行，新App复测待原runner。
+
+2026-10-06 12:19 北京时间：独立smoke37412250645/source528a1b34真实ContentTest PASS；实际5分钟前台333.7秒测试FAIL，原AUTO与相同最近手动快照去重，测试未改变状态却断言必须有AUTO。TEST_HARNESS，不删去重保护；受控样本在手动后改变1两，再等待真实计时，JVM保留不变状态去重。UI回档/external cold尚未执行。磻溪action61 13→6/shared pending及三守卫action44已实现；84原CPU守卫/5局部JVM PASS，c60未启用下一批7/121/142，不能称新主线可玩。下一动作原development-smoke复测，同时完成三图同批导出。

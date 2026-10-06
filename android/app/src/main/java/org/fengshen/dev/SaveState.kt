@@ -240,6 +240,8 @@ data class SaveSnapshot(val contentVersion:String,val mapId:Int,val x:Int,val y:
         if(content.battle?.storyBattles?.values?.any{!it.validScopedContinuation(this)}==true)return false
         if(content.yangJoin()?.validPending(this)==false)return false
         if(content.jiangJoin?.validPending(this)==false)return false
+        if(!OriginalJiangJoin.validPanxiPending(this))return false
+        if(flags[OriginalJiangJoin.PANXI_PENDING]==true&&content.npcs.none{it.id=="rom.npc.7.4"&&it.originalTalk?.actionId==61})return false
         if(flags[OriginalJiangJoinDefinition(OriginalJiangJoin.EVIDENCE).pendingFlag]==true&&content.jiangJoin==null)return false
         if(content.sceneItemUses().any{!it.validPending(this)})return false
         for(originalId in listOf(0,1,14)){
