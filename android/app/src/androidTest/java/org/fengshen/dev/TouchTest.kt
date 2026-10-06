@@ -315,6 +315,25 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(before.inventory,v.currentSnapshot().inventory)
         }
         screenshot(v,"world-jiang-controlled-four-actor-item-targets-selection-only"+evidenceSuffix)
+        tap(v,center(v.battleItemBounds(HerbUse.ID)))
+        val medicine=GameView::class.java.getDeclaredMethod("battleItemLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
+        val dp=v.resources.displayMetrics.density;val font=v.resources.configuration.fontScale
+        assertTrue("Four-party target HP and two core medicine lines must remain visible",medicine.detail.h>=(14*font*1.25f+4)*2*dp)
+        val measured=android.graphics.Paint()
+        for(hero in fight!!.party){
+            val box=v.battleItemTargetBounds(hero.id)
+            measured.textSize=14*v.resources.displayMetrics.scaledDensity
+            assertTrue("Full medicine target name",measured.measureText(v.content.characterDefinitions.getValue(hero.id).name)<=box.w-16*dp)
+            measured.textSize=12*v.resources.displayMetrics.scaledDensity
+            assertTrue("Full medicine target HP",measured.measureText("HP ${hero.hp}/${hero.maxHp}")<=box.w-16*dp)
+        }
+        screenshot(v,"world-jiang-controlled-four-actor-item-selected-medicine"+evidenceSuffix)
+        val medicineScroll=center(medicine.detail);val medicineEnd=medicineScroll.first to medicineScroll.second-40*dp
+        send(v,MotionEvent.ACTION_DOWN,listOf(medicineScroll));send(v,MotionEvent.ACTION_MOVE,listOf(medicineEnd))
+        send(v,MotionEvent.ACTION_UP,listOf(medicineEnd))
+        hardwareButton(v,android.view.KeyEvent.KEYCODE_BUTTON_A)
+        assertEquals(0,fight!!.inputRevision);assertEquals(0,rng.draws)
+        assertEquals(before,v.currentSnapshot());assertEquals(before.characters,fight!!.party)
         tap(v,center(v.battleItemCloseBounds()))
         val beforeEnemy=fight!!.enemies.map{it.hp}
         repeat(3){i->

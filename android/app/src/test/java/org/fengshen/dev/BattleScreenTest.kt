@@ -31,6 +31,20 @@ class BattleScreenTest {
         assertNull(battleSceneLayout(Box(0f,0f,400f,240f),1f,2f,6,4))
         assertNull(battleSceneLayout(Box(0f,0f,660f,280f),1f,2f,6,4))
     }
+    @Test fun wideMedicineKeepsEveryTargetAndCoreEffectsAboveTheConfirmAction(){
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(font in listOf(1f,1.3f,2f))for(party in 3..4){
+                val scene=battleMedicineSceneLayout(safe,dp,font,party)!!;val l=scene.modal
+                assertEquals(party,scene.targets.size)
+                assertTrue(l.detail.h>=(14*font*1.25f+4)*2*dp)
+                val boxes=scene.targets+listOf(l.close,l.list,l.detail,l.primary)
+                for(b in boxes)assertTrue(inside(b,safe))
+                for(target in scene.targets){assertTrue(target.w>=48*dp&&target.h>=48*dp)
+                    assertTrue(target.y+target.h<=l.list.y)}
+                for(i in boxes.indices)for(j in i+1 until boxes.size)assertFalse(overlaps(boxes[i],boxes[j]))
+            }
+        assertNull(battleMedicineSceneLayout(Box(0f,0f,660f,318f),1f,2f,4))
+    }
     @Test fun currentActionPartyProjectionCannotShowLaterSettlementHp(){
         val hero=CharacterState("jiangziya",38,190000,1000,1608,151,235,109,63,124,151)
         val before=hero.copy()

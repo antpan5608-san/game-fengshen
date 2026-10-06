@@ -2311,11 +2311,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun battleHerbCount()=max(0,(inventory[HerbUse.ID]?:0)-(battle?.herbsConsumed?:0))
     private fun battleMedicines()=content.itemDefinitions.values.filter{(it.category=="medicine"||it.battleBindingUse!=null)&&
         ((inventory[it.id]?:0)>0||it.id==HerbUse.ID)}.map{it.id}.sorted()
+    private fun battleMedicineScene():BattleMedicineSceneLayout? {
+        if(selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}!=null)return null
+        return battleMedicineSceneLayout(ui.safe,resources.displayMetrics.density,
+            resources.configuration.fontScale,battle?.party?.size?:1)
+    }
     private fun battleItemLayout():TouchModalLayout {
+        battleMedicineScene()?.let{return it.modal}
         val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         val l=touchModalLayout(ui.safe,dp,font,0,0,false)
         val header=max(96f,(15f+12f)*font*1.25f+28f)*dp+
-            battlePartyTargetHeader(dp,font,battle?.party?.size?:1)
+            battlePartyTargetHeader(dp,font,if(selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}!=null)1 else battle?.party?.size?:1)
         val y=l.frame.y+header+8*dp;val bottom=l.frame.y+l.frame.h-8*dp
         return l.copy(list=l.list.copy(y=y,h=bottom-y),detail=l.detail.copy(y=y,h=max(1f,l.primary.y-8*dp-y)))
     }
@@ -2324,6 +2330,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun battleItemTargetBounds(id:String):Box {
         val party=battle?.party?:return Box(0f,0f,0f,0f);val i=party.indexOfFirst{it.id==id}
         if(party.size<=1||i<0)return Box(0f,0f,0f,0f)
+        battleMedicineScene()?.let{return it.targets[i]}
         val l=battleItemLayout();val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         return battlePartyTargetBoxes(l.frame,l.list.y,dp,font,party.size)[i]
     }
@@ -2348,11 +2355,22 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun drawBattleItems(c:Canvas,current:OpeningBattle){
         val l=battleItemLayout();val dp=resources.displayMetrics.density;c.drawColor(Color.BLACK)
-        touchText(c,"战斗物品",Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
-        touchText(c,"点列表查看 · 使用才提交",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
+        val scene=battleMedicineScene()
+        touchText(c,if(scene==null)"战斗物品"else"战斗物品 · 选择不消耗，使用才提交",
+            Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
+        if(scene==null)touchText(c,"点列表查看 · 使用才提交",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
         touchButton(c,l.close,"关闭")
-        if(current.party.size>1&&selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}==null)for(player in current.party)touchButton(c,battleItemTargetBounds(player.id),
-            "${if(battleItemTarget()?.id==player.id)"✓ " else ""}${heroName(player.id)} · HP ${player.hp}/${player.maxHp}")
+        if(current.party.size>1&&selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}==null)for(player in current.party){
+            val box=battleItemTargetBounds(player.id)
+            if(scene==null)touchButton(c,box,"${if(battleItemTarget()?.id==player.id)"✓ " else ""}${heroName(player.id)} · HP ${player.hp}/${player.maxHp}")
+            else{
+                touchButton(c,box,"",selected=battleItemTarget()?.id==player.id)
+                val font=resources.configuration.fontScale
+                battleLine(c,heroName(player.id),Box(box.x+8*dp,box.y+4*dp,box.w-16*dp,max(24f,17*font)*dp),14f)
+                battleLine(c,"HP ${player.hp}/${player.maxHp}",Box(box.x+8*dp,box.y+box.h-max(18f,14*font)*dp-4*dp,
+                    box.w-16*dp,max(18f,14*font)*dp),12f)
+            }
+        }
         c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
         for((i,id) in battleMedicines().withIndex()){
             val row=l.row(i,battleItemListScroll);overlayPaint.color=if(id==selectedBattleItem)0xff244d49.toInt() else 0xff18252e.toInt()
@@ -2365,7 +2383,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val binding=item?.battleBindingUse!=null
         val enabled=item!=null&&if(binding)current.bindingAvailable(inventory[item.id]?:0,item,flags["rom.inventory.special.${item.originalId}.used"]==true)
             else target!=null&&current.herbAvailable(target.id,inventory[HerbUse.ID]?:0,item)
-        val lines=if(id==null)listOf("选择物品后查看效果与合法目标", "只浏览、取消或滑动不会消耗物品") else if(binding)listOf(
+        val allLines=if(id==null)listOf("选择物品后查看效果与合法目标", "只浏览、取消或滑动不会消耗物品") else if(binding)listOf(
             "${current.inputHero?.id?.let{heroName(it)}?:"当前没有合法角色"} · 本场${item?.battleBindingUse?.targetLabel}",
             "困住${item?.battleBindingUse?.targetLabel}，解除原伤害保护", "使用耗本次行动；数量保留",battleMedicineReason(id),
             "取消无副作用；敌人按原顺序行动")else listOf(
@@ -2373,6 +2391,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             if(id==HerbUse.ID)"HP +50 · 不超过上限" else "效果尚未实现",
             if(id==HerbUse.ID)"满HP仍消耗1份" else "当前不能使用",
             battleMedicineReason(id),"取消不消耗；敌人按顺序行动")
+        val lines=if(scene!=null&&id!=null&&!binding)allLines.drop(1) else allLines
         c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
         var y=l.detail.y-battleItemDetailScroll
         for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp

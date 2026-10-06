@@ -87,3 +87,23 @@ fun battleEnemySceneLayout(cell:Box,dp:Float,fontScale:Float,compact:Boolean,sin
     val width=max(1f,cell.x+cell.w-6*dp-x)
     return BattleEnemySceneLayout(graphic,Box(x,y,width,labelH),Box(x,cell.y+cell.h-8*dp,width,4*dp))
 }
+
+/** Wide four-party medicine targets share one row, leaving the effect readable. */
+data class BattleMedicineSceneLayout(val modal:TouchModalLayout,val targets:List<Box>)
+fun battleMedicineSceneLayout(safe:Box,dp:Float,fontScale:Float,partyCount:Int):BattleMedicineSceneLayout? {
+    require(dp>0&&fontScale>0&&partyCount in 1..4)
+    val l=touchModalLayout(safe,dp,fontScale,0,0,false)
+    if(partyCount<3||l.frame.w<800*dp)return null
+    val pad=8*dp
+    val header=max(l.close.h+2*pad,(15*fontScale*1.25f+16)*dp)
+    val cardH=max(52f,26*fontScale+18)*dp
+    val cardW=(l.frame.w-(partyCount+1)*pad)/partyCount
+    val targets=(0 until partyCount).map{i->Box(l.frame.x+pad+i*(cardW+pad),l.frame.y+header,cardW,cardH)}
+    val y=l.frame.y+header+cardH+pad
+    val detailH=l.primary.y-pad-y
+    // Target HP/max is visible in the cards; the two core effect/cost lines
+    // must be visible together. Other conditions keep the existing scrolling.
+    if(detailH<(14*fontScale*1.25f+4)*2*dp)return null
+    return BattleMedicineSceneLayout(l.copy(list=l.list.copy(y=y,h=l.frame.y+l.frame.h-pad-y),
+        detail=l.detail.copy(y=y,h=detailH)),targets)
+}
