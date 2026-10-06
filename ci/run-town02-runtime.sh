@@ -123,6 +123,7 @@ if [[ "$stage" == development-smoke ]]; then
     adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion,org.fengshen.dev.ContentTest#testC60FrozenDependenciesAndMedicalPartySave,org.fengshen.dev.ContentTest#testJiamengSavedActorsDialogueAndManualReturnFixture org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
     cat artifacts/town02-runtime/development-content-loader.txt
     grep -Eq 'OK \([0-9]+ tests?\)' artifacts/town02-runtime/development-content-loader.txt || exit 1
+    run_test testTouchUxSelectionScrollAndAtomicEquipment false
     if [[ "$development_scope" == full ]]; then
         run_test testControlledSaveHistoryRealForegroundFiveMinuteAutoSave false
         run_test testControlledSaveHistoryCorruptionAndRetentionProtectActiveAndMigration false

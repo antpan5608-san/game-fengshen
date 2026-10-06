@@ -769,12 +769,19 @@ class TouchTest:IsolatedGameTestCase(){
     }
     private fun scrollToItem(v:GameView,id:String){
         val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
-        for(i in 0..60){
+        val layout=GameView::class.java.getDeclaredMethod("modalLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
+        val distance=minOf(list.h*.64f,64*dp)
+        val itemCount=v.currentSnapshot().inventory.count{it.value>0}
+        // The expanded catalogue needs more travel than the original fixed
+        // 60 gestures. Derive a finite budget from the real shared geometry.
+        val budget=maxOf(60,kotlin.math.ceil(layout.maxScroll(itemCount)/distance).toInt()+4)
+        for(i in 0..budget){
             if(v.panelItemBounds(id).h>=48*dp)return
-            val distance=minOf(list.h*.64f,64*dp)
             val down=Pair(list.x+list.w*.5f,list.y+list.h*.82f);val up=Pair(down.first,down.second-distance)
             send(v,MotionEvent.ACTION_DOWN,listOf(down));send(v,MotionEvent.ACTION_MOVE,listOf(up));send(v,MotionEvent.ACTION_UP,listOf(up))
-        };fail("Item $id never reached an accessible row: row=${v.panelItemBounds(id)}, list=$list, view=${v.width}x${v.height}, density=$dp, font=${v.resources.configuration.fontScale}")
+        }
+        screenshot(v,"touch-ux-scroll-failure")
+        fail("Item $id never reached an accessible row: row=${v.panelItemBounds(id)}, list=$list, items=$itemCount, budget=$budget, layer=${v.layer}, active=${v.active}, focused=${v.focused}, view=${v.width}x${v.height}, density=$dp, font=${v.resources.configuration.fontScale}")
     }
     private fun scrollToShopItem(v:GameView,id:String){
         val list=v.panelListBounds();val dp=v.resources.displayMetrics.density
