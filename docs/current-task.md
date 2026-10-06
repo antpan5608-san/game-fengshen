@@ -9,12 +9,12 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v84 / 0.8.14-c60-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: c61，APP_VERIFIED_DEBUG_CONTROLLED_SIGNED_PENDING_NOT_PUBLISHED
+current_candidate_version: c61，SIGNED_APP_LEGACY_FIXTURE_FAILED_RETRY_PENDING_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: 四人武器44缺命中表的真实崩溃已修复；DEBUG37511781139已实际通过全部姜局部门禁。下一步同源签名v85的21 Content/旧14+姜4门禁，未签名/未发布；完整剧情/UI及外部验收仍未完成。
+first_real_blocker: 首次签名37513917589有20/21 Content通过，c1测试误保留依赖战斗的姜事件而移除combat，被生产guard正确拒绝；仅修合成fixture并增新事件缺战斗拒绝，待同源签名复测，未发布。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
@@ -110,3 +110,9 @@ source8101fee / DEBUG37499759518失败：真实冷启before/after完整JSON equa
 正式候选规划v85/0.8.15-jiang-personal：保留内容导出基底27，实际升级基底84/704fc991/37469698895/fad6f4d；c61 manifest37f0f7bb/388文件/72依赖图，旧14个人门禁加姜codec/触控入队/外部cold/四人战斗4项，21 Content测试。两个原录制与cold-boundary SHA必须留在签名runtime receipt并复核；不能用DEBUG替代。同源main/原审核与签名/仅两对象/公网完整字节/postflight保持，尚未签名或发布。
 
 本地4B本轮0片段/服务身份不可用，管理窗口已实际只读核Ollama停止、GPU训练服务占用5212MiB并持锁；未抢占训练。Codex亲自覆盖所有未审代码并登记codex_fallback，不能写4B审查通过。实际旧胜利摘要四人内容有裁切，已列入下一界面批次；当前只关闭此次崩溃/局部布局能力，不关闭全界面或累计欠账。长期目标ACTIVE，签名发布后继续。
+
+## c61首次签名真实失败与兼容样本修正（2026-10-07，北京时间）
+
+source95607f417eeef0ade79288df11525aa5d31c81fb / run37513917589：build SUCCESS，411 release JVM/89 suites零失败错误跳过；正式APK85/0.8.15-jiang-personal，32,481,873字节/SHA58aff3da918b095e1e148054ee738b4166e5f83ac9df67604465baa2516a029a，原签名/包名/精确c61内容独立verify通过。runtime真实校验升级基底84、导出旧存档、同签名覆盖安装完成；Content21有20通过、1 ERROR于testPreviousContentWithoutCharacterNameStillLoads：合成c1 fixture删除combat却残留originalJiangJoin，Content.kt1074正确拒绝“Jiang physical rules missing”。后续upgrade一致/18个人门禁未运行，不得写签名App PASS或发布。
+
+仅让c1 fixture去掉其不存在的后期事件，并断言无Jiang能力；新增当前c61启用事件而缺combat必须原guard拒绝的反例。生产guard/旧档迁移/资源pin和21原方法均保留。4B新请求0片段/超时，Codex亲自核此一个文件；修正后仍须新冻结源码和同签名完整21+18门禁，不复用失败APK验收，v85尚未发布。下一UI只读检查发现当前全部区域上下文最多6敌、4队员；536组/20Boss是静态依赖，不是正常通关。

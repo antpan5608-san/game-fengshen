@@ -349,6 +349,14 @@ class ContentTest:IsolatedGameTestCase(){
             val failure=runCatching{ContentLoader.load(fake)}.exceptionOrNull()
             assertNotNull(failure);assertTrue(failure!!.message.orEmpty().contains("weapon hit lookup"))
         }
+        // An enabled c61 invitation cannot be packaged without its combat rules.
+        // Legacy compatibility below removes the later feature, not this guard.
+        val noCombatManifest=JSONObject(original.read("manifest.json").toString(Charsets.UTF_8))
+        noCombatManifest.getJSONObject("files").remove("combat.json")
+        val noCombat=object:ContentSource{override fun read(name:String)=if(name=="manifest.json")
+            noCombatManifest.toString().toByteArray(Charsets.UTF_8) else original.read(name)}
+        val noCombatFailure=runCatching{ContentLoader.load(noCombat)}.exceptionOrNull()
+        assertNotNull(noCombatFailure);assertEquals("Jiang physical rules missing",noCombatFailure!!.message)
         assertEquals(listOf(1,2,3,4,5,6,8,9,10).flatMap{caller->
             listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
         assertMedicalPartySave(c)
@@ -1241,6 +1249,7 @@ class ContentTest:IsolatedGameTestCase(){
         // c1 has neither scoped combat nor later automatic scene scripts/actors.
         // Keep the fixture coherent instead of retaining a script without its actor.
         scene.remove("sceneStories")
+        scene.remove("originalJiangJoin") // c1 also predates the combat-dependent invitation.
         val oldNpcs=scene.getJSONArray("npcs");val c1Npcs=org.json.JSONArray()
         for(i in 0 until oldNpcs.length())if(!oldNpcs.getJSONObject(i).optBoolean("scriptedActor",false))
             c1Npcs.put(oldNpcs.getJSONObject(i))
@@ -1267,6 +1276,7 @@ class ContentTest:IsolatedGameTestCase(){
         val content=ContentLoader.load(older)
         assertEquals("nezha",content.playerNames["nezha"])
         assertNull(content.battle)
+        assertNull(content.jiangJoin)
         assertTrue(content.sceneStories.isEmpty())
         assertFalse(content.npcs.any{it.scriptedActor})
     }
