@@ -8,6 +8,7 @@ description: 在Fengshen当前授权的内容迭代或地图批量接入中复�
 先读AGENTS.md及docs/current-task.md；当前任务/版本/欠账不保存在skill。
 需要本轮范围、已审核基底构建run_id与APK SHA、可信receipt及内容pin。
 资源获取按AGENTS.md最新授权；不含凭据，不扩展任务或发布范围。
+当前任务若为本地迁移交接，仅保存公开成果与资源索引；不调用下列inspect/构建/发布触发命令，不继续游戏开发。已运行CI保留，私有原始输入通过安全入口另行迁出。
 
 # 已验证方法
 

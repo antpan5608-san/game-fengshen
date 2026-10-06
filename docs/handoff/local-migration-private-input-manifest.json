@@ -1,0 +1,3710 @@
+{
+  "status": "NOT_EXPORTED_TO_LOCAL_COMPUTER",
+  "files": [
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well-ppu.bin",
+      "size": 16384,
+      "sha256": "746429f54e308972db71d22b2784610144e9243fa8e094a073b288f285b12c45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well-ram.bin",
+      "size": 2048,
+      "sha256": "f90b718370471054db146e39fb3c6196d4f009840e0cb8fb6e1e2fa0a947275c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well-sram.bin",
+      "size": 2048,
+      "sha256": "c35bb8b29170fe751e09821de125573adc78a8dd2aaa6dbb27f08dd1711fcefe"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well.fc8",
+      "size": 73168,
+      "sha256": "6fac1b97c1e3027177da963fc49b5a980516bce6acba5bce1f3a9c36e9a33b8f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/00-after-real-well.png",
+      "size": 3559,
+      "sha256": "f39e2dadaa58bae0e19b49eceab3f2b58a4f9b487f0fc37a89c703f2e59ce5c2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge-ppu.bin",
+      "size": 16384,
+      "sha256": "746429f54e308972db71d22b2784610144e9243fa8e094a073b288f285b12c45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge-ram.bin",
+      "size": 2048,
+      "sha256": "46e48ddf2108ba7d05ae542d2bbe8a6225daecf19150d282d6dd707c2913bde4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge-sram.bin",
+      "size": 2048,
+      "sha256": "5dd49839dbc98fe063eaa78300aa6770e8a30023dee25d80e942d7e489cff01e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge.fc8",
+      "size": 73168,
+      "sha256": "3e0aa49452200dd07ee909b183224e05d1720342a669896fa34668680fa04181"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/01-controlled-village-edge.png",
+      "size": 3629,
+      "sha256": "8ce099da67da5dab65ac4977e426d42e53c4392deee2da1d3aa1c8acc5d239cc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return-ppu.bin",
+      "size": 16384,
+      "sha256": "cd34f573a9d4698d317201ea44446f636eaf9367b8f34cde5c14979e7e450142"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return-ram.bin",
+      "size": 2048,
+      "sha256": "bfee99d3f3b47959698848e891af94fcc042cab8a5ee171ad9064d3cb18ab011"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return-sram.bin",
+      "size": 2048,
+      "sha256": "4038ff36ca29a5bad6ef197d17156884b8d989c466b201e106ebca1f7678d6de"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return.fc8",
+      "size": 73168,
+      "sha256": "4d2f5d2e6c56854adf50df5eb2b6f1c1f14ee1d39f3fce27cf87577fe8a87a41"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/02-real-village-return.png",
+      "size": 3784,
+      "sha256": "7f6e5594f4bbd7170c96a43b60e018943f5c243f83332f71ded63d90f551bad6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi-ppu.bin",
+      "size": 16384,
+      "sha256": "cd34f573a9d4698d317201ea44446f636eaf9367b8f34cde5c14979e7e450142"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi-ram.bin",
+      "size": 2048,
+      "sha256": "e4e2957f11df68b8c2831809f59e105fe72307a420ead32af6eeb0cc2d174a2a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi-sram.bin",
+      "size": 2048,
+      "sha256": "79ba8ebde7ad8c271f7befc3e4d66730350639d35af8c10c5c5d1ed080189113"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi.fc8",
+      "size": 73168,
+      "sha256": "ba72ab4f40a5aab8ed66c833f02bcc7281af7e7c545a27b4861bf651999eea6b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/03-controlled-before-panxi.png",
+      "size": 3779,
+      "sha256": "d1ac3e796d350d49e69bd13d28dcce5e312b31ed0d82d06c9d1d98fa29fa051b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry-ppu.bin",
+      "size": 16384,
+      "sha256": "fee2227f3913585d2dff4334b2e6f627e1adc6a755748463c1658e06cb06b3d8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry-ram.bin",
+      "size": 2048,
+      "sha256": "e6fc94c49f72c4fc8abc4bfde7b79e81cd569d0a3b5d9e9810fc1362287ab415"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry-sram.bin",
+      "size": 2048,
+      "sha256": "d4aaf9314b19fa3d9a61fba9708d307fbad547b2b2de43b332c84f1d4de3b97e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry.fc8",
+      "size": 73168,
+      "sha256": "e05773984d8bd49a4ddfb268923630aadfe91f0b85761feadb5f4274934bd80f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/04-real-panxi-entry.png",
+      "size": 2977,
+      "sha256": "cc7e3f9b267df1e0e2399c0cc9629bd2b35ac64ddf9d27ae7cf9c9481986188e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman-ppu.bin",
+      "size": 16384,
+      "sha256": "fee2227f3913585d2dff4334b2e6f627e1adc6a755748463c1658e06cb06b3d8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman-ram.bin",
+      "size": 2048,
+      "sha256": "83aafb5b17fbf7a6f52fd5b0b27225c97c859d2e2db8c05d70943a5da7ea17d5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman-sram.bin",
+      "size": 2048,
+      "sha256": "e6b2b38e9fd308323f15145a6d08c94cc0d305253a6fc762294838e41c04c491"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman.fc8",
+      "size": 73168,
+      "sha256": "9f88bb605aa277ed70b2b3262be8abfdf83212afc6525fbf5c710990958f58de"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/05-controlled-front-fisherman.png",
+      "size": 2965,
+      "sha256": "e0418e80034f021049b58eadc3961567c0116b6632c0109d24abec887ddd447b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman-ppu.bin",
+      "size": 16384,
+      "sha256": "fee2227f3913585d2dff4334b2e6f627e1adc6a755748463c1658e06cb06b3d8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman-ram.bin",
+      "size": 2048,
+      "sha256": "2b7480bb9376124f058600456a0e1f9ffc95247f8e627f317e76dcfba97b6bdb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman-sram.bin",
+      "size": 2048,
+      "sha256": "fade1c5f04d1c0d47fcdd985f5ae6fda53491bb4306d3d482747dfe337bdfddb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman.fc8",
+      "size": 73168,
+      "sha256": "e3f5481d9293a07eb79d53d22b5d762a47f352e7cf27b5b1483c76a864cf91f8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/06-real-face-fisherman.png",
+      "size": 2962,
+      "sha256": "fd4b1d2413e68de28ce134efee25432a4ef6a8b4c23d2c7049c5db92036c8e9f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/done.txt",
+      "size": 108,
+      "sha256": "11b7e63154c201fad839e6c337e3bf5d0569381e890e608012f45caeaf9cca7a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/fceux.log",
+      "size": 1460,
+      "sha256": "9428fecaf46879e4fedcaf19f26fbd55395f5c4361e2d1ea397ca0229b607676"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A-ppu.bin",
+      "size": 16384,
+      "sha256": "8593d870bcf09cfb64c244a82303a2c21628f8e894268cf4ea5334f1a21581a6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A-ram.bin",
+      "size": 2048,
+      "sha256": "076e6367b49d761273e2e48963ec97950599a777a050e1d69f414807fb8b24cc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A-sram.bin",
+      "size": 2048,
+      "sha256": "f8281c0913612a869b4907d3230f06266d12ce4f2f17500d1e881ccca90e23b1"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A.fc8",
+      "size": 73168,
+      "sha256": "4ecd2dad5b580661169984316512fba9ad76d4c0c8cfd5d3e23d96c7d6e9fbd0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-01-A.png",
+      "size": 3323,
+      "sha256": "16e58c0caf339d07660c742fabf85aab055ef678ef9797cf9fb9031658fffeb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A-ppu.bin",
+      "size": 16384,
+      "sha256": "3ba43f047974ebbc2bb450af5e26d96f7f740c74e4654e56f1ee4534412699de"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A-ram.bin",
+      "size": 2048,
+      "sha256": "9325572d31fb167f6c91b3b1ab7c93431b774cf98c418c924d355074e348b086"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A-sram.bin",
+      "size": 2048,
+      "sha256": "96070cd7901a9b2d7fab550b491386744fdaa809745746459b8e1b26e83fe5e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A.fc8",
+      "size": 73168,
+      "sha256": "854dff206518e5e0394bdc088981c001e8dd1f0d7d562780294a964b1930aee5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-02-A.png",
+      "size": 4145,
+      "sha256": "8ae54dd11f5995fb0a18333f6f30d5659952628b13274d7962c605e2b74763b0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A-ppu.bin",
+      "size": 16384,
+      "sha256": "dc108337597b13deaf6dd40ea67736286899ee72998633d25460c675fb504c5e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A-ram.bin",
+      "size": 2048,
+      "sha256": "f6b5b3abef32225b918fcda7c0457b236c6185495ed147065d5f52675459ce47"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A-sram.bin",
+      "size": 2048,
+      "sha256": "bc93810177f84bdda6b825da25367a4e858126878f5d8963abd8e1b937eb7f2f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A.fc8",
+      "size": 73168,
+      "sha256": "d18903f676f7945c44def2efb6619cc92a7663b90eefb817dd05cf78e78f1fbe"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-03-A.png",
+      "size": 3323,
+      "sha256": "16e58c0caf339d07660c742fabf85aab055ef678ef9797cf9fb9031658fffeb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A-ram.bin",
+      "size": 2048,
+      "sha256": "22a5c16ceb9bb1bd9e750ab20fee338e239ae422824ba3b7b76c28ce772d0faf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A-sram.bin",
+      "size": 2048,
+      "sha256": "2afb40b7519d445af67ad909487f5d76c562a7aa9c7c49124c618a193492cbdc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A.fc8",
+      "size": 73168,
+      "sha256": "21a32b4d11119be2e8509bdec941fee0a731f82622d969e641c754f8bf185278"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-04-A.png",
+      "size": 3646,
+      "sha256": "4db3aada9c614fe92c5c929f8167f4b6c2123c66690e40cef00a207793c4a2e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A-ram.bin",
+      "size": 2048,
+      "sha256": "e1a7a972f021f762e67f85711b8cab67dd17d96bdbc1f240282a206f5ccf1961"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A-sram.bin",
+      "size": 2048,
+      "sha256": "c8435673c4478fd452831849d29ed3e533ac2cd96027790331f70fb4c54e7dc1"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A.fc8",
+      "size": 73168,
+      "sha256": "aff9c80e04a278bfdde479c8595518a4f1ed9d26fdd9dbf7952ccf0a69ded354"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-05-A.png",
+      "size": 4474,
+      "sha256": "87092a1f897d6c202e0c53fbf78dbb6bbdf925f4bc1b54d70250bc84055a442b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A-ram.bin",
+      "size": 2048,
+      "sha256": "5b16e7ba5d00ecb4f490e2c6c27fba50e01d0ab2e8d5af2d5d2b20166f7d24bb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A-sram.bin",
+      "size": 2048,
+      "sha256": "310db2384b09e00e8d46ebf1fc6268d8daacfe862fb07434cc50f9cff7dd140e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A.fc8",
+      "size": 73168,
+      "sha256": "0998a8264d9e216badaf361cae919deca2f8ba5ce5d609a62cbb47aa79e1406e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-06-A.png",
+      "size": 4887,
+      "sha256": "eeffa747adef72cffb92ff44789b2f5f5ae2c882b28076fa4b26952247479bd4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A-ram.bin",
+      "size": 2048,
+      "sha256": "3e3cee20bd691a5cae2b6ffc44a69665800b3fa2fcff09c410b3e95650cf52a8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A-sram.bin",
+      "size": 2048,
+      "sha256": "f45c9998c0a026259a1fbc7d2193f72ea2c81b5ccb2f348e0f5484c0c2d21314"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A.fc8",
+      "size": 73168,
+      "sha256": "14ab3351313f3d95f4ac2e458c9bfd78f5aadeaae2194c8ef8f7acb0ba666e10"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-07-A.png",
+      "size": 4474,
+      "sha256": "87092a1f897d6c202e0c53fbf78dbb6bbdf925f4bc1b54d70250bc84055a442b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A-ram.bin",
+      "size": 2048,
+      "sha256": "1dc80f2f94c994dab162ddab86ee5a76a15e1f5a178690b383bde6c3256a675e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A-sram.bin",
+      "size": 2048,
+      "sha256": "2d3844a3202297e3dcc2a498aa918943a59587731452af7be591ddafd13031b6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A.fc8",
+      "size": 73168,
+      "sha256": "8f4998e3593cdecde522bd34a9c2fc30103a09e9f4170f975e44cf87acff716a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-08-A.png",
+      "size": 3646,
+      "sha256": "4db3aada9c614fe92c5c929f8167f4b6c2123c66690e40cef00a207793c4a2e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A-ram.bin",
+      "size": 2048,
+      "sha256": "18df8d06020adc63c40a59c7ccd0d502f80b5d8c4efb2678a92fbe3ff1cdce23"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A-sram.bin",
+      "size": 2048,
+      "sha256": "3e6d92e672865332ad0b8820dfb0cf9fa6d057f926dd90c220931179e351b8d0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A.fc8",
+      "size": 73168,
+      "sha256": "8c4e06e3bd3e730b70632680a1c9fdb5683a9f3c1160044554f2192e6ed9debc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-09-A.png",
+      "size": 4474,
+      "sha256": "87092a1f897d6c202e0c53fbf78dbb6bbdf925f4bc1b54d70250bc84055a442b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A-ram.bin",
+      "size": 2048,
+      "sha256": "902b4fe8ca7336a8406da3401313166521b55fd6aba6dcb5a177559d3490bf24"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A-sram.bin",
+      "size": 2048,
+      "sha256": "432b33dfe964b91560a449129146e0f622a437cb2a17406ee9c4044e8d0b4bcb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A.fc8",
+      "size": 73168,
+      "sha256": "6835b913bf7bdd93c5a8ec7c58a87cbd8a64cc4fd3f7cb5cbc5b94aa7d8290c2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-10-A.png",
+      "size": 4897,
+      "sha256": "c7a01bf8c7f99f1f5eae0d5ec1218fc844c009fe90a5e4bae3daae56e192d958"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A-ram.bin",
+      "size": 2048,
+      "sha256": "6ac70a2b16b038b7eb382defef4fcd2a2f1582e4281debac3cdce2a6994d2f71"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A-sram.bin",
+      "size": 2048,
+      "sha256": "cbd69ed050956a6b0ef8bea16fec0d1aaa803f0d21c2c19c9ed698fec062368d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A.fc8",
+      "size": 73168,
+      "sha256": "3d1bc2297d040fb4f86c0222af0c05a915d07f61fa6707c4f2497cc230597bd9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-11-A.png",
+      "size": 4480,
+      "sha256": "c6e3541e8bd159e3280ff55424546997d41e17cc1e381d09b29192abb47b09bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A-ram.bin",
+      "size": 2048,
+      "sha256": "1d4a276ff94a3d5160c6adf6e16a7b461903980bc3be2b09c85bbbe85da72ebf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A-sram.bin",
+      "size": 2048,
+      "sha256": "c01b5e6b716b91966eacd2f269040df3f18d9be6c1c3fa0c57bd06311daf8438"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A.fc8",
+      "size": 73168,
+      "sha256": "361e225a126a35b1cf1e9eaf3dc1104fe885d10f14763294f27a3d444bdceb6f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-12-A.png",
+      "size": 3663,
+      "sha256": "faa95346fdbefd1d44871c0a623506e8a98b1f6dee39a606432f3595718dba3d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A-ram.bin",
+      "size": 2048,
+      "sha256": "6438025b766dab44c94edd1ad38b58888dea48ef827d7d92713b3958bb4a65e3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A-sram.bin",
+      "size": 2048,
+      "sha256": "e7716a7cf9f52faebfcf8fa597bb2aaf7cfe44d1e1185a7b24cfd7057f8ec4e3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A.fc8",
+      "size": 73168,
+      "sha256": "21eececf7bc86927010a667fbd48aba3818a5a46da7c1944031a472035ca45c7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-13-A.png",
+      "size": 4480,
+      "sha256": "c6e3541e8bd159e3280ff55424546997d41e17cc1e381d09b29192abb47b09bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A-ram.bin",
+      "size": 2048,
+      "sha256": "d6b3dc17761ace269b0afe254b5d152fb5e8a47508b9cdb80af74fb5fbf950cf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A-sram.bin",
+      "size": 2048,
+      "sha256": "060cd9d775535fbd62e653feb07b5bc7051df36db5a4c8cfe8300e8f5bb01548"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A.fc8",
+      "size": 73168,
+      "sha256": "433264727ff028110dcc89706718410a281c0b38dbf4a17347c8f983c445e488"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-14-A.png",
+      "size": 4898,
+      "sha256": "31f3371891c8b2b73433c9b28f58d64770b0b4b51e4d7607b02bf8d5824eb428"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A-ram.bin",
+      "size": 2048,
+      "sha256": "4574fe6637bf9dc00806161f5437ac0a70c996f7657528940b82b4a54f713bea"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A-sram.bin",
+      "size": 2048,
+      "sha256": "bfe17b5dfe77a60895d97fe19d5f55ef3a197373db8bd159e5130085c250b4c0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A.fc8",
+      "size": 73168,
+      "sha256": "7aec3b151cea792a79d99afa53c0fbb0457d6a2bf108f17d6e6b568cca1b82d5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-15-A.png",
+      "size": 4480,
+      "sha256": "c6e3541e8bd159e3280ff55424546997d41e17cc1e381d09b29192abb47b09bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A-ram.bin",
+      "size": 2048,
+      "sha256": "7cf5d900a4f6395e22bd7b4f7da0968f1327e3a79e0b2a01bd8daa0a824c5132"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A-sram.bin",
+      "size": 2048,
+      "sha256": "297872b706f1fdb71cd62f7f3294a2f6dc9ad622f53549e5e01df59fecf5d695"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A.fc8",
+      "size": 73168,
+      "sha256": "8b27855fc4426bfd1cccd407c286cdac40df9c36530e9eb03795cc3f6fca79a5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-16-A.png",
+      "size": 3658,
+      "sha256": "5e6d6ca7dbc3e719d1174648db697c88ab565b22609f446c5eb97af51485fc4b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A-ram.bin",
+      "size": 2048,
+      "sha256": "b47624e9d056e5fd8e3f78c0c892c55d7a4bfe55615e331479a53c7b0610ad54"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A-sram.bin",
+      "size": 2048,
+      "sha256": "5d812f96e424dbe5e6025681f401603fac5465360eea563c93970b78c47d2b53"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A.fc8",
+      "size": 73168,
+      "sha256": "3a54c214ef211cb3dccd7079807ef7a8fe2e3fd37342d3a0b74de0d6c6c17faf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-17-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A-ram.bin",
+      "size": 2048,
+      "sha256": "f6157202f113fae3ef22b5de4efc9030a9a45fcc40c03924dbae158738bbeca8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A-sram.bin",
+      "size": 2048,
+      "sha256": "704fcee2d2f5774d31804f06ab1db3226302ebdf03d00d2ad4586452463c4157"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A.fc8",
+      "size": 73168,
+      "sha256": "46d8d57048f6f3b0d48bf93f654c88427caef965d3736c40985335f1a86caba4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-18-A.png",
+      "size": 4898,
+      "sha256": "382f38639722e313f6518a771053fdba7d174dfaf1d91ae600fac8b23a6ce927"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A-ram.bin",
+      "size": 2048,
+      "sha256": "94924fafdd1e89e9c688dd8956c0bd2f37cf43a4713c911ab7ffd88c7cf40e20"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A-sram.bin",
+      "size": 2048,
+      "sha256": "3af5a0e88cf5f24dda9d38a088596a5e71ee7d706f2088d6cca2d38887333b64"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A.fc8",
+      "size": 73168,
+      "sha256": "4fb403abac30410ca9d014b1bdf1cecb3a349f4f36016734b81d3492865e497c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-19-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A-ram.bin",
+      "size": 2048,
+      "sha256": "5005762fe2f91814814e0bbd55e6581c8f8ec15f76c03404e3b4b2a3059f8f24"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A-sram.bin",
+      "size": 2048,
+      "sha256": "9a1475a6ba222a51a191ad74fc42bbf05fb8605d6b5c99cc0370d97ff2d96a80"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A.fc8",
+      "size": 73168,
+      "sha256": "c94a12cd9f3c7fa590d749d2f68ab1ef1e21826f2dd4c304ce6100f40b274a4e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-20-A.png",
+      "size": 3658,
+      "sha256": "5e6d6ca7dbc3e719d1174648db697c88ab565b22609f446c5eb97af51485fc4b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A-ram.bin",
+      "size": 2048,
+      "sha256": "cb0d8c892a3ad4f6ee7e176da8b2a364efb876ce25a970ef7ad30cbdc0156aa0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A-sram.bin",
+      "size": 2048,
+      "sha256": "bed6bc5ef3908f9bb3d256eee41c01f3f22f5c66cacf1dfec1ad2ff4d15878e7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A.fc8",
+      "size": 73168,
+      "sha256": "2c86155453f2dd4b51137216cc3ed3a37913c862c7d0ff13c17e3bdfaa1379ea"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-21-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A-ram.bin",
+      "size": 2048,
+      "sha256": "b1c9d5137dccb44d06542e7de5136d6fe257ec1c4363f6da8fa3bade13f734f2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A-sram.bin",
+      "size": 2048,
+      "sha256": "01ddfec7f9325e8a0add5e6028868cfbdd70bd3934fcd1e1bd50cc5e00f1981e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A.fc8",
+      "size": 73168,
+      "sha256": "e89884ad2fda22aa470bebe0760f53366ac85e7dcd0d07ab88ffad0419754bb7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-22-A.png",
+      "size": 4898,
+      "sha256": "4ec2980508e91ab09e846af442567d4ebe8b35f4249bfc8c8a8ed85f62d354f4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A-ram.bin",
+      "size": 2048,
+      "sha256": "c08a39ade8ad65e82459d404c2dd06705ea88ef7338b7c8631d73bc6ea10b6cd"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A-sram.bin",
+      "size": 2048,
+      "sha256": "96070cd7901a9b2d7fab550b491386744fdaa809745746459b8e1b26e83fe5e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A.fc8",
+      "size": 73168,
+      "sha256": "8c01eea51d4958909944e376feea9cac9db8e82b6639d3e8bc0ce6757904b4d6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-23-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A-ram.bin",
+      "size": 2048,
+      "sha256": "b1df9ca272a6d9b11b467f1dde53a9e126ab53edccfd147b60946bca26b2653f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A-sram.bin",
+      "size": 2048,
+      "sha256": "bc93810177f84bdda6b825da25367a4e858126878f5d8963abd8e1b937eb7f2f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A.fc8",
+      "size": 73168,
+      "sha256": "c5ba7a66d822f63a09ab751840232ced53ce53d5561c6314986765fe6121f895"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-24-A.png",
+      "size": 3658,
+      "sha256": "5e6d6ca7dbc3e719d1174648db697c88ab565b22609f446c5eb97af51485fc4b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A-ram.bin",
+      "size": 2048,
+      "sha256": "bf50a1d88e0f7a94fdcb1dd5c875c6fac5105d530e96fdece3ec062a6273a2c0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A-sram.bin",
+      "size": 2048,
+      "sha256": "2afb40b7519d445af67ad909487f5d76c562a7aa9c7c49124c618a193492cbdc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A.fc8",
+      "size": 73168,
+      "sha256": "d48582853b8ceb3a577d2d2a20acced98018513f25508413278b3f824a6e6245"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-25-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A-ram.bin",
+      "size": 2048,
+      "sha256": "f126520be74f71810989d4eb2f6da49571fbcd213f5dcb3a8809a457395a6578"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A-sram.bin",
+      "size": 2048,
+      "sha256": "c8435673c4478fd452831849d29ed3e533ac2cd96027790331f70fb4c54e7dc1"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A.fc8",
+      "size": 73168,
+      "sha256": "633d28223fe4da87ba0da08abadc3a81b3f565d04f0079643c7f1323af7acd0a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-26-A.png",
+      "size": 4900,
+      "sha256": "ed3310944eb33136b60aa4dea0a0e978c04ad064aa7587d7603b8cf9d134a2cc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A-ram.bin",
+      "size": 2048,
+      "sha256": "7a97c1045e73b6c45dc72f19fd3aa7152b761c4902d70bd46b7d0f94087afa45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A-sram.bin",
+      "size": 2048,
+      "sha256": "310db2384b09e00e8d46ebf1fc6268d8daacfe862fb07434cc50f9cff7dd140e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A.fc8",
+      "size": 73168,
+      "sha256": "1096df8c3d2dcae3b361cc98bcef5fc01214a89f6735fd1f143b0410dbe9ff24"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-27-A.png",
+      "size": 4482,
+      "sha256": "e5dc50ae172b48cb7350f99759c133035069c15d6f9e1da64185a844fcfad732"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A-ram.bin",
+      "size": 2048,
+      "sha256": "898b99fff1f1ea77546215d25ae2f7dafd8e50016637b9dbc7a41200cb9fc2a6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A-sram.bin",
+      "size": 2048,
+      "sha256": "f45c9998c0a026259a1fbc7d2193f72ea2c81b5ccb2f348e0f5484c0c2d21314"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A.fc8",
+      "size": 73168,
+      "sha256": "0e297690509caee68d81d1834ebab1966dafa697ead63632c2dc771ae81ba84c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-28-A.png",
+      "size": 3642,
+      "sha256": "416c21dbd00af71178370b151d2d270b9e9f6cb0b6ce8927a3ae54df55aa8063"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A-ppu.bin",
+      "size": 16384,
+      "sha256": "f8774327963d16b2422b3c69b63832cc17250ea5ea6b898736d99777ca2b0601"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A-ram.bin",
+      "size": 2048,
+      "sha256": "27bf9815eb41c73d99d8820db86df5bfe647c96e0e52c4ab2b37d07dd97d04f6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A-sram.bin",
+      "size": 2048,
+      "sha256": "2d3844a3202297e3dcc2a498aa918943a59587731452af7be591ddafd13031b6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A.fc8",
+      "size": 73168,
+      "sha256": "86b08b1b4912487284009e285cac99481f777b30a2a2ea826c6ff01ed890e4e8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-29-A.png",
+      "size": 4478,
+      "sha256": "a6663d081db2459c479ba390f9b5e693cc023c1013852b6ff2e6cc7f4ea83da3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A-ppu.bin",
+      "size": 16384,
+      "sha256": "54ee1d81ad1ba913f94a53bec1a93261f568014d94fe052dc2e060bc7418f040"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A-ram.bin",
+      "size": 2048,
+      "sha256": "ff21294540c11d3cb440f545db05e598d8f131a2435a3599c247a458deb77ded"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A-sram.bin",
+      "size": 2048,
+      "sha256": "3e6d92e672865332ad0b8820dfb0cf9fa6d057f926dd90c220931179e351b8d0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A.fc8",
+      "size": 73168,
+      "sha256": "f66466a6f69fd562e9c6e9c741397c4cc18ba72bebf240694509ba05436c0754"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-30-A.png",
+      "size": 4891,
+      "sha256": "d1102cc674d9ecc8756ba0aefa73ead34625e6c82b3ba3532c618617539c783f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A-ppu.bin",
+      "size": 16384,
+      "sha256": "9900c8aecfda5ef27776031b802729a35b93e259c46ebc5c7237d78e6575e3d9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A-ram.bin",
+      "size": 2048,
+      "sha256": "626b73e350bfa5c7936db6d5aab54372662b113179b1770a31c0507a67ce6669"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A-sram.bin",
+      "size": 2048,
+      "sha256": "432b33dfe964b91560a449129146e0f622a437cb2a17406ee9c4044e8d0b4bcb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A.fc8",
+      "size": 73168,
+      "sha256": "adcb286402f13888c7d5aa9c630a0acc30ae13533dca86bf949e9d1acf1d1706"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-31-A.png",
+      "size": 4478,
+      "sha256": "a6663d081db2459c479ba390f9b5e693cc023c1013852b6ff2e6cc7f4ea83da3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A-ppu.bin",
+      "size": 16384,
+      "sha256": "118b57fa5c8784a40f798ba863d47bf1d66efae1afe01485fda53775cb07855a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A-ram.bin",
+      "size": 2048,
+      "sha256": "347cb41e6c379bca42562add7776c2a7d94f62ddfc88a83dad9e0e190761b16e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A-sram.bin",
+      "size": 2048,
+      "sha256": "cbd69ed050956a6b0ef8bea16fec0d1aaa803f0d21c2c19c9ed698fec062368d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A.fc8",
+      "size": 73168,
+      "sha256": "42a93ed9fa2aac3d2db7af0ad76594cf285e87f4fe2cbcf8b91952d0617e4ef0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/menu-32-A.png",
+      "size": 3642,
+      "sha256": "416c21dbd00af71178370b151d2d270b9e9f6cb0b6ce8927a3ae54df55aa8063"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/probe.lua",
+      "size": 2623,
+      "sha256": "785faeb9160818844628e7fb423db34af40965b7563518bf7b9165d01898afbf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/writes.tsv",
+      "size": 2571,
+      "sha256": "3c47f0a4424f5c3fc3feb86508bd18154f6f5837a36e62080a2da6b85ee23825"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-panxi7-after-well-talk-valid-pose-controlled/xvfb.log",
+      "size": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source-ppu.bin",
+      "size": 16384,
+      "sha256": "45d4e96373f4673d6ce01aff477b003257f672844dfa5c38d078235024d13262"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source-ram.bin",
+      "size": 2048,
+      "sha256": "86b5e07e0d830e5169a856a7e321792e4597302a3422c3b9cdb324aaff278fb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source-sram.bin",
+      "size": 2048,
+      "sha256": "aaf33fdc60edff2ef2f49e9823dc9adca03db09650d42986f36f7b6df47234ca"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source.fc8",
+      "size": 73168,
+      "sha256": "b92d8036b41d119aab0960d1cf20090eaf4f2a37dfbe48f0a33e2639162826d0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/00-real-panxi-return-source.png",
+      "size": 3458,
+      "sha256": "bc330e76a6f3b5a5f83c58c3939f4dbe843d8be263f5f8eec150709ff687bd9a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry-ram.bin",
+      "size": 2048,
+      "sha256": "c825c6f50e9446e9ca05c360fbf96c3462bf0ffeb59a2dba32f1b9a63d2c4b2f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry-sram.bin",
+      "size": 2048,
+      "sha256": "b42bd1ab12e7a5457e0e4900644e864382afa386a83b30847475b859703155db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry.fc8",
+      "size": 73168,
+      "sha256": "36d1df6b397f863716edefaf9ce7dcdf1ec7ec06c4045bad71af3ebc2f3d972e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/01-real-city142-entry.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry-ram.bin",
+      "size": 2048,
+      "sha256": "7f1e61ce9c29150cc98d715af833c6c3ac276b5445b647be41a46e60bac28fd0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry-sram.bin",
+      "size": 2048,
+      "sha256": "ebec748901b0cd20f274b3b63e369b18dbe7943772dec6d1e99fa5dd3ecd36a6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry.fc8",
+      "size": 73168,
+      "sha256": "aee3283e503f9bfd043f14d5e5a50a165a964c4696fc29c8f49fcb2728d6c43a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/02-real-city121-entry.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king-ram.bin",
+      "size": 2048,
+      "sha256": "ade9aee490d2772ef9072698c40ae38048655a05f05af0b255a302eb302b3580"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king-sram.bin",
+      "size": 2048,
+      "sha256": "361692822b4a6cdbbe3eecbedf6e8d31bb1f5cae8af9f4c8ed4833994a1a6074"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king.fc8",
+      "size": 73168,
+      "sha256": "ca33213218017ff06cc78de167f02e2e52c4a3cd6e06990039cec39d3b909043"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/03-real-face-king.png",
+      "size": 2973,
+      "sha256": "bfa1f28e1980c446121ef34307442b710ce8277dee84e472c51c4b8a387742a3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/done.txt",
+      "size": 83,
+      "sha256": "5c624f5c8eaa1ee2fb0f30555cc13e246d5c067966027dcb188a652e62517bca"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/fceux.log",
+      "size": 1540,
+      "sha256": "bd974fa71bb41f069d9b62cc28db96c324b942a52c1eda319ce6fae67d6b324b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/probe.lua",
+      "size": 2319,
+      "sha256": "de4270aa7ca4bc50ffb01b46533006f6ba1cab9dc5f788d7b00f96f8ae9fbfb2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A-ppu.bin",
+      "size": 16384,
+      "sha256": "4a34e4b0880d4fea1c0549f52e6bc7ab0934f5f724642c2c703c7067657b9f9e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A-ram.bin",
+      "size": 2048,
+      "sha256": "b16c62801c7813806784ccff85df50bc9fb2f64030b4f784ec7bd08b90fa941e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A-sram.bin",
+      "size": 2048,
+      "sha256": "ff768b7b1f82ce64f77630ea8bc5c80547d609ce19db9c8dc7239a72299658be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A.fc8",
+      "size": 73168,
+      "sha256": "b1b09e87bb289ec75e1f3c2c7367abaa18b1fbd59796dd2e36ffdfc71a277387"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-01-A.png",
+      "size": 3658,
+      "sha256": "a1b6d377e6179515caac5c9959e4195fc9c787e3615a86f83f3f5b617b77adad"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A-ppu.bin",
+      "size": 16384,
+      "sha256": "d1850744291e200441910f4d1757c81b2020e774ea66f29c7129419f8b9c7c7b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A-ram.bin",
+      "size": 2048,
+      "sha256": "643596d452003d46931f2a2c9229174f96e98fe67ede9a88c6d612e427f8f17e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A-sram.bin",
+      "size": 2048,
+      "sha256": "a9f03bc98fd06133f56aebef1036dd2f3dd3382fbb0f18e5bc365d7baabad37d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A.fc8",
+      "size": 73168,
+      "sha256": "4a5136567cfe27780d3367d0222cad237ddc03b9fb8e29f9ba9180a84eca08f9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-02-A.png",
+      "size": 4249,
+      "sha256": "bf52e5f47d6fe0262b89f7ac28e64d176d68f33d8de9549ef4d7045527920c01"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A-ppu.bin",
+      "size": 16384,
+      "sha256": "62ed63c90da999ba81aedd7e116111aa9404091465f207f09816e2c6108f77e2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A-ram.bin",
+      "size": 2048,
+      "sha256": "42cb0936e755c044dd77a3e0a36b59b06b9adbbd08588f20173494d7a5f1c865"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A-sram.bin",
+      "size": 2048,
+      "sha256": "30d88e1e550d68296f10cd53a6491ee82e986f6b63db9fbdd5f186c6ebc54376"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A.fc8",
+      "size": 73168,
+      "sha256": "b3a33caa6b9dcc18a21f6b2b16ae5158e980eb9143f95b9321628a582e86f23a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-03-A.png",
+      "size": 3439,
+      "sha256": "88d24cab70a49c5d20140c3833d5a57415a55881264ad40d2dda8e0214de56e9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A-ppu.bin",
+      "size": 16384,
+      "sha256": "90aaa84834e488531da011a263d1e4a309b2fded6116c781662698b7030d3e50"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A-ram.bin",
+      "size": 2048,
+      "sha256": "5137af0730e29f8c1bd6a3b6df6a326aec972d83122060262fa067a4e47b2ed7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A-sram.bin",
+      "size": 2048,
+      "sha256": "4fed84373b5b0269a70ddfd2d9c1bb2f1e023a196c39834bdf77e886d19bb172"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A.fc8",
+      "size": 73168,
+      "sha256": "bb2b48e2743bfbf9a4f0edc15ef730adfe3bac74dc17f50482f946ccfb364452"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-04-A.png",
+      "size": 3445,
+      "sha256": "5587f59e5d429d9aeb4ca312af217e94eed101f2de23e154327a1ef58aaadfa8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A-ppu.bin",
+      "size": 16384,
+      "sha256": "df086aa8ba217302398bdaf732263b7a5f9f785a708b3038b3dd6849ba810654"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A-ram.bin",
+      "size": 2048,
+      "sha256": "131276b37126efec837cbde3921772074f0ee657f7b0b7f191d3165b026dfef0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A-sram.bin",
+      "size": 2048,
+      "sha256": "259acc9a6b0f3749e584836d65611d5ad7248242dd9d9a02f7d9aaa5452b9ae0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A.fc8",
+      "size": 73168,
+      "sha256": "1c47c9ee4055136f5ab02faefc5de375f9fc4e329a0edde26e6215588e5c5664"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-05-A.png",
+      "size": 3431,
+      "sha256": "e186e2ef68c7af6e585ca6896c0200d2dbb76a669d6db38613547587a7180093"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A-ppu.bin",
+      "size": 16384,
+      "sha256": "86989f1368c351a92cbe1681ef763e52893ba6e4c7fda46f3d0872ac861184fc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A-ram.bin",
+      "size": 2048,
+      "sha256": "3f4790641163d863e9017abf0a6f90a16084d82e181ea475323446e3f32403c5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A-sram.bin",
+      "size": 2048,
+      "sha256": "494596cb0c2777338c8001e1e24baff8d52c2f2af105735781ea065d1e0ccc86"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A.fc8",
+      "size": 73168,
+      "sha256": "b897fdaee296592e86c65c2abe5f03adb406d2ba65186a38b7433ea5850ea49d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-06-A.png",
+      "size": 3431,
+      "sha256": "e186e2ef68c7af6e585ca6896c0200d2dbb76a669d6db38613547587a7180093"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A-ppu.bin",
+      "size": 16384,
+      "sha256": "fd91bf0f542ac880787237997f611df9bf56657d42989c471f834e36402d612f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A-ram.bin",
+      "size": 2048,
+      "sha256": "d2dde16a39aa427e56bc18567e14f4f5bbcb0edff3ccc5b243c8d88b823cc0b8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A-sram.bin",
+      "size": 2048,
+      "sha256": "f4a4ca20d88c291c61801acff16d4831912e12edf7f5ee837a40cc2da043cd45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A.fc8",
+      "size": 73168,
+      "sha256": "d95d9cb6f1ff129f4df552bc83189a4c7505b0d5417d196b34db41264a6e3ba2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-07-A.png",
+      "size": 3435,
+      "sha256": "ec978b951ff8a652d6d235bd6f121474fa6965cb90122b3a5a1a2ec8ddc30266"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A-ppu.bin",
+      "size": 16384,
+      "sha256": "05b79e1b6457942c5c50e7d597f8a4f4f715b37d1f77bbefb9c5e8322adf40b5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A-ram.bin",
+      "size": 2048,
+      "sha256": "57bc2178a5fa417be2a2b8006c65a80054cd385a13fcfc888ee26082d6e29f6d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A-sram.bin",
+      "size": 2048,
+      "sha256": "b045c3fc6d506458e0a8209664558be66461ae96c936267d6e781060ddcc8d26"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A.fc8",
+      "size": 73168,
+      "sha256": "6e99b0b4f4c4ca144fac8b430eb8c0b68146bf23d24a6ff0152c02f70ba321b4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-08-A.png",
+      "size": 3378,
+      "sha256": "fff9f8498a00247115f3d6a6646aa8c29114bdc35418a3d83fe645422ea30dad"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A-ppu.bin",
+      "size": 16384,
+      "sha256": "fa2f226a493a2ab7870bb89a2413257cedc6e65b53b582387d460f2657430bec"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A-ram.bin",
+      "size": 2048,
+      "sha256": "0674e22247f2445496629a75f649a8a2806086c513b8abdefab197ad0ac31871"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A-sram.bin",
+      "size": 2048,
+      "sha256": "1274ebaeede26dec2dccf8bed9924ea8636b662b0dc251ec9652a8f5341b4b03"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A.fc8",
+      "size": 73168,
+      "sha256": "c93fb9eb6f78db0781cde5906044cfeb7a7701df4b5e1e3d2e462ae194cac02f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-09-A.png",
+      "size": 3340,
+      "sha256": "d60db093588db89a7e8944fbb2cf2388d8ba95bd8ee1d260365f000d5d126ac5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A-ppu.bin",
+      "size": 16384,
+      "sha256": "1bcec1226568df9647178d611b41828a062738909233c59c7de650dd1aceb012"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A-ram.bin",
+      "size": 2048,
+      "sha256": "25818f1ff3dacdd6c6aed7a8a2bb6e1227d14fa3e151a5ea55049b6ee2c69ce0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A-sram.bin",
+      "size": 2048,
+      "sha256": "bdb27871b77bff9c884f39206fb729c0f71c9e41d2823278daa936c9ac9519ee"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A.fc8",
+      "size": 73168,
+      "sha256": "ab15eda6d986093bdbdc7ea3660b9ff9f5fb48bd7eebf2c8d6379684915a863e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-10-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A-ppu.bin",
+      "size": 16384,
+      "sha256": "1bcec1226568df9647178d611b41828a062738909233c59c7de650dd1aceb012"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A-ram.bin",
+      "size": 2048,
+      "sha256": "4fc1ad11167888305e58a38771fdea62619be524ab54888b66f8a481dadf1d74"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A-sram.bin",
+      "size": 2048,
+      "sha256": "30d88e1e550d68296f10cd53a6491ee82e986f6b63db9fbdd5f186c6ebc54376"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A.fc8",
+      "size": 73168,
+      "sha256": "08922f7bfceb807252a0bf65231818ce55dc15582d5278deeb0ff9ca5a1057dc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-11-A.png",
+      "size": 3182,
+      "sha256": "51082e627d88b086bef97b92962ec24dc2479371697465a739e8c971ffea65bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A-ppu.bin",
+      "size": 16384,
+      "sha256": "8b97a824c7f47a708849a0a03aeefc9d2537d3cd0748f73e0c7b64dddbcde3c4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A-ram.bin",
+      "size": 2048,
+      "sha256": "3946301e9c21bbd05bf1ebe746502e3109f16874d86db7db4ff64e7bbfc653b2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A-sram.bin",
+      "size": 2048,
+      "sha256": "4fed84373b5b0269a70ddfd2d9c1bb2f1e023a196c39834bdf77e886d19bb172"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A.fc8",
+      "size": 73168,
+      "sha256": "856e43d92eede0e4b743eb4b577f4c3d98028ed49abd06d81ccf5cbd3f9e9f06"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-12-A.png",
+      "size": 4008,
+      "sha256": "322b0aa199b878e1f9a25e2c6b80243ecb1381be9757503b250e0e1491a5891c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A-ram.bin",
+      "size": 2048,
+      "sha256": "fdf6ca4a841d1ae1fa0b34aea3c52c656560d3d04a0cd1d3eabad8367b22b9b5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A-sram.bin",
+      "size": 2048,
+      "sha256": "259acc9a6b0f3749e584836d65611d5ad7248242dd9d9a02f7d9aaa5452b9ae0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A.fc8",
+      "size": 73168,
+      "sha256": "826f8b8babbbe423f227c849342440b3f4ec029d51e3010d9bc2c663696b32db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-13-A.png",
+      "size": 3714,
+      "sha256": "04b0efe31b90379abf82106fdfcd341a7f295cc46956b938fc4d7a9bf04de0fa"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A-ram.bin",
+      "size": 2048,
+      "sha256": "9014226e4da4c81f2aebd2df8d7618d288c62283c98077265bf4741cf4046911"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A-sram.bin",
+      "size": 2048,
+      "sha256": "494596cb0c2777338c8001e1e24baff8d52c2f2af105735781ea065d1e0ccc86"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A.fc8",
+      "size": 73168,
+      "sha256": "ac9ea3870d59b7f1bcfbb5cc3160c5af33fa489f196daff5ca94f8867429daba"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-14-A.png",
+      "size": 3182,
+      "sha256": "51082e627d88b086bef97b92962ec24dc2479371697465a739e8c971ffea65bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A-ram.bin",
+      "size": 2048,
+      "sha256": "e8a980d3451beec18113a84a4dddfdcd2a0b76b1eec1551f6d45df25ba67eb81"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A-sram.bin",
+      "size": 2048,
+      "sha256": "f4a4ca20d88c291c61801acff16d4831912e12edf7f5ee837a40cc2da043cd45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A.fc8",
+      "size": 73168,
+      "sha256": "319a25a4350ef14ce1928dc64917042dadd4db342c66157973a188a0495ab35a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-15-A.png",
+      "size": 4008,
+      "sha256": "322b0aa199b878e1f9a25e2c6b80243ecb1381be9757503b250e0e1491a5891c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A-ram.bin",
+      "size": 2048,
+      "sha256": "99627230ec3e3618193d3644f0c766e42ee4d0e4e71f37ddbda2bb6aaeada75c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A-sram.bin",
+      "size": 2048,
+      "sha256": "92d827afc5fc1e67ba8359be1121e03100aeae32d897341d000a98204b51b410"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A.fc8",
+      "size": 73168,
+      "sha256": "d27c83573fed521c26c7010038f75eca85f634753e06e189f6e7b1c0e3b9696d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-16-A.png",
+      "size": 3714,
+      "sha256": "04b0efe31b90379abf82106fdfcd341a7f295cc46956b938fc4d7a9bf04de0fa"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A-ram.bin",
+      "size": 2048,
+      "sha256": "6c4e09539e8f7817910036921624cab9476aa4d6d8d586a80a80abc720cd191f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A-sram.bin",
+      "size": 2048,
+      "sha256": "0a417868af03bce754e33b0b0d1a86b9902fc18dfbc8cfe5766033685f28d647"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A.fc8",
+      "size": 73168,
+      "sha256": "618504ca798ba88b5db755af09b28b91bc89f5997363704b899a6c237d1b57cd"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-17-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A-ram.bin",
+      "size": 2048,
+      "sha256": "4a65515960a66e7a5eddc49c9cd24ed3e18c365960ec2f7f9171b0ee059ae0f9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A-sram.bin",
+      "size": 2048,
+      "sha256": "bdb27871b77bff9c884f39206fb729c0f71c9e41d2823278daa936c9ac9519ee"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A.fc8",
+      "size": 73168,
+      "sha256": "a0dd6ce448ff674e0b0afc24f56c8d83564467507d91d59ebcc6b2b2c4b6f650"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-18-A.png",
+      "size": 4022,
+      "sha256": "30f040d3f767c85f1deaaf1b97986cb6b268d431545a440686a54023118d0608"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A-ram.bin",
+      "size": 2048,
+      "sha256": "abdc147d7a6c484739cded3a90144201c86d404e3fe34a4e4edd4dcfeecc5b89"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A-sram.bin",
+      "size": 2048,
+      "sha256": "30d88e1e550d68296f10cd53a6491ee82e986f6b63db9fbdd5f186c6ebc54376"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A.fc8",
+      "size": 73168,
+      "sha256": "88e7dd9c689a6cc054d7b734750f1642226d12bad694d01da853301cb6c206ea"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-19-A.png",
+      "size": 3728,
+      "sha256": "1c3de045ba92caf8b3683a9dab573d5260fd9ac289ebc5aac1de6530d0eab408"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A-ram.bin",
+      "size": 2048,
+      "sha256": "2c82ea4f8e2aa9fec50b2730f32ef2db651c3eeb8cb664449cb0d6810b91708f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A-sram.bin",
+      "size": 2048,
+      "sha256": "4fed84373b5b0269a70ddfd2d9c1bb2f1e023a196c39834bdf77e886d19bb172"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A.fc8",
+      "size": 73168,
+      "sha256": "f99a444f26ba1ccb77716bd279606c7edcb36a8d2ec946edf8ff74af700f4bcf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-20-A.png",
+      "size": 3182,
+      "sha256": "51082e627d88b086bef97b92962ec24dc2479371697465a739e8c971ffea65bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A-ram.bin",
+      "size": 2048,
+      "sha256": "d83a0939250d0f34c98bb84cdc8b76a121e61943cb0029c9620071dcd7c2f427"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A-sram.bin",
+      "size": 2048,
+      "sha256": "259acc9a6b0f3749e584836d65611d5ad7248242dd9d9a02f7d9aaa5452b9ae0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A.fc8",
+      "size": 73168,
+      "sha256": "5d557cf297807d26add8be33ec2bb566b59530d6804d55c75b2c806b234e36f5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-21-A.png",
+      "size": 4008,
+      "sha256": "322b0aa199b878e1f9a25e2c6b80243ecb1381be9757503b250e0e1491a5891c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A-ram.bin",
+      "size": 2048,
+      "sha256": "d3efa7caca02d02f14614bad51ce8a49fdf57ffa80d37667a37f404f1feeddf4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A-sram.bin",
+      "size": 2048,
+      "sha256": "494596cb0c2777338c8001e1e24baff8d52c2f2af105735781ea065d1e0ccc86"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A.fc8",
+      "size": 73168,
+      "sha256": "16d5a5ddcc221f4ebd426ba361ee43e183ea0a22b290366f939cdae90f57bbe6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-22-A.png",
+      "size": 3712,
+      "sha256": "ae5805cf72f4761ea1fff0ee82cf7e5259cf567c026b35515be6f7396df26f10"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A-ram.bin",
+      "size": 2048,
+      "sha256": "f66ac6966f17202fcf160dd3152f34f3170c7e2f2089d68aa8fbb9b7482831c9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A-sram.bin",
+      "size": 2048,
+      "sha256": "f4a4ca20d88c291c61801acff16d4831912e12edf7f5ee837a40cc2da043cd45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A.fc8",
+      "size": 73168,
+      "sha256": "944cff44fc256fb5a17943ae01e28971bf81f1829fe52a72408213627897234c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-23-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A-ram.bin",
+      "size": 2048,
+      "sha256": "346617c4790c399b502cae52c9e323bdb0e6b667e2c5e82625e1d00cc637415b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A-sram.bin",
+      "size": 2048,
+      "sha256": "92d827afc5fc1e67ba8359be1121e03100aeae32d897341d000a98204b51b410"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A.fc8",
+      "size": 73168,
+      "sha256": "7aeb722b7ce328dd3cd15e99923bb2e0de08cebc8550149f9624b3e33b4ab826"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-24-A.png",
+      "size": 4022,
+      "sha256": "30f040d3f767c85f1deaaf1b97986cb6b268d431545a440686a54023118d0608"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A-ram.bin",
+      "size": 2048,
+      "sha256": "49eec9383717f4c6ee1934332ef327ea8d0e19e7658a14e53cc349eb05752917"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A-sram.bin",
+      "size": 2048,
+      "sha256": "0a417868af03bce754e33b0b0d1a86b9902fc18dfbc8cfe5766033685f28d647"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A.fc8",
+      "size": 73168,
+      "sha256": "8dda42794ac2be34ad9a3fd94d22fb7a1fd0ea14bf9fa046521725451ac857c6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-25-A.png",
+      "size": 3728,
+      "sha256": "26099ce61f97f0e7abf49fb72bcdf731af8922aeaba57598a6d93720d14d10e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A-ram.bin",
+      "size": 2048,
+      "sha256": "2ec292c02516367ad2927653d9416448750d5cad2ff7d047033db0b51f8e10c5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A-sram.bin",
+      "size": 2048,
+      "sha256": "bdb27871b77bff9c884f39206fb729c0f71c9e41d2823278daa936c9ac9519ee"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A.fc8",
+      "size": 73168,
+      "sha256": "9a7380a59df1134af92f6b1e7a49ba83a312d73fab177539feaa37f975c5edca"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-26-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A-ram.bin",
+      "size": 2048,
+      "sha256": "6b3e9c4b7ed0a85c2ea261c6552255ef4d14f20b1d2ff5e9386cfc7de591ec37"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A-sram.bin",
+      "size": 2048,
+      "sha256": "30d88e1e550d68296f10cd53a6491ee82e986f6b63db9fbdd5f186c6ebc54376"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A.fc8",
+      "size": 73168,
+      "sha256": "eb8fd8f3471a8e555f6dfe42089a5b82a245ee413498e2460fa7bc379ee01c16"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-27-A.png",
+      "size": 4022,
+      "sha256": "30f040d3f767c85f1deaaf1b97986cb6b268d431545a440686a54023118d0608"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A-ram.bin",
+      "size": 2048,
+      "sha256": "8e1cd6777d6195c168a7a981ac747760935657dd83a6a57f7d4d55517f4b817b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A-sram.bin",
+      "size": 2048,
+      "sha256": "4fed84373b5b0269a70ddfd2d9c1bb2f1e023a196c39834bdf77e886d19bb172"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A.fc8",
+      "size": 73168,
+      "sha256": "b9837de511b91157651854bd1414b44e55843a579e3a3cb7257d0a9f3104e55a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-28-A.png",
+      "size": 3714,
+      "sha256": "04b0efe31b90379abf82106fdfcd341a7f295cc46956b938fc4d7a9bf04de0fa"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A-ram.bin",
+      "size": 2048,
+      "sha256": "b3968da2fdc9f98c7a9507a46e11399f97dc0dc544dc76e5b8ed0eb5a90666df"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A-sram.bin",
+      "size": 2048,
+      "sha256": "259acc9a6b0f3749e584836d65611d5ad7248242dd9d9a02f7d9aaa5452b9ae0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A.fc8",
+      "size": 73168,
+      "sha256": "a1dbbbd7edc40e855804ef68bcd33fe56683fec8e4d84af0a8806458f8f4d48f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-29-A.png",
+      "size": 3182,
+      "sha256": "51082e627d88b086bef97b92962ec24dc2479371697465a739e8c971ffea65bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A-ram.bin",
+      "size": 2048,
+      "sha256": "3919ab5511b8dd1fc62d67245c6f04cda9de8c602168c7a3dcebaca272f5b733"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A-sram.bin",
+      "size": 2048,
+      "sha256": "494596cb0c2777338c8001e1e24baff8d52c2f2af105735781ea065d1e0ccc86"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A.fc8",
+      "size": 73168,
+      "sha256": "37c98414787b859177f4d9c6a02b0c9d3c2085a4417813c8c6543c6d70e0c8b6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-30-A.png",
+      "size": 4008,
+      "sha256": "322b0aa199b878e1f9a25e2c6b80243ecb1381be9757503b250e0e1491a5891c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A-ram.bin",
+      "size": 2048,
+      "sha256": "6f6203f1b3e3c0b5fa059b7dcff6e2988a3891e4b74e50a1260adae51cf2e83a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A-sram.bin",
+      "size": 2048,
+      "sha256": "f4a4ca20d88c291c61801acff16d4831912e12edf7f5ee837a40cc2da043cd45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A.fc8",
+      "size": 73168,
+      "sha256": "f20f4285e951e3c0e7fe466cbac3a4a2f299ccbbe36b1108fa3b5a3779fe3ef6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-31-A.png",
+      "size": 3714,
+      "sha256": "d7ba981fcea3713de40d10813be8a6a5694434672f34eae8a4d8e121a2f9b2ac"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A-ram.bin",
+      "size": 2048,
+      "sha256": "b726dbe677e9f7287e1d3aa525e5dfc72c4899473fef4e1f5dac756565e11b3d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A-sram.bin",
+      "size": 2048,
+      "sha256": "92d827afc5fc1e67ba8359be1121e03100aeae32d897341d000a98204b51b410"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A.fc8",
+      "size": 73168,
+      "sha256": "18d101bfa50564292ee1c9e2c3810250e56ce8645bd197b5bd162e1120bcad3e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-32-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A-ram.bin",
+      "size": 2048,
+      "sha256": "dd3072e660445e711e2c7bd363fa9090db667ed0b2e432871a9e945a2e3040b5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A-sram.bin",
+      "size": 2048,
+      "sha256": "0a417868af03bce754e33b0b0d1a86b9902fc18dfbc8cfe5766033685f28d647"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A.fc8",
+      "size": 73168,
+      "sha256": "accaba485855599ca674f00a07f389941c925266a06be3c1e705f65abebd951a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-33-A.png",
+      "size": 4022,
+      "sha256": "30f040d3f767c85f1deaaf1b97986cb6b268d431545a440686a54023118d0608"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A-ram.bin",
+      "size": 2048,
+      "sha256": "5566caea2250d8413dc6986a6d3f2d4e2dd47518c74541a9b1758c51df0447e7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A-sram.bin",
+      "size": 2048,
+      "sha256": "bdb27871b77bff9c884f39206fb729c0f71c9e41d2823278daa936c9ac9519ee"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A.fc8",
+      "size": 73168,
+      "sha256": "f7859aee7e875e620c81eab41d1077a44fb38fd7ca58111943e834787d0ec6bb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-34-A.png",
+      "size": 3728,
+      "sha256": "26099ce61f97f0e7abf49fb72bcdf731af8922aeaba57598a6d93720d14d10e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A-ram.bin",
+      "size": 2048,
+      "sha256": "1c6aa51f362f2c19f3445b22403d689f7650f67b47e9298dcfd2be7468e466ba"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A-sram.bin",
+      "size": 2048,
+      "sha256": "30d88e1e550d68296f10cd53a6491ee82e986f6b63db9fbdd5f186c6ebc54376"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A.fc8",
+      "size": 73168,
+      "sha256": "c4612a4533a012dbb1ad41e34be61a750ed219808037fcb824b1c026164c3b96"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-35-A.png",
+      "size": 3182,
+      "sha256": "51082e627d88b086bef97b92962ec24dc2479371697465a739e8c971ffea65bc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A-ram.bin",
+      "size": 2048,
+      "sha256": "de3308ff340ee5f5b022fbde277038de8f49e4185e96549e91e1ee22444aaa67"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A-sram.bin",
+      "size": 2048,
+      "sha256": "4fed84373b5b0269a70ddfd2d9c1bb2f1e023a196c39834bdf77e886d19bb172"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A.fc8",
+      "size": 73168,
+      "sha256": "b4470ce86c3c01f1a4c91292263916751701067ec9ccf8b1f8e5e330a3f51727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-36-A.png",
+      "size": 4008,
+      "sha256": "322b0aa199b878e1f9a25e2c6b80243ecb1381be9757503b250e0e1491a5891c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A-ram.bin",
+      "size": 2048,
+      "sha256": "1a5071f166be367cee277b87d7d18d60d7d095f9f228668f950a9fb0aa24dd5b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A-sram.bin",
+      "size": 2048,
+      "sha256": "259acc9a6b0f3749e584836d65611d5ad7248242dd9d9a02f7d9aaa5452b9ae0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A.fc8",
+      "size": 73168,
+      "sha256": "19910c6a41c280deade7e1931a1c585a02fde46f8aeaf31b70050da029d6fe6f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-37-A.png",
+      "size": 3714,
+      "sha256": "04b0efe31b90379abf82106fdfcd341a7f295cc46956b938fc4d7a9bf04de0fa"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A-ppu.bin",
+      "size": 16384,
+      "sha256": "a7b6a2d2d9fa148e86384eba138c3d402dce73956638761ca53fff9f8a28a8af"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A-ram.bin",
+      "size": 2048,
+      "sha256": "c9ef7339c39949f991d44dbc15253dc6ff11b1a26fe7e610adbb3a8afa367798"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A-sram.bin",
+      "size": 2048,
+      "sha256": "494596cb0c2777338c8001e1e24baff8d52c2f2af105735781ea065d1e0ccc86"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A.fc8",
+      "size": 73168,
+      "sha256": "e925f11b51b649755e10c9e9b040fd35fd0605e2378120e9cf61989f78a812e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-38-A.png",
+      "size": 3189,
+      "sha256": "373dc752814428602ada5d5271322ba48d6075c65f2fb8bb0112985d98ac4776"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A-ppu.bin",
+      "size": 16384,
+      "sha256": "ac61562af3181e3a9b7a01c5ec5140d45295cb974005ccc922b7bb80572df515"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A-ram.bin",
+      "size": 2048,
+      "sha256": "f5863f448372c3595d4a04b7a8a07a91112a4149b2685aeb8d9d2fc3cbffc53a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A-sram.bin",
+      "size": 2048,
+      "sha256": "f4a4ca20d88c291c61801acff16d4831912e12edf7f5ee837a40cc2da043cd45"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A.fc8",
+      "size": 73168,
+      "sha256": "fcc0030112b85b63ecadc9735d7f8959d78c91669ecfcf7c21aa90a7420a4708"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-39-A.png",
+      "size": 4022,
+      "sha256": "30f040d3f767c85f1deaaf1b97986cb6b268d431545a440686a54023118d0608"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A-ppu.bin",
+      "size": 16384,
+      "sha256": "086ef5da9b49c1466e756be22a40e7f489fe8d1ba1644db34c496080921a4811"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A-ram.bin",
+      "size": 2048,
+      "sha256": "2b854ba0289c93b014a361efa78fd4f90668cbe57b66117b184f757d1a976c7a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A-sram.bin",
+      "size": 2048,
+      "sha256": "92d827afc5fc1e67ba8359be1121e03100aeae32d897341d000a98204b51b410"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A.fc8",
+      "size": 73168,
+      "sha256": "7f23717fb1dd74368ac6e3d09501d4bd6e0a0a5298053fbe7793fa58670edf31"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/talk-40-A.png",
+      "size": 3728,
+      "sha256": "26099ce61f97f0e7abf49fb72bcdf731af8922aeaba57598a6d93720d14d10e0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/writes.tsv",
+      "size": 2071,
+      "sha256": "0956aa197c793ae7863c5143d794d84b036da7fa6077649af8afc1f24cdf64be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-king121-join-controlled/xvfb.log",
+      "size": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose-ppu.bin",
+      "size": 16384,
+      "sha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose-ram.bin",
+      "size": 2048,
+      "sha256": "cff876d1d07c55807388a673b4e98bbf275aff406fb56592025caa865af52015"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose-sram.bin",
+      "size": 2048,
+      "sha256": "a5f468dbfab8ef640db67448357aa7c9d55487b1b67fc886b73f8b378ef7d192"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose.fc8",
+      "size": 73168,
+      "sha256": "23be735b836e4d9c139b65e10c78f86ce25788afb27416f04fd8959bff0b6bc2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/00-king-original-pose.png",
+      "size": 2974,
+      "sha256": "4e54e76ae49b4b7ab56f7a6ca58e50ff2a9590f0e46b1b8e7443082450a06f0f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14-ppu.bin",
+      "size": 16384,
+      "sha256": "1f17dfb40002f7910486d3837268ecee5458620acf2803ce298cc076ae9a1e67"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14-ram.bin",
+      "size": 2048,
+      "sha256": "50a8433add43f87d11e55e8c13a45f06e5a9bc38dc8ef29bef70e7f1dd2af727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14-sram.bin",
+      "size": 2048,
+      "sha256": "2cb964fee83a8b17a6650ad0255cebb3e81322fb48cbb4c6f3061f1bfd9bc0d7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14.fc8",
+      "size": 73168,
+      "sha256": "f494dfdf45972afe252e17a4a4c51f1bc1c43836f56b1f17c2d612e668af79eb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/01-king-before-cure-message14.png",
+      "size": 2973,
+      "sha256": "bfa1f28e1980c446121ef34307442b710ce8277dee84e472c51c4b8a387742a3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose-ppu.bin",
+      "size": 16384,
+      "sha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose-ram.bin",
+      "size": 2048,
+      "sha256": "9301b3cd82e5beb983fe6a59f9eb7479dcad06d5a493db5887de975de03acc4e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose-sram.bin",
+      "size": 2048,
+      "sha256": "5c832a99a1ccf8012ad0efc1f016f265fa4f795525fef0c5da03481a6a6e5e79"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose.fc8",
+      "size": 73168,
+      "sha256": "d6e325bd27f6769e2e0ad7496efcdc3d41c3a7296c9f35c514a1f8af26063d34"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/02-guard-original-pose.png",
+      "size": 2944,
+      "sha256": "b90e0a6078f334114cc3cf9a4a9badd6b61ce2abe772e2f2d8ad4f918bec8f46"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message-ppu.bin",
+      "size": 16384,
+      "sha256": "7eef8f9041524d18bfa154ea6beeb68168437770f138fbef65b3125712916da8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message-ram.bin",
+      "size": 2048,
+      "sha256": "4ac1229ecc3cbe287ea53451ab1905d632d17286f5c0b76cb186db24fdce69fb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message-sram.bin",
+      "size": 2048,
+      "sha256": "64c2458d581675f55eed87684d34f56cb45196f096294fe6d3d89bbba6d9d104"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message.fc8",
+      "size": 73168,
+      "sha256": "09635b5da8faeee5f5695878d6676ee5c37004626c5b53889ff40c882146993a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/03-guard-first-message.png",
+      "size": 3780,
+      "sha256": "c00159d72664969a83aa98ae0d8c53bef923c09f7d74e1e641e23225c7b1be88"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/done.txt",
+      "size": 60,
+      "sha256": "076f0106b9305198fc38fe6dcac8291f0abaca98900284c729c1935baa5430fc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-king-fonts-controlled/probe.lua",
+      "size": 1917,
+      "sha256": "90085b47d90b86832d894c2ad443fc4406f95924e0002cbcb4812d9b20dc0dcb"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose-ppu.bin",
+      "size": 16384,
+      "sha256": "7817d9fa874d039aad68d0f22105821d5db26757b17a63d18a63a0a32d66ae8f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose-ram.bin",
+      "size": 2048,
+      "sha256": "bcfcdb5acc039ff70fd391568ffdbf49a41ebf0e67c6d021342ae52fe25af94f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose-sram.bin",
+      "size": 2048,
+      "sha256": "05fd0073b68f7d0cbf1ef59dee70a39bedfe182d33e32e245f1d4c0ecf9cd2a0"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose.fc8",
+      "size": 73168,
+      "sha256": "72b4e19aad262825f8de150fafba278dda84b6c2cbd7a91f1bba276055d50d44"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/00-original-panxi-settled-pose.png",
+      "size": 2962,
+      "sha256": "fd4b1d2413e68de28ce134efee25432a4ef6a8b4c23d2c7049c5db92036c8e9f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/done.txt",
+      "size": 43,
+      "sha256": "17acb792f73a3ae2e3728bc107a8a46fd80a560f49015cc332320ac91167c57e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-panxi-oam-controlled/probe.lua",
+      "size": 1332,
+      "sha256": "dfd4a201143c3dfa6a99734a4ba50684092f4a9a7a4a4d63fe4394a9ba97be19"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "5cc3bcd13cbf8b7deaf919db3a469b6a1bab9fdaea25a5c92390af32a065b604"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "60b96f0b26e29aa1404c0482a3b9ad14c5b35c7669597b9830a31fb28cbd1cb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-after-real-key.png",
+      "size": 2977,
+      "sha256": "cc7e3f9b267df1e0e2399c0cc9629bd2b35ac64ddf9d27ae7cf9c9481986188e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "22ef71b0380179b09deeac876879c03382913342786a12a55ae06eff50e94c75"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/city-bottom-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/done.txt",
+      "size": 70,
+      "sha256": "f59d1a1c1e580f4c338b7538925562edaf2e34da5fcdb8b2c51191dbf6355637"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "1373c63722dd47f6264b262336aefb0676e7de74d0b35edb4ee7cf4e073c0469"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "81ac5205d80bd4d089c7f9a3f09d1a33468fdee6983414d6fadcf19d4fe38c85"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-after-real-key.png",
+      "size": 2864,
+      "sha256": "be9c6d405f0085da5da02e49fd7f9d8e4775e8a8bd8ea5e27f952afe1d13ebe8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "7ad8721da3591e8ce8472d1d48b8d72ba8d04112a696f48d05a95a04326855ef"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-left-before-controlled.png",
+      "size": 2923,
+      "sha256": "bb681b57a6b3588e86f47ebe5685c9e060636a7a833ac90f2306a64d7ec0d12a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "f21895f4b8e2f133d989449bd9288fdbd4d91a956ed9cd0b88184436439a36bd"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "4b5eaa934f49ac13fc5970896a660bfbe8879a43bc511d8772672d250e201ac9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "66026cca3db21438a9527157892d9dfbfdb5f86bb1d5b2ce4c56ee158e6e4e5b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "332b99e5f78b938a5c1ae0e06251f069f6649b4f3e899ecd21a1032e09bdf740"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-return-before-controlled.png",
+      "size": 2930,
+      "sha256": "b94fd12c723e69e36b561b7003f8553f9f2d04f1fdedd5dc391179256e8889b6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "bc948cfd401cc8159c0429fff24060391851b03338c7c89532c8476583b4963f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "9d1fbc5ddef3213e0f72738c43ea7a6991271d5e05f31b792f2213880a11e47c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "66026cca3db21438a9527157892d9dfbfdb5f86bb1d5b2ce4c56ee158e6e4e5b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "ace1c115e8eff60127edef3f4a9dcbeafcd19eab954179f903961598a601d02c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/inner-right-before-controlled.png",
+      "size": 2816,
+      "sha256": "6c1a2d5811e9b0b407eeccf07de00d801f838040438afd2f29484aff39e559cf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "342ec680695021e52afbfdda04cc3b0e7e3774d9a767f424314867144892c0a8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "60b96f0b26e29aa1404c0482a3b9ad14c5b35c7669597b9830a31fb28cbd1cb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "bdd985b2306396efa002516a9353c649ad463e3038f0fbe29c3d614e767e7dac"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-left-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "619a386450edc73c0c36ac5b6ba20be463a032343445c0372246690ed6d77107"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "1e193960395ebee516cb68ee20616479769743feda87742b35804949a787782f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "7519538634e81a7158c514c1728c587397f4904b0c40d4a9e6434429d1f35286"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "802dbf65cd2df27ddc50ef9ec0d4014684e1a6cd147705c3d1002f60b5be4721"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/outer-right-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "051083813a41e5e75154c849104f57ac5a097970fce27f0ac00dda07fb9d058b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "7d044b8cf68d27955a2167b184c375c37576e9442ffe945770d325ad7a2b7d3c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "11613e52aa11bc09a1eb4fa808fb42823d32565d4abab066181e51132d15c35c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "7817d9fa874d039aad68d0f22105821d5db26757b17a63d18a63a0a32d66ae8f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "f8348cc793994049a79fac6934ab0749dbda297b97723e492cdc428fa9d88651"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "ca395ab7ccae03064b159de86b8122c101d7286e88b640cd6ab91c397dba1419"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/panxi-return-before-controlled.png",
+      "size": 2953,
+      "sha256": "71f07b2cdfcf81aa9fe00b99ff1d5f64ede68575826e7ec191a15524ecb7f326"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/probe.lua",
+      "size": 2450,
+      "sha256": "97901a097e337f671ee5a509a6d572e4eb5577d151e3b744e03ceb2193849c78"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-controlled/results.tsv",
+      "size": 295,
+      "sha256": "f8c6adaa5999c5a75a4776e154a68b03133489fdbc8de62f4ae5ce31b5085af9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "3ef01276fc69e0ff8d90e08698ea929f56bad37162f8a4ce27232d3a257961be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "b06e51e00ad79773bf0520cf1661f7110536f512149a2d661b0aa1ef2723787e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "04557f96e38e0a9365d32480fd8c735aaf8b16d8799b1c4a7d45987fb8d7ffa7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "1243f4abba0eb5b8aea565bc9cea401b689095cb39209c7ec8c037af69db486a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-13-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "3ef01276fc69e0ff8d90e08698ea929f56bad37162f8a4ce27232d3a257961be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "b06e51e00ad79773bf0520cf1661f7110536f512149a2d661b0aa1ef2723787e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "04557f96e38e0a9365d32480fd8c735aaf8b16d8799b1c4a7d45987fb8d7ffa7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "11773ed7dab97db875e603c880d73321a96e2ddf0c097b3d475bb62002378d98"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-14-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "3ef01276fc69e0ff8d90e08698ea929f56bad37162f8a4ce27232d3a257961be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "b06e51e00ad79773bf0520cf1661f7110536f512149a2d661b0aa1ef2723787e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "04557f96e38e0a9365d32480fd8c735aaf8b16d8799b1c4a7d45987fb8d7ffa7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "0ba31808394584cd2afbe19a7132b641145131261f7ac4d1eed7bbd5eefd410b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-16-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "3ef01276fc69e0ff8d90e08698ea929f56bad37162f8a4ce27232d3a257961be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "b06e51e00ad79773bf0520cf1661f7110536f512149a2d661b0aa1ef2723787e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "04557f96e38e0a9365d32480fd8c735aaf8b16d8799b1c4a7d45987fb8d7ffa7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-after-real-key.png",
+      "size": 2977,
+      "sha256": "cc7e3f9b267df1e0e2399c0cc9629bd2b35ac64ddf9d27ae7cf9c9481986188e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "1a0591ef4dcf596fc709842bf6cab054a427de0b0e49343256eb45d9d227bcaf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-17-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "3ef01276fc69e0ff8d90e08698ea929f56bad37162f8a4ce27232d3a257961be"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "82f95c10fd53547c574ca39e1693b5f3a6f600a89a841b2bcf1badb570693efd"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "04557f96e38e0a9365d32480fd8c735aaf8b16d8799b1c4a7d45987fb8d7ffa7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e3bd31a658d724042d73ef88478d6ef924bad375375ba8d3b62bcc9c833fa727"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "a5714436e6ba7f22523b6a06895d46fe27b742d1b71b5609f5c53ae994bca0d4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/city-bottom-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/done.txt",
+      "size": 70,
+      "sha256": "f59d1a1c1e580f4c338b7538925562edaf2e34da5fcdb8b2c51191dbf6355637"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "b766101e861fb3482f2b6a2b7a08a0f74226a88b77a03c5cf9b313001428a90e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "81ac5205d80bd4d089c7f9a3f09d1a33468fdee6983414d6fadcf19d4fe38c85"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-after-real-key.png",
+      "size": 2859,
+      "sha256": "a14d09879f4b90fce38405b442cbd65a8689ce46fdf2128b910fc3abe58d4b08"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "847cde953d5cf8d60568d243c412102f10323041924fad646e4d56d972a40835"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-left-before-controlled.png",
+      "size": 2948,
+      "sha256": "675716b5133bc805ed85eee0aa3df2d5829c55626c7fbd931f43e44329972815"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "f21895f4b8e2f133d989449bd9288fdbd4d91a956ed9cd0b88184436439a36bd"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "4b5eaa934f49ac13fc5970896a660bfbe8879a43bc511d8772672d250e201ac9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "66026cca3db21438a9527157892d9dfbfdb5f86bb1d5b2ce4c56ee158e6e4e5b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "bb55e163fa56331fc3ef99142c903858e628cec5cabf232f03dbe62dcc00c6f6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "332b99e5f78b938a5c1ae0e06251f069f6649b4f3e899ecd21a1032e09bdf740"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-return-before-controlled.png",
+      "size": 2930,
+      "sha256": "b94fd12c723e69e36b561b7003f8553f9f2d04f1fdedd5dc391179256e8889b6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "bc948cfd401cc8159c0429fff24060391851b03338c7c89532c8476583b4963f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "9d1fbc5ddef3213e0f72738c43ea7a6991271d5e05f31b792f2213880a11e47c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "66026cca3db21438a9527157892d9dfbfdb5f86bb1d5b2ce4c56ee158e6e4e5b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "e341b749a4bec970eab6a8899f5091ae4d1450727f719278f44c2effd3e9c4db"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "ace1c115e8eff60127edef3f4a9dcbeafcd19eab954179f903961598a601d02c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "2171b1fabf72fc2e1b888029e8f29b776b91c0ce2f6172285ebb56d9d1036703"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/inner-right-before-controlled.png",
+      "size": 2816,
+      "sha256": "6c1a2d5811e9b0b407eeccf07de00d801f838040438afd2f29484aff39e559cf"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "3e40bf322760eced729e183ad31236aba716130f9f4dec65d2141bae735bbd38"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "60b96f0b26e29aa1404c0482a3b9ad14c5b35c7669597b9830a31fb28cbd1cb5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "bad239b327cfcb34f0d25139a7648181b775550567690fb6253d2b02fbcb2958"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-left-before-controlled.png",
+      "size": 2978,
+      "sha256": "f72f153b12f7d90bfeed217cd090a39273d58824dba7a6ad1679e33da052c90a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "619a386450edc73c0c36ac5b6ba20be463a032343445c0372246690ed6d77107"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "1e193960395ebee516cb68ee20616479769743feda87742b35804949a787782f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "7519538634e81a7158c514c1728c587397f4904b0c40d4a9e6434429d1f35286"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-after-real-key.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "ad2818662516f685c111713b313d9aefaf4605b2eb5585fff662857701d8f82a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "802dbf65cd2df27ddc50ef9ec0d4014684e1a6cd147705c3d1002f60b5be4721"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "4421bc73a083f9816d1eace2760c7ea346fa5e3d7fb8d1ca07d84930f8af8dd8"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/outer-right-before-controlled.png",
+      "size": 3051,
+      "sha256": "2626ab4ba326d027256be051ec76e565299e2a9d02e9f8bea91ce940c514fdb9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-after-real-key-ppu.bin",
+      "size": 16384,
+      "sha256": "051083813a41e5e75154c849104f57ac5a097970fce27f0ac00dda07fb9d058b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-after-real-key-ram.bin",
+      "size": 2048,
+      "sha256": "7d044b8cf68d27955a2167b184c375c37576e9442ffe945770d325ad7a2b7d3c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-after-real-key-sram.bin",
+      "size": 2048,
+      "sha256": "11613e52aa11bc09a1eb4fa808fb42823d32565d4abab066181e51132d15c35c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-after-real-key.png",
+      "size": 2881,
+      "sha256": "381a863a134890bef31cccda432da7acab8ef3c02ca19ee56e94c710e9dcf990"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-before-controlled-ppu.bin",
+      "size": 16384,
+      "sha256": "7817d9fa874d039aad68d0f22105821d5db26757b17a63d18a63a0a32d66ae8f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-before-controlled-ram.bin",
+      "size": 2048,
+      "sha256": "f8348cc793994049a79fac6934ab0749dbda297b97723e492cdc428fa9d88651"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-before-controlled-sram.bin",
+      "size": 2048,
+      "sha256": "ca395ab7ccae03064b159de86b8122c101d7286e88b640cd6ab91c397dba1419"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/panxi-return-before-controlled.png",
+      "size": 2953,
+      "sha256": "71f07b2cdfcf81aa9fe00b99ff1d5f64ede68575826e7ec191a15524ecb7f326"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/probe.lua",
+      "size": 2862,
+      "sha256": "46a94a0c4d642eefe425d181b3c5b5687d8ee013e9590aa589c0df7742ff9d3f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-jiang-exits-correct-adjacency-controlled/results.tsv",
+      "size": 403,
+      "sha256": "13c3aea9700f29fcae82781f56491d6713f31d88db20d1f5a02cb41243725885"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/done.txt",
+      "size": 71,
+      "sha256": "ce6214c515a290c36120bed369d3e710a80c9526b7f897278f504bd40c948cff"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/fceux.log",
+      "size": 932,
+      "sha256": "e97856715f55072ac0d68ba9aae7974b17eadbf91e2b75966f4a44b916a6f2b4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return-ppu.bin",
+      "size": 16384,
+      "sha256": "9b0717bc88b45d6d303c7043a7dc2e3cfbb6b149c22ea2ec795d4ba058698d41"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return-ram.bin",
+      "size": 2048,
+      "sha256": "2a6137dee239b52072697bb55dc036bd264da65333df519584bc2263ce98c76d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return-sram.bin",
+      "size": 2048,
+      "sha256": "dfdf7db7ebedfcc125db2cf36b12862660cb6381197c4d6330145e7e625ceee4"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return.fc8",
+      "size": 73168,
+      "sha256": "a4527c1255a790577b34278cbe280da873b1ef16dfd84ce9e4e01a6c21ee09a2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-before-return.png",
+      "size": 4158,
+      "sha256": "b4c575f801fd54f3b897e633d93d10d49ca55cf9e8e3e497a17be79243cc879b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return-ppu.bin",
+      "size": 16384,
+      "sha256": "dd893685e57f6b357642e322ed5e747959700d69b6f49223be15f48e0c8f05c3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return-ram.bin",
+      "size": 2048,
+      "sha256": "35613fd65b73dd9762e8e67accebd1c0ba90f0d5a82cc40cec483bf00e64a53c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return-sram.bin",
+      "size": 2048,
+      "sha256": "ef781ca2e5f99af300d7926838803b6b4564fb35bf2dd459354206732ee28a9d"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return.fc8",
+      "size": 73168,
+      "sha256": "20ffad1f5baad54c4919bb3e2e8a9b74acbe1ce2fe2778ed2b4dca68621d4814"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-normal-return.png",
+      "size": 5064,
+      "sha256": "ec24bf81f7b8a78dee4c1f7fbe4566fe74d56eda92caed0c771d22d853a6d9c3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source-ppu.bin",
+      "size": 16384,
+      "sha256": "e59cb95f6adcd64499dbbeb2718cdfca85fdc0f56beba16a358fa97b38332318"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source-ram.bin",
+      "size": 2048,
+      "sha256": "517a1ca1b5488e0aea2c85ec9a374760fa503e2c5e86f3ad4deef2f0e143646a"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source-sram.bin",
+      "size": 2048,
+      "sha256": "da443a072c4b2786c03c332a1859493127237c5e5ca88a9ce4b79756e5370ac6"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source.fc8",
+      "size": 73168,
+      "sha256": "590ff57a8d7d2275dad6f8bfa2eeee79588d0bf70389bbc9000730af5501eb52"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map38-original-entry-source.png",
+      "size": 2926,
+      "sha256": "f128aa1c61b87c2a0ceda96c3d2a79b4bf3e0582e147d3dcc594cf8740db2cf7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return-ppu.bin",
+      "size": 16384,
+      "sha256": "b7b2dfb2efbaa5e3c6b1608cd0d1db06bec827cc736ee133a6cad061723f5386"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return-ram.bin",
+      "size": 2048,
+      "sha256": "c8f1e74a0d6c3ba86c98cc16fd0715dd504cda6e8781845360e2c4fdcf8628de"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return-sram.bin",
+      "size": 2048,
+      "sha256": "1e7eab72af049f1d8723dbe1b3fa94829d23958810bd1086621d39d0f75eb6e5"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return.fc8",
+      "size": 73168,
+      "sha256": "a75c61d856055ec82eb3f46bf192cc81a18d5b2806df651af008c456ea5a8e60"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-before-return.png",
+      "size": 4369,
+      "sha256": "908bc29201101d13eebd4e0a2c5ed2228d915c452a28f6290ff3d1c712e73509"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return-ppu.bin",
+      "size": 16384,
+      "sha256": "59210625672ef5eae8d405dc636bb816200f2584960d86c66d0a3a2297f479ba"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return-ram.bin",
+      "size": 2048,
+      "sha256": "659a5476cf3dd9feda56714023e6a3f359eb7d0b11aa999f8422ead77144d99e"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return-sram.bin",
+      "size": 2048,
+      "sha256": "696ea58f52f7bdd97b7baa3aa22f3a854545031a68c5c52deec2290f24489464"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return.fc8",
+      "size": 73168,
+      "sha256": "30642bb3fa343dce92eb18ee2b74721390e8fd9559f0411675919e46e32ec25c"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-normal-return.png",
+      "size": 5575,
+      "sha256": "c7f3a610d6189f4a7adf441257efac911dcb7cc709594e6ce6bf57efdbc020ef"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source-cpu.bin",
+      "size": 32768,
+      "sha256": "1b936d6c7ded2e690d3207905b4e6e1daa6f1aa5739c7eb6b7d7fe6b6798a853"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source-ppu.bin",
+      "size": 16384,
+      "sha256": "b75ae5b9ddf4357f0babb3597054816fd96b6709b92b52d03384c0e1a61ddcc9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source-ram.bin",
+      "size": 2048,
+      "sha256": "5b6ae1e34be8e457772f807b00e315ba411322e7621716c0b397e7f5d794d2b3"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source-sram.bin",
+      "size": 2048,
+      "sha256": "f4d140de06def23225a00e05a5ab8a089c25c19a5a8c3f2d3325e84b980b7dd9"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source.fc8",
+      "size": 73168,
+      "sha256": "568953d072bc44f1676ba88531a4ee5e2dc7833f7a76c3fa95548b50059da81f"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/map39-original-entry-source.png",
+      "size": 3530,
+      "sha256": "072c6ed72bc425d86318539da9458b05d271b56fc86557b0a7554a1b4732eebc"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/probe.lua",
+      "size": 2188,
+      "sha256": "069384c2c3af0af8f5c15da1f8776dd0093be7a21f23b07f01445d6a8bbb43c1"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/timeline.tsv",
+      "size": 348,
+      "sha256": "2f68e2ed735702d7acb46f22fc4cc47d3b29ed9fce0be55e7cde9f58b02a6d65"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island/private-derived/world-house38-39-original-entry-return-controlled/xvfb.log",
+      "size": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font131-draft.json",
+      "size": 24678,
+      "sha256": "471c7f8ffba5ec6eb21b040af7df7d6ec3e9403a047dbec10775e8fae7e28611"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font131-first-draft.json",
+      "size": 24858,
+      "sha256": "8fbeb31574c880e84a05d9150729c1aabbfadd219a5a2f8549ad70424738a374"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font131-first-unknown.png",
+      "size": 9622,
+      "sha256": "40dfb10aacf6b65b465f6ad81ed1c6f21ff7bd959286c6432632df49b0da0301"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font131-unknown.png",
+      "size": 2713,
+      "sha256": "bc47fcf9e1e290e669c466da0492da4aada2085edad3b0ac78fe3371855a37df"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font17-draft.json",
+      "size": 21501,
+      "sha256": "eb0bdc0bd4d34d51d9883284e4edc3039ba8dec1d18d0aeddd0f4ee79748c223"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/font17-unknown.png",
+      "size": 12359,
+      "sha256": "2d72f347d5f1f8e1b63e2c12d9aaf2c69fa264a748e6591ebf43edfd072d400b"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-resources/oam-recipes.json",
+      "size": 8558,
+      "sha256": "fb1229ce46678c4f12cf422faa71dafe603fca956cc0f90f172ebc5e258289e2"
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next/private-derived/world-jiang-city142-terrain/matrix.tsv",
+      "size": 6035,
+      "sha256": "8a2195676e8dbd55a5bd43da72a436e919b6447d27250dce8e0c3a0e74859a3b"
+    }
+  ]
+}

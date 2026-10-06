@@ -1,0 +1,1301 @@
+{
+  "snapshot_utc": "2026-10-06T04:56:41.866812+00:00",
+  "scope": "PUBLIC_GIT_ONLY_BEFORE_HANDOFF_DOCUMENT_COMMIT",
+  "worktrees": [
+    {
+      "path": "/workspace/game-fengshen",
+      "branch": "main",
+      "start_sha": "456892c911a4ff11b1cc5c653af8f2432eeeb486",
+      "preserved_source_sha": "456892c911a4ff11b1cc5c653af8f2432eeeb486",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-armor-acquisition",
+      "branch": "test/armor-acquisition",
+      "start_sha": "ead1c5ec32efff8a85f6a63760188c8ca409a098",
+      "preserved_source_sha": "ead1c5ec32efff8a85f6a63760188c8ca409a098",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-cave85-runtime",
+      "branch": "test/cave85-normal-runtime",
+      "start_sha": "03aace72f7342ccf499192455013d6c586690708",
+      "preserved_source_sha": "03aace72f7342ccf499192455013d6c586690708",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-east-content",
+      "branch": "data/east-palace-content",
+      "start_sha": "47d16bee311f1427f0d42df4204f3d99fd81dbf2",
+      "preserved_source_sha": "47d16bee311f1427f0d42df4204f3d99fd81dbf2",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-north-runtime",
+      "branch": "test/north-pearl-runtime",
+      "start_sha": "840daa1029ccc3d3585ea27d1b0deb3a225afa66",
+      "preserved_source_sha": "840daa1029ccc3d3585ea27d1b0deb3a225afa66",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-party-rules",
+      "branch": "impl/original-party-rules",
+      "start_sha": "5b00054c7be2577853850160c72bcbabd590ed5b",
+      "preserved_source_sha": "5b00054c7be2577853850160c72bcbabd590ed5b",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-runtime-summary",
+      "branch": "work/runtime-summary-safety",
+      "start_sha": "b473d3b93f9b6e2d7c42ca7cd652761757011359",
+      "preserved_source_sha": "b473d3b93f9b6e2d7c42ca7cd652761757011359",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-status4-test-fix",
+      "branch": "test/status4-supported-fixture",
+      "start_sha": "d12c02803f146c1656a0b097a1e2a37cda0696b3",
+      "preserved_source_sha": "d12c02803f146c1656a0b097a1e2a37cda0696b3",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-updater-review",
+      "branch": "review/updater-protocol",
+      "start_sha": "7b9142745d2a79ec83e16931b7e95b820722dac1",
+      "preserved_source_sha": "7b9142745d2a79ec83e16931b7e95b820722dac1",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-after-forest",
+      "branch": "work/world-after-forest",
+      "start_sha": "addc84c46e890b9d7792f1074c48a234f3b2469d",
+      "preserved_source_sha": "addc84c46e890b9d7792f1074c48a234f3b2469d",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-after-medical",
+      "branch": "work/world-13e9d9e6",
+      "start_sha": "13e9d9e67ea65441d3eb34658a9b7d20fa16473d",
+      "preserved_source_sha": "13e9d9e67ea65441d3eb34658a9b7d20fa16473d",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-after-tree",
+      "branch": "work/world-909a8ec3",
+      "start_sha": "909a8ec3694ef7376f40f0de1288e29fae90513b",
+      "preserved_source_sha": "909a8ec3694ef7376f40f0de1288e29fae90513b",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-batch",
+      "branch": "work/world-fbfc8cac",
+      "start_sha": "fbfc8cac21644ecefdc066f364abb87a188b8464",
+      "preserved_source_sha": "fbfc8cac21644ecefdc066f364abb87a188b8464",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-c36-publish-policy",
+      "branch": "work/world-263e7dbc",
+      "start_sha": "263e7dbce24a3baa26abfb0c267783dfe0ad3a9e",
+      "preserved_source_sha": "263e7dbce24a3baa26abfb0c267783dfe0ad3a9e",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-cave-candidate",
+      "branch": "work/world-9b438f73",
+      "start_sha": "9b438f73ded6400f0ea130154f71e64b8885f75c",
+      "preserved_source_sha": "9b438f73ded6400f0ea130154f71e64b8885f75c",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-chest-loader-fix",
+      "branch": "work/world-f2f86ffa",
+      "start_sha": "f2f86ffa47dbf9ec8ea933e9432e868ea928a019",
+      "preserved_source_sha": "f2f86ffa47dbf9ec8ea933e9432e868ea928a019",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-continuation",
+      "branch": "work/world-75ac819c",
+      "start_sha": "75ac819cad0bc387bafbf35ac3ccb352229aab9f",
+      "preserved_source_sha": "75ac819cad0bc387bafbf35ac3ccb352229aab9f",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-coverage",
+      "branch": "work/world-99a036ba",
+      "start_sha": "99a036ba80ecec5fed9d0f5dfb86f947bfc3cb98",
+      "preserved_source_sha": "99a036ba80ecec5fed9d0f5dfb86f947bfc3cb98",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-east-batch",
+      "branch": "work/world-91f2708d",
+      "start_sha": "91f2708d0e918097d57e58f3fd3e0263623cdc94",
+      "preserved_source_sha": "91f2708d0e918097d57e58f3fd3e0263623cdc94",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-ferry",
+      "branch": "work/world-87df6cf8",
+      "start_sha": "87df6cf836ec7d2106f2231f67f13c622272528c",
+      "preserved_source_sha": "87df6cf836ec7d2106f2231f67f13c622272528c",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-first-hall",
+      "branch": "work/world-ccefece6",
+      "start_sha": "ccefece6c5fd66bfe41c353daca17fe945223f77",
+      "preserved_source_sha": "ccefece6c5fd66bfe41c353daca17fe945223f77",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-followup",
+      "branch": "work/world-05bfcc05",
+      "start_sha": "05bfcc05e1d25de95f5825cc19c29adab7d0b0e9",
+      "preserved_source_sha": "2920d9d9ffcbd0e6c4b86ea3f8a6c5e089eddf0f",
+      "start_uncommitted": [
+        " M android/app/src/androidTest/java/org/fengshen/dev/TouchTest.kt"
+      ],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-ghost-batch",
+      "branch": "work/world-bb342354",
+      "start_sha": "bb3423548e3c5ecdee54baa5ba8feaa68815b0cd",
+      "preserved_source_sha": "bb3423548e3c5ecdee54baa5ba8feaa68815b0cd",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-hall-npc-test-fix",
+      "branch": "work/world-82eb31d9",
+      "start_sha": "82eb31d92dba47edc74e0fb501452c8ff0c03661",
+      "preserved_source_sha": "82eb31d92dba47edc74e0fb501452c8ff0c03661",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-hell-batch",
+      "branch": "work/world-73cc1b90",
+      "start_sha": "73cc1b901ee3b43a5b5ad216a43bde8e45cad655",
+      "preserved_source_sha": "73cc1b901ee3b43a5b5ad216a43bde8e45cad655",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-hell-rest",
+      "branch": "work/world-f38b4fa8",
+      "start_sha": "f38b4fa8f9676a19efeae3133d7515135d0e9cc1",
+      "preserved_source_sha": "f38b4fa8f9676a19efeae3133d7515135d0e9cc1",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-island",
+      "branch": "work/world-island",
+      "start_sha": "5e94b68f51a7c30de40443a4751af8d3de9d2d24",
+      "preserved_source_sha": "5e94b68f51a7c30de40443a4751af8d3de9d2d24",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-item-source-fix",
+      "branch": "work/world-8aa3b6b9",
+      "start_sha": "8aa3b6b9e9aeb49f44287b35a4f7f9ae3cec95ff",
+      "preserved_source_sha": "8aa3b6b9e9aeb49f44287b35a4f7f9ae3cec95ff",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng",
+      "branch": "work/world-jiameng",
+      "start_sha": "7747010d2cd71ab78c6e1a459440b54530e8ea9d",
+      "preserved_source_sha": "7747010d2cd71ab78c6e1a459440b54530e8ea9d",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-jiameng-next",
+      "branch": "work/local-migration-handoff",
+      "start_sha": "72912e3792066a96b9bc7b10c8b78e2a45e7d3b6",
+      "preserved_source_sha": "353cf7e8d8d5619d4b9409383a0de22c050948c6",
+      "start_uncommitted": [
+        " M android/app/src/main/java/org/fengshen/dev/Content.kt",
+        " M game-data/provenance/world-jiang-invitation.json",
+        " M tools/export_development.py",
+        "?? android/app/src/test/resources/world-city142-terrain-original.tsv",
+        "?? ci/golden-world-jiang-content.json",
+        "?? game-data/provenance/world-jiang-content.json",
+        "?? tools/rom-extractor/probe-world-city142-terrain.py"
+      ],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-last-halls",
+      "branch": "work/world-a73241ad",
+      "start_sha": "a73241ade785472d5a105afd33d0a7bbd1cd1069",
+      "preserved_source_sha": "a73241ade785472d5a105afd33d0a7bbd1cd1069",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-next",
+      "branch": "work/world-c461e7c1",
+      "start_sha": "c461e7c121b6f535d85e2a245b82be1f6e42d786",
+      "preserved_source_sha": "c461e7c121b6f535d85e2a245b82be1f6e42d786",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-post-rebirth",
+      "branch": "work/world-post-rebirth",
+      "start_sha": "b1ef6aad0faf85b171275d71d530a96b541485f4",
+      "preserved_source_sha": "b1ef6aad0faf85b171275d71d530a96b541485f4",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-rebirth",
+      "branch": "work/world-8e5f4d9d",
+      "start_sha": "8e5f4d9d7a0304ea91ab0606a0725d9340ba51e1",
+      "preserved_source_sha": "8e5f4d9d7a0304ea91ab0606a0725d9340ba51e1",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-rebirth-exit-fix",
+      "branch": "work/world-b19de048",
+      "start_sha": "b19de0481bfa7132bb42b21bcb57ef7b7c573103",
+      "preserved_source_sha": "b19de0481bfa7132bb42b21bcb57ef7b7c573103",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-village3-clinic",
+      "branch": "work/world-c552900a",
+      "start_sha": "c552900a4c831bc6451017e93fc3bc21b0e0be4a",
+      "preserved_source_sha": "c552900a4c831bc6451017e93fc3bc21b0e0be4a",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-world-village4",
+      "branch": "work/world-village4",
+      "start_sha": "10ddf56b09de0f74ee9e2418685d050a2893e02d",
+      "preserved_source_sha": "10ddf56b09de0f74ee9e2418685d050a2893e02d",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/game-fengshen-xiaolongnv-data",
+      "branch": "data/xiaolongnv-party",
+      "start_sha": "a8625c230e5841ff2c48c45d286a8f2efbd04898",
+      "preserved_source_sha": "a8625c230e5841ff2c48c45d286a8f2efbd04898",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/scratch/nanhai-clean-checkpoint",
+      "branch": "DETACHED",
+      "start_sha": "40db7d2aa5c7b31535c86aaee301391949d6a5ce",
+      "preserved_source_sha": "40db7d2aa5c7b31535c86aaee301391949d6a5ce",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/scratch/nanhai-clean-final",
+      "branch": "DETACHED",
+      "start_sha": "71b2f233e06c8393387d8e21eb470151d6128fb6",
+      "preserved_source_sha": "71b2f233e06c8393387d8e21eb470151d6128fb6",
+      "start_uncommitted": [],
+      "uncommitted": []
+    },
+    {
+      "path": "/workspace/scratch/nanhai-clean-origin",
+      "branch": "DETACHED",
+      "start_sha": "142de0e73176283c7358e696a81f5d619c90a95b",
+      "preserved_source_sha": "142de0e73176283c7358e696a81f5d619c90a95b",
+      "start_uncommitted": [],
+      "uncommitted": []
+    }
+  ],
+  "local_branches": [
+    {
+      "branch": "ci/auto-approval-local-d175e225",
+      "sha": "d175e225c63cd592b801091219118de9cc405166",
+      "tree": "59910d75ab221cb717131c0adc365f4c3dcf0e78",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-0b75ae7c",
+      "sha": "0b75ae7c80372d52e3f85aba29fb357765959b9d",
+      "tree": "e1a2b30fbea7f7f1e95bd764900b58b6041b103b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-0e7886ec",
+      "sha": "0e7886ec581cc84398b68b7d551b9fb16528303e",
+      "tree": "9e3f703ba352da838e971e2918ff211fc3f347ad",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-15145bad",
+      "sha": "15145badb637e4a23e852822d04d26f4824129b2",
+      "tree": "03bccc78ea62de32992e6d90458a0fc852da8711",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-1856c238",
+      "sha": "1856c238f782d7a439c0fa8231285609d5ed1769",
+      "tree": "b15d684f061a3c1fd84d016a2dbc2784f55787ea",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-2055f5c3",
+      "sha": "2055f5c305d0848aa69d5735284d7dfb2b6bdb2e",
+      "tree": "1aeda137765e9fca7245108aca7270f5fa562507",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-2b1b9eda",
+      "sha": "2b1b9eda31d63b96c02063de7860d42e58122670",
+      "tree": "6894a0902787c6e64bb93fb98698bb9936d02e80",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-3c0b9190",
+      "sha": "3c0b919003cc265867d0da98f1af9ad2b3596b76",
+      "tree": "653da596dc0765d6a8858c2ecbd38e4e57afe453",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-50be511b",
+      "sha": "50be511bd69a9a5eab60028b9db43c3e76c48979",
+      "tree": "66f19116bdfa03ecfd192aeb670790f7262c46a0",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-543b0c2e",
+      "sha": "543b0c2e7e025b8710b8b24078d75d28806d58a5",
+      "tree": "59468aac67d12ce95ffeb54ce5bd0e65b7aa73d7",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-5d14017f",
+      "sha": "5d14017f2689c1ca675e87b5e5c601aed050efcc",
+      "tree": "1dca2fa1c9b1d59644ffdea092a9434580482e36",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-6319f8ad",
+      "sha": "6319f8ad0fc0f339d9a31146cfb782e5f176f31f",
+      "tree": "07e60f8442ffc93efa1b54e40562f65b89a8c0e7",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-63919052",
+      "sha": "6391905236a0db6ba35573fdaa170cc28855545d",
+      "tree": "cc096c01250b55f99e8ae1f2b8fdc2afe6470f22",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-6bac5763",
+      "sha": "6bac5763553d03647f3073259e05afa4939e3c4d",
+      "tree": "923a0421885cab6ad2abc255dc5e14fa5e991325",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-6e41dcd7",
+      "sha": "6e41dcd717afef3328966cffea3bcf3f5f63160c",
+      "tree": "94a413bdcdb0968c280777b3e246d44339b0b086",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-74602d21",
+      "sha": "74602d219ea5e878cd2e693472c8d42f96a9fc9c",
+      "tree": "1f0fb76820036e667a8c4678086baafb6a4073cf",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-8155db62",
+      "sha": "8155db624ff6e586c9e1e54f90517cfb4ba9d73f",
+      "tree": "37d189fc90e90e9ad3256dd710e66412fac7dc99",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-8a01c325",
+      "sha": "8a01c325c7e75bdbb313b655c35ae8206d9c0750",
+      "tree": "31e6ff757879744e459b05907fc277b8de411b7c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-ac1e0acf",
+      "sha": "ac1e0acf046e0fa2e7cd9f09e63d65c38a0a4378",
+      "tree": "4ec1efc40dbeffb08325cf168f7458215747733e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-c36ec317",
+      "sha": "c36ec317b7acd2b8cd88dcf4d63f0cc0678e6912",
+      "tree": "9074b7ed3335ee2dee72867489aed0c65c35f333",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-c379e704",
+      "sha": "c379e7043e839903c84d10de4c1f0cb9fc49b974",
+      "tree": "6e58fe9e16c30cfc254f041cfed1ff79351d56fe",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-d172e3df",
+      "sha": "d172e3df0c2751d9ec5f7ba90ccb68d6127ba05b",
+      "tree": "5d2e4ab527bf099a44bdfb85188f1d05f20d82ab",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-d2701690",
+      "sha": "d2701690b41fe5b6ac0f634429f2e272e48b155e",
+      "tree": "bf48b14650d327510a25d800c7bc26e92e27b69b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-d9696e60",
+      "sha": "d9696e60cea4be5e4952a66ad33cd2c33b85e494",
+      "tree": "7c1a5e82b96a4f2f9988fb1d802b674c3392fd02",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/nanhai-local-ec76a419",
+      "sha": "ec76a41939ab8bad5909b049580bbbaeb379eba0",
+      "tree": "7343c2102b872b7ea0bdf0133e868b8f0d682c44",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/runtime-report-fix-local-555770e",
+      "sha": "555770e31c12e5f092c2d794d510c65b87d5fa25",
+      "tree": "767577335548f392aaf9dcbdace3b927361f9f53",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/touch-ux-delivery-local-5b7a525c",
+      "sha": "5b7a525cb2b4a25dead5f0af9d543c846364e364",
+      "tree": "b725146f8df44a8992c292045b98fdd4074201c2",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/touch-ux-delivery-local-9c9e5b70",
+      "sha": "9c9e5b70605a5cc857fd2b99e3a4e24ddac31b3d",
+      "tree": "79c4e3d171b52b63036e898df104c5f744f506a7",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-base-local-b99304cf",
+      "sha": "b99304cf66c741aae11c35583257052248315b21",
+      "tree": "d72e7006107c5950cbe911cdbbc5ca224753655a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-0ed31ab4",
+      "sha": "0ed31ab478e0049f2c5d9f668706bd43eb48ce87",
+      "tree": "900cb4864f04d7962cf57b83c992981dfa28c9be",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-2fd8cb13",
+      "sha": "2fd8cb134ca7999cb86d0ba7ee5e67eb355e1660",
+      "tree": "d453c2ef58da9c4a5ee077f18725a8f7b1a4e5d4",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-4cb24280",
+      "sha": "4cb242809d7ed20bbc90195ec99f709522a517eb",
+      "tree": "34902a5802213b9e9e88acae57ca33f3288ea82f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-4d601965",
+      "sha": "4d60196521eb74f2375785d44355edd5d47114cb",
+      "tree": "6bee84ab633721a3d35f73b9dcc5ea536d9f7539",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-4ea4bf5c",
+      "sha": "4ea4bf5c4a76590b591d5315f7accae5d2c01f8a",
+      "tree": "e559e3ebff7b5eb42f36f8d45f920b9ffa9dea6a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-6c2800e7",
+      "sha": "6c2800e7d967540960c431d7f75f96dc191756bb",
+      "tree": "be1a8382a23d9db54d1d736c9d0217f476d6f28c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-71b0ad2a",
+      "sha": "71b0ad2a7c67c55fd2cd8288696364c0937b1320",
+      "tree": "5eb6ee1ed6f639c9f80430a1f6613679b88c9b0f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-9203c314",
+      "sha": "9203c3143ddc3cd272f1c3c8b326f559c8f0e6f3",
+      "tree": "55ffe69c687a8868b0286d30ae03850f237725f4",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-933c7a75",
+      "sha": "933c7a75667c86e82d2806b2214846645adec334",
+      "tree": "f3607a969d20e0241119d7ad98239a6a9778e1fc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-966fb7e9",
+      "sha": "966fb7e9bd96e1c1f2ca05f1ba53e5679af70cfe",
+      "tree": "e91c01edee82ab4aa535ce28a5b4e0804ad773eb",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-a2d47e78",
+      "sha": "a2d47e78679732ab974529f76a4ea1eb5435d1bd",
+      "tree": "25dd576bf0f5e6441072dd02d4a8712fe88967db",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-ad0d7faa",
+      "sha": "ad0d7faa17dfadb9471b58a547f0b6ffb43d32b8",
+      "tree": "e6d932717f0236f97200a7466f57594f021fbfab",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-ad427ec6",
+      "sha": "ad427ec67e3e746ef51ae5ee406762e6837684a0",
+      "tree": "64461f3c29b2894ecc7ba9dbf4a1d04f073a0775",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-delivery-local-c73b3acb",
+      "sha": "c73b3acbd5267d9ac4f965cd0dd213f68f0ec7bc",
+      "tree": "884d2e0eb5856f076ca3f88d028f9ec9c1d8561c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/town02-inspect-local-a287e755",
+      "sha": "a287e7556adbc454758d6b8680155547525c608a",
+      "tree": "41c254e7db5665c9e1c704a15f7bc47643a27bf3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/v22-delivery-local-501c502d",
+      "sha": "501c502d8de4c2e68a59fac21e776428b6822e12",
+      "tree": "f07996257818a164e3c4eaa42d78dea5674da059",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "ci/world-local-3c75f536",
+      "sha": "3c75f536cc929a4e616033117cdfb9a0880c5940",
+      "tree": "4c2141e96d1ab8e25c7b3dade4244b9ece02bfee",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "data/east-palace-content",
+      "sha": "47d16bee311f1427f0d42df4204f3d99fd81dbf2",
+      "tree": "d3939aae1bff992fcb35c8ddcb38ad4547cbf179",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "data/xiaolongnv-party",
+      "sha": "a8625c230e5841ff2c48c45d286a8f2efbd04898",
+      "tree": "01c4eee1dcabdbf0208e2dab68204fbed36e552c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "fix/world-chest-loader",
+      "sha": "2efa761cef13dd4fd80095e70775037b38a5f74a",
+      "tree": "0ddc395bb4bf62aeec4cca18f8c41bb63140cf98",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "impl/original-party-rules",
+      "sha": "5b00054c7be2577853850160c72bcbabd590ed5b",
+      "tree": "aa023e00666bd180baa7b9230f32d98331cd3593",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "main",
+      "sha": "456892c911a4ff11b1cc5c653af8f2432eeeb486",
+      "tree": "857774ccd5f4805f1420b70626b80a75c393ca75",
+      "push_main_allowed": false
+    },
+    {
+      "branch": "review/updater-protocol",
+      "sha": "7b9142745d2a79ec83e16931b7e95b820722dac1",
+      "tree": "26eef5f844ed631217cfd90ad1c9cdc6441446b6",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "test/armor-acquisition",
+      "sha": "ead1c5ec32efff8a85f6a63760188c8ca409a098",
+      "tree": "81ee097ab1a3c4f4fe9ac82fec7fa8cedb2f3e8a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "test/cave85-normal-runtime",
+      "sha": "03aace72f7342ccf499192455013d6c586690708",
+      "tree": "5821098ef9a4b81ce0275f86e92d4a0a26931f75",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "test/north-pearl-runtime",
+      "sha": "840daa1029ccc3d3585ea27d1b0deb3a225afa66",
+      "tree": "351b15f29da056f61f8a12867c7941f41aefa5c0",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "test/status4-supported-fixture",
+      "sha": "d12c02803f146c1656a0b097a1e2a37cda0696b3",
+      "tree": "c4077400d05b1e3d81829fceec0df0357c0468fe",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/local-migration-handoff",
+      "sha": "353cf7e8d8d5619d4b9409383a0de22c050948c6",
+      "tree": "966f7b147eb9b2f5d2ccb5c8cbd8a4b84dd3f2cd",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/local-migration-original-main",
+      "sha": "456892c911a4ff11b1cc5c653af8f2432eeeb486",
+      "tree": "857774ccd5f4805f1420b70626b80a75c393ca75",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/runtime-summary-safety",
+      "sha": "b473d3b93f9b6e2d7c42ca7cd652761757011359",
+      "tree": "db72e75507a51ff9f9b7d232a6989378b25c6399",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-00d4f8cf",
+      "sha": "fe9071c6dc54871a5dacab1ee211d48713215cfd",
+      "tree": "61af206d1137c1a2ad0481d2668ff024a1c8845b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-010b6091",
+      "sha": "74504c898dddf92381737148efa6416e539ad759",
+      "tree": "e4e67f136a0d95139b734d988bfd7614ffeca2d3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-0491c444",
+      "sha": "eb8789409212e165c863628abbbea834b97fac53",
+      "tree": "114dc217c87114313a0cedb5efed0880f4e20778",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-05bfcc05",
+      "sha": "2920d9d9ffcbd0e6c4b86ea3f8a6c5e089eddf0f",
+      "tree": "210884e39cf9dd7c6a07bb326e3481fb75ee6454",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-0dda447e",
+      "sha": "8b0bb32c1008f8081f8ab3892b6db42759f0d1aa",
+      "tree": "650b70478cf725b6bfddfe8473d0db6b88c1f945",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-13e9d9e6",
+      "sha": "13e9d9e67ea65441d3eb34658a9b7d20fa16473d",
+      "tree": "6516bc8d202863ce25613a0ea5cf6cb7a7d94f21",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-14f1e214",
+      "sha": "6384fc508472165a33a224e998d24194a70fd1cb",
+      "tree": "33c393feaaf2011e6f661fd4d538500e930d640f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-1935914f",
+      "sha": "51d8c055ff89138e1d57d79723075c165109a83f",
+      "tree": "cdec1a0d04b1176b760277877a8f656894d54879",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-1abff35c",
+      "sha": "194e1ba92fec0d023f1580be21ad7e2bcd7b3ac4",
+      "tree": "1bbfc17cdb922c81b4542dbf22f7333cf62acd43",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-25c8464e",
+      "sha": "fb05cde88f6d624855e3070fc9401d6a719cad76",
+      "tree": "e0d22ae3dcdef429a04e5b52a9d31c30657cdd57",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-263e7dbc",
+      "sha": "263e7dbce24a3baa26abfb0c267783dfe0ad3a9e",
+      "tree": "465967bf01b5aaf253bd9b519789da0269708ed3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-36ce1187",
+      "sha": "65bc51a8d829a0d0abecc6898f1ee58a60e2546a",
+      "tree": "d93c9c278969493b141a02a337adc04258baf8cf",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-374cfc36",
+      "sha": "dd79a13ec1a89248fa96b5aa1c49fc1b23dd1f27",
+      "tree": "9d00d40c84d7bc984c5ee7a1147394d49d8bb871",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-4353dda6",
+      "sha": "8260dfaceb1b010d92ae71a78837eb713445f13f",
+      "tree": "b00431ede89a23dd6637a09bf83bb0ac0e5658df",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-571cb812",
+      "sha": "27b1bf0418818d8446e2fa3725c4a241e679a1b1",
+      "tree": "5d652887b06a81ea46e4d132aaada274c431320d",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-6227b5a5",
+      "sha": "47a1d3ba23bd256fcc63e413f909642c0c2d63a3",
+      "tree": "3a3dea9fe7a24a322547dda8e7a1b51af1eb1e25",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-62313454",
+      "sha": "955796e30145db3cca3287f4f95090521b079948",
+      "tree": "c1e53895bd45cc3651991259f9f4604fd79a2500",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-66d072b8",
+      "sha": "350ad6ec42dc4879a2744890feaf4b63031652b7",
+      "tree": "ba674846f59ded4b986ee649a43bcce9e9b5b352",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-6d7882e4",
+      "sha": "2ac6322023594d4c34c4157f3b2a0bfd61c2adf2",
+      "tree": "404b690874bb2da6d67920f8bf9d6e2400c53561",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-7302040c",
+      "sha": "e9f801156bc1579888351476cc1b87e887139bf7",
+      "tree": "75f5a33e2d800400ea5dfb068d335e89de06bcdc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-73cc1b90",
+      "sha": "73cc1b901ee3b43a5b5ad216a43bde8e45cad655",
+      "tree": "042cd0db1e835f0692d1b7a321e783a238f43233",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-75ac819c",
+      "sha": "75ac819cad0bc387bafbf35ac3ccb352229aab9f",
+      "tree": "d74f73cf63042e00488b95ce67f6c87316d419ae",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-7747010d",
+      "sha": "545a78e7067665b2f68529cf73f461fd8a1b8d36",
+      "tree": "d75816bb94e7c0d258ee90f689e22d7ccfdc7b31",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-7adeaceb",
+      "sha": "298e51ef16a6a1e8e4b22fbdac7f2bae896f024c",
+      "tree": "9ce2f34a5a0e852b31e5b0fc7b2f1ff5651a3c51",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-7b13487d",
+      "sha": "97574d8198f4c92904656383cca7d27a4be8f99e",
+      "tree": "c2e379b22d8b0f9c8daebd8929ee130309b7db1b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-7cccffa0",
+      "sha": "0bea0199b6a5759c2f613f0e807ec6656afb2525",
+      "tree": "fc7da043cb1c3782c92441fc1fa90884371f9e5f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-82eb31d9",
+      "sha": "82eb31d92dba47edc74e0fb501452c8ff0c03661",
+      "tree": "5f6a02c1f3eb2da2f3e11a083fba38ebbb613b4e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-84c60142",
+      "sha": "ea65a161cdc0e13ddb189bdfd608ed60c9ded577",
+      "tree": "54cbfa2b62b7b0e1eba315aacb525281db509323",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-87bc56cb",
+      "sha": "44354821db8be77547286a2329c7dddc3c03818f",
+      "tree": "92d7e54e86fdbe84d7009404fd06a97e263ba0e6",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-87df6cf8",
+      "sha": "87df6cf836ec7d2106f2231f67f13c622272528c",
+      "tree": "d93c9c278969493b141a02a337adc04258baf8cf",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-8a55db8f",
+      "sha": "604724f6ee884db339ddf2b8ba99681115094b28",
+      "tree": "d74f73cf63042e00488b95ce67f6c87316d419ae",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-8aa3b6b9",
+      "sha": "8aa3b6b9e9aeb49f44287b35a4f7f9ae3cec95ff",
+      "tree": "650b70478cf725b6bfddfe8473d0db6b88c1f945",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-8e5f4d9d",
+      "sha": "8e5f4d9d7a0304ea91ab0606a0725d9340ba51e1",
+      "tree": "b8dc110e8a22bea8051a6abee2620ffc46881290",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-909a8ec3",
+      "sha": "909a8ec3694ef7376f40f0de1288e29fae90513b",
+      "tree": "1bbfc17cdb922c81b4542dbf22f7333cf62acd43",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-91b4d6d0",
+      "sha": "d6496b5066902fcfbd02e564f22045ffaedd31fe",
+      "tree": "819eb2c97c24cab5df00832f74bba5e81d17160a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-91f2708d",
+      "sha": "91f2708d0e918097d57e58f3fd3e0263623cdc94",
+      "tree": "fc7da043cb1c3782c92441fc1fa90884371f9e5f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-950e4329",
+      "sha": "a160f90d3b77e7278d4a4c72044a4caa378294be",
+      "tree": "a41504b44b063c536b9c643491bd66a0ec4b6ff9",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-96b1724b",
+      "sha": "61aae2132c4f9cc3159d722089b0349512935baf",
+      "tree": "53b2c0212137e85a9e9cd4810fa5d10780da5205",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-99a036ba",
+      "sha": "99a036ba80ecec5fed9d0f5dfb86f947bfc3cb98",
+      "tree": "b0e6e5f2c6ba12d2a7bacb031beb411825a81acc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-9b438f73",
+      "sha": "9b438f73ded6400f0ea130154f71e64b8885f75c",
+      "tree": "819eb2c97c24cab5df00832f74bba5e81d17160a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-9dd0bc25",
+      "sha": "ca6ffb987e75e8eb6fa87cb1b6e41a8a6564c5e6",
+      "tree": "ed05625995fb2015ba5f1d73c8683159f212a376",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-a2b3ca38",
+      "sha": "7c3baa50e75969409656b8c2117fd76a5fd4f568",
+      "tree": "35e0c588adad2d54e3f4e2ad3e97eb00107ab35a",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-a73241ad",
+      "sha": "a73241ade785472d5a105afd33d0a7bbd1cd1069",
+      "tree": "d2e991742d93f1b71eb030b7d4355656fed55fcc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-aa57392f",
+      "sha": "aa57392fddcfed84397df0ea4bcde7c925b2a9d0",
+      "tree": "ed05625995fb2015ba5f1d73c8683159f212a376",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-after-forest",
+      "sha": "addc84c46e890b9d7792f1074c48a234f3b2469d",
+      "tree": "360b25434ee7013ad7ffce67df3c1f16fc45cd76",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-after-medical",
+      "sha": "395d1c3c0d4faa59efe62983e0b94fa01b26a7b6",
+      "tree": "6516bc8d202863ce25613a0ea5cf6cb7a7d94f21",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-after-tree",
+      "sha": "53b570b21d38c8ed3601eba30f19c2467e34583e",
+      "tree": "03b288895204e718ab4db0a63a0dc440d0ce7bdd",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-b19de048",
+      "sha": "b19de0481bfa7132bb42b21bcb57ef7b7c573103",
+      "tree": "9dde49f611dbb59010e13044dd90a02bc6c4abfa",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-bb342354",
+      "sha": "bb3423548e3c5ecdee54baa5ba8feaa68815b0cd",
+      "tree": "e4e67f136a0d95139b734d988bfd7614ffeca2d3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-bf41bf54",
+      "sha": "f1bd34a4a3cd1108e326305d9bab5eb3983e9cf6",
+      "tree": "ce56c05147808e6d40cbfa4f53894122428b4837",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c0e06c64",
+      "sha": "36010f2c6eee1d240d8050095bc86567780b6d7e",
+      "tree": "a660ccb997b6b949d8a8bedff9f86a15d180b5b6",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c28-exit-fix",
+      "sha": "475619509769560c9906546a8a4bf19bb7dcb30e",
+      "tree": "9dde49f611dbb59010e13044dd90a02bc6c4abfa",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c36-publish-policy",
+      "sha": "b5e5288cfa0e0e17248d450e6173d6c88360f91f",
+      "tree": "465967bf01b5aaf253bd9b519789da0269708ed3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c3850969",
+      "sha": "af8fddb394efc6f928f0222875ba2fd0eb327335",
+      "tree": "8fdae849e67315c55d74e90a1731de218542d180",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c461e7c1",
+      "sha": "c461e7c121b6f535d85e2a245b82be1f6e42d786",
+      "tree": "3a3dea9fe7a24a322547dda8e7a1b51af1eb1e25",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-c552900a",
+      "sha": "c552900a4c831bc6451017e93fc3bc21b0e0be4a",
+      "tree": "fb3024d828d9ef83d541fc16d49aaf0519343b5c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-cave-candidate",
+      "sha": "82ebe5e4488e5d003bf630e6b8fff8d7855c64f6",
+      "tree": "eb108e2ac75d0c15a4abca92d30d92c669179e69",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-ccefece6",
+      "sha": "ccefece6c5fd66bfe41c353daca17fe945223f77",
+      "tree": "7432b5d347bccc8591a712bf30c98d5cc312a4d0",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-cd93b9d4",
+      "sha": "ed984032aec817a8777092694565916dbe79096f",
+      "tree": "cd018987a6d470fac4f7667ec6dcf3a97121fa0e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-cfa52924",
+      "sha": "98b7a98e667d29ccd5213940edc1a7b4cb406fcb",
+      "tree": "acc3ae6c0cbc7d2fcbb80aec3fef51ed82d2e09c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-da514038",
+      "sha": "4d3ed68e78b5f2064133095ee66f5f2f93b9282b",
+      "tree": "c9a4f125af17d9b243da19d32d5b3c7311794008",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-dd310273",
+      "sha": "7f78feb8f3706d837bbe63a2e0c01c554f91cb5a",
+      "tree": "1d9f0bbebc139c8837f91a5e912690eb0ff59d23",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-de0b2e04",
+      "sha": "04e273e41c6d8104306ecf7b34f26eda732225d9",
+      "tree": "be5b566395c4d9fdf561362051e886839ec498d5",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-de4a93a5",
+      "sha": "9640b2633f31245d9d308a37d09ddc39d61f8a95",
+      "tree": "055f80242c0fe48f8c3adf44a93216c60718a4b3",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-e030997f",
+      "sha": "accb1b29d531fa6b577422b82ce55bf12e64ac4b",
+      "tree": "7432b5d347bccc8591a712bf30c98d5cc312a4d0",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-e831fe10",
+      "sha": "e95f68b72e375877b801e4e795962e89b5f7927e",
+      "tree": "fb3024d828d9ef83d541fc16d49aaf0519343b5c",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-east-after-efab",
+      "sha": "7e49a34fedff26bfcc411622bedc5b107d89d240",
+      "tree": "c3e0bd1df17ebc2b4a0328407ec0d671060cb394",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-east-after-north",
+      "sha": "75a744ac2c2d0755a1c53876996a51bfdb71a8cd",
+      "tree": "7118bce389d903c168a77d58915ffedbafe7d5eb",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-edcaa380",
+      "sha": "ff66acfb7e057568cf259ca5f56ce6a9ab6e2086",
+      "tree": "d00718e67897cf483c0973d75a51b7d778c34b2b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-ee1b3e61",
+      "sha": "5ad163e60f01d00748a3518ec0e47cc99d2f7acf",
+      "tree": "f7803a68182677e1c1949e50a9851fc522afbd5f",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-efabbe43",
+      "sha": "eb388c0d65f88721cb67fd22a9f482a95f757f00",
+      "tree": "a372987db3472ec7475de468c81fd6a64d2598e7",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-f22e4234",
+      "sha": "b09c45fe00d796f59e93584d0b20f40626e71dcb",
+      "tree": "fe7dfd51e744be91daedb25fa7384b9e117783f8",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-f2f86ffa",
+      "sha": "f2f86ffa47dbf9ec8ea933e9432e868ea928a019",
+      "tree": "0ddc395bb4bf62aeec4cca18f8c41bb63140cf98",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-f38b4fa8",
+      "sha": "f38b4fa8f9676a19efeae3133d7515135d0e9cc1",
+      "tree": "a660ccb997b6b949d8a8bedff9f86a15d180b5b6",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-fb5b85c9",
+      "sha": "006a7735ad0eb0108ca725ea156104fb1087916d",
+      "tree": "3bd722720f11b24f4e3a8240765a0d4baa4b8a0b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-fbfc8cac",
+      "sha": "fbfc8cac21644ecefdc066f364abb87a188b8464",
+      "tree": "a372987db3472ec7475de468c81fd6a64d2598e7",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-fbfe0a64",
+      "sha": "8d40c5d9307e0b2c057fbff59a916c2b78a8a1b2",
+      "tree": "5282c0e7bb049e9ae2334ae4defd349e397b06ba",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-fd096bee",
+      "sha": "b24c38f9d0d6dda5b5a3b55903d7b1ad6ad29b92",
+      "tree": "b0e6e5f2c6ba12d2a7bacb031beb411825a81acc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-ferry",
+      "sha": "77bb06a57e10303a74ba0c11466ad2e83272608c",
+      "tree": "86ab752d84d6fe523f7f3ac671b845fae0a74d8b",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-ff5f3cfa",
+      "sha": "3893d28834611855dde809429a888a88aa5d6eb7",
+      "tree": "6337c2fe2c14ce457ec1e6f516fbd259d0a03182",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-first-hall-implementation",
+      "sha": "08d8bddd3275256fda91f82e30d3a63ff8562a93",
+      "tree": "0cf4eed7f5521be8693006659f1a61dc1a414348",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-full-after-r1",
+      "sha": "ac4f4e57840a953b56cbf76bc3eaa18ea50f8546",
+      "tree": "429bfa24e50d3de2f33257aca49e2919f42c6e98",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-full01-batch",
+      "sha": "d0c3a87082414d64b3562d8e4619dc3bab2a6986",
+      "tree": "d5d98bc6697b9d08ff59bc8f5363534009c03309",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-full01-coverage",
+      "sha": "ee06130c33a6554af73aefc418dd40a9eab1158b",
+      "tree": "857774ccd5f4805f1420b70626b80a75c393ca75",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-full01-followup",
+      "sha": "e24b59c3142caea8d10a31d4872cc6f00635bad7",
+      "tree": "d4dfaf43913ff4a6200b11e600298d58005b5585",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-ghost-after-village2",
+      "sha": "1bfd15a5b98850a5c07d1f20a8a2e9fb2bc915a7",
+      "tree": "2d03548f959a4359dd2f367efe62bf0e7fa2857e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-hall-npc-test-fix",
+      "sha": "991804f66cb0add6e5201d6e204b9b26163c5f36",
+      "tree": "5f6a02c1f3eb2da2f3e11a083fba38ebbb613b4e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-hell-after-east",
+      "sha": "3323c6673ea7cf41fab117f585ce03f0834be360",
+      "tree": "98954a2cd66f0926405e567c69dbf662686b7f4e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-hell-batch-next",
+      "sha": "1d5614e169aea6046236a90ea6515216d4a52e71",
+      "tree": "042cd0db1e835f0692d1b7a321e783a238f43233",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-hell-rest-evidence",
+      "sha": "efbb5f7a4113198040f212a5227928b3d515bd2e",
+      "tree": "a01ec2acf1d531b74d3f0aa713b564aeb864eb2d",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-island",
+      "sha": "5e94b68f51a7c30de40443a4751af8d3de9d2d24",
+      "tree": "4f0aa1d0452bd744850e6497eb9edbdcd34c8cbc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-item-source-fix",
+      "sha": "9d7e1b1c9901c1a40adaf2d7244ab51b9d002487",
+      "tree": "d89cb64fb8d29d5da0fb34323b88bbd4aa35ee5d",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-jiameng",
+      "sha": "7747010d2cd71ab78c6e1a459440b54530e8ea9d",
+      "tree": "5d652887b06a81ea46e4d132aaada274c431320d",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-jiameng-next",
+      "sha": "353cf7e8d8d5619d4b9409383a0de22c050948c6",
+      "tree": "966f7b147eb9b2f5d2ccb5c8cbd8a4b84dd3f2cd",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-last-halls-next",
+      "sha": "b42398ae417f59fbd44194147fb7a0b9d62cf639",
+      "tree": "d2e991742d93f1b71eb030b7d4355656fed55fcc",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-next-ce5",
+      "sha": "c6fefa9b53b8504aaea4edec28ec7c1b8c8e15b8",
+      "tree": "9ce4c70ef0fc018d7f1b46205d1070c01719f948",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-post-rebirth",
+      "sha": "b1ef6aad0faf85b171275d71d530a96b541485f4",
+      "tree": "48e4cacc18e27e479712619e04cf4ee61d7c2593",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-rebirth-next",
+      "sha": "d9d3995891f69329d0980368a06a84efb711a22e",
+      "tree": "b8dc110e8a22bea8051a6abee2620ffc46881290",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-village3-clinic",
+      "sha": "b495b91cb90562c27d469256b7b9c52c23370ba9",
+      "tree": "9fd8c0697b3b9ba92043eb60c951ddb4bba1999e",
+      "push_main_allowed": null
+    },
+    {
+      "branch": "work/world-village4",
+      "sha": "10ddf56b09de0f74ee9e2418685d050a2893e02d",
+      "tree": "945560d062ac3a226c706346bcea2129a0824d03",
+      "push_main_allowed": null
+    }
+  ],
+  "note": "Handoff document tip is resolved from origin/work/local-migration-handoff; inventory captures exact preserved game-source checkpoints. Remote main is 75ac819cad0bc387bafbf35ac3ccb352229aab9f, local old main is separately preserved."
+}
