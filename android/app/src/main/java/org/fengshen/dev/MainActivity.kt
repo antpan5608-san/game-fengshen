@@ -729,8 +729,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleScene()?.let{scene->
             val current=battle!!;val cell=scene.touch.enemies[current.enemies.indexOfFirst{it.slot==enemy.slot}]
             val dp=resources.displayMetrics.density
-            val target=if(current.enemies.size==1)Box(cell.x+4*dp,cell.y+4*dp,cell.w-8*dp,max(1f,cell.h-38*dp))
-                else Box(cell.x+4*dp,cell.y+4*dp,max(1f,min(cell.w*.35f,48*dp)),cell.h-8*dp)
+            val target=battleEnemySceneLayout(cell,dp,resources.configuration.fontScale,scene.compact,current.enemies.size==1).graphic
             val w=(graphic?.width?:32).toFloat();val h=(graphic?.height?:40).toFloat()
             val fit=min(target.w/w,target.h/h)
             val scale=if(fit>=1f)floor(fit)else fit
@@ -2228,11 +2227,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
                 paint.alpha=255
             }
-            val x=if(current.enemies.size==1)cell.x+6*dp else cell.x+min(cell.w*.35f,48*dp)+10*dp
-            val y=if(current.enemies.size==1)cell.y+cell.h-32*dp else cell.y+4*dp
-            val name=enemy.definition.name+(if(current.enemies.count{it.definition.id==enemy.definition.id}>1)" ${enemy.slot+1}"else"")
-            battleLine(c,if(hp>0)name else "$name · 倒下",Box(x,y,max(1f,cell.x+cell.w-6*dp-x),max(26*dp,16*font*dp)),12f)
-            gauge(c,Box(x,cell.y+cell.h-8*dp,max(1f,cell.x+cell.w-6*dp-x),4*dp),hp,enemy.definition.hp,0xffc55758.toInt())
+            val parts=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1)
+            val name=if(scene.compact)"#${enemy.slot+1}"
+                else (if(current.enemies.size>1)"#${enemy.slot+1} "else"")+enemy.definition.name
+            battleLine(c,if(hp>0||scene.compact)name else "$name · 倒下",parts.label,12f,
+                if(hp>0)Color.WHITE else 0xff88969c.toInt())
+            gauge(c,parts.gauge,hp,enemy.definition.hp,0xffc55758.toInt())
         }
         for((i,hero)in current.party.withIndex()){
             val view=battlePartyView(hero,heroName(hero.id),action,current.inputHero?.id,current.hero.id)

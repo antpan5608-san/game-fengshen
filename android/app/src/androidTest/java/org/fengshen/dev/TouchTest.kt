@@ -5336,7 +5336,11 @@ class TouchTest:IsolatedGameTestCase(){
         val boss=rules.storyBattles.getValue("rom.npc.97.0").group
         val base=v.currentSnapshot();val reports=org.json.JSONArray()
         fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
-        fun scene()=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as BattleSceneLayout
+        fun scene():BattleSceneLayout {
+            val layout=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as? BattleSceneLayout
+            assertNotNull("Native phone safe-area layout: font=$font, party=${v.currentSnapshot().characters.size}",layout)
+            return layout!!
+        }
         fun overlap(a:Box,b:Box)=a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y
         fun json(box:Box)=JSONObject().put("x",box.x).put("y",box.y).put("width",box.w).put("height",box.h)
         fun source(count:Int)=base.copy(mapId=7,x=23*16+8,y=7*16+8,direction=Key.DOWN,characters=actors.take(count),
@@ -5374,6 +5378,11 @@ class TouchTest:IsolatedGameTestCase(){
                 val target=v.battleTargetBounds(enemy.slot)
                 assertEquals(image.width.toFloat()/image.height,graphic.w/graphic.h,.001f)
                 assertTrue(graphic.x>=target.x&&graphic.y>=target.y&&graphic.x+graphic.w<=target.x+target.w&&graphic.y+graphic.h<=target.y+target.h)
+                if(layout.compact){
+                    val label=battleEnemySceneLayout(target,dp,font,true,false).label
+                    val measured=android.graphics.Paint().apply{textSize=12*v.resources.displayMetrics.scaledDensity}
+                    assertTrue("Compact enemy instance number must remain completely visible",measured.measureText("#${enemy.slot+1}")<=label.w)
+                }
             }
             screenshot(v,"mobile-party-phone-$font-$count-${group.members.size}-native")
             tap(v,center(v.battleTargetBounds(fight.enemies.last().slot)))
@@ -5389,7 +5398,8 @@ class TouchTest:IsolatedGameTestCase(){
             }
             reports.put(JSONObject().put("party",org.json.JSONArray(fight.party.map{it.id})).put("groupId",group.id)
                 .put("enemies",org.json.JSONArray(fight.enemies.map{it.definition.id})).put("frame",json(layout.touch.frame))
-                .put("cards",org.json.JSONArray(layout.partyCards.map{json(it)})).put("enemyField",json(layout.enemyField)).put("allyField",json(layout.allyField)))
+                .put("cards",org.json.JSONArray(layout.partyCards.map{json(it)})).put("enemyField",json(layout.enemyField)).put("allyField",json(layout.allyField))
+                .put("compactInstanceNumbers",layout.compact))
         }
         var rewardSourceRestored=false
         instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);rewardSourceRestored=v.restoreSnapshot(source(4))}

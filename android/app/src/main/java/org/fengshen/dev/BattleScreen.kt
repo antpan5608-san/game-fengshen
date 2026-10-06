@@ -23,25 +23,29 @@ data class BattleSceneLayout(val touch:BattleTouchLayout,val prompt:Box,val enem
 
 fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCount:Int):BattleSceneLayout? {
     require(dp>0&&fontScale>0&&enemyCount in 1..8&&partyCount in 1..4)
-    val pad=8*dp;val gap=4*dp
-    val f=Box(safe.x+pad,safe.y+pad,safe.w-2*pad,safe.h-2*pad)
-    if(f.w<560*dp||f.h<280*dp)return null
+    val gap=4*dp
     val commandH=max(48f,15*fontScale+16)*dp
-    val commands=(0..4).map{i->Box(f.x+i*(f.w+pad)/5,f.y+f.h-commandH,(f.w-4*pad)/5,commandH)}
     // Name/status on the first line; current HP/MP numbers and gauges on the
     // second. Full maxima and attributes remain in the separate detail layer.
     val cardH=max(52f,26*fontScale+18)*dp
     val partyRows=if(partyCount>2)2 else 1
     val cardColumns=if(partyCount==1)1 else 2
     val statusH=partyRows*cardH+(partyRows-1)*gap
+    val promptH=max(28f,13*fontScale+8)*dp
+    // Respect the actual inset-safe height, which is shorter than the screenshot.
+    // Compress only whitespace; preserve two-column cards and system font sizes.
+    val minimumArena=max(48f,if(partyCount>2)76f else 48f)*dp
+    val pad=min(8*dp,max(2*dp,(safe.h-commandH-statusH-promptH-minimumArena)/5))
+    val f=Box(safe.x+pad,safe.y+pad,safe.w-2*pad,safe.h-2*pad)
+    if(f.w<560*dp||f.h<280*dp)return null
+    val commands=(0..4).map{i->Box(f.x+i*(f.w+pad)/5,f.y+f.h-commandH,(f.w-4*pad)/5,commandH)}
     val status=Box(f.x,commands[0].y-pad-statusH,f.w,statusH)
     val cardW=(f.w-(cardColumns-1)*gap)/cardColumns
     val cards=(0 until partyCount).map{i->Box(f.x+(i%cardColumns)*(cardW+gap),
         status.y+(i/cardColumns)*(cardH+gap),cardW,cardH)}
-    val promptH=max(28f,13*fontScale+8)*dp
     val prompt=Box(f.x,f.y,f.w,promptH)
     val arena=Box(f.x,prompt.y+prompt.h+pad,f.w,status.y-pad-prompt.y-prompt.h-pad)
-    if(arena.h<48*dp)return null
+    if(arena.h<minimumArena-.01f)return null
     val enemyW=(arena.w-pad)*.6f
     val enemyField=Box(arena.x,arena.y,enemyW,arena.h)
     val allies=Box(enemyField.x+enemyField.w+pad,arena.y,arena.w-enemyField.w-pad,arena.h)
@@ -64,4 +68,22 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
     val result=Box(f.x,f.y,f.w,footer.y-pad-f.y)
     val controls=BattleTouchLayout(f,arena,status,commands,enemies,commands.last(),close,result,13*dp*fontScale)
     return BattleSceneLayout(controls,prompt,enemyField,allies,sprites,cards,footer,rows==1&&enemyCount>3)
+}
+
+/** The compact row keeps a whole instance number above the native graphic. */
+data class BattleEnemySceneLayout(val graphic:Box,val label:Box,val gauge:Box)
+fun battleEnemySceneLayout(cell:Box,dp:Float,fontScale:Float,compact:Boolean,single:Boolean):BattleEnemySceneLayout {
+    val labelH=max(26f,16*fontScale)*dp
+    if(compact){
+        val label=Box(cell.x+4*dp,cell.y+2*dp,cell.w-8*dp,labelH)
+        val graphic=Box(cell.x+4*dp,label.y+label.h+2*dp,cell.w-8*dp,
+            max(1f,cell.y+cell.h-10*dp-(label.y+label.h+2*dp)))
+        return BattleEnemySceneLayout(graphic,label,Box(cell.x+4*dp,cell.y+cell.h-6*dp,cell.w-8*dp,4*dp))
+    }
+    val graphic=if(single)Box(cell.x+4*dp,cell.y+4*dp,cell.w-8*dp,max(1f,cell.h-38*dp))
+        else Box(cell.x+4*dp,cell.y+4*dp,max(1f,min(cell.w*.35f,48*dp)),cell.h-8*dp)
+    val x=if(single)cell.x+6*dp else cell.x+min(cell.w*.35f,48*dp)+10*dp
+    val y=if(single)cell.y+cell.h-32*dp else cell.y+4*dp
+    val width=max(1f,cell.x+cell.w-6*dp-x)
+    return BattleEnemySceneLayout(graphic,Box(x,y,width,labelH),Box(x,cell.y+cell.h-8*dp,width,4*dp))
 }

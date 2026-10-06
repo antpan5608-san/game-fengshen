@@ -8,7 +8,7 @@ class BattleScreenTest {
     private fun inside(a:Box,b:Box)=a.x>=b.x&&a.y>=b.y&&a.x+a.w<=b.x+b.w+.01f&&a.y+a.h<=b.y+b.h+.01f
     @Test fun allNativePartyEnemyCountsAndLargeFontsHaveVisibleIndependentTargets(){
         val windows=listOf(Pair(Box(0f,136f,960f,404f),1f),Pair(Box(90f,0f,2460f,1216f),3f),
-            Pair(Box(0f,0f,660f,318f),1f))
+            Pair(Box(0f,0f,660f,318f),1f),Pair(Box(0f,0f,2640f,936f),3f))
         for((safe,dp)in windows)for(font in listOf(1f,1.3f,2f))for(party in 1..4)for(enemy in 1..6){
             val s=battleSceneLayout(safe,dp,font,enemy,party)!!
             assertEquals(party,s.partyCards.size);assertEquals(party,s.allySprites.size)
@@ -18,6 +18,13 @@ class BattleScreenTest {
             for(i in hit.indices)for(j in i+1 until hit.size)assertFalse(overlaps(hit[i],hit[j]))
             assertFalse(overlaps(s.enemyField,s.allyField));assertTrue(inside(s.touch.result,safe))
             assertFalse(overlaps(s.touch.result,s.resultFooter))
+            if(s.compact)for(cell in s.touch.enemies){
+                val parts=battleEnemySceneLayout(cell,dp,font,true,false)
+                for(b in listOf(parts.graphic,parts.label,parts.gauge))assertTrue(inside(b,cell))
+                assertFalse(overlaps(parts.graphic,parts.label));assertFalse(overlaps(parts.graphic,parts.gauge))
+                assertFalse(overlaps(parts.label,parts.gauge))
+                assertTrue(parts.label.w>=40*dp)
+            }
         }
     }
     @Test fun unsupportedSmallWindowIsExplicitlyDeferredInsteadOfCrashingTheApp(){
