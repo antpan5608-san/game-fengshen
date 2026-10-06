@@ -14,7 +14,7 @@ frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: c61 DEBUG37494010240实际前后存档证实仅map7三人上下文标记缺失→false；正在复用原地图重建规则修复入队保存，完整cold/四人战斗及签名发布仍待通过。
+first_real_blocker: DEBUG37499759518实际cold完整等值及中段/最终对白已通过，随后四人战斗Process crashed；先取原AndroidRuntime堆栈并修复，再签名验收，当前未发布。
 
 ## 最新长期授权与终点（2026-10-07，北京时间）
 
@@ -98,3 +98,7 @@ run37449645306/source62fe4f6正式签名build通过（406 release JVM/零失败�
 run37456878420/source11fc：build成功，20 Content/覆盖升级/备份、滚动装备、交易、药草、战斗、不可恢复保护均通过；诊疗旧R1 fixture的c51-r1标记与当前c60被仪器错误要求相同，未发布。仅明确controlled首次回放允许已核51-r1→60版本字段变化，先用当前scene/actor/state校验原档；normal同候选及cold保持精确一致，其他旧/未来标记拒绝。比较全SaveSnapshot只改contentVersion，原fixture字节/hash不动，index如实记marker变化及gameplay未变。新增边界拒绝仪器，DEBUG提前检查诊疗与personal完整cold录制并保留触控/诊疗证据，生产迁移/存档规则不变。
 
 本轮将controlledReplayVersionMarker作为第14个个人必需门禁（原13项保留）；旧真实fixture输入字节/hash不变，普通同候选与cold禁止跨标记回放。新增字段后大续跑仪器触发JVM单方法大小上限，已仅抽取原源状态断言及元数据写入帮助函数，未删正常路径/资源/取消/冷启动断言；编译与App需再次真实执行。
+
+## c61最新真实运行（2026-10-07，北京时间）
+
+source8101fee / DEBUG37499759518失败：真实冷启before/after完整JSON equal=true/差异字段空；实际pending及完成无重复入队截图已核，随后四人battle-ready后instrument报告Process crashed。不能由cold通过写整轮App PASS；签名85/发布仍未完成。原before/after、两段MP4、失败日志/截图均保留。a3da978修正3/4队员物品目标为共享2x2绘制/命中几何，保留旧两人精确位置；411 JVM零失败/错误/跳过及仪器编译通过，4B全部4建议片段已读并登记决定，实际UI仍待同来源验收。418cbab在原jiang DEBUG失败分支收集隔离AndroidRuntime堆栈并exit1，8项录制检查/Bash语法通过；原发布与完整等值门槛不变，接续真实新DEBUG。代码检查发现原初始武器44不在已导出hit表中，暂作待堆栈核实线索，不猜阈值或放宽拒绝。
