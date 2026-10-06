@@ -9,12 +9,12 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v84 / 0.8.14-c60-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: c61，PLANNED_NOT_PACKAGED_NOT_PUBLISHED
+current_candidate_version: c61，IMPLEMENTED_DEBUG_COLD_FAILED_NOT_SIGNED_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c60
 manifest_sha256: 8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb
-first_real_blocker: c60个人阶段已交付；c61出口/加载定义与四人战斗上限已修正，真实同候选App入队/外部冷启/四人战斗尚待运行，不能发布。
+first_real_blocker: c61 DEBUG37489153639已通过真实Content2与受控四人入队，但外部冷启动完整存档等值失败；实际后状态尚未保留，先补只读取证再最小修复，不能发布。
 
 ## 当前用户授权（2026-10-06）
 
@@ -31,6 +31,14 @@ IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED均完成。v84 / 0.8.14-c60
 原postflight 2026-10-06T13:49:11Z：NO_ISSUES_OBSERVED，errors为空、cleanupFailures=0，原两版保留为84/82；样本来自此前已上报会话，不构成v84新真机验收。下载继续原两对象入口和覆盖升级，勿卸载清档。
 
 下一批c61：已从旧实际命令恢复原Lua两份与TSV两份，全部size+SHA与741清单匹配，本机私有保留。修正脚本46a94a0c4d642eefe425d181b3c5b5687d8ee013e9590aa589c0df7742ff9d3f明确x13..17,y42,DOWN→16(42,78)/steps0；旧脚本97901a097e337f671ee5a509a6d572e4eb5577d151e3b744e03ceb2193849c78及295字节日志f8c6adaa5999c5a75a4776e154a68b03133489fdbc8de62f4ae5ce31b5085af9确认15,43向下不换图；403字节修正日志13c3aea9700f29fcae82781f56491d6713f31d88db20d1f5a02cb41243725885确认两个left仍失败。原RAM/PNG/FC8未恢复，不伪称已复跑原路线。以原5字节记录为source，另行固定实际departure derivation，不制造全宽出口，不启用left。原84guard CPU重新执行同29ed0ebd3150c448e9045bf59ba8152961d6a99311f375079a96d9be25b7e940、零差异；原inactive c61配方bde171/388文件/72依赖图已复现，保留冲突待修，尚未App或发布。
+
+## c61当前真实验收状态（2026-10-07，北京时间）
+
+v84仍为已发布个人版。c61尚未签名或发布，活跃CI内容pin仍c60；inactive c61 manifest为34de87f4983c6fe34ed91f866a27129f73458063499d287336bfa041d8bdb5d0，388文件/72依赖图，不是72图完整可玩。
+
+DEBUG37482355271在环境阶段exit1，未留具体原因；不得猜测SDK版本故障。DEBUG37484779330实际进入AVD后ContentLoader.kt1054因成长表缺evidence失败，已补原来源字段、缺失/错来源拒绝并严格恢复，5项导出测试PASS159.602s，source0655f81。DEBUG37489153639真实Content2及首段受控入队PASS，录像/四人中段对白截图/expected-save已保留，但原录制器完整saved-before/after等值失败，外部cold方法和四人战斗未执行。OK(1 test)只证明第一段，不覆盖冷启失败。
+
+source2eae8c5仅增加只读冷启before/after JSON及失败原片保留，完整等值断言、备份恢复和生产代码不变；8项录制边界测试通过，4B三片段已实际读并登记真实决定。当前重新运行原KVM以取得实际逐字段差异；不把代码检查中可能新增false上下文标记写成已证实原因。随后最小修复、新审查与真实复测。DEBUG实际通过后才启用精确c61个人scope/baseline84，并要求同签名v85全部旧14及姜新增门禁、原审核/两对象发布、公网完整字节/postflight。
 
 ## 首批历史过程：c60与存档回档
 

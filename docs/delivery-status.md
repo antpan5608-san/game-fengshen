@@ -1663,3 +1663,8 @@ run37449645306/source62fe4f6正式签名build通过（406 release JVM/零失败�
 run37456878420/source11fc：build成功，20 Content/覆盖升级/备份、滚动装备、交易、药草、战斗、不可恢复保护均通过；诊疗旧R1 fixture的c51-r1标记与当前c60被仪器错误要求相同，未发布。仅明确controlled首次回放允许已核51-r1→60版本字段变化，先用当前scene/actor/state校验原档；normal同候选及cold保持精确一致，其他旧/未来标记拒绝。比较全SaveSnapshot只改contentVersion，原fixture字节/hash不动，index如实记marker变化及gameplay未变。新增边界拒绝仪器，DEBUG提前检查诊疗与personal完整cold录制并保留触控/诊疗证据，生产迁移/存档规则不变。
 
 本轮将controlledReplayVersionMarker作为第14个个人必需门禁（原13项保留）；旧真实fixture输入字节/hash不变，普通同候选与cold禁止跨标记回放。新增字段后大续跑仪器触发JVM单方法大小上限，已仅抽取原源状态断言及元数据写入帮助函数，未删正常路径/资源/取消/冷启动断言；编译与App需再次真实执行。
+
+
+## c61冷启失败补充（2026-10-07，北京时间）
+
+当前最先阻断为DEBUG37489153639外部cold完整存档等值失败。真实Content2与首段受控四人入队通过，不能据此写整体App PASS；cold方法/四人战斗/签名85/发布均未完成。原失败日志、首段原片、pending截图和expected-save已保留；2eae8c5仅补只读before/after及中断冷启原片，不放宽等值。已完成成长表缺evidence修正及5项严格导出回归；inactive c61精确manifest34de87f4983c6fe34ed91f866a27129f73458063499d287336bfa041d8bdb5d0，388文件/72依赖图。当前实际阶段与后续门禁以current-task为准。
