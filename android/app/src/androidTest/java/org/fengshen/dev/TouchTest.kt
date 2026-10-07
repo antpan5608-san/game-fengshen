@@ -709,6 +709,13 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v,center(v.battleCommandBounds(0)));tap(v,center(v.battleTargetBounds(slot)))
     }
     private fun layoutFor(v:GameView)=layout(v.width,v.height,v.resources.displayMetrics.density,v.safe,DisplayMode.FULL,ControlConfig())
+    private fun phoneWindowMetrics(v:GameView):JSONObject {
+        val box=layoutFor(v).safe
+        return JSONObject().put("geometryEvidence","ACTUAL_WINDOW_INSETS_V1")
+            .put("safeInsets",JSONObject().put("left",v.safe.left).put("top",v.safe.top)
+                .put("right",v.safe.right).put("bottom",v.safe.bottom))
+            .put("safeArea",JSONObject().put("x",box.x).put("y",box.y).put("width",box.w).put("height",box.h))
+    }
     private fun tapMapActor(v:GameView,npc:StoryNpc){
         var point:Pair<Float,Float>?=null
         instrumentation.runOnMainSync{
@@ -5734,7 +5741,7 @@ class TouchTest:IsolatedGameTestCase(){
         send(v,MotionEvent.ACTION_UP,listOf(Pair(start.first,start.second-80*dp)))
         screenshot(v,"mobile-phone-growth-scrolled-$font")
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
-            org.json.JSONObject().put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
+            phoneWindowMetrics(v).put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
                 .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48)
                 .put("medicineDetailHeightDp",medicine.detail.h/dp).put("medicineTextRowsVisible",medicine.detail.h/((14f*font*1.25f+4)*dp)).toString())
         instrumentation.runOnMainSync{activity.finish()}
@@ -5821,7 +5828,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue("Restore the valid four-actor reward fixture",rewardSourceRestored)
         verifyControlledJiangFourActorBattle(v,"-phone-$font")
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-party-phone-$font.json").writeText(
-            JSONObject().put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)
+            phoneWindowMetrics(v).put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)
                 .put("screenHeight",screen.height).put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font)
                 .put("density",dp).put("cases",reports).put("fourActorInputAndRewardChecks","PASS").toString())
         instrumentation.runOnMainSync{activity.finish()}

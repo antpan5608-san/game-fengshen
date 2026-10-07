@@ -16,7 +16,13 @@ interface ContentSource {
 fun checkedName(name: String): String { require(name.matches(Regex("[a-zA-Z0-9._-]+")) && !name.startsWith("."));return name }
 class AssetSource(private val assets: AssetManager): ContentSource {
     override fun read(name: String)=assets.open("development/"+checkedName(name)).use { it.readBytes() }
-    override fun readVisual(name: String)=assets.open("battle-visual-02/"+checkedName(name)).use { it.readBytes() }
+    override fun readVisual(name: String)=assets.open("battle-visual-02/"+checkedName(name)).use { input->
+        val limit=if(name=="manifest.json")64*1024 else 4*1024*1024
+        val output=java.io.ByteArrayOutputStream();val buffer=ByteArray(8192)
+        while(true){val count=input.read(buffer);if(count<0)break
+            require(count<=limit-output.size()){"Visual file exceeds bound"};output.write(buffer,0,count)}
+        output.toByteArray()
+    }
 }
 class DirectorySource(private val root: File): ContentSource {
     override fun read(name: String)=File(root,checkedName(name)).readBytes()

@@ -284,11 +284,8 @@ def active_scope(candidate=None):
             raise ValueError('Current battle magic touch/phases/fonts/full cold proofs cannot be omitted')
         if c62 and (scope.get('battleVisualAcceptance') is not None or candidate is not None and int(candidate.get('versionCode',0))>=91) and scope.get('battleVisualAcceptance')!=visual.ACCEPTANCE:
             raise ValueError('Current original visual/normal/cold proofs cannot be omitted')
-        if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != dict(
-                kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY', screen=[2640, 1216],
-                window=[2640, 1080], safe=[2640, 936], density=3, fonts=[1.0, 1.3, 2.0],
-                nativeCasesPerFont=8, requiredScreenshotsPerFont=29,
-                requiredInstrumentLogs=battle_ui.log_names(), proofKey=battle_ui.UI_PROOF_KEY):
+        if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != battle_ui.acceptance(
+                require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE):
             raise ValueError('Exact battle UI acceptance cannot omit fonts, native cases, screenshots or logs')
     else:
         raise ValueError('Unknown authorized frozen milestone')
@@ -549,7 +546,8 @@ def main():
         if personal_quality(scope):
             review_personal(receipt)
             if scope['id'] in battle_ui.UI_SCOPES:
-                proofs = battle_ui.proof_digests(args.evidence, args.receipt.parent)
+                proofs = battle_ui.proof_digests(args.evidence, args.receipt.parent,
+                    require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE)
                 if any(receipt.get(key) != value for key, value in proofs.items()):
                     raise ValueError('Raw battle UI artifacts differ from this reviewed candidate proof')
             if scope['id'] == room28.SCOPE:

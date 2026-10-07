@@ -20,8 +20,9 @@ class BattleVisualAssets(private val source:ContentSource,manifestBytes:ByteArra
     private val actors=manifest.getJSONObject("actors")
     private val backgrounds=manifest.getJSONObject("backgrounds")
     private val maps=manifest.getJSONObject("mapBackgrounds")
-    private val cache=LinkedHashMap<String,Bitmap>(16,.75f,true)
-    var cachedBytes=0;private set
+    private val cache=ResourceMap(files.keys().asSequence().toList(),files.length()){decode(it)}
+        .limitBytes(CACHE_LIMIT.toLong()){it.allocationByteCount.toLong()}
+    val cachedBytes:Int get()=cache.cachedBytes().toInt()
     val id:String get()=manifest.getString("id")
     init {
         require(manifestBytes.size<=64*1024&&sha(manifestBytes)==MANIFEST_SHA256){"Visual manifest differs from reviewed assets"}
@@ -41,8 +42,8 @@ class BattleVisualAssets(private val source:ContentSource,manifestBytes:ByteArra
         for(key in backgrounds.keys())require(files.getJSONObject(checkedName(backgrounds.getString(key))).getString("kind")=="background")
         for(key in maps.keys())require(key.toInt() in mapIds&&backgrounds.has(maps.getString(key)))
     }
-    @Synchronized private fun image(name:String):Bitmap {
-        cache[name]?.let{return it}
+    private fun image(name:String):Bitmap=cache.getValue(name)
+    private fun decode(name:String):Bitmap {
         val row=files.getJSONObject(checkedName(name))
         val bytes=source.readVisual(name)?:error("Visual asset missing: $name")
         require(bytes.size==row.getInt("bytes")&&bytes.size<=4*1024*1024&&sha(bytes)==row.getString("sha256")){"Visual checksum mismatch: $name"}
@@ -53,11 +54,8 @@ class BattleVisualAssets(private val source:ContentSource,manifestBytes:ByteArra
             inSampleSize=when(row.getString("kind")){"portrait"->4;"idle"->2;else->1}}
         val image=BitmapFactory.decodeByteArray(bytes,0,bytes.size,options)?:error("Invalid visual image")
         require(image.allocationByteCount<=CACHE_LIMIT)
-        while(cachedBytes+image.allocationByteCount>CACHE_LIMIT&&cache.isNotEmpty()){
-            val old=cache.entries.iterator();val entry=old.next();cachedBytes-=entry.value.allocationByteCount;old.remove()
-            // A Canvas caller can still hold the bitmap this frame. Let GC reclaim evictions.
-        }
-        cache[name]=image;cachedBytes+=image.allocationByteCount;return image
+        // ResourceMap accounts decoded bytes without recycling live Canvas bitmaps.
+        return image
     }
     fun portrait(actor:String):Bitmap?=actors.optJSONObject(actor)?.let{image(it.getString("portrait"))}
     fun idle(actor:String):Bitmap?=actors.optJSONObject(actor)?.let{image(it.getString("idle"))}

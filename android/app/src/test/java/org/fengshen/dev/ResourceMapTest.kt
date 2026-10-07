@@ -24,4 +24,27 @@ class ResourceMapTest {
         try{ResourceMap(listOf(1,1),2){it};fail()}catch(_:IllegalArgumentException){}
         try{ResourceMap(listOf(1),0){it};fail()}catch(_:IllegalArgumentException){}
     }
+    @Test fun byteBudgetEvictsLeastRecentWhilePreservingIdentityIndex(){
+        val sizes=mapOf(1 to 39,2 to 25,3 to 10)
+        val map=ResourceMap(listOf(1,2,3),9){ByteArray(sizes.getValue(it))}
+            .limitBytes(64){it.size.toLong()}
+        map.getValue(1);map.getValue(2);assertEquals(64L,map.cachedBytes())
+        map.getValue(1);map.getValue(3)
+        assertEquals(setOf(1,3),map.cachedKeys());assertEquals(49L,map.cachedBytes())
+        assertEquals(setOf(1,2,3),map.keys)
+    }
+    @Test fun oversizedOrInvalidWeightNeverPoisonsExistingCachedImages(){
+        var size=65
+        val map=ResourceMap(listOf(1,2),9){ByteArray(if(it==1)20 else size)}
+            .limitBytes(64){it.size.toLong()}
+        map.getValue(1)
+        try{map.getValue(2);fail()}catch(_:IllegalArgumentException){}
+        assertEquals(setOf(1),map.cachedKeys());assertEquals(20L,map.cachedBytes())
+        size=44;map.getValue(2);assertEquals(64L,map.cachedBytes())
+        try{map.limitBytes(32){it.size.toLong()};fail()}catch(_:IllegalArgumentException){}
+        val invalid=ResourceMap(listOf(1),2){"image"}.limitBytes(64){-1L}
+        try{invalid.getValue(1);fail()}catch(_:IllegalArgumentException){}
+        assertTrue(invalid.cachedKeys().isEmpty());assertEquals(0L,invalid.cachedBytes())
+        try{ResourceMap(listOf(1),2){it}.limitBytes(0){1L};fail()}catch(_:IllegalArgumentException){}
+    }
 }

@@ -11,7 +11,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v90 / 0.8.20-battle-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v91 / 0.8.21-battle-visual-personal，IMPLEMENTED_LOCAL_VERIFIED；正式签名/App/发布待验
+current_candidate_version: v91 / 0.8.21-battle-visual-personal，修正后441 JVM/88 Python本地通过；首轮App汇总FAIL已保留，需新同源Actions；NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

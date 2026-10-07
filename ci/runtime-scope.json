@@ -274,14 +274,6 @@
       2640,
       1216
     ],
-    "window": [
-      2640,
-      1080
-    ],
-    "safe": [
-      2640,
-      936
-    ],
     "density": 3,
     "fonts": [
       1.0,
@@ -303,7 +295,13 @@
       "testMobileBattlePhoneSizeAndLargeFont-font-2.0.txt",
       "testControlledBattlePartyPhoneSizeAndLargeFont-font-2.0.txt"
     ],
-    "proofKey": "battleUiEvidenceSha256"
+    "proofKey": "battleUiEvidenceSha256",
+    "windowHeights": [
+      1080,
+      1216
+    ],
+    "safe": "MEASURED_ANDROID_INSETS",
+    "geometryEvidence": "ACTUAL_WINDOW_INSETS_V1"
   },
   "normalRoom28Acceptance": {
     "kind": "NORMAL_NEW_GAME_TOUCH_WITH_EXTERNAL_COLD_NOT_FULL_STORY_OR_PHONE",

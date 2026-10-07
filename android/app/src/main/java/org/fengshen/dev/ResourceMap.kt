@@ -5,7 +5,16 @@ class ResourceMap<K:Any,V:Any>(identities:Collection<K>,private val capacity:Int
     private val load:(K)->V):AbstractMap<K,V>() {
     private val ids=identities.toSet()
     private val cache=java.util.LinkedHashMap<K,V>(capacity,.75f,true)
+    private val weights=mutableMapOf<K,Long>()
+    private var byteLimit=Long.MAX_VALUE
+    private var weightOf:(V)->Long={0L}
+    private var retainedBytes=0L
     init {require(capacity>0);require(ids.size==identities.size)}
+    /** Optional image budget; keep the published three-argument constructor. */
+    @Synchronized fun limitBytes(limit:Long,weight:(V)->Long):ResourceMap<K,V> {
+        require(limit>0&&cache.isEmpty())
+        byteLimit=limit;weightOf=weight;return this
+    }
     override val size get()=ids.size
     override val keys:Set<K> get()=ids
     override fun containsKey(key:K)=key in ids
@@ -13,8 +22,15 @@ class ResourceMap<K:Any,V:Any>(identities:Collection<K>,private val capacity:Int
         if(key !in ids)return null
         cache[key]?.let{return it}
         val value=load(key)
+        val weight=weightOf(value)
+        require(weight>=0&&weight<=byteLimit){"Resource exceeds its cache byte budget"}
+        // Evict before addition to avoid overflow even for a very large budget.
+        while(cache.isNotEmpty()&&(cache.size>=capacity||retainedBytes>byteLimit-weight)){
+            val first=cache.entries.first().key
+            cache.remove(first);retainedBytes-=weights.remove(first)!!
+        }
         cache[key]=value
-        if(cache.size>capacity)cache.remove(cache.entries.first().key)
+        weights[key]=weight;retainedBytes+=weight
         return value
     }
     override val entries:Set<Map.Entry<K,V>> get()=object:AbstractSet<Map.Entry<K,V>>() {
@@ -31,4 +47,5 @@ class ResourceMap<K:Any,V:Any>(identities:Collection<K>,private val capacity:Int
         }
     }
     @Synchronized fun cachedKeys():Set<K> =cache.keys.toSet()
+    @Synchronized fun cachedBytes():Long =retainedBytes
 }

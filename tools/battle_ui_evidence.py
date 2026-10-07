@@ -23,6 +23,17 @@ METHODS = ('testControlledMobileBattleTouchAndSnapshots', 'testControlledMobileB
            'testControlledBindingItemSelectionCancelAndSingleActorCommand',
            'testControlledWholly08PartyAdvancesWithoutTouchCommand')
 PHONE_METHODS = ('testMobileBattlePhoneSizeAndLargeFont', 'testControlledBattlePartyPhoneSizeAndLargeFont')
+GEOMETRY_EVIDENCE = 'ACTUAL_WINDOW_INSETS_V1'
+
+
+def acceptance(require_insets=False):
+    value=dict(kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY',screen=[2640,1216],
+               window=[2640,1080],safe=[2640,936],density=3,fonts=[1.0,1.3,2.0],
+               nativeCasesPerFont=8,requiredScreenshotsPerFont=29,requiredInstrumentLogs=log_names(),proofKey=UI_PROOF_KEY)
+    if require_insets:
+        value.pop('window');value.pop('safe')
+        value.update(windowHeights=[1080,1216],safe='MEASURED_ANDROID_INSETS',geometryEvidence=GEOMETRY_EVIDENCE)
+    return value
 
 
 def screenshot_names(font):
@@ -58,14 +69,14 @@ def json_evidence(path):
     return value, data
 
 
-def box(value):
+def box(value, max_height=936):
     if not isinstance(value, dict):
         raise ValueError('Missing actual battle UI box')
     coordinates = [value.get(k) for k in ('x', 'y', 'width', 'height')]
     if any(isinstance(n, bool) or not isinstance(n, (int, float)) or not math.isfinite(n) for n in coordinates):
         raise ValueError('Invalid actual battle UI coordinates')
     x, y, w, h = coordinates
-    if x < 0 or y < 0 or w <= 0 or h <= 0 or x + w > 2640.01 or y + h > 936.01:
+    if x < 0 or y < 0 or w <= 0 or h <= 0 or x + w > 2640.01 or y + h > max_height+.01:
         raise ValueError('Battle UI box exceeds the measured inset-safe phone window')
     return x, y, w, h
 
@@ -74,13 +85,35 @@ def overlap(a, b):
     return a[0] < b[0] + b[2] and a[0] + a[2] > b[0] and a[1] < b[1] + b[3] and a[1] + a[3] > b[1]
 
 
-def validate_metrics(value, font, native):
+def validate_metrics(value, font, native, require_insets=False):
     kind = 'CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE' if native else 'CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE'
     if (value.get('kind') != kind or value.get('screenWidth') != 2640 or value.get('screenHeight') != 1216
-            or value.get('windowWidth') != 2640 or value.get('windowHeight') != 1080
+            or value.get('windowWidth') != 2640
             or value.get('density') != 3 or isinstance(value.get('fontScale'), bool)
             or value.get('fontScale') != float(font)):
         raise ValueError('Battle UI proof has different actual screen/window/font metrics')
+    measured=value.get('geometryEvidence')==GEOMETRY_EVIDENCE
+    if value.get('geometryEvidence') is not None and not measured:
+        raise ValueError('Unknown geometry evidence protocol')
+    if require_insets and not measured:
+        raise ValueError('Current visual candidate requires actual Android inset measurements')
+    height=value.get('windowHeight')
+    safe=(0,0,2640,936)
+    if measured:
+        if isinstance(height,bool) or not isinstance(height,int) or height not in (1080,1216):
+            raise ValueError('Unsupported actual Surface height')
+        insets=value.get('safeInsets')
+        if not isinstance(insets,dict) or set(insets)!=set(('left','top','right','bottom')):
+            raise ValueError('Missing measured Android insets')
+        left,top,right,bottom=(insets[k] for k in ('left','top','right','bottom'))
+        if any(isinstance(n,bool) or not isinstance(n,int) or not 0<=n<=limit for n,limit in
+               ((left,880),(right,880),(top,height//3),(bottom,height//3))):
+            raise ValueError('Invalid measured Android insets')
+        safe=box(value.get('safeArea'),height)
+        if safe!=(left,top,2640-left-right,height-top-bottom) or safe[2]<560*3 or safe[3]<280*3:
+            raise ValueError('Safe area differs from actual Surface/insets')
+    elif height!=1080:
+        raise ValueError('Legacy proof must retain its original Surface measurements')
     if not native:
         if value.get('minTouchDp') != 48 or value.get('medicineTextRowsVisible', 0) < 3:
             raise ValueError('Original medicine layout checks are missing')
@@ -93,11 +126,13 @@ def validate_metrics(value, font, native):
         enemies, group = ([35] * 6, 8) if index % 2 == 0 else ([137], 156)
         if case.get('party') != list(PARTY[:count]) or case.get('enemies') != enemies or case.get('groupId') != group:
             raise ValueError('Native UI case target was omitted or substituted')
-        frame = box(case.get('frame'))
+        frame = box(case.get('frame'),height if measured else 936)
+        if frame[0]<safe[0] or frame[1]<safe[1] or frame[0]+frame[2]>safe[0]+safe[2]+.01 or frame[1]+frame[3]>safe[1]+safe[3]+.01:
+            raise ValueError('Native battle frame escapes measured inset-safe area')
         cards = case.get('cards')
         if not isinstance(cards, list) or len(cards) != count:
             raise ValueError('Native party cards are missing')
-        boxes = [box(c) for c in cards] + [box(case.get(k)) for k in ('enemyField', 'allyField')]
+        boxes = [box(c,height if measured else 936) for c in cards] + [box(case.get(k),height if measured else 936) for k in ('enemyField', 'allyField')]
         for b in boxes:
             if b[0] < frame[0] or b[1] < frame[1] or b[0]+b[2] > frame[0]+frame[2]+.01 or b[1]+b[3] > frame[1]+frame[3]+.01:
                 raise ValueError('Native party/enemy region escapes its frame')
@@ -109,7 +144,7 @@ def validate_metrics(value, font, native):
             raise ValueError('Crowded native enemy instance IDs are not independently visible')
 
 
-def proof_digests(evidence, logs):
+def proof_digests(evidence, logs, require_insets=False):
     """Bind all expected raw screenshots, measured JSON and actual passing logs."""
     from PIL import Image
     evidence, logs = Path(evidence), Path(logs)
@@ -124,7 +159,7 @@ def proof_digests(evidence, logs):
         for prefix, native in (('mobile-phone-', False), ('mobile-party-phone-', True)):
             name = prefix + font + '.json'
             value, data = json_evidence(evidence / name)
-            validate_metrics(value, font, native)
+            validate_metrics(value, font, native,require_insets)
             files['checkpoint-ui/' + name] = hashlib.sha256(data).hexdigest()
         for name in screenshot_names(font):
             path = evidence / name

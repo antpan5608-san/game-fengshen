@@ -365,7 +365,7 @@ if scope['id'] in C61_SCOPES:
     r.update(jiang_proof_digests(Path('artifacts/checkpoint-ui'),scope['contentVersion']))
     r.update({key:'PASS' for key in C61_PERSONAL_GATES})
 if scope['id'] in ui.UI_SCOPES:
-    r.update(ui.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime')))
+    r.update(ui.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime'),require_insets=scope.get('battleVisualAcceptance')==visual.ACCEPTANCE))
     r.update({key:'PASS' for key in ui.UI_GATES})
 if scope['id']==room28.SCOPE:
     r.update(room28.proof_digests(Path('artifacts/checkpoint-ui')))

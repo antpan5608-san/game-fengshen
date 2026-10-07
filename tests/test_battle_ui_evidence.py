@@ -92,5 +92,32 @@ class BattleUiEvidenceTest(unittest.TestCase):
         self.write('mobile-phone-2.0.json', old)
         with self.assertRaises(ValueError): self.proof()
 
+    def test_current_candidate_requires_measured_insets_for_both_surface_modes(self):
+        with self.assertRaisesRegex(ValueError,'inset'):ui.proof_digests(self.evidence,self.logs,require_insets=True)
+        for height in (1080,1216):
+            for font in ui.FONTS:
+                for prefix in ('mobile-phone-','mobile-party-phone-'):
+                    name=prefix+font+'.json';value=json.loads((self.evidence/name).read_text())
+                    value.update(windowHeight=height,geometryEvidence=ui.GEOMETRY_EVIDENCE,
+                        safeInsets=dict(left=0,top=0,right=0,bottom=144),
+                        safeArea=dict(x=0,y=0,width=2640,height=height-144))
+                    self.write(name,value)
+            self.assertEqual(64,len(ui.proof_digests(self.evidence,self.logs,require_insets=True)[ui.UI_PROOF_KEY]))
+
+    def test_measured_surface_rejects_forged_insets_and_escaping_frame(self):
+        name='mobile-party-phone-2.0.json';base=json.loads((self.evidence/name).read_text())
+        base.update(windowHeight=1216,geometryEvidence=ui.GEOMETRY_EVIDENCE,
+            safeInsets=dict(left=0,top=0,right=0,bottom=144),safeArea=dict(x=0,y=0,width=2640,height=1072))
+        ui.validate_metrics(base,'2.0',True,require_insets=True)
+        for change in ('protocol','missing','inset','safe','height','frame'):
+            value=copy.deepcopy(base)
+            if change=='protocol':value['geometryEvidence']='INVENTED'
+            elif change=='missing':value.pop('safeInsets')
+            elif change=='inset':value['safeInsets']['bottom']=True
+            elif change=='safe':value['safeArea']['height']=1216
+            elif change=='height':value['windowHeight']=1217
+            else:value['cases'][0]['frame']['height']=1080
+            with self.subTest(change=change),self.assertRaises(ValueError):ui.validate_metrics(value,'2.0',True,require_insets=True)
+
 
 if __name__ == '__main__': unittest.main()

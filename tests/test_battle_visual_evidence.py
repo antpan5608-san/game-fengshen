@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from tools import battle_visual_evidence as visual,runtime_handoff as h
+from tools import battle_visual_evidence as visual,runtime_handoff as h,battle_ui_evidence as ui
 from tests import test_battle_magic_personal_scope as fixtures
 
 
@@ -55,10 +55,15 @@ class VisualProofTests(unittest.TestCase):
     def test_new_gates_keep_all_thirty_three_old_gates_and_refuse_omitted_visual_proofs(self):
         fixture=fixtures.BattleMagicPersonalScopeTest();fixture.setUp();self.addCleanup(fixture.doCleanups)
         scope=copy.deepcopy(fixture.scope);scope['battleVisualAcceptance']=visual.ACCEPTANCE;scope['personalTest']['gates']+=visual.GATES
+        scope['battleUiAcceptance']=ui.acceptance(require_insets=True)
         fixture.fixture.fixture.write_scope(scope)
         candidate=dict(fixture.candidate,versionCode=91);proposed=dict(fixture.proposed,versionCode=91,**{g:'PASS'for g in visual.GATES},**self.proof())
         self.assertEqual(35,len(h.personal_gates(h.active_scope(candidate))))
         h.review_personal(h.finish_personal(proposed))
+        bad_scope=copy.deepcopy(scope);bad_scope['battleUiAcceptance'].pop('geometryEvidence')
+        fixture.fixture.fixture.write_scope(bad_scope)
+        with self.assertRaisesRegex(ValueError,'battle UI'):h.active_scope(candidate)
+        fixture.fixture.fixture.write_scope(scope)
         for key in (*visual.GATES,*visual.PROOF_KEYS):
             bad=dict(proposed);bad.pop(key)
             with self.assertRaises(ValueError):h.finish_personal(bad)
