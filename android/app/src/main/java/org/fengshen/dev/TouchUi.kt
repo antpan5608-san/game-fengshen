@@ -17,12 +17,15 @@ fun touchModalLayout(safe:Box,dp:Float,fontScale:Float,tabs:Int,party:Int,second
     val pad=8*dp;val f=Box(safe.x+pad,safe.y+pad,max(1f,safe.w-2*pad),max(1f,safe.h-2*pad))
     val regularHeader=max(72f,48*fontScale+16)*dp;val tabH=max(48f,22*fontScale+16)*dp
     val actionH=max(48f,17.5f*fontScale+16)*dp
-    val partyH=if(party>1)actionH else 0f
+    // Three-character party names need their scaled text width, not a fixed48dp square.
+    val partyW=if(party>1)min(max(48f,44*fontScale+16)*dp,(f.w-2*pad-(party-1)*pad)/party)else 48*dp
+    val partyLines=ceil(42*fontScale/max(1f,partyW/dp-16))
+    val partyH=if(party>1)max(actionH,(17.5f*fontScale*partyLines+16)*dp)else 0f
     val compact=f.h-regularHeader-partyH-tabH-3*pad < actionH+(17.5f*fontScale+8)*dp
     val header=if(compact)max(72f,18.75f*fontScale+16)*dp else regularHeader
     val closeW=max(48f,28*fontScale+16)*dp
     val ts=(0 until tabs).map{Box(f.x+pad+it*(f.w-2*pad)/tabs,f.y+header+partyH,(f.w-2*pad)/tabs,tabH)}
-    val ps=(0 until party).map{Box(f.x+pad+it*56*dp,f.y+header,48*dp,48*dp)}
+    val ps=(0 until party).map{Box(f.x+pad+it*(partyW+pad),f.y+header,partyW,partyH)}
     val y=f.y+header+partyH+tabH+pad;val h=max(48*dp,f.y+f.h-pad-y)
     val wide=f.w>=560*dp;val listW=if(wide)(f.w-3*pad)*.46f else f.w-2*pad
     val list=Box(f.x+pad,y,listW,h);val rx=if(wide)list.x+list.w+pad else list.x

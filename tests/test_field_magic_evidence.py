@@ -34,6 +34,7 @@ class FieldMagicEvidenceTest(unittest.TestCase):
                     width=160, height=90, screenWidth=160, screenHeight=100,
                     selectionAndCancelUnchanged=True, repeatConfirmationUnchanged=True,
                     protectedSaveFailureRollbackUnchanged=True,
+                    partyLabelsFit=True, compactCasterMpHeaderFits=True,
                     before=self.before, after=self.after))
             Image.new('RGB', (160, 100), (1, 2, 3)).save(
                 self.folder / ('touch-ux-world-field-magic-committed-font-' + font + '.png'))

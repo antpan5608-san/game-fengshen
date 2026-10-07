@@ -41,7 +41,25 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue("Isolated field fixture rejected; see retained complete validation JSON",restored)
         assertTrue(v.content.fieldMagicEnabled)
         val before=v.currentSnapshot()
-        fun open(){tap(v,center(v.hudBounds()));assertEquals(GameView.Layer.CHARACTER,v.layer);tap(v,tabPoint(v,3))}
+        fun open(){tap(v,center(v.hudBounds()));assertEquals(GameView.Layer.CHARACTER,v.layer);tap(v,tabPoint(v,3))
+            val dp=v.resources.displayMetrics.density
+            val geometry=touchModalLayout(layoutFor(v).safe,dp,v.resources.configuration.fontScale,4,4,false)
+            assertTrue("Actual panel must remain in the GameView viewport",geometry.frame.y>=0&&geometry.frame.y+geometry.frame.h<=v.height+1)
+            val measured=android.graphics.Paint().apply{textSize=14*v.resources.displayMetrics.scaledDensity}
+            v.currentSnapshot().characters.forEachIndexed{i,h->
+                val name=v.content.characterDefinitions.getValue(h.id).name;val box=geometry.party[i]
+                val lines=kotlin.math.ceil(measured.measureText(name)/(box.w-16*dp))
+                assertTrue("Full party label must fit: $name",lines*measured.textSize*1.25f+16*dp<=box.h+1)
+                assertTrue(box.x+box.w<=geometry.frame.x+geometry.frame.w)
+            }
+            if(geometry.compactHeader){
+                val h=v.currentSnapshot().characters.first();val caster=v.currentSnapshot().characters[1]
+                val title="${v.content.characterDefinitions.getValue(h.id).name}  Lv.${h.level} · ${v.content.characterDefinitions.getValue(caster.id).name} MP ${caster.mp}/${caster.maxMp}"
+                measured.textSize=15*v.resources.displayMetrics.scaledDensity
+                assertTrue("Bound caster MP must fit the compact header",measured.measureText(title)<=geometry.close.x-geometry.frame.x-16*dp)
+                assertTrue("Compact title must finish before the party row",geometry.frame.y+8*dp+measured.textSize*1.25f<=geometry.party.first().y)
+            }
+        }
         fun select(){tap(v,center(v.panelCharacterBounds("xiaolongnv")));tap(v,center(v.panelSpellBounds(OriginalFieldMagic.SPELL_ID)))}
         open();screenshot(v,"world-field-magic-nezha-unavailable")
         select();assertEquals(before,v.currentSnapshot());screenshot(v,"world-field-magic-selection")
@@ -78,6 +96,7 @@ class TouchTest:IsolatedGameTestCase(){
             .put("screenWidth",imageSize.outWidth).put("screenHeight",imageSize.outHeight)
             .put("selectionAndCancelUnchanged",true).put("repeatConfirmationUnchanged",true)
             .put("protectedSaveFailureRollbackUnchanged",true)
+            .put("partyLabelsFit",true).put("compactCasterMpHeaderFits",true)
             .put("before",before.json()).put("after",after.json()).toString())
         File(root,"world-field-magic-expected-save.json").writeText(after.json().toString())
         instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}

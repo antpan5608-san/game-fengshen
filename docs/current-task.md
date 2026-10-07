@@ -9,12 +9,18 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v88 / 0.8.18-battle-sprites-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v89/0.8.19-field-magic-personal 提神术有限候选，IMPLEMENTED_LOCAL_VERIFIED，未签名App验收/发布；线上88
+current_candidate_version: v89/0.8.19-field-magic-personal 提神术有限候选；94来源App31门禁通过但原片字体可读性待修，未发布；线上88
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: v89原首次签名run37610894546的隔离法术fixture恢复被拒，测试main线程断言导致仪器进程结束，尚未进入施法。已签名/JVM423通过，但App失败未发布；只修测试状态构造/失败回执，再新同源验收，保留存档门禁。
+first_real_blocker: v89第三次31门禁通过后实际原片发现2倍字体角色名称裁切/法术剩余MP在初始视口隐藏；先定向修复并新同源验收，不能用几何PASS替代可读性。
+
+## v89 第三次App门禁通过、原片可读性修正（2026-10-07）
+
+source94b6cfe/run37619415057原 build/runtime SUCCESS；423 release JVM/92 suites、21 Content、31 gates，原包名签名/c62/392及32,791,156 bytes/fullSHA f269d7c131a70ebb0dfc5e57b9319306d5cab9568fd364d27faa6285b02ad939独立复核。原片/五组完整外部冷启边界及恢复偏好经独立脚本通过；fixture诊断 actual snapshotValid/yangJoinContextValid/restored均true。
+
+实际目视新1/1.3/2字体PNG和保存拒绝回滚图，发现2倍字体固定48dp队员按钮裁切名称，紧凑标题把MP移入可滚动详情且反馈占首行，剩余MP在初始视口不可见。自动门禁通过不等于可读性通过，94来源不发布，线上仍88。定向修复：队员标签宽高按系统字体和可用区域布局；法术紧凑标题始终显示绑定施法者姓名/当前MP。增加实际Paint测量名称和标题范围的仪器断言及原证据helper字段，保留31门禁/全部事务与存档校验。修正须新4B、本地验证及新同源签名App验收，不复用f269候选。
 
 ## v89 第二次同源验收诊断（2026-10-07）
 

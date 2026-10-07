@@ -50,6 +50,8 @@ def proof_digests(directory):
         if (data.get('kind') != ACCEPTANCE['kind'] or data.get('font') != float(font.replace('_', '.'))
                 or data.get('selectionAndCancelUnchanged') is not True
                 or data.get('protectedSaveFailureRollbackUnchanged') is not True
+                or data.get('partyLabelsFit') is not True
+                or data.get('compactCasterMpHeaderFits') is not True
                 or data.get('repeatConfirmationUnchanged') is not True):
             raise ValueError('Field magic actual font/touch assertion missing')
         before, after = data.get('before'), data.get('after')

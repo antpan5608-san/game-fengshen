@@ -1,3 +1,5 @@
+v89 source94/run37619415057第三次签名App31门禁通过，独立完整原片/五组冷启与423 release JVM复核；实际目视2倍字体发现角色名称裁切、剩余MP在初始视口隐藏。未发布94 APK，正在定向修布局并新同源验收；线上仍88。存档/原内容/31门禁保持。
+
 <!-- v89 second runtime failure: retained actual fixture diagnostics; no publication -->
 第二次候选 run37615096677：签名构建及423 release JVM通过，受控四人fixture违反杨戬入队上下文守卫，App恢复拒绝，未施法/未发布。正在补齐测试上下文和法术证据artifact路径；生产保存/31门禁不变。线上仍v88，正常主线/真机/声音/完整法术未完成。
 

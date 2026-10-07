@@ -1780,7 +1780,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun drawDirectPanel(c:Canvas){
         val l=modalLayout();val hero=characters[characterPage]
-        touchFrame(c,"${heroName(hero.id)}  Lv.${hero.level}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"} · 银两 $money",listOf("属性","装备","物品","法术"),panelTab.ordinal)
+        val title="${heroName(hero.id)}  Lv.${hero.level}"
+        // Compact details scroll; keep the bound caster's current MP visible in the header.
+        val heading=if(l.compactHeader&&panelTab==CharacterTab.MAGIC)fieldMagicHero().let{
+            "$title · ${heroName(it.id)} MP ${it.mp}/${it.maxMp?:"?"}"}else title
+        touchFrame(c,heading,"HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"} · 银两 $money",listOf("属性","装备","物品","法术"),panelTab.ordinal)
         if(panelTab==CharacterTab.MAGIC){
             val caster=fieldMagicHero();val spells=fieldSpells()
             if(spells.isEmpty()){
