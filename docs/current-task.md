@@ -1,3 +1,5 @@
+最新研发检查点：拟v94按当前战斗准备已接原ContentLoader单队列、四头像启动与battle/GameView/epoch/销毁owner拒过期；本批新450 JVM/96 suites、61相关Python和DEBUG编译通过，仪器新断言尚待原Actions实际App执行，未正式签名/未发布。个人线上93、稳定82/c62/原审核16图及全部长期/真机/声音欠账保持，见[本批实际状态](evidence/battle-scoped-load-next-batch.md)。以下为已发布93与历史。
+
 # WORLD-FULL-01 本地恢复执行
 
 task_id: WORLD-FULL-01
@@ -11,7 +13,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v93 / 0.8.23-support-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 下一按当前战斗准备图像批次已只读定位，尚未实施/冻结新版本；个人93已发布
+current_candidate_version: 拟v94 / 0.8.24-scoped-visual-personal，按当前战斗准备已有限实施/新450 JVM及61 Python通过；待新原Actions签名/App，尚未发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

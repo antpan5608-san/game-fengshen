@@ -1,6 +1,12 @@
 # 下一有限批次：按当前战斗准备图像
 
-状态：SOURCE_LOCATED / NOT_IMPLEMENTED；尚未冻结版本、App或发布。线上个人93、稳定82、c62与全部未完成项保持；同一WORLD-FULL-01，不创建新任务。当前缺口是生产启动仍准备固定16图，实际保留39,316,116字节；不能据此声称按战斗加载或手机性能通过。
+状态：IMPLEMENTED_LOCAL_VERIFIED；拟94 / 0.8.24-scoped-visual-personal，尚未正式签名/App/发布。线上个人93、稳定82、c62与全部未完成项保持；同一WORLD-FULL-01，不创建新任务。以下原只读设计保留为实施前记录。
+
+新有限实施：BattleVisualAssets保持原五参数完整16图构造/封闭Source零绘制读取及坏图15门槛，分离可复用BattleVisualPreparer和不持有Source/cache的不可变lookup。BattleVisualRequest复制真实身份，只取审核清单的actor已有portrait/idle/attack/cast、精确enemy ID和map/blackScene背景；未知保持native回退，失败不缓存可重试，旧bundle不recycle。生产ContentLoader.loadForPlay仅准备四头像，原load签名保留完整包取证；同一development-content-loader改可关闭单队列。随机/story入口都按battle对象/UUID/epoch请求，UI同时核当前GameView和未销毁Activity；退出拒旧epoch，onDestroy拒新请求/取消队列，结果仅替换绘制/命中共用lookup，规则/tick/RNG/存档不改。
+
+新本地450 JVM/96 suites零失败错误跳过，生产接入后v2确实执行testDebugUnitTest；最终只增仪器合并断言/清单pin，JVM为UP-TO-DATE不冒称再次执行。61相关Python实际最终5.538秒通过（含原environment-review嵌套32项自动审批fixture），应用/仪器DEBUG新编译成功。DEBUG参数94仅编译候选，不是签名或App通过。ci新scope7d9b724e绑定四头像/精确12图/旧epoch/另一battle/退出/销毁owner拒绝，严格拒旧16预热报告/遗漏/非布尔值；36原个人门禁保留。ContentTest新增真实decoder设计的4头像/5图/7图/共享缓存/8图合并/坏图恢复断言；TouchTest新增实际生产准备与owner guards断言，目前仅编译，待原Actions真实执行，不把断言存在称App证据。
+
+新preflight 2026-10-07T23:19:07Z为NO_DATA，保留93/92，不能当手机健康。来源范围仍已审r2原16图/清单，未增或改素材。拟94须新同源Actions/签名/21Content和36门禁/三字体原图及正常供应攻击胜利治疗完整save与外部cold实际回执后才能原批准发布；不能复用93App。证据在服务器`/srv/fengshen-dev/receipts/battle-scoped-load-preflight.json`、`battle-scoped-load-build-v2.log`、`battle-scoped-load-build-final.log`和`battle-scoped-load-python-final.log`。所有真机/声音/正常完整结局/其他视觉覆盖和十类欠账保持OPEN；候选失败保留，不发布未验包。
 
 已用CPU prepare_context只读定位、实际读取ContentLoader/Content、BattleVisualAssets/ResourceMap、MainActivity内容线程/Choreographer/两战斗入口/portrait与统一绘制、ContentTest/TouchTest。没有等待本地推理。只读设计/清单尺寸估算保存在服务器`.local-ai/battle-pose-next/scoped-load-notes.md`与`scoped-load-budget-research.json`，估算不提升为实际性能证据。
 

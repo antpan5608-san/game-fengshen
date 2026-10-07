@@ -1,3 +1,5 @@
+最新研发检查点：拟v94按当前战斗准备已接原ContentLoader单队列、四头像启动与battle/GameView/epoch/销毁owner拒过期；本批新450 JVM/96 suites、61相关Python和DEBUG编译通过，仪器新断言尚待原Actions实际App执行，未正式签名/未发布。个人线上93、稳定82/c62/原审核16图及全部长期/真机/声音欠账保持，见[本批实际状态](evidence/battle-scoped-load-next-batch.md)。以下为已发布93与历史。
+
 最新实际检查点：个人 v93 已发布并独立核验公网 62,589,404 完整字节与原审核 APK 一致；本版正式447 JVM/95 suites、21 Content/36门禁及121原PNG/78视频采样/7完整cold已验。原治疗/解毒仅真实目标局部光效，规则/存档/c62/素材不变。postflight查询成功但NO_DATA，保留93/92，不能当真机健康通过；稳定82、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。详见[v93交付](evidence/v93-support-visual-personal.md)。下一有限批次接[按当前战斗准备图像](evidence/battle-scoped-load-next-batch.md)，尚未实施/冻结新版本。以下各段保留历史状态。
 
 最新接续批次：[原治疗局部光效](evidence/battle-support-local-next-batch.md)已完成有限源码及本地新447 JVM/95 suites、68相关Python和应用/仪器DEBUG构建检查；拟93尚未正式签名/App/发布，不能复用92验收。仅现有法术真实目标光效，规则/保存/素材不改。以下为实际已发布92及历史。

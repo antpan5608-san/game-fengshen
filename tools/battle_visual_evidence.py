@@ -11,6 +11,12 @@ ACCEPTANCE=dict(kind='ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PH
     assets=16,controlledPoseMethod='testControlledBattleVisualPosesReadOnly',fonts=[1.0,1.3,2.0],normalMethod='testNormalVisualSupplyAttackVictoryAndSave',coldMethod='testHerbColdStartMatchesNormalSave',
     decoderMethod='testBattleVisualAssetsHashesCacheAndReadOnlySnapshots',proofKey=PROOF_KEYS[0])
 ACCEPTANCE['supportFeedback']='IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW'
+ACCEPTANCE['preparation']='PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS'
+POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
+    'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
+    'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',
+    'nezha-attack.png','xiaolongnv-cast.png','enemy-1.png','grass-v1.png')))
+DELIVERY_GUARDS=('staleEpochRejected','otherBattleRejected','exitRejected','destroyedOwnerRejected')
 
 
 def bounded(path,limit):
@@ -66,10 +72,13 @@ def proof_digests(evidence,logs):
         raw=bounded(evidence/name,1024*1024);value=json.loads(raw);hashes[name]=hashlib.sha256(raw).hexdigest()
         if (value.get('kind')!='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE'
                 or value.get('font')!=float(font) or value.get('manifestSha256')!=ACCEPTANCE['manifestSha256']
-                or value.get('prepared')!=16 or not 0<value.get('decodedBytes',0)<=64*1024*1024
+                or value.get('prepared')!=len(POSE_FILES) or not 0<value.get('decodedBytes',0)<=64*1024*1024
                 or value.get('renderStateUnchanged') is not True or value.get('rngUnchanged') is not True
                 or value.get('before')!=value.get('after')):
             raise ValueError('Controlled pose report changed state, source, font or budget')
+        if (value.get('startupPrepared')!=4 or value.get('preparedFiles')!=list(POSE_FILES)
+                or any(value.get(key) is not True for key in DELIVERY_GUARDS)):
+            raise ValueError('Scoped preparation or stale delivery guards were not verified')
         complete_save(value.get('before'))
         phases=value.get('phases',[])
         expected=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),

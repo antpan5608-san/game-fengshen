@@ -178,7 +178,13 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     }
 }
 object ContentLoader {
-    fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content {
+    fun load(source: ContentSource,timing:(JSONObject)->Unit={},audioCache:File?=null): Content =
+        loadInternal(source,timing,audioCache,null)
+    /** Production startup prepares portraits; explicit full-pack decoder callers keep load(). */
+    fun loadForPlay(source:ContentSource,timing:(JSONObject)->Unit,audioCache:File?,
+        visualReady:(BattleVisualPreparer)->Unit):Content=loadInternal(source,timing,audioCache,visualReady)
+    private fun loadInternal(source:ContentSource,timing:(JSONObject)->Unit,audioCache:File?,
+        visualReady:((BattleVisualPreparer)->Unit)?): Content {
         val started=SystemClock.elapsedRealtime();var verificationMs=0L;var atlasMs=0L
         val manifestBytes=source.read("manifest.json")
         val manifest=JSONObject(String(manifestBytes,Charsets.UTF_8))
@@ -1223,11 +1229,14 @@ object ContentLoader {
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
                 val visualStart=SystemClock.elapsedRealtime()
                 content.battleVisual=runCatching{source.readVisual("manifest.json")?.let{bytes->
-                    BattleVisualAssets(source,bytes,content.characterDefinitions.keys,scenes.keys,battle!!.enemies.keys)
+                    val preparer=BattleVisualPreparer(source,bytes,content.characterDefinitions.keys,scenes.keys,battle!!.enemies.keys)
+                    if(visualReady==null)preparer.prepareAll()else preparer.preparePortraits().also{visualReady(preparer)}
                 }}.onFailure{Diagnostics.record("visual_load","WARN",code="missing_or_corrupt_visual_manifest")}.getOrNull()
                 content.battleVisual?.let{visual->Diagnostics.record("visual_load",if(visual.failedAssets.isEmpty())"INFO"else"WARN",
                     JSONObject().put("verificationMs",SystemClock.elapsedRealtime()-visualStart)
-                        .put("assetID",visual.id).put("success",visual.failedAssets.isEmpty()))}
+                        .put("assetID",visual.id).put("success",visual.failedAssets.isEmpty())
+                        .put("prepared",visual.preparedCount).put("decodedBytes",visual.cachedBytes)
+                        .put("scope",if(visualReady==null)"EXPLICIT_FULL_PACK"else"STARTUP_PORTRAITS"))}
                 content.clinics=clinics
                 data.optJSONArray("mapArrivals")?.let{a->
                     require(a.length()==1)

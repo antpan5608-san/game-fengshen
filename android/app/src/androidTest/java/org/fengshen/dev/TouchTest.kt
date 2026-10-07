@@ -11,6 +11,14 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    private fun awaitBattleVisuals(v:GameView){
+        for(i in 0..200){
+            var ready=false;instrumentation.runOnMainSync{ready=v.battleVisualPrepared}
+            if(ready)return
+            SystemClock.sleep(25)
+        }
+        fail("Current battle visual preparation did not complete")
+    }
     /** Expected ratio of the actual selected draw asset, retaining the legacy native fallback. */
     private fun battleDrawnEnemyRatio(v:GameView,enemy:BattleEnemy):Float {
         val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v)
@@ -20,8 +28,8 @@ class TouchTest:IsolatedGameTestCase(){
     }
     /** Actual queued rule steps and Canvas, controlled actors, not normal joining or phone performance. */
     fun testControlledBattleVisualPosesReadOnly(){
-        val(activity,v)=launch();val c=v.content;val rules=c.battle!!;val visual=c.battleVisual!!
-        assertEquals(16,visual.preparedCount);assertTrue(visual.failedAssets.isEmpty())
+        val(activity,v)=launch();val c=v.content;val rules=c.battle!!;val startup=c.battleVisual!!
+        assertEquals(4,startup.preparedCount);assertTrue(startup.failedAssets.isEmpty())
         val actors=listOf(c.initialPlayer.copy(hp=5,maxHp=200,statusMask=2))+
             listOf("xiaolongnv","yangjian","jiangziya").map{c.joinCharacters.getValue(it)}
         val fixture=v.currentSnapshot().copy(mapId=7,x=23*16+8,y=7*16+8,direction=Key.DOWN,
@@ -32,7 +40,7 @@ class TouchTest:IsolatedGameTestCase(){
         assertTrue(fixture.validate(c));val p=BattlePresentation();lateinit var fight:OpeningBattle
         val group=rules.groups.first{g->g.members.all{m->rules.enemies.getValue(m.enemyId).behaviorByte==0}}
         var draws=0;val phases=org.json.JSONArray();val font=v.resources.configuration.fontScale
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{
             v.active=false;assertTrue(v.restoreSnapshot(fixture))
             fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
@@ -48,6 +56,21 @@ class TouchTest:IsolatedGameTestCase(){
             field("battleCommitted",false);field("storyBattle",null);field("battleInfoOpen",false)
             field("battleItemsOpen",false);field("battleMagicOpen",false);field("layer",GameView.Layer.BATTLE)
         }
+        var epoch=0L;var oldEpoch=0L
+        instrumentation.runOnMainSync{
+            v.requestBattleVisuals()
+            oldEpoch=GameView::class.java.getDeclaredField("battleVisualEpoch").apply{isAccessible=true}.getLong(v)
+            v.requestBattleVisuals()
+            epoch=GameView::class.java.getDeclaredField("battleVisualEpoch").apply{isAccessible=true}.getLong(v)
+            assertFalse(v.deliverBattleVisuals(fight,"controlled-visual-poses",oldEpoch,startup))
+            assertFalse(v.deliverBattleVisuals(fight,"previous-battle",epoch,startup))
+            val other=OpeningBattle(group,rules,c.initialPlayer,2)
+            assertFalse(v.deliverBattleVisuals(other,"controlled-visual-poses",epoch,startup))
+        }
+        awaitBattleVisuals(v)
+        val visual=c.battleVisual!!
+        assertEquals(12,visual.preparedCount);assertTrue(visual.failedAssets.isEmpty())
+        assertNull(visual.background(25,false));assertNull(visual.enemy(137))
         val saved=v.currentSnapshot();val party=fight.party.toList();val sampled=draws;val bytes=visual.cachedBytes
         var attack=false;var cast=false;var debit=false
         var index=0
@@ -86,13 +109,27 @@ class TouchTest:IsolatedGameTestCase(){
         }
         assertTrue(attack&&cast&&debit);assertEquals(saved,v.currentSnapshot());assertEquals(party,fight.party)
         val screen=instrumentation.uiAutomation.takeScreenshot()
+        instrumentation.runOnMainSync{
+            field("battle",null);field("layer",GameView.Layer.MAP)
+            assertFalse(v.deliverBattleVisuals(fight,"controlled-visual-poses",epoch,visual))
+            activity.finish()
+        }
+        for(i in 0..200){if(activity.isDestroyed)break;SystemClock.sleep(25)}
+        assertTrue(activity.isDestroyed)
+        instrumentation.runOnMainSync{
+            // Retained old-view reference: ownership must reject even otherwise matching fields.
+            field("battle",fight);field("layer",GameView.Layer.BATTLE)
+            assertFalse(v.deliverBattleVisuals(fight,"controlled-visual-poses",epoch,visual))
+            field("battle",null);field("layer",GameView.Layer.MAP)
+        }
         File(instrumentation.targetContext.getExternalFilesDir(null),"world-visual-poses-$font.json").writeText(JSONObject()
             .put("kind","CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE")
             .put("font",font).put("screenWidth",screen.width).put("screenHeight",screen.height)
             .put("manifestSha256",BattleVisualAssets.MANIFEST_SHA256).put("prepared",visual.preparedCount)
+            .put("startupPrepared",startup.preparedCount).put("preparedFiles",org.json.JSONArray(visual.preparedFiles.sorted()))
+            .put("staleEpochRejected",true).put("otherBattleRejected",true).put("exitRejected",true).put("destroyedOwnerRejected",true)
             .put("decodedBytes",bytes).put("phases",phases).put("renderStateUnchanged",true)
             .put("rngUnchanged",true).put("before",saved.json()).put("after",v.currentSnapshot().json()).toString())
-        instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);activity.finish()}
     }
     /** Controlled four-role fixture, real taps/foreground phases/save; no normal join claim. */
     fun testControlledBattleMagicSelectionPhasesAndSave(){
@@ -113,7 +150,7 @@ class TouchTest:IsolatedGameTestCase(){
         val rng=object:java.security.SecureRandom(){var draws=0;var value=255
             override fun nextInt(bound:Int):Int{check(bound==256);draws++;return value}}
         lateinit var fight:OpeningBattle
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{
             fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
                 .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
@@ -617,7 +654,7 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{
             fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
                 .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
-            fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+            fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
             field("battle",fight);field("battlePresentation",p);field("battleID","controlled-jiang-four-party")
             field("battleRandom",rng)
             field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
@@ -1714,7 +1751,7 @@ class TouchTest:IsolatedGameTestCase(){
     }
     fun testControlledOneHitAndSameKindInstances(){
         val(activity,v)=launch();val rules=v.content.battle!!
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         fun prepare(group:EncounterGroup,hero:CharacterState):Pair<OpeningBattle,BattlePresentation>{
             val fight=OpeningBattle(group,rules,hero,2);val p=BattlePresentation()
             instrumentation.runOnMainSync{
@@ -5571,7 +5608,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         tap(v,center(layoutFor(v).buttons.getValue(Key.A)));assertEquals(GameView.Layer.DIALOGUE,v.layer)
         assertTrue(v.currentSnapshot().flags["rom.event.97.39.1"]!=true)
-        completeDialogue(v);assertEquals(GameView.Layer.BATTLE,v.layer);waitCommands()
+        completeDialogue(v);assertEquals(GameView.Layer.BATTLE,v.layer);waitCommands();awaitBattleVisuals(v)
         val fight=f.get(v) as OpeningBattle;val beforeEscapeHp=fight.hero.hp
         val enemyBox=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java)
             .apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
@@ -5643,7 +5680,7 @@ class TouchTest:IsolatedGameTestCase(){
         fight.configureParty(actors,mapOf("nezha" to 0,"xiaolongnv" to 1),
             actors.associate{it.id to 0},actors.associate{it.id to 0})
         val p=BattlePresentation();val enemyHp=fight.enemies.single().hp
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{
             field("battle",fight);field("battlePresentation",p);field("battleID","controlled-all08")
             field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
@@ -5667,7 +5704,7 @@ class TouchTest:IsolatedGameTestCase(){
         val group=rules.groups.first{g->g.members.groupBy{it.enemyId}.values.any{it.size>1}}
         val hero=v.content.initialPlayer.copy(hp=200,maxHp=200)
         val fight=OpeningBattle(group,rules,hero,2);val p=BattlePresentation()
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{
             field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-gesture")
             field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE)
@@ -5718,7 +5755,7 @@ class TouchTest:IsolatedGameTestCase(){
         fight.configureParty(listOf(hero,girl),mapOf(hero.id to 0,girl.id to 1),
             mapOf(hero.id to 0,girl.id to 0),mapOf(hero.id to 0,girl.id to 0))
         val p=BattlePresentation()
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-binding-gesture")
             field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE);p.tick(400)}
         assertTrue(fight.bindingAvailable(1,item))
@@ -5750,7 +5787,7 @@ class TouchTest:IsolatedGameTestCase(){
         val hero=v.content.initialPlayer.copy(level=8,experience=702,hp=30,maxHp=100,strength=250,agility=30,equipment=EquipmentState(2,-1,0,28))
         instrumentation.runOnMainSync{assertTrue(v.restoreSnapshot(base.copy(characters=listOf(hero),inventory=mapOf(HerbUse.ID to 2))))}
         val checkpoint=v.currentSnapshot();val fight=OpeningBattle(story.group,rules,hero,20,3);val p=BattlePresentation()
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-herb")
             field("battleCommitted",false);field("storyBattle",null);field("layer",GameView.Layer.BATTLE);p.tick(400)}
         tap(v,center(v.battleCommandBounds(2)));tap(v,center(v.battleItemBounds(HerbUse.ID)))
@@ -5787,9 +5824,10 @@ class TouchTest:IsolatedGameTestCase(){
         val screen=instrumentation.uiAutomation.takeScreenshot();assertEquals(2640,screen.width);assertEquals(1216,screen.height)
         val rules=v.content.battle!!;val story=rules.storyBattles.getValue("rom.npc.97.0");val fight=OpeningBattle(story.group,rules,v.content.initialPlayer,2)
         val p=BattlePresentation()
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         instrumentation.runOnMainSync{field("battle",fight);field("battlePresentation",p);field("battleID","controlled-mobile-font-$font")
             field("battleCommitted",false);field("storyBattle",story);field("layer",GameView.Layer.BATTLE);p.tick(400)}
+        awaitBattleVisuals(v)
         fun overlap(a:Box,b:Box)=a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y
         val targets=(0..4).map{v.battleCommandBounds(it)}+fight.enemies.map{v.battleTargetBounds(it.slot)}
         targets.forEach{assertTrue(it.w>=48*dp);assertTrue(it.h>=48*dp)}
@@ -5844,7 +5882,7 @@ class TouchTest:IsolatedGameTestCase(){
         val six=(rules.groups+rules.zones.flatMap{it.groups}).first{it.members.size==6&&it.members.all{m->m.enemyId in c.enemyGraphics}}
         val boss=rules.storyBattles.getValue("rom.npc.97.0").group
         val base=v.currentSnapshot();val reports=org.json.JSONArray()
-        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value);if(name=="battleID")v.requestBattleVisuals()}
         fun scene():BattleSceneLayout {
             val layout=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as? BattleSceneLayout
             assertNotNull("Native phone safe-area layout: font=$font, party=${v.currentSnapshot().characters.size}",layout)
@@ -5876,6 +5914,7 @@ class TouchTest:IsolatedGameTestCase(){
                 }
             }
             assertTrue("Restore the validated layout fixture on the actual GameView: party=$count",restored)
+            awaitBattleVisuals(v)
             val before=v.currentSnapshot();val layout=scene()
             val targets=layout.partyCards+layout.touch.commands+layout.touch.enemies
             for(box in targets){assertTrue(box.w>=48*dp&&box.h>=48*dp)

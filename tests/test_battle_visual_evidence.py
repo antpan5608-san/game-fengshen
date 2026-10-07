@@ -40,7 +40,8 @@ class VisualProofTests(unittest.TestCase):
                     supportTarget='nezha' if kind in ('SPECIAL','HEAL') else None,arenaFlash=False))
             self.write('touch-ux-world-visual-poses-'+font+'.json',dict(
                 kind='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE',font=float(font),
-                manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=16,decodedBytes=32*1024*1024,
+                manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=12,decodedBytes=32*1024*1024,
+                startupPrepared=4,preparedFiles=list(visual.POSE_FILES),**{k:True for k in visual.DELIVERY_GUARDS},
                 renderStateUnchanged=True,rngUnchanged=True,before=fixture.before,after=fixture.before,
                 screenWidth=160,screenHeight=100,phases=rows))
             (self.logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt')).write_text('OK (1 test)\n')
@@ -115,6 +116,15 @@ class VisualProofTests(unittest.TestCase):
         for phase in changed['phases']:phase.pop('supportTarget');phase.pop('arenaFlash')
         self.write(name,changed)
         with self.assertRaisesRegex(ValueError,'Support feedback'):self.proof()
+
+    def test_full_preload_missing_scope_and_stale_delivery_are_rejected(self):
+        name='touch-ux-world-visual-poses-1.3.json';original=json.loads((self.evidence/name).read_text())
+        for change in (dict(prepared=16),dict(startupPrepared=16),dict(preparedFiles=list(visual.POSE_FILES)+['enemy-137.png']),
+                *({k:False}for k in visual.DELIVERY_GUARDS),*({k:1}for k in visual.DELIVERY_GUARDS)):
+            self.write(name,dict(original,**change))
+            with self.assertRaises(ValueError):self.proof()
+        changed=copy.deepcopy(original);changed.pop('startupPrepared');self.write(name,changed)
+        with self.assertRaisesRegex(ValueError,'Scoped preparation'):self.proof()
 
 
 if __name__=='__main__':unittest.main()

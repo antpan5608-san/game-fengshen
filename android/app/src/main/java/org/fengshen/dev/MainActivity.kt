@@ -20,7 +20,9 @@ class MainActivity:Activity() {
     fun openCloudSave(){cloud.open()}
     fun onLocalSnapshotSaved(snapshot:SaveSnapshot){cloud.onLocalSaved(snapshot)}
     private var resumed=false
-    private var destroyed=false
+    @Volatile private var destroyed=false
+    private val contentWorker=java.util.concurrent.Executors.newSingleThreadExecutor{r->Thread(r,"development-content-loader")}
+    private var visualPreparer:BattleVisualPreparer?=null // Accessed only on contentWorker.
     private var loadStarted=0L
     internal var firstFrameReported=false
     fun firstInteractiveFrame(){if(!firstFrameReported){firstFrameReported=true;Diagnostics.record("content_first_interactive_frame",details=JSONObject().put("firstFrameMs",SystemClock.elapsedRealtime()-loadStarted));Diagnostics.schedule()}}
@@ -32,9 +34,9 @@ class MainActivity:Activity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         setContentView(TextView(this).apply{text="正在校验本地开发内容…";gravity=Gravity.CENTER})
         window.insetsController?.apply {hide(WindowInsets.Type.systemBars());systemBarsBehavior=WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE}
-        Thread({
+        contentWorker.execute {
             try {
-                val content=ContentLoader.load(AssetSource(assets),{timings->Diagnostics.record("content_load",details=timings.put("success",true))},java.io.File(filesDir,"content-audio"))
+                val content=ContentLoader.loadForPlay(AssetSource(assets),{timings->Diagnostics.record("content_load",details=timings.put("success",true))},java.io.File(filesDir,"content-audio")){visualPreparer=it}
                 runOnUiThread {
                     if(destroyed)return@runOnUiThread
                     val v=GameView(this,content);game=v
@@ -53,11 +55,22 @@ class MainActivity:Activity() {
                     v.requestApplyInsets();v.active=resumed;v.audio.foreground(resumed);cloud.resume()
                 }
             } catch(e:Exception) {Diagnostics.record("content_load","ERROR",JSONObject().put("success",false),e.javaClass.simpleName,e.stackTrace.take(12).joinToString("\n"));runOnUiThread {if(!destroyed)setContentView(TextView(this).apply{text="开发内容加载失败，未进入场景。\n${e.message}";gravity=Gravity.CENTER})}}
-        },"development-content-loader").start()
+        }
     }
+    internal fun prepareBattleVisuals(owner:GameView,request:BattleVisualRequest,ready:(BattleVisualAssets?)->Unit){
+        if(destroyed)return
+        try{contentWorker.execute {
+            if(destroyed)return@execute
+            val visual=runCatching{visualPreparer?.prepareBattle(request)}.onFailure{
+                Diagnostics.record("visual_load","WARN",code="battle_visual_preparation_failed")
+            }.getOrNull()
+            runOnUiThread{if(!destroyed&&game===owner)ready(visual)}
+        }}catch(_:java.util.concurrent.RejectedExecutionException){/* Closed activity owns no result. */}
+    }
+    internal fun ownsVisualTarget(owner:GameView)=!destroyed&&game===owner
     override fun onResume(){super.onResume();resumed=true;game?.active=true;game?.audio?.foreground(true);updater.resumeAfterPermission();Diagnostics.record("app_foreground");Diagnostics.schedule()}
     override fun onPause(){resumed=false;game?.active=false;game?.audio?.foreground(false);game?.persistState();Diagnostics.record("app_background");super.onPause()}
-    override fun onDestroy(){destroyed=true;updater.close();game?.active=false;game?.audio?.close();cloud.close();super.onDestroy()}
+    override fun onDestroy(){destroyed=true;contentWorker.shutdownNow();updater.close();game?.active=false;game?.audio?.close();cloud.close();super.onDestroy()}
     override fun onSaveInstanceState(out:Bundle){game?.let{it.finishForLifecycle();out.putString("snapshot",it.currentSnapshot().json().toString());out.putString("version",it.content.scene.version)};super.onSaveInstanceState(out)}
     override fun onWindowFocusChanged(focus:Boolean){super.onWindowFocusChanged(focus);game?.focused=focus}
     @Suppress("DEPRECATION")
@@ -91,6 +104,26 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var storyBattle:StoryBattleDefinition?=null
     private var battleSavePending=false
     private var battleID=""
+    private val startupBattleVisual=content.battleVisual
+    private var battleVisualEpoch=0L
+    internal var battleVisualPrepared=false;private set
+    internal fun requestBattleVisuals(){
+        val current=battle?:return
+        val id=battleID;val epoch=++battleVisualEpoch
+        content.battleVisual=startupBattleVisual;battleVisualPrepared=false
+        val request=BattleVisualRequest(current.party.map{it.id},current.enemies.map{it.definition.id},
+            world.mapId,current.enemies.any{it.definition.id in content.blackBattleEnemyIds})
+        activity.prepareBattleVisuals(this,request){visual->deliverBattleVisuals(current,id,epoch,visual)}
+    }
+    internal fun deliverBattleVisuals(current:OpeningBattle,id:String,epoch:Long,visual:BattleVisualAssets?):Boolean {
+        if(!activity.ownsVisualTarget(this)||battle!==current||battleID!=id||battleVisualEpoch!=epoch||layer!=Layer.BATTLE)return false
+        content.battleVisual=if(visual==null)startupBattleVisual else startupBattleVisual?.let{visual.withPortraits(it)}?:visual
+        battleVisualPrepared=true
+        Diagnostics.record("visual_load",if(visual==null||visual.failedAssets.isNotEmpty())"WARN"else"INFO",
+            JSONObject().put("scope","CURRENT_BATTLE").put("prepared",content.battleVisual?.preparedCount?:0)
+                .put("decodedBytes",content.battleVisual?.cachedBytes?:0).put("success",visual!=null&&visual.failedAssets.isEmpty()))
+        invalidate();return true
+    }
     private var battleMessage=""
     private var battlePresentation=BattlePresentation()
     private var battleTouchRevision=0
@@ -508,6 +541,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleMessage="遭遇敌群 ${group.id} · 选择目标后攻击"
         battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
+        requestBattleVisuals()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
         input.clear();battleTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset()
@@ -650,6 +684,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battlePresentation.screen!=BattlePresentation.Screen.RESULT||!battleCommitted)return
         if(battleSavePending){battleSavePending=!persistStateResult();if(battleSavePending)return}
         val story=storyBattle;storyBattle=null
+        battleVisualEpoch++;battleVisualPrepared=false;content.battleVisual=startupBattleVisual
         battle=null;battleResultDetails=false;battleResultParty=emptyList();battleInfoHeroId=null;clearBattleGesture();layer=Layer.MAP;input.clear();clock.reset()
         audio.scene(world.mapId)
         if(story!=null&&flags[story.flagId+".dialogue.pending"]==true){
@@ -1221,6 +1256,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         selectedBattleSlot=story.group.members.first().slot;battleMessage="${rules.enemies.getValue(story.group.members.first().enemyId).name} · 剧情战斗"
         battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
+        requestBattleVisuals()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
             .put("mapId",world.mapId).put("storyBattle",story.id))
         audio.scene(world.mapId,"battle");input.clear();battleTouch.clear();clearUxGesture();clock.reset()

@@ -68,7 +68,69 @@ class ContentTest:IsolatedGameTestCase(){
         repeat(50){ready.portrait("nezha");ready.body("nezha",BattleVisualPose.ATTACK)
             ready.body("xiaolongnv",BattleVisualPose.CAST);ready.enemy(137);ready.background(25,false)}
         assertEquals(count,reads);assertEquals(16,ready.preparedCount)
+        verifyScopedBattleVisualPreparation(c,original,before)
         Log.i("FengshenVisualTest","APP_DECODER_HASH_CACHE_PASS_NOT_PHONE_OR_NORMAL_STORY")
+    }
+    /** Explicit decoder scopes; production startup and lifecycle guards are checked by TouchTest. */
+    private fun verifyScopedBattleVisualPreparation(c:Content,original:ContentSource,before:SaveSnapshot){
+        val reads=mutableListOf<String>();var sealed=false;var corrupt=false
+        val source=object:ContentSource{
+            override fun read(name:String)=original.read(name)
+            override fun readVisual(name:String):ByteArray{
+                check(!sealed){"Prepared lookup read its source"};reads.add(name)
+                val bytes=original.readVisual(name)!!
+                return if(corrupt&&name=="nezha-idle-v1.png")bytes.copyOf().apply{
+                    this[lastIndex]=(this[lastIndex].toInt() xor 1).toByte()
+                }else bytes
+            }
+        }
+        fun preparer()=BattleVisualPreparer(source,original.readVisual("manifest.json")!!,
+            c.characterDefinitions.keys,c.scenes.keys,c.battle!!.enemies.keys)
+        val worker=preparer();val portraits=worker.preparePortraits()
+        val portraitNames=c.characterDefinitions.keys.mapNotNull{actor->
+            portraits.portrait(actor)?.let{actor}
+        }.toSet()
+        assertEquals(OriginalJiangJoin.FULL_PARTY.toSet(),portraitNames)
+        assertEquals(4,portraits.preparedCount);assertEquals(portraits.preparedFiles,reads.toSet())
+        assertNull(portraits.body("nezha",BattleVisualPose.ATTACK));assertNull(portraits.enemy(1))
+        assertNull(portraits.background(16,false))
+        val firstRequest=BattleVisualRequest(listOf("nezha"),listOf(1),16,false)
+        val first=worker.prepareBattle(firstRequest)
+        val firstNames=setOf("nezha-portrait-v1.png","nezha-idle-v1.png","nezha-attack.png","enemy-1.png","grass-v1.png")
+        assertEquals(firstNames,first.preparedFiles);assertEquals(5,first.preparedCount)
+        assertSame(portraits.portrait("nezha"),first.portrait("nezha"))
+        assertNull(first.body("xiaolongnv",BattleVisualPose.CAST));assertNull(first.enemy(137))
+        assertNull(first.background(25,false));val firstBytes=first.cachedBytes
+        val second=worker.prepareBattle(BattleVisualRequest(listOf("xiaolongnv","yangjian"),listOf(137),999,true))
+        assertEquals(7,second.preparedCount);assertNotNull(second.background(999,true))
+        assertNull(second.enemy(1));assertNull(second.body("nezha",BattleVisualPose.ATTACK))
+        assertEquals("yangjian-idle-v2.png",second.body("yangjian",BattleVisualPose.ATTACK)!!.file)
+        assertEquals(firstNames,first.preparedFiles);assertEquals(firstBytes,first.cachedBytes)
+        assertTrue(reads.groupingBy{it}.eachCount().values.all{it==1})
+        sealed=true;val count=reads.size
+        val repeated=worker.prepareBattle(firstRequest)
+        assertSame(first.body("nezha",BattleVisualPose.ATTACK)!!.bitmap,repeated.body("nezha",BattleVisualPose.ATTACK)!!.bitmap)
+        repeat(50){portraits.portrait("nezha");first.body("nezha",BattleVisualPose.ATTACK)
+            second.body("xiaolongnv",BattleVisualPose.CAST);second.enemy(137);first.background(16,false)}
+        val missing=worker.prepareBattle(BattleVisualRequest(listOf("unknown"),listOf(999),999,false))
+        assertEquals(0,missing.preparedCount);assertTrue(missing.failedAssets.isEmpty())
+        assertEquals(count,reads.size);sealed=false
+        val withPortraits=first.withPortraits(portraits)
+        assertEquals(8,withPortraits.preparedCount);assertNotNull(withPortraits.portrait("jiangziya"))
+        assertSame(first.body("nezha",BattleVisualPose.ATTACK)!!.bitmap,withPortraits.body("nezha",BattleVisualPose.ATTACK)!!.bitmap)
+        assertNull(withPortraits.body("jiangziya",BattleVisualPose.IDLE));assertNull(withPortraits.enemy(137))
+        val all=worker.prepareAll();assertEquals(16,all.preparedCount)
+        assertTrue(worker.retainedCacheBytes() in 1..BattleVisualAssets.CACHE_LIMIT.toLong())
+        assertSame(first.idle("nezha"),all.idle("nezha"));assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+        // A corrupt demanded image is not cached. Its retry can recover without clearing progress.
+        val retry=preparer();corrupt=true
+        val damaged=retry.prepareBattle(firstRequest)
+        assertEquals(setOf("nezha-idle-v1.png"),damaged.failedAssets);assertEquals(4,damaged.preparedCount)
+        assertNull(damaged.idle("nezha"));assertNotNull(damaged.body("nezha",BattleVisualPose.ATTACK))
+        corrupt=false;val recovered=retry.prepareBattle(firstRequest)
+        assertTrue(recovered.failedAssets.isEmpty());assertEquals(5,recovered.preparedCount)
+        assertNotNull(recovered.idle("nezha"));assertNull(damaged.idle("nezha"))
+        Log.i("FengshenVisualTest","SCOPED_API_DECODER_CACHE_PASS_NOT_PRODUCTION_DEMAND_OR_PHONE")
     }
     /** Original Firecloud loader and gift codec, CONTROLLED not a normal pilgrimage. */
     fun testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion(){
