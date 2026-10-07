@@ -1,6 +1,8 @@
 # 首批战斗视觉候选：服务器有限代码批次
 
-最新：首轮正式build37669616584/source110f8c7已签名，但App在固定窗口指标汇总FAIL，未发布。Windows新增交接已选择性合并缓存/有界读取，修正为强制实际Insets证据后441 JVM/88 Python通过；须新同源Actions。详见 [交接、失败与下一检查点](../handoffs/server-windows-visual-20261008.md)。下文保留首轮本地快照，旧检查不替最新代码App验收。
+最新实际状态：v91已沿原Actions发布并公网完整字节/postflight复核，见[v91交付](v91-battle-visual-personal.md)。下列候选失败及未发布状态保留为历史，不覆盖最新交付。
+
+历史候选检查点：首轮正式build37669616584/source110f8c7已签名，但App在固定窗口指标汇总FAIL，未发布。Windows新增交接已选择性合并缓存/有界读取，修正为强制实际Insets证据后441 JVM/88 Python通过；须新同源Actions。详见 [交接、失败与下一检查点](../handoffs/server-windows-visual-20261008.md)。下文保留首轮本地快照，旧检查不替最新代码App验收。
 
 日期：2026-10-08 北京时间。WORLD-FULL-01 仍 IN_PROGRESS/PARTIAL；本文件不是整套视觉或游戏长期完成报告。当前正式个人版90、历史稳定82；新规划候选91 / 0.8.21-battle-visual-personal，正式签名/App/发布尚 NOT_RUN。
 

@@ -10,8 +10,8 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v90 / 0.8.20-battle-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v91 / 0.8.21-battle-visual-personal，修正后441 JVM/88 Python本地通过；首轮App汇总FAIL已保留，需新同源Actions；NOT_PUBLISHED
+published_personal_version: v91 / 0.8.21-battle-visual-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: 下一有限姿态/敌1及137批次已CPU定位并读真实源码；4图来源/hash及原提示词关联核实，尚未接App/未冻结
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
@@ -19,6 +19,14 @@ manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8be
 first_real_blocker: 整体参考重制体验未实现；下一安全版本优先已获批正常视觉可玩片段。剩余法术A/B/C、正常原结局/真机/声音/寻路与其他累计欠账不关。
 
 服务器接管历史及源码入口见 [development-host.md](development-host.md)。迁移轮仅接管、不新增玩法、不发布；用户已在同一会话恢复既定研发，当前视觉批次见下段，WORLD-FULL-01仍IN_PROGRESS/PARTIAL。
+
+## v91已发布，主动接续姿态与敌图（2026-10-08北京时间）
+
+[实际交付](evidence/v91-battle-visual-personal.md)：sourcec323bfd/build37675332933/publish37681167754均SUCCESS；公网完整57,540,785字节/SHA6304e3ecba1b102a64d6c430241bd0e206e247ce351d8a9deb692ada017bf668与审核APK逐字节一致。原包名签名/c62/392及独立视觉13文件完整复核。新正式441 JVM/94 suites、16 Python组报告122、21 Content/35门禁及7完整cold/14原片SHA/偏好恢复通过；109原PNG和44视频采样帧已看，不称全程播放/手机/声音/稳定主线。
+
+postflight20:22:22Z NO_ISSUES_OBSERVED/errors空/cleanup0，保留91/90；69事件/1实机会话全90，91样本0，手机验收仍PENDING。稳定82、UNKNOWN分母与所有未验项不关。Windows旧树/历史和ZIP保留，唯一服务器writer已按哈希选择性合并缓存/有界读，首次c61验包失败与首runApp窗口汇总FAIL原件保留。
+
+下一有限批次已prepare_context并实际读Content/BattleVisualAssets/MainActivity/BattleActionStep及交接纯几何：适配哪吒攻击、小龙女施法、敌1/137四图；精确imagegen调用/5提示词/4masterSHA已由迁入历史恢复核实。只读能力标识区分合法法术/药草，图片比例/脚底、真实动作切换、Canvas无阻塞/worker过期回退和受控比例测试须新检查，不整树覆写/另建系统。旧敌图黑底及2倍字体三四人战场偏小仍OPEN；法术A/B/C、完整视觉/主线/点击寻路和十类欠账持续接续。以下是候选与旧版本历史，不覆盖当前已发布91事实。
 
 ## 服务器首批视觉有限代码与原验收接续（2026-10-08北京时间）
 
