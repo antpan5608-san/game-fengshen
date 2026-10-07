@@ -1,6 +1,6 @@
 # 原版法术基础取证：尚未接入游戏
 
-2026-10-07，MAGIC-ORIGINAL-01 / WORLD-FULL-01 的同一执行队列。线上仍是已验证 v87/c62；本批只增加原取证工具与派生证据，不开放玩家法术，不生成新的游戏版本。
+2026-10-07，MAGIC-ORIGINAL-01 / WORLD-FULL-01 的同一执行队列。线上是已验证 v88/c62；本批只增加原取证工具与派生证据，不开放玩家法术，不生成新的游戏版本。
 
 原 [probe-original-magic.py](../../tools/rom-extractor/probe-original-magic.py) 复用 Reader 和既有 probe-world-yang-join.py 的有界 CPU harness。精确目标 ROM 校验保持；RAM 和原截图只在私有忽略目录，不进入公共仓库。输出见 [原证据报告](../../game-data/provenance/expected/original-magic/original-magic-report.json)。
 
@@ -18,3 +18,5 @@
 最终生产脚本重新实跑880案例，原 span 与脚本哈希验证；JSON 固定 LF，错误 ROM、错误 RAM 和覆盖已有结果均在输出前拒绝。4B 首轮6全新片段91.125s、LF修正后2全新片段15.64s，全部实际阅读并登记 reviewed；输出仅建议。拒绝削弱精确来源/断言/步数上限，以及把未知字节、缺名称或非Android证据判作游戏已失败的建议。
 
 下一步用相同原码核 field 目标及施法者限制、battle 名称/MP时点与初始攻击，再最小接入现有 Content、角色页、World 与原战斗调度。A/B/C、完整主线、真机/声音及累计欠账仍未完成。
+
+后续同源发布冻结期间的私有原生对照已核：MP3首次施法在bank8:918B仅进入1次，HP5→20/MP3→0；晚期不足提示在成功后出现。目标HP0/status32与HP5/status64同目标0尝试均不进入effect、HP/MP保持。阳性exec对照有效；只记录精确mask64，不给未核状态命名。施法者限制和完整target矩阵/battle执行仍待核，不以这些个案称全部规则完成。

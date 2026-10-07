@@ -8,13 +8,23 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v87 / 0.8.17-town-room28-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v88 / 0.8.18-battle-sprites-personal；2倍字紧凑敌图比例薄修，本地Debug/编译通过，正式同源签名/App待验；线上v87已复核
+published_personal_version: v88 / 0.8.18-battle-sprites-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: v88已发布并公网完整字节复核；postflight NO_DATA，实机健康UNKNOWN；已接续法术取证，无新候选或已开放法术
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
-content_version: opening-segment-001-c62（v87已发布并公网复核）
+content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: 无当前启动/旧档升级阻断；房间28已发布。法术初始身份/习得及效果取证中；2倍字敌图偏小待限定修复；六敌编号原图已复核可读，长期终点未完成。
+
+## v88 当前有效交付与法术接续（2026-10-07）
+
+PUBLISHED_AND_VERIFIED；[实际交付证据](evidence/v88-battle-sprites-personal.md)。source480d376fe312c055bbd5079b8bbd5674e77d72f9，原build37595383488/publish37599015986 SUCCESS；418 release JVM/91 suites、21 Content/29个人门禁、实际v87同c62覆盖无伪迁移备份、首份controlled迁移备份、四组完整cold/偏好恢复通过。公网完整32,780,824字节/SHA6090de31b43e6d5ff188f0625f91d8e6a7d6df24e571b1c782d1050484c6c8a2及原包名签名/c62/hash625a/392文件核实；73只是依赖图数。原像素前后与本包三字体六敌、7room和8原片末帧实际查看，2倍字紧凑敌图48→原90px空间明显扩大；只关闭该有限问题，其余UI欠账保留。
+
+实际postflight09:13:56.7748911Z **NO_DATA**/0事件0会话/errors{}/cleanup0，权威保留88/87，旧86按原规则清理。当前无87/88实机样本，健康UNKNOWN，不写NO_ISSUES或手机无故障。PERSONAL_TEST/manual=PENDING、稳定82、声音/完整剧情和全部十类欠账不变。只用本次roomHP11和完整snapshot比较，不借用旧87HP15；早期cold无HUD、后续再入/冷启末帧有控件。首段personal/history/Jiang末帧桌面、room末帧App、四段cold App；未全程播放。
+
+法术继续只做原版取证，不改发布后来源来复用旧APK。原生MP3阳性exec对照在bank8:918B恰进入1次，before目标HP5/MP3、afterHP20/MP0；晚期不足提示在成功后出现，已解决首提交时序疑问。死亡目标HP0/status32与HP5/status64的相同目标0尝试均entry0/MP44及HP不变，阳性对照验证hook；mask64不擅自命名。下一步核施法者限制、原battle名称/MP时点及初始攻击，再最小复用既有Content/World/角色页/战斗，不开放未知项。所有新原RAM/PNG仍私有。
+
+以下v88候选过程与v87历史保留，不覆盖当前交付。
 
 ## v88 当前候选：大字紧凑敌图（2026-10-07）
 

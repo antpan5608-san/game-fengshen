@@ -1,3 +1,9 @@
+## 最新有效交付：v88大字紧凑战斗图形个人版（2026-10-07）
+
+v88/0.8.18-battle-sprites-personal PUBLISHED_AND_VERIFIED；source480d376，原build37595383488/publish37599015986 SUCCESS。418 release JVM/91 suites、21 Content/29个人门禁、真实v87同c62覆盖完整存档及无伪迁移备份、受控首份备份与四组完整cold通过。公网完整32,780,824字节/SHA6090de31b43e6d5ff188f0625f91d8e6a7d6df24e571b1c782d1050484c6c8a2、包名签名/c62/392文件核实，详见[evidence/v88-battle-sprites-personal.md](evidence/v88-battle-sprites-personal.md)。实际原像素前后确认2倍字紧凑敌图48px→原90px空间扩大；只关闭该有限图形问题，原图和命中格保持。
+
+postflight09:13:56.7748911Z NO_DATA/0事件0会话/errors{}/cleanup0，权威保留88/87；健康UNKNOWN，无当前实机样本，不能称实机无故障。PERSONAL_TEST/manual=PENDING，稳定82；完整剧情、法术、全部角色/装备/物品及窗口、导航、真机/声音/云恢复/内容更新及十类累计欠账仍开放，ALL_MAPS_USABLE=NO、分母UNKNOWN。唯一执行者已接续法术施法者/目标与初始battle取证，以下旧交付保留历史。
+
 ## 最新有效交付：v87陈塘村房间个人版（2026-10-07）
 
 v87/0.8.17-town-room28-personal PUBLISHED_AND_VERIFIED；source af4f1d5，原build37587677750/publish37590470949 SUCCESS。418 release JVM/91 suites、21 Content与29同签名个人门禁通过；原正常局部入门/只读线索/一次药草/取消重复/返程再入/保存及外部cold完整等值、实际v86/c61旧档覆盖与首份备份通过。公网完整32,780,784字节/SHA d4b1d24e6b0e58a03c30b10f8ff1df94acd0d10be2be64e998aae940a6fd68ed及原包名签名/c62/392文件核实，详见[evidence/v87-town-room28-personal.md](evidence/v87-town-room28-personal.md)。73依赖图不是可玩分母；PERSONAL_TEST/manual_acceptance=PENDING、历史稳定v82。
