@@ -1,5 +1,7 @@
 # 战斗提神术与解毒术：当前有限代码批次
 
+2026-10-08北京时间当前结果：修正source732440a/build37648979694的正式33门禁与原片/完整cold通过，原publish37655007489已发布、公网完整APK/签名/c62/postflight独立复核，见[v90实际交付](v90-battle-magic-personal.md)。下面“未发布/失败中”描述为原候选过程，保留原失败与取证，不覆盖当前真实交付。
+
 状态：IMPLEMENTED / LOCAL_TESTED / PACKAGED；source7f011ab的实际同候选 App 验收失败，定向修隔离驱动中，未 App 通过/发布/公网。当前线上仍 v89，长期 MAGIC-ORIGINAL-01 A/B/C、BATTLE-VISUAL-02 和所有未完成欠账不关闭。
 
 ## 正式候选失败与定向修正

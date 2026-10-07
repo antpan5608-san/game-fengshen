@@ -1,3 +1,11 @@
+## v90 已发布，继续整体重制体验（2026-10-08北京时间）
+
+PUBLISHED_AND_VERIFIED/PERSONAL_TEST，详见[evidence/v90-battle-magic-personal.md](evidence/v90-battle-magic-personal.md)。source732440a997664ced63f3f0ecf2023be5a1b29e23/build37648979694/publish37655007489成功；公网32,806,652字节/fullSHA2a09da9432e3794f398020a7f427664110403a095d9fe55fe76932981f926003与实际审核APK逐字节一致，原签名/c62/392核实，仅原两个OSS对象。437release JVM/94 suites、21Content/33个人门禁及全部raw digest/6cold/prefs通过；22新三字体法术PNG全看、13静音原片SHA/末帧与5实际法术采样已核，未冒称全程播放/正常四人入队/手机/声音。
+
+只关闭小龙女战斗提神术/解毒术有限接入及个人验收，保留平台启动失败/2倍字驱动未滚动失败。postflight16:50:37.857701856Z/北京时间00:50 NO_ISSUES_OBSERVED/errors{}/cleanup0保留90/89，3864事件/1实机会话全89、90样本0，不当90手机验收。manual=PENDING/历史稳定82；原有效分母UNKNOWN，ALL_MAPS_USABLE=NO。
+
+人类新增整体参考重制体验已入[REMAKE-EXPERIENCE-01](plans/remake-experience-01.md)，覆盖战斗/角色/物品/商店/对话/探索和实际视觉/操作硬条件。下一安全版优先新视觉正常交互→物品→攻击/已实现治疗→奖励→保存外部cold片段，四人/Boss另验；新素材当前仅候选。MAGIC-ORIGINAL-01 A/B/C、BATTLE-VISUAL-02、全角色/物品/装备/交互/点击寻路、正常结局、声音/真机/云恢复/内容更新和累计十类欠账继续开放，长期ACTIVE。以下是历史交付与候选，不覆盖当前90事实。
+
 ## v89 已发布，继续原战斗法术（2026-10-07）
 
 v89/0.8.19-field-magic-personal 已真实发布/公网完整下载复核。来源588f60dda28d9999a33bfd0a64ae185fca60fe48，build37624018494、publish37627514753 SUCCESS；32,791,444字节/fullSHA1cf7f56ced8ae06b11e199690268d2a1095190789361c9a753646242b5cbaf1f，原包名签名/c62/625a/392不变，仅原两个Fengshen OSS对象更新。运行升级基线换为此实际89；历史iteration导出基底不改。

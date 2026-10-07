@@ -8,15 +8,23 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v89 / 0.8.19-field-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v90 / 0.8.20-battle-magic-personal，PACKAGED；同候选App验收失败后定向修驱动，尚未App通过/发布
+published_personal_version: v90 / 0.8.20-battle-magic-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: 下一安全重制视觉可玩片段，ASSET_PREPARATION；未接App/打包/发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 法术A/B/C未完成，战斗与其余地图能力未开放；继续原执行/目标/MP/RNG取证与既有四人调度接入，正常原结局/真机/声音欠账不关。
+first_real_blocker: 整体参考重制体验未实现；下一安全版本优先已获批正常视觉可玩片段。剩余法术A/B/C、正常原结局/真机/声音/寻路与其他累计欠账不关。
+
+## v90已发布，立即接续整体重制体验（2026-10-08北京时间）
+
+[v90实际交付](evidence/v90-battle-magic-personal.md)：source732440a997664ced63f3f0ecf2023be5a1b29e23/build37648979694/publish37655007489均成功，32,806,652字节/fullSHA2a09da9432e3794f398020a7f427664110403a095d9fe55fe76932981f926003，原包名签名/c62/392保持；公网完整字节/签名/版本/内容与回执独立复核，原仅两个OSS对象发布。437release JVM/94 suites、21Content/33个人门禁、原raw digests、13原片SHA/6完整cold及偏好恢复通过。22新法术三字体PNG、13末帧/5法术采样实际查看，不声称全程播放、正常四人入队、手机或声音；首run平台未建runtime及第二runfont2未滚动的失败保留，不倒改为通过。
+
+postflight16:50:37.857701856Z/北京时间00:50 NO_ISSUES_OBSERVED/errors{}/cleanup0保留90/89，3864events/1real全89、90样本0；人工PENDING/稳定82保持。下一覆盖基底实际90、历史iteration27保持。REMAKE-EXPERIENCE-01已直接核人类批准并关联全部目标；下一动作是把四人头像/待机与草地/海岸/海底/洞窟候选接现有内容加载/布局/演出，优先形成已证起始交互→物品→攻击/已实现治疗→奖励→保存外部cold正常片段，四人/Boss另验；全套美术、法术A/B/C、主线、寻路和十类欠账仍OPEN。以下v90“未发布/验收中”为当时记录，不能覆盖本段实际发布结果。
 
 ## 战斗初始法术当前有限代码批次（未正式App/发布）
+
+2026-10-08新增 [REMAKE-EXPERIENCE-01 整体重制体验补充](plans/remake-experience-01.md) 已实际保存并关联长期目标、战斗视觉、法术、物品、交互/寻路与世界欠账。直接核实来源人类批准01a11725-557b-7f63-9443-7f54f0bb41bc。统一神话Q版二维美术覆盖战斗/角色/物品/商店/对话/探索；实际App/录像/手机体验成为长期终点硬条件，原版规则/旧档保持。当前v90source732440a/build37648979694正式打包并在执行原33门禁，不改冻结来源；此排队文档本地登记，候选发布后再同步提交。下一安全版本优先正常起始交互→物品→战斗攻击/已实现治疗演出→奖励→保存/外部cold可见片段，四人/Boss另验；不等待全部法术/全世界取证，不冒称fixture为正常故事，不因阶段回复停止。四人头像/待机与背景候选仅准备，尚未接App。
 
 原source7f011ab的build37641724001打包成功，runtime未创建，GitHub页面实际报Internal server error（correlation3ce665b7-74b6-4829-b956-e88f81db6c1b）；原failed重试被拒绝后，同源全流程37644034300实际执行App。新APK32,806,652字节/fullSHA02ab63d679e27a4d116b833955a50c516ae8050649aa9e9f7d6da26d47f6ba2e独立验包及437 release JVM/94 suites零失败通过。runtime在2倍字体TouchTest:120失败：应为yangjian，实际仍xiaolongnv；真实截图显示解毒术尚在列表可视区域外、选择为空。1/1.3倍字体两轮效果/扣费及战后完整保存检查通过，外部cold尚未运行。分类TEST_HARNESS：复用已有scrollToBattleItem真实滚动至48dp可点行后选择，并新增稳定spellID及滚动/选择不改变队伍、MP、输入revision、RNG、完整保存的断言；不改玩家规则/布局、不删2倍字体门禁。该修正仍须新4B/编译/同源正式候选App；failed APK不发布，线上v89保持。
 
