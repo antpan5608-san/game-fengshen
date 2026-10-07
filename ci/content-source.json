@@ -1,6 +1,6 @@
 {
   "apkUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/fengshen-remake.apk.bin",
-  "contentVersion": "opening-segment-001-c61",
+  "contentVersion": "opening-segment-001-c62",
   "iteration": {
     "base": {
       "apkSha256": "5944141d45edb059294e9de066914c611f1e0cc6f334f32be9584a6ec35cc353",
@@ -10,22 +10,22 @@
       "sourceCommit": "9396d3d3e39db47e13a8cf2a9dd9b2e32bda2d9b",
       "versionCode": 27
     },
-    "provenance": "game-data/provenance/world-jiang-content.json"
+    "provenance": "game-data/provenance/town-room28-content.json"
   },
-  "manifestSha256": "37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557",
+  "manifestSha256": "625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef",
   "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
   "package": "org.fengshen.dev",
   "runtimeBaseline": {
-    "buildRunId": 37516065030,
-    "sourceCommit": "230b999cb5c0269484f4c61b0bf58256d2ae800c",
-    "versionCode": 85,
-    "apkSha256": "0fafb10d61fdd7511b8c84f875ea43bdb84db8ba9a8b72258767fb16a5d90baf",
+    "buildRunId": 37570999686,
+    "sourceCommit": "b13343b1e7ac820021d0f4fe66ebf6dca1e0903f",
+    "versionCode": 86,
+    "apkSha256": "a511d061563c034cc0202335bdb6f35158d3e1ba3f5a39ff10d5288a03db1a22",
     "contentVersion": "opening-segment-001-c61",
     "manifestSha256": "37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557"
   },
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "aaf6a26b661e69c652a1dbe4486f4651b2eaff3377f3e49575a848eda82f6fec"
+    "sha256": "a9e0c6b5f0269fb64e3da5e492f340ff3025306e885c3159716a8b2b87776e23"
   }
 }

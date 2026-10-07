@@ -5,8 +5,13 @@ import json
 import math
 import re
 from pathlib import Path
+if __package__:
+    from . import room28_evidence
+else:
+    import room28_evidence
 
 UI_SCOPE = 'WORLD-C61-UI-PERSONAL'
+UI_SCOPES = (UI_SCOPE, room28_evidence.SCOPE)
 UI_GATES = ['battleUiGestureSafety', 'battleUiHerbAtomic', 'battleUiVictoryOnce',
             'battleUiBindingCommands', 'battleUiAutomatic08',
             'battleUiFont1', 'battleUiFont13', 'battleUiFont2']

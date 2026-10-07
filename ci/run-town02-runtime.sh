@@ -256,9 +256,9 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
     run_test testControlledHerbBoundariesAndSaveCompatibility false
     run_test testControlledMobileBattleHerbAndSave false
     run_test testUnrestorableSaveCannotBeOverwritten false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL || "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then run_test testControlledR1ReplayVersionMarkerBounds false; fi
     run_test testControlledPlayableR1MedicalDoorReentryFromVerifiedSave false
-    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C60-PERSONAL || "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL || "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
         # Run on this signed candidate; DEBUG observations cannot satisfy these gates.
         timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c60-well8-codec.txt 2>&1
         cat artifacts/town02-runtime/c60-well8-codec.txt
@@ -267,7 +267,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
         python tools/record_app_audio.py world-save-history testControlledSaveHistoryManualRollbackAndActivityRestart --silent --controlled-save-history --cold-test testSaveHistoryExternalColdStartMatchesRestoredSnapshot --budget-seconds 300
     fi
     python tools/record_app_audio.py personal-r1-smoke testPersonalR1SmokeFromVerifiedEastSave --silent --cold-test testPersonalR1SmokeColdRestartMatchesVerifiedSave --budget-seconds 300
-    if [[ "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C61-PERSONAL || "$scope_id" == WORLD-C61-UI-PERSONAL || "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
         timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/c61-jiang-codec.txt 2>&1
         cat artifacts/town02-runtime/c61-jiang-codec.txt
         grep -q 'OK (1 test)' artifacts/town02-runtime/c61-jiang-codec.txt
@@ -277,7 +277,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             exit 1
         fi
     fi
-    if [[ "$scope_id" == WORLD-C61-UI-PERSONAL ]]; then
+    if [[ "$scope_id" == WORLD-C61-UI-PERSONAL || "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
         # Same signed candidate, after every original save/upgrade/cold gate.
         run_test testControlledMobileBattleTouchAndSnapshots false
         run_test testControlledMobileBattleHerbAndSave false
@@ -301,12 +301,20 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
         adb shell wm size 960x540
         adb shell wm density 160
     fi
+    if [[ "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
+        # A fresh normal new game on this signed APK; never reuse DEBUG evidence.
+        if ! python tools/record_app_audio.py world-room28 testNormalTownRoom28EntryInvestigationAndSave --silent --cold-test testTownRoom28ExternalColdStartReturnAndNoSecondGrant --budget-seconds 600; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/c62-room28-crash.txt
+            cat artifacts/town02-runtime/c62-room28-crash.txt
+            exit 1
+        fi
+    fi
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
 from pathlib import Path
-from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,review_personal,active_scope,jiang_proof_digests
-from tools import battle_ui_evidence as ui
+from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,C60_SCOPES,C61_SCOPES,review_personal,active_scope,jiang_proof_digests
+from tools import battle_ui_evidence as ui, room28_evidence as room28
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -315,7 +323,8 @@ assert proof['normalAssertions']=='PASS' and proof['forceStopRestartEqual'] is T
 for segment in proof['segments']:
     assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
 r.update({key:'PASS' for key in PERSONAL_GATES}) # Reached only after each mandatory actual command succeeds.
-if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL',ui.UI_SCOPE):
+scope=active_scope(r)
+if scope['id'] in C60_SCOPES:
     history_recording=Path('artifacts/checkpoint-ui/world-save-history-recording.json')
     history=json.loads(history_recording.read_text())
     assert history['kind']=='CONTROLLED_SAVE_HISTORY_SMOKE' and history['controlledAssertions']=='PASS'
@@ -325,12 +334,15 @@ if active_scope(r)['id'] in ('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL',ui.UI_SCO
         assert hashlib.sha256(Path(segment['file']).read_bytes()).hexdigest()==segment['sha256']
     r.update({key:'PASS' for key in C60_PERSONAL_GATES})
     r['saveHistoryRecordingSha256']=hashlib.sha256(history_recording.read_bytes()).hexdigest()
-if active_scope(r)['id'] in ('WORLD-C61-PERSONAL',ui.UI_SCOPE):
-    r.update(jiang_proof_digests(Path('artifacts/checkpoint-ui')))
+if scope['id'] in C61_SCOPES:
+    r.update(jiang_proof_digests(Path('artifacts/checkpoint-ui'),scope['contentVersion']))
     r.update({key:'PASS' for key in C61_PERSONAL_GATES})
-if active_scope(r)['id']==ui.UI_SCOPE:
+if scope['id'] in ui.UI_SCOPES:
     r.update(ui.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime')))
     r.update({key:'PASS' for key in ui.UI_GATES})
+if scope['id']==room28.SCOPE:
+    r.update(room28.proof_digests(Path('artifacts/checkpoint-ui')))
+    r.update({key:'PASS' for key in room28.GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

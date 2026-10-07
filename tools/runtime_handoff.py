@@ -13,9 +13,10 @@ import subprocess
 from pathlib import Path
 
 if __package__:
-    from . import battle_ui_evidence as battle_ui
+    from . import battle_ui_evidence as battle_ui, room28_evidence as room28
 else:
     import battle_ui_evidence as battle_ui
+    import room28_evidence as room28
 
 STAGES = ('base', 'world', 'continuation')
 CHECKPOINTS = {'base': ('north-palace',), 'world': ('ferry', 'yang-join')}
@@ -72,6 +73,9 @@ C60_MAP_IDS = [0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 16, 17, 18, 19, 20, 22, 23, 25, 37
 C60_PERSONAL_GATES = ['controlledReplayVersionMarker', 'well8ControlledCodec', 'saveHistoryRollback',
                       'saveHistoryExternalColdRestart', 'saveHistoryCorruptionRetention']
 C61_MAP_IDS = sorted(C60_MAP_IDS + [7, 121, 142])
+C62_MAP_IDS = sorted(C61_MAP_IDS + [28])
+C61_SCOPES = ('WORLD-C61-PERSONAL', *battle_ui.UI_SCOPES)
+C60_SCOPES = ('WORLD-C60-PERSONAL', *C61_SCOPES)
 C61_PERSONAL_GATES = ['jiangInvitationCodec', 'jiangControlledTouchJoin',
                       'jiangExternalColdRestart', 'jiangFourPartyBattle']
 C61_PROOF_KEYS = ('jiangRecordingSha256', 'jiangColdBoundarySha256')
@@ -93,12 +97,16 @@ C61_CONTENT_TESTS = [
     'testJiamengSavedActorsDialogueAndManualReturnFixture',
     'testControlledJiangInvitationCodecAndDepartureBoundaries']
 
+C62_CONTENT_TESTS = ['testC62Room28DependenciesAndInteriorSaveCodec' if n ==
+    'testC61FrozenDependenciesAndMedicalPartySave' else n for n in C61_CONTENT_TESTS]
+
 
 def personal_gates(scope):
     return (PERSONAL_GATES
-            + (C60_PERSONAL_GATES if scope['id'] in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL', battle_ui.UI_SCOPE) else [])
-            + (C61_PERSONAL_GATES if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE) else [])
-            + (battle_ui.UI_GATES if scope['id'] == battle_ui.UI_SCOPE else []))
+            + (C60_PERSONAL_GATES if scope['id'] in C60_SCOPES else [])
+            + (C61_PERSONAL_GATES if scope['id'] in C61_SCOPES else [])
+            + (battle_ui.UI_GATES if scope['id'] in battle_ui.UI_SCOPES else [])
+            + (room28.GATES if scope['id'] == room28.SCOPE else []))
 
 
 def validate_jiang_digests(receipt):
@@ -114,8 +122,10 @@ def validate_battle_ui_digest(receipt):
         raise ValueError('Missing actual three-font battle UI proof digest')
 
 
-def jiang_proof_digests(directory):
+def jiang_proof_digests(directory, content_version='opening-segment-001-c61'):
     """Verify the original controlled App recorder and its complete cold boundary."""
+    if content_version not in ('opening-segment-001-c61','opening-segment-001-c62'):
+        raise ValueError('Jiang proof cannot admit an unknown content version')
     recording_path = directory / 'world-jiang-recording.json'
     boundary_path = directory / 'world-jiang-cold-boundary.json'
     proof, boundary = read_json(recording_path), read_json(boundary_path)
@@ -132,7 +142,7 @@ def jiang_proof_digests(directory):
             or boundary['before'] != boundary.get('after')):
         raise ValueError('Jiang cold restart must preserve the entire actual saved state')
     before = boundary['before']
-    if (before.get('contentVersion') != 'opening-segment-001-c61' or before.get('mapId') != 7
+    if (before.get('contentVersion') != content_version or before.get('mapId') != 7
             or [c.get('id') for c in before.get('characters', [])] != ['nezha','xiaolongnv','yangjian','jiangziya']
             or before.get('flags', {}).get('rom.event.7.21.dialogue.pending') is not True):
         raise ValueError('Jiang cold proof is not the declared four-party pending endpoint')
@@ -164,12 +174,15 @@ def finish_personal(proposed):
     if any(proposed.get(key) != 'PASS' for key in gates):
         raise ValueError('Personal delivery minimum smoke/upgrade/backup gate did not pass')
     result = dict(binding(proposed), **{key: proposed[key] for key in gates})
-    if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
+    if scope['id'] in C61_SCOPES:
         validate_jiang_digests(proposed)
         result.update({key: proposed[key] for key in C61_PROOF_KEYS})
-    if scope['id'] == battle_ui.UI_SCOPE:
+    if scope['id'] in battle_ui.UI_SCOPES:
         validate_battle_ui_digest(proposed)
         result[battle_ui.UI_PROOF_KEY] = proposed[battle_ui.UI_PROOF_KEY]
+    if scope['id'] == room28.SCOPE:
+        room28.validate_digests(proposed)
+        result.update({key: proposed[key] for key in room28.PROOF_KEYS})
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -188,12 +201,14 @@ def review_personal(receipt):
         raise ValueError('Personal receipt scope/hash mismatch')
     if receipt.get('completedStages') != ['personal-smoke'] or any(receipt.get(k) != 'PASS' for k in personal_gates(scope)):
         raise ValueError('Actual personal minimum gates are required')
-    if scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
+    if scope['id'] in C61_SCOPES:
         validate_jiang_digests(receipt)
-    if scope['id'] == battle_ui.UI_SCOPE:
+    if scope['id'] in battle_ui.UI_SCOPES:
         validate_battle_ui_digest(receipt)
         if receipt.get('audio') != 'NOT_RUN' or receipt.get('onePlus13T') != 'NOT_RUN':
             raise ValueError('Emulator UI proof cannot claim phone or audio acceptance')
+    if scope['id'] == room28.SCOPE:
+        room28.validate_digests(receipt)
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
     if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
@@ -220,23 +235,26 @@ def active_scope(candidate=None):
         expected_points={'base':['north-palace'],'world':['hall-batch']}
         if scope.get('quality') != 'STABLE':
             raise ValueError('Hell/rebirth milestone requires actual stable normal stages')
-    elif scope.get('id') in ('WORLD-C60-PERSONAL', 'WORLD-C61-PERSONAL', battle_ui.UI_SCOPE):
-        c61 = scope['id'] in ('WORLD-C61-PERSONAL', battle_ui.UI_SCOPE)
-        expected_maps = C61_MAP_IDS if c61 else C60_MAP_IDS
+    elif scope.get('id') in C60_SCOPES:
+        c61 = scope['id'] in C61_SCOPES
+        c62 = scope['id'] == room28.SCOPE
+        expected_maps = C62_MAP_IDS if c62 else C61_MAP_IDS if c61 else C60_MAP_IDS
         # End of the existing controlled short smoke, not a new normal-story claim.
         expected_endpoint = dict(mapId=2, party=['nezha', 'xiaolongnv'], bossFlag='rom.map.95.flag.128')
         expected_gates = R1_STAGE_GATES
         expected_points = {'base': ['north-palace'], 'world': ['hell-village2']}
         if (scope.get('quality') != 'PERSONAL_TEST'
-                or scope.get('contentVersion') != ('opening-segment-001-c61' if c61 else 'opening-segment-001-c60')
-                or scope.get('manifestSha256') != ('37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557' if c61 else '8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb')
+                or scope.get('contentVersion') != ('opening-segment-001-c62' if c62 else 'opening-segment-001-c61' if c61 else 'opening-segment-001-c60')
+                or scope.get('manifestSha256') != ('625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef' if c62 else '37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557' if c61 else '8c56f689610cff897c58d5efdac2370f32e0934cd172a3b0b173f0eb6c1b7bdb')
                 or scope.get('acceptanceScope') != 'CONTROLLED_FIXTURES_AND_SHORT_APP_SMOKE_NOT_FULL_WORLD_OR_STABLE'):
             raise ValueError('Personal scope cannot claim stable/full-world acceptance or a different target')
         if c61 and (scope.get('controlledEndpoint') != dict(mapId=7,
                 party=['nezha','xiaolongnv','yangjian','jiangziya'], sceneFlag='rom.map.7.flag.128')
-                or scope.get('contentTests') != C61_CONTENT_TESTS):
+                or scope.get('contentTests') != (C62_CONTENT_TESTS if c62 else C61_CONTENT_TESTS)):
             raise ValueError('c61 controlled endpoint or mandatory content tests changed')
-        if scope['id'] == battle_ui.UI_SCOPE and scope.get('battleUiAcceptance') != dict(
+        if c62 and scope.get('normalRoom28Acceptance') != room28.ACCEPTANCE:
+            raise ValueError('Room28 normal/cold acceptance cannot omit its exact original endpoint or proofs')
+        if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != dict(
                 kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY', screen=[2640, 1216],
                 window=[2640, 1080], safe=[2640, 936], density=3, fonts=[1.0, 1.3, 2.0],
                 nativeCasesPerFont=8, requiredScreenshotsPerFont=29,
@@ -500,10 +518,15 @@ def main():
         receipt = read_json(args.receipt)
         if personal_quality(scope):
             review_personal(receipt)
-            if scope['id'] == battle_ui.UI_SCOPE:
+            if scope['id'] in battle_ui.UI_SCOPES:
                 proofs = battle_ui.proof_digests(args.evidence, args.receipt.parent)
                 if any(receipt.get(key) != value for key, value in proofs.items()):
                     raise ValueError('Raw battle UI artifacts differ from this reviewed candidate proof')
+            if scope['id'] == room28.SCOPE:
+                proofs = {**room28.proof_digests(args.evidence),
+                    **jiang_proof_digests(args.evidence,scope['contentVersion'])}
+                if any(receipt.get(key) != value for key,value in proofs.items()):
+                    raise ValueError('Raw room28/Jiang artifacts differ from this reviewed candidate proof')
             print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
             return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):

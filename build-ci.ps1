@@ -44,14 +44,15 @@ try {
             & python -m unittest discover -s tests -p $pattern
             if($LASTEXITCODE -ne 0){throw "Hell milestone related regression failed: $pattern"}
         }
-    }elseif($scopeId -in @('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL','WORLD-C61-UI-PERSONAL')){
+    }elseif($scopeId -in @('WORLD-C60-PERSONAL','WORLD-C61-PERSONAL','WORLD-C61-UI-PERSONAL','WORLD-C62-ROOM-PERSONAL')){
         # Exact c60 export and save-history acceptance; full JVM regression still runs below.
         $env:FENGSHEN_CONTENT_BASE_APK=(Get-ChildItem artifacts/content-base/*-release.apk | Select-Object -First 1).FullName
         if($ContentApk){$env:FENGSHEN_CONTENT_BASE_APK=(Resolve-Path $ContentApk).Path}
         if(-not $env:FENGSHEN_CONTENT_BASE_APK){throw 'Exact original content base is required for c60 regression'}
         $patterns=@('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_c60_personal_scope.py','test_personal_test_delivery.py','test_world_reference_repair.py','test_world_scene_mechanism.py','test_world_trade_driver.py','test_world_hell_route_driver.py')
-        if($scopeId -in @('WORLD-C61-PERSONAL','WORLD-C61-UI-PERSONAL')){$patterns+=@('test_c61_personal_scope.py','test_world_jiang_export.py')}
-        if($scopeId -eq 'WORLD-C61-UI-PERSONAL'){$patterns+=@('test_battle_ui_evidence.py','test_battle_ui_personal_scope.py')}
+        if($scopeId -in @('WORLD-C61-PERSONAL','WORLD-C61-UI-PERSONAL','WORLD-C62-ROOM-PERSONAL')){$patterns+=@('test_c61_personal_scope.py','test_world_jiang_export.py')}
+        if($scopeId -in @('WORLD-C61-UI-PERSONAL','WORLD-C62-ROOM-PERSONAL')){$patterns+=@('test_battle_ui_evidence.py','test_battle_ui_personal_scope.py')}
+        if($scopeId -eq 'WORLD-C62-ROOM-PERSONAL'){$patterns+=@('test_room28_evidence.py','test_room28_personal_scope.py','test_town_room28_export.py')}
         foreach($pattern in $patterns){
             & python -m unittest discover -s tests -p $pattern
             if($LASTEXITCODE -ne 0){throw "Personal scope related regression failed: $pattern"}

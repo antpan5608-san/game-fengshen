@@ -332,6 +332,10 @@ class ContentTest:IsolatedGameTestCase(){
             99,100,101,107,108,109,110,114,115,116,117,121,136,139,141,142,145,146,147,148,
             158,159,163,164,171,172),c.scenes.keys)
         assertEquals("opening-segment-001-c61",c.scene.version)
+        assertJiangFrozenCapabilities(c)
+    }
+    /** Retained operative lookups, missing-rule rejection and medical/save guards. */
+    private fun assertJiangFrozenCapabilities(c:Content){
         assertEquals(setOf("xiaolongnv","yangjian","jiangziya"),c.joinCharacters.keys)
         for(id in listOf(7,44))assertEquals(51,c.battle!!.physicalRules!!.weaponHitThreshold[id])
         // A self-consistent package hash must not conceal a missing operative
@@ -363,9 +367,12 @@ class ContentTest:IsolatedGameTestCase(){
     }
     fun testC62Room28DependenciesAndInteriorSaveCodec(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
-        assertEquals("opening-segment-001-c62",c.scene.version);assertEquals(73,c.scenes.size)
-        assertEquals(setOf("xiaolongnv","yangjian","jiangziya"),c.joinCharacters.keys)
-        for(id in listOf(7,44))assertEquals(51,c.battle!!.physicalRules!!.weaponHitThreshold[id])
+        assertEquals("opening-segment-001-c62",c.scene.version)
+        assertEquals(setOf(0,1,2,3,4,5,6,7,8,9,10,16,17,18,19,20,22,23,25,28,37,41,42,
+            60,61,62,63,64,65,66,67,68,69,70,74,76,77,78,79,85,86,87,89,95,96,97,98,
+            99,100,101,107,108,109,110,114,115,116,117,121,136,139,141,142,145,146,147,148,
+            158,159,163,164,171,172),c.scenes.keys)
+        assertJiangFrozenCapabilities(c)
         val room=c.scenes.getValue(28)
         assertEquals(16,room.width);assertEquals(15,room.height)
         val enter=c.exits.single{it.fromMapId==0&&it.toMapId==28}
@@ -385,7 +392,6 @@ class ContentTest:IsolatedGameTestCase(){
         assertTrue(world.tryRestore(28,saved.x,saved.y,0,saved.direction,saved.interiorContext,0))
         assertEquals(saved.interiorContext,world.interiorContext)
         assertFalse(WorldItems.openTreasure(saved,hidden.treasure,c.itemDefinitions.getValue(HerbUse.ID)).applied)
-        assertMedicalPartySave(c)
     }
     /** Loaded c61 source-cell edges and durable event codec; no normal mainline claim. */
     fun testControlledJiangInvitationCodecAndDepartureBoundaries(){

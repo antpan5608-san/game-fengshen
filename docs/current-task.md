@@ -9,12 +9,20 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v86 / 0.8.16-battle-ui-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86已发布；房间28 inactive c62已接入/导出，DEBUG正常触摸与外部cold待验，NOT_APP_VERIFIED_NOT_PUBLISHED
+current_candidate_version: v86已发布；房间28 c62 DEBUG正常新游戏/外部cold通过；v87正式29门禁接入中，NOT_SIGNED_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
-content_version: opening-segment-001-c61
-manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
-first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
+content_version: opening-segment-001-c62（待正式签名候选；线上v86仍c61）
+manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
+first_real_blocker: 房间28正常新游戏DEBUG已验，须原同源签名候选重跑全部旧26+新3门禁并发布；正常主线至结局、全部UI/导航与十类欠账仍未完成。
+
+## 房间28 DEBUG通过与正式候选准备（2026-10-07，北京时间）
+
+原development-smoke 37578337792/source18a6112752fa9fe0f00c81c63703b9c750e51a54实际SUCCESS：2 Content 3.321s、正常新游戏触摸50.812s、外部cold触摸6.376s。独立核全份expected-save/index/cold before-after相等、偏好恢复，实际端点map28像素104,120（格6,7）、caller0/返程12,23、药草1/一次旗1。两个原App MP4完整字节SHA分别2ab1547d0c42e9c676bda7ec17051daa477e4ed03e30f62f77e538468b0e5af6、d10f4a16c5982763ddff4aecd1d29a1172a733b73108fa623cb3fea38961de88；已目视7张实际入门/线索/调查/返程/保存/冷启/再调查截图和两个原片末帧。初始cold截图控件尚未出现，后续真实force-stop-restored图已显示控件；不推断持续界面故障。没有逐段全程播放、音频或真机验收。
+
+现在只在原链注册WORLD-C62-ROOM-PERSONAL：保留旧26个人门禁、21 Content（c62依赖断言共享全部旧姜战斗缺项拒绝/医疗存档检查），增加正常进出/提示、隐藏药草一次性、外部cold及再入共3门禁。原发布入口须重算7原PNG、完整存档/index、2 MP4及3个room proof；原三字体UI和姜cold证据继续必需。目标pin625a/392文件/73依赖图，恢复基底仍原v27，覆盖升级基底固定实际已发布v86/sourceb13343b/run37570999686/APK a511d061。正式候选尚未运行/签名/发布，线上仍v86；DEBUG不能替代同审核签名APK验收。下一步完成本地定向检查与真实4B审查后冻结同源v87，再原签名/发布/完整公网字节/postflight，通过后主动接续其余主线/UI/MAGIC队列。
+
+正式范围本地检查已通过：417 debug JVM/91 suites零失败错误跳过，增强Content仪器编译2m24s；快速40项初跑39通过、1旧c60导出因未设置基底路径的setup error保留，指定现有v27后该项及3新房间导出/旧媒体不变/篡改拒绝/空restore共4项262.961s通过，55原runtime/APK门禁12.680s通过。新范围29门禁/6 proof必需、缺旧地图/字体/端点拒绝和签名分派失败停止均实跑；真实DEBUG7原图/全状态/2原片重算通过，另有明确synthetic版本字段复制验证c62接受、旧61/未知63拒绝，不当c62 App证据。5 Python、原Bash/嵌入Python/Windows解析及diff检查通过。4B snapshot cf6f093875c12a28484d446372e365f4ff735291e2a8f2f71b4ee606f33ebd06完整21全新片段/无未覆盖，全部实际读完并登记reviewed：拒绝放宽缺文件/签名/原字节校验、合并不同用途基底、误称医疗检查删除或删除已授权scope的建议。正式签名/发布仍待实际执行。
 
 ## v86最新交付及自主接续（2026-10-07，北京时间）
 

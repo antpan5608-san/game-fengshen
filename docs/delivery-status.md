@@ -1,3 +1,7 @@
+## 房间28当前开发验收：DEBUG通过，正式签名待验（2026-10-07）
+
+原DEBUG37578337792/source18a6112752fa9fe0f00c81c63703b9c750e51a54成功：正常新游戏输入进入原房间、只读线索、首次调查药草、取消及防重复、原门返程、室内保存、外部force-stop/cold全状态等值及再入不重赠。2 Content/normal50.812s/cold6.376s及原2 MP4完整SHA、7实际PNG和末帧独立核验；仅DEBUG局部正常路线，未签名、未发布，不是全主线/声音/真机验收。正式WORLD-C62-ROOM-PERSONAL准备保留旧26门禁和全部原UI/姜/存档保护，再加3房间门禁；同签名候选必须重跑。完整状态见[current-task.md](current-task.md)。所有其他累计欠账保持开放，线上仍以下v86。
+
 ## 最新有效交付：v86战斗个人版（2026-10-07）
 
 v86/0.8.16-battle-ui-personal PUBLISHED_AND_VERIFIED；原build37570999686/sourceb13343b与publish37572999450 SUCCESS，415 release JVM/21 Content/26同签名个人门禁通过。公网完整APK32,513,189字节/SHA a511d061563c034cc0202335bdb6f35158d3e1ba3f5a39ff10d5288a03db1a22及原包名签名/c61/388文件核实，详细证据见[evidence/v86-battle-ui-personal.md](evidence/v86-battle-ui-personal.md)。实际三字体一至四人/六敌/Boss、明确动作后目标、药品/一次奖励/详情及原升级/cold门禁通过；个人级，manual_acceptance=PENDING，历史稳定v82保留。
