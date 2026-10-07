@@ -8,13 +8,23 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v88 / 0.8.18-battle-sprites-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v89/0.8.19-field-magic-personal 提神术有限候选；94来源App31门禁通过但原片字体可读性待修，未发布；线上88
+published_personal_version: v89 / 0.8.19-field-magic-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: NONE；v89已发布，继续MAGIC-ORIGINAL-01原战斗初始法术；未预占新构建
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: v89第三次31门禁通过后实际原片发现2倍字体角色名称裁切/法术剩余MP在初始视口隐藏；先定向修复并新同源验收，不能用几何PASS替代可读性。
+first_real_blocker: 法术A/B/C未完成，战斗与其余地图能力未开放；继续原执行/目标/MP/RNG取证与既有四人调度接入，正常原结局/真机/声音欠账不关。
+
+## v89 已发布，继续原战斗法术（2026-10-07）
+
+v89/0.8.19-field-magic-personal 已真实发布/公网完整下载复核。来源588f60dda28d9999a33bfd0a64ae185fca60fe48，build37624018494、publish37627514753 SUCCESS；32,791,444字节/fullSHA1cf7f56ced8ae06b11e199690268d2a1095190789361c9a753646242b5cbaf1f，原包名签名/c62/625a/392不变，仅原两个Fengshen OSS对象更新。运行升级基线换为此实际89；历史iteration导出基底不改。
+
+仅开放地图提神术。既有角色页动作→目标→确认、原固定等级寻址/3MP治疗、取消/重复不结算、保存失败回滚通过。角色标签按系统字体适配，紧凑法术标题常驻绑定施法者MP；新1/1.3/2原PNG实际目视完整标签/2xMP41/44。423release JVM/92 suites、21Content/31 gates，87BUI/7room28/8fieldMagic原PNG及JSON、11段静音原片（R1正常2段，其余各1段及5外部冷启）全hash、完整存档与偏好恢复独立复核。cold早期PNG捕获旧HUD5；实际原cold录像末帧58与GameView/全保存JSON58/MP41一致。保留原图，不将过渡PNG称作58视觉证明。真机/声音/完整正常主线人工验收仍PENDING。
+
+13:20:24.824611833Z postflight NO_ISSUES_OBSERVED，errors{}、cleanup0，保留89/88；193事件/2实机会话全来自88，89样本0，不冒称89手机验收。旧88发布NO_DATA与后来103样本保留历史事实。
+
+有限地图批次已交付，A/B/C及WORLD-FULL-01终点仍OPEN。继续原四人初始战斗法术；私有原版已有治疗/解毒/初始MP/完整J→Y→X→N执行取证，9858CPU前缀复跑PASS、另1026初始MP。Y一次原伤害字292仅是当前受控样本，公式/RNG、目标合法性/自然先死亡、Boss与控制继续核验；不凭参考表开放。下一版本尚未构建/验收/发布，全部累计欠账不关闭。
 
 ## v89 第三次App门禁通过、原片可读性修正（2026-10-07）
 

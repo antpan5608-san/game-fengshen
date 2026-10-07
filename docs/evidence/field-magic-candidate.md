@@ -1,3 +1,15 @@
+## v89 已发布，继续原战斗法术（2026-10-07）
+
+v89/0.8.19-field-magic-personal 已真实发布/公网完整下载复核。来源588f60dda28d9999a33bfd0a64ae185fca60fe48，build37624018494、publish37627514753 SUCCESS；32,791,444字节/fullSHA1cf7f56ced8ae06b11e199690268d2a1095190789361c9a753646242b5cbaf1f，原包名签名/c62/625a/392不变，仅原两个Fengshen OSS对象更新。运行升级基线换为此实际89；历史iteration导出基底不改。
+
+仅开放地图提神术。既有角色页动作→目标→确认、原固定等级寻址/3MP治疗、取消/重复不结算、保存失败回滚通过。角色标签按系统字体适配，紧凑法术标题常驻绑定施法者MP；新1/1.3/2原PNG实际目视完整标签/2xMP41/44。423release JVM/92 suites、21Content/31 gates，87BUI/7room28/8fieldMagic原PNG及JSON、11段静音原片（R1正常2段，其余各1段及5外部冷启）全hash、完整存档与偏好恢复独立复核。cold早期PNG捕获旧HUD5；实际原cold录像末帧58与GameView/全保存JSON58/MP41一致。保留原图，不将过渡PNG称作58视觉证明。真机/声音/完整正常主线人工验收仍PENDING。
+
+13:20:24.824611833Z postflight NO_ISSUES_OBSERVED，errors{}、cleanup0，保留89/88；193事件/2实机会话全来自88，89样本0，不冒称89手机验收。旧88发布NO_DATA与后来103样本保留历史事实。
+
+有限地图批次已交付，A/B/C及WORLD-FULL-01终点仍OPEN。继续原四人初始战斗法术；私有原版已有治疗/解毒/初始MP/完整J→Y→X→N执行取证，9858CPU前缀复跑PASS、另1026初始MP。Y一次原伤害字292仅是当前受控样本，公式/RNG、目标合法性/自然先死亡、Boss与控制继续核验；不凭参考表开放。下一版本尚未构建/验收/发布，全部累计欠账不关闭。
+
+以下候选和旧交付记录保留历史状态，正式结果以上述v89发布为准。
+
 # FIELD-MAGIC-01：提神术有限候选
 
 IMPLEMENTED_LOCAL_VERIFIED；v89/0.8.19-field-magic-personal 候选。未打包、未进行签名 App 验收、未发布；线上仍 v88，稳定版仍 v82。MAGIC-ORIGINAL-01 的 A/B/C 和长期终点均未完成。
