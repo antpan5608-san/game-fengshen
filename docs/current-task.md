@@ -14,7 +14,15 @@ frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 新提神术候选待4B最终阅读决策、原同源签名App/31门禁及发布；已有本地423 JVM与3700原CPU通过。其他法术/主线和长期终点未完成。
+first_real_blocker: v89原首次签名run37610894546的隔离法术fixture恢复被拒，测试main线程断言导致仪器进程结束，尚未进入施法。已签名/JVM423通过，但App失败未发布；只修测试状态构造/失败回执，再新同源验收，保留存档门禁。
+
+## v89 首次原签名验收失败与定向修正（2026-10-07）
+
+source90ce340/build37610894546的build SUCCESS，423 release JVM/92 suites零失败错误跳过；真实32,791,156字节/fullSHA230736a14d1ad944117803596c4c6f1c343ea955283695c6951b4e2d8fafda2c、原包名/签名/c62/392文件独立复核。runtime在第一次字体的法术测试TouchTest:22恢复fixture返回false，main线程assertTrue导致仪器App进程终止；不是普通玩家已触发的新施法崩溃，也未进入发布。
+
+只将受控fixture改为已观察的town2,15、明确foot mode0/UP/零步数/独立intro标志，不继承上一个测试的剧情/交通上下文；保存完整校验/恢复JSON，并把断言移出App主线程，失败仍硬拒绝。实际确定失败点，拒绝原因不能从现有短断言推定为玩家法术或atlas故障。原SaveSnapshot/World校验、423业务与31门禁不放宽。新修改须新4B/同源构建；旧失败与旧APK保留，不复用旧2307候选发布。
+
+冻结期另有原生battle取证：受控两人提神术菜单/目标/取消截图实际查看，HP5→58在frame4059先写，MP44→41在4120后写；四人尚未提交第四命令时NHP5/XMP44保持，说明不按地图的先扣MP时点直接接battle。原RAM/图仍私有，不是正常入队或Android证据，battle继续未开放。
 
 ## v89 提神术有限候选与新巡检样本（2026-10-07）
 

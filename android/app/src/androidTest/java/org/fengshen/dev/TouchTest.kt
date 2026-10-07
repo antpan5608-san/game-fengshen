@@ -15,13 +15,26 @@ class TouchTest:IsolatedGameTestCase(){
     fun testControlledFieldMagicSelectionCancelCommitAndSave(){
         val(activity,v)=launch();val root=instrumentation.targetContext.getExternalFilesDir(null)!!
         val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        var restored=false
         instrumentation.runOnMainSync{
-            val base=v.currentSnapshot();val town=v.content.scenes.getValue(0)
+            val base=v.currentSnapshot()
             val party=listOf(v.content.initialPlayer.copy(hp=5,maxHp=200))+
                 listOf("xiaolongnv","yangjian","jiangziya").map{v.content.joinCharacters.getValue(it)}
-            assertTrue(v.restoreSnapshot(base.copy(mapId=0,x=town.spawnX*16+8,y=town.spawnY*16+8,
-                interiorContext=null,characters=party,flags=base.flags+("opening.intro.seen" to true))))
+            // This fresh isolated fixture does not inherit a prior test's plot/transport context.
+            // Cell2,15 is the already observed normal town entrance, not a descriptor default spawn.
+            val fixture=base.copy(mapId=0,x=2*16+8,y=15*16+8,direction=Key.UP,terrainMode=0,
+                interiorContext=null,characters=party,encounterSteps=0,flags=mapOf("opening.intro.seen" to true))
+            val scene=v.content.sceneForState(0,fixture.flags)
+            val metadata=JSONObject().put("kind","CONTROLLED_FIXTURE_VALIDATION_NOT_PLAYER_SAVE")
+                .put("snapshotValid",fixture.validate(v.content))
+                .put("cellCheck",if(scene==null)"MISSING_SCENE" else scene.check(2,15)?:"OK")
+                .put("fixture",fixture.json())
+            restored=v.restoreSnapshot(fixture)
+            metadata.put("restored",restored)
+            File(root,"world-field-magic-fixture-validation.json").writeText(metadata.toString())
         }
+        // Assertion failures belong on the instrumentation thread, not the App main Looper.
+        assertTrue("Isolated field fixture rejected; see retained complete validation JSON",restored)
         assertTrue(v.content.fieldMagicEnabled)
         val before=v.currentSnapshot()
         fun open(){tap(v,center(v.hudBounds()));assertEquals(GameView.Layer.CHARACTER,v.layer);tap(v,tabPoint(v,3))}
