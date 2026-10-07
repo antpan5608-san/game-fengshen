@@ -2,7 +2,7 @@
 
 v87/0.8.17-town-room28-personal PUBLISHED_AND_VERIFIED；source af4f1d5，原build37587677750/publish37590470949 SUCCESS。418 release JVM/91 suites、21 Content与29同签名个人门禁通过；原正常局部入门/只读线索/一次药草/取消重复/返程再入/保存及外部cold完整等值、实际v86/c61旧档覆盖与首份备份通过。公网完整32,780,784字节/SHA d4b1d24e6b0e58a03c30b10f8ff1df94acd0d10be2be64e998aae940a6fd68ed及原包名签名/c62/392文件核实，详见[evidence/v87-town-room28-personal.md](evidence/v87-town-room28-personal.md)。73依赖图不是可玩分母；PERSONAL_TEST/manual_acceptance=PENDING、历史稳定v82。
 
-实际postflight07:57:37.9702317Z errors{}/cleanup0，权威保留87/86；一个既有v86会话不能作为v87手机验收。只关闭房间28本批和实际c61→c62升级缺口，首次升级与发布依赖失败保留。六敌1.3字体编号拥挤和2倍字敌图偏小保留，正常完整剧情、法术、所有角色/装备/物品及窗口、导航、真机/声音/云恢复/内容更新及十类累计欠账继续开放，ALL_MAPS_USABLE=NO、分母UNKNOWN。唯一执行者已接续法术原版私有取证及具体UI修复；以下旧阶段记录仅保留历史。
+实际postflight07:57:37.9702317Z errors{}/cleanup0，权威保留87/86；一个既有v86会话不能作为v87手机验收。只关闭房间28本批和实际c61→c62升级缺口，首次升级与发布依赖失败保留。六敌编号放大原图复核清楚、无重叠，先前缩略图判断已纠正；2倍字敌图偏小保留，正常完整剧情、法术、所有角色/装备/物品及窗口、导航、真机/声音/云恢复/内容更新及十类累计欠账继续开放，ALL_MAPS_USABLE=NO、分母UNKNOWN。唯一执行者已接续法术原版私有取证及具体UI修复；以下旧阶段记录仅保留历史。
 
 ## 房间28当前开发验收：DEBUG通过，正式签名待验（2026-10-07）
 

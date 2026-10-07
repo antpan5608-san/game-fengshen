@@ -31,7 +31,7 @@
 - Jiang recorder：de98f8b614d832080d601b518c5c0228c5973de0f061e59b20363228b8da1714；cold：80373ddfcc910d8eb0b3fa866abd0a385acfa936b2eb522dcf044e157e2b90d0。
 - Room recorder：98e15aa8f2c9786eb76e2b151ce800442a6469d837abcacfe95578e54be68095；cold：614edc796e69d334c814066daa0258757b720110276db30cae28ee3501b04a1d；UI：8b4aad5bdc17cab875930e17630c152b28e5b47689baab8febc965c698365c2f。
 
-实际目视本候选全部 7 房间图、三字体四人/六敌 6 图、2 倍字胜利图、后续恢复图和全部 8 原片末帧。早期 room cold PNG 未绘制 HUD，后续恢复/再调查有 HUD 和控件。Personal-r1、history、Jiang 首段末帧是 Android 桌面，room 首段和四段 cold 末帧是 App；没有声称逐段全程播放。六敌 1.3 倍字体相邻实例编号拥挤/重叠，2 倍字体敌图偏小，保留界面欠账；几何 PASS 不代表所有文字可读性已完成。
+实际目视本候选全部 7 房间图、三字体四人/六敌 6 图、2 倍字胜利图、后续恢复图和全部 8 原片末帧。早期 room cold PNG 未绘制 HUD，后续恢复/再调查有 HUD 和控件。Personal-r1、history、Jiang 首段末帧是 Android 桌面，room 首段和四段 cold 末帧是 App；没有声称逐段全程播放。放大原始像素复核，六敌三字体实例编号清楚且无重叠；先前缩略图误判已纠正。2 倍字体敌图偏小，保留界面欠账；几何 PASS 不代表所有文字可读性已完成。
 
 真实失败保留：a04/run37581950501 在实际 c61→c62 升级失败，根因历史兼容列表漏 c61；有界修复 b8/run37583981445 后全部 29 门禁通过。首次 publish37586776216 在依赖安装前执行 scope 查询，因新 room 模块顶层导入 PIL 而失败，未上传。af4 将图像导入限于实际 proof 校验，真实无 site-packages 查询通过、缺 Pillow 的图片校验仍拒绝；20 项回归和新 4B 两片段审查/实际决策后重新构建及完整验收，未复用改变来源后的旧 APK。
 

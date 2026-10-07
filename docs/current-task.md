@@ -14,13 +14,13 @@ frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v87已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 无当前启动/旧档升级阻断；房间28已发布。法术初始身份/习得及效果取证中；六敌1.3倍字编号拥挤与2倍字图形偏小待限定修复，长期终点未完成。
+first_real_blocker: 无当前启动/旧档升级阻断；房间28已发布。法术初始身份/习得及效果取证中；2倍字敌图偏小待限定修复；六敌编号原图已复核可读，长期终点未完成。
 
 ## v87 当前有效交付与下一批（2026-10-07，北京时间）
 
 PUBLISHED_AND_VERIFIED；[完整交付证据](evidence/v87-town-room28-personal.md)。source af4f1d546da0ff5d88cf428f00a254140862a32a，原build37587677750与publish37590470949全部SUCCESS；418 release JVM/91 suites、21 Content、全部29同签名个人门禁、实际v86/c61→c62完整旧档与首份备份、四组完整cold及原偏好恢复通过。公网全部32,780,784字节/SHA d4b1d24e6b0e58a03c30b10f8ff1df94acd0d10be2be64e998aae940a6fd68ed，原包名签名/c62 manifest625a/392文件独立复核；73仍只是依赖图数。实际postflight07:57:37.9702317Z errors{}/cleanup0，权威保留87/86，16事件来自一个既有v86会话，不是v87手机验收。
 
-实际目视当前7room PNG、三字体四人/六敌6图、2倍字胜利、后续restore图和8原片末帧。Personal/history/Jiang首段末帧桌面，room首段及四段cold为App；只核末帧，未全程播放或验声音。room早期cold无HUD、后续恢复/再调查控件可见。六敌1.3字体相邻编号拥挤/重叠，2倍字敌图偏小，原UI欠账继续开放。PERSONAL_TEST/manual=PENDING，历史稳定82与长期三终点、十类欠账均保留。
+实际目视当前7room PNG、三字体四人/六敌6图、2倍字胜利、后续restore图和8原片末帧。Personal/history/Jiang首段末帧桌面，room首段及四段cold为App；只核末帧，未全程播放或验声音。room早期cold无HUD、后续恢复/再调查控件可见。放大原始像素复核后六敌编号清楚、无重叠；先前缩略图判断已纠正。2倍字敌图偏小，原UI欠账继续开放。PERSONAL_TEST/manual=PENDING，历史稳定82与长期三终点、十类欠账均保留。
 
 下一批沿已批准MAGIC-ORIGINAL-01核原角色/习得/初始法术和MP时点，复用现有Content/角色页/World/战斗调度，不另建系统。私有取证已执行battle/field各320个有界等级案例：哪吒原菜单拒绝法术，原小龙女12级显示两项3MP；高等级10项原菜单三页实际查看，显示不代表当前地图可用。原受控取消保留HP/MP，提交扣3；最大HP200隔离fixture实际5→58/44→41，原240个效果前缀矩阵匹配53点治疗，不能直接套参考公式或视作正常入队/App验收。MP2不足原提示且不改变HP/MP；MP3首提交到0的raw已核，后期截图是不足提示，不能从晚期截图推断整个按键时序。原健康目标解毒仍扣3的受控观察与缺低字节回写线索正在分开核。以上全部原RAM/PNG/ROM留私有忽略目录，尚未开放玩家法术。
 
