@@ -1,0 +1,495 @@
+{
+  "cpu": [
+    {
+      "caseCount": 2,
+      "failures": 0,
+      "path": "game-data/provenance/expected/town-room28/town-room28-entry-original.tsv",
+      "probePath": "tools/rom-extractor/probe-town-room28.py",
+      "probeSha256": "783e645b62b4b68262b7926001e3aaf5c75658e00bfe820509b7ed7354a23663",
+      "sha256": "8ac25d0b2140122872a63ec6caf2e6a82f47030533deb94f761c48b3e8424d0c"
+    },
+    {
+      "caseCount": 28,
+      "failures": 0,
+      "path": "game-data/provenance/expected/town-room28/town-room28-hidden-original.tsv",
+      "probePath": "tools/rom-extractor/probe-town-room28.py",
+      "probeSha256": "783e645b62b4b68262b7926001e3aaf5c75658e00bfe820509b7ed7354a23663",
+      "sha256": "0a5e2f72366b47d517e7de9a9ff1b8a0ccbbefbfbf4d5cbca5d6e6d47ca0f6c6"
+    },
+    {
+      "caseCount": 256,
+      "failures": 0,
+      "path": "game-data/provenance/expected/town-room28/town-room28-talk-original.tsv",
+      "probePath": "tools/rom-extractor/probe-town-room28.py",
+      "probeSha256": "783e645b62b4b68262b7926001e3aaf5c75658e00bfe820509b7ed7354a23663",
+      "sha256": "3e3b5ae653b5f7d344844323a6469f8c9c5fddbdbd6681b08619b1425cb26967"
+    },
+    {
+      "caseCount": 64,
+      "failures": 0,
+      "path": "game-data/provenance/expected/town-room28/town-room28-terrain-original.tsv",
+      "probePath": "tools/rom-extractor/probe-town-room28.py",
+      "probeSha256": "783e645b62b4b68262b7926001e3aaf5c75658e00bfe820509b7ed7354a23663",
+      "sha256": "f6da9e06b3f05a25ef638b723e4ab0ea47003164e9497bab398e4d8a66e066ec"
+    }
+  ],
+  "defaultPalette": {
+    "backgroundSelector": 28,
+    "confidence": "STATIC_ROM_DEFAULT_ONLY",
+    "mapId": 28,
+    "palette": [
+      14,
+      7,
+      23,
+      55,
+      25,
+      7,
+      38,
+      22,
+      25,
+      33,
+      23,
+      22,
+      25,
+      0,
+      16,
+      48,
+      14,
+      14,
+      54,
+      22,
+      25,
+      14,
+      54,
+      43,
+      25,
+      14,
+      38,
+      34,
+      25,
+      14,
+      38,
+      32
+    ],
+    "remainingUnknown": [
+      "Scripted palette/lighting transitions and non-default event states"
+    ],
+    "routineEvidence": [
+      {
+        "cpuAddress": 43001,
+        "length": 44,
+        "meaning": "Signed map ID selector dispatch",
+        "module": 0,
+        "offset": 10249,
+        "sha256": "a43c8fe613fee648a3c937415b3288892a97b6a971156f0742ba89ab88c64478"
+      },
+      {
+        "cpuAddress": 41872,
+        "length": 110,
+        "meaning": "Original queued background then sprite palette writes",
+        "module": 0,
+        "offset": 9120,
+        "sha256": "87cb10cb6c5ba04b7d6670c2d7e32982064f16c2eaf4647c3749d51ff975197d"
+      }
+    ],
+    "source": [
+      {
+        "cpuAddress": 57595,
+        "length": 2,
+        "meaning": "Map background/sprite palette selector pair",
+        "module": 0,
+        "offset": 24843,
+        "sha256": "8e2ada6ef626983be1fe9a365ceeb424ee59b884e144f7541cf191116876de04"
+      },
+      {
+        "cpuAddress": 58334,
+        "length": 2,
+        "meaning": "Background palette pointer",
+        "module": 0,
+        "offset": 25582,
+        "sha256": "cfeb9e6f60cc8dc569cd66df235f93a96cbfb80b44bbced5c4463c9501c53567"
+      },
+      {
+        "cpuAddress": 58424,
+        "length": 2,
+        "meaning": "Sprite palette pointer",
+        "module": 0,
+        "offset": 25672,
+        "sha256": "449ba65e9cf3e432b8ca7cef03f209ec62cb111eb098ed15b5bd06bf0934212a"
+      },
+      {
+        "cpuAddress": 58826,
+        "length": 16,
+        "meaning": "Original default background colors",
+        "module": 0,
+        "offset": 26074,
+        "sha256": "3666167d09eecfdcae80f7846cea17e88dd6cb5f85ac65cdc2a781b7d8b819f9"
+      },
+      {
+        "cpuAddress": 58634,
+        "length": 16,
+        "meaning": "Original sprite colors",
+        "module": 0,
+        "offset": 25882,
+        "sha256": "27b62d7a1e952e1548cc15dc50e495520b33434835b018afafbbee3888e6bdde"
+      }
+    ],
+    "spriteSelector": 0
+  },
+  "dialogue": {
+    "font": {
+      "activePpuMatch": true,
+      "charset": {
+        "152": "調",
+        "168": "下",
+        "170": "倉",
+        "172": "要",
+        "25": "查",
+        "42": "穀",
+        "45": "內",
+        "52": "一",
+        "54": "好"
+      },
+      "chr2kBanks": [
+        2,
+        3
+      ],
+      "glyphs": [
+        {
+          "character": "查",
+          "code": 25,
+          "pixelsSha256": "236945ed3b18accf807b011903f2f877ea1b289a536db9f1b6e79f02f7830f5c"
+        },
+        {
+          "character": "穀",
+          "code": 42,
+          "pixelsSha256": "f4116c4738f88973da8c731bfac3738c64f466385ba5e9351d3688e3ad52aec8"
+        },
+        {
+          "character": "內",
+          "code": 45,
+          "pixelsSha256": "f10854910aed6983fd9d334dbf733b4b2259b6f42b1f84a659fa6c20d115ef3e"
+        },
+        {
+          "character": "一",
+          "code": 52,
+          "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+        },
+        {
+          "character": "好",
+          "code": 54,
+          "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+        },
+        {
+          "character": "調",
+          "code": 152,
+          "pixelsSha256": "d2c2429474cb9e0c05e1270c48fcd36be5171c35b09d01aca2e0ad7cb4dfd9b2"
+        },
+        {
+          "character": "下",
+          "code": 168,
+          "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+        },
+        {
+          "character": "倉",
+          "code": 170,
+          "pixelsSha256": "c4c2eaf2e08f886cd7a259b6fdf84a27039048f0ac5f9af118d84705fa1c01f7"
+        },
+        {
+          "character": "要",
+          "code": 172,
+          "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+        }
+      ],
+      "sources": [
+        {
+          "length": 2048,
+          "offset": 528400,
+          "sha256": "e7c5c51dbed9ea6e02f9fe4e30d1f0fa574b36445da09f3f8d44b9b78cc15b45"
+        },
+        {
+          "length": 2048,
+          "offset": 530448,
+          "sha256": "f853497dd9a1d992e7a76c271919976a6527c9e2000ea49ca647479421ece964"
+        }
+      ]
+    },
+    "id": "rom.dialogue.38.12",
+    "source": {
+      "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+      "originalVerified": false,
+      "pointerEvidence": [
+        {
+          "cpuAddress": 35502,
+          "length": 2,
+          "meaning": "Text group pointer",
+          "module": 3,
+          "offset": 101054,
+          "sha256": "bd9db662ef4b5b349c4ec4161e8cea657616202f735bedca92de3af0c68b0948"
+        },
+        {
+          "cpuAddress": 35854,
+          "length": 2,
+          "meaning": "Message pointer",
+          "module": 3,
+          "offset": 101406,
+          "sha256": "6d4e9c41d74fa4b2578571d1762d2edf2311569c737577d71e0680053176c3e2"
+        }
+      ],
+      "record": {
+        "cpuAddress": 37595,
+        "length": 14,
+        "meaning": "C3-terminated text byte stream",
+        "module": 3,
+        "offset": 103147,
+        "sha256": "ff35f952d0cda0b6cb9f6d51b0d0f9e65c7ab670bf487360650820f11f2e855a"
+      }
+    },
+    "text": "『穀倉內要好好調查一下。』"
+  },
+  "limitations": [
+    "One original normal route/default state; not all rooms or full story",
+    "Earlier DOWN-only exit and menu-selection failures preserved privately",
+    "Native audio was muted; no sound or Android acceptance",
+    "Dynamic NPC poses and original text rendering timing remain debt",
+    "350 controlled CPU cases are boundary evidence, not normal gameplay",
+    "Next implement existing scene/InteriorContext/hidden pickup and actual Android entry/save/cold/return; not complete"
+  ],
+  "map": {
+    "gridSha256": "c106ff8a3231621e6391376c86a133660e607d7648f8d6d1923c7962815dadad",
+    "height": 15,
+    "romMapId": 28,
+    "tilesetId": 2,
+    "width": 16
+  },
+  "normalOriginal": {
+    "captures": [
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001592-room28-stable-entry-ppu.bin",
+        "sha256": "443f5872318ff5f7d24813dc85fb72c2e8ac666a7f49e7c72a81f76bfb287e8a"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001592-room28-stable-entry-ram.bin",
+        "sha256": "1b596aae0acbc99e0ffac1a185c1466673c8a98211b686be58cc301c25dc4856"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001592-room28-stable-entry-sram.bin",
+        "sha256": "b71dcc09c748031b5bb0293da5e2a7d420da56a2c727b89f54952cfe739c4590"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001592-room28-stable-entry.png",
+        "sha256": "a78e08d53b9b42a5d4ee14f93e7fbb9e071c8579d267d930cb069a87025464ef"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001700-actor1-neighbor-ppu.bin",
+        "sha256": "99da32691884871e315737f3b0b452fbd46a72ca637def93293375a9d2a53b6b"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001700-actor1-neighbor-ram.bin",
+        "sha256": "0f746139d34a55fa6892d4a6ae480cc22bfe3a9f65fde2c5da1a51499ea68845"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001700-actor1-neighbor-sram.bin",
+        "sha256": "d0297dd4d8d921853a4bbaa4ffab95e7a6f7a5280957e68fea54607b96744ce0"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001700-actor1-neighbor.png",
+        "sha256": "4cd9f56e2d058538e2a0a319ac49dc54b31debd78712ea2572d31d80566c721e"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001940-actor1-actual-dialogue-ppu.bin",
+        "sha256": "5df1e5e34988dafccd8d04bcb0a8f94715afee62640bf496f697ac004e3177b7"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001940-actor1-actual-dialogue-ram.bin",
+        "sha256": "221152840a292338f667103af5de0244bdb07972f7f65d5bf5adcadfe6adf3b7"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001940-actor1-actual-dialogue-sram.bin",
+        "sha256": "5102f54e7abc6ec622c5c091c51fd78e1dc522387e25840bd01d43c84d85be29"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/001940-actor1-actual-dialogue.png",
+        "sha256": "c99c1c7d130b68f0722445f8a18b1cc29b82d3325a3f95738fe18d071a5c7b67"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002633-actor2-neighbor-ppu.bin",
+        "sha256": "389d0e9bf51308ba8814905dc6774c2ae7ed42088abe42dadf3c4fae0e854d14"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002633-actor2-neighbor-ram.bin",
+        "sha256": "cfab21a126ac86f009c2c6570d9fd274cb71d60a48d3d532d65c002d8fddbdef"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002633-actor2-neighbor-sram.bin",
+        "sha256": "c92946e6a39f7eaaf57bfada4b400dd034939723fc26e3f16c3602155e8d4532"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002633-actor2-neighbor.png",
+        "sha256": "27ea30e15220a6254e7b2aaef6b31267c8b9d42e4a1d1489b22841355ea82a88"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002873-hidden-first-investigation-ppu.bin",
+        "sha256": "6cba360e46575dcd1aeecf40ad1b1463b166ab2cfb3b2d64e0a718c61dc18300"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002873-hidden-first-investigation-ram.bin",
+        "sha256": "7bced56d5252f64227bc31b09d7c370808eef32b8915c7b90bbf32743f5358a8"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002873-hidden-first-investigation-sram.bin",
+        "sha256": "d4c2b5864ffc7fb6ea4f8eabcd1efcb6fa6189f8b522a5e7bb8e13adc8c8487f"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/002873-hidden-first-investigation.png",
+        "sha256": "b9ff92c5d077b367c5465bc2909fa10b99a1d730057287f77df344dcefa4b9a8"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003273-hidden-repeat-investigation-ppu.bin",
+        "sha256": "18b33f1e2d14cefb2be89f5591e025dedd98e8783ec812e01686663a71cfce1f"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003273-hidden-repeat-investigation-ram.bin",
+        "sha256": "2b53fc2588cee8caecc16b6a8fb9b5840a80adb09c833033c1feb6d94a58f138"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003273-hidden-repeat-investigation-sram.bin",
+        "sha256": "72bc169466ba40330401bee55f21e35fe50c215bba589027bce5cded697f70f3"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003273-hidden-repeat-investigation.png",
+        "sha256": "d9f7004d63164645d4843ce7ea75339db11df6587882ba7b2ac6931c44443d78"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003723-room28-return-settled-ppu.bin",
+        "sha256": "b2632989d3e3712bca1dd7dcf2ad02d27543e55e09715d958ad2ec473ab6d9e1"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003723-room28-return-settled-ram.bin",
+        "sha256": "0da77c67d37ad73da8fd818588cc5b91552f09ddf2aae9b4c6bd328c210b0603"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003723-room28-return-settled-sram.bin",
+        "sha256": "97a7da39c7797de6ffbb4cd1cd6809d580ec7c542426644df205b57d225425a3"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/003723-room28-return-settled.png",
+        "sha256": "d5aaf844e6c7456bdd97d217496bf07fe004490e7946539a9f84cfa4cfe24b76"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/timeline.tsv",
+        "sha256": "c630f3305095b28093fb59397391b70784cf1d5a18b7ee1f72fcb3ad1c63b54b"
+      },
+      {
+        "path": ".local-ai/native-evidence/room28-final/private-derived/town-room28/writes.tsv",
+        "sha256": "976ae4925bea53efef214291f1fe9d70d181b05e5373fe875a906f2dff0a1efa"
+      }
+    ],
+    "entry": {
+      "callerMapId": 0,
+      "collisionClass": 28,
+      "houseIndex": 2,
+      "spawn": [
+        6,
+        10
+      ],
+      "toMapId": 28,
+      "trigger": [
+        12,
+        23
+      ]
+    },
+    "hiddenPickup": {
+      "category": 0,
+      "flagBeforeFirstRepeatReturn": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "flagMask": 1,
+      "itemId": 0,
+      "npcIndex": 1,
+      "quantityBeforeFirstRepeatReturn": [
+        0,
+        1,
+        1,
+        1
+      ]
+    },
+    "kind": "NORMAL_NEW_GAME_CONTROLLER_ONLY_NO_RAM_WRITES_NO_SAVESTATE_LOAD",
+    "probePath": "tools/rom-extractor/probe-town-room28.lua",
+    "probeSha256": "24661d45fa5a689e82d61aa58114262f223e4624ae95b1b57bf50589fd6b297a",
+    "return": {
+      "fromMapId": 28,
+      "settledFramesAfterMapChange": 140,
+      "spawn": [
+        12,
+        23
+      ],
+      "toMapId": 0,
+      "trigger": [
+        6,
+        10
+      ]
+    },
+    "toolSha256": "bc8f7e420ebf512615bc8bbc5b8beea655ea1feaf474742a2f56b35fd0415aee",
+    "toolVersion": "FCEUX 2.6.6"
+  },
+  "npcSources": [
+    {
+      "cpuAddress": 46606,
+      "length": 14,
+      "meaning": "Fixed 14-byte NPC source record",
+      "module": 8,
+      "offset": 275998,
+      "sha256": "5c7de4f5864405413b4b4ba3285aaebfa33d57432d79db946d06c33461c4b927"
+    },
+    {
+      "cpuAddress": 46620,
+      "length": 14,
+      "meaning": "Fixed 14-byte NPC source record",
+      "module": 8,
+      "offset": 276012,
+      "sha256": "a2e61280dce4fa06cc27cfcf9139b3593333fc12ff9459d1c14a5308a01f8a67"
+    }
+  ],
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "schemaVersion": 1,
+  "scopeRevision": "town0-house2-room28-original-normal-entry-return-talk-hidden-medicine",
+  "sources": [
+    {
+      "cpuAddress": 52297,
+      "length": 11,
+      "meaning": "Original house-index caller dispatch",
+      "module": 0,
+      "offset": 19545,
+      "sha256": "85d2e2baf59c90880c41d3ee32ec757e51b54e11b5e6f9eeb1e65f63f9c23401"
+    },
+    {
+      "cpuAddress": 53897,
+      "length": 1,
+      "meaning": "Caller0 house2 target",
+      "module": 0,
+      "offset": 21145,
+      "sha256": "bd4fc42a21f1f860a1030e6eba23d53ecab71bd19297ab6c074381d4ecee0018"
+    },
+    {
+      "cpuAddress": 57531,
+      "length": 5,
+      "meaning": "Original room28 FE return record retaining explicit caller coordinates",
+      "module": 8,
+      "offset": 286923,
+      "sha256": "79415bd0965ab454c98a1908a0e5b350ece3a62e347d66f7f679768a570aabb0"
+    },
+    {
+      "cpuAddress": 54475,
+      "length": 2,
+      "meaning": "Original map28 hidden-item flag pointer",
+      "module": 0,
+      "offset": 21723,
+      "sha256": "7fac881506fcb40e1779538a2b72097b89903f91a8ed65937ff1b0a778bb1bf7"
+    }
+  ],
+  "status": "INPUT_EVIDENCE_NOT_EXPORTED_NOT_ANDROID"
+}
