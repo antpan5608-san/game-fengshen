@@ -20,6 +20,8 @@ first_real_blocker: 整体参考重制体验未实现；下一安全版本优先
 
 服务器接管历史及源码入口见 [development-host.md](development-host.md)。迁移轮仅接管、不新增玩法、不发布；用户已在同一会话恢复既定研发，当前视觉批次见下段，WORLD-FULL-01仍IN_PROGRESS/PARTIAL。
 
+首正式build37686148098签名通过、App旧Boss比例断言FAIL，未发布；原失败保留。已定向适配三处实际绘制asset比例（保留native／边界／规则断言），仪器新编译／29 Python通过，未改生产的445 JVM沿用本批实际结果，待重新审查／新source原Actions同候选App。线上91、稳定82与全部未验项保持。
+
 当前有限代码检查点：四图、原worker固定16图准备及Canvas只读已实现；445 JVM／95 suites、19组Python报告162、DEBUG应用／仪器编译、c62／392与视觉17文件完整校验通过。新增受控真实动作三字体raw-proof，第36个人门禁保留原35项。下一动作是本批最新审查／冻结同源main并执行原Actions正式签名App；线上v91／稳定v82不变，完整主线／声音／真机／云恢复及全部欠账保持OPEN。
 
 ## v91已发布，主动接续姿态与敌图（2026-10-08北京时间）

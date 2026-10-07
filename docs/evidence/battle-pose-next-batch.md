@@ -14,6 +14,10 @@
 
 下一自然检查点：新全diff审查／record_review_decision，冻结并推main后原Actions同源签名＋21Content／36个人raw门禁，实际查看新PNG／原片。全门槛通过才同审核APK发布92、公网完整字节／postflight；失败原件保留，修正需新源码／检查／签名App。所有长期终点／真机声音完整主线继续开放；只在服务器接续。
 
+实际首签名／App失败记录：source58d066b／build37686148098，签名包62,588,756字节／SHA595e3736781704168cb92717ffffa461b92247995c679af5ee7e323780cda433，原证书／c62／视觉17及445release JVM／95 suites和16组Python122通过。原App21 Content已通过，但testControlledNanhaiVictoryFlagAndResumeOnce在TouchTest:5567实际期待旧128/112=1.142857、新Boss裁框为0.814985而失败；36整体门禁／新姿态三字体／完整本批正常cold尚未跑完，APK不发布。runtime-failed／base-failed／mobile-failed原产物、签名包和完整原日志保留，不改失败为PASS。
+
+已实际搜全battleEnemyBox／ratio断言，修正遗漏的南海受控Boss和手机单Boss两处旧像素期望，统一实际选中asset（场景不存在时仍原nativefallback）；另保留原native Boss本体128×112比例断言、原目标安全边界／48dp及奖励／剧情／存档测试。生产源码／PNG／manifest／35+1门禁不变，只有仪器期望适配。生产未改，沿用该source此前实际445 JVM／95 suites（本次Gradle该任务UP-TO-DATE）；仪器新编译及29相关Python通过，仍须新source同签名App，不复用首run通过子项或旧回执。
+
 ---
 
 # 视觉姿态／敌图下一有限批次

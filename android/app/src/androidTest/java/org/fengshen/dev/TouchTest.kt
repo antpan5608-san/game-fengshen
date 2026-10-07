@@ -11,6 +11,13 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Expected ratio of the actual selected draw asset, retaining the legacy native fallback. */
+    private fun battleDrawnEnemyRatio(v:GameView,enemy:BattleEnemy):Float {
+        val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v)
+        val crop=if(scene==null)null else v.content.battleVisual?.enemy(enemy.definition.id)?.crop
+        val native=v.content.enemyGraphics.getValue(enemy.definition.id)
+        return if(crop==null)native.width.toFloat()/native.height else crop.width().toFloat()/crop.height()
+    }
     /** Actual queued rule steps and Canvas, controlled actors, not normal joining or phone performance. */
     fun testControlledBattleVisualPosesReadOnly(){
         val(activity,v)=launch();val c=v.content;val rules=c.battle!!;val visual=c.battleVisual!!
@@ -5564,8 +5571,10 @@ class TouchTest:IsolatedGameTestCase(){
         val enemyBox=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java)
             .apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
         val targetBox=v.battleTargetBounds(fight.enemies.single().slot)
-        assertEquals(128f/112,enemyBox.w/enemyBox.h,.001f)
-        assertTrue("Full native Boss sprite fits its independent target cell",enemyBox.x>=targetBox.x&&
+        val originalBoss=v.content.enemyGraphics.getValue(fight.enemies.single().definition.id)
+        assertEquals(128f/112,originalBoss.width.toFloat()/originalBoss.height,.001f)
+        assertEquals(battleDrawnEnemyRatio(v,fight.enemies.single()),enemyBox.w/enemyBox.h,.001f)
+        assertTrue("Full selected Boss crop fits its independent target cell",enemyBox.x>=targetBox.x&&
             enemyBox.y>=targetBox.y&&enemyBox.x+enemyBox.w<=targetBox.x+targetBox.w&&enemyBox.y+enemyBox.h<=targetBox.y+targetBox.h)
         screenshot(v,"nanhai-controlled-boss-original-origin")
         tap(v,center(v.battleCommandBounds(3)));assertEquals(BattlePresentation.Screen.ACTING,(p.get(v) as BattlePresentation).screen)
@@ -5782,7 +5791,9 @@ class TouchTest:IsolatedGameTestCase(){
         for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
         val eb=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,fight.enemies.single()) as Box
         val bossTarget=v.battleTargetBounds(fight.enemies.single().slot)
-        assertEquals(128f/112,eb.w/eb.h,.001f)
+        val originalBoss=v.content.enemyGraphics.getValue(fight.enemies.single().definition.id)
+        assertEquals(128f/112,originalBoss.width.toFloat()/originalBoss.height,.001f)
+        assertEquals(battleDrawnEnemyRatio(v,fight.enemies.single()),eb.w/eb.h,.001f)
         assertTrue(eb.x>=bossTarget.x&&eb.y>=bossTarget.y&&eb.x+eb.w<=bossTarget.x+bossTarget.w&&eb.y+eb.h<=bossTarget.y+bossTarget.h)
         screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(2)))
         screenshot(v,"mobile-phone-medicine-$font");tap(v,center(v.battleItemBounds(HerbUse.ID)))
@@ -5866,12 +5877,9 @@ class TouchTest:IsolatedGameTestCase(){
                 assertTrue(box.x>=0&&box.y>=0&&box.x+box.w<=v.width&&box.y+box.h<=v.height)}
             for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
             for(enemy in fight.enemies){
-                val image=c.enemyGraphics.getValue(enemy.definition.id)
                 val graphic=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,enemy) as Box
                 val target=v.battleTargetBounds(enemy.slot)
-                val crop=c.battleVisual?.enemy(enemy.definition.id)?.crop
-                val ratio=if(crop==null)image.width.toFloat()/image.height else crop.width().toFloat()/crop.height()
-                assertEquals(ratio,graphic.w/graphic.h,.001f)
+                assertEquals(battleDrawnEnemyRatio(v,enemy),graphic.w/graphic.h,.001f)
                 assertTrue(graphic.x>=target.x&&graphic.y>=target.y&&graphic.x+graphic.w<=target.x+target.w&&graphic.y+graphic.h<=target.y+target.h)
                 if(layout.compact){
                     val label=battleEnemySceneLayout(target,dp,font,true,false).label
