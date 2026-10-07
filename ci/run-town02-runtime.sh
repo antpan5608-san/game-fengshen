@@ -85,7 +85,7 @@ if listed.returncode:
         print('No installed App evidence directory; preserve the primary runtime failure')
         raise SystemExit(0)
 for name in listed.stdout.splitlines():
-    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*|town01-normal-injury-attempts)\.(png|json)',name):
+    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|battle-magic-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*|town01-normal-injury-attempts)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
@@ -140,6 +140,11 @@ if [[ "$stage" == development-smoke ]]; then
         if ! python tools/record_app_audio.py world-field-magic testControlledFieldMagicSelectionCancelCommitAndSave --silent --controlled-field-magic --cold-test testFieldMagicExternalColdStartPreservesFullSave --budget-seconds 300; then
             adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/field-magic-crash.txt
             cat artifacts/town02-runtime/field-magic-crash.txt
+            exit 1
+        fi
+        if ! python tools/record_app_audio.py world-battle-magic testControlledBattleMagicSelectionPhasesAndSave --silent --controlled-battle-magic --cold-test testBattleMagicExternalColdStartPreservesFullSave --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/battle-magic-crash.txt
+            cat artifacts/town02-runtime/battle-magic-crash.txt
             exit 1
         fi
         pull_evidence
@@ -300,6 +305,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             cp artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont-font-$font.txt"
             run_test testControlledBattlePartyPhoneSizeAndLargeFont false
             run_test testControlledFieldMagicSelectionCancelCommitAndSave false
+            run_test testControlledBattleMagicSelectionPhasesAndSave false
             cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
             pull_evidence
         done
@@ -319,13 +325,18 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             cat artifacts/town02-runtime/field-magic-crash.txt
             exit 1
         fi
+        if ! python tools/record_app_audio.py world-battle-magic testControlledBattleMagicSelectionPhasesAndSave --silent --controlled-battle-magic --cold-test testBattleMagicExternalColdStartPreservesFullSave --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/battle-magic-crash.txt
+            cat artifacts/town02-runtime/battle-magic-crash.txt
+            exit 1
+        fi
     fi
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
 from pathlib import Path
 from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,C60_SCOPES,C61_SCOPES,review_personal,active_scope,jiang_proof_digests
-from tools import battle_ui_evidence as ui, room28_evidence as room28, field_magic_evidence as field_magic
+from tools import battle_ui_evidence as ui, room28_evidence as room28, field_magic_evidence as field_magic, battle_magic_evidence as battle_magic
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -357,6 +368,9 @@ if scope['id']==room28.SCOPE:
 if scope.get('fieldMagicAcceptance')==field_magic.ACCEPTANCE:
     r.update(field_magic.proof_digests(Path('artifacts/checkpoint-ui')))
     r.update({key:'PASS' for key in field_magic.GATES})
+if scope.get('battleMagicAcceptance')==battle_magic.ACCEPTANCE:
+    r.update(battle_magic.proof_digests(Path('artifacts/checkpoint-ui')))
+    r.update({key:'PASS' for key in battle_magic.GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

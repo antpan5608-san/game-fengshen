@@ -12,7 +12,8 @@ fun battlePartyView(hero:CharacterState,name:String,action:BattleActionStep?,inp
         ?:if(hero.id==firstHeroId)action?.heroHp?:hero.hp else hero.hp
     val status=action?.partyStatus?.get(hero.id)
         ?:if(hero.id==firstHeroId)action?.heroStatusMask?:hero.statusMask else hero.statusMask
-    return BattlePartyView(hero.id,name,hero.level,hp,hero.maxHp,hero.mp,hero.maxMp,status,
+    val mp=action?.partyMp?.get(hero.id)?:hero.mp
+    return BattlePartyView(hero.id,name,hero.level,hp,hero.maxHp,mp,hero.maxMp,status,
         if(action==null)inputHeroId==hero.id else action.actorId==hero.id)
 }
 

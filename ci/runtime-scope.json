@@ -249,7 +249,9 @@
       "room28NormalHiddenMedicineOnce",
       "room28ExternalColdAndReentry",
       "fieldMagicTouchCancelCommitAndFonts",
-      "fieldMagicFullSaveExternalCold"
+      "fieldMagicFullSaveExternalCold",
+      "battleMagicFourRoleTouchPhasesAndFonts",
+      "battleMagicFullSaveExternalCold"
     ],
     "manual_acceptance": "PENDING"
   },
@@ -348,6 +350,34 @@
       "fieldMagicRecordingSha256",
       "fieldMagicColdBoundarySha256",
       "fieldMagicUiEvidenceSha256"
+    ]
+  },
+  "battleMagicAcceptance": {
+    "kind": "CONTROLLED_FOUR_ROLE_BATTLE_MAGIC_NOT_NORMAL_JOIN_OR_PHONE",
+    "spells": [
+      "rom.magic.battle.1.0",
+      "rom.magic.battle.1.1"
+    ],
+    "caster": "xiaolongnv",
+    "casterLevel": 12,
+    "target": "nezha",
+    "cost": 3,
+    "beforeHP": 5,
+    "maximumHP": 200,
+    "beforeStatus": 2,
+    "afterHP": 58,
+    "afterStatus": 0,
+    "beforeMP": 44,
+    "afterMP": 38,
+    "fonts": [
+      1.0,
+      1.3,
+      2.0
+    ],
+    "proofKeys": [
+      "battleMagicRecordingSha256",
+      "battleMagicColdBoundarySha256",
+      "battleMagicUiEvidenceSha256"
     ]
   }
 }

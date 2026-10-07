@@ -1232,6 +1232,8 @@ object ContentLoader {
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
                 content.fieldMagicEnabled=content.characterDefinitions["xiaolongnv"]?.originalActorIndex==1&&
                     content.joinCharacters["xiaolongnv"]?.let{it.level==12&&it.mp==44&&it.maxMp==44}==true
+                content.battle?.originalMagicEnabled=content.characterDefinitions["xiaolongnv"]?.originalActorIndex==1&&
+                    content.joinCharacters["xiaolongnv"]?.let{it.level==12&&it.mp==44&&it.maxMp==44}==true
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
                 data.optJSONObject("freeBoat")?.let{o->

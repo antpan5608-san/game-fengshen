@@ -9,20 +9,24 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v89 / 0.8.19-field-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: NONE；v89已发布，继续MAGIC-ORIGINAL-01原战斗初始法术；未预占新构建
+current_candidate_version: v90 / 0.8.20-battle-magic-personal，LOCAL_TESTED；进入正式同源构建，尚未App/发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: 法术A/B/C未完成，战斗与其余地图能力未开放；继续原执行/目标/MP/RNG取证与既有四人调度接入，正常原结局/真机/声音欠账不关。
 
-## 战斗初始法术证据固定（v89发布后，未接入/未构建新APK）
+## 战斗初始法术当前有限代码批次（未正式App/发布）
+
+2026-10-07 已在原 OpeningBattle 四人队列接入小龙女提神术/解毒术、BattleActionStep 分阶段MP和原物品模态动作→目标→确认。实际437 Debug JVM/94 suites零失败/错误/跳过、仪器编译2m36s通过；49项raw-proof/范围/原表/录屏及27历史UI/handoff/c61回归通过。最初测试helper回合后继续循环的7m41s失败保留，修有界后437通过；不是游戏调度变更。首轮4B32全新431.203s全读，最终34片段/6新97.641s、28缓存文本逐字节已读，snapshot5ac39123f5b8956d5dcf4a9701dc58d685801a26f4640ae93621a64e5dbf3086已CLI登记reviewed。拒绝删除存档/初始习得/模态/原raw门禁、把合成传输字节当App、将发布回执混为玩家存档等不成立建议。额外发现并精确补齐原collector新battle-magic前缀，真实PYEVIDENCE隔离传输测试通过；scope按LF绑定33门禁，旧31保持。实际App/正式新APK/发布均 NOT_RUN；详见evidence/battle-magic-candidate.md，当前线上v89不变。
+
+新增 [BATTLE-VISUAL-02 完整获批方案](plans/battle-visual-02.md) 已落盘并关联长期计划。已直接核对来源人类批准消息01a116bd-100a-7131-92ae-b4c89ee697c1及原计划；已实际目视用户参考图与当前 v89 四人图。当前仅 AUTHORIZED_QUEUED，保留本批法术，下一安全视觉批次做完整场景/头像/站位，再演出/覆盖。参考商业图只作私有研究，不直接当许可素材；未实施/打包/App/发布，不关长期欠账。
 
 复用原probe-original-magic.py增加四份独立原生RAM哈希入口；无效/缺失输入在输出前拒绝，新旧证据文件不覆盖。实际执行原CPU14,584案例：旧地图/目录3700全部TSV逐字节保持，新battle6表10,884逐字节匹配先前私有独立原执行记录。新6表与仅偏移/长度/hash的报告保存original-battle-magic；无ROM/RAM/原片公开或模型上传。5个实际Python门禁验证新report/script/table完整绑定、错RAM/部分输入/既有证据/错ROM拒绝，0skip。
 
 基础包括row0固定X身份等级治疗与死亡bit20、late MP减3/下溢0、初始MP>=3、row1精确state2谓词、post-HP状态。Native另确认初始死亡目标可选择但不复活仍付3，初始state64可治疗5→58/MP44→41且保留64；state64中文原名不提升为已核。原battle count矩阵已核X第二项displayLevel10、Y第二项25、J第二项27；旧目录literal displayedLearnLevel是raw recordbyte，不能直接作UI习得等级。
 
-这只是可复跑规则证据，新的战斗功能仍未接入。下一步在现有OpeningBattle增加X两项稳定ID命令与分阶段MP快照，沿原动作→目标/队伍输入revision/一次保存；不套地图F0限制，不用一次Y伤害字292当通用公式。完整A/B/C与全部长期欠账仍OPEN。
+上述原版基础曾先于接入固定；当前代码已接X两项，但正式App仍待原同源候选。下一步验证33门禁/字体阶段原片/完整冷启/实际v89覆盖，通过才原发布及公网/postflight；不套地图F0限制，不用一次Y伤害字292当通用公式。完整A/B/C与全部长期欠账仍OPEN。
 
 ## v89 已发布，继续原战斗法术（2026-10-07）
 

@@ -330,6 +330,8 @@ jobs:
             artifacts/checkpoint-ui/touch-ux-world-room28-*
             artifacts/checkpoint-ui/world-field-magic-*
             artifacts/checkpoint-ui/touch-ux-world-field-magic-*
+            artifacts/checkpoint-ui/world-battle-magic-*
+            artifacts/checkpoint-ui/touch-ux-battle-magic-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
             artifacts/checkpoint-ui/touch-ux-world-content-migration-backup.json
             artifacts/checkpoint-ui/mobile-*

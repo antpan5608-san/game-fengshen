@@ -100,6 +100,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var battleGesture:BattleTouchGesture?=null
     private var battleBlocked=false
     private var battleItemsOpen=false
+    private var battleMagicOpen=false
     private var selectedBattleItem:String?=null
     private var selectedBattleTarget:String?=null
     private var battleItemListScroll=0f
@@ -505,7 +506,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battle=createPartyBattle(group,rules)
         selectedBattleSlot=group.members.first().slot
         battleMessage="遭遇敌群 ${group.id} · 选择目标后攻击"
-        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",group.id).put("mapId",world.mapId))
         audio.scene(world.mapId,"battle")
@@ -640,7 +641,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(hadSelection&&battlePresentation.screen==BattlePresentation.Screen.COMMAND){
             battleNotice="请选择指令；点击敌人查看信息";battlePresentation.invalidateInput();clearBattleGesture();return
         }
-        if(battleItemsOpen){battleItemsOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput();clearBattleGesture();return}
+        if(battleItemsOpen){battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput();clearBattleGesture();return}
         if(battleInfoOpen){battleInfoOpen=false;battlePresentation.resetResultTimer();battlePresentation.invalidateInput();clearBattleGesture();return}
         if(battleResultDetails&&battlePresentation.screen==BattlePresentation.Screen.RESULT){
             battleResultDetails=false;battleResultScroll=0f;battlePresentation.resetResultTimer();battlePresentation.invalidateInput();return
@@ -754,11 +755,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battleItemsOpen){
             val items=battleItemLayout()
             if(items.close.contains(x,y))return cmd("close-items")
-            battleMedicines().firstOrNull{battleItemBounds(it).contains(x,y)&&battleItemBounds(it).h>=48*resources.displayMetrics.density}?.let{return cmd("select-medicine",item=it)}
+            battlePanelEntries().firstOrNull{battleItemBounds(it).contains(x,y)&&battleItemBounds(it).h>=48*resources.displayMetrics.density}?.let{return cmd("select-medicine",item=it)}
             val binding=selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}!=null
             if(!binding)current.party.firstOrNull{battleItemTargetBounds(it.id).contains(x,y)}?.let{return cmd("medicine-target",target=it.id)}
             if(items.primary.contains(x,y))return selectedBattleItem?.let{
-                cmd(if(binding)"use-binding"else"use-medicine",item=it,target=if(binding)current.inputHero?.id else battleItemTarget()?.id)}
+                cmd(if(battleMagicOpen)"use-magic"else if(binding)"use-binding"else"use-medicine",item=it,target=if(binding)current.inputHero?.id else battleItemTarget()?.id)}
             return when{items.detail.contains(x,y)->cmd("medicine-scroll");items.list.contains(x,y)->cmd("medicine-list-scroll");else->null}
         }
         if(battleInfoOpen){
@@ -811,13 +812,27 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(battlePresentation.screen==BattlePresentation.Screen.COMMAND){battlePresentation.selectCommand(0);battlePresentation.targets()}
                 else battlePresentation.invalidateInput()
                 battleAttackSelection=cmd.copy(revision=battlePresentation.revision).also{it.actorId=cmd.actorId;it.inputRevision=cmd.inputRevision}}
-            "magic"->{clearAttackChoice();battleNotice="已学法术状态与执行逻辑尚未迁移";battlePresentation.invalidateInput()}
-            "items"->{clearAttackChoice();battleNotice="";battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
-            "close-items"->{battleItemsOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput()}
-            "select-medicine"->{if(cmd.itemId !in battleMedicines())return;selectedBattleItem=cmd.itemId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
+            "magic"->{clearAttackChoice()
+                if(current.learnedMagic().isEmpty()){battleNotice="当前角色没有已开放的战斗法术";battlePresentation.invalidateInput();return}
+                battleNotice="";battleMagicOpen=true;battleItemsOpen=true;selectedBattleItem=null
+                selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
+            "items"->{clearAttackChoice();battleNotice="";battleMagicOpen=false;battleItemsOpen=true;selectedBattleItem=null;selectedBattleTarget=currentBattleTargetId();battleItemListScroll=0f;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
+            "close-items"->{battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battlePresentation.invalidateInput()}
+            "select-medicine"->{if(cmd.itemId !in battlePanelEntries())return;selectedBattleItem=cmd.itemId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "medicine-target"->{val current=battle?:return;if(current.party.none{it.id==cmd.targetId})return
                 selectedBattleTarget=cmd.targetId;battleItemDetailScroll=0f;battlePresentation.invalidateInput()}
             "medicine-scroll","medicine-list-scroll"->Unit
+            "use-magic"->{
+                if(!battleItemsOpen||!battleMagicOpen||cmd.itemId!=selectedBattleItem||cmd.targetId!=battleItemTarget()?.id)return
+                val spellId=cmd.itemId?:return;val targetId=cmd.targetId?:return
+                val revision=current.inputRevision
+                val turn=current.useMagic(spellId,targetId){battleRandom.nextInt(256)}
+                if(!showSubmittedBattleCommand(current,revision,turn)){
+                    battleNotice=current.magicReason(spellId,targetId)?:"当前不能提交法术";battlePresentation.invalidateInput();return}
+                battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null
+                Diagnostics.record("battle_magic",details=JSONObject().put("battleID",battleID).put("spellID",spellId)
+                    .put("actorID",cmd.actorId).put("targetID",targetId))
+            }
             "use-binding"->{
                 val current=battle?:return;val item=content.itemDefinitions[cmd.itemId]?:return
                 if(cmd.itemId!=selectedBattleItem||cmd.targetId!=current.inputHero?.id)return
@@ -854,7 +869,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     if(g.cancelled){
                         if(battleItemsOpen){
                             val item=battleItemLayout()
-                            if(item.list.contains(g.x,g.y))battleItemListScroll=(battleItemListScroll+g.lastY-y).coerceIn(0f,item.maxScroll(battleMedicines().size))
+                            if(item.list.contains(g.x,g.y))battleItemListScroll=(battleItemListScroll+g.lastY-y).coerceIn(0f,item.maxScroll(battlePanelEntries().size))
                             else if(item.detail.contains(g.x,g.y))battleItemDetailScroll=max(0f,battleItemDetailScroll+g.lastY-y)
                         }else if(battleInfoOpen){
                             val info=battleInfoLayout()
@@ -1202,7 +1217,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         storyBattle=story;battleSavePending=false
         battle=createPartyBattle(story.group,rules)
         selectedBattleSlot=story.group.members.first().slot;battleMessage="${rules.enemies.getValue(story.group.members.first().enemyId).name} · 剧情战斗"
-        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
+        battleCommitted=false;battlePresentation=BattlePresentation();battleInfoOpen=false;battleItemsOpen=false;battleMagicOpen=false;selectedBattleItem=null;battleNotice="";battleResultBefore=null;battleResultLines=emptyList();battleResultScroll=0f;resetBattleUiSelection();clearBattleGesture();layer=Layer.BATTLE
         battleID=java.util.UUID.randomUUID().toString()
         Diagnostics.record("battle_start",details=JSONObject().put("battleID",battleID).put("groupId",story.group.id)
             .put("mapId",world.mapId).put("storyBattle",story.id))
@@ -1798,7 +1813,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(fieldMagicChoosingTarget)lines+="请选择上方队员作为目标：${heroName(hero.id)} · HP ${hero.hp}/${hero.maxHp}"
                 else lines+="选择法术后，点击选择目标"
                 if(selectedFieldSpell!=null)fieldMagicReason()?.let{lines+=it}
-                lines+="仅开放地图提神术；其他法术继续接入中"
+                lines+="地图提神术；战斗另有提神术和解毒术"
                 touchDetail(c,lines)
                 if(selectedFieldSpell!=null)touchButton(c,l.primary,if(fieldMagicChoosingTarget)"使用于${heroName(hero.id)}" else "选择目标",fieldMagicReason()==null)
             };return
@@ -2229,11 +2244,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val partyLines=current.party.map{player->
             val hp=action?.partyHp?.get(player.id)?:if(player.id==current.hero.id)action?.heroHp?:player.hp else player.hp
             val status=action?.partyStatus?.get(player.id)?:if(player.id==current.hero.id)action?.heroStatusMask?:player.statusMask else player.statusMask
-            "${heroName(player.id)}${if(status==0)"" else " · ${OriginalStatus.label(status)}"} HP $hp/${player.maxHp} · MP ${player.mp}/${player.maxMp?:"?"}"
+            "${heroName(player.id)}${if(status==0)"" else " · ${OriginalStatus.label(status)}"} HP $hp/${player.maxHp} · MP ${action?.partyMp?.get(player.id)?:player.mp}/${player.maxMp?:"?"}"
         }
         touchText(c,(partyLines+message).joinToString("\n"),Box(l.status.x+6*dp,l.status.y+3*dp,l.status.w-12*dp,l.status.h),12f)
         val waiting=screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)
-        listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->touchButton(c,l.commands[i],title,waiting&&i!=1)}
+        listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->touchButton(c,l.commands[i],title,waiting)}
         if(action?.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.MISS,BattleActionKind.HEAL)){
             val target=action?.targetSlot?.let{slot->current.enemies.firstOrNull{it.slot==slot}?.let{battleEnemyBox(it)}}?:l.arena
             val text=if(action?.kind==BattleActionKind.MISS)"MISS" else (action?.hpDelta?:0).toString()
@@ -2317,7 +2332,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         val waiting=screen in listOf(BattlePresentation.Screen.COMMAND,BattlePresentation.Screen.TARGET)
         listOf("攻击","法术","物品","逃跑","信息").forEachIndexed{i,title->
-            touchButton(c,l.commands[i],title,waiting&&i!=1,selected=i==0&&attackSelected())}
+            touchButton(c,l.commands[i],title,waiting,selected=i==0&&attackSelected())}
         if(action?.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.MISS,BattleActionKind.HEAL)){
             val target=action?.targetSlot?.let{slot->current.enemies.firstOrNull{it.slot==slot}?.let{battleEnemyBox(it)}}
                 ?:scene.allySprites.getOrNull(current.party.indexOfFirst{it.id==action?.targetId})?:scene.allyField
@@ -2368,6 +2383,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     fun battleHerbCount()=max(0,(inventory[HerbUse.ID]?:0)-(battle?.herbsConsumed?:0))
     private fun battleMedicines()=content.itemDefinitions.values.filter{(it.category=="medicine"||it.battleBindingUse!=null)&&
         ((inventory[it.id]?:0)>0||it.id==HerbUse.ID)}.map{it.id}.sorted()
+    private fun battlePanelEntries()=if(battleMagicOpen)battle?.learnedMagic()?.map{it.id}?:emptyList() else battleMedicines()
     private fun battleMedicineScene():BattleMedicineSceneLayout? {
         if(selectedBattleItem?.let{content.itemDefinitions[it]?.battleBindingUse}!=null)return null
         return battleMedicineSceneLayout(ui.safe,resources.displayMetrics.density,
@@ -2391,7 +2407,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val l=battleItemLayout();val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         return battlePartyTargetBoxes(l.frame,l.list.y,dp,font,party.size)[i]
     }
-    fun battleItemBounds(id:String)=battleItemLayout().visibleRow(battleMedicines().indexOf(id),battleItemListScroll)
+    fun battleItemBounds(id:String)=battleItemLayout().visibleRow(battlePanelEntries().indexOf(id),battleItemListScroll)
     fun battleItemUseBounds()=battleItemLayout().primary
     fun battleItemCloseBounds()=battleItemLayout().close
     private fun battleMedicineReason(id:String):String {
@@ -2411,6 +2427,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return if(current.herbAvailable(target.id,inventory[id]?:0,item))"确认消耗1份；按敏捷顺序恢复HP，占用一次行动" else "此场景的物品逻辑未接入或角色状态不一致"
     }
     private fun drawBattleItems(c:Canvas,current:OpeningBattle){
+        if(battleMagicOpen){drawBattleMagic(c,current);return}
         val l=battleItemLayout();val dp=resources.displayMetrics.density;c.drawColor(Color.BLACK)
         val scene=battleMedicineScene()
         touchText(c,if(scene==null)"战斗物品"else"战斗物品 · 选择不消耗，使用才提交",
@@ -2455,6 +2472,43 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(battleNotice.isNotEmpty())y+=touchText(c,battleNotice,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
         battleItemDetailScroll=battleItemDetailScroll.coerceAtMost(max(0f,y+battleItemDetailScroll-l.detail.y-l.detail.h));c.restore()
         touchButton(c,l.primary,if(id==null)"先选择物品" else if(binding)"对${item?.battleBindingUse?.targetLabel}使用"else target?.let{"使用于${heroName(it.id)}"}?:"没有合法目标",enabled)
+    }
+    private fun drawBattleMagic(c:Canvas,current:OpeningBattle){
+        val l=battleItemLayout();val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
+        val caster=current.inputHero;val scene=battleMedicineScene();c.drawColor(Color.BLACK)
+        touchText(c,"法术 · ${caster?.let{heroName(it.id)}?:"队伍"} MP ${caster?.mp?:0}",
+            Box(l.frame.x+8*dp,l.frame.y+8*dp,l.close.x-l.frame.x-16*dp,1f),15f)
+        if(scene==null)touchText(c,"选择法术和队友 · 确认才提交",Box(l.frame.x+8*dp,l.frame.y+l.close.h+12*dp,l.frame.w-16*dp,1f),12f)
+        touchButton(c,l.close,"关闭")
+        if(current.party.size>1)for(player in current.party){
+            val box=battleItemTargetBounds(player.id)
+            if(scene==null)touchButton(c,box,"${if(battleItemTarget()?.id==player.id)"✓ "else""}${heroName(player.id)} · HP ${player.hp}/${player.maxHp}")
+            else{
+                touchButton(c,box,"",selected=battleItemTarget()?.id==player.id)
+                battleLine(c,heroName(player.id),Box(box.x+8*dp,box.y+4*dp,box.w-16*dp,max(24f,17*font)*dp),14f)
+                battleLine(c,"HP ${player.hp}/${player.maxHp}",Box(box.x+8*dp,box.y+box.h-max(18f,14*font)*dp-4*dp,
+                    box.w-16*dp,max(18f,14*font)*dp),12f)
+            }
+        }
+        c.save();c.clipRect(l.list.x,l.list.y,l.list.x+l.list.w,l.list.y+l.list.h)
+        for((i,spell) in current.learnedMagic().withIndex()){
+            val row=l.row(i,battleItemListScroll);overlayPaint.color=if(spell.id==selectedBattleItem)0xff244d49.toInt()else 0xff18252e.toInt()
+            c.drawRect(row.x,row.y,row.x+row.w,row.y+row.h,overlayPaint)
+            touchText(c,"${spell.name} · MP ${spell.cost}",Box(row.x+8*dp,row.y+8*dp,row.w-16*dp,1f),14f)
+        };c.restore()
+        val spell=current.learnedMagic().firstOrNull{it.id==selectedBattleItem};val target=battleItemTarget()
+        val reason=if(spell!=null&&target!=null)current.magicReason(spell.id,target.id) else "请选择法术和队友"
+        val lines=if(spell==null)listOf("选择法术，再选择队友", "浏览和取消不扣MP")else listOf(
+            if(spell.id==OriginalBattleMagic.HEAL)"${spell.name} · HP +${3*((caster?.level?:1)-1)+20}，不超过上限"else"${spell.name} · 解除中毒",
+            "消耗 MP ${spell.cost} · 满血或无效果仍扣费",
+            target?.let{"${heroName(it.id)} · ${OriginalStatus.label(it.statusMask)}"}?:"请选择队友",
+            reason?:"轮到施法者时执行；倒下则跳过", "不能复活；取消不耗行动")
+        c.save();c.clipRect(l.detail.x,l.detail.y,l.detail.x+l.detail.w,l.detail.y+l.detail.h)
+        var y=l.detail.y-battleItemDetailScroll
+        for(line in lines)y+=touchText(c,line,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
+        if(battleNotice.isNotEmpty())y+=touchText(c,battleNotice,Box(l.detail.x,y,l.detail.w,1f),14f)+4*dp
+        battleItemDetailScroll=battleItemDetailScroll.coerceAtMost(max(0f,y+battleItemDetailScroll-l.detail.y-l.detail.h));c.restore()
+        touchButton(c,l.primary,if(spell==null)"先选择法术"else target?.let{"施法于${heroName(it.id)}"}?:"请选择队友",spell!=null&&reason==null)
     }
     private fun drawBattleInformation(c:Canvas,current:OpeningBattle){
         if(battleInfoHeroId!=null){drawBattlePartyInformation(c,current);return}

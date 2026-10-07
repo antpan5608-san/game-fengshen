@@ -11,6 +11,155 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Controlled four-role fixture, real taps/foreground phases/save; no normal join claim. */
+    fun testControlledBattleMagicSelectionPhasesAndSave(){
+        val(activity,v)=launch();val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        val c=v.content;val rules=c.battle!!;assertTrue(rules.originalMagicEnabled)
+        val base=v.currentSnapshot()
+        val actors=listOf(c.initialPlayer.copy(hp=5,maxHp=200,statusMask=2))+
+            listOf("xiaolongnv","yangjian","jiangziya").map{c.joinCharacters.getValue(it)}
+        val fixture=base.copy(mapId=0,x=2*16+8,y=15*16+8,direction=Key.UP,terrainMode=0,
+            interiorContext=null,characters=actors,encounterSteps=0,
+            inventory=mapOf(OriginalYangJoin.ITEM_ID to 1),
+            flags=mapOf("opening.intro.seen" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true))
+        assertTrue("Battle fixture keeps production save guards",fixture.validate(c))
+        var restored=false;instrumentation.runOnMainSync{restored=v.restoreSnapshot(fixture)}
+        assertTrue("Battle magic fixture restore",restored)
+        val before=v.currentSnapshot();val p=BattlePresentation()
+        val group=rules.groups.first{g->g.members.all{m->rules.enemies.getValue(m.enemyId).behaviorByte==0}}
+        val rng=object:java.security.SecureRandom(){var draws=0;var value=255
+            override fun nextInt(bound:Int):Int{check(bound==256);draws++;return value}}
+        lateinit var fight:OpeningBattle
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{
+            fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
+                .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
+            GameView::class.java.getDeclaredMethod("resetBattleUiSelection").apply{isAccessible=true}.invoke(v)
+            field("battle",fight);field("battlePresentation",p);field("battleID","controlled-battle-magic")
+            field("battleRandom",rng);field("battleCommitted",false);field("storyBattle",null)
+            field("battleInfoOpen",false);field("battleItemsOpen",false);field("battleMagicOpen",false)
+            field("layer",GameView.Layer.BATTLE);v.input.clear();p.tick(400)
+        }
+        val font=v.resources.configuration.fontScale;val label=font.toString().replace('.','_')
+        val phases=org.json.JSONArray();val dp=v.resources.displayMetrics.density
+        fun waitState(predicate:()->Boolean){
+            val deadline=SystemClock.elapsedRealtime()+20000;var ready=false
+            while(!ready&&SystemClock.elapsedRealtime()<deadline){
+                instrumentation.runOnMainSync{ready=predicate()};if(!ready)SystemClock.sleep(15)
+            }
+            assertTrue("Bounded actual battle phase",ready)
+        }
+        fun phase(name:String,mp:Int,kind:BattleActionKind,hp:Int,status:Int){
+            waitState{
+                val step=p.action
+                val match=p.screen==BattlePresentation.Screen.ACTING&&step?.actorId=="xiaolongnv"&&
+                    step.kind==kind&&step.partyMp["xiaolongnv"]==mp&&step.partyHp["nezha"]==hp&&step.partyStatus["nezha"]==status
+                if(match)v.active=false
+                match
+            }
+            val action=p.action!!
+            assertEquals(before,v.currentSnapshot()) // No half-round persisted state.
+            assertEquals(mp,battlePartyView(fight.party[1],c.characterDefinitions.getValue("xiaolongnv").name,action,null,"nezha").mp)
+            screenshot(v,"battle-magic-$name-font-$label")
+            phases.put(JSONObject().put("stage",name).put("casterMP",mp).put("targetHP",hp).put("targetStatus",status)
+                .put("actorID",action.actorId).put("targetID",action.targetId).put("actionKind",action.kind.name)
+                .put("partyHP",JSONObject(action.partyHp)).put("partyMP",JSONObject(action.partyMp))
+                .put("partyStatus",JSONObject(action.partyStatus)))
+            instrumentation.runOnMainSync{v.active=true}
+        }
+        fun open(spell:String){
+            tap(v,center(v.battleCommandBounds(1)));tap(v,center(v.battleItemBounds(spell)))
+            tap(v,center(v.battleItemTargetBounds("nezha")))
+        }
+        fun otherCommands(){
+            for(id in listOf("yangjian","jiangziya")){
+                assertEquals(id,fight.inputHero!!.id);chooseAttack(v,fight.enemies.first().slot)
+            }
+        }
+        tap(v,center(v.battleCommandBounds(1)))
+        assertEquals(0,fight.inputRevision);assertEquals(0,rng.draws);assertEquals(before,v.currentSnapshot())
+        chooseAttack(v,fight.enemies.first().slot)
+        assertEquals("xiaolongnv",fight.inputHero!!.id)
+        open(OriginalBattleMagic.HEAL)
+        val modal=GameView::class.java.getDeclaredMethod("battleItemLayout").apply{isAccessible=true}.invoke(v) as TouchModalLayout
+        val measured=android.graphics.Paint()
+        for(hero in fight.party){
+            val box=v.battleItemTargetBounds(hero.id)
+            assertTrue(box.w>=48*dp&&box.h>=48*dp&&box.x>=0&&box.y>=0&&box.x+box.w<=v.width&&box.y+box.h<=v.height)
+            measured.textSize=14*v.resources.displayMetrics.scaledDensity
+            assertTrue("Full magic target name",measured.measureText(c.characterDefinitions.getValue(hero.id).name)<=box.w-16*dp)
+            measured.textSize=12*v.resources.displayMetrics.scaledDensity
+            assertTrue("Full magic target HP",measured.measureText("HP ${hero.hp}/${hero.maxHp}")<=box.w-16*dp)
+        }
+        measured.textSize=15*v.resources.displayMetrics.scaledDensity
+        assertTrue("Bound caster MP header fits",measured.measureText("法术 · ${c.characterDefinitions.getValue("xiaolongnv").name} MP 44")<=modal.close.x-modal.frame.x-16*dp)
+        assertTrue("Effect/cost visible",modal.detail.h>=(14*font*1.25f+4)*2*dp)
+        screenshot(v,"battle-magic-selection-font-$label")
+        val point=center(v.battleItemUseBounds())
+        send(v,MotionEvent.ACTION_DOWN,listOf(point));send(v,MotionEvent.ACTION_CANCEL,listOf(point));send(v,MotionEvent.ACTION_UP,listOf(point))
+        send(v,MotionEvent.ACTION_DOWN,listOf(point));send(v,MotionEvent.ACTION_POINTER_DOWN or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(point,point))
+        send(v,MotionEvent.ACTION_POINTER_UP or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(point,point));send(v,MotionEvent.ACTION_UP,listOf(point))
+        hardwareButton(v,android.view.KeyEvent.KEYCODE_BUTTON_A)
+        assertEquals(1,fight.inputRevision);assertEquals(0,rng.draws);assertEquals(actors,fight.party)
+        tap(v,center(v.battleItemCloseBounds()));assertEquals(actors,fight.party)
+        open(OriginalBattleMagic.HEAL)
+        lateinit var stale:BattleTouchCommand
+        instrumentation.runOnMainSync{stale=GameView::class.java.getDeclaredMethod("battleHit",Float::class.javaPrimitiveType,Float::class.javaPrimitiveType)
+            .apply{isAccessible=true}.invoke(v,point.first,point.second) as BattleTouchCommand}
+        tap(v,point);assertEquals(2,fight.inputRevision);assertEquals(0,rng.draws);assertEquals(actors,fight.party)
+        instrumentation.runOnMainSync{GameView::class.java.getDeclaredMethod("submitBattle",BattleTouchCommand::class.java)
+            .apply{isAccessible=true}.invoke(v,stale)}
+        send(v,MotionEvent.ACTION_UP,listOf(point))
+        assertEquals(2,fight.inputRevision);assertEquals(0,rng.draws);assertEquals(actors,fight.party)
+        otherCommands();phase("heal-effect",44,BattleActionKind.HEAL,58,2)
+        phase("heal-debit",41,BattleActionKind.TEXT,58,2)
+        waitState{p.screen==BattlePresentation.Screen.COMMAND}
+        assertEquals(41,fight.party[1].mp);assertEquals(58,fight.hero.hp);assertEquals(2,fight.hero.statusMask)
+        chooseAttack(v,fight.enemies.first().slot);open(OriginalBattleMagic.ANTIDOTE)
+        screenshot(v,"battle-magic-antidote-selection-font-$label")
+        tap(v,center(v.battleItemUseBounds()));otherCommands()
+        phase("cure-effect",41,BattleActionKind.STATUS,58,0)
+        phase("cure-debit",38,BattleActionKind.TEXT,58,0)
+        waitState{p.screen==BattlePresentation.Screen.COMMAND}
+        assertEquals(38,fight.party[1].mp);assertEquals(58,fight.hero.hp);assertEquals(0,fight.hero.statusMask)
+        val afterMagic=before.copy(characters=before.characters.map{h->when(h.id){
+            "nezha"->h.copy(hp=58,statusMask=0);"xiaolongnv"->h.copy(mp=38);else->h}})
+        assertEquals(afterMagic.characters,fight.party);assertEquals(before,v.currentSnapshot())
+        instrumentation.runOnMainSync{rng.value=0}
+        val finishDeadline=SystemClock.elapsedRealtime()+90000
+        var done=false
+        while(!done&&SystemClock.elapsedRealtime()<finishDeadline){
+            var target:Int?=null
+            instrumentation.runOnMainSync{
+                done=v.layer==GameView.Layer.MAP||p.screen==BattlePresentation.Screen.RESULT&&
+                    GameView::class.java.getDeclaredField("battleCommitted").apply{isAccessible=true}.getBoolean(v)
+                if(!done&&p.screen==BattlePresentation.Screen.COMMAND)target=fight.enemies.firstOrNull{it.hp>0}?.slot
+            }
+            target?.let{chooseAttack(v,it)};if(!done)SystemClock.sleep(30)
+        }
+        assertTrue("Finish through real physical actions and production commit",done)
+        val after=v.currentSnapshot();assertEquals(38,after.characters[1].mp);assertEquals(0,after.characters[0].statusMask)
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        assertEquals(after,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        screenshot(v,"battle-magic-saved-font-$label")
+        val size=android.graphics.BitmapFactory.Options().apply{inJustDecodeBounds=true}
+        android.graphics.BitmapFactory.decodeFile(File(root,"battle-magic-selection-font-$label.png").path,size)
+        File(root,"battle-magic-font-$label.json").writeText(JSONObject()
+            .put("kind","CONTROLLED_FOUR_ROLE_BATTLE_MAGIC_NOT_NORMAL_JOIN_OR_PHONE").put("font",font)
+            .put("screenWidth",size.outWidth).put("screenHeight",size.outHeight).put("width",v.width).put("height",v.height)
+            .put("selectionCancelMultiPointerUnchanged",true).put("staleAndRepeatUnchanged",true)
+            .put("partyLabelsAndMpHeaderFit",true).put("fullSavePersisted",true)
+            .put("phases",phases).put("before",before.json()).put("afterMagic",afterMagic.json()).put("after",after.json()).toString())
+        File(root,"battle-magic-expected-save.json").writeText(after.json().toString())
+        instrumentation.runOnMainSync{if(v.layer==GameView.Layer.BATTLE)v.handleBack();v.persistState();activity.finish()}
+    }
+    fun testBattleMagicExternalColdStartPreservesFullSave(){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        val expected=SaveSnapshot.parse(File(root,"battle-magic-expected-save.json").readText())
+        val(activity,v)=launch();assertEquals(expected,v.currentSnapshot());assertEquals(38,expected.characters[1].mp)
+        screenshot(v,"battle-magic-cold-full-state")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
     /** Isolated four-role fixture; real modal taps, never a normal join/playthrough claim. */
     fun testControlledFieldMagicSelectionCancelCommitAndSave(){
         val(activity,v)=launch();val root=instrumentation.targetContext.getExternalFilesDir(null)!!

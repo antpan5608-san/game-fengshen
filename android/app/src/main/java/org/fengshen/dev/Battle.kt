@@ -303,6 +303,7 @@ data class BattleContent(val zoneMapId:Int,val zoneRects:List<EncounterRect>,val
     fun physicalFor(owner:String)=if(owner=="nezha")physicalRules else characterPhysicalRules[owner]
     var characterGrowth:Map<String,List<GrowthRow>> = emptyMap();internal set
     var characterLevelLimits:Map<String,Int> = emptyMap();internal set
+    var originalMagicEnabled:Boolean=false;internal set
     fun growthFor(owner:String)=if(owner=="nezha")growth else characterGrowth[owner]?:emptyList()
     fun maxLevelFor(owner:String)=if(owner=="nezha")knownMaxLevel else characterLevelLimits[owner]
 }
@@ -339,6 +340,7 @@ data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,I
     var targetId:String?=null;internal set
     var partyHp:Map<String,Int> = emptyMap();internal set
     var partyStatus:Map<String,Int> = emptyMap();internal set
+    var partyMp:Map<String,Int> = emptyMap();internal set
 }
 data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:Int,val defeatedEnemyIds:List<Int>,
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
@@ -369,9 +371,9 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var configured=false
     // Original6948 is local to the current battle and resets on exit.
     private var bindingMarker=0
-    private enum class CommandKind { ATTACK, HERB, BINDING, ESCAPE, ESCAPED }
+    private enum class CommandKind { ATTACK, HERB, MAGIC, BINDING, ESCAPE, ESCAPED }
     private data class QueuedCommand(val kind:CommandKind,val targetSlot:Int?=null,val targetId:String?=null,
-        val bindingName:String="",val bindingTarget:String="",val bindingOriginalId:Int=-1)
+        val bindingName:String="",val bindingTarget:String="",val bindingOriginalId:Int=-1,val spellId:String?=null)
     private val commands=linkedMapOf<String,QueuedCommand>()
     var inputRevision=0;private set
     private fun originalActors()=partyStates.mapIndexed{slot,p->OriginalPartyRules.Actor(originalIndices.getValue(p.id),slot,p.hp,p.statusMask,p.agility)}
@@ -409,6 +411,23 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
     private var settled=false
     // Pending battle effects share the existing pre-battle save checkpoint. No second inventory is persisted.
     var herbsConsumed=0;private set
+    fun learnedMagic():List<OriginalBattleSpell> {
+        val caster=inputHero?:return emptyList()
+        return if(content.originalMagicEnabled&&content.physicalRules!=null)
+            OriginalBattleMagic.learned(caster,originalIndices.getValue(caster.id))else emptyList()
+    }
+    fun magicReason(spellId:String,targetId:String):String? {
+        if(phase!=BattlePhase.TARGET||!content.originalMagicEnabled||content.physicalRules==null)return "当前不能施法"
+        val caster=inputHero?:return "当前没有可输入角色"
+        if(caster.hp<=0)return "当前角色已倒下"
+        return OriginalBattleMagic.selectionReason(caster,originalIndices.getValue(caster.id),spellId,
+            partyStates.firstOrNull{it.id==targetId})
+    }
+    fun useMagic(spellId:String,targetId:String,nextByte:()->Int):BattleTurn? {
+        if(magicReason(spellId,targetId)!=null)return null
+        // Browsing/confirmation collects a stable command, without MP or RNG changes.
+        return submit(QueuedCommand(CommandKind.MAGIC,targetId=targetId,spellId=spellId),nextByte)
+    }
     fun bindingAvailable(count:Int,item:ItemDefinition,alreadyUsed:Boolean=false):Boolean {
         if(phase!=BattlePhase.TARGET||content.physicalRules==null||(inputHero?.hp?:0)<=0||count!=1||alreadyUsed||
             item.category!="special"||item.maxCount!=1)return false
@@ -453,6 +472,7 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null)=
         BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy,hero.statusMask).also{
             it.actorId=actorId;it.targetId=targetId;it.partyHp=partyStates.associate{p->p.id to p.hp};it.partyStatus=partyStates.associate{p->p.id to p.statusMask}
+            it.partyMp=partyStates.associate{p->p.id to p.mp}
         }
     /** Byte-exact 9:8A49..8AAF for the enabled normal enemies. Carry at entry is 1.
      * Random sequence remains independent of NES $43; no fixed success probability. */
@@ -502,6 +522,29 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(!OriginalPartyRules.canAct(originalActors().first{it.originalActorIndex==actor}))continue
                 val command=commands[player.id]?:continue
                 if(command.kind==CommandKind.ESCAPED)continue
+                if(command.kind==CommandKind.MAGIC){
+                    val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
+                    val spell=OriginalBattleMagic.spells.single{it.id==command.spellId}
+                    steps.add(frame("${spell.name} · ${target.id.let{if(it==player.id)"自身"else"队友"}}",kind=BattleActionKind.SPECIAL,
+                        actorId=player.id,targetId=target.id))
+                    val effect=OriginalBattleMagic.effect(player,target,spell)
+                    setCharacter(target.id,effect.target)
+                    val text=if(spell.id==OriginalBattleMagic.HEAL){
+                        if(effect.applied)"${spell.name} · 恢复 ${effect.hpDelta} HP"else"${spell.name}不能复活目标"
+                    }else if(effect.applied)"${spell.name} · 中毒解除"else"${spell.name} · 目标状态保持"
+                    steps.add(frame(text,kind=if(spell.id==OriginalBattleMagic.HEAL&&effect.applied)BattleActionKind.HEAL else BattleActionKind.STATUS,
+                        delta=effect.hpDelta,beforeHero=if(target.id==hero.id)target.hp else hero.hp,actorId=player.id,targetId=target.id))
+                    // 9:A8AE follows the effect. Read the updated caster so self-heal is preserved.
+                    setCharacter(player.id,OriginalBattleMagic.debit(partyStates.first{it.id==player.id},spell))
+                    steps.add(frame("${spell.name} · MP −${spell.cost}",actorId=player.id,targetId=target.id))
+                    val beforeStatus=partyStates.first{it.id==target.id}
+                    val afterStatus=OriginalBattleMagic.afterHp(beforeStatus)
+                    if(afterStatus.statusMask!=beforeStatus.statusMask){
+                        setCharacter(target.id,afterStatus)
+                        steps.add(frame("目标状态更新",kind=BattleActionKind.STATUS,actorId=player.id,targetId=target.id))
+                    }
+                    continue
+                }
                 if(command.kind==CommandKind.BINDING){
                     val target=enemies.firstOrNull{it.hp>0}?:continue
                     bindingMarker=originalSpecialBindingMarker(command.bindingOriginalId,target.definition.id,bindingMarker)

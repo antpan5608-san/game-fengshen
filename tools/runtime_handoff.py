@@ -13,11 +13,12 @@ import subprocess
 from pathlib import Path
 
 if __package__:
-    from . import battle_ui_evidence as battle_ui, room28_evidence as room28, field_magic_evidence as field_magic
+    from . import battle_ui_evidence as battle_ui, room28_evidence as room28, field_magic_evidence as field_magic, battle_magic_evidence as battle_magic
 else:
     import battle_ui_evidence as battle_ui
     import room28_evidence as room28
     import field_magic_evidence as field_magic
+    import battle_magic_evidence as battle_magic
 
 STAGES = ('base', 'world', 'continuation')
 CHECKPOINTS = {'base': ('north-palace',), 'world': ('ferry', 'yang-join')}
@@ -108,7 +109,8 @@ def personal_gates(scope):
             + (C61_PERSONAL_GATES if scope['id'] in C61_SCOPES else [])
             + (battle_ui.UI_GATES if scope['id'] in battle_ui.UI_SCOPES else [])
             + (room28.GATES if scope['id'] == room28.SCOPE else [])
-            + (field_magic.GATES if scope.get('fieldMagicAcceptance') == field_magic.ACCEPTANCE else []))
+            + (field_magic.GATES if scope.get('fieldMagicAcceptance') == field_magic.ACCEPTANCE else [])
+            + (battle_magic.GATES if scope.get('battleMagicAcceptance') == battle_magic.ACCEPTANCE else []))
 
 
 def validate_jiang_digests(receipt):
@@ -188,6 +190,9 @@ def finish_personal(proposed):
     if scope.get('fieldMagicAcceptance') == field_magic.ACCEPTANCE:
         field_magic.validate_digests(proposed)
         result.update({key: proposed[key] for key in field_magic.PROOF_KEYS})
+    if scope.get('battleMagicAcceptance') == battle_magic.ACCEPTANCE:
+        battle_magic.validate_digests(proposed)
+        result.update({key: proposed[key] for key in battle_magic.PROOF_KEYS})
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -216,6 +221,8 @@ def review_personal(receipt):
         room28.validate_digests(receipt)
     if scope.get('fieldMagicAcceptance') == field_magic.ACCEPTANCE:
         field_magic.validate_digests(receipt)
+    if scope.get('battleMagicAcceptance') == battle_magic.ACCEPTANCE:
+        battle_magic.validate_digests(receipt)
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
     if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
@@ -264,6 +271,9 @@ def active_scope(candidate=None):
         if c62 and (scope.get('fieldMagicAcceptance') is not None or
                 candidate is not None and int(candidate.get('versionCode',0))>=89) and scope.get('fieldMagicAcceptance') != field_magic.ACCEPTANCE:
             raise ValueError('Current field magic touch/fonts/full cold proofs cannot be omitted')
+        if c62 and (scope.get('battleMagicAcceptance') is not None or
+                candidate is not None and int(candidate.get('versionCode',0))>=90) and scope.get('battleMagicAcceptance') != battle_magic.ACCEPTANCE:
+            raise ValueError('Current battle magic touch/phases/fonts/full cold proofs cannot be omitted')
         if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != dict(
                 kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY', screen=[2640, 1216],
                 window=[2640, 1080], safe=[2640, 936], density=3, fonts=[1.0, 1.3, 2.0],
@@ -541,6 +551,10 @@ def main():
                 proofs = field_magic.proof_digests(args.evidence)
                 if any(receipt.get(key) != value for key,value in proofs.items()):
                     raise ValueError('Raw field magic artifacts differ from this reviewed candidate proof')
+            if scope.get('battleMagicAcceptance') == battle_magic.ACCEPTANCE:
+                proofs = battle_magic.proof_digests(args.evidence)
+                if any(receipt.get(key) != value for key,value in proofs.items()):
+                    raise ValueError('Raw battle magic artifacts differ from this reviewed candidate proof')
             print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
             return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):

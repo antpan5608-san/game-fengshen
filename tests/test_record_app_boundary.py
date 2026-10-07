@@ -35,6 +35,12 @@ class RecordingBoundaryTests(unittest.TestCase):
         self.assertEqual('CONTROLLED_SAVE_HISTORY_SMOKE',controlled['kind'])
         self.assertFalse(controlled['continuedExploration'])
         self.assertTrue(controlled['forceStopRestartEqual'])
+    def test_battle_magic_recording_keeps_controlled_limits(self):
+        result=recording_result([],[],True,'CONTROLLED_BATTLE_MAGIC_SMOKE')
+        self.assertEqual('CONTROLLED_BATTLE_MAGIC_SMOKE',result['kind'])
+        self.assertEqual('NOT_APPLICABLE',result['normalAssertions'])
+        self.assertEqual('PASS',result['controlledAssertions'])
+        self.assertFalse(result['continuedExploration'])
     def test_only_scoped_first_preparation_and_hall_batch_have_a_longer_bounded_budget(self):
         for prefix,budget in [('world-first-hall',18000),('world-first-hall',60),('world-hall-batch',7200),('world-west',3600),('town02',60)]:
             self.assertIsNone(validate_recording_budget(prefix,budget))
