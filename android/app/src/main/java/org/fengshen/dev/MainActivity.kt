@@ -729,10 +729,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleScene()?.let{scene->
             val current=battle!!;val cell=scene.touch.enemies[current.enemies.indexOfFirst{it.slot==enemy.slot}]
             val dp=resources.displayMetrics.density
-            val target=battleEnemySceneLayout(cell,dp,resources.configuration.fontScale,scene.compact,current.enemies.size==1).graphic
+            val font=resources.configuration.fontScale
+            val target=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1).graphic
             val w=(graphic?.width?:32).toFloat();val h=(graphic?.height?:40).toFloat()
             val fit=min(target.w/w,target.h/h)
-            val scale=if(fit>=1f)floor(fit)else fit
+            // The compact large-font arena uses its remaining sprite height;
+            // nearest-neighbor drawing keeps the original bitmap unchanged.
+            val scale=if(scene.compact&&font>=2f&&fit<2f)fit else if(fit>=1f)floor(fit)else fit
             return Box(target.x+(target.w-w*scale)/2,target.y+(target.h-h*scale)/2,w*scale,h*scale)
         }
         // A captured single-enemy origin is not a shared origin for every instance in a group.

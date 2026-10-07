@@ -9,12 +9,20 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v87 / 0.8.17-town-room28-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v87 af4f1d5 / build37587677750 / publish37590470949；公网完整字节及postflight通过，已接续法术取证与具体UI欠账
+current_candidate_version: v88 / 0.8.18-battle-sprites-personal；2倍字紧凑敌图比例薄修，本地Debug/编译通过，正式同源签名/App待验；线上v87已复核
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v87已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: 无当前启动/旧档升级阻断；房间28已发布。法术初始身份/习得及效果取证中；2倍字敌图偏小待限定修复；六敌编号原图已复核可读，长期终点未完成。
+
+## v88 当前候选：大字紧凑敌图（2026-10-07）
+
+只修MainActivity紧凑行、font>=2且fit<2时的绘制比例，沿用原图片及filter=false最近邻、同一命中格和现有规则。实际v87元数据font2/4人/6敌：90px图形空间、原32x48图、fit1.875却取整1，旧实图48px高；新候选利用原空间，未据计算冒称新App图已通过。字体1/1.3、非紧凑、其余整数放大分支保持原行为。当前内容c62/hash625a/392文件不变，原29门禁全部保留；实际最新已发布v87作为覆盖基线，golden历史输入不改。
+
+实际本地Debug418JVM/91 suites零失败错误跳过及仪器编译通过（2m45s），不是release签名或App。16原scope/raw proof/29门禁回归51.586s通过。首次本地release调用缺既有签名key、未引号版本参数被PowerShell分成任务、误写测试模块名均保留为本地调用错误；纠正后实际Debug/正确16项通过，不修改签名要求或把错误算成生产故障。正式原CI须再跑release418、21 Content/29个人门禁、当前v87同c62覆盖与首份备份/不造备份、字体实际图和完整cold，再原发布及公网/postflight。
+
+4B snapshot7c1f555841e4d3e27c1e3cfceea14ef1a5031c07a57b2142697fc905b792b96a完整2全新/27.594s已读并登记reviewed；拒绝把旧fit<1缩小/空图默认值冒称新增模糊或缺图、改变线性插值，以及把更新最新已发布基线推定为删除旧档兼容。新候选尚未打包/App/发布，长期终点、法术和其他欠账不变。
 
 ## v87 当前有效交付与下一批（2026-10-07，北京时间）
 
