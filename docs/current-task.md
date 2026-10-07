@@ -9,12 +9,20 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v86 / 0.8.16-battle-ui-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86已发布；房间28 c62 DEBUG正常新游戏/外部cold通过；v87正式29门禁接入中，NOT_SIGNED_NOT_PUBLISHED
+current_candidate_version: v86已发布；v87首次签名build通过，但实际c61旧档恢复失败；兼容标记薄修复测中，NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（待正式签名候选；线上v86仍c61）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 房间28正常新游戏DEBUG已验，须原同源签名候选重跑全部旧26+新3门禁并发布；正常主线至结局、全部UI/导航与十类欠账仍未完成。
+first_real_blocker: 正式v87覆盖v86时旧c61标记被历史1..60兼容范围拒绝；必须修复并新同源签名重跑21 Content/29个人门禁，未发布。
+
+## v87首次签名验收失败：实际c61旧档标记遗漏（2026-10-07，北京时间）
+
+source a04ec38284d5193187093f5492565a5578ce4dad/run37581950501：build成功、417 release JVM/91 suites零失败错误跳过；候选87/0.8.17-town-room28-personal、32,780,692字节/SHA9c8fa143ddd296b8cfdccdad7d351f23574d9ff857d2caf9e8e5c09bcfeb7ae9，原包名/签名/c62 manifest625a/392文件独立验证通过。runtime实际v86正常赠刀导出、同签名覆盖安装和21 Content通过；testUpgradeKeepsPreviousSave在第729行失败，预期旧原map114位置184,360、库存小刀1、一次赠物旗和steps4，仅版本字段升62，实际视图仍为开局136,344/空库存/steps0。其他29门禁及新房间正式录制未运行，完整runtime未通过，未发布；线上仍v86。失败APK、原日志与旧源值保留。
+
+已定位生产SaveSnapshot.compatibleContentVersion历史兼容列表仅1..60；v85→v86同为c61，因此此前未暴露，c61→新c62被拒。只新增已发布c61→精确c62的有界兼容，保留旧1..60/R1、所有场景/调用者/flags位置守卫、未来未知与反向降级拒绝、首份原档备份和失败写入保护。新增JVM边界和Content内对实际v86赠刀端点的controlled完整存档验证/坏map/坏坐标/未来标记拒绝。不是修改断言为接受空进度；新编译、4B审查及同源正式覆盖复测尚待完成，不能发布失败旧APK。
+
+薄修本地418 debug JVM/91 suites零失败错误跳过、仪器编译2m23s、4原room scope/证据缺失/失败分派检查4.296s通过。4B snapshot ca9224eb15257d48fcc5e0d0347ea0952286165d7d0d6e13d5a4e8b72d0560b7完整3全新片段/41.859s/无未覆盖，全部已读并登记reviewed；保留历史c60拒绝61与新61→精确62、未来/反向拒绝，拒绝模型将未发布62误称STABLE或将允许真实升级误称错误的建议。下一步新同源签名覆盖复测，不能用旧失败hash交付。
 
 ## 房间28 DEBUG通过与正式候选准备（2026-10-07，北京时间）
 

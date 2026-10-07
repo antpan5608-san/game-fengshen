@@ -374,6 +374,15 @@ class ContentTest:IsolatedGameTestCase(){
             158,159,163,164,171,172),c.scenes.keys)
         assertJiangFrozenCapabilities(c)
         val room=c.scenes.getValue(28)
+        // CONTROLLED validation of the actual failed v86 normal gift endpoint.
+        // Marker admission still requires every existing scene/state/caller guard.
+        val previous=SaveSnapshot("opening-segment-001-c61",114,184,360,Key.DOWN,
+            listOf(c.initialPlayer),mapOf(OpeningEquipment.KNIFE_ID to 1),
+            mapOf("opening.intro.seen" to true,"rom.npc.114.2" to true),money=0,encounterSteps=4)
+        assertTrue(previous.validate(c));assertEquals(previous,SaveSnapshot.parse(previous.json().toString()))
+        assertFalse(previous.copy(mapId=999).validate(c))
+        assertFalse(previous.copy(x=185).validate(c))
+        assertFalse(previous.copy(contentVersion="opening-segment-001-c63").validate(c))
         assertEquals(16,room.width);assertEquals(15,room.height)
         val enter=c.exits.single{it.fromMapId==0&&it.toMapId==28}
         val back=c.exits.single{it.fromMapId==28}
