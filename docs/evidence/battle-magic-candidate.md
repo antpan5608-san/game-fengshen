@@ -1,6 +1,12 @@
 # 战斗提神术与解毒术：当前有限代码批次
 
-状态：IMPLEMENTED_IN_WORKTREE / LOCAL_TESTED；正式签名构建、同候选 App、发布和公网均 NOT_RUN。当前线上仍 v89，长期 MAGIC-ORIGINAL-01 A/B/C、BATTLE-VISUAL-02 和所有未完成欠账不关闭。
+状态：IMPLEMENTED / LOCAL_TESTED / PACKAGED；source7f011ab的实际同候选 App 验收失败，定向修隔离驱动中，未 App 通过/发布/公网。当前线上仍 v89，长期 MAGIC-ORIGINAL-01 A/B/C、BATTLE-VISUAL-02 和所有未完成欠账不关闭。
+
+## 正式候选失败与定向修正
+
+2026-10-07原build37641724001成功，runtime无job/未执行，页面Internal server error、correlation3ce665b7-74b6-4829-b956-e88f81db6c1b；failed rerun被平台拒绝。相同源7f011ab再运行37644034300，build成功，437 release JVM/94 suites零失败；APK32,806,652字节/fullSHA02ab63d679e27a4d116b833955a50c516ae8050649aa9e9f7d6da26d47f6ba2e经独立签名/版本/内容验包。两个同源构建字节不同，不复用首包SHA。
+
+真实App在2倍字体TouchTest:120、otherCommands:76失败：expected yangjian / actual xiaolongnv。实际selection PNG仅显示提神术，解毒术在滚动区域下方，选择为空；1/1.3倍字体HEAL44→TEXT41 / STATUS41→TEXT38及战后完整保存JSON实际通过。外部cold和最终33门禁未到达，不称App通过。分类TEST_HARNESS，复用已有scrollToBattleItem真实手势使目标行至少48dp可点，再按稳定ID选择，新增实际selectedBattleItem及滚动/选择不变队伍、MP、inputRevision、RNG、完整保存断言；不修改规则或删大字检查。修改后另行新4B/编译/同源App；failed候选不发布。原失败图/日志保留私有忽略目录。
 
 ## 原版依据与边界
 
@@ -23,7 +29,7 @@ BattleActionStep.partyMp 新增为构造体外字段，旧构造/跨APK ABI保�
 
 ## 实际 App 门禁与发布约束
 
-原31门禁全部保留，新增 battleMagicFourRoleTouchPhasesAndFonts、battleMagicFullSaveExternalCold，共33。三字体1/1.3/2的隔离四人真实触摸、HEAL44→TEXT41 / STATUS41→TEXT38完整队伍阶段图/JSON、实际物理胜利/原事务提交、原录像器完整保存外部冷启及偏好恢复必须同正式候选通过。当前未执行；测试不能在真实设备上写fixture，原IsolatedGameTestCase守卫保留。录屏为静音，无真机/声音/正常入队/完整主线宣称。
+原31门禁全部保留，新增 battleMagicFourRoleTouchPhasesAndFonts、battleMagicFullSaveExternalCold，共33。三字体1/1.3/2的隔离四人真实触摸、HEAL44→TEXT41 / STATUS41→TEXT38完整队伍阶段图/JSON、实际物理胜利/原事务提交、原录像器完整保存外部冷启及偏好恢复必须同正式候选通过。首次实际执行范围与失败见上文；完整33门禁尚未通过。测试不能在真实设备上写fixture，原IsolatedGameTestCase守卫保留。录屏为静音，无真机/声音/正常入队/完整主线宣称。
 
 runtimeBaseline仍实际已发布 v89/source588f60d/build37624018494/完整SHA1cf7f56c…，内容 c62/manifest625a…/392文件与历史导出基底保持。runtime-scope 的33项内容hash已重新绑定；历史 golden scope/旧29、31验收仍按原版本有效。新候选code90时不能重哈希删除战斗法术门禁或raw digest，正式版本号和来源以实际构建回执为准。
 
@@ -34,3 +40,5 @@ runtimeBaseline仍实际已发布 v89/source588f60d/build37624018494/完整SHA1c
 最终本地追加49项 Python SUCCESS10.206s、27历史UI/handoff/c61回归SUCCESS16.086s；原runtime Bash语法及diff-check通过。原collector遗漏battle-magic前缀已精确加入png/json白名单，真实PYEVIDENCE块使用隔离adb传输测试证明新文件被收集、raw/player输入仍排除；这不是App。scope按严格LF核hash后固定33门禁。
 
 4B初轮32全新431.203s全部实际阅读；最终snapshot5ac39123f5b8956d5dcf4a9701dc58d685801a26f4640ae93621a64e5dbf3086，34段/6全新97.641s/无未覆盖，28缓存文本逐字节与已读相同，新6段全读，已原CLI决定登记reviewed。保留已核原版边界、原失败/ABI/存档保护和实际App未执行状态；拒绝模型删除硬门禁、混淆发布回执与玩家存档、虚构缺方法/变量/MP写入及把合成测试冒充App的建议。
+
+滚动修正实际compileDebugAndroidTestKotlin通过1m58s；Debug JVM任务UP-TO-DATE，既有437结果保持，未冒称此次重跑437。新4B snapshot451fb13093b9a36d772fb8c67fdb50117dcc4ee551dc6b23928efe251c042036，1全新/15.735s、无未覆盖、全文已读。拒绝删除输入收集期间RNG/inputRevision断言（该阶段本来不得采样/提交）、为隔离测试增加生产API、使用不存在的TextMeasurements；反射限既有隔离测试，无玩家数据写入，实际PNG仍须查看。修正后正式同源验收待执行。

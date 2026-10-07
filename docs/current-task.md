@@ -9,7 +9,7 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v89 / 0.8.19-field-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v90 / 0.8.20-battle-magic-personal，LOCAL_TESTED；进入正式同源构建，尚未App/发布
+current_candidate_version: v90 / 0.8.20-battle-magic-personal，PACKAGED；同候选App验收失败后定向修驱动，尚未App通过/发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
@@ -17,6 +17,8 @@ manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8be
 first_real_blocker: 法术A/B/C未完成，战斗与其余地图能力未开放；继续原执行/目标/MP/RNG取证与既有四人调度接入，正常原结局/真机/声音欠账不关。
 
 ## 战斗初始法术当前有限代码批次（未正式App/发布）
+
+原source7f011ab的build37641724001打包成功，runtime未创建，GitHub页面实际报Internal server error（correlation3ce665b7-74b6-4829-b956-e88f81db6c1b）；原failed重试被拒绝后，同源全流程37644034300实际执行App。新APK32,806,652字节/fullSHA02ab63d679e27a4d116b833955a50c516ae8050649aa9e9f7d6da26d47f6ba2e独立验包及437 release JVM/94 suites零失败通过。runtime在2倍字体TouchTest:120失败：应为yangjian，实际仍xiaolongnv；真实截图显示解毒术尚在列表可视区域外、选择为空。1/1.3倍字体两轮效果/扣费及战后完整保存检查通过，外部cold尚未运行。分类TEST_HARNESS：复用已有scrollToBattleItem真实滚动至48dp可点行后选择，并新增稳定spellID及滚动/选择不改变队伍、MP、输入revision、RNG、完整保存的断言；不改玩家规则/布局、不删2倍字体门禁。该修正仍须新4B/编译/同源正式候选App；failed APK不发布，线上v89保持。
 
 2026-10-07 已在原 OpeningBattle 四人队列接入小龙女提神术/解毒术、BattleActionStep 分阶段MP和原物品模态动作→目标→确认。实际437 Debug JVM/94 suites零失败/错误/跳过、仪器编译2m36s通过；49项raw-proof/范围/原表/录屏及27历史UI/handoff/c61回归通过。最初测试helper回合后继续循环的7m41s失败保留，修有界后437通过；不是游戏调度变更。首轮4B32全新431.203s全读，最终34片段/6新97.641s、28缓存文本逐字节已读，snapshot5ac39123f5b8956d5dcf4a9701dc58d685801a26f4640ae93621a64e5dbf3086已CLI登记reviewed。拒绝删除存档/初始习得/模态/原raw门禁、把合成传输字节当App、将发布回执混为玩家存档等不成立建议。额外发现并精确补齐原collector新battle-magic前缀，真实PYEVIDENCE隔离传输测试通过；scope按LF绑定33门禁，旧31保持。实际App/正式新APK/发布均 NOT_RUN；详见evidence/battle-magic-candidate.md，当前线上v89不变。
 

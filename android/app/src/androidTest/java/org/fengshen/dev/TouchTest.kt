@@ -68,8 +68,19 @@ class TouchTest:IsolatedGameTestCase(){
             instrumentation.runOnMainSync{v.active=true}
         }
         fun open(spell:String){
-            tap(v,center(v.battleCommandBounds(1)));tap(v,center(v.battleItemBounds(spell)))
+            tap(v,center(v.battleCommandBounds(1)))
+            val revision=fight.inputRevision;val draws=rng.draws;val party=fight.party.toList()
+            // The second learned spell is below the viewport at 2x font.
+            // Use the same real scrolling helper as the existing battle-item tests.
+            scrollToBattleItem(v,spell)
+            tap(v,center(v.battleItemBounds(spell)))
+            var selected:String?=null
+            instrumentation.runOnMainSync{selected=GameView::class.java.getDeclaredField("selectedBattleItem")
+                .apply{isAccessible=true}.get(v) as String?}
+            assertEquals("Actual visible spell selection",spell,selected)
             tap(v,center(v.battleItemTargetBounds("nezha")))
+            assertEquals(revision,fight.inputRevision);assertEquals(draws,rng.draws)
+            assertEquals(party,fight.party);assertEquals(before,v.currentSnapshot())
         }
         fun otherCommands(){
             for(id in listOf("yangjian","jiangziya")){
