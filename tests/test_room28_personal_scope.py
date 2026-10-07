@@ -51,6 +51,18 @@ class Room28PersonalScopeTest(unittest.TestCase):
         for key in ('audio','onePlus13T','stableAcceptance','manual_acceptance'):
             with self.assertRaises(ValueError):h.review_personal(dict(receipt,**{key:'PASS'}))
 
+    def test_publisher_scope_query_needs_only_stdlib_but_raw_png_proof_requires_pillow(self):
+        # Reproduce the actual publisher ordering without global/site packages.
+        result=subprocess.run([sys.executable,'-S','tools/runtime_handoff.py','scope','--field','quality'],
+            cwd=ROOT,capture_output=True,text=True,timeout=15)
+        self.assertEqual(0,result.returncode,result.stderr)
+        self.assertIn(result.stdout.strip(),('PERSONAL_TEST','STABLE'))
+        result=subprocess.run([sys.executable,'-S','-c',
+            "from tools.room28_evidence import proof_digests; proof_digests('.')"],
+            cwd=ROOT,capture_output=True,text=True,timeout=15)
+        self.assertNotEqual(0,result.returncode)
+        self.assertIn("No module named 'PIL'",result.stderr)
+
     def test_self_consistent_scope_hash_cannot_omit_original_guards(self):
         for mutation in ('normalEndpoint','proofKeys','screenshots','font','gate','jiang','content','roomMap','oldMap','fullEndpoint'):
             scope=copy.deepcopy(self.scope)

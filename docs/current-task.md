@@ -9,12 +9,22 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v86 / 0.8.16-battle-ui-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86已发布；v87首次签名build通过，但实际c61旧档恢复失败；兼容标记薄修复测中，NOT_PUBLISHED
+current_candidate_version: v86已发布；v87来源b8e68b1正式21 Content/29门禁通过；首次发布因scope提前导入Pillow失败，依赖时序薄修中，NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（待正式签名候选；线上v86仍c61）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 正式v87覆盖v86时旧c61标记被历史1..60兼容范围拒绝；必须修复并新同源签名重跑21 Content/29个人门禁，未发布。
+first_real_blocker: v87实际旧档升级已修复并验收；发布scope查询在安装图像依赖前因room模块顶层PIL导入失败，须薄修后新同源签名/29门禁及原发布，未发布。
+
+## v87正式App通过与发布依赖顺序缺口（2026-10-07，北京时间）
+
+source b8e68b1b963bd869096ce7bc8f1baf5adb5b64a1/run37583981445 build/runtime实际SUCCESS。418 release JVM/91 suites零失败错误跳过、21 Content、原26+room3全部29同签名个人门禁通过；实际v86/c61正常赠刀旧档完整恢复、首份迁移前raw备份及后续两次controlled版本字段迁移保留首份备份。候选32,780,784字节/SHA3c08cd733fd4c1220874e4e70d6ace618d3e0bb80268014b41cbd1f995d41fa2，原包名/签名/c62 manifest625a/392文件独立复核；73只是依赖图数。正常房间触摸43.913s、完整cold等值与返程再调查通过，原87战斗PNG+7room PNG/6 metrics/11日志及8 MP4完整字节校验，4组cold完整before-after相等、偏好恢复通过。独立proof battle9843e3fe、room recorder8093ce0d/cold ef813e2f/UI6668aace、Jiang ae8abdbc/cold80373ddf。
+
+实际目视本次7room截图、6三字体四人/六敌/胜利图、8原片末帧和room后续恢复图。2倍字敌图较小，room早期cold截图未画HUD，后续恢复/再调查有HUD与控件；history及Jiang首段末帧为Android桌面，不能称这些末帧显示App或逐段全程播放。PERSONAL_TEST/manual=PENDING，音频/真机/全剧情及其他界面欠账仍未验。
+
+首次原publish37586776216：approve SUCCESS，publish在Require successful trusted build的runtime_handoff scope查询被ModuleNotFoundError:PIL阻断，未进入上传/凭据获取。原publisher稍后已有精确Pillow安装，但新room28模块顶层导入使查询提前依赖它。只将Image加载移至实际raw proof函数，与旧UI工具一致；scope/source元数据查询保持标准库即可，真实PNG验证仍必须图像库、缺依赖继续失败，不忽略任何缺图/字节/来源/签名/reviewer门禁。新的无site-packages真实子进程回归验证查询成功而图片proof拒绝缺Pillow；新审查后须新同源完整签名验收，不发布改变来源后的旧3c08候选。线上仍v86，旧升级失败与本次发布失败保留。
+
+依赖薄修20项原room/UI/c61scope/原字节/缺文件/29门禁及失败分派回归22.169s通过；真实-S子进程查询PERSONAL_TEST成功，缺Pillow的实际PNGproof仍被拒绝。4B snapshot66b9dd4313c1b42f95d28441865a07a683ff2ba1097a5731116a65b273367a82完整2全新片段/24.422s/无未覆盖，全部已读并登记reviewed。拒绝对真实图片校验作缺依赖降级，以及误称Python严格type判断不能区分None/float的建议。下一步新同源签名与原发布，无Android/规则/内容改动；同源保护不放宽。
 
 ## v87首次签名验收失败：实际c61旧档标记遗漏（2026-10-07，北京时间）
 

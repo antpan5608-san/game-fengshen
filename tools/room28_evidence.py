@@ -2,7 +2,6 @@
 import hashlib
 import json
 from pathlib import Path
-from PIL import Image
 
 SCOPE = 'WORLD-C62-ROOM-PERSONAL'
 GATES = ['room28NormalEntryHintAndReturn', 'room28NormalHiddenMedicineOnce',
@@ -36,6 +35,9 @@ def validate_digests(receipt):
 
 
 def proof_digests(directory):
+    # Scope/source queries run before the original publisher installs Pillow.
+    # Actual image verification still requires it and must fail if unavailable.
+    from PIL import Image
     directory = Path(directory)
     recording, recording_bytes = read(directory / 'world-room28-recording.json')
     boundary, boundary_bytes = read(directory / 'world-room28-cold-boundary.json')
