@@ -1,7 +1,7 @@
 {
   "status": "SCOPED_ORIGINAL_CPU_EVIDENCE_NOT_NORMAL_JOIN_OR_ANDROID",
   "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
-  "scriptSha256": "b40a3e0ebafad00ca7549e7b8aeceb82dd2b0cb2204b322981f5659c8aa302b5",
+  "scriptSha256": "8707bb4202390f089d12a09b93373dded1e81c3995a84eca7551e662885b6b62",
   "results": [
     {
       "name": "battle-availability-controlled-original",
@@ -19,6 +19,24 @@
       "name": "heal-controlled-original",
       "cases": 240,
       "sha256": "73b1280757b4c5414670fce2faf464472f5347a0012ca00e2bc342ac12a233eb",
+      "failures": 0
+    },
+    {
+      "name": "field-caster-status-controlled-original",
+      "cases": 256,
+      "sha256": "6ddeb3bcb1e8091700e048243b9069c87d4e6d7fb81aae55198e35b0392920f6",
+      "failures": 0
+    },
+    {
+      "name": "field-heal-target-status-controlled-original",
+      "cases": 512,
+      "sha256": "fd4b3e5e1fd63a598247da8d92d73f9438f5b3af1bb8d6065ef1149ddd5e89e1",
+      "failures": 0
+    },
+    {
+      "name": "field-mp-validation-controlled-original",
+      "cases": 2052,
+      "sha256": "5915e3336bd69fa436cf4f26363cd7eb048ab52e638fc3cfa95c4d707856813b",
       "failures": 0
     }
   ],
@@ -536,16 +554,42 @@
       "module": 2,
       "cpuAddress": 61117,
       "meaning": "Original integer multiply/add/divide"
+    },
+    {
+      "offset": 74420,
+      "length": 52,
+      "sha256": "5519169e44bceb3327524749065c129f00529554c298a344dd886c1f10ab6321",
+      "module": 2,
+      "cpuAddress": 41636,
+      "meaning": "Native-observed caster status validation; message call excluded"
+    },
+    {
+      "offset": 74659,
+      "length": 82,
+      "sha256": "3b1ca8aeae004d48e9665a733432408a9f7cf86530577bcf4601b7ccef09775e",
+      "module": 2,
+      "cpuAddress": 41875,
+      "meaning": "Native-observed healing target status validation; message call excluded"
+    },
+    {
+      "offset": 69866,
+      "length": 54,
+      "sha256": "f851a1ce624f4812eef03aae11c00ce5f6cad7521538d177751aeb7a28478497",
+      "module": 2,
+      "cpuAddress": 37082,
+      "meaning": "MP validation before scene dispatch or deduction"
     }
   ],
   "limits": [
     "Field selector0 aliases Xiao table; it is not permission for Nezha magic",
     "Reference role IDs, original actorIndex and battle ActiveActorId differ",
-    "No spell name, target legality, normal growth/join or Android assertion",
+    "No spell name, full target legality, normal growth/join or Android assertion",
     "Healing starts after menu validation; supplied target/cost are controlled",
     "Only message JSR804F skipped; stop924E before UI; no unknown target rule assumed",
     "Native initial uncapped heal observed53 independently; other cases remain CPU-controlled",
-    "Original party search increments once without looping; do not substitute reference formula"
+    "Original party search increments once without looping; do not substitute reference formula",
+    "Field status predicates scoped to Xiao caster and healing rows0/4; only refusal renderer skipped",
+    "MP prefix stops before scene dispatch; acceptance alone does not authorize a spell or apply an effect"
   ],
   "controlledNativeFixtureSha256": "e011ed846bae4c871d437a426f37b09e920259de41cca0d1519360a9cf15987a"
 }

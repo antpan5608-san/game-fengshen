@@ -152,6 +152,8 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "Village5 hidden pickup export regression failed" }
     & python -m unittest discover -s tests -p test_world_evidence_checkout.py
     if($LASTEXITCODE -ne 0){throw 'Strict original CPU table byte hashes failed'}
+    & python -m unittest discover -s tests -p 'test_field_magic*.py'
+    if($LASTEXITCODE -ne 0){throw 'Field magic raw evidence, historical scope and mandatory same-candidate gates failed'}
     }
     Push-Location (Join-Path $root 'android')
     try {

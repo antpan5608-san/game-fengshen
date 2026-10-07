@@ -9,12 +9,18 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v88 / 0.8.18-battle-sprites-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v88已发布并公网完整字节复核；postflight NO_DATA，实机健康UNKNOWN；已接续法术取证，无新候选或已开放法术
+current_candidate_version: v89/0.8.19-field-magic-personal 提神术有限候选，IMPLEMENTED_LOCAL_VERIFIED，未签名App验收/发布；线上88
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 暂无正式模拟器启动/旧档验收阻断；postflight NO_DATA不能证明实机健康。大字紧凑敌图有限修复已发布，法术施法者/目标及初始battle取证中；长期终点未完成。
+first_real_blocker: 新提神术候选待4B最终阅读决策、原同源签名App/31门禁及发布；已有本地423 JVM与3700原CPU通过。其他法术/主线和长期终点未完成。
+
+## v89 提神术有限候选与新巡检样本（2026-10-07）
+
+详见[候选证据](evidence/field-magic-candidate.md)。复用现有角色页和保存事务，地图提神术动作→目标→确认，取消/重复不结算，HP与MP一次保存/失败回滚。原 native 两个状态 read 地址及3700 CPU、旧880矩阵不变，实际423 Debug JVM/92 suites及仪器编译通过，29 Python 检查通过；首次重排队伍等级寻址错误已由原矩阵捕获并修正，失败记录保留。正式 scope 保留29+2=31，v88实际基线/同c62；历史 golden 不改。未打包/App/发布，A/B/C仍未完成。
+
+原 inspect37604805219 SUCCESS；10:03:45Z preflight 新收到103个v88事件/1实机会话，NO_ISSUES_OBSERVED/errors{}，仅此上传样本。v88发布时postflight NO_DATA保持原始事实，不改成当时已有实机样本。旧交付与全部欠账如下保留。
 
 ## v88 当前有效交付与法术接续（2026-10-07）
 

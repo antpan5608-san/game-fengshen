@@ -39,7 +39,7 @@ def read_saved_boundary(read_pref,pause=time.sleep,attempts=20):
     raise SavedBoundaryUnavailable(f'Actual persisted save unavailable after {attempts} reads ({last})')
 
 def recording_result(videos,segments,controlled=False,controlled_kind='CONTROLLED_SAVE_HISTORY_SMOKE'):
-    if controlled_kind not in ('CONTROLLED_SAVE_HISTORY_SMOKE','CONTROLLED_JIANG_INVITATION_SMOKE'):
+    if controlled_kind not in ('CONTROLLED_SAVE_HISTORY_SMOKE','CONTROLLED_JIANG_INVITATION_SMOKE','CONTROLLED_FIELD_MAGIC_SMOKE'):
         raise ValueError('Unknown controlled recording kind')
     result={'source':'Actual Android App screenrecord; SILENT, no sound validation','videos':videos,
         'segments':segments,'normalAssertions':'NOT_APPLICABLE' if controlled else 'PASS',
@@ -83,6 +83,12 @@ def record_silent():
         sys.argv.remove('--controlled-jiang')
         assert prefix=='world-jiang' and method=='testControlledJiangInvitationPendingAtColdBoundary'
         assert cold_method=='testJiangExternalColdStartMatchesPendingAndCompletesOnce'
+    if '--controlled-field-magic' in sys.argv:
+        assert not controlled and not comparison
+        controlled=True;controlled_kind='CONTROLLED_FIELD_MAGIC_SMOKE'
+        sys.argv.remove('--controlled-field-magic')
+        assert prefix=='world-field-magic' and method=='testControlledFieldMagicSelectionCancelCommitAndSave'
+        assert cold_method=='testFieldMagicExternalColdStartPreservesFullSave'
     def adb(*args,**kwargs):
         return subprocess.run(['adb','-s','emulator-5554',*args],check=True,capture_output=True,timeout=90,**kwargs).stdout
     assert b'ranchu' in adb('shell','getprop','ro.hardware'), 'Isolated emulator only'

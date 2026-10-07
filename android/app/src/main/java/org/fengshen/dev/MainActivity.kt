@@ -187,6 +187,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     val selectedCharacterId get()=characters.getOrNull(characterPage)?.id
     private var panelReturnLayer=Layer.MENU
     private var selectedItemId:String?=null
+    private var selectedFieldSpell:String?=null
+    private var fieldMagicCaster:String?=null
+    private var fieldMagicChoosingTarget=false
     private var modalDialog:AlertDialog?=null
     private var previousMessage=""
     private var noticeUntil=0L
@@ -1230,6 +1233,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         panelReturnLayer=layer;if(finishPendingStep())return
         input.clear();hudTouch.clear();npcTouch.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();clock.reset()
         characterPage=0;selectedItemId=null;candidateSlot=null;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false;uxRevision++
+        clearFieldMagic()
         panelTab=if(which==Layer.INVENTORY)CharacterTab.ITEMS else CharacterTab.ATTRIBUTES
         layer=which
     }
@@ -1303,14 +1307,24 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         val l=touchModalLayout(ui.safe,resources.displayMetrics.density,resources.configuration.fontScale,
             if(layer==Layer.SHOP)2 else 4,if(layer==Layer.SHOP)0 else characters.size,layer!=Layer.SHOP&&panelTab==CharacterTab.EQUIPMENT)
-        if(layer!=Layer.SHOP&&panelTab in listOf(CharacterTab.ATTRIBUTES,CharacterTab.MAGIC)){
+        if(layer!=Layer.SHOP&&(panelTab==CharacterTab.ATTRIBUTES||panelTab==CharacterTab.MAGIC&&fieldSpells().isEmpty())){
             val dp=resources.displayMetrics.density
             return l.copy(list=Box(0f,0f,0f,0f),detail=Box(l.frame.x+8*dp,l.list.y,l.frame.w-16*dp,l.list.h),
                 primary=Box(0f,0f,0f,0f),secondary=Box(0f,0f,0f,0f))}
         return l
     }
     private fun clearUxGesture(){uxGesture=null;uxBlocked=false}
-    private fun resetModalSelection(){clearUxGesture();uxRevision++;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false}
+    private fun clearFieldMagic(){selectedFieldSpell=null;fieldMagicCaster=null;fieldMagicChoosingTarget=false}
+    private fun resetModalSelection(){clearUxGesture();clearFieldMagic();uxRevision++;modalListScroll=0f;modalDetailScroll=0f;modalDetailsOpen=false}
+    private fun fieldMagicIndices()=content.characterDefinitions.mapValues{it.value.originalActorIndex}
+    private fun fieldMagicHero()=characters.firstOrNull{it.id==fieldMagicCaster}?:characters[characterPage]
+    private fun fieldSpells():List<String> = if(content.fieldMagicEnabled&&
+        OriginalFieldMagic.learned(fieldMagicHero(),content.characterDefinitions[fieldMagicHero().id]?.originalActorIndex?:-1))
+        listOf(OriginalFieldMagic.SPELL_ID) else emptyList()
+    private fun fieldMagicReason()=if(!content.fieldMagicEnabled)"法术规则尚未开放" else
+        OriginalFieldMagic.unavailable(characters,fieldMagicIndices(),fieldMagicHero().id,characters[characterPage].id,
+            selectedFieldSpell?:"",panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+    fun panelSpellBounds(id:String)=modalLayout().visibleRow(fieldSpells().indexOf(id),modalListScroll)
     private fun panelItems()=inventoryEntries().filter{entry->candidateSlot==null ||
         content.equipmentDefinitions[entry.key]?.let{it.slot==candidateSlot&&OpeningEquipment.replace(characters[characterPage],inventory,it,content.equipmentDefinitions.values)!=null}==true}
     fun panelTabBounds(index:Int)=tabBox(index)
@@ -1390,10 +1404,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val visible=l.visibleRow(index,modalListScroll)
             if(l.list.contains(x,y)&&visible.h>=48*resources.displayMetrics.density){
                 if(panelTab==CharacterTab.ITEMS)panelItems().getOrNull(index)?.let{return ModalCommand("item",it.key,hero.id,mode=candidateSlot)}
+                else if(panelTab==CharacterTab.MAGIC)fieldSpells().getOrNull(index)?.let{return ModalCommand("field-spell",it,fieldMagicHero().id)}
                 else if(panelTab==CharacterTab.EQUIPMENT)listOf("rightHand","leftHand","body","feet").getOrNull(index)?.let{return ModalCommand("slot",targetId=hero.id,slot=it)}
             }
         }
         if(l.wide||modalDetailsOpen){
+            if(panelTab==CharacterTab.MAGIC&&selectedFieldSpell!=null&&l.primary.contains(x,y)&&fieldMagicReason()==null)
+                return ModalCommand(if(fieldMagicChoosingTarget)"cast-field-spell" else "choose-field-magic-target",selectedFieldSpell,hero.id)
             if(panelTab==CharacterTab.ITEMS&&l.primary.contains(x,y)){
                 val a=itemAction();if(a.enabled&&a.kind!=null)return ModalCommand(a.kind,selectedItemId,a.target,mode=candidateSlot)
             }
@@ -1409,8 +1426,23 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         uxRevision++;clearUxGesture()
         when(cmd.kind){
             "close"->closePanel()
-            "back-list"->{modalDetailsOpen=false;modalDetailScroll=0f}
-            "hero"->{characters.indexOfFirst{it.id==cmd.targetId}.takeIf{it>=0}?.let{characterPage=it};selectedItemId=null;candidateSlot=null;resetModalSelection()}
+            "back-list"->{if(panelTab==CharacterTab.MAGIC){fieldMagicCaster?.let{id->characters.indexOfFirst{it.id==id}.takeIf{it>=0}?.let{characterPage=it}};clearFieldMagic()};modalDetailsOpen=false;modalDetailScroll=0f}
+            "hero"->{characters.indexOfFirst{it.id==cmd.targetId}.takeIf{it>=0}?.let{characterPage=it};selectedItemId=null;candidateSlot=null
+                if(panelTab==CharacterTab.MAGIC&&fieldMagicChoosingTarget)modalDetailScroll=0f else resetModalSelection()}
+            "field-spell"->{if(cmd.itemId !in fieldSpells()||cmd.targetId!=fieldMagicHero().id)return
+                selectedFieldSpell=cmd.itemId;fieldMagicCaster=fieldMagicHero().id;fieldMagicChoosingTarget=false;modalDetailsOpen=true;modalDetailScroll=0f}
+            "choose-field-magic-target"->{if(panelTab!=CharacterTab.MAGIC||selectedFieldSpell!=cmd.itemId||fieldMagicChoosingTarget||fieldMagicReason()!=null)return
+                fieldMagicChoosingTarget=true;modalDetailScroll=0f}
+            "cast-field-spell"->{
+                if(panelTab!=CharacterTab.MAGIC||!fieldMagicChoosingTarget||selectedFieldSpell!=cmd.itemId||selectedCharacterId!=cmd.targetId||fieldMagicReason()!=null)return
+                val before=currentSnapshot();val caster=fieldMagicHero().id
+                val result=OriginalFieldMagic.apply(characters,fieldMagicIndices(),caster,cmd.targetId?:return,cmd.itemId?:return,
+                    panelReturnLayer in listOf(Layer.MAP,Layer.MENU))
+                if(!result.applied){feedback(result.error?:"当前不能施法");return}
+                characters=result.characters;commitModal(before,"${heroName(caster)}使用${OriginalFieldMagic.NAME}")
+                characters.indexOfFirst{it.id==caster}.takeIf{it>=0}?.let{characterPage=it};resetModalSelection()
+                modalDetailsOpen=true // Keep the actual save result visible on narrow layouts; a new selection is still required.
+            }
             "item"->{if(panelItems().none{it.key==cmd.itemId})return;selectedItemId=cmd.itemId;modalDetailsOpen=true;modalDetailScroll=0f}
             "slot"->{equipmentSlot=cmd.slot?:return;modalDetailsOpen=true;modalDetailScroll=0f}
             "candidates"->{candidateSlot=cmd.slot;panelTab=CharacterTab.ITEMS;selectedItemId=null;resetModalSelection()}
@@ -1686,7 +1718,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(!uxBlocked&&g!=null){val i=e.findPointerIndex(g.pointer);if(i>=0){val x=e.getX(i);val y=e.getY(i)
                     if(hypot(x-g.x,y-g.y)>ViewConfiguration.get(context).scaledTouchSlop){g.dragged=true;g.command=null}
                     if(g.dragged){val delta=g.lastY-y
-                        if(g.scrollArea==1){val count=if(clinic!=null)characters.size else if(layer==Layer.SHOP)shopEntries().size else if(panelTab==CharacterTab.ITEMS)panelItems().size else 4
+                        if(g.scrollArea==1){val count=if(clinic!=null)characters.size else if(layer==Layer.SHOP)shopEntries().size else if(panelTab==CharacterTab.ITEMS)panelItems().size else if(panelTab==CharacterTab.MAGIC)fieldSpells().size else 4
                             modalListScroll=(modalListScroll+delta).coerceIn(0f,l.maxScroll(count))}
                         if(g.scrollArea==2)modalDetailScroll=max(0f,modalDetailScroll+delta)
                     };g.lastY=y}}
@@ -1749,7 +1781,25 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun drawDirectPanel(c:Canvas){
         val l=modalLayout();val hero=characters[characterPage]
         touchFrame(c,"${heroName(hero.id)}  Lv.${hero.level}","HP ${hero.hp}/${hero.maxHp} · MP ${hero.mp}/${hero.maxMp?:"?"} · 银两 $money",listOf("属性","装备","物品","法术"),panelTab.ordinal)
-        if(panelTab in listOf(CharacterTab.ATTRIBUTES,CharacterTab.MAGIC)){
+        if(panelTab==CharacterTab.MAGIC){
+            val caster=fieldMagicHero();val spells=fieldSpells()
+            if(spells.isEmpty()){
+                touchDetail(c,listOf(if(content.characterDefinitions[hero.id]?.originalActorIndex==0)"哪吒不会使用法术" else "此角色的法术效果尚未开放",
+                    "其他治疗、解毒、战斗及地图法术仍待接入"));return
+            }
+            if(l.wide||!modalDetailsOpen)touchRows(c,spells.map{Triple(it,"${OriginalFieldMagic.NAME}\nMP ${OriginalFieldMagic.COST} · 地图治疗",null)},selectedFieldSpell)
+            if(l.wide||modalDetailsOpen){
+                val lines=mutableListOf(if(selectedFieldSpell==null)"请选择法术" else OriginalFieldMagic.NAME,
+                    "施法者 ${heroName(caster.id)} · MP ${caster.mp}/${caster.maxMp?:"?"}","消耗 MP ${OriginalFieldMagic.COST}")
+                if(fieldMagicChoosingTarget)lines+="请选择上方队员作为目标：${heroName(hero.id)} · HP ${hero.hp}/${hero.maxHp}"
+                else lines+="选择法术后，点击选择目标"
+                if(selectedFieldSpell!=null)fieldMagicReason()?.let{lines+=it}
+                lines+="仅开放地图提神术；其他法术继续接入中"
+                touchDetail(c,lines)
+                if(selectedFieldSpell!=null)touchButton(c,l.primary,if(fieldMagicChoosingTarget)"使用于${heroName(hero.id)}" else "选择目标",fieldMagicReason()==null)
+            };return
+        }
+        if(panelTab==CharacterTab.ATTRIBUTES){
             val progress=growthProgress(hero)
             val lines=if(panelTab==CharacterTab.MAGIC)listOf("已学法术状态尚未迁移","执行逻辑尚未开放") else
                 listOf("当前等级 ${hero.level}",if(progress.status==ExperienceProgress.Status.PROGRESS)"下一等级 ${hero.level+1}" else progress.summary,

@@ -165,6 +165,75 @@ def healing(reader, output, fixture):
     return write_cases(output, "heal-controlled-original", rows)
 
 
+def field_validation(reader, output, fixture):
+    """Execute native-observed menu predicates, before any MP/effect commit."""
+    raw = fixture.read_bytes()
+    if len(raw) != 0x800 or hashlib.sha256(raw).hexdigest() != HEAL_RAM_SHA256:
+        raise ValueError("Exact independently captured private menu RAM required")
+    results = []
+    for kind, entry, phase, expected_message in (
+            ("caster", 0xa2a4, 7, 0xa2c6),
+            ("heal-target", 0xa393, 12, 0xa3d8)):
+        rows = ["spellIndex\tstatusByte\tphaseBefore\tphaseAfter\trefused\tMPBefore\tMPAfter"]
+        for spell, status in itertools.product((0,) if kind == "caster" else (0, 4), range(256)):
+            cpu = MPU()
+            cpu.memory[:0x800] = raw
+            cpu.memory[0x8000:] = reader.read(2, 0x8000, 32768)
+            cpu.memory[0x6e4] = 0
+            cpu.memory[0x605] = 1 if kind == "caster" else 0
+            cpu.memory[0x68b] = 1
+            cpu.memory[0x6db] = spell
+            cpu.memory[0x544 + (kind == "caster")] = status
+            cpu.memory[0x60a] = phase
+            before_mp = word(cpu, 0x526)
+            cpu.sp = 255
+            cpu.stPushWord(0x5fff)
+            cpu.pc = entry
+            skipped = []
+            for _ in range(500):
+                if cpu.pc == 0x6000:
+                    break
+                if cpu.memory[cpu.pc:cpu.pc + 3] == [0x20, 0x4f, 0x80]:
+                    skipped.append(cpu.pc)
+                    cpu.pc += 3  # Native refusal message renderer only.
+                else:
+                    cpu.step()
+            else:
+                raise RuntimeError("Original field validation did not return")
+            refused = status & 0xf0 != 0
+            assert skipped == ([expected_message] if refused else [])
+            assert cpu.memory[0x60a] == phase + (not refused)
+            assert cpu.memory[0x6e4] == int(refused)
+            assert word(cpu, 0x526) == before_mp
+            assert cpu.memory[0x514:0x524] == list(raw[0x514:0x524])
+            rows.append("\t".join(map(str, (spell, status, phase, cpu.memory[0x60a],
+                                         int(refused), before_mp, word(cpu, 0x526)))))
+        results.append(write_cases(output, "field-" + kind + "-status-controlled-original", rows))
+
+    rows = ["cost\tMPBefore\taccepted\tMPAfter"]
+    for cost, mp in itertools.product((3, 12), (*range(1024), 4095, 65535)):
+        cpu = MPU()
+        cpu.memory[:0x800] = raw
+        cpu.memory[0x8000:] = reader.read(2, 0x8000, 32768)
+        cpu.memory[0x68b] = 1
+        cpu.memory[0x6d8] = cost
+        cpu.memory[0x6d9] = 0
+        put_word(cpu, 0x526, mp)
+        cpu.pc = 0x90da
+        for _ in range(100):
+            if cpu.pc in (0x9110, 0x9104):
+                break
+            cpu.step()
+        else:
+            raise RuntimeError("Original field MP prefix did not finish")
+        accepted = cpu.pc == 0x9110
+        assert accepted == (mp >= cost) and word(cpu, 0x526) == mp
+        assert cpu.memory[0x514:0x524] == list(raw[0x514:0x524])
+        rows.append(f"{cost}\t{mp}\t{int(accepted)}\t{word(cpu, 0x526)}")
+    results.append(write_cases(output, "field-mp-validation-controlled-original", rows))
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--rom", type=Path, required=True)
@@ -173,7 +242,10 @@ def main():
     args = parser.parse_args()
     reader = Reader(args.rom.read_bytes())
     names = ("original-magic-report.json", "battle-availability-controlled-original.tsv",
-             "field-prefix-availability-controlled-original.tsv", "heal-controlled-original.tsv")
+             "field-prefix-availability-controlled-original.tsv", "heal-controlled-original.tsv",
+             "field-caster-status-controlled-original.tsv",
+             "field-heal-target-status-controlled-original.tsv",
+             "field-mp-validation-controlled-original.tsv")
     if any((args.output / name).exists() for name in names):
         raise ValueError("Fresh output directory required; preserve earlier evidence")
     if args.heal_ram is not None:
@@ -184,6 +256,7 @@ def main():
     results = availability(reader, args.output)
     if args.heal_ram is not None:
         results.append(healing(reader, args.output, args.heal_ram))
+        results.extend(field_validation(reader, args.output, args.heal_ram))
     report = {
         "status": "SCOPED_ORIGINAL_CPU_EVIDENCE_NOT_NORMAL_JOIN_OR_ANDROID",
         "romSha256": hashlib.sha256(reader.data).hexdigest(),
@@ -197,11 +270,13 @@ def main():
         "limits": [
             "Field selector0 aliases Xiao table; it is not permission for Nezha magic",
             "Reference role IDs, original actorIndex and battle ActiveActorId differ",
-            "No spell name, target legality, normal growth/join or Android assertion",
+            "No spell name, full target legality, normal growth/join or Android assertion",
             "Healing starts after menu validation; supplied target/cost are controlled",
             "Only message JSR804F skipped; stop924E before UI; no unknown target rule assumed",
             "Native initial uncapped heal observed53 independently; other cases remain CPU-controlled",
             "Original party search increments once without looping; do not substitute reference formula",
+            "Field status predicates scoped to Xiao caster and healing rows0/4; only refusal renderer skipped",
+            "MP prefix stops before scene dispatch; acceptance alone does not authorize a spell or apply an effect",
         ],
     }
     if args.heal_ram is not None:
@@ -209,6 +284,9 @@ def main():
         report["entrySources"] += [
             reader.span(2, 0x918b, 195, "Native-observed MP deduction and heal effect prefix"),
             reader.span(2, 0xeebd, 48, "Original integer multiply/add/divide"),
+            reader.span(2, 0xa2a4, 52, "Native-observed caster status validation; message call excluded"),
+            reader.span(2, 0xa393, 82, "Native-observed healing target status validation; message call excluded"),
+            reader.span(2, 0x90da, 54, "MP validation before scene dispatch or deduction"),
         ]
     (args.output / "original-magic-report.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")

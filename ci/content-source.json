@@ -16,16 +16,16 @@
   "metadataUrl": "https://kubernetes-fleetpilot.oss-cn-beijing.aliyuncs.com/artifacts/fengshen-remake/app/version.json",
   "package": "org.fengshen.dev",
   "runtimeBaseline": {
-    "buildRunId": 37587677750,
-    "sourceCommit": "af4f1d546da0ff5d88cf428f00a254140862a32a",
-    "versionCode": 87,
-    "apkSha256": "d4b1d24e6b0e58a03c30b10f8ff1df94acd0d10be2be64e998aae940a6fd68ed",
+    "buildRunId": 37595383488,
+    "sourceCommit": "480d376fe312c055bbd5079b8bbd5674e77d72f9",
+    "versionCode": 88,
+    "apkSha256": "6090de31b43e6d5ff188f0625f91d8e6a7d6df24e571b1c782d1050484c6c8a2",
     "contentVersion": "opening-segment-001-c62",
     "manifestSha256": "625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef"
   },
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "a9e0c6b5f0269fb64e3da5e492f340ff3025306e885c3159716a8b2b87776e23"
+    "sha256": "4bbf38621fb2a1477d15024c94f29f6ec959f6f91fe806bc73956545f8a5f54f"
   }
 }

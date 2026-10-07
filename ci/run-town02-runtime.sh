@@ -137,6 +137,11 @@ if [[ "$stage" == development-smoke ]]; then
             pull_evidence
             exit 1
         fi
+        if ! python tools/record_app_audio.py world-field-magic testControlledFieldMagicSelectionCancelCommitAndSave --silent --controlled-field-magic --cold-test testFieldMagicExternalColdStartPreservesFullSave --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/field-magic-crash.txt
+            cat artifacts/town02-runtime/field-magic-crash.txt
+            exit 1
+        fi
         pull_evidence
         exit 0
     fi
@@ -294,6 +299,7 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             run_test testMobileBattlePhoneSizeAndLargeFont false
             cp artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testMobileBattlePhoneSizeAndLargeFont-font-$font.txt"
             run_test testControlledBattlePartyPhoneSizeAndLargeFont false
+            run_test testControlledFieldMagicSelectionCancelCommitAndSave false
             cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
             pull_evidence
         done
@@ -308,13 +314,18 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             cat artifacts/town02-runtime/c62-room28-crash.txt
             exit 1
         fi
+        if ! python tools/record_app_audio.py world-field-magic testControlledFieldMagicSelectionCancelCommitAndSave --silent --controlled-field-magic --cold-test testFieldMagicExternalColdStartPreservesFullSave --budget-seconds 300; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/field-magic-crash.txt
+            cat artifacts/town02-runtime/field-magic-crash.txt
+            exit 1
+        fi
     fi
     pull_evidence
     python - <<'PYPERSONAL'
 import json,os,hashlib
 from pathlib import Path
 from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,C60_SCOPES,C61_SCOPES,review_personal,active_scope,jiang_proof_digests
-from tools import battle_ui_evidence as ui, room28_evidence as room28
+from tools import battle_ui_evidence as ui, room28_evidence as room28, field_magic_evidence as field_magic
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -343,6 +354,9 @@ if scope['id'] in ui.UI_SCOPES:
 if scope['id']==room28.SCOPE:
     r.update(room28.proof_digests(Path('artifacts/checkpoint-ui')))
     r.update({key:'PASS' for key in room28.GATES})
+if scope.get('fieldMagicAcceptance')==field_magic.ACCEPTANCE:
+    r.update(field_magic.proof_digests(Path('artifacts/checkpoint-ui')))
+    r.update({key:'PASS' for key in field_magic.GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

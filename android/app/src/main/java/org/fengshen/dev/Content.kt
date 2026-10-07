@@ -112,6 +112,7 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     // bounded loader; this never holds every visited map alive.
     var joinCharacters:Map<String,CharacterState> = emptyMap()
         internal set
+    var fieldMagicEnabled:Boolean=false;internal set
     var sceneBarriers:List<SceneBarrier> = emptyList()
         internal set
     var mechanisms:List<SceneMechanism> = emptyList()
@@ -1229,6 +1230,8 @@ object ContentLoader {
                 }
                 content.jiangJoin=jiangJoin
                 content.joinCharacters=extraCharacters.associate{it.first.id to it.first}
+                content.fieldMagicEnabled=content.characterDefinitions["xiaolongnv"]?.originalActorIndex==1&&
+                    content.joinCharacters["xiaolongnv"]?.let{it.level==12&&it.mp==44&&it.maxMp==44}==true
                 content.sceneStories=sceneStories
                 content.sceneBarriers=sceneBarriers
                 data.optJSONObject("freeBoat")?.let{o->

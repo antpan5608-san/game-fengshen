@@ -1,3 +1,9 @@
+## 当前候选：v89提神术有限闭环（2026-10-07）
+
+IMPLEMENTED_LOCAL_VERIFIED，未签名App验收、未发布；[候选记录](evidence/field-magic-candidate.md)。423 Debug JVM/92 suites与仪器编译、3700原CPU、29 Python检查通过；实际原矩阵捕获的固定角色等级寻址错误已修正，失败保留。原个人门禁29+法术触摸三字体/完整cold两项=31，实际覆盖基线88，同c62/392文件及所有存档保护保持。线上仍88、稳定82，法术A/B/C、完整主线与所有未验项仍开放。
+
+原inspect37604805219于10:03:45Z收到新v88上传样本：103事件/1实机会话/errors{}，NO_ISSUES_OBSERVED只覆盖该样本。以下v88发布时postflight NO_DATA是当时事实，继续保留，不等于现在没有任何样本，也不等于完整手机验收通过。
+
 ## 最新有效交付：v88大字紧凑战斗图形个人版（2026-10-07）
 
 v88/0.8.18-battle-sprites-personal PUBLISHED_AND_VERIFIED；source480d376，原build37595383488/publish37599015986 SUCCESS。418 release JVM/91 suites、21 Content/29个人门禁、真实v87同c62覆盖完整存档及无伪迁移备份、受控首份备份与四组完整cold通过。公网完整32,780,824字节/SHA6090de31b43e6d5ff188f0625f91d8e6a7d6df24e571b1c782d1050484c6c8a2、包名签名/c62/392文件核实，详见[evidence/v88-battle-sprites-personal.md](evidence/v88-battle-sprites-personal.md)。实际原像素前后确认2倍字紧凑敌图48px→原90px空间扩大；只关闭该有限图形问题，原图和命中格保持。

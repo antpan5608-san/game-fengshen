@@ -11,6 +11,69 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Isolated four-role fixture; real modal taps, never a normal join/playthrough claim. */
+    fun testControlledFieldMagicSelectionCancelCommitAndSave(){
+        val(activity,v)=launch();val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
+        instrumentation.runOnMainSync{
+            val base=v.currentSnapshot();val town=v.content.scenes.getValue(0)
+            val party=listOf(v.content.initialPlayer.copy(hp=5,maxHp=200))+
+                listOf("xiaolongnv","yangjian","jiangziya").map{v.content.joinCharacters.getValue(it)}
+            assertTrue(v.restoreSnapshot(base.copy(mapId=0,x=town.spawnX*16+8,y=town.spawnY*16+8,
+                interiorContext=null,characters=party,flags=base.flags+("opening.intro.seen" to true))))
+        }
+        assertTrue(v.content.fieldMagicEnabled)
+        val before=v.currentSnapshot()
+        fun open(){tap(v,center(v.hudBounds()));assertEquals(GameView.Layer.CHARACTER,v.layer);tap(v,tabPoint(v,3))}
+        fun select(){tap(v,center(v.panelCharacterBounds("xiaolongnv")));tap(v,center(v.panelSpellBounds(OriginalFieldMagic.SPELL_ID)))}
+        open();screenshot(v,"world-field-magic-nezha-unavailable")
+        select();assertEquals(before,v.currentSnapshot());screenshot(v,"world-field-magic-selection")
+        tap(v,center(v.panelPrimaryBounds()));tap(v,center(v.panelCharacterBounds("nezha")))
+        assertEquals(before,v.currentSnapshot());screenshot(v,"world-field-magic-target")
+        instrumentation.runOnMainSync{v.handleBack()};assertEquals(before,v.currentSnapshot())
+        open();select();tap(v,center(v.panelPrimaryBounds()));tap(v,center(v.panelCharacterBounds("nezha")))
+        assertEquals(before,v.currentSnapshot())
+        // Exercise the existing protected-save rejection, without corrupting a preference file.
+        val protection=GameView::class.java.getDeclaredField("localSaveProtected").apply{isAccessible=true}
+        instrumentation.runOnMainSync{protection.setBoolean(v,true)}
+        try{
+            tap(v,center(v.panelPrimaryBounds()))
+            assertEquals(before,v.currentSnapshot())
+            assertEquals(before,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+            screenshot(v,"world-field-magic-save-failure-rollback")
+        }finally{instrumentation.runOnMainSync{protection.setBoolean(v,false)}}
+        instrumentation.runOnMainSync{v.handleBack()}
+        open();select();tap(v,center(v.panelPrimaryBounds()));tap(v,center(v.panelCharacterBounds("nezha")))
+        assertEquals(before,v.currentSnapshot());tap(v,center(v.panelPrimaryBounds()))
+        val after=v.currentSnapshot();val expected=before.copy(characters=before.characters.map{h->
+            when(h.id){"nezha"->h.copy(hp=58);"xiaolongnv"->h.copy(mp=41);else->h}})
+        assertEquals(expected,after);assertEquals(after,SaveSnapshot.parse(prefs.getString("saveJson",null)!!))
+        // A repeated old confirmation without a new spell selection must not consume again.
+        tap(v,center(v.panelPrimaryBounds()));assertEquals(after,v.currentSnapshot())
+        val font=v.resources.configuration.fontScale
+        val label=font.toString().replace('.','_')
+        screenshot(v,"world-field-magic-committed-font-$label")
+        val imageSize=android.graphics.BitmapFactory.Options().apply{inJustDecodeBounds=true}
+        android.graphics.BitmapFactory.decodeFile(File(root,"world-field-magic-committed-font-$label.png").path,imageSize)
+        File(root,"world-field-magic-font-$label.json").writeText(JSONObject()
+            .put("kind","CONTROLLED_FOUR_ROLE_REAL_TOUCH_NOT_NORMAL_JOIN_OR_PHONE")
+            .put("font",font).put("width",v.width).put("height",v.height)
+            .put("screenWidth",imageSize.outWidth).put("screenHeight",imageSize.outHeight)
+            .put("selectionAndCancelUnchanged",true).put("repeatConfirmationUnchanged",true)
+            .put("protectedSaveFailureRollbackUnchanged",true)
+            .put("before",before.json()).put("after",after.json()).toString())
+        File(root,"world-field-magic-expected-save.json").writeText(after.json().toString())
+        instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}
+    }
+    fun testFieldMagicExternalColdStartPreservesFullSave(){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        val expected=SaveSnapshot.parse(File(root,"world-field-magic-expected-save.json").readText())
+        val(activity,v)=launch();assertEquals(expected,v.currentSnapshot())
+        assertEquals(58,expected.characters.first{it.id=="nezha"}.hp)
+        assertEquals(41,expected.characters.first{it.id=="xiaolongnv"}.mp)
+        screenshot(v,"world-field-magic-cold-full-state")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
     /** CONTROLLED state, real foreground five-minute clock; no timer injection. */
     fun testControlledSaveHistoryRealForegroundFiveMinuteAutoSave(){
         val(activity,v)=launch()
