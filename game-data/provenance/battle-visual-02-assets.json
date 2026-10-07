@@ -109,12 +109,52 @@
       "review": "SOURCE_HASH_AND_LOCAL_VISUAL_INSPECTION",
       "publishableBasis": "User-authorized original generation for BATTLE-VISUAL-02; no commercial/ROM reference supplied",
       "appVerified": false
+    },
+    {
+      "asset": "nezha-attack.png",
+      "sha256": "093a030da694cf1511da07deabf1563464ca419df13ced07c7945c5aa95a7bc5",
+      "preparationRecord": "windows-handoff-20261008/visual-handoff.zip",
+      "method": "OWN_BUILTIN_IMAGE_GEN_EXACT_COPY",
+      "sourceCall": "call_JcaFfbDtDqaHlbAd4X7UJZgj",
+      "review": "SOURCE_PROMPT_CHAIN_HASH_AND_LOCAL_VISUAL_INSPECTION",
+      "publishableBasis": "User-authorized original generation for BATTLE-VISUAL-02; only own generated Nezha image used as attack reference, no commercial/ROM reference supplied",
+      "appVerified": false
+    },
+    {
+      "asset": "xiaolongnv-cast.png",
+      "sha256": "e71a03a59701ccedc3ddd03505b46de9c585c871ecbb1528627c2260f97a625b",
+      "preparationRecord": "windows-handoff-20261008/visual-handoff.zip",
+      "method": "OWN_BUILTIN_IMAGE_GEN_EXACT_COPY",
+      "sourceCall": "call_lrJIcz8TXcWRQNrGcMsBKggs",
+      "review": "SOURCE_PROMPT_CHAIN_HASH_AND_LOCAL_VISUAL_INSPECTION",
+      "publishableBasis": "User-authorized original generation for BATTLE-VISUAL-02; only own generated Nezha image used as attack reference, no commercial/ROM reference supplied",
+      "appVerified": false
+    },
+    {
+      "asset": "enemy-1.png",
+      "sha256": "e5f789e8317da9ab4837f31399b0a9bc2a426fa546c7fba832873fd120dbc8a7",
+      "preparationRecord": "windows-handoff-20261008/visual-handoff.zip",
+      "method": "OWN_BUILTIN_IMAGE_GEN_EXACT_COPY",
+      "sourceCall": "call_xHzWM61uCps9ZKt4PECKPhsl",
+      "review": "SOURCE_PROMPT_CHAIN_HASH_AND_LOCAL_VISUAL_INSPECTION",
+      "publishableBasis": "User-authorized original generation for BATTLE-VISUAL-02; only own generated Nezha image used as attack reference, no commercial/ROM reference supplied",
+      "appVerified": false
+    },
+    {
+      "asset": "enemy-137.png",
+      "sha256": "9f60df6115e88242ff2242731c881bcc1c236d5da157ef0cfdff87a9f1a8c5b8",
+      "preparationRecord": "windows-handoff-20261008/visual-handoff.zip",
+      "method": "OWN_BUILTIN_IMAGE_GEN_EXACT_COPY",
+      "sourceCall": "call_38aa4d20a7bc414681ab27afabfb1739",
+      "review": "SOURCE_PROMPT_CHAIN_HASH_AND_LOCAL_VISUAL_INSPECTION",
+      "publishableBasis": "User-authorized original generation for BATTLE-VISUAL-02; only own generated Nezha image used as attack reference, no commercial/ROM reference supplied",
+      "appVerified": false
     }
   ],
   "excluded": [
     "yangjian-portrait-rejected-crown-crop-v1.png",
     "yangjian-idle-candidate-v1.png"
   ],
-  "privatePreparation": "Original candidate files/prompts/rejections retained in .local-ai/battle-visual-02; only approved exact asset bytes selected",
-  "manifestSha256": "4480914b805e4b5c99feeaf9d207227a60bca4accf3379fd151c13ccbaac571c"
+  "privatePreparation": "Original candidates/prompts/rejections retained on server .local-ai/battle-visual-02 and isolated Windows handoff; four additional original generation masters and prompt chain verified against migrated history",
+  "manifestSha256": "8dc53b77027055a2b9a2ec37a80e2aba3113e668bd350ab822c14c3d85794f30"
 }

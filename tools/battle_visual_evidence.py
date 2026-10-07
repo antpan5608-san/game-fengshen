@@ -4,11 +4,11 @@ import json
 import re
 from pathlib import Path
 
-GATES=['battleVisualAssets','battleVisualNormalAndCold']
+GATES=['battleVisualAssets','battleVisualNormalAndCold','battleVisualControlledPosesReadOnly']
 PROOF_KEYS=('battleVisualEvidenceSha256',)
 ACCEPTANCE=dict(kind='ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PHONE',
-    manifestSha256='4480914b805e4b5c99feeaf9d207227a60bca4accf3379fd151c13ccbaac571c',
-    assets=12,normalMethod='testNormalVisualSupplyAttackVictoryAndSave',coldMethod='testHerbColdStartMatchesNormalSave',
+    manifestSha256='8dc53b77027055a2b9a2ec37a80e2aba3113e668bd350ab822c14c3d85794f30',
+    assets=16,controlledPoseMethod='testControlledBattleVisualPosesReadOnly',fonts=[1.0,1.3,2.0],normalMethod='testNormalVisualSupplyAttackVictoryAndSave',coldMethod='testHerbColdStartMatchesNormalSave',
     decoderMethod='testBattleVisualAssetsHashesCacheAndReadOnlySnapshots',proofKey=PROOF_KEYS[0])
 
 
@@ -55,4 +55,40 @@ def proof_digests(evidence,logs):
         raw=bounded(evidence/name,64*1024*1024);digest=hashlib.sha256(raw).hexdigest()
         if digest!=segment.get('sha256'):raise ValueError('Visual original video bytes changed')
         hashes[name]=digest
+    from PIL import Image
+    if __package__:
+        from .battle_magic_evidence import complete_save
+    else:
+        from battle_magic_evidence import complete_save
+    for font in ('1.0','1.3','2.0'):
+        name='touch-ux-world-visual-poses-'+font+'.json'
+        raw=bounded(evidence/name,1024*1024);value=json.loads(raw);hashes[name]=hashlib.sha256(raw).hexdigest()
+        if (value.get('kind')!='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE'
+                or value.get('font')!=float(font) or value.get('manifestSha256')!=ACCEPTANCE['manifestSha256']
+                or value.get('prepared')!=16 or not 0<value.get('decodedBytes',0)<=64*1024*1024
+                or value.get('renderStateUnchanged') is not True or value.get('rngUnchanged') is not True
+                or value.get('before')!=value.get('after')):
+            raise ValueError('Controlled pose report changed state, source, font or budget')
+        complete_save(value.get('before'))
+        phases=value.get('phases',[])
+        expected=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
+                  ('xiaolongnv','HEAL','CAST','xiaolongnv-cast.png',44,58),
+                  ('xiaolongnv','TEXT','IDLE','xiaolongnv-idle-v1.png',41,58),
+                  ('nezha','ATTACK','ATTACK','nezha-attack.png',41,58)]
+        actual=[(p.get('actor'),p.get('kind'),p.get('pose'),p.get('file'),p.get('casterMP'),p.get('targetHP'))for p in phases]
+        if actual!=expected:raise ValueError('Controlled original queue/pose timing differs')
+        for phase in phases:
+            name=phase.get('screenshot','')
+            if not re.fullmatch(r'touch-ux-world-visual-pose-'+font.replace('.','_')+r'-\d{1,2}\.png',name):
+                raise ValueError('Unsafe controlled pose picture path')
+            raw=bounded(evidence/name,10*1024*1024)
+            with Image.open(evidence/name) as picture:
+                if picture.size!=(value.get('screenWidth'),value.get('screenHeight')) or min(picture.size)<80 or picture.convert('RGB').getbbox() is None:
+                    raise ValueError('Wrong or blank actual pose picture')
+            hashes[name]=hashlib.sha256(raw).hexdigest()
+        raw=bounded(logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt'),512*1024)
+        text=raw.decode('utf-8')
+        if not re.search(r'^OK \(1 test\)\s*$',text,re.M) or re.search('FAILURES!!!|Process crashed|INSTRUMENTATION_FAILED',text):
+            raise ValueError('Controlled pose App test did not pass')
+        hashes['pose-test-'+font]=hashlib.sha256(raw).hexdigest()
     return {PROOF_KEYS[0]:hashlib.sha256(json.dumps(hashes,sort_keys=True,separators=(',',':')).encode()).hexdigest()}

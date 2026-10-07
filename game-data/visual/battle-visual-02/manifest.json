@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "battle-visual-02-r1",
+  "id": "battle-visual-02-r2",
   "authorization": "docs/plans/battle-visual-02.md",
   "files": {
     "nezha-portrait-v1.png": {
@@ -86,6 +86,58 @@
       "width": 1672,
       "height": 941,
       "kind": "background"
+    },
+    "nezha-attack.png": {
+      "sha256": "093a030da694cf1511da07deabf1563464ca419df13ced07c7945c5aa95a7bc5",
+      "bytes": 924944,
+      "width": 1145,
+      "height": 1374,
+      "kind": "attack",
+      "bounds": [
+        158,
+        269,
+        1054,
+        1167
+      ]
+    },
+    "xiaolongnv-cast.png": {
+      "sha256": "e71a03a59701ccedc3ddd03505b46de9c585c871ecbb1528627c2260f97a625b",
+      "bytes": 1455205,
+      "width": 1122,
+      "height": 1402,
+      "kind": "cast",
+      "bounds": [
+        153,
+        94,
+        1026,
+        1304
+      ]
+    },
+    "enemy-1.png": {
+      "sha256": "e5f789e8317da9ab4837f31399b0a9bc2a426fa546c7fba832873fd120dbc8a7",
+      "bytes": 783522,
+      "width": 1145,
+      "height": 1374,
+      "kind": "enemy",
+      "bounds": [
+        269,
+        184,
+        902,
+        1203
+      ]
+    },
+    "enemy-137.png": {
+      "sha256": "9f60df6115e88242ff2242731c881bcc1c236d5da157ef0cfdff87a9f1a8c5b8",
+      "bytes": 1876221,
+      "width": 1145,
+      "height": 1374,
+      "kind": "enemy",
+      "bounds": [
+        48,
+        38,
+        1113,
+        1346
+      ]
     }
   },
   "actors": {
@@ -97,7 +149,8 @@
         55,
         1057,
         1305
-      ]
+      ],
+      "attack": "nezha-attack.png"
     },
     "xiaolongnv": {
       "portrait": "xiaolongnv-portrait-v1.png",
@@ -107,7 +160,8 @@
         42,
         1035,
         1353
-      ]
+      ],
+      "cast": "xiaolongnv-cast.png"
     },
     "yangjian": {
       "portrait": "yangjian-portrait-v2.png",
@@ -147,8 +201,12 @@
   "mappingConfidence": "ART_DIRECTION_ONLY_NOT_ORIGINAL_ROM_ART",
   "cacheBytes": 67108864,
   "limitations": [
-    "Idle cutouts only; dedicated attack/cast/hurt/death/victory frames remain open",
-    "Existing original enemy graphics retained; enemy remake coverage open",
-    "Actual App readability/phone/performance pending"
-  ]
+    "Only Nezha physical attack and Xiaolongnv verified heal/antidote cast poses; other poses remain open",
+    "Only enemy IDs 1 and 137 remade; other original enemy graphics retained",
+    "Actual App pose continuity/phone/performance pending"
+  ],
+  "enemies": {
+    "1": "enemy-1.png",
+    "137": "enemy-137.png"
+  }
 }

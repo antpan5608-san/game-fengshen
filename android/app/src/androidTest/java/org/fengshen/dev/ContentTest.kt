@@ -19,7 +19,9 @@ class ContentTest:IsolatedGameTestCase(){
         val visual=c.battleVisual!!
         val before=SaveSnapshot(c.scene.version,c.scene.mapId,c.scene.spawnX*16+8,c.scene.spawnY*16+8,
             Key.DOWN,listOf(c.initialPlayer),emptyMap(),emptyMap(),money=c.initialMoney)
-        assertEquals(0,visual.cachedBytes)
+        assertEquals(16,visual.preparedCount);assertTrue(visual.failedAssets.isEmpty())
+        assertTrue(visual.cachedBytes in 1..BattleVisualAssets.CACHE_LIMIT)
+        val preparedBytes=visual.cachedBytes
         for(id in OriginalJiangJoin.FULL_PARTY){
             val portrait=visual.portrait(id)!!;val idle=visual.idle(id)!!
             assertTrue(portrait.width>=300&&portrait.height>=300)
@@ -28,6 +30,15 @@ class ContentTest:IsolatedGameTestCase(){
         }
         for(map in listOf(16,10,25,85))assertNotNull(visual.background(map,false))
         assertNotNull(visual.background(7,true));assertNull(visual.portrait("unknown"))
+        assertEquals("nezha-attack.png",visual.body("nezha",BattleVisualPose.ATTACK)!!.file)
+        assertEquals("xiaolongnv-cast.png",visual.body("xiaolongnv",BattleVisualPose.CAST)!!.file)
+        assertEquals("yangjian-idle-v2.png",visual.body("yangjian",BattleVisualPose.ATTACK)!!.file)
+        for(id in listOf(1,137)){
+            val enemy=visual.enemy(id)!!;assertTrue(enemy.bitmap.hasAlpha())
+            assertTrue(enemy.crop.width()>0&&enemy.crop.height()>0)
+            assertTrue(enemy.crop.right<=enemy.bitmap.width&&enemy.crop.bottom<=enemy.bitmap.height)
+        }
+        assertNull(visual.enemy(999));assertEquals(preparedBytes,visual.cachedBytes)
         assertTrue(visual.cachedBytes in 1..BattleVisualAssets.CACHE_LIMIT)
         assertEquals(before,SaveSnapshot.parse(before.json().toString()))
         val original=AssetSource(instrumentation.targetContext.assets)
@@ -37,8 +48,26 @@ class ContentTest:IsolatedGameTestCase(){
                 if(name=="nezha-idle-v1.png")bytes.copyOf().apply{this[lastIndex]=(this[lastIndex].toInt() xor 1).toByte()}else bytes}
         }
         val damaged=ContentLoader.load(corrupt).battleVisual!!
-        try{damaged.idle("nezha");fail("Corrupt approved asset must be rejected")}
-        catch(expected:IllegalArgumentException){assertTrue(expected.message!!.contains("checksum"))}
+        assertNull(damaged.idle("nezha"));assertEquals(setOf("nezha-idle-v1.png"),damaged.failedAssets)
+        assertEquals(15,damaged.preparedCount);assertNotNull(damaged.body("nezha",BattleVisualPose.ATTACK))
+        val corruptManifest=object:ContentSource{
+            override fun read(name:String)=original.read(name)
+            override fun readVisual(name:String)=if(name=="manifest.json")byteArrayOf(0)else original.readVisual(name)
+        }
+        val fallback=ContentLoader.load(corruptManifest)
+        assertNull(fallback.battleVisual);assertEquals(c.scene.version,fallback.scene.version)
+        assertEquals(c.initialPlayer,fallback.initialPlayer);assertEquals(c.battle!!.enemies,fallback.battle!!.enemies)
+        // After preparation, source reads are forbidden: repeated Canvas access
+        // must neither decode nor wait for a lazy source/cache operation.
+        var sealed=false;var reads=0
+        val guarded=object:ContentSource{
+            override fun read(name:String)=original.read(name)
+            override fun readVisual(name:String):ByteArray{check(!sealed);reads++;return original.readVisual(name)}
+        }
+        val ready=ContentLoader.load(guarded).battleVisual!!;sealed=true;val count=reads
+        repeat(50){ready.portrait("nezha");ready.body("nezha",BattleVisualPose.ATTACK)
+            ready.body("xiaolongnv",BattleVisualPose.CAST);ready.enemy(137);ready.background(25,false)}
+        assertEquals(count,reads);assertEquals(16,ready.preparedCount)
         Log.i("FengshenVisualTest","APP_DECODER_HASH_CACHE_PASS_NOT_PHONE_OR_NORMAL_STORY")
     }
     /** Original Firecloud loader and gift codec, CONTROLLED not a normal pilgrimage. */

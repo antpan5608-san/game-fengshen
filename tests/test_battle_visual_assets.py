@@ -30,7 +30,7 @@ class VisualAssetTests(unittest.TestCase):
 
     def test_selected_original_sources_manifest_dimensions_and_no_rejected_candidate(self):
         provenance=json.loads((ROOT/'game-data/provenance/battle-visual-02-assets.json').read_text(encoding='utf-8'))
-        self.assertEqual(12,len(provenance['assets']))
+        self.assertEqual(16,len(provenance['assets']))
         self.assertEqual(self.pin['manifestSha256'],ci.sha((ART/'manifest.json').read_bytes()))
         source=(ROOT/'android/app/src/main/java/org/fengshen/dev/BattleVisualAssets.kt').read_text(encoding='utf-8')
         self.assertIn('MANIFEST_SHA256="'+self.pin['manifestSha256']+'"',source)
@@ -44,7 +44,7 @@ class VisualAssetTests(unittest.TestCase):
         self.assertEqual('625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef',config['manifestSha256'])
 
     def test_exact_assets_pack_is_verified_separately_from_gameplay_content(self):
-        self.write();self.assertEqual(13,ci.visual_content(self.apk,self.pin)['files'])
+        self.write();self.assertEqual(17,ci.visual_content(self.apk,self.pin)['files'])
 
     def test_corrupt_image_or_manifest_rejected(self):
         for name in ('nezha-idle-v1.png','manifest.json'):

@@ -26,12 +26,12 @@
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "af8877cebba2d6351b2b5a5f0dd5561478e9367f35009b2455829fddd86a59f7"
+    "sha256": "ccbbeb8efc3c40f568577463e8633ea5303b0efb6551ab6490e612a12e813f8d"
   },
   "visualPack": {
-    "id": "battle-visual-02-r1",
+    "id": "battle-visual-02-r2",
     "assetPrefix": "assets/battle-visual-02/",
-    "manifestSha256": "4480914b805e4b5c99feeaf9d207227a60bca4accf3379fd151c13ccbaac571c",
-    "files": 13
+    "manifestSha256": "8dc53b77027055a2b9a2ec37a80e2aba3113e668bd350ab822c14c3d85794f30",
+    "files": 17
   }
 }

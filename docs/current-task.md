@@ -11,7 +11,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v91 / 0.8.21-battle-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 下一姿态/敌1及137批次前置代码已实现，新445 JVM/95 suites及DEBUG通过；4图未接App/正式候选未冻结
+current_candidate_version: v92 / 0.8.22-battle-pose-personal，四图及固定worker准备已实现/本地445 JVM和162 Python检查；待原Actions同源签名/App，未发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
@@ -19,6 +19,8 @@ manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8be
 first_real_blocker: 整体参考重制体验未实现；下一安全版本优先已获批正常视觉可玩片段。剩余法术A/B/C、正常原结局/真机/声音/寻路与其他累计欠账不关。
 
 服务器接管历史及源码入口见 [development-host.md](development-host.md)。迁移轮仅接管、不新增玩法、不发布；用户已在同一会话恢复既定研发，当前视觉批次见下段，WORLD-FULL-01仍IN_PROGRESS/PARTIAL。
+
+当前有限代码检查点：四图、原worker固定16图准备及Canvas只读已实现；445 JVM／95 suites、19组Python报告162、DEBUG应用／仪器编译、c62／392与视觉17文件完整校验通过。新增受控真实动作三字体raw-proof，第36个人门禁保留原35项。下一动作是本批最新审查／冻结同源main并执行原Actions正式签名App；线上v91／稳定v82不变，完整主线／声音／真机／云恢复及全部欠账保持OPEN。
 
 ## v91已发布，主动接续姿态与敌图（2026-10-08北京时间）
 

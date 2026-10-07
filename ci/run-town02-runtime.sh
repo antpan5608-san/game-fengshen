@@ -306,6 +306,8 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             run_test testControlledBattlePartyPhoneSizeAndLargeFont false
             run_test testControlledFieldMagicSelectionCancelCommitAndSave false
             run_test testControlledBattleMagicSelectionPhasesAndSave false
+            run_test testControlledBattleVisualPosesReadOnly false
+            cp artifacts/town02-runtime/testControlledBattleVisualPosesReadOnly.txt "artifacts/town02-runtime/testControlledBattleVisualPosesReadOnly-font-$font.txt"
             cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
             pull_evidence
         done

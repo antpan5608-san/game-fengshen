@@ -1,3 +1,21 @@
+# 四图接入当前有限批次（服务器）
+
+状态：IMPLEMENTED_LOCAL_VERIFIED，拟v92／0.8.22-battle-pose-personal；正式签名App／发布尚未执行。线上v91、稳定v82及WORLD-FULL-01 IN_PROGRESS/PARTIAL保持。以下前置记录留作历史。
+
+实际先prepare_context CPU导航并读真实源码、冻结说明／ZIP；四master来源、精确提示词／自制哪吒引用链和完整哈希已由迁入历史核实，四张再实际目视，原字节复制，旧12张未变。最小公开provenance记录call／hash／用户批准原创生成范围，原图／提示词／失败和两端历史保留在服务器私有位置。
+
+复用原ContentLoader工作线程准备固定16图（不是全世界预解码），原activity destroyed guard拒绝加载后的旧activity挂接；没有逐战斗异步请求，跨battle无需新token／第二worker。Canvas访问已准备只读map，不调用同步缓存／解码／source；64MiB为保留bitmap预算，不代表真机峰值／60fps。单张缺损拒绝解码并留failedAssets，缺manifest仅视觉回退，核心c62校验不放宽；严格正式APK pin仍拒缺图／改字节。
+
+原BattleActionStep及BattlePresentation只读身份／时间选择哪吒物理攻击中段与小龙女真实HEAL／ANTIDOTE准备／效果姿态，扣费TEXT回待机；药草不变法术。敌1／137同现有战斗目标布局，alpha裁框等比；其他图仍原回退。绘制不更改HP／MP／RNG／队伍／奖励／存档。旧SPECIAL全场遮罩／其他动作和敌图／2倍字战场大小仍OPEN，未借本批扩大规则。
+
+新实际：445 JVM／95 suites、0失败／错误／跳过；应用和仪器DEBUG最终6秒通过。19组相关Python报告162，0失败／错误／skip，最后视觉10项另复测；DEBUG66,520,576字节／SHA3e07abe60ae9c3323bc0c6ee769f6814ebc00d3aa43ec0f13867d6273ac8e969，核心c62／392和视觉17文件全字节核。只是本地构建，不是App验收。服务器日志visual-pose-r2-{build-final.log,python-related.log,python-visual-final.log,local-verified.json}。
+
+本轮preflight20:38:48Z NO_ISSUES_OBSERVED／errors空／cleanup0，仅69项v90上传事件，未称v91／v92真机通过。原35门禁全部保留，新36门禁严格绑定三字体实际原队列、准备MP44／HP5→效果44／58→扣费41／58、哪吒攻击，完整保存／RNG／fight.party读前读后相等及原PNG全hash。正常新游戏／NPC／物品／攻击胜利／合法药草／奖励／保存外部cold照原方法重跑，四人／Boss另列，不能用新几何／合成raw传输测试替App。
+
+下一自然检查点：新全diff审查／record_review_decision，冻结并推main后原Actions同源签名＋21Content／36个人raw门禁，实际查看新PNG／原片。全门槛通过才同审核APK发布92、公网完整字节／postflight；失败原件保留，修正需新源码／检查／签名App。所有长期终点／真机声音完整主线继续开放；只在服务器接续。
+
+---
+
 # 视觉姿态／敌图下一有限批次
 
 状态：PREREQUISITES_IMPLEMENTED_LOCAL_VERIFIED，正式候选未冻结／App未验／未发布。线上v91与稳定v82保持；WORLD-FULL-01继续IN_PROGRESS/PARTIAL。开发唯一入口仍current-task，本文件是同任务接续证据，不创建另一任务。

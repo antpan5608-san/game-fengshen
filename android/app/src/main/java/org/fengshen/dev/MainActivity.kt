@@ -730,16 +730,18 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun battleEnemyBox(enemy:BattleEnemy):Box {
         val graphic=content.enemyGraphics[enemy.definition.id]
+        val visual=content.battleVisual?.enemy(enemy.definition.id)
         battleScene()?.let{scene->
             val current=battle!!;val cell=scene.touch.enemies[current.enemies.indexOfFirst{it.slot==enemy.slot}]
             val dp=resources.displayMetrics.density
             val font=resources.configuration.fontScale
             val target=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1).graphic
-            val w=(graphic?.width?:32).toFloat();val h=(graphic?.height?:40).toFloat()
+            val w=(visual?.crop?.width()?:graphic?.width?:32).toFloat()
+            val h=(visual?.crop?.height()?:graphic?.height?:40).toFloat()
             val fit=min(target.w/w,target.h/h)
             // The compact large-font arena uses its remaining sprite height;
             // nearest-neighbor drawing keeps the original bitmap unchanged.
-            val scale=if(scene.compact&&font>=2f&&fit<2f)fit else if(fit>=1f)floor(fit)else fit
+            val scale=if(visual!=null||scene.compact&&font>=2f&&fit<2f)fit else if(fit>=1f)floor(fit)else fit
             return Box(target.x+(target.w-w*scale)/2,target.y+(target.h-h*scale)/2,w*scale,h*scale)
         }
         // A captured single-enemy origin is not a shared origin for every instance in a group.
@@ -2311,7 +2313,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val shift=if(action?.actorSlot==enemy.slot)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
                 paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
                 if(impact&&action?.kind==BattleActionKind.DEATH)paint.alpha=(255*(1-battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs)).toInt().coerceIn(0,255)
-                content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
+                val visual=content.battleVisual?.enemy(enemy.definition.id)
+                if(visual!=null){paint.isFilterBitmap=true
+                    c.drawBitmap(visual.bitmap,visual.crop,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)
+                    paint.isFilterBitmap=false
+                }else content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
                 paint.alpha=255
             }
             val parts=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1)
@@ -2329,15 +2335,17 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 (action.actorId==hero.id||(action.actorId==null&&hero.id==current.hero.id))
             val progress=(battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs).coerceIn(0f,1f)
             val shift=if(moving)battleAdvance(progress)*l.arena.w*.055f else 0f
-            val idle=content.battleVisual?.idle(hero.id)
-            val crop=idle?.let{content.battleVisual!!.idleBounds(hero.id,it)}
+            val pose=battleVisualPose(action,hero.id).let{
+                if(it==BattleVisualPose.ATTACK&&progress !in .2f.. .85f)BattleVisualPose.IDLE else it}
+            val body=content.battleVisual?.body(hero.id,pose)
+            val crop=body?.crop
             val sprite=if(crop==null)Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2,size,size)
                 else battleVisualBodyBounds(field,crop.width(),crop.height()).let{it.copy(x=it.x-shift)}
-            if(idle!=null){
+            if(body!=null){
                 overlayPaint.color=0x550a151b;c.drawOval(RectF(sprite.x+sprite.w*.12f,sprite.y+sprite.h-3*dp,sprite.x+sprite.w*.88f,sprite.y+sprite.h+3*dp),overlayPaint)
                 val damaged=action?.targetId==hero.id&&action.kind==BattleActionKind.DAMAGE
                 paint.alpha=if(view.hp<=0)70 else if(damaged&&battlePresentation.elapsedMs/80%2==0L)100 else 255
-                paint.isFilterBitmap=true;c.drawBitmap(idle,crop,RectF(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h),paint)
+                paint.isFilterBitmap=true;c.drawBitmap(body.bitmap,crop,RectF(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h),paint)
                 paint.alpha=255;paint.isFilterBitmap=false
             } else if(view.hp>0)portrait(c,hero,sprite)
             if(action?.targetId==hero.id&&action.kind==BattleActionKind.HEAL){

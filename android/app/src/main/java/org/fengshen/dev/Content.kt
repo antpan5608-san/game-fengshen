@@ -1221,9 +1221,13 @@ object ContentLoader {
             mapOf(initialPlayer.id to initialName)+extraCharacters.associate{it.first.id to it.second.name},
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
-                content.battleVisual=source.readVisual("manifest.json")?.let{bytes->
-                    BattleVisualAssets(source,bytes,content.characterDefinitions.keys,scenes.keys)
-                }
+                val visualStart=SystemClock.elapsedRealtime()
+                content.battleVisual=runCatching{source.readVisual("manifest.json")?.let{bytes->
+                    BattleVisualAssets(source,bytes,content.characterDefinitions.keys,scenes.keys,battle!!.enemies.keys)
+                }}.onFailure{Diagnostics.record("visual_load","WARN",code="missing_or_corrupt_visual_manifest")}.getOrNull()
+                content.battleVisual?.let{visual->Diagnostics.record("visual_load",if(visual.failedAssets.isEmpty())"INFO"else"WARN",
+                    JSONObject().put("verificationMs",SystemClock.elapsedRealtime()-visualStart)
+                        .put("assetID",visual.id).put("success",visual.failedAssets.isEmpty()))}
                 content.clinics=clinics
                 data.optJSONArray("mapArrivals")?.let{a->
                     require(a.length()==1)

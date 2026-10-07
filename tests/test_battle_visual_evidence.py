@@ -7,6 +7,8 @@ import tempfile
 import unittest
 from tools import battle_visual_evidence as visual,runtime_handoff as h,battle_ui_evidence as ui
 from tests import test_battle_magic_personal_scope as fixtures
+from tests import test_battle_magic_evidence as magic_fixture
+from PIL import Image
 
 
 class VisualProofTests(unittest.TestCase):
@@ -24,6 +26,23 @@ class VisualProofTests(unittest.TestCase):
         segments[-1]['phase']='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE'
         self.recording=dict(normalAssertions='PASS',forceStopRestartEqual=True,continuedExploration=True,originalPreferencesRestored=True,segments=segments,videos=[s['file']for s in segments])
         self.write('world-visual-normal-recording.json',self.recording)
+        fixture=magic_fixture.BattleMagicEvidenceTest();fixture.setUp();self.addCleanup(fixture.doCleanups)
+        phases=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
+                ('xiaolongnv','HEAL','CAST','xiaolongnv-cast.png',44,58),
+                ('xiaolongnv','TEXT','IDLE','xiaolongnv-idle-v1.png',41,58),
+                ('nezha','ATTACK','ATTACK','nezha-attack.png',41,58)]
+        for font in ('1.0','1.3','2.0'):
+            rows=[]
+            for i,(actor,kind,pose,file,mp,hp) in enumerate(phases):
+                name='touch-ux-world-visual-pose-'+font.replace('.','_')+'-'+str(i)+'.png'
+                Image.new('RGB',(160,100),(1,2,3)).save(self.evidence/name)
+                rows.append(dict(actor=actor,kind=kind,pose=pose,file=file,casterMP=mp,targetHP=hp,screenshot=name))
+            self.write('touch-ux-world-visual-poses-'+font+'.json',dict(
+                kind='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE',font=float(font),
+                manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=16,decodedBytes=32*1024*1024,
+                renderStateUnchanged=True,rngUnchanged=True,before=fixture.before,after=fixture.before,
+                screenWidth=160,screenHeight=100,phases=rows))
+            (self.logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt')).write_text('OK (1 test)\n')
 
     def write(self,name,value):(self.evidence/name).write_text(json.dumps(value),encoding='utf-8')
     def proof(self):return visual.proof_digests(self.evidence,self.logs)
@@ -57,8 +76,8 @@ class VisualProofTests(unittest.TestCase):
         scope=copy.deepcopy(fixture.scope);scope['battleVisualAcceptance']=visual.ACCEPTANCE;scope['personalTest']['gates']+=visual.GATES
         scope['battleUiAcceptance']=ui.acceptance(require_insets=True)
         fixture.fixture.fixture.write_scope(scope)
-        candidate=dict(fixture.candidate,versionCode=91);proposed=dict(fixture.proposed,versionCode=91,**{g:'PASS'for g in visual.GATES},**self.proof())
-        self.assertEqual(35,len(h.personal_gates(h.active_scope(candidate))))
+        candidate=dict(fixture.candidate,versionCode=92);proposed=dict(fixture.proposed,versionCode=92,**{g:'PASS'for g in visual.GATES},**self.proof())
+        self.assertEqual(36,len(h.personal_gates(h.active_scope(candidate))))
         h.review_personal(h.finish_personal(proposed))
         bad_scope=copy.deepcopy(scope);bad_scope['battleUiAcceptance'].pop('geometryEvidence')
         fixture.fixture.fixture.write_scope(bad_scope)
@@ -70,6 +89,21 @@ class VisualProofTests(unittest.TestCase):
         scope.pop('battleVisualAcceptance');scope['personalTest']['gates']=[g for g in scope['personalTest']['gates']if g not in visual.GATES]
         fixture.fixture.fixture.write_scope(scope)
         with self.assertRaisesRegex(ValueError,'visual'):h.active_scope(candidate)
+
+    def test_pose_report_wrong_mp_draw_mutation_missing_font_picture_and_test_rejected(self):
+        name='touch-ux-world-visual-poses-1.3.json';original=json.loads((self.evidence/name).read_text())
+        for key in ('renderStateUnchanged','rngUnchanged'):
+            self.write(name,dict(original,**{key:False}))
+            with self.assertRaises(ValueError):self.proof()
+        changed=copy.deepcopy(original);changed['phases'][1]['casterMP']=41;self.write(name,changed)
+        with self.assertRaisesRegex(ValueError,'timing'):self.proof()
+        changed=copy.deepcopy(original);changed['after']['money']=77;self.write(name,changed)
+        with self.assertRaises(ValueError):self.proof()
+        self.write(name,original)
+        path=self.logs/'testControlledBattleVisualPosesReadOnly-font-1.3.txt';path.write_text('FAILURES!!!\nOK (1 test)\n')
+        with self.assertRaises(ValueError):self.proof()
+        path.write_text('OK (1 test)\n');(self.evidence/original['phases'][0]['screenshot']).unlink()
+        with self.assertRaises(ValueError):self.proof()
 
 
 if __name__=='__main__':unittest.main()

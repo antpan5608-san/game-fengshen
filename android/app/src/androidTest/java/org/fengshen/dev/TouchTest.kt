@@ -11,6 +11,77 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Actual queued rule steps and Canvas, controlled actors, not normal joining or phone performance. */
+    fun testControlledBattleVisualPosesReadOnly(){
+        val(activity,v)=launch();val c=v.content;val rules=c.battle!!;val visual=c.battleVisual!!
+        assertEquals(16,visual.preparedCount);assertTrue(visual.failedAssets.isEmpty())
+        val actors=listOf(c.initialPlayer.copy(hp=5,maxHp=200,statusMask=2))+
+            listOf("xiaolongnv","yangjian","jiangziya").map{c.joinCharacters.getValue(it)}
+        val fixture=v.currentSnapshot().copy(mapId=7,x=23*16+8,y=7*16+8,direction=Key.DOWN,
+            characters=actors,encounterSteps=0,terrainMode=0,interiorContext=null,
+            inventory=mapOf(OriginalYangJoin.ITEM_ID to 1),
+            flags=mapOf("opening.intro.seen" to true,OriginalYangJoin.CONTEXT_FLAG to true,OriginalYangJoin.USED_FLAG to true,
+                OriginalSceneItems.PLAGUE_FLAG to true,"rom.map.7.flag.128" to true))
+        assertTrue(fixture.validate(c));val p=BattlePresentation();lateinit var fight:OpeningBattle
+        val group=rules.groups.first{g->g.members.all{m->rules.enemies.getValue(m.enemyId).behaviorByte==0}}
+        var draws=0;val phases=org.json.JSONArray();val font=v.resources.configuration.fontScale
+        fun field(name:String,value:Any?){GameView::class.java.getDeclaredField(name).apply{isAccessible=true}.set(v,value)}
+        instrumentation.runOnMainSync{
+            v.active=false;assertTrue(v.restoreSnapshot(fixture))
+            fight=GameView::class.java.getDeclaredMethod("createPartyBattle",EncounterGroup::class.java,BattleContent::class.java)
+                .apply{isAccessible=true}.invoke(v,group,rules) as OpeningBattle
+            assertNull(fight.attack(fight.enemies.first().slot){error("Queued attack must not draw")})
+            assertNull(fight.useMagic(OriginalBattleMagic.HEAL,"nezha"){error("Queued heal must not draw")})
+            assertNull(fight.attack(fight.enemies.first().slot){error("Queued attack must not draw")})
+            val turn=fight.attack(fight.enemies.first().slot){draws++;255}!!
+            assertEquals(58,fight.hero.hp);assertEquals(41,fight.party[1].mp)
+            p.tick(400);assertTrue(p.present(turn))
+            GameView::class.java.getDeclaredMethod("resetBattleUiSelection").apply{isAccessible=true}.invoke(v)
+            field("battle",fight);field("battlePresentation",p);field("battleID","controlled-visual-poses")
+            field("battleCommitted",false);field("storyBattle",null);field("battleInfoOpen",false)
+            field("battleItemsOpen",false);field("battleMagicOpen",false);field("layer",GameView.Layer.BATTLE)
+        }
+        val saved=v.currentSnapshot();val party=fight.party.toList();val sampled=draws;val bytes=visual.cachedBytes
+        var attack=false;var cast=false;var debit=false
+        var index=0
+        while(p.screen==BattlePresentation.Screen.ACTING){
+            val action=p.action!!
+            val capture=action.actorId=="nezha"&&action.kind==BattleActionKind.ATTACK||
+                action.actorId=="xiaolongnv"&&action.abilityId==OriginalBattleMagic.HEAL
+            if(capture){
+                val expected=battleVisualPose(action,action.actorId!!)
+                if(expected==BattleVisualPose.ATTACK)attack=true
+                if(expected==BattleVisualPose.CAST)cast=true
+                if(action.kind==BattleActionKind.TEXT){assertEquals(BattleVisualPose.IDLE,expected);debit=true}
+                instrumentation.runOnMainSync{p.tick(p.actionDurationMs/2);v.invalidate()}
+                val body=visual.body(action.actorId!!,expected)!!
+                val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as BattleSceneLayout
+                val field=scene.allySprites[fight.party.indexOfFirst{it.id==action.actorId}]
+                val box=battleVisualBodyBounds(field,body.crop.width(),body.crop.height())
+                assertEquals(field.y+field.h,box.y+box.h,.01f)
+                assertEquals(body.crop.width().toFloat()/body.crop.height(),box.w/box.h,.001f)
+                val name="world-visual-pose-${font.toString().replace('.','_')}-$index"
+                screenshot(v,name)
+                assertEquals(saved,v.currentSnapshot());assertEquals(party,fight.party)
+                assertEquals(sampled,draws);assertEquals(bytes,visual.cachedBytes)
+                phases.put(JSONObject().put("actor",action.actorId).put("kind",action.kind.name)
+                    .put("ability",action.abilityId).put("file",body.file).put("pose",expected.name)
+                    .put("screenshot","touch-ux-$name.png").put("foot",box.y+box.h)
+                    .put("casterMP",action.partyMp["xiaolongnv"]).put("targetHP",action.partyHp["nezha"]))
+            }
+            instrumentation.runOnMainSync{p.tick(p.actionDurationMs-p.elapsedMs)};index++
+            assertTrue("Finite original action queue",index<100)
+        }
+        assertTrue(attack&&cast&&debit);assertEquals(saved,v.currentSnapshot());assertEquals(party,fight.party)
+        val screen=instrumentation.uiAutomation.takeScreenshot()
+        File(instrumentation.targetContext.getExternalFilesDir(null),"world-visual-poses-$font.json").writeText(JSONObject()
+            .put("kind","CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE")
+            .put("font",font).put("screenWidth",screen.width).put("screenHeight",screen.height)
+            .put("manifestSha256",BattleVisualAssets.MANIFEST_SHA256).put("prepared",visual.preparedCount)
+            .put("decodedBytes",bytes).put("phases",phases).put("renderStateUnchanged",true)
+            .put("rngUnchanged",true).put("before",saved.json()).put("after",v.currentSnapshot().json()).toString())
+        instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);activity.finish()}
+    }
     /** Controlled four-role fixture, real taps/foreground phases/save; no normal join claim. */
     fun testControlledBattleMagicSelectionPhasesAndSave(){
         val(activity,v)=launch();val root=instrumentation.targetContext.getExternalFilesDir(null)!!
@@ -5798,7 +5869,9 @@ class TouchTest:IsolatedGameTestCase(){
                 val image=c.enemyGraphics.getValue(enemy.definition.id)
                 val graphic=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,enemy) as Box
                 val target=v.battleTargetBounds(enemy.slot)
-                assertEquals(image.width.toFloat()/image.height,graphic.w/graphic.h,.001f)
+                val crop=c.battleVisual?.enemy(enemy.definition.id)?.crop
+                val ratio=if(crop==null)image.width.toFloat()/image.height else crop.width().toFloat()/crop.height()
+                assertEquals(ratio,graphic.w/graphic.h,.001f)
                 assertTrue(graphic.x>=target.x&&graphic.y>=target.y&&graphic.x+graphic.w<=target.x+target.w&&graphic.y+graphic.h<=target.y+target.h)
                 if(layout.compact){
                     val label=battleEnemySceneLayout(target,dp,font,true,false).label
