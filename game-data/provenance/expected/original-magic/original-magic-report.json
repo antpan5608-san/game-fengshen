@@ -1,0 +1,551 @@
+{
+  "status": "SCOPED_ORIGINAL_CPU_EVIDENCE_NOT_NORMAL_JOIN_OR_ANDROID",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scriptSha256": "b40a3e0ebafad00ca7549e7b8aeceb82dd2b0cb2204b322981f5659c8aa302b5",
+  "results": [
+    {
+      "name": "battle-availability-controlled-original",
+      "cases": 320,
+      "sha256": "1ab0ddd9e05cc97cc0e3da626f524fa2bcbe62fc777f393a9db192d59f078ea7",
+      "failures": 0
+    },
+    {
+      "name": "field-prefix-availability-controlled-original",
+      "cases": 320,
+      "sha256": "2726719a5f7c46c4464bacd50a235daac2def12b8ffd9fa32e0a740030a62930",
+      "failures": 0
+    },
+    {
+      "name": "heal-controlled-original",
+      "cases": 240,
+      "sha256": "73b1280757b4c5414670fce2faf464472f5347a0012ca00e2bc342ac12a233eb",
+      "failures": 0
+    }
+  ],
+  "directoryRecords": [
+    {
+      "kind": "FIELD_TABLE",
+      "namespace": "fieldSelectorByte",
+      "identity": 1,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 0,
+          "displayedLearnLevel": 1,
+          "costByte": 3,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 9,
+          "displayedLearnLevel": 10,
+          "costByte": 3,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 14,
+          "displayedLearnLevel": 15,
+          "costByte": 4,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 19,
+          "displayedLearnLevel": 20,
+          "costByte": 6,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 24,
+          "displayedLearnLevel": 25,
+          "costByte": 12,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 29,
+          "displayedLearnLevel": 30,
+          "costByte": 10,
+          "targetKindByte": 4,
+          "sceneKindByte": 3
+        },
+        {
+          "rowIndex": 6,
+          "levelByte": 35,
+          "displayedLearnLevel": 36,
+          "costByte": 20,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 7,
+          "levelByte": 42,
+          "displayedLearnLevel": 43,
+          "costByte": 40,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 8,
+          "levelByte": 49,
+          "displayedLearnLevel": 50,
+          "costByte": 50,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 9,
+          "levelByte": 56,
+          "displayedLearnLevel": 57,
+          "costByte": 80,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 93957,
+        "length": 41,
+        "sha256": "0eab3d32f8e9724a27eefb85a65ae578b8b506779ad07169d8d75ea89bc60195",
+        "module": 2,
+        "cpuAddress": 61173,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    },
+    {
+      "kind": "FIELD_TABLE",
+      "namespace": "fieldSelectorByte",
+      "identity": 2,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 0,
+          "displayedLearnLevel": 1,
+          "costByte": 4,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 19,
+          "displayedLearnLevel": 20,
+          "costByte": 6,
+          "targetKindByte": 4,
+          "sceneKindByte": 3
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 24,
+          "displayedLearnLevel": 25,
+          "costByte": 8,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 29,
+          "displayedLearnLevel": 30,
+          "costByte": 10,
+          "targetKindByte": 4,
+          "sceneKindByte": 2
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 34,
+          "displayedLearnLevel": 35,
+          "costByte": 20,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 40,
+          "displayedLearnLevel": 41,
+          "costByte": 25,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 6,
+          "levelByte": 46,
+          "displayedLearnLevel": 47,
+          "costByte": 35,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 7,
+          "levelByte": 53,
+          "displayedLearnLevel": 54,
+          "costByte": 50,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 93998,
+        "length": 33,
+        "sha256": "2ec181a0fbe290b1614973b0a2207fba96c52143b845bde2c4c3145e70b45c28",
+        "module": 2,
+        "cpuAddress": 61214,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    },
+    {
+      "kind": "FIELD_TABLE",
+      "namespace": "fieldSelectorByte",
+      "identity": 3,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 0,
+          "displayedLearnLevel": 1,
+          "costByte": 4,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 0,
+          "displayedLearnLevel": 1,
+          "costByte": 6,
+          "targetKindByte": 4,
+          "sceneKindByte": 3
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 26,
+          "displayedLearnLevel": 27,
+          "costByte": 7,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 31,
+          "displayedLearnLevel": 32,
+          "costByte": 5,
+          "targetKindByte": 2,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 36,
+          "displayedLearnLevel": 37,
+          "costByte": 10,
+          "targetKindByte": 2,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 41,
+          "displayedLearnLevel": 42,
+          "costByte": 40,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 6,
+          "levelByte": 47,
+          "displayedLearnLevel": 48,
+          "costByte": 60,
+          "targetKindByte": 3,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 7,
+          "levelByte": 54,
+          "displayedLearnLevel": 55,
+          "costByte": 80,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 94031,
+        "length": 33,
+        "sha256": "2338eddf5533ee2d9d28d252c9676ecf3de31099b64f43baaaacd9280fb271d8",
+        "module": 2,
+        "cpuAddress": 61247,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    },
+    {
+      "kind": "BATTLE_TABLE",
+      "namespace": "battleActiveActorId",
+      "identity": 2,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 1,
+          "displayedLearnLevel": 1,
+          "costByte": 3,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 10,
+          "displayedLearnLevel": 10,
+          "costByte": 3,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 15,
+          "displayedLearnLevel": 15,
+          "costByte": 4,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 20,
+          "displayedLearnLevel": 20,
+          "costByte": 6,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 25,
+          "displayedLearnLevel": 25,
+          "costByte": 12,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 36,
+          "displayedLearnLevel": 36,
+          "costByte": 20,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 6,
+          "levelByte": 43,
+          "displayedLearnLevel": 43,
+          "costByte": 40,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 7,
+          "levelByte": 50,
+          "displayedLearnLevel": 50,
+          "costByte": 50,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        },
+        {
+          "rowIndex": 8,
+          "levelByte": 57,
+          "displayedLearnLevel": 57,
+          "costByte": 80,
+          "targetKindByte": 2,
+          "sceneKindByte": 0
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 312875,
+        "length": 37,
+        "sha256": "6a5ca1a4e74fb77a49152f4b8ca4ee0f8285ad5e716fbca438d58397c6de5402",
+        "module": 9,
+        "cpuAddress": 50715,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    },
+    {
+      "kind": "BATTLE_TABLE",
+      "namespace": "battleActiveActorId",
+      "identity": 3,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 1,
+          "displayedLearnLevel": 1,
+          "costByte": 4,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 25,
+          "displayedLearnLevel": 25,
+          "costByte": 8,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 35,
+          "displayedLearnLevel": 35,
+          "costByte": 20,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 41,
+          "displayedLearnLevel": 41,
+          "costByte": 25,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 47,
+          "displayedLearnLevel": 47,
+          "costByte": 35,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 54,
+          "displayedLearnLevel": 54,
+          "costByte": 50,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 312912,
+        "length": 25,
+        "sha256": "acbfead41e7e902dc969cad2b3a15a391f63c7400604a17881dccd02ec2c1f19",
+        "module": 9,
+        "cpuAddress": 50752,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    },
+    {
+      "kind": "BATTLE_TABLE",
+      "namespace": "battleActiveActorId",
+      "identity": 4,
+      "rows": [
+        {
+          "rowIndex": 0,
+          "levelByte": 1,
+          "displayedLearnLevel": 1,
+          "costByte": 4,
+          "targetKindByte": 0,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 1,
+          "levelByte": 27,
+          "displayedLearnLevel": 27,
+          "costByte": 7,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 2,
+          "levelByte": 32,
+          "displayedLearnLevel": 32,
+          "costByte": 5,
+          "targetKindByte": 2,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 3,
+          "levelByte": 37,
+          "displayedLearnLevel": 37,
+          "costByte": 10,
+          "targetKindByte": 2,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 4,
+          "levelByte": 42,
+          "displayedLearnLevel": 42,
+          "costByte": 40,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 5,
+          "levelByte": 48,
+          "displayedLearnLevel": 48,
+          "costByte": 60,
+          "targetKindByte": 3,
+          "sceneKindByte": 1
+        },
+        {
+          "rowIndex": 6,
+          "levelByte": 55,
+          "displayedLearnLevel": 55,
+          "costByte": 80,
+          "targetKindByte": 1,
+          "sceneKindByte": 1
+        }
+      ],
+      "status": "BOUNDED_RECORDS_NOT_ENABLED_SPELL_OPERATIONS",
+      "source": {
+        "offset": 312937,
+        "length": 29,
+        "sha256": "aa245171d31be05b5db214433b866378e4a41383216533d5f03c9fb2a137710e",
+        "module": 9,
+        "cpuAddress": 50777,
+        "meaning": "Original records; effect and name bytes not inferred"
+      }
+    }
+  ],
+  "entrySources": [
+    {
+      "offset": 309334,
+      "length": 67,
+      "sha256": "e4b7056cf013bf0abba2753fcbb138651e9d7d538c1d4931097eca1a8b8899e4",
+      "module": 9,
+      "cpuAddress": 47174,
+      "meaning": "Battle ActiveActorId and displayed-level count"
+    },
+    {
+      "offset": 70774,
+      "length": 59,
+      "sha256": "6b569e727a67f3c974e23d2363814f89fff4e34336a3ca3bd6f67ece41fe65ad",
+      "module": 2,
+      "cpuAddress": 37990,
+      "meaning": "Field prefix; stopped before rendering"
+    },
+    {
+      "offset": 70043,
+      "length": 195,
+      "sha256": "640f10190c9263a0d3bd0f4f4ea77d80b29033a93dd0202faab5b463c6b5e959",
+      "module": 2,
+      "cpuAddress": 37259,
+      "meaning": "Native-observed MP deduction and heal effect prefix"
+    },
+    {
+      "offset": 93901,
+      "length": 48,
+      "sha256": "34d7a00ffe001b32259aedb3ca1e8ef98920883f20cb10c10801fda103a81b83",
+      "module": 2,
+      "cpuAddress": 61117,
+      "meaning": "Original integer multiply/add/divide"
+    }
+  ],
+  "limits": [
+    "Field selector0 aliases Xiao table; it is not permission for Nezha magic",
+    "Reference role IDs, original actorIndex and battle ActiveActorId differ",
+    "No spell name, target legality, normal growth/join or Android assertion",
+    "Healing starts after menu validation; supplied target/cost are controlled",
+    "Only message JSR804F skipped; stop924E before UI; no unknown target rule assumed",
+    "Native initial uncapped heal observed53 independently; other cases remain CPU-controlled",
+    "Original party search increments once without looping; do not substitute reference formula"
+  ],
+  "controlledNativeFixtureSha256": "e011ed846bae4c871d437a426f37b09e920259de41cca0d1519360a9cf15987a"
+}

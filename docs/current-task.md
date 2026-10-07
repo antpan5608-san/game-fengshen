@@ -24,6 +24,8 @@ PUBLISHED_AND_VERIFIED；[完整交付证据](evidence/v87-town-room28-personal.
 
 下一批沿已批准MAGIC-ORIGINAL-01核原角色/习得/初始法术和MP时点，复用现有Content/角色页/World/战斗调度，不另建系统。私有取证已执行battle/field各320个有界等级案例：哪吒原菜单拒绝法术，原小龙女12级显示两项3MP；高等级10项原菜单三页实际查看，显示不代表当前地图可用。原受控取消保留HP/MP，提交扣3；最大HP200隔离fixture实际5→58/44→41，原240个效果前缀矩阵匹配53点治疗，不能直接套参考公式或视作正常入队/App验收。MP2不足原提示且不改变HP/MP；MP3首提交到0的raw已核，后期截图是不足提示，不能从晚期截图推断整个按键时序。原健康目标解毒仍扣3的受控观察与缺低字节回写线索正在分开核。以上全部原RAM/PNG/ROM留私有忽略目录，尚未开放玩家法术。
 
+原取证工具已接入[probe-original-magic.py](../tools/rom-extractor/probe-original-magic.py)及[基础证据](evidence/magic-original-foundation.md)：最终实际880 CPU案例、48有界field/battle记录、三矩阵与独立探针字节相等；原span/脚本hash和LF、错误ROM/RAM及覆盖拒绝检查通过。首轮4B 6全新/91.125s与LF后2全新/15.64s全部已读并登记reviewed，拒绝削弱输入/步数/断言及把未知字节当游戏错误。未改Android/内容pin、未开放法术或新游戏版本。原初始中毒解毒2→0/MP44→41、健康目标仍扣3已观察，目标与施法者完整限制/battle效果及高字节角落仍待核。
+
 以下v87中间失败和已验证旧候选保留历史，不覆盖当前交付。
 
 ## v87正式App通过与发布依赖顺序缺口（2026-10-07，北京时间）
