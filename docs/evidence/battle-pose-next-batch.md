@@ -1,3 +1,5 @@
+最新：本有限批次已发布v92，详见[v92实际交付](v92-battle-pose-personal.md)。新同源445 release JVM/95 suites、21 Content/36门禁、实际图/片/cold和公网完整字节均已核；postflight NO_DATA，不当健康或真机证明。下面未发布/待App段落是保留历史，不能覆盖本段；下一治疗局部视觉接续仍属于WORLD-FULL-01。
+
 # 四图接入当前有限批次（服务器）
 
 状态：IMPLEMENTED_LOCAL_VERIFIED，拟v92／0.8.22-battle-pose-personal；正式签名App／发布尚未执行。线上v91、稳定v82及WORLD-FULL-01 IN_PROGRESS/PARTIAL保持。以下前置记录留作历史。

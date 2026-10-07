@@ -10,8 +10,8 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v91 / 0.8.21-battle-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v92 / 0.8.22-battle-pose-personal，四图及固定worker准备已实现/本地445 JVM和162 Python检查；待原Actions同源签名/App，未发布
+published_personal_version: v92 / 0.8.22-battle-pose-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: 下一有限治疗局部视觉批次，尚未冻结/打包/App/发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
@@ -23,6 +23,10 @@ first_real_blocker: 整体参考重制体验未实现；下一安全版本优先
 首正式build37686148098签名通过、App旧Boss比例断言FAIL，未发布；原失败保留。已定向适配三处实际绘制asset比例（保留native／边界／规则断言），仪器新编译／29 Python通过，未改生产的445 JVM沿用本批实际结果，待重新审查／新source原Actions同候选App。线上91、稳定82与全部未验项保持。
 
 当前有限代码检查点：四图、原worker固定16图准备及Canvas只读已实现；445 JVM／95 suites、19组Python报告162、DEBUG应用／仪器编译、c62／392与视觉17文件完整校验通过。新增受控真实动作三字体raw-proof，第36个人门禁保留原35项。下一动作是本批最新审查／冻结同源main并执行原Actions正式签名App；线上v91／稳定v82不变，完整主线／声音／真机／云恢复及全部欠账保持OPEN。
+
+## v92已发布，主动接续原治疗局部视觉
+
+最新实际检查点：v92已沿原同源签名/App/审核发布，公网62,588,756完整字节与审核APK一致；正式445 JVM/95 suites、21 Content/36个人门禁及实际121PNG/60帧采样/7完整cold通过。postflight查询成功但NO_DATA（92/91无上传样本），不当运行健康/手机通过；稳定82及全部长期欠账保持。见[v92交付](evidence/v92-battle-pose-personal.md)。服务器继续原合法治疗局部视觉下一批次，以下为历史检查点。
 
 ## v91已发布，主动接续姿态与敌图（2026-10-08北京时间）
 
