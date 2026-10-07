@@ -1,3 +1,9 @@
+## 最新有效交付：v86战斗个人版（2026-10-07）
+
+v86/0.8.16-battle-ui-personal PUBLISHED_AND_VERIFIED；原build37570999686/sourceb13343b与publish37572999450 SUCCESS，415 release JVM/21 Content/26同签名个人门禁通过。公网完整APK32,513,189字节/SHA a511d061563c034cc0202335bdb6f35158d3e1ba3f5a39ff10d5288a03db1a22及原包名签名/c61/388文件核实，详细证据见[evidence/v86-battle-ui-personal.md](evidence/v86-battle-ui-personal.md)。实际三字体一至四人/六敌/Boss、明确动作后目标、药品/一次奖励/详情及原升级/cold门禁通过；个人级，manual_acceptance=PENDING，历史稳定v82保留。
+
+只关闭本批有限战斗界面与同候选存档验收缺口。全角色/装备/物品搜索、所有小窗口、点击寻路、房间28与原交互、正常主线至结局、真机/声音/云恢复/内容更新及十类累计欠账继续开放。ALL_MAPS_USABLE=NO、有效分母UNKNOWN。原版正常房间28进入已观察，第一轮返程失败保留，不算Android可玩；唯一执行者继续独立取证和下一版本。
+
 ## 当前交付：c61个人阶段v85（2026-10-07，北京时间）
 
 IMPLEMENTED/PACKAGED/APP_VERIFIED_PERSONAL/PUBLISHED_AND_VERIFIED；[实际来源与交付报告](evidence/v85-jiang-personal.md)。build37516065030/source230b999cb5c0269484f4c61b0bf58256d2ae800c/publish37518266540全部SUCCESS，411 release JVM/21 Content/18同签名个人门禁PASS；原公网32,481,873字节、SHA0fafb10d61fdd7511b8c84f875ea43bdb84db8ba9a8b72258767fb16a5d90baf、包名/签名/c61内容/六段原片与完整cold等值独立核实；postflight19:22:04UTC errors{}/cleanup0，原权威保留85/84。PERSONAL_TEST/manual_acceptance PENDING，历史STABLE82；仅关闭本轮受控姜入队/四人局部引擎与cold保护，不关闭正常完整主线/全界面/72图可玩/真机/音频/十类累计欠账。上报仍v84历史会话，无v85真机验收。长期三终点ACTIVE/PARTIAL，下一界面批次继续current-task。以下历史过程保留，不覆盖此最新交付。

@@ -8,13 +8,23 @@ valid_map_denominator: UNKNOWN
 development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86 battle UI batch，SIGNED_APP_VERIFIED_PUBLICATION_DEPENDENCY_FAILED_NOT_PUBLISHED，新来源补依赖后重验
+published_personal_version: v86 / 0.8.16-battle-ui-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: v86已发布；下一批房间28正常进出与交互取证，NOT_IMPLEMENTED_NOT_APP_VERIFIED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
 manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
 first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
+
+## v86最新交付及自主接续（2026-10-07，北京时间）
+
+v86/0.8.16-battle-ui-personal已完成原流程发布与公网独立复核，完整报告见[evidence/v86-battle-ui-personal.md](evidence/v86-battle-ui-personal.md)。冻结APK来源b13343b1e7ac820021d0f4fe66ebf6dca1e0903f，原build37570999686和publish37572999450均SUCCESS；415 release JVM/90 suites零失败错误跳过、21 Content和原18+UI8共26同签名个人门禁PASS。32,513,189字节/SHA a511d061563c034cc0202335bdb6f35158d3e1ba3f5a39ff10d5288a03db1a22，公网完整字节/原签名包名/c61 manifest37f0/388文件独立核验通过，72只是依赖图数。
+
+87原PNG/6尺寸JSON/11日志重算proof41acb036；Jiang recorder359539f9、cold-boundary dddd784a及六段原片完整SHA/三组before-after完整等值/偏好恢复通过。本候选18张四人/六敌/Boss/药品/奖励/滚动图与六末帧、三段4秒帧实际目视，2倍字敌图较小、其余详情依赖滚动；Jiang 4秒帧为桌面而末帧为对白，不声称逐段全程看完。覆盖v85同c61保持完整档且无备份；两次controlled版本字段迁移保留首份raw备份，不当真实旧版正常主线。
+
+原postflight2026-10-07T04:46:56.1156322Z：NO_ISSUES_OBSERVED/errors空/cleanupFailures0，权威保留86/85；16事件来自v85一个已上报真实会话，不构成v86真机健康、音频或完整剧情验收。PERSONAL_TEST/manual_acceptance=PENDING，历史STABLE仍v82。第一次同内容仪器失败和首次发布PIL依赖失败保留；不因当前成功抹去。
+
+自主接续房间28：新取得匹配ROM原版正常新游戏按键实际进入map28，未写RAM/未载旧档；第一轮向下返程未成功，原失败日志/PNG/RAM/PPU仅私有保留。下一步核实际角色坐标、门口/返程和两演员交互，再最小扩展既有HOUSE_TABLE_ENTRY/RETURN_TO_CALLER及统一存档；尚未实现或Android验收。当前普通回合继续长期授权，旧goal机制仍usageLimited，不冒称恢复active或完成；全主线、全部UI/导航与十类欠账开放。
 
 ## 本轮恢复及v86正式App通过、发布依赖缺口（2026-10-07，北京时间）
 
