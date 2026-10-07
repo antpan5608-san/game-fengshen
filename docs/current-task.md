@@ -16,6 +16,12 @@ content_version: opening-segment-001-c62（v88同内容已发布并公网复核�
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: v89原首次签名run37610894546的隔离法术fixture恢复被拒，测试main线程断言导致仪器进程结束，尚未进入施法。已签名/JVM423通过，但App失败未发布；只修测试状态构造/失败回执，再新同源验收，保留存档门禁。
 
+## v89 第二次同源验收诊断（2026-10-07）
+
+source b1ecf699/run37615096677 build SUCCESS，423 release JVM/92 suites通过，APK fullSHA ee8f22588266e84a700b9adfb6f1574f4f895572f1e7940f45d9cc9af3ee0309；runtime仍在受控状态恢复失败，未施法/未发布。实际保留的 fixture-validation JSON 为 snapshotValid=false/cellCheck=OK/restored=false。原 OriginalYangJoin.validPending 要求杨戬存在时入队 context/used 标志为真且 item19 恰为1；此前四人fixture仅有intro标志/item0，违反此守卫。
+
+定向补齐受控fixture的上述上下文/物品，保留主线程外硬失败断言，生产存档校验不变。此前个人原片artifact未收集法术前缀（完整base artifact有诊断），补齐world-field-magic及touch-ux-world-field-magic路径，避免运行通过后缺原片；31门禁不减。实际本地Debug单元任务UP-TO-DATE（业务代码不变）、新仪器编译1m47s通过；第一轮两段4B建议实际阅读，拒绝删除恢复断言/既有辅助函数或把明确隔离fixture伪称正常路线。最终快照审查与新同源验收另记，线上仍88。
+
 ## v89 首次原签名验收失败与定向修正（2026-10-07）
 
 source90ce340/build37610894546的build SUCCESS，423 release JVM/92 suites零失败错误跳过；真实32,791,156字节/fullSHA230736a14d1ad944117803596c4c6f1c343ea955283695c6951b4e2d8fafda2c、原包名/签名/c62/392文件独立复核。runtime在第一次字体的法术测试TouchTest:22恢复fixture返回false，main线程assertTrue导致仪器App进程终止；不是普通玩家已触发的新施法崩溃，也未进入发布。

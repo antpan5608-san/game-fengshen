@@ -1,3 +1,6 @@
+<!-- v89 second runtime failure: retained actual fixture diagnostics; no publication -->
+第二次候选 run37615096677：签名构建及423 release JVM通过，受控四人fixture违反杨戬入队上下文守卫，App恢复拒绝，未施法/未发布。正在补齐测试上下文和法术证据artifact路径；生产保存/31门禁不变。线上仍v88，正常主线/真机/声音/完整法术未完成。
+
 ## 当前候选：v89提神术有限闭环（2026-10-07）
 
 首次原签名run37610894546：build/423 release JVM通过，但runtime在隔离fixture恢复时被拒，测试主线程断言终止仪器进程，尚未施法、未发布。旧候选完整SHA230736a1…/32,791,156字节与原包名签名/c62已独立复核；只修新测试上下文及完整失败回执，存档和31门禁保留，修改后新同源构建，不复用旧APK。

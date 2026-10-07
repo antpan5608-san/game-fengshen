@@ -23,10 +23,14 @@ class TouchTest:IsolatedGameTestCase(){
             // This fresh isolated fixture does not inherit a prior test's plot/transport context.
             // Cell2,15 is the already observed normal town entrance, not a descriptor default spawn.
             val fixture=base.copy(mapId=0,x=2*16+8,y=15*16+8,direction=Key.UP,terrainMode=0,
-                interiorContext=null,characters=party,encounterSteps=0,flags=mapOf("opening.intro.seen" to true))
+                interiorContext=null,characters=party,encounterSteps=0,
+                inventory=mapOf(OriginalYangJoin.ITEM_ID to 1),
+                flags=mapOf("opening.intro.seen" to true,OriginalYangJoin.CONTEXT_FLAG to true,
+                    OriginalYangJoin.USED_FLAG to true))
             val scene=v.content.sceneForState(0,fixture.flags)
             val metadata=JSONObject().put("kind","CONTROLLED_FIXTURE_VALIDATION_NOT_PLAYER_SAVE")
                 .put("snapshotValid",fixture.validate(v.content))
+                .put("yangJoinContextValid",v.content.yangJoin()?.validPending(fixture))
                 .put("cellCheck",if(scene==null)"MISSING_SCENE" else scene.check(2,15)?:"OK")
                 .put("fixture",fixture.json())
             restored=v.restoreSnapshot(fixture)
