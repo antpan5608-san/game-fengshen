@@ -1,0 +1,123 @@
+{
+  "status": "BOUNDED_ORIGINAL_BATTLE_FOUNDATION_NOT_IMPLEMENTED_OR_ANDROID",
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "scriptSha256": "9fd5aff6ff0c594411100c49b5b33fa763545c00794c03f895c9e7a7c58d319c",
+  "battleFixtureSha256": {
+    "effect": "b22705a526d3a8e0f4ae02087b37d07bcaea7268acc93276dd58137b5d31baab",
+    "debit": "541a221a538b14abdc04e09802532e590b6f5d7ecbc3582b2060e1f5fe6a1b24",
+    "cure": "2f2c8728768a50196155387abd0370d57f434d01ddbb4c59c86235a9c37f6841",
+    "menu": "55e95fe91ffb37d5b69f41bfc117e92c7599b1e97befb2531df155e9e4b6b6e6"
+  },
+  "results": [
+    {
+      "name": "battle-row0-target-status",
+      "cases": 256,
+      "sha256": "385f07edd4dbf2aa2906ec265f2528fdd54ac60d1cf65b74c91f6525b7ec3f9e",
+      "failures": 0
+    },
+    {
+      "name": "battle-row0-heal",
+      "cases": 3200,
+      "sha256": "e8881167bc9ada4753a65fffb0ad450c3d77e5a32ce82a798397f50d9b5fac69",
+      "failures": 0
+    },
+    {
+      "name": "battle-row0-mp-debit",
+      "cases": 1026,
+      "sha256": "65ffac949a75124e842ebee3105c0a93e9649dd89cef7b08f4b4e3c0b2d95aed",
+      "failures": 0
+    },
+    {
+      "name": "battle-antidote-target-prefix",
+      "cases": 256,
+      "sha256": "e579f4c73c2617fac21b20805b5c239a6acdd94e181a05695bb7a0c23535af14",
+      "failures": 0
+    },
+    {
+      "name": "battle-post-hp-status",
+      "cases": 5120,
+      "sha256": "f00f755015c2f25c99066f9a6681756f0bf75c2ffd27ddb5ab209749d0c7ee7c",
+      "failures": 0
+    },
+    {
+      "name": "battle-initial-mp-prefix",
+      "cases": 1026,
+      "sha256": "5c733698c09718f302cf56aab81a6eb6d597dbb7359b87a6ad9cb46c2288ee85",
+      "failures": 0
+    }
+  ],
+  "entrySources": [
+    {
+      "offset": 302740,
+      "length": 22,
+      "sha256": "c87138c533e4a17e5bcbf4ef1b9c402bea6e3e8c5e0c094849dd882ea92c138a",
+      "module": 9,
+      "cpuAddress": 40580,
+      "meaning": "Row0 target death-bit predicate and effect dispatch"
+    },
+    {
+      "offset": 303158,
+      "length": 86,
+      "sha256": "f9edfd0147bdde88b1d06f94b0dc016d1b8c5490eb3fdc9c32a331742ba932ae",
+      "module": 9,
+      "cpuAddress": 40998,
+      "meaning": "Battle heal HP cap; MP is not debited here"
+    },
+    {
+      "offset": 307098,
+      "length": 90,
+      "sha256": "f4a02d37d98fd3d1b5e77c2a87591daac0bfa6c30411201239cf17a15d7416ca",
+      "module": 9,
+      "cpuAddress": 44938,
+      "meaning": "Original fixed-actor level multiply and formula constants"
+    },
+    {
+      "offset": 305342,
+      "length": 58,
+      "sha256": "300bb7d9b0a9fb8e82e2633ab9be03fdbb659d4136499300c669bb4b2a9dbdc8",
+      "module": 9,
+      "cpuAddress": 43182,
+      "meaning": "Native-observed late MP debit and underflow clamp"
+    },
+    {
+      "offset": 300101,
+      "length": 30,
+      "sha256": "6e5dc5217144762ed1fefeb62ea7a6021903cab5564577a3b70994424eb13097",
+      "module": 9,
+      "cpuAddress": 37941,
+      "meaning": "Exact-state2 cure predicate; prefix stops before renderer/effect"
+    },
+    {
+      "offset": 304994,
+      "length": 109,
+      "sha256": "6ef96b7572998c42aefc8f33db02f60aaf623f0c351b4dbeecb2297ced3f7031",
+      "module": 9,
+      "cpuAddress": 42834,
+      "meaning": "Native-observed post-HP state routine"
+    },
+    {
+      "offset": 310666,
+      "length": 23,
+      "sha256": "29247084b9e7785fffccf45297bfefc9aad66592422d692028d9ede27b94ea7e",
+      "module": 9,
+      "cpuAddress": 48506,
+      "meaning": "Initial MP compare before target selection"
+    },
+    {
+      "offset": 307622,
+      "length": 60,
+      "sha256": "6b3cf641dcb4483bfea7f9d75054a1e7e47574e740a4bba6888a9ad40846546c",
+      "module": 9,
+      "cpuAddress": 45462,
+      "meaning": "Original fixed identity lookup, distinct from field one-step search"
+    }
+  ],
+  "limits": [
+    "Battle prefixes, native whole-action traces and Android acceptance are separate",
+    "No renderer or effect instruction skipped in battle cases; cure prefix stops before renderer",
+    "Target masks and high MP are controlled, not necessarily legal player saves or maxMP growth",
+    "Battle target death bit20 differs from field targetF0; initial dead/state64 selection verified separately",
+    "State1 native Chinese label remains unverified; do not apply battle post-HP cleanup to field magic",
+    "Row0 healing and row1 predicate/debit only; no general attack/control/RNG/Boss rule inferred"
+  ]
+}

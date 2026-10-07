@@ -22,6 +22,16 @@ shared = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(shared)
 
 HEAL_RAM_SHA256 = "e011ed846bae4c871d437a426f37b09e920259de41cca0d1519360a9cf15987a"
+BATTLE_FIXTURES = {
+    "effect": "b22705a526d3a8e0f4ae02087b37d07bcaea7268acc93276dd58137b5d31baab",
+    "debit": "541a221a538b14abdc04e09802532e590b6f5d7ecbc3582b2060e1f5fe6a1b24",
+    "cure": "2f2c8728768a50196155387abd0370d57f434d01ddbb4c59c86235a9c37f6841",
+    "menu": "55e95fe91ffb37d5b69f41bfc117e92c7599b1e97befb2531df155e9e4b6b6e6",
+}
+BATTLE_CASE_NAMES = (
+    "battle-row0-target-status", "battle-row0-heal", "battle-row0-mp-debit",
+    "battle-antidote-target-prefix", "battle-post-hp-status", "battle-initial-mp-prefix",
+)
 
 
 def word(cpu, address):
@@ -234,11 +244,114 @@ def field_validation(reader, output, fixture):
     return results
 
 
+def battle_foundation(reader, output, fixtures):
+    """Native-observed bounded entries; no rendering instruction or RNG is skipped.
+
+    Mutated masks/high MP are controlled CPU inputs, not admitted player saves.
+    Effects, post-HP status, debit and initial selection are separate phases.
+    """
+    def cpu(kind):
+        c = MPU()
+        c.memory[:0x800] = fixtures[kind]
+        c.memory[0x8000:] = reader.read(9, 0x8000, 32768)
+        return c
+
+    def prefix(c, entry, stops):
+        c.pc = entry
+        for _ in range(5000):
+            if c.pc in stops:
+                return
+            c.step()
+        raise RuntimeError("Original battle prefix did not finish")
+
+    results = []
+    rows = ["targetStatus\tentry\tstop\tafterHP\tafterMP\tafterStatus\tinstructions"]
+    for status in range(256):
+        c = cpu("effect"); c.memory[0x544] = status; c.pc = 0x9e84
+        for steps in range(5000):
+            if c.pc in (0x9e8e, 0x9fda):
+                break
+            c.step()
+        else:
+            raise RuntimeError("Original healing target prefix did not finish")
+        hp, mp = word(c, 0x514), word(c, 0x526)
+        assert hp == (5 if status & 32 else 58) and mp == 44 and c.memory[0x544] == status
+        rows.append(f"{status}\t9E84\t{c.pc:04X}\t{hp}\t{mp}\t{status}\t{steps}")
+    results.append(write_cases(output, BATTLE_CASE_NAMES[0], rows))
+
+    rows = ["partyIds\tcasterSlot\ttargetSlot\txiaoStoredLevel\tbeforeHP\tmaxHP\tafterHP\tafterMP\tamountAtEffect"]
+    for party, level, target, before, maximum in itertools.product(
+            ((1, 2), (2, 1), (1, 2, 3, 4), (4, 3, 2, 1)), range(80), (0, 1), (0, 5, 190), (20, 200)):
+        if before > maximum:
+            continue
+        c = cpu("effect"); c.memory[0x12d:0x12d + len(party)] = party
+        c.memory[0x368] = party.index(2); c.memory[0xef] = target; c.memory[0x505] = level
+        actor = party[target] - 1
+        put_word(c, 0x514 + 2 * actor, before); put_word(c, 0x51c + 2 * actor, maximum)
+        c.memory[0x544 + actor] = 0; c.pc = 0x9e84; amount = None
+        for _ in range(5000):
+            if c.pc == 0xa026:
+                amount = word(c, 0x14)
+            if c.pc == 0x9fda:
+                break
+            c.step()
+        else:
+            raise RuntimeError("Original battle heal did not finish")
+        hp, mp = word(c, 0x514 + 2 * actor), word(c, 0x526)
+        assert amount == 3 * level + 20 and hp == min(maximum, before + amount) and mp == 44
+        rows.append("\t".join(map(str, (",".join(map(str, party)), party.index(2), target,
+                                         level, before, maximum, hp, mp, amount))))
+    results.append(write_cases(output, BATTLE_CASE_NAMES[1], rows))
+
+    rows = ["beforeMP\tafterMP\tNHP\tXHP\tcost"]
+    for mp in list(range(1024)) + [4095, 65535]:
+        c = cpu("debit"); put_word(c, 0x526, mp); shared.call(c, 0xa8ae)
+        after = word(c, 0x526)
+        assert after == max(0, mp - 3) and word(c, 0x514) == 58 and word(c, 0x516) == 92
+        rows.append(f"{mp}\t{after}\t58\t92\t3")
+    results.append(write_cases(output, BATTLE_CASE_NAMES[2], rows))
+
+    rows = ["targetStatus\tstop\taccepted\tHP\tMP\tunchangedStatus"]
+    for status in range(256):
+        c = cpu("cure"); c.memory[0x544] = status
+        prefix(c, 0x9435, (0x943f, 0x9452))
+        accepted = c.pc == 0x943f
+        assert accepted == (status == 2) and c.memory[0x544] == status
+        assert word(c, 0x514) == 5 and word(c, 0x526) == 44
+        rows.append(f"{status}\t{c.pc:04X}\t{int(accepted)}\t5\t44\t{status}")
+    results.append(write_cases(output, BATTLE_CASE_NAMES[3], rows))
+
+    rows = ["actorSlot\tHP\tmaxHP\tbeforeStatus\tafterStatus"]
+    for actor, hp, status in itertools.product(range(4), (0, 5, 49, 50, 200), range(256)):
+        c = cpu("effect"); c.memory[0x12d:0x131] = [1, 2, 3, 4]
+        c.memory[0x368] = actor; c.memory[0x544 + actor] = status
+        put_word(c, 0x514 + 2 * actor, hp); put_word(c, 0x51c + 2 * actor, 200)
+        shared.call(c, 0xa752)
+        expected = (32 if hp == 0 else status if status >= 16 else
+                    (1 if status == 0 else status) if hp < 50 else 0 if status == 1 else status)
+        assert c.memory[0x544 + actor] == expected and word(c, 0x514 + 2 * actor) == hp
+        assert word(c, 0x526) == 44
+        rows.append(f"{actor}\t{hp}\t200\t{status}\t{expected}")
+    results.append(write_cases(output, BATTLE_CASE_NAMES[4], rows))
+
+    rows = ["beforeMP\tcost\taccepted\tstop\tafterMP\tHP"]
+    for mp in list(range(1024)) + [4095, 65535]:
+        c = cpu("menu"); c.a, c.x, c.y = 3, 1, 1; put_word(c, 0x526, mp)
+        prefix(c, 0xbd7a, (0xbd91, 0xbe05))
+        accepted = c.pc == 0xbd91
+        assert accepted == (mp >= 3) and word(c, 0x526) == mp and word(c, 0x514) == 5
+        rows.append(f"{mp}\t3\t{int(accepted)}\t{c.pc:04X}\t{mp}\t5")
+    results.append(write_cases(output, BATTLE_CASE_NAMES[5], rows))
+    return results
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--rom", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--heal-ram", type=Path)
+    for kind in BATTLE_FIXTURES:
+        parser.add_argument("--battle-" + kind + "-ram", type=Path)
     args = parser.parse_args()
     reader = Reader(args.rom.read_bytes())
     names = ("original-magic-report.json", "battle-availability-controlled-original.tsv",
@@ -246,17 +359,30 @@ def main():
              "field-caster-status-controlled-original.tsv",
              "field-heal-target-status-controlled-original.tsv",
              "field-mp-validation-controlled-original.tsv")
+    names += tuple(name + ".tsv" for name in BATTLE_CASE_NAMES)
     if any((args.output / name).exists() for name in names):
         raise ValueError("Fresh output directory required; preserve earlier evidence")
     if args.heal_ram is not None:
         raw = args.heal_ram.read_bytes()
         if len(raw) != 0x800 or hashlib.sha256(raw).hexdigest() != HEAL_RAM_SHA256:
             raise ValueError("Exact independently captured private menu RAM required")
+    fixtures = {}
+    for kind, expected in BATTLE_FIXTURES.items():
+        path = getattr(args, "battle_" + kind + "_ram")
+        if path is not None:
+            data = path.read_bytes()
+            if len(data) != 0x800 or hashlib.sha256(data).hexdigest() != expected:
+                raise ValueError("Exact independently captured private battle " + kind + " RAM required")
+            fixtures[kind] = data
+    if fixtures and len(fixtures) != len(BATTLE_FIXTURES):
+        raise ValueError("All four original battle fixtures required before producing any evidence")
     args.output.mkdir(parents=True, exist_ok=True)
     results = availability(reader, args.output)
     if args.heal_ram is not None:
         results.append(healing(reader, args.output, args.heal_ram))
         results.extend(field_validation(reader, args.output, args.heal_ram))
+    if fixtures:
+        results.extend(battle_foundation(reader, args.output, fixtures))
     report = {
         "status": "SCOPED_ORIGINAL_CPU_EVIDENCE_NOT_NORMAL_JOIN_OR_ANDROID",
         "romSha256": hashlib.sha256(reader.data).hexdigest(),
@@ -287,6 +413,26 @@ def main():
             reader.span(2, 0xa2a4, 52, "Native-observed caster status validation; message call excluded"),
             reader.span(2, 0xa393, 82, "Native-observed healing target status validation; message call excluded"),
             reader.span(2, 0x90da, 54, "MP validation before scene dispatch or deduction"),
+        ]
+    if fixtures:
+        report["battleFixtureSha256"] = BATTLE_FIXTURES
+        report["entrySources"] += [
+            reader.span(9, 0x9e84, 22, "Row0 target death-bit predicate and effect dispatch"),
+            reader.span(9, 0xa026, 86, "Battle heal HP cap; MP is not debited here"),
+            reader.span(9, 0xaf8a, 90, "Original fixed-actor level multiply and formula constants"),
+            reader.span(9, 0xa8ae, 58, "Native-observed late MP debit and underflow clamp"),
+            reader.span(9, 0x9435, 30, "Exact-state2 cure predicate; prefix stops before renderer/effect"),
+            reader.span(9, 0xa752, 109, "Native-observed post-HP state routine"),
+            reader.span(9, 0xbd7a, 23, "Initial MP compare before target selection"),
+            reader.span(9, 0xb196, 60, "Original fixed identity lookup, distinct from field one-step search"),
+        ]
+        report["limits"] += [
+            "Battle prefixes, native whole-action traces and Android acceptance are separate",
+            "No renderer or effect instruction skipped in battle cases; cure prefix stops before renderer",
+            "Target masks and high MP are controlled, not necessarily legal player saves or maxMP growth",
+            "Battle target death bit20 differs from field targetF0; initial dead/state64 selection verified separately",
+            "State1 native Chinese label remains unverified; do not apply battle post-HP cleanup to field magic",
+            "Row0 healing and row1 predicate/debit only; no general attack/control/RNG/Boss rule inferred",
         ]
     (args.output / "original-magic-report.json").write_text(
         json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
