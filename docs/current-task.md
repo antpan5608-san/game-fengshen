@@ -11,7 +11,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v91 / 0.8.21-battle-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 下一有限姿态/敌1及137批次已CPU定位并读真实源码；4图来源/hash及原提示词关联核实，尚未接App/未冻结
+current_candidate_version: 下一姿态/敌1及137批次前置代码已实现，新445 JVM/95 suites及DEBUG通过；4图未接App/正式候选未冻结
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
@@ -21,6 +21,8 @@ first_real_blocker: 整体参考重制体验未实现；下一安全版本优先
 服务器接管历史及源码入口见 [development-host.md](development-host.md)。迁移轮仅接管、不新增玩法、不发布；用户已在同一会话恢复既定研发，当前视觉批次见下段，WORLD-FULL-01仍IN_PROGRESS/PARTIAL。
 
 ## v91已发布，主动接续姿态与敌图（2026-10-08北京时间）
+
+最新有限代码检查点见[姿态批次入口](evidence/battle-pose-next-batch.md)：原BattleActionStep只读abilityId及纯裁框/脚底适配已完成，新445 JVM/95 suites零失败，应用/仪器DEBUG编译通过。原HP/MP/效果/RNG/保存代码保持；四图及异步准备/真实姿态切换仍待接入，尚未正式App/发布，不复用v91回执。仅在服务器接续，本地DEBUG92参数不等于冻结候选。
 
 [实际交付](evidence/v91-battle-visual-personal.md)：sourcec323bfd/build37675332933/publish37681167754均SUCCESS；公网完整57,540,785字节/SHA6304e3ecba1b102a64d6c430241bd0e206e247ce351d8a9deb692ada017bf668与审核APK逐字节一致。原包名签名/c62/392及独立视觉13文件完整复核。新正式441 JVM/94 suites、16 Python组报告122、21 Content/35门禁及7完整cold/14原片SHA/偏好恢复通过；109原PNG和44视频采样帧已看，不称全程播放/手机/声音/稳定主线。
 

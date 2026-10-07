@@ -1,5 +1,7 @@
 # 服务器开发接管与下一视觉片段入口
 
+当前源码批次：v91发布后已主动接续[姿态/敌图前置代码](evidence/battle-pose-next-batch.md)，只读命令身份与统一裁框已实现，真实445 JVM/95 suites和DEBUG应用/仪器构建通过；完整差异/新增测试已由Codex实际审查，按本批新快照登记codex_only。四图未接App、正式候选未冻结。迁入工具/授权改动继续保留，所有检查点在服务器，不回Windows。
+
 最新检查点：v91已按原同源签名/App/审核发布，公网57,540,785完整字节与审核产物相同，postflight通过（仅90样本，91真机仍待验），见[v91交付](evidence/v91-battle-visual-personal.md)。当前开发HEAD含c323bfd游戏批次，4b157ad是迁入历史；本轮新441 JVM/88本地Python/正式16组122与35App門禁分别真实完成，不复用旧50/437回执。下一四图姿态/敌图已prepare_context及真实源码定位，全部工作仅服务器接续。迁入未提交CPU工具/授权/Linux改动保持未提交，未被游戏提交覆盖。
 
 上一检查点：已读取新增Windows冻结说明与视觉ZIP并选择性合并，见 [服务器选择性接收记录](handoffs/server-windows-visual-20261008.md)。全部任务只在服务器后续执行；完整旧历史/旧树保留，不依赖Windows及其监控。首轮App汇总失败已保留；修正后441 JVM/88 Python通过，正式App需重跑。下文是原接管历史快照。

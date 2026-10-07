@@ -341,6 +341,8 @@ data class BattleActionStep(val text:String,val heroHp:Int,val enemyHp:Map<Int,I
     var partyHp:Map<String,Int> = emptyMap();internal set
     var partyStatus:Map<String,Int> = emptyMap();internal set
     var partyMp:Map<String,Int> = emptyMap();internal set
+    /** Presentation identity from the executed command; never a rule or save field. */
+    var abilityId:String?=null;internal set
 }
 data class BattleTurn(val playerDamage:Int,val enemyDamage:Int,val enemyMisses:Int,val defeatedEnemyIds:List<Int>,
     val phase:BattlePhase,val actions:List<BattleActionStep> = emptyList())
@@ -469,10 +471,11 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
         return OriginalPartyRules.restoreBattleCharacters(rosterStates,partyStates)
     }
     private fun frame(text:String,actor:Int?=null,target:Int?=null,kind:BattleActionKind=BattleActionKind.TEXT,
-        delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null)=
+        delta:Int=0,beforeHero:Int=hero.hp,beforeEnemy:Int?=null,actorId:String?=null,targetId:String?=null,abilityId:String?=null)=
         BattleActionStep(text,hero.hp,enemies.associate{it.slot to it.hp},actor,target,kind,delta,beforeHero,beforeEnemy,hero.statusMask).also{
             it.actorId=actorId;it.targetId=targetId;it.partyHp=partyStates.associate{p->p.id to p.hp};it.partyStatus=partyStates.associate{p->p.id to p.statusMask}
             it.partyMp=partyStates.associate{p->p.id to p.mp}
+            it.abilityId=abilityId
         }
     /** Byte-exact 9:8A49..8AAF for the enabled normal enemies. Carry at entry is 1.
      * Random sequence remains independent of NES $43; no fixed success probability. */
@@ -526,22 +529,22 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                     val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
                     val spell=OriginalBattleMagic.spells.single{it.id==command.spellId}
                     steps.add(frame("${spell.name} · ${target.id.let{if(it==player.id)"自身"else"队友"}}",kind=BattleActionKind.SPECIAL,
-                        actorId=player.id,targetId=target.id))
+                        actorId=player.id,targetId=target.id,abilityId=spell.id))
                     val effect=OriginalBattleMagic.effect(player,target,spell)
                     setCharacter(target.id,effect.target)
                     val text=if(spell.id==OriginalBattleMagic.HEAL){
                         if(effect.applied)"${spell.name} · 恢复 ${effect.hpDelta} HP"else"${spell.name}不能复活目标"
                     }else if(effect.applied)"${spell.name} · 中毒解除"else"${spell.name} · 目标状态保持"
                     steps.add(frame(text,kind=if(spell.id==OriginalBattleMagic.HEAL&&effect.applied)BattleActionKind.HEAL else BattleActionKind.STATUS,
-                        delta=effect.hpDelta,beforeHero=if(target.id==hero.id)target.hp else hero.hp,actorId=player.id,targetId=target.id))
+                        delta=effect.hpDelta,beforeHero=if(target.id==hero.id)target.hp else hero.hp,actorId=player.id,targetId=target.id,abilityId=spell.id))
                     // 9:A8AE follows the effect. Read the updated caster so self-heal is preserved.
                     setCharacter(player.id,OriginalBattleMagic.debit(partyStates.first{it.id==player.id},spell))
-                    steps.add(frame("${spell.name} · MP −${spell.cost}",actorId=player.id,targetId=target.id))
+                    steps.add(frame("${spell.name} · MP −${spell.cost}",actorId=player.id,targetId=target.id,abilityId=spell.id))
                     val beforeStatus=partyStates.first{it.id==target.id}
                     val afterStatus=OriginalBattleMagic.afterHp(beforeStatus)
                     if(afterStatus.statusMask!=beforeStatus.statusMask){
                         setCharacter(target.id,afterStatus)
-                        steps.add(frame("目标状态更新",kind=BattleActionKind.STATUS,actorId=player.id,targetId=target.id))
+                        steps.add(frame("目标状态更新",kind=BattleActionKind.STATUS,actorId=player.id,targetId=target.id,abilityId=spell.id))
                     }
                     continue
                 }
@@ -556,13 +559,13 @@ class OpeningBattle(val group:EncounterGroup,private val content:BattleContent,h
                 if(command.kind==CommandKind.HERB){
                     val target=partyStates.firstOrNull{it.id==command.targetId}?:continue
                     if(target.statusMask and OriginalStatus.DEAD!=0){
-                        steps.add(frame("药草不能复活目标 · 已消耗1份",kind=BattleActionKind.TEXT,actorId=player.id,targetId=target.id));continue
+                        steps.add(frame("药草不能复活目标 · 已消耗1份",kind=BattleActionKind.TEXT,actorId=player.id,targetId=target.id,abilityId=HerbUse.ID));continue
                     }
                     val before=target.hp
                     val updated=target.copy(hp=minOf(target.maxHp.toLong(),before.toLong()+50).toInt())
                     setCharacter(target.id,updated)
                     steps.add(frame("药草 · 恢复 ${updated.hp-before} HP",kind=BattleActionKind.HEAL,
-                        delta=updated.hp-before,beforeHero=if(target.id==hero.id)before else hero.hp,actorId=player.id,targetId=target.id))
+                        delta=updated.hp-before,beforeHero=if(target.id==hero.id)before else hero.hp,actorId=player.id,targetId=target.id,abilityId=HerbUse.ID))
                     continue
                 }
                 if(command.kind==CommandKind.ESCAPE){

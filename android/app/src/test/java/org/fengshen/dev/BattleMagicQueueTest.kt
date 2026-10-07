@@ -43,6 +43,10 @@ class BattleMagicQueueTest {
         val magic=turn.actions.filter{it.actorId==x.id}
         assertEquals(listOf(44,44,41),magic.map{it.partyMp.getValue(x.id)})
         assertEquals(listOf(5,58,58),magic.map{it.partyHp.getValue(n.id)})
+        assertTrue(magic.all{it.abilityId==OriginalBattleMagic.HEAL})
+        assertEquals(listOf(BattleVisualPose.CAST,BattleVisualPose.CAST,BattleVisualPose.IDLE),
+            magic.map{battleVisualPose(it,x.id)})
+        assertTrue(turn.actions.filter{it.actorId!=x.id}.all{it.abilityId==null})
         assertEquals(listOf(j.id,y.id,x.id,n.id),turn.actions.mapNotNull{it.actorId}.distinct())
         assertEquals(41,b.party.single{it.id==x.id}.mp)
         assertEquals(58,b.hero.hp)
@@ -77,6 +81,7 @@ class BattleMagicQueueTest {
             if(target.statusMask==2){
                 assertEquals(listOf(2,0,0,1),turn.actions.filter{it.actorId==x.id}.map{it.partyStatus.getValue(n.id)})
             }
+            assertTrue(turn.actions.filter{it.actorId==x.id}.all{it.abilityId==spell})
         }
     }
     @Test fun fasterEnemyKillsTargetButSpellStillDebits(){
@@ -107,6 +112,7 @@ class BattleMagicQueueTest {
     }
     @Test fun oldActionFramesRetainMpFallback(){
         val old=BattleActionStep("historical ABI",5,emptyMap())
+        assertNull(old.abilityId)
         assertEquals(44,battlePartyView(x,"小龙女",old,null,n.id).mp)
     }
 }

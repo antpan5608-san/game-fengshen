@@ -1,5 +1,7 @@
 ## v91 已发布，继续视觉姿态/敌图批次（2026-10-08北京时间）
 
+最新代码接续：[四图前置入口与实际边界](evidence/battle-pose-next-batch.md)。只读abilityId/纯裁框适配已完成，新445 JVM/95 suites及DEBUG编译通过；新四图/异步准备/动作切换尚未App接入，不当正式验收或已发布92，全部原未完成项保持。
+
 PUBLISHED_AND_VERIFIED/PERSONAL_TEST，见[evidence/v91-battle-visual-personal.md](evidence/v91-battle-visual-personal.md)。sourcec323bfd/build37675332933/publish37681167754均SUCCESS；公网完整57,540,785字节/fullSHA6304e3ecba1b102a64d6c430241bd0e206e247ce351d8a9deb692ada017bf668与审核APK一致，原签名/c62/392与独立视觉13文件复核。新441release JVM/94 suites、16组Python报告122、21Content/35个人门禁、7完整cold/14原片SHA/偏好恢复通过；109PNG/44视频采样帧实际查看，受控四人/Boss/法术另列，不是手机/声音/全程录像/完整主线证明。
 
 postflight20:22:22Z NO_ISSUES_OBSERVED/errors空/cleanup0，保留91/90；69事件1实机会话全90，91样本0。manual=PENDING/稳定82，WORLD-FULL-01 IN_PROGRESS/PARTIAL、ALL_MAPS_USABLE=NO/分母UNKNOWN保持。迁入c61验包失败、首run固定窗口汇总FAIL与全部Windows历史/输入保留。下一有限四图姿态/敌1/137批次已定位/读真实源码，原生成调用/精确提示词/masterHash已核；全套视觉、2倍字体战场、其余敌图、正常原结局/真机/声音/法术A/B/C/寻路/十类欠账继续OPEN。以下各段为历史快照，不覆盖本段实际发布状态。

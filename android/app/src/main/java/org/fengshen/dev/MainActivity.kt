@@ -2331,9 +2331,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val shift=if(moving)battleAdvance(progress)*l.arena.w*.055f else 0f
             val idle=content.battleVisual?.idle(hero.id)
             val crop=idle?.let{content.battleVisual!!.idleBounds(hero.id,it)}
-            val fit=if(crop==null)1f else min(field.w/crop.width(),field.h/crop.height())
             val sprite=if(crop==null)Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2,size,size)
-                else Box(field.x+(field.w-crop.width()*fit)/2-shift,field.y+field.h-crop.height()*fit,crop.width()*fit,crop.height()*fit)
+                else battleVisualBodyBounds(field,crop.width(),crop.height()).let{it.copy(x=it.x-shift)}
             if(idle!=null){
                 overlayPaint.color=0x550a151b;c.drawOval(RectF(sprite.x+sprite.w*.12f,sprite.y+sprite.h-3*dp,sprite.x+sprite.w*.88f,sprite.y+sprite.h+3*dp),overlayPaint)
                 val damaged=action?.targetId==hero.id&&action.kind==BattleActionKind.DAMAGE

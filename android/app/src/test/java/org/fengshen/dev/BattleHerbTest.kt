@@ -19,6 +19,9 @@ class BattleHerbTest {
         assertEquals(3,turn.actions.first().actorSlot)
         val heal=turn.actions.single{it.kind==BattleActionKind.HEAL}
         assertEquals(21,heal.beforeHeroHp);assertEquals(71,heal.heroHp);assertEquals(50,heal.hpDelta)
+        assertEquals(HerbUse.ID,heal.abilityId)
+        assertEquals(BattleVisualPose.IDLE,battleVisualPose(heal,"nezha"))
+        assertTrue(turn.actions.filter{it.actorSlot!=null}.all{it.abilityId==null})
         assertEquals(9,turn.enemyDamage);assertEquals(0,turn.playerDamage);assertEquals(120,b.enemies.single().hp)
     }
     @Test fun fullHealthStillConsumesAndEnemyContinuesAfterEqualAgilityPlayer(){
