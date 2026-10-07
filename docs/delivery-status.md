@@ -1,3 +1,9 @@
+## 最新有效交付：v87陈塘村房间个人版（2026-10-07）
+
+v87/0.8.17-town-room28-personal PUBLISHED_AND_VERIFIED；source af4f1d5，原build37587677750/publish37590470949 SUCCESS。418 release JVM/91 suites、21 Content与29同签名个人门禁通过；原正常局部入门/只读线索/一次药草/取消重复/返程再入/保存及外部cold完整等值、实际v86/c61旧档覆盖与首份备份通过。公网完整32,780,784字节/SHA d4b1d24e6b0e58a03c30b10f8ff1df94acd0d10be2be64e998aae940a6fd68ed及原包名签名/c62/392文件核实，详见[evidence/v87-town-room28-personal.md](evidence/v87-town-room28-personal.md)。73依赖图不是可玩分母；PERSONAL_TEST/manual_acceptance=PENDING、历史稳定v82。
+
+实际postflight07:57:37.9702317Z errors{}/cleanup0，权威保留87/86；一个既有v86会话不能作为v87手机验收。只关闭房间28本批和实际c61→c62升级缺口，首次升级与发布依赖失败保留。六敌1.3字体编号拥挤和2倍字敌图偏小保留，正常完整剧情、法术、所有角色/装备/物品及窗口、导航、真机/声音/云恢复/内容更新及十类累计欠账继续开放，ALL_MAPS_USABLE=NO、分母UNKNOWN。唯一执行者已接续法术原版私有取证及具体UI修复；以下旧阶段记录仅保留历史。
+
 ## 房间28当前开发验收：DEBUG通过，正式签名待验（2026-10-07）
 
 原DEBUG37578337792/source18a6112752fa9fe0f00c81c63703b9c750e51a54成功：正常新游戏输入进入原房间、只读线索、首次调查药草、取消及防重复、原门返程、室内保存、外部force-stop/cold全状态等值及再入不重赠。2 Content/normal50.812s/cold6.376s及原2 MP4完整SHA、7实际PNG和末帧独立核验；仅DEBUG局部正常路线，未签名、未发布，不是全主线/声音/真机验收。正式WORLD-C62-ROOM-PERSONAL准备保留旧26门禁和全部原UI/姜/存档保护，再加3房间门禁；同签名候选必须重跑。完整状态见[current-task.md](current-task.md)。所有其他累计欠账保持开放，线上仍以下v86。
