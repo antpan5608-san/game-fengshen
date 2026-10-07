@@ -361,6 +361,32 @@ class ContentTest:IsolatedGameTestCase(){
             listOf("rom.clinic.$caller.revival","rom.clinic.$caller.care")}.toSet(),c.clinics.keys)
         assertMedicalPartySave(c)
     }
+    fun testC62Room28DependenciesAndInteriorSaveCodec(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        assertEquals("opening-segment-001-c62",c.scene.version);assertEquals(73,c.scenes.size)
+        assertEquals(setOf("xiaolongnv","yangjian","jiangziya"),c.joinCharacters.keys)
+        for(id in listOf(7,44))assertEquals(51,c.battle!!.physicalRules!!.weaponHitThreshold[id])
+        val room=c.scenes.getValue(28)
+        assertEquals(16,room.width);assertEquals(15,room.height)
+        val enter=c.exits.single{it.fromMapId==0&&it.toMapId==28}
+        val back=c.exits.single{it.fromMapId==28}
+        assertEquals(12 to 23,enter.triggerX to enter.triggerY);assertEquals(6 to 10,enter.spawnX to enter.spawnY)
+        assertTrue(enter.captureCaller);assertTrue(back.returnToCaller)
+        assertEquals(6 to 10,back.triggerX to back.triggerY);assertEquals(12 to 23,back.spawnX to back.spawnY)
+        val hint=c.npcs.single{it.id=="rom.npc.28.0"};assertTrue(hint.readOnlyDialogue)
+        assertEquals("rom.dialogue.38.12",hint.firstDialogue);assertTrue(hint.firstEffects.isEmpty())
+        val hidden=c.npcs.single{it.id=="rom.npc.28.1"};assertTrue(hidden.hiddenInvestigation)
+        assertEquals(HerbUse.ID,hidden.treasure!!.itemId);assertEquals(0,hidden.treasure.categoryGrant)
+        val saved=SaveSnapshot(c.scene.version,28,104,120,Key.UP,listOf(c.initialPlayer),
+            mapOf(HerbUse.ID to 1),mapOf("rom.map.28.flag.1" to true),money=321,
+            encounterSteps=17,interiorContext=InteriorContext(0,12,23))
+        assertTrue(saved.validate(c));assertEquals(saved,SaveSnapshot.parse(saved.json().toString()))
+        val world=World(c.scenes,c.exits,28)
+        assertTrue(world.tryRestore(28,saved.x,saved.y,0,saved.direction,saved.interiorContext,0))
+        assertEquals(saved.interiorContext,world.interiorContext)
+        assertFalse(WorldItems.openTreasure(saved,hidden.treasure,c.itemDefinitions.getValue(HerbUse.ID)).applied)
+        assertMedicalPartySave(c)
+    }
     /** Loaded c61 source-cell edges and durable event codec; no normal mainline claim. */
     fun testControlledJiangInvitationCodecAndDepartureBoundaries(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

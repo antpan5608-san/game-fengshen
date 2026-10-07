@@ -328,7 +328,10 @@ object ContentLoader {
                     val jiang=n.optString("jiangResourceEvidence")==OriginalJiangJoin.EVIDENCE&&
                         (npc.mapId==7&&npc.id in listOf("rom.npc.7.0","rom.npc.7.1","rom.npc.7.2","rom.npc.7.3","rom.npc.7.5")||
                             npc.mapId==121&&npc.id in(4..9).map{"rom.npc.121.$it"})
-                    require((master||sages||jiang)&&
+                    val room28=n.optString("houseResourceEvidence")==WorldItems.ROOM28_EVIDENCE&&
+                        npc.mapId==28&&npc.id=="rom.npc.28.0"&&npc.x==4&&npc.y==5&&
+                        npc.firstDialogue=="rom.dialogue.38.12"
+                    require((master||sages||jiang||room28)&&
                         npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.treasure==null&&
                         npc.originalTalk==null&&npc.shopId==null&&npc.innId==null&&
                         !n.has("originalTalk")&&!n.has("clinicId")&&!n.has("sceneStoryActor")&&!n.has("scriptedActor"))
@@ -357,7 +360,11 @@ object ContentLoader {
                         (npc.treasure!=null||n.has("moneyTreasure"))
                     val house=n.optString("houseResourceEvidence")=="game-data/provenance/world-west-houses-resources.json"&&
                         npc.mapId==42&&npc.id in listOf("rom.npc.42.1","rom.npc.42.2")&&npc.treasure!=null
-                    require((old||queen||west||house)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
+                    val room28=n.optString("houseResourceEvidence")==WorldItems.ROOM28_EVIDENCE&&
+                        npc.id=="rom.npc.28.1"&&npc.mapId==28&&npc.x==7&&npc.y==4&&
+                        npc.treasure?.flagId=="rom.map.28.flag.1"&&npc.treasure.itemId=="rom.medicine.0"&&
+                        npc.treasure.categoryGrant==0
+                    require((old||queen||west||house||room28)&&npc.firstDialogue.isEmpty()&&npc.repeatDialogue==null&&npc.firstEffects.isEmpty()&&npc.openedSprite!=null)
                 }
                 npc.automaticStoryOnly=n.optBoolean("automaticStoryOnly",false)
                 npc.removedFlagId=n.optString("removedFlagId").takeIf{it.isNotEmpty()}

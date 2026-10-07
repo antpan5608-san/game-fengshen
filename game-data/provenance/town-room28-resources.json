@@ -1,0 +1,531 @@
+{
+  "bindings": [
+    {
+      "callerMapId": 0,
+      "collisionClass": 28,
+      "houseIndex": 2,
+      "spawn": [
+        6,
+        10
+      ],
+      "tableSource": {
+        "cpuAddress": 53897,
+        "length": 1,
+        "meaning": "Caller0 house2 target",
+        "module": 0,
+        "offset": 21145,
+        "sha256": "bd4fc42a21f1f860a1030e6eba23d53ecab71bd19297ab6c074381d4ecee0018"
+      },
+      "toMapId": 28,
+      "trigger": [
+        12,
+        23
+      ]
+    }
+  ],
+  "limitations": [
+    "One original normal route/default state; not all rooms or full story",
+    "Earlier DOWN-only exit and menu-selection failures preserved privately",
+    "Native audio was muted; no sound or Android acceptance",
+    "Dynamic NPC poses and original text rendering timing remain debt",
+    "350 controlled CPU cases are boundary evidence, not normal gameplay",
+    "Next implement existing scene/InteriorContext/hidden pickup and actual Android entry/save/cold/return; not complete"
+  ],
+  "originalEvidence": {
+    "path": "game-data/provenance/town-room28-original.json",
+    "sha256": "416f4e7a9dce07ad5e620ed197098d2cca6f71d90af1e253064576a4f387d463"
+  },
+  "romSha256": "f3596ffda5c1b83821e58d15827a3a2fbc94c85352b7a5b834c1039e70509a25",
+  "rooms": [
+    {
+      "dialogues": [
+        {
+          "id": "rom.dialogue.38.12",
+          "source": {
+            "confidence": "PROVISIONAL_ROM_GLYPH_TRANSCRIPTION",
+            "evidence": "game-data/provenance/town-room28-resources.json",
+            "originalVerified": false,
+            "pointerEvidence": [
+              {
+                "cpuAddress": 35502,
+                "length": 2,
+                "meaning": "Text group pointer",
+                "module": 3,
+                "offset": 101054,
+                "sha256": "bd9db662ef4b5b349c4ec4161e8cea657616202f735bedca92de3af0c68b0948"
+              },
+              {
+                "cpuAddress": 35854,
+                "length": 2,
+                "meaning": "Message pointer",
+                "module": 3,
+                "offset": 101406,
+                "sha256": "6d4e9c41d74fa4b2578571d1762d2edf2311569c737577d71e0680053176c3e2"
+              }
+            ],
+            "record": {
+              "cpuAddress": 37595,
+              "length": 14,
+              "meaning": "C3-terminated text byte stream",
+              "module": 3,
+              "offset": 103147,
+              "sha256": "ff35f952d0cda0b6cb9f6d51b0d0f9e65c7ab670bf487360650820f11f2e855a"
+            }
+          },
+          "text": "『穀倉內要好好調查一下。』"
+        }
+      ],
+      "font": {
+        "activePpuMatch": true,
+        "charset": {
+          "152": "調",
+          "168": "下",
+          "170": "倉",
+          "172": "要",
+          "25": "查",
+          "42": "穀",
+          "45": "內",
+          "52": "一",
+          "54": "好"
+        },
+        "chr2kBanks": [
+          2,
+          3
+        ],
+        "glyphs": [
+          {
+            "character": "查",
+            "code": 25,
+            "pixelsSha256": "236945ed3b18accf807b011903f2f877ea1b289a536db9f1b6e79f02f7830f5c"
+          },
+          {
+            "character": "穀",
+            "code": 42,
+            "pixelsSha256": "f4116c4738f88973da8c731bfac3738c64f466385ba5e9351d3688e3ad52aec8"
+          },
+          {
+            "character": "內",
+            "code": 45,
+            "pixelsSha256": "f10854910aed6983fd9d334dbf733b4b2259b6f42b1f84a659fa6c20d115ef3e"
+          },
+          {
+            "character": "一",
+            "code": 52,
+            "pixelsSha256": "2704be64441cc759999995f73ccad4fc7c713b664e546f300e0f9858120302f3"
+          },
+          {
+            "character": "好",
+            "code": 54,
+            "pixelsSha256": "084c1b5ece75902a395c42a2c8a61ab88b2ff507e78710233ccf3c916add4f61"
+          },
+          {
+            "character": "調",
+            "code": 152,
+            "pixelsSha256": "d2c2429474cb9e0c05e1270c48fcd36be5171c35b09d01aca2e0ad7cb4dfd9b2"
+          },
+          {
+            "character": "下",
+            "code": 168,
+            "pixelsSha256": "d2f5c6f0f5db2e25f6cd73c43bb9b3fb6c745bfeb8c30d41176d5797f711a897"
+          },
+          {
+            "character": "倉",
+            "code": 170,
+            "pixelsSha256": "c4c2eaf2e08f886cd7a259b6fdf84a27039048f0ac5f9af118d84705fa1c01f7"
+          },
+          {
+            "character": "要",
+            "code": 172,
+            "pixelsSha256": "f82f5bd46e93389a0d723b9dfe8af9fd0e51935afcce9bb7bb468abe8d050163"
+          }
+        ],
+        "sources": [
+          {
+            "length": 2048,
+            "offset": 528400,
+            "sha256": "e7c5c51dbed9ea6e02f9fe4e30d1f0fa574b36445da09f3f8d44b9b78cc15b45"
+          },
+          {
+            "length": 2048,
+            "offset": 530448,
+            "sha256": "f853497dd9a1d992e7a76c271919976a6527c9e2000ea49ca647479421ece964"
+          }
+        ]
+      },
+      "graphics": {
+        "npc-room28-161.png": {
+          "actorEntityId": 161,
+          "actorRecordOffset": 1048,
+          "actualOamEvidenceKind": "NORMAL_NEW_GAME_ROUTE_ONE_POSE_ONLY",
+          "animationSource": {
+            "cpuAddress": 37397,
+            "length": 3,
+            "meaning": "Actual room28 same-entity initial animation transport",
+            "module": 0,
+            "offset": 4645,
+            "sha256": "c730587662537d49ed7a559bd188daaf20e8fbf2e2bc75a3b8c287f68717a1c6"
+          },
+          "captureKind": "NORMAL_ORIGINAL_NEW_GAME_ONE_OAM_POSE",
+          "captureSha256": "a78e08d53b9b42a5d4ee14f93e7fbb9e071c8579d267d930cb069a87025464ef",
+          "frameRecordSource": {
+            "cpuAddress": 46606,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 275998,
+            "sha256": "5c7de4f5864405413b4b4ba3285aaebfa33d57432d79db946d06c33461c4b927"
+          },
+          "frameSource": {
+            "cpuAddress": 37556,
+            "length": 5,
+            "meaning": "Original room28 frame bytes; high attributes retained without guessed decoding",
+            "module": 0,
+            "offset": 4804,
+            "sha256": "bfed737386346519ba2f1f684405fb59fd615697ee86d965281405193f59f9d4"
+          },
+          "height": 16,
+          "normalPlayEvidence": true,
+          "observedRect": [
+            80,
+            25,
+            16,
+            16
+          ],
+          "opaquePixelCount": 162,
+          "opaquePixelMatch": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ],
+            "1": [
+              0,
+              0,
+              0
+            ],
+            "2": [
+              255,
+              117,
+              97
+            ],
+            "3": [
+              93,
+              150,
+              255
+            ]
+          },
+          "ppuSha256": "443f5872318ff5f7d24813dc85fb72c2e8ac666a7f49e7c72a81f76bfb287e8a",
+          "ramSha256": "1b596aae0acbc99e0ffac1a185c1466673c8a98211b686be58cc301c25dc4856",
+          "rgbaSha256": "48d79bc29eac696195b5f8bd4438edf7b455c6f9315301083939977d1b3c0250",
+          "tiles": [
+            {
+              "attribute": 66,
+              "flipX": true,
+              "flipY": false,
+              "length": 16,
+              "offset": 870496,
+              "sha256": "57bdd074fcf61f5f7067382702c2c632d1d77f788f8811f99550a75bc36e9cab",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "attribute": 66,
+              "flipX": true,
+              "flipY": false,
+              "length": 16,
+              "offset": 870480,
+              "sha256": "8d14063e4fc778235b36d93c9bcc8a3d79b82a9be707f2c771328f90e69d2a03",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "attribute": 66,
+              "flipX": true,
+              "flipY": false,
+              "length": 16,
+              "offset": 870752,
+              "sha256": "5c7a1d917e2c5fe1e987cd01ad6cf6f6c20f20b4f25b4d379746f8f92c85f813",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "attribute": 66,
+              "flipX": true,
+              "flipY": false,
+              "length": 16,
+              "offset": 870736,
+              "sha256": "2683e356e1a7fcf631f9f0ab47efe670b5983258228494d964e2ab92ab0e6011",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        },
+        "npc-room28-198.png": {
+          "actorEntityId": 198,
+          "actorRecordOffset": 1070,
+          "actualOamEvidenceKind": "NORMAL_NEW_GAME_ROUTE_ONE_POSE_ONLY",
+          "animationSource": {
+            "cpuAddress": 36434,
+            "length": 3,
+            "meaning": "Actual room28 same-entity initial animation transport",
+            "module": 0,
+            "offset": 3682,
+            "sha256": "9159e4e62e72203bedd1beda646cf8e30340da2c41e22413f1591695da22464e"
+          },
+          "captureKind": "NORMAL_ORIGINAL_NEW_GAME_ONE_OAM_POSE",
+          "captureSha256": "a78e08d53b9b42a5d4ee14f93e7fbb9e071c8579d267d930cb069a87025464ef",
+          "frameRecordSource": {
+            "cpuAddress": 46620,
+            "length": 14,
+            "meaning": "Fixed 14-byte NPC source record",
+            "module": 8,
+            "offset": 276012,
+            "sha256": "a2e61280dce4fa06cc27cfcf9139b3593333fc12ff9459d1c14a5308a01f8a67"
+          },
+          "frameSource": {
+            "cpuAddress": 36675,
+            "length": 5,
+            "meaning": "Original room28 hidden blank frame",
+            "module": 0,
+            "offset": 3923,
+            "sha256": "a326a6dd46876addff6977972bdc1854caebfa13ea8d270220df785f312fd1c8"
+          },
+          "height": 16,
+          "normalPlayEvidence": true,
+          "observedRect": [
+            128,
+            9,
+            16,
+            16
+          ],
+          "opaquePixelCount": 0,
+          "opaquePixelMatch": true,
+          "paletteCodes": {
+            "0": [
+              0,
+              0,
+              0
+            ]
+          },
+          "ppuSha256": "443f5872318ff5f7d24813dc85fb72c2e8ac666a7f49e7c72a81f76bfb287e8a",
+          "ramSha256": "1b596aae0acbc99e0ffac1a185c1466673c8a98211b686be58cc301c25dc4856",
+          "rgbaSha256": "5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+          "tiles": [
+            {
+              "attribute": 0,
+              "flipX": false,
+              "flipY": false,
+              "length": 16,
+              "offset": 528166,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                0
+              ]
+            },
+            {
+              "attribute": 0,
+              "flipX": false,
+              "flipY": false,
+              "length": 16,
+              "offset": 528166,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                0
+              ]
+            },
+            {
+              "attribute": 0,
+              "flipX": false,
+              "flipY": false,
+              "length": 16,
+              "offset": 528166,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                0,
+                8
+              ]
+            },
+            {
+              "attribute": 0,
+              "flipX": false,
+              "flipY": false,
+              "length": 16,
+              "offset": 528166,
+              "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+              "xy": [
+                8,
+                8
+              ]
+            }
+          ],
+          "transparentZero": true,
+          "width": 16
+        }
+      },
+      "map": {
+        "gridSha256": "c106ff8a3231621e6391376c86a133660e607d7648f8d6d1923c7962815dadad",
+        "mapId": 28,
+        "palette": [
+          14,
+          7,
+          23,
+          55,
+          25,
+          7,
+          38,
+          22,
+          25,
+          33,
+          23,
+          22,
+          25,
+          0,
+          16,
+          48,
+          14,
+          14,
+          54,
+          22,
+          25,
+          14,
+          54,
+          43,
+          25,
+          14,
+          38,
+          34,
+          25,
+          14,
+          38,
+          32
+        ],
+        "tilesetId": 2,
+        "walkableClasses": [
+          0,
+          2,
+          5
+        ]
+      },
+      "mapId": 28,
+      "npcs": [
+        {
+          "cell": [
+            4,
+            5
+          ],
+          "firstDialogue": "rom.dialogue.38.12",
+          "firstEffects": [],
+          "houseResourceEvidence": "game-data/provenance/town-room28-resources.json",
+          "id": "rom.npc.28.0",
+          "mapId": 28,
+          "readOnlyDialogue": true,
+          "repeatDialogue": null,
+          "source": {
+            "confidence": "PROVISIONAL_ONE_NORMAL_ORIGINAL_POSE",
+            "evidence": "game-data/provenance/town-room28-resources.json",
+            "record": {
+              "cpuAddress": 46606,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 275998,
+              "sha256": "5c7de4f5864405413b4b4ba3285aaebfa33d57432d79db946d06c33461c4b927"
+            },
+            "remainingUnknown": [
+              "Full original dynamic NPC movement and per-frame animation; normal Android route NOT_RUN"
+            ]
+          },
+          "sprite": "npc-room28-161.png",
+          "spriteId": 161
+        },
+        {
+          "cell": [
+            7,
+            4
+          ],
+          "firstDialogue": "",
+          "firstEffects": [],
+          "hiddenInvestigation": true,
+          "houseResourceEvidence": "game-data/provenance/town-room28-resources.json",
+          "id": "rom.npc.28.1",
+          "mapId": 28,
+          "openedSprite": "npc-room28-198.png",
+          "repeatDialogue": null,
+          "source": {
+            "confidence": "PROVISIONAL_ONE_NORMAL_ORIGINAL_POSE",
+            "evidence": "game-data/provenance/town-room28-resources.json",
+            "record": {
+              "cpuAddress": 46620,
+              "length": 14,
+              "meaning": "Fixed 14-byte NPC source record",
+              "module": 8,
+              "offset": 276012,
+              "sha256": "a2e61280dce4fa06cc27cfcf9139b3593333fc12ff9459d1c14a5308a01f8a67"
+            },
+            "remainingUnknown": [
+              "Full original dynamic NPC movement and per-frame animation; normal Android route NOT_RUN"
+            ]
+          },
+          "sprite": "npc-room28-198.png",
+          "spriteId": 198,
+          "treasure": {
+            "amount": 1,
+            "categoryGrant": 0,
+            "evidence": "game-data/provenance/town-room28-resources.json",
+            "flagId": "rom.map.28.flag.1",
+            "itemId": "rom.medicine.0"
+          }
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 1,
+  "scopeRevision": "town0-house2-room28-original-normal-entry-return-talk-hidden-medicine",
+  "sources": [
+    {
+      "cpuAddress": 52297,
+      "length": 11,
+      "meaning": "Original house-index caller dispatch",
+      "module": 0,
+      "offset": 19545,
+      "sha256": "85d2e2baf59c90880c41d3ee32ec757e51b54e11b5e6f9eeb1e65f63f9c23401"
+    },
+    {
+      "cpuAddress": 53897,
+      "length": 1,
+      "meaning": "Caller0 house2 target",
+      "module": 0,
+      "offset": 21145,
+      "sha256": "bd4fc42a21f1f860a1030e6eba23d53ecab71bd19297ab6c074381d4ecee0018"
+    },
+    {
+      "cpuAddress": 57531,
+      "length": 5,
+      "meaning": "Original room28 FE return record retaining explicit caller coordinates",
+      "module": 8,
+      "offset": 286923,
+      "sha256": "79415bd0965ab454c98a1908a0e5b350ece3a62e347d66f7f679768a570aabb0"
+    },
+    {
+      "cpuAddress": 54475,
+      "length": 2,
+      "meaning": "Original map28 hidden-item flag pointer",
+      "module": 0,
+      "offset": 21723,
+      "sha256": "7fac881506fcb40e1779538a2b72097b89903f91a8ed65937ff1b0a778bb1bf7"
+    }
+  ]
+}

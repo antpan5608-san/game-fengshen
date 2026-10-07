@@ -9,7 +9,7 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v86 / 0.8.16-battle-ui-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86已发布；下一批房间28正常进出与交互取证，NOT_IMPLEMENTED_NOT_APP_VERIFIED
+current_candidate_version: v86已发布；房间28 inactive c62已接入/导出，DEBUG正常触摸与外部cold待验，NOT_APP_VERIFIED_NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
@@ -17,6 +17,10 @@ manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f574755
 first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
 
 ## v86最新交付及自主接续（2026-10-07，北京时间）
+
+新增队列 MAGIC-ORIGINAL-01：直接核实来源窗口人类需求01a114cc-4654-7b60-9643-b3bbd8007200及批准01a114d2-b768-7c81-b636-a4b2734481dc“Implement the proposed plan.”，完整获批范围已落盘[plans/magic-original-01.md](plans/magic-original-01.md)并关联原长期计划/法术欠账。AUTHORIZED_QUEUED_NOT_IMPLEMENTED_NOT_APP_VERIFIED；A目录/习得/基本施法与MP闭环，B其他战斗法术，C地图法术及总验收，由唯一执行者按主线依赖安排，不中断房间28、不预占版本、不改既有方向。下一安全批次先核角色编号转换、原法术身份/习得/入队能力证据表，不能从参考34行表直接赋效果或视作功能完成。
+
+房间28已推进：最终仓库Lua从原版正常新游戏实际复跑进入6,10/返程0的12,23；普通对象实际38.12提示，调查药草首次0→1、重复与返程仍1；350原CPU边界通过。原失败、原片和RAM/PPU只保留私有，公开仅脚本/span/hash/派生TSV。独立inactive c62导出73依赖图/392文件、manifest625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef，3项增量/旧媒体不变/篡改拒绝/空目录恢复343.578s通过；Android接入和原DEBUG正常触摸/保存/外部cold驱动正在编译审查，实际App仍NOT_RUN、未发布。当前签名配置仍c61/v86；只读inspect37574913802于05:09:47UTC成功，errors空/cleanup0，86/85，样本仅v85。不得把原版证据或导出当Android正常主线完成。
 
 v86/0.8.16-battle-ui-personal已完成原流程发布与公网独立复核，完整报告见[evidence/v86-battle-ui-personal.md](evidence/v86-battle-ui-personal.md)。冻结APK来源b13343b1e7ac820021d0f4fe66ebf6dca1e0903f，原build37570999686和publish37572999450均SUCCESS；415 release JVM/90 suites零失败错误跳过、21 Content和原18+UI8共26同签名个人门禁PASS。32,513,189字节/SHA a511d061563c034cc0202335bdb6f35158d3e1ba3f5a39ff10d5288a03db1a22，公网完整字节/原签名包名/c61 manifest37f0/388文件独立核验通过，72只是依赖图数。
 

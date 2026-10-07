@@ -15,9 +15,9 @@ on:
         description: 'Reviewed base APK SHA-256 (verify-base only)'
         required: false
       development_smoke_scope:
-        description: 'DEBUG only: history, rollback/cold, Jiang, or battle UI/font regression'
+        description: 'DEBUG only: history, rollback/cold, Jiang, battle UI/fonts, or normal room28 route'
         type: choice
-        options: [full, rollback, jiang, battle-ui]
+        options: [full, rollback, jiang, battle-ui, room28]
         default: full
         required: false
       runtime_tests:
@@ -815,7 +815,8 @@ jobs:
           import json,sys,os
           from pathlib import Path
           from tools import ci_apk as ci
-          pin='ci/golden-world-jiang-content.json' if os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE'] in ('jiang','battle-ui') else 'ci/golden-world-reference-repair-content.json'
+          scope=os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE']
+          pin='ci/golden-town-room28-content.json' if scope=='room28' else 'ci/golden-world-jiang-content.json' if scope in ('jiang','battle-ui') else 'ci/golden-world-reference-repair-content.json'
           ci.CONFIG=json.loads(Path(pin).read_text())
           ci.restore(Path(sys.argv[1]),next_code=84)
           PYRESTORE
@@ -825,7 +826,8 @@ jobs:
           from pathlib import Path
           from tools import ci_apk as ci
           apk=Path('android/app/build/outputs/apk/debug/app-debug.apk')
-          pin='ci/golden-world-jiang-content.json' if os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE'] in ('jiang','battle-ui') else 'ci/golden-world-reference-repair-content.json'
+          scope=os.environ['FENGSHEN_DEVELOPMENT_SMOKE_SCOPE']
+          pin='ci/golden-town-room28-content.json' if scope=='room28' else 'ci/golden-world-jiang-content.json' if scope in ('jiang','battle-ui') else 'ci/golden-world-reference-repair-content.json'
           ci.CONFIG=json.loads(Path(pin).read_text())
           ci.content(apk,ci.CONFIG)
           Path('artifacts/development-smoke').mkdir(parents=True,exist_ok=True)
@@ -847,6 +849,7 @@ jobs:
             artifacts/checkpoint-ui/*save-history*
             artifacts/checkpoint-ui/personal-r1-smoke-*
             artifacts/checkpoint-ui/world-jiang-*
+            artifacts/checkpoint-ui/world-room28-*
             artifacts/checkpoint-ui/mobile-*
             artifacts/checkpoint-ui/touch-ux-*
             artifacts/town02-runtime/testControlledSaveHistory*.txt
@@ -856,6 +859,7 @@ jobs:
             artifacts/town02-runtime/development-content-loader.txt
             artifacts/town02-runtime/development-rollback-crash.txt
             artifacts/town02-runtime/development-jiang-crash.txt
+            artifacts/town02-runtime/development-room28-crash.txt
             artifacts/town02-runtime/testControlled*Battle*.txt
             artifacts/town02-runtime/testControlledNanhaiVictoryFlagAndResumeOnce.txt
             artifacts/town02-runtime/testControlledBindingItemSelectionCancelAndSingleActorCommand.txt

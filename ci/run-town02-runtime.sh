@@ -123,10 +123,23 @@ run_test(){
 }
 if [[ "$stage" == development-smoke ]]; then
     development_scope="${FENGSHEN_DEVELOPMENT_SMOKE_SCOPE:-full}"
-    case "$development_scope" in full|rollback|jiang|battle-ui) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
+    case "$development_scope" in full|rollback|jiang|battle-ui|room28) ;; *) echo "Unknown DEBUG smoke scope" >&2; exit 1;; esac
     # DEBUG-only isolated AVD. No stable receipt or signed publication claim.
     adb install -r android/app/build/outputs/apk/debug/app-debug.apk
     adb install -r android/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    if [[ "$development_scope" == room28 ]]; then
+        adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testC62Room28DependenciesAndInteriorSaveCodec,org.fengshen.dev.ContentTest#testControlledJiangInvitationCodecAndDepartureBoundaries org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/development-content-loader.txt 2>&1
+        cat artifacts/town02-runtime/development-content-loader.txt
+        grep -q 'OK (2 tests)' artifacts/town02-runtime/development-content-loader.txt || exit 1
+        if ! python tools/record_app_audio.py world-room28 testNormalTownRoom28EntryInvestigationAndSave --silent --cold-test testTownRoom28ExternalColdStartReturnAndNoSecondGrant --budget-seconds 600; then
+            adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/development-room28-crash.txt
+            cat artifacts/town02-runtime/development-room28-crash.txt
+            pull_evidence
+            exit 1
+        fi
+        pull_evidence
+        exit 0
+    fi
     if [[ "$development_scope" == jiang || "$development_scope" == battle-ui ]]; then
         # Inactive bounded c61 recipe: loader/codec plus actual controlled touch
         # and external force-stop. This never creates a release receipt.

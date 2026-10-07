@@ -683,6 +683,29 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
     fun testNormalTownShopsBuySellAndReturn(){normalTownShops(false)}
     fun testNormalHerbSupplyLoop(){normalTownShops(true)}
+    fun testNormalTownRoom28EntryInvestigationAndSave(){normalTownShops(false,room28=true)}
+    fun testTownRoom28ExternalColdStartReturnAndNoSecondGrant(){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        val expected=SaveSnapshot.parse(File(root,"world-room28-expected-save.json").readText())
+        val(activity,v)=launch()
+        assertEquals(expected,v.currentSnapshot());assertEquals(28,v.world.mapId)
+        assertEquals(InteriorContext(0,12,23),v.world.interiorContext)
+        assertEquals(true,expected.flags["rom.map.28.flag.1"])
+        screenshot(v,"world-room28-cold-full-state")
+        repeat(3){stickStep(v,Key.DOWN)}
+        assertEquals(0,v.world.mapId);assertEquals(12 to 23,v.world.x/16 to v.world.y/16)
+        assertNull(v.world.interiorContext)
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP)
+        assertEquals(28,v.world.mapId);assertEquals(6 to 10,v.world.x/16 to v.world.y/16)
+        repeat(6){stickStep(v,Key.UP)};stickStep(v,Key.LEFT);stickStep(v,Key.RIGHT)
+        assertEquals(6 to 4,v.world.x/16 to v.world.y/16)
+        val before=v.currentSnapshot();val action=center(layoutFor(v).buttons.getValue(Key.A))
+        tap(v,action);assertEquals(before,v.currentSnapshot())
+        assertEquals(expected.inventory,before.inventory);assertEquals(expected.money,before.money)
+        assertEquals(expected.characters,before.characters)
+        screenshot(v,"world-room28-cold-reentry-no-repeat-grant")
+        instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
     fun testExportCurrentSaveForUpgrade(){
         val(activity,v)=launch()
         // On the old APK, create a real gift/position save with normal inputs.
@@ -812,7 +835,7 @@ class TouchTest:IsolatedGameTestCase(){
         fixture(5,0);val empty=v.currentSnapshot();tap(v,action);assertEquals(empty,v.currentSnapshot())
         instrumentation.runOnMainSync{activity.finish()}
     }
-    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false,innSupply:Boolean=false){
+    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false,innSupply:Boolean=false,room28:Boolean=false){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit()
         val(activity,v)=launch()
         fun capture(name:String){
@@ -937,6 +960,10 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(0,v.world.mapId);assertEquals(entry.triggerX,v.world.x/16);assertEquals(entry.triggerY,v.world.y/16)
             capture("returned$mid")
         }
+        if(room28){
+            normalTownRoom28OnView(activity,v,::walkTo)
+            return
+        }
         if(touchUx){
             tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2));scrollToItem(v,"rom.weapon.1")
             val before=v.currentSnapshot();scrollToItem(v,"rom.weapon.1");tap(v,center(v.panelItemBounds("rom.weapon.1")));assertEquals(before,v.currentSnapshot())
@@ -1033,6 +1060,61 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v,tabPoint(v,1));capture("equipped-handknife")
         instrumentation.runOnMainSync{v.handleBack()}
         instrumentation.runOnMainSync{v.persistState();activity.finish()}
+    }
+    /** Continues the actual new-game town route; no restoreSnapshot or state grants. */
+    private fun normalTownRoom28OnView(activity:MainActivity,v:GameView,walk:(Int,Int)->Unit){
+        val root=instrumentation.targetContext.getExternalFilesDir(null)!!
+        assertEquals(0,v.world.mapId)
+        walk(12,24);stickStep(v,Key.UP)
+        assertEquals(28,v.world.mapId);assertEquals(6 to 10,v.world.x/16 to v.world.y/16)
+        assertEquals(InteriorContext(0,12,23),v.world.interiorContext)
+        screenshot(v,"world-room28-normal-original-door-entry")
+        // Approach on a legal final UP step; stickStep requires a completed
+        // move and must not be used to face into an original blocked NPC cell.
+        walk(4,7);stickStep(v,Key.UP)
+        val hintBefore=v.currentSnapshot();val action=center(layoutFor(v).buttons.getValue(Key.A))
+        tap(v,action);assertEquals(GameView.Layer.DIALOGUE,v.layer)
+        assertEquals(hintBefore,v.currentSnapshot())
+        screenshot(v,"world-room28-normal-read-only-hint")
+        hardwareButton(v,android.view.KeyEvent.KEYCODE_BUTTON_B)
+        assertEquals(GameView.Layer.MAP,v.layer);assertEquals(hintBefore,v.currentSnapshot())
+        walk(5,4);stickStep(v,Key.RIGHT)
+        val before=v.currentSnapshot()
+        val hidden=v.content.npcs.single{it.id=="rom.npc.28.1"}
+        assertEquals(HerbUse.ID,hidden.treasure!!.itemId)
+        assertTrue(before.flags["rom.map.28.flag.1"]!=true)
+        val quantity=before.inventory[HerbUse.ID]?:0
+        assertTrue(quantity in 0..9)
+        // Expected grant comes from the executed original CPU/native evidence,
+        // not from calling the same transaction as the App under test.
+        val expectedInventory=before.inventory+(HerbUse.ID to quantity+1)
+        val expectedFlags=before.flags+("rom.map.28.flag.1" to true)
+        send(v,MotionEvent.ACTION_DOWN,listOf(action));send(v,MotionEvent.ACTION_CANCEL,listOf(action))
+        assertEquals(before,v.currentSnapshot())
+        tap(v,action);val after=v.currentSnapshot()
+        assertEquals(before.copy(inventory=expectedInventory,flags=expectedFlags),after)
+        repeat(4){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(after,v.currentSnapshot())
+        tap(v,action);assertEquals(after,v.currentSnapshot())
+        assertEquals(MovementBlock.PHYSICAL,v.world.scene.probeFrom(6,4,Key.RIGHT))
+        screenshot(v,"world-room28-normal-hidden-herb-once")
+        walk(6,10);assertEquals(0,v.world.mapId)
+        assertEquals(12 to 23,v.world.x/16 to v.world.y/16);assertNull(v.world.interiorContext)
+        assertEquals(after.inventory,v.currentSnapshot().inventory)
+        assertEquals(after.money,v.currentSnapshot().money);assertEquals(after.characters,v.currentSnapshot().characters)
+        screenshot(v,"world-room28-normal-return-original-door")
+        stickStep(v,Key.DOWN);stickStep(v,Key.UP)
+        assertEquals(28,v.world.mapId);walk(6,7)
+        val saved=v.currentSnapshot()
+        instrumentation.runOnMainSync{v.persistState()}
+        val persisted=SaveSnapshot.parse(instrumentation.targetContext.getSharedPreferences("opening-local-save",0).getString("saveJson",null)!!)
+        assertEquals(saved,persisted)
+        File(root,"world-room28-expected-save.json").writeText(saved.json().toString())
+        File(root,"world-room28-normal-index.json").writeText(JSONObject()
+            .put("kind","NORMAL_NEW_GAME_GAMEVIEW_TOUCH_INPUTS")
+            .put("stateGrants",false).put("restoredFixture",false)
+            .put("expectedSave",saved.json()).toString())
+        screenshot(v,"world-room28-normal-saved-interior")
+        instrumentation.runOnMainSync{activity.finish()}
     }
     private fun screenshot(v:GameView,name:String){
         SystemClock.sleep(350)

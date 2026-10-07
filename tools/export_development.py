@@ -1108,6 +1108,11 @@ def validate_world_hall_batch_npc_graphic(reader,sprite_id):
 
 def validate_world_chest_grant(reader,npc):
     """Grant only from the actual chest record; item effect or price is not inferred."""
+    if npc['treasure']['evidence']=='game-data/provenance/town-room28-resources.json':
+        room,_=validate_world_house_resources(reader,28)
+        if npc not in room['npcs'] or npc['id']!='rom.npc.28.1':
+            raise ValueError('Room28 hidden grant record differs')
+        return room
     if npc['treasure']['evidence']=='game-data/provenance/world-west-houses-resources.json':
         room,_=validate_world_house_resources(reader,npc['mapId'])
         if npc not in room['npcs']:raise ValueError('House hidden grant record differs')
@@ -1671,6 +1676,9 @@ def validate_world_house_resources(reader,map_id):
     Only the currently evidenced pair is admitted. This does not establish boat
     movement, cure or other unimplemented event outcomes.
     """
+    if map_id==28:
+        from town_room28_resources import validate
+        return validate(reader,ROOT,checked_span,scoped_observed_graphic)
     from forensics.fengshen246 import extract_npcs,extract_text,glyph_pixels,decode_tokens,extract_default_map_palette
     path='game-data/provenance/world-west-houses-resources.json';p=load(ROOT/path)
     if p['romSha256']!=SHA256 or p['scopeRevision']!='fubing-two-original-house-callers-and-item-witness-talk':
@@ -2965,7 +2973,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Lotus map cannot change original actors/collision/palette')
         if recipe.get('houseRoomEvidence'):
             room,_=validate_world_house_resources(reader,mid)
-            if recipe['houseRoomEvidence']!='game-data/provenance/world-west-houses-resources.json' or \
+            house_path='game-data/provenance/town-room28-resources.json' if mid==28 else 'game-data/provenance/world-west-houses-resources.json'
+            if recipe['houseRoomEvidence']!=house_path or \
                     original['tilesetId']!=2 or set(collision)!={0,1,2,5} or allowed!=[0,2,5] or \
                     recipe['palette']!=room['map']['palette']or recipe.get('directionalCollision') or \
                     recipe['npcCells']!=[n['cell'][1]*original['width']+n['cell'][0]for n in room['npcs']]:
@@ -3141,8 +3150,9 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
             raise ValueError('World transition lacks scoped source/target evidence')
         raw=checked_span(reader,exit['source'])
         if exit['kind']=='RETURN_TO_CALLER':
-            if list(raw)!=exit['trigger']+[254,0,0]:raise ValueError('Original return record differs')
-            if exit['fromMapId']in (41,42):
+            caller_bytes=exit['spawn'] if exit['fromMapId']==28 else [0,0]
+            if list(raw)!=exit['trigger']+[254]+caller_bytes:raise ValueError('Original return record differs')
+            if exit['fromMapId']in (28,41,42):
                 _,proof=validate_world_house_resources(reader,exit['fromMapId'])
                 b=next(b for b in proof['bindings']if b['toMapId']==exit['fromMapId'])
                 if exit.get('returnToCaller')is not True or exit['trigger']!=b['spawn']or \
@@ -3780,7 +3790,8 @@ def export_world_from_base(payload,evidence,provenance_path,target_pin):
                 raise ValueError('Lotus actor/dialogue/graphic differs')
         elif npc.get('houseResourceEvidence'):
             room,_=validate_world_house_resources(reader,npc['mapId'])
-            if npc['houseResourceEvidence']!='game-data/provenance/world-west-houses-resources.json' or npc not in room['npcs']or \
+            house_path='game-data/provenance/town-room28-resources.json' if npc['mapId']==28 else 'game-data/provenance/world-west-houses-resources.json'
+            if npc['houseResourceEvidence']!=house_path or npc not in room['npcs']or \
                     any(d not in scene['dialogues']for d in room['dialogues'])or \
                     any(evidence['graphics'].get(k)!=g for k,g in room['graphics'].items()):
                 raise ValueError('House actor/dialogue/graphic differs')
