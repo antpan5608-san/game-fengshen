@@ -326,6 +326,7 @@ jobs:
             artifacts/checkpoint-ui/world-jiang-*
             artifacts/checkpoint-ui/touch-ux-world-jiang-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
+            artifacts/checkpoint-ui/touch-ux-world-content-migration-backup.json
             artifacts/checkpoint-ui/mobile-*
           if-no-files-found: error
           retention-days: 14

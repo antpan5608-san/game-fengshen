@@ -9,14 +9,22 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86 battle UI batch，DEBUG_APP_VERIFIED_PERSONAL_SIGNED_CANDIDATE_PENDING_NOT_PUBLISHED
+current_candidate_version: v86 battle UI batch，SIGNED_PACKAGE_BUILT_APP_FAILED_NOT_PUBLISHED，TEST_HARNESS修复后新来源重验
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
 manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
 first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
 
-## 下一批战斗界面（开发中，尚未App验收）
+## v86首次签名失败及同内容升级测试修正（2026-10-07，北京时间）
+
+source193085bd81b47464718cf3c0b6b0a6d2b9df3c06 / 原签名run37538999494：build SUCCESS，415 release JVM/90 suites零失败、错误、跳过；候选86/0.8.16-battle-ui-personal，32,513,189字节/SHAb278927098c2233f50f10001db117313bc1f1ecafc7118a0c9481b53ff976063，原包名/证书/c61 manifest/388文件独立verify通过。runtime实际旧v85正常赠刀导出、同签名覆盖完整存档一致、21 Content通过，随后testContentMigrationKeepsFirstRecoverableBackup在旧第718行对不存在的preContentMigration使用!!，报测试空指针；其余门禁/UI三字体未执行，没有runtime成功回执，未发布。失败APK、日志和来源保留，线上仍是v85。
+
+分类TEST_HARNESS：实际v85和v86内容同为c61，生产只在内容版本变化时保留首次备份，未新建备份是正确行为。修正仅仪器与原artifact路径：将旧包实际导出的原备份（或无备份）与覆盖后raw值比较；另由真实覆盖存档仅改变contentVersion构造两个明确CONTROLLED样本，通过原restorePersisted/persistState检查首次备份逐字节保留和完整当前/持久SaveSnapshot相等。其他角色、库存、金钱、位置与flags不构造新进度。隔离测试恢复旧偏好，生产存档逻辑和所有原门禁不改；实际JSON报告标注CONTROLLED_VERSION_ONLY_MIGRATION_FROM_ACTUAL_COVERING_SAVE，不冒称本次同内容升级发生迁移。初版仪器编译2m15s和四项原UI scope/分派拒绝测试8.618s通过；补强旧包raw比较后须重新审查、编译和新来源正式21 Content+26个人门禁，不能发布旧失败候选或用DEBUG替代。
+
+修正版最终仪器编译2m34s通过；四项UI个人scope/raw证据/原签名分派拒绝检查8.618s、四项旧c61门禁检查8.571s、Bash语法与git diff检查通过。4B snapshot d09134ee39f31e6723e223cef8c38e81c9ef068d090915627d257b44d4ce4f54完整两份新建议/无未覆盖，全部已读并登记reviewed；拒绝放宽缺证据error或跳过原门禁的建议。仅测试修正尚不算App通过，下一步新同源main/dev正式签名重跑完整21 Content与26个人门禁。
+
+## 下一批战斗界面（DEBUG局部验收通过，同签名完整验收待重跑）
 
 按长期授权自主拆分为可验收版本：下一版先完成敌左我右、当前队员状态卡、明确动作后选目标、敌人/队员只读信息和四人奖励摘要/独立详情。角色装备、物品分类搜索与能力说明、可展开行动记录及更小窗口的降级适配继续后续UI批次；不能据此关闭整个界面方案或累计欠账。内容仍为c61，原manifest和388文件/72依赖图保持；v86 / 0.8.16-battle-ui-personal是待验证版本，不是已发布包。
 

@@ -715,15 +715,50 @@ class TouchTest:IsolatedGameTestCase(){
     fun testContentMigrationKeepsFirstRecoverableBackup(){
         val source=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-source.json").readText()
         val prefs=instrumentation.targetContext.getSharedPreferences("opening-local-save",0)
-        val first=prefs.getString("preContentMigration",null)!!
+        val first=prefs.getString("preContentMigration",null)
+        val sourceSnapshot=SaveSnapshot.parse(source)
         val(activity,v)=launch()
-        instrumentation.runOnMainSync{
-            assertTrue(prefs.edit().putString("saveJson",source).commit())
-            v.restorePersisted();v.persistState()
-            assertEquals(first,prefs.getString("preContentMigration",null))
-            assertEquals(SaveSnapshot.parse(source).copy(contentVersion=v.content.scene.version),v.currentSnapshot())
-            activity.finish()
+        val expected=sourceSnapshot.copy(contentVersion=v.content.scene.version)
+        val priorFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-upgrade-existing-backup.json")
+        val priorRaw=if(priorFile.exists())priorFile.readText()else null
+        val expectedAfterCovering=priorRaw?:if(sourceSnapshot.contentVersion!=v.content.scene.version)source else null
+        assertEquals("Actual covering install must preserve the prior raw backup or migrate only changed content",
+            expectedAfterCovering,first)
+        assertEquals(expected,v.currentSnapshot())
+        assertEquals("Same-content covering install must not fabricate or replace a migration backup",first,
+            prefs.getString("preContentMigration",null))
+        var expectedFirst=first
+        // CONTROLLED version-only migration fixtures based on the real covering
+        // save, not a claim that this APK's unchanged content caused migration.
+        val versions=listOf("opening-segment-001-c60","opening-segment-001-c51","opening-segment-001-c14")
+            .filter{it!=v.content.scene.version}.take(2)
+        val reports=org.json.JSONArray()
+        for(version in versions){
+            val fixture=sourceSnapshot.copy(contentVersion=version)
+            assertEquals(sourceSnapshot,fixture.copy(contentVersion=sourceSnapshot.contentVersion))
+            val encoded=fixture.json().toString()
+            var committed=false
+            instrumentation.runOnMainSync{
+                committed=prefs.edit().putString("saveJson",encoded).commit()
+                if(committed){v.restorePersisted();v.persistState()}
+            }
+            assertTrue("Write the isolated version-only fixture",committed)
+            if(expectedFirst==null)expectedFirst=encoded
+            assertEquals("First raw pre-migration JSON must stay byte-for-byte recoverable",expectedFirst,
+                prefs.getString("preContentMigration",null))
+            assertEquals(expected,v.currentSnapshot())
+            val saved=prefs.getString("saveJson",null)
+            assertNotNull("Migration must retain a persisted current save",saved)
+            assertEquals(expected,SaveSnapshot.parse(saved!!))
+            reports.put(JSONObject().put("sourceContentVersion",version).put("currentSaveMatches",true)
+                .put("firstBackupPreserved",true))
         }
+        File(instrumentation.targetContext.getExternalFilesDir(null),"world-content-migration-backup.json").writeText(
+            JSONObject().put("kind","CONTROLLED_VERSION_ONLY_MIGRATION_FROM_ACTUAL_COVERING_SAVE")
+                .put("coveringContentVersion",sourceSnapshot.contentVersion).put("targetContentVersion",v.content.scene.version)
+                .put("hadBackupAfterActualCovering",first!=null).put("sameContentCovering",sourceSnapshot.contentVersion==v.content.scene.version)
+                .put("checks",reports).toString())
+        instrumentation.runOnMainSync{activity.finish()}
     }
     fun testHerbColdStartMatchesNormalSave(){
         val expectedFile=File(instrumentation.targetContext.getExternalFilesDir(null),"town02-expected-save.json")
