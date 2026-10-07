@@ -57,6 +57,8 @@ class TouchTest:IsolatedGameTestCase(){
                 action.actorId=="xiaolongnv"&&action.abilityId==OriginalBattleMagic.HEAL
             if(capture){
                 val expected=battleVisualPose(action,action.actorId!!)
+                val supportTarget=battleVisualSupportTarget(action,fight.party.map{it.id})
+                assertEquals(if(expected==BattleVisualPose.CAST)"nezha" else null,supportTarget)
                 if(expected==BattleVisualPose.ATTACK)attack=true
                 if(expected==BattleVisualPose.CAST)cast=true
                 if(action.kind==BattleActionKind.TEXT){assertEquals(BattleVisualPose.IDLE,expected);debit=true}
@@ -75,6 +77,9 @@ class TouchTest:IsolatedGameTestCase(){
                     .put("ability",action.abilityId).put("file",body.file).put("pose",expected.name)
                     .put("screenshot","touch-ux-$name.png").put("foot",box.y+box.h)
                     .put("casterMP",action.partyMp["xiaolongnv"]).put("targetHP",action.partyHp["nezha"]))
+                phases.getJSONObject(phases.length()-1)
+                    .put("supportTarget",supportTarget?:JSONObject.NULL)
+                    .put("arenaFlash",action.kind==BattleActionKind.SPECIAL&&supportTarget==null)
             }
             instrumentation.runOnMainSync{p.tick(p.actionDurationMs-p.elapsedMs)};index++
             assertTrue("Finite original action queue",index<100)

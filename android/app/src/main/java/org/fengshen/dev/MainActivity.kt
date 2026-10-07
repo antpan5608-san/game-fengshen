@@ -2275,6 +2275,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun drawBattleScene(c:Canvas,current:OpeningBattle,scene:BattleSceneLayout){
         val l=scene.touch;val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         val screen=battlePresentation.screen;val action=battlePresentation.action
+        val supportTarget=battleVisualSupportTarget(action,current.party.map{it.id})
         c.drawColor(Color.BLACK);overlayPaint.alpha=255;paint.alpha=255;paint.isFilterBitmap=false
         if(screen==BattlePresentation.Screen.RESULT){drawBattleSceneResult(c,current,scene);return}
         val blackScene=current.enemies.any{it.definition.id in content.blackBattleEnemyIds}
@@ -2348,7 +2349,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 paint.isFilterBitmap=true;c.drawBitmap(body.bitmap,crop,RectF(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h),paint)
                 paint.alpha=255;paint.isFilterBitmap=false
             } else if(view.hp>0)portrait(c,hero,sprite)
-            if(action?.targetId==hero.id&&action.kind==BattleActionKind.HEAL){
+            if(action?.targetId==hero.id&&(action.kind==BattleActionKind.HEAL||supportTarget==hero.id)){
                 overlayPaint.color=0xff72d3c5.toInt();overlayPaint.alpha=(150*sin(progress*Math.PI)).toInt().coerceIn(0,150)
                 overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=3*dp
                 c.drawOval(RectF(sprite.x-4*dp,sprite.y+sprite.h*.3f,sprite.x+sprite.w+4*dp,sprite.y+sprite.h),overlayPaint)
@@ -2384,7 +2385,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         if(action?.kind==BattleActionKind.ICE){overlayPaint.color=0x4484cafa
             c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
-        if(action?.kind==BattleActionKind.SPECIAL){overlayPaint.color=0x33ffffff
+        if(action?.kind==BattleActionKind.SPECIAL&&supportTarget==null){overlayPaint.color=0x33ffffff
             c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
         overlayPaint.alpha=255
     }

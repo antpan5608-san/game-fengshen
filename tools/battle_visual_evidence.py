@@ -10,6 +10,7 @@ ACCEPTANCE=dict(kind='ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PH
     manifestSha256='8dc53b77027055a2b9a2ec37a80e2aba3113e668bd350ab822c14c3d85794f30',
     assets=16,controlledPoseMethod='testControlledBattleVisualPosesReadOnly',fonts=[1.0,1.3,2.0],normalMethod='testNormalVisualSupplyAttackVictoryAndSave',coldMethod='testHerbColdStartMatchesNormalSave',
     decoderMethod='testBattleVisualAssetsHashesCacheAndReadOnlySnapshots',proofKey=PROOF_KEYS[0])
+ACCEPTANCE['supportFeedback']='IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW'
 
 
 def bounded(path,limit):
@@ -77,6 +78,9 @@ def proof_digests(evidence,logs):
                   ('nezha','ATTACK','ATTACK','nezha-attack.png',41,58)]
         actual=[(p.get('actor'),p.get('kind'),p.get('pose'),p.get('file'),p.get('casterMP'),p.get('targetHP'))for p in phases]
         if actual!=expected:raise ValueError('Controlled original queue/pose timing differs')
+        if (any('supportTarget' not in p or p.get('arenaFlash') is not False for p in phases)
+                or [p.get('supportTarget')for p in phases]!=['nezha','nezha',None,None]):
+            raise ValueError('Support feedback must stay local to the actual original target')
         for phase in phases:
             name=phase.get('screenshot','')
             if not re.fullmatch(r'touch-ux-world-visual-pose-'+font.replace('.','_')+r'-\d{1,2}\.png',name):

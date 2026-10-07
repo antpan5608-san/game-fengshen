@@ -394,6 +394,7 @@
     "normalMethod": "testNormalVisualSupplyAttackVictoryAndSave",
     "coldMethod": "testHerbColdStartMatchesNormalSave",
     "decoderMethod": "testBattleVisualAssetsHashesCacheAndReadOnlySnapshots",
-    "proofKey": "battleVisualEvidenceSha256"
+    "proofKey": "battleVisualEvidenceSha256",
+    "supportFeedback": "IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW"
   }
 }

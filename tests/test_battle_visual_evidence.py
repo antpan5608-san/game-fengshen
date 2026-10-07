@@ -36,7 +36,8 @@ class VisualProofTests(unittest.TestCase):
             for i,(actor,kind,pose,file,mp,hp) in enumerate(phases):
                 name='touch-ux-world-visual-pose-'+font.replace('.','_')+'-'+str(i)+'.png'
                 Image.new('RGB',(160,100),(1,2,3)).save(self.evidence/name)
-                rows.append(dict(actor=actor,kind=kind,pose=pose,file=file,casterMP=mp,targetHP=hp,screenshot=name))
+                rows.append(dict(actor=actor,kind=kind,pose=pose,file=file,casterMP=mp,targetHP=hp,screenshot=name,
+                    supportTarget='nezha' if kind in ('SPECIAL','HEAL') else None,arenaFlash=False))
             self.write('touch-ux-world-visual-poses-'+font+'.json',dict(
                 kind='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE',font=float(font),
                 manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=16,decodedBytes=32*1024*1024,
@@ -104,6 +105,16 @@ class VisualProofTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.proof()
         path.write_text('OK (1 test)\n');(self.evidence/original['phases'][0]['screenshot']).unlink()
         with self.assertRaises(ValueError):self.proof()
+
+    def test_support_target_global_flash_and_old_reports_are_rejected(self):
+        name='touch-ux-world-visual-poses-1.3.json';original=json.loads((self.evidence/name).read_text())
+        for key,value in [('supportTarget','xiaolongnv'),('arenaFlash',True),('arenaFlash',0)]:
+            changed=copy.deepcopy(original);changed['phases'][0][key]=value;self.write(name,changed)
+            with self.assertRaisesRegex(ValueError,'Support feedback'):self.proof()
+        changed=copy.deepcopy(original)
+        for phase in changed['phases']:phase.pop('supportTarget');phase.pop('arenaFlash')
+        self.write(name,changed)
+        with self.assertRaisesRegex(ValueError,'Support feedback'):self.proof()
 
 
 if __name__=='__main__':unittest.main()

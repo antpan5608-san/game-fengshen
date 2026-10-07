@@ -53,4 +53,32 @@ class BattleVisualGeometryTest {
         val debit=BattleActionStep("MP −3",58,emptyMap()).apply{actorId="xiaolongnv";abilityId=OriginalBattleMagic.HEAL}
         assertEquals(BattleVisualPose.IDLE,battleVisualPose(debit,"xiaolongnv"))
     }
+    @Test fun supportFeedbackUsesOnlyTheActualPartyTargetAndDoesNotMutateStepState(){
+        val ids=listOf("nezha","xiaolongnv","yangjian","jiangziya")
+        for(ability in listOf(OriginalBattleMagic.HEAL,OriginalBattleMagic.ANTIDOTE))
+            for(kind in listOf(BattleActionKind.SPECIAL,BattleActionKind.HEAL,BattleActionKind.STATUS)){
+                val action=BattleActionStep("Not parsed as a spell",5,mapOf(3 to 100),kind=kind)
+                    .apply{actorId="xiaolongnv";targetId="nezha";abilityId=ability
+                        partyHp=mapOf("nezha" to 5);partyMp=mapOf("xiaolongnv" to 44);partyStatus=mapOf("nezha" to 2)}
+                val hp=action.partyHp;val mp=action.partyMp;val status=action.partyStatus
+                repeat(50){assertEquals("nezha",battleVisualSupportTarget(action,ids))}
+                assertSame(hp,action.partyHp);assertSame(mp,action.partyMp);assertSame(status,action.partyStatus)
+                assertEquals(5,action.heroHp);assertEquals(0,action.hpDelta)
+                // The projection does not infer a successful heal or revive from the target's HP.
+                action.partyHp=mapOf("nezha" to 0);assertEquals("nezha",battleVisualSupportTarget(action,ids))
+            }
+    }
+    @Test fun unsupportedEnemyItemMissingTargetsAndDebitFramesKeepLegacyFeedback(){
+        val ids=listOf("nezha","xiaolongnv")
+        fun step(kind:BattleActionKind=BattleActionKind.SPECIAL,actorSlot:Int?=null,targetSlot:Int?=null,
+            actor:String?="xiaolongnv",target:String?="nezha",ability:String?=OriginalBattleMagic.HEAL)=
+            BattleActionStep("提神术",5,emptyMap(),actorSlot,targetSlot,kind).apply{
+                actorId=actor;targetId=target;abilityId=ability}
+        val rejected=listOf(step(actorSlot=3),step(targetSlot=3),step(actor=null),step(target=null),
+            step(actor="unknown"),step(target="unknown"),step(ability=null),step(ability="unknown"),
+            step(ability=HerbUse.ID),step(BattleActionKind.TEXT),step(BattleActionKind.ATTACK),
+            step(BattleActionKind.ICE),step(BattleActionKind.DAMAGE),step(BattleActionKind.MISS))
+        for(action in rejected)assertNull(battleVisualSupportTarget(action,ids))
+        assertNull(battleVisualSupportTarget(null,ids));assertNull(battleVisualSupportTarget(step(),emptyList()))
+    }
 }

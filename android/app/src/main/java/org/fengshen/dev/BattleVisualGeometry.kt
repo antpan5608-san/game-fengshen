@@ -26,3 +26,15 @@ fun battleVisualPose(action:BattleActionStep?,actorId:String):BattleVisualPose {
         else->BattleVisualPose.IDLE
     }
 }
+
+/** Project only identified original support steps onto their actual party target.
+ * Unknown/legacy steps, enemy specials and item effects retain their existing feedback.
+ * Failed effects may still show the original preparation/status feedback, never a new heal.
+ */
+fun battleVisualSupportTarget(action:BattleActionStep?,partyIds:Collection<String>):String? {
+    if(action==null||action.actorSlot!=null||action.targetSlot!=null||
+        action.actorId !in partyIds||action.targetId !in partyIds)return null
+    if(action.abilityId !in setOf(OriginalBattleMagic.HEAL,OriginalBattleMagic.ANTIDOTE)||
+        action.kind !in setOf(BattleActionKind.SPECIAL,BattleActionKind.HEAL,BattleActionKind.STATUS))return null
+    return action.targetId
+}
