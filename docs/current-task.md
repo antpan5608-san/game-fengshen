@@ -14,7 +14,7 @@ frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
-first_real_blocker: 无当前启动/旧档升级阻断；房间28已发布。法术初始身份/习得及效果取证中；2倍字敌图偏小待限定修复；六敌编号原图已复核可读，长期终点未完成。
+first_real_blocker: 暂无正式模拟器启动/旧档验收阻断；postflight NO_DATA不能证明实机健康。大字紧凑敌图有限修复已发布，法术施法者/目标及初始battle取证中；长期终点未完成。
 
 ## v88 当前有效交付与法术接续（2026-10-07）
 
