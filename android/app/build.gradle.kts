@@ -44,6 +44,8 @@ android {
         }
     }
     buildFeatures { buildConfig = true }
+    // Approved original presentation assets; the c62 gameplay export stays unchanged.
+    sourceSets.getByName("main").assets.srcDir("../../game-data/visual")
 }
 dependencies {
     testImplementation("junit:junit:4.13.2")

@@ -1,3 +1,7 @@
+## 服务器首批视觉候选（2026-10-08北京时间，尚未发布）
+
+IMPLEMENTED_LOCAL_VERIFIED；[有限代码/真实检查/失败及下一验收](evidence/battle-visual-candidate.md)。12份自行生成候选完整hash/目视已核，接统一加载/布局/行动计时，c62玩家规则与存档不变；439新JVM/94 suites与86相关Python、DEBUG编译通过，正式签名/App/发布仍NOT_RUN。迁入ignored assets为c61的实际验包失败保留，已按原流程验完整已发布v90并恢复可信c62，随后新包另验。原33个人门禁保持、新增视觉解码和正常物品/战斗/cold两项共35；四人/Boss/法术与正常起始路线分列，所有外部及长期欠账未关闭。线上个人90/历史稳定82保持，不能以代码接入或编译称视觉达标。
+
 ## v90 已发布，继续整体重制体验（2026-10-08北京时间）
 
 PUBLISHED_AND_VERIFIED/PERSONAL_TEST，详见[evidence/v90-battle-magic-personal.md](evidence/v90-battle-magic-personal.md)。source732440a997664ced63f3f0ecf2023be5a1b29e23/build37648979694/publish37655007489成功；公网32,806,652字节/fullSHA2a09da9432e3794f398020a7f427664110403a095d9fe55fe76932981f926003与实际审核APK逐字节一致，原签名/c62/392核实，仅原两个OSS对象。437release JVM/94 suites、21Content/33个人门禁及全部raw digest/6cold/prefs通过；22新三字体法术PNG全看、13静音原片SHA/末帧与5实际法术采样已核，未冒称全程播放/正常四人入队/手机/声音。

@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "id": "battle-visual-02-r1",
+  "authorization": "docs/plans/battle-visual-02.md",
+  "files": {
+    "nezha-portrait-v1.png": {
+      "sha256": "708bf3e32505f78f65ac22d67f1fa6bba78a1a96802e10ce505645d673579dc5",
+      "bytes": 1902941,
+      "width": 1254,
+      "height": 1254,
+      "kind": "portrait"
+    },
+    "xiaolongnv-portrait-v1.png": {
+      "sha256": "2b2034576070ea86f6aa280a0a3593ecf979762ff85b3048f2006e976ddbe917",
+      "bytes": 2175694,
+      "width": 1254,
+      "height": 1254,
+      "kind": "portrait"
+    },
+    "yangjian-portrait-v2.png": {
+      "sha256": "4201050d35fdb56a9aeb4a0a1641853c705c5e6af9ec2acf329eaaea4d463e5e",
+      "bytes": 1810819,
+      "width": 1254,
+      "height": 1254,
+      "kind": "portrait"
+    },
+    "jiangziya-portrait-v1.png": {
+      "sha256": "ac71c67404ffbbd78afb97efab0a171ef70b87760497d4394f704ff0b4518554",
+      "bytes": 1994650,
+      "width": 1254,
+      "height": 1254,
+      "kind": "portrait"
+    },
+    "jiangziya-idle-v1.png": {
+      "sha256": "039c3ef8ace30d7dd8ab0e95edea70965006f3edaac1de393f9f2dd4955fb52b",
+      "bytes": 1691223,
+      "width": 1145,
+      "height": 1374,
+      "kind": "idle"
+    },
+    "nezha-idle-v1.png": {
+      "sha256": "e9eef76e191c2b820433352fba3c4d84b9856358631462388108d6125389250c",
+      "bytes": 1327003,
+      "width": 1145,
+      "height": 1374,
+      "kind": "idle"
+    },
+    "xiaolongnv-idle-v1.png": {
+      "sha256": "2a9a1910973103245fb4c836b19d4bb57ea6882b6f0c382c1544d3c3ec3552d7",
+      "bytes": 1657593,
+      "width": 1123,
+      "height": 1401,
+      "kind": "idle"
+    },
+    "yangjian-idle-v2.png": {
+      "sha256": "58704b1f7ba1338a144d3cd771acb72de4a29d12795e74970d8f940f0d3dd411",
+      "bytes": 1735839,
+      "width": 1145,
+      "height": 1374,
+      "kind": "idle"
+    },
+    "cave-v1.png": {
+      "sha256": "19aa9c34f1b766910cb44f2864d4489222b30cb45632f500b7168f20f808b745",
+      "bytes": 2456610,
+      "width": 1672,
+      "height": 941,
+      "kind": "background"
+    },
+    "coast-v1.png": {
+      "sha256": "b31f2c3a15bffdc763046d5df1037c93f40b6fcc943f3415caa03aca16a5ba9c",
+      "bytes": 2532996,
+      "width": 1672,
+      "height": 941,
+      "kind": "background"
+    },
+    "grass-v1.png": {
+      "sha256": "52ae9f3d3077e4233981758a248514718970b191fd0c7de2de657a93b059e472",
+      "bytes": 2943359,
+      "width": 1672,
+      "height": 941,
+      "kind": "background"
+    },
+    "undersea-v1.png": {
+      "sha256": "4c5dea9460644262b20590c6637bbc098226d0441fb36c123547ef98b6075724",
+      "bytes": 2489373,
+      "width": 1672,
+      "height": 941,
+      "kind": "background"
+    }
+  },
+  "actors": {
+    "nezha": {
+      "portrait": "nezha-portrait-v1.png",
+      "idle": "nezha-idle-v1.png",
+      "bounds": [
+        204,
+        55,
+        1057,
+        1305
+      ]
+    },
+    "xiaolongnv": {
+      "portrait": "xiaolongnv-portrait-v1.png",
+      "idle": "xiaolongnv-idle-v1.png",
+      "bounds": [
+        154,
+        42,
+        1035,
+        1353
+      ]
+    },
+    "yangjian": {
+      "portrait": "yangjian-portrait-v2.png",
+      "idle": "yangjian-idle-v2.png",
+      "bounds": [
+        162,
+        22,
+        1104,
+        1360
+      ]
+    },
+    "jiangziya": {
+      "portrait": "jiangziya-portrait-v1.png",
+      "idle": "jiangziya-idle-v1.png",
+      "bounds": [
+        192,
+        32,
+        1114,
+        1341
+      ]
+    }
+  },
+  "backgrounds": {
+    "cave": "cave-v1.png",
+    "coast": "coast-v1.png",
+    "grass": "grass-v1.png",
+    "undersea": "undersea-v1.png"
+  },
+  "mapBackgrounds": {
+    "16": "grass",
+    "10": "coast",
+    "25": "undersea",
+    "97": "undersea",
+    "85": "cave",
+    "7": "grass"
+  },
+  "mappingConfidence": "ART_DIRECTION_ONLY_NOT_ORIGINAL_ROM_ART",
+  "cacheBytes": 67108864,
+  "limitations": [
+    "Idle cutouts only; dedicated attack/cast/hurt/death/victory frames remain open",
+    "Existing original enemy graphics retained; enemy remake coverage open",
+    "Actual App readability/phone/performance pending"
+  ]
+}

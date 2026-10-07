@@ -9,10 +9,14 @@ import java.security.MessageDigest
 import android.os.SystemClock
 
 /** Bundled and future validated cache directories use this same reader. No networking in A. */
-interface ContentSource { fun read(name: String): ByteArray }
+interface ContentSource {
+    fun read(name: String): ByteArray
+    fun readVisual(name: String): ByteArray? = null
+}
 fun checkedName(name: String): String { require(name.matches(Regex("[a-zA-Z0-9._-]+")) && !name.startsWith("."));return name }
 class AssetSource(private val assets: AssetManager): ContentSource {
     override fun read(name: String)=assets.open("development/"+checkedName(name)).use { it.readBytes() }
+    override fun readVisual(name: String)=assets.open("battle-visual-02/"+checkedName(name)).use { it.readBytes() }
 }
 class DirectorySource(private val root: File): ContentSource {
     override fun read(name: String)=File(root,checkedName(name)).readBytes()
@@ -99,6 +103,8 @@ data class Content(val scene: Scene,val atlas: Bitmap,val sprites: Map<Key,Bitma
     val enemyOrigins:Map<Int,Pair<Int,Int>> = emptyMap(),val inns:Map<String,InnDefinition> = emptyMap(),
     val serviceBindings:List<ServiceBinding> = emptyList()) {
     var clinics:Map<String,ClinicDefinition> = emptyMap();internal set
+    // Presentation only, excluded from GameState/SaveSnapshot and original content version.
+    var battleVisual:BattleVisualAssets?=null;internal set
     var ferries:Map<String,FerryDefinition> = emptyMap();internal set
     var ferrySprites:Map<String,Bitmap> = emptyMap();internal set
     var freeBoatEnabled:Boolean=false;internal set
@@ -1209,6 +1215,9 @@ object ContentLoader {
             mapOf(initialPlayer.id to initialName)+extraCharacters.associate{it.first.id to it.second.name},
             mapOf(definition.id to definition)+extraCharacters.associate{it.first.id to it.second},itemDefinitions,equipmentDefinitions,battle,audio,
             enemyGraphics,battleHorizon,battleHero,shops,mapObjects,battleHorizons,blackBattleEnemyIds,enemyOrigins,inns,serviceBindings).also{content->
+                content.battleVisual=source.readVisual("manifest.json")?.let{bytes->
+                    BattleVisualAssets(source,bytes,content.characterDefinitions.keys,scenes.keys)
+                }
                 content.clinics=clinics
                 data.optJSONArray("mapArrivals")?.let{a->
                     require(a.length()==1)

@@ -97,6 +97,36 @@ def validate_item_sources(payload):
             raise ValueError('Unsupported item source confidence: ' + item['id'])
 
 
+def visual_content(apk, pin=None):
+    """Verify the approved original art separately from the immutable c62 rules export."""
+    pin = CONFIG.get('visualPack') if pin is None else pin
+    if not pin:
+        return None
+    prefix = pin['assetPrefix']
+    if prefix != 'assets/battle-visual-02/':
+        raise ValueError('Unexpected visual asset prefix')
+    with zipfile.ZipFile(apk) as archive:
+        entries = [e for e in archive.infolist() if e.filename.startswith(prefix) and not e.is_dir()]
+        names = [e.filename[len(prefix):] for e in entries]
+        if len(names) != len(set(names)) or len(names) != pin['files'] or sum(e.file_size for e in entries) > 32*1024*1024:
+            raise ValueError('Duplicate, missing or excessive visual assets')
+        for entry, name in zip(entries, names):
+            validate_content_path(name)
+            if '/' in name or entry.file_size > 4*1024*1024 or (entry.external_attr >> 16) & 0o170000 == 0o120000:
+                raise ValueError('Unsafe visual asset')
+        raw = archive.read(prefix+'manifest.json')
+        if len(raw) > 64*1024 or sha(raw) != pin['manifestSha256']:
+            raise ValueError('Visual manifest differs from reviewed assets')
+        manifest = json.loads(raw)
+        if manifest['schemaVersion'] != 1 or manifest['id'] != pin['id'] or set(names) != set(manifest['files']) | {'manifest.json'}:
+            raise ValueError('Visual identity or file set differs')
+        for name, item in manifest['files'].items():
+            raw = archive.read(prefix+name)
+            if len(raw) != item['bytes'] or sha(raw) != item['sha256']:
+                raise ValueError('Visual checksum mismatch: '+name)
+    return dict(id=pin['id'],manifestSha256=pin['manifestSha256'],files=len(names))
+
+
 def fetch(url, target):
     if not url.startswith("https://"):
         raise ValueError("Content source requires HTTPS")
@@ -162,6 +192,9 @@ def receipt(apk, output, code=None, name=None):
     validate_item_sources(files)
     info.update(sha256=sha(apk.read_bytes()), sizeBytes=apk.stat().st_size,
                 contentVersion=CONFIG["contentVersion"], contentHash=CONFIG["manifestSha256"], contentFiles=len(files))
+    visual = visual_content(apk)
+    if visual:
+        info['visualPack'] = visual
     output.write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(info))
 
@@ -184,6 +217,7 @@ def main():
             raise ValueError('Wrong reviewed base APK bytes')
         CONFIG.update(base)
         CONFIG.pop('iteration')
+        CONFIG.pop('visualPack',None)
     if args.mode == "restore":
         restore(args.apk, next_code=args.code)
     elif args.mode == "verify":

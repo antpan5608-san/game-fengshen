@@ -251,7 +251,9 @@
       "fieldMagicTouchCancelCommitAndFonts",
       "fieldMagicFullSaveExternalCold",
       "battleMagicFourRoleTouchPhasesAndFonts",
-      "battleMagicFullSaveExternalCold"
+      "battleMagicFullSaveExternalCold",
+      "battleVisualAssets",
+      "battleVisualNormalAndCold"
     ],
     "manual_acceptance": "PENDING"
   },
@@ -379,5 +381,14 @@
       "battleMagicColdBoundarySha256",
       "battleMagicUiEvidenceSha256"
     ]
+  },
+  "battleVisualAcceptance": {
+    "kind": "ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PHONE",
+    "manifestSha256": "4480914b805e4b5c99feeaf9d207227a60bca4accf3379fd151c13ccbaac571c",
+    "assets": 12,
+    "normalMethod": "testNormalVisualSupplyAttackVictoryAndSave",
+    "coldMethod": "testHerbColdStartMatchesNormalSave",
+    "decoderMethod": "testBattleVisualAssetsHashesCacheAndReadOnlySnapshots",
+    "proofKey": "battleVisualEvidenceSha256"
   }
 }

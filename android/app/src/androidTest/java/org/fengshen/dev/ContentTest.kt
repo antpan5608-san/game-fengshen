@@ -13,6 +13,34 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class ContentTest:IsolatedGameTestCase(){
+    /** Actual Android decoder/cache; neither a normal story nor device performance proof. */
+    fun testBattleVisualAssetsHashesCacheAndReadOnlySnapshots(){
+        val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))
+        val visual=c.battleVisual!!
+        val before=SaveSnapshot(c.scene.version,c.scene.mapId,c.scene.spawnX*16+8,c.scene.spawnY*16+8,
+            Key.DOWN,listOf(c.initialPlayer),emptyMap(),emptyMap(),money=c.initialMoney)
+        assertEquals(0,visual.cachedBytes)
+        for(id in OriginalJiangJoin.FULL_PARTY){
+            val portrait=visual.portrait(id)!!;val idle=visual.idle(id)!!
+            assertTrue(portrait.width>=300&&portrait.height>=300)
+            val b=visual.idleBounds(id,idle);assertTrue(b.left>=0&&b.top>=0&&b.right<=idle.width&&b.bottom<=idle.height)
+            assertTrue(b.width()>0&&b.height()>0);assertSame(idle,visual.idle(id))
+        }
+        for(map in listOf(16,10,25,85))assertNotNull(visual.background(map,false))
+        assertNotNull(visual.background(7,true));assertNull(visual.portrait("unknown"))
+        assertTrue(visual.cachedBytes in 1..BattleVisualAssets.CACHE_LIMIT)
+        assertEquals(before,SaveSnapshot.parse(before.json().toString()))
+        val original=AssetSource(instrumentation.targetContext.assets)
+        val corrupt=object:ContentSource{
+            override fun read(name:String)=original.read(name)
+            override fun readVisual(name:String)=original.readVisual(name).let{bytes->
+                if(name=="nezha-idle-v1.png")bytes.copyOf().apply{this[lastIndex]=(this[lastIndex].toInt() xor 1).toByte()}else bytes}
+        }
+        val damaged=ContentLoader.load(corrupt).battleVisual!!
+        try{damaged.idle("nezha");fail("Corrupt approved asset must be rejected")}
+        catch(expected:IllegalArgumentException){assertTrue(expected.message!!.contains("checksum"))}
+        Log.i("FengshenVisualTest","APP_DECODER_HASH_CACHE_PASS_NOT_PHONE_OR_NORMAL_STORY")
+    }
     /** Original Firecloud loader and gift codec, CONTROLLED not a normal pilgrimage. */
     fun testControlledWell8LocationItemPendingCodecAndNoDuplicateCompletion(){
         val c=ContentLoader.load(AssetSource(instrumentation.targetContext.assets))

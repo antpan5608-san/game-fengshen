@@ -5,16 +5,26 @@ status: IN_PROGRESS
 overall: PARTIAL
 ALL_MAPS_USABLE: NO
 valid_map_denominator: UNKNOWN
-development_location: USER_COMPUTER_ONLY
+development_location: LOCAL_AI_SERVER_ONLY
+development_host: 192.168.1.20 / antpan
+development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v90 / 0.8.20-battle-magic-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 下一安全重制视觉可玩片段，ASSET_PREPARATION；未接App/打包/发布
+current_candidate_version: v91 / 0.8.21-battle-visual-personal，IMPLEMENTED_LOCAL_VERIFIED；正式签名/App/发布待验
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: 整体参考重制体验未实现；下一安全版本优先已获批正常视觉可玩片段。剩余法术A/B/C、正常原结局/真机/声音/寻路与其他累计欠账不关。
+
+服务器接管历史及源码入口见 [development-host.md](development-host.md)。迁移轮仅接管、不新增玩法、不发布；用户已在同一会话恢复既定研发，当前视觉批次见下段，WORLD-FULL-01仍IN_PROGRESS/PARTIAL。
+
+## 服务器首批视觉有限代码与原验收接续（2026-10-08北京时间）
+
+[当前候选记录](evidence/battle-visual-candidate.md)：已选12份本机自行生成且来源/完整hash/实际目视通过的候选，排除裁切/色晕失败；接原ContentLoader、统一布局/命中、BattleActionStep与计时演出。c62/625a/392文件及玩家规则/存档不变，视觉清单4480914b另核。439新JVM/94 suites、86相关Python及DEBUG编译通过；正式签名/App/发布未执行。先前本地ignored assets仍c61导致实际验包拒绝，原失败包与输入保留；已校验完整已发布v90并用原restore恢复c62，正在新包复核。原21 Content/33门禁保持，加视觉解码与正常用药/战斗/完整cold两项共35，必须原同候选Actions实际通过、目视原截图/原片后才发布。
+
+素材专用动作图集/敌人高清覆盖/其他地图与探索物品统一美术仍OPEN；四人/Boss与法术受控证据单列，不冒称正常主线。下一动作是新审查回执、冻结同源main、原签名App验收及通过后的两对象发布/公网完整字节/postflight；所有真机/声音/完整原结局/长期欠账保留。
 
 ## v90已发布，立即接续整体重制体验（2026-10-08北京时间）
 

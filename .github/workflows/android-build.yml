@@ -322,6 +322,7 @@ jobs:
             artifacts/town02-runtime/c61-jiang-*.txt
             artifacts/town02-runtime/c62-room28-*.txt
             artifacts/town02-runtime/phone-display.txt
+            artifacts/town02-runtime/battle-visual-assets.txt
             artifacts/checkpoint-ui/personal-r1-smoke-*
             artifacts/checkpoint-ui/world-save-history-*
             artifacts/checkpoint-ui/world-jiang-*
@@ -331,6 +332,7 @@ jobs:
             artifacts/checkpoint-ui/world-field-magic-*
             artifacts/checkpoint-ui/touch-ux-world-field-magic-*
             artifacts/checkpoint-ui/world-battle-magic-*
+            artifacts/checkpoint-ui/world-visual-normal-*
             artifacts/checkpoint-ui/touch-ux-battle-magic-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
             artifacts/checkpoint-ui/touch-ux-world-content-migration-backup.json

@@ -703,7 +703,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return l.copy(list=list,detail=detail,rowHeight=row)
     }
     private fun battleScene()=battleSceneLayout(ui.safe,resources.displayMetrics.density,
-        resources.configuration.fontScale,battle?.enemies?.size?:1,battle?.party?.size?:1)
+        resources.configuration.fontScale,battle?.enemies?.size?:1,battle?.party?.size?:1,content.battleVisual!=null)
     private fun battleLayout()=battleScene()?.touch?:battleTouchLayout(ui.safe,resources.displayMetrics.density,
         resources.configuration.fontScale,battle?.enemies?.size?:1,battle?.party?.size?:1)
     fun battlePartyCardBounds(id:String):Box {
@@ -2063,9 +2063,13 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun label(c:Canvas,value:String,x:Float,y:Float,sp:Float){textPaint.textSize=sp*resources.displayMetrics.density;c.drawText(value,x-textPaint.measureText(value)/2,y+textPaint.textSize*.34f,textPaint)}
     private fun portrait(c:Canvas,character:CharacterState,box:Box){
         overlayPaint.color=0xff355063.toInt();c.drawRoundRect(RectF(box.x,box.y,box.x+box.w,box.y+box.h),6f,6f,overlayPaint)
-        val image=content.characterDefinitions[character.id]?.portrait
+        val image=content.battleVisual?.portrait(character.id)?:content.characterDefinitions[character.id]?.portrait
         if(image!=null){paint.color=Color.WHITE;paint.alpha=255;paint.isFilterBitmap=false
-            c.drawBitmap(image,null,RectF(box.x,box.y,box.x+box.w,box.y+box.h),paint)
+            val scale=min(box.w/image.width,box.h/image.height)
+            val x=box.x+(box.w-image.width*scale)/2;val y=box.y+(box.h-image.height*scale)/2
+            paint.isFilterBitmap=content.battleVisual!=null
+            c.drawBitmap(image,null,RectF(x,y,x+image.width*scale,y+image.height*scale),paint)
+            paint.isFilterBitmap=false
         } else {textPaint.color=Color.WHITE;label(c,"?",box.x+box.w/2,box.y+box.h/2,18f)}
     }
     private fun gauge(c:Canvas,box:Box,current:Int,maxValue:Int?,color:Int){
@@ -2275,7 +2279,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         overlayPaint.color=if(blackScene)Color.BLACK else 0xff111c22.toInt();c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)
         val horizon=if(blackScene)null
             else content.battleHorizons[world.mapId]?:content.battleHorizon
-        horizon?.let{image->val scale=min(l.arena.w/image.width,l.arena.h/image.height)
+        val background=content.battleVisual?.background(world.mapId,blackScene)
+        background?.let{image->
+            val scale=max(l.arena.w/image.width,l.arena.h/image.height)
+            val x=l.arena.x+(l.arena.w-image.width*scale)/2;val y=l.arena.y+(l.arena.h-image.height*scale)/2
+            c.save();c.clipRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h)
+            paint.isFilterBitmap=true;c.drawBitmap(image,null,RectF(x,y,x+image.width*scale,y+image.height*scale),paint)
+            c.restore();paint.isFilterBitmap=false
+        }
+        horizon?.takeIf{background==null}?.let{image->val scale=min(l.arena.w/image.width,l.arena.h/image.height)
             val x=l.arena.x+(l.arena.w-image.width*scale)/2
             c.drawBitmap(image,null,RectF(x,l.arena.y,x+image.width*scale,l.arena.y+image.height*scale),paint)}
         val message=when{
@@ -2289,19 +2301,23 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         battleLine(c,message,scene.prompt,13f)
         for((i,enemy)in current.enemies.withIndex()){
             val cell=l.enemies[i];val hp=battleVisibleHp(enemy.slot)?:0
-            overlayPaint.color=if(selectedBattleSlot==enemy.slot)0xdd244d49.toInt()else if(blackScene)0xcc000000.toInt()else 0xcc18252e.toInt()
-            c.drawRect(cell.x,cell.y,cell.x+cell.w,cell.y+cell.h,overlayPaint)
+            if(background==null||selectedBattleSlot==enemy.slot){
+                overlayPaint.color=if(selectedBattleSlot==enemy.slot)0x44244d49 else if(blackScene)0xcc000000.toInt()else 0xcc18252e.toInt()
+                c.drawRect(cell.x,cell.y,cell.x+cell.w,cell.y+cell.h,overlayPaint)
+            }
             val sprite=battleEnemyBox(enemy)
-            val impact=action?.targetSlot==enemy.slot&&action.kind==BattleActionKind.DAMAGE
+            val impact=action?.targetSlot==enemy.slot&&action.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.DEATH)
             if(hp>0||impact){
                 val shift=if(action?.actorSlot==enemy.slot)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
                 paint.alpha=if(impact&&battlePresentation.elapsedMs/80%2==0L)80 else 255
+                if(impact&&action?.kind==BattleActionKind.DEATH)paint.alpha=(255*(1-battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs)).toInt().coerceIn(0,255)
                 content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
                 paint.alpha=255
             }
             val parts=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1)
             val name=if(scene.compact)"#${enemy.slot+1}"
                 else (if(current.enemies.size>1)"#${enemy.slot+1} "else"")+enemy.definition.name
+            overlayPaint.color=0xcc14242b.toInt();c.drawRoundRect(RectF(parts.label.x,parts.label.y,parts.label.x+parts.label.w,parts.label.y+parts.label.h),4*dp,4*dp,overlayPaint)
             battleLine(c,if(hp>0||scene.compact)name else "$name · 倒下",parts.label,12f,
                 if(hp>0)Color.WHITE else 0xff88969c.toInt())
             gauge(c,parts.gauge,hp,enemy.definition.hp,0xffc55758.toInt())
@@ -2311,9 +2327,26 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             val field=scene.allySprites[i];val size=min(48*dp,min(field.w-8*dp,field.h-8*dp)).coerceAtLeast(dp)
             val moving=action?.kind==BattleActionKind.ATTACK&&action.actorSlot==null&&
                 (action.actorId==hero.id||(action.actorId==null&&hero.id==current.hero.id))
-            val shift=if(moving)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
-            val sprite=Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2-shift,size,size)
-            if(view.hp>0)portrait(c,hero,sprite)
+            val progress=(battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs).coerceIn(0f,1f)
+            val shift=if(moving)battleAdvance(progress)*l.arena.w*.055f else 0f
+            val idle=content.battleVisual?.idle(hero.id)
+            val crop=idle?.let{content.battleVisual!!.idleBounds(hero.id,it)}
+            val fit=if(crop==null)1f else min(field.w/crop.width(),field.h/crop.height())
+            val sprite=if(crop==null)Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2,size,size)
+                else Box(field.x+(field.w-crop.width()*fit)/2-shift,field.y+field.h-crop.height()*fit,crop.width()*fit,crop.height()*fit)
+            if(idle!=null){
+                overlayPaint.color=0x550a151b;c.drawOval(RectF(sprite.x+sprite.w*.12f,sprite.y+sprite.h-3*dp,sprite.x+sprite.w*.88f,sprite.y+sprite.h+3*dp),overlayPaint)
+                val damaged=action?.targetId==hero.id&&action.kind==BattleActionKind.DAMAGE
+                paint.alpha=if(view.hp<=0)70 else if(damaged&&battlePresentation.elapsedMs/80%2==0L)100 else 255
+                paint.isFilterBitmap=true;c.drawBitmap(idle,crop,RectF(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h),paint)
+                paint.alpha=255;paint.isFilterBitmap=false
+            } else if(view.hp>0)portrait(c,hero,sprite)
+            if(action?.targetId==hero.id&&action.kind==BattleActionKind.HEAL){
+                overlayPaint.color=0xff72d3c5.toInt();overlayPaint.alpha=(150*sin(progress*Math.PI)).toInt().coerceIn(0,150)
+                overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=3*dp
+                c.drawOval(RectF(sprite.x-4*dp,sprite.y+sprite.h*.3f,sprite.x+sprite.w+4*dp,sprite.y+sprite.h),overlayPaint)
+                overlayPaint.style=Paint.Style.FILL;overlayPaint.alpha=255
+            }
             if(action?.targetId==hero.id){overlayPaint.color=0xffcfab54.toInt();overlayPaint.style=Paint.Style.STROKE
                 overlayPaint.strokeWidth=2*dp;c.drawRect(sprite.x,sprite.y,sprite.x+sprite.w,sprite.y+sprite.h,overlayPaint)
                 overlayPaint.style=Paint.Style.FILL}
@@ -2321,10 +2354,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             overlayPaint.color=if(view.active)0xff244d49.toInt()else 0xff18252e.toInt()
             c.drawRect(card.x,card.y,card.x+card.w,card.y+card.h,overlayPaint)
             if(view.active){overlayPaint.color=0xffcfab54.toInt();c.drawRect(card.x,card.y,card.x+3*dp,card.y+card.h,overlayPaint)}
-            val icon=Box(card.x+6*dp,card.y+4*dp,24*dp,24*dp);portrait(c,hero,icon)
+            val iconSize=if(content.battleVisual!=null)40*dp else 24*dp
+            val icon=Box(card.x+6*dp,if(content.battleVisual!=null)card.y+(card.h-iconSize)/2 else card.y+4*dp,iconSize,iconSize);portrait(c,hero,icon)
             val title="${view.name} Lv.${view.level}"+(if(view.status==0)""else" · ${OriginalStatus.label(view.status)}")
-            battleLine(c,title,Box(icon.x+icon.w+6*dp,card.y+4*dp,card.w-42*dp,max(24*dp,17*font*dp)),13f)
-            val x=card.x+8*dp;val w=card.w-16*dp;val y=card.y+card.h-max(18f,14*font)*dp-4*dp
+            battleLine(c,title,Box(icon.x+icon.w+6*dp,card.y+4*dp,card.w-icon.w-18*dp,max(24*dp,17*font*dp)),13f)
+            val x=if(content.battleVisual!=null)icon.x+icon.w+6*dp else card.x+8*dp
+            val w=card.x+card.w-8*dp-x;val y=card.y+card.h-max(18f,14*font)*dp-4*dp
             battleLine(c,"HP ${view.hp}",Box(x,y,w*.58f,max(18f,14*font)*dp),11f)
             battleLine(c,"MP ${view.mp}",Box(x+w*.6f,y,w*.4f,max(18f,14*font)*dp),11f)
             gauge(c,Box(x,card.y+card.h-5*dp,w*.56f,3*dp),view.hp,view.maxHp,0xffc55758.toInt())

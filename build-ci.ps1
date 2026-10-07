@@ -156,6 +156,8 @@ try {
     if($LASTEXITCODE -ne 0){throw 'Field magic raw evidence, historical scope and mandatory same-candidate gates failed'}
     & python -m unittest discover -s tests -p 'test_battle_magic*.py'
     if($LASTEXITCODE -ne 0){throw 'Battle magic raw phases, full cold and mandatory same-candidate gates failed'}
+    & python -m unittest discover -s tests -p 'test_battle_visual*.py'
+    if($LASTEXITCODE -ne 0){throw 'Approved visual assets and same-candidate proof gates failed'}
     }
     Push-Location (Join-Path $root 'android')
     try {

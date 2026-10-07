@@ -942,6 +942,8 @@ class TouchTest:IsolatedGameTestCase(){
     fun testNormalOpeningEscapeAndDefeat(){normalOpeningBattle(true)}
     fun testNormalTownShopsBuySellAndReturn(){normalTownShops(false)}
     fun testNormalHerbSupplyLoop(){normalTownShops(true)}
+    /** Same normal touch route, additionally require a real attack victory and reward before cold. */
+    fun testNormalVisualSupplyAttackVictoryAndSave(){normalTownShops(true,visualVictory=true)}
     fun testNormalTownRoom28EntryInvestigationAndSave(){normalTownShops(false,room28=true)}
     fun testTownRoom28ExternalColdStartReturnAndNoSecondGrant(){
         val root=instrumentation.targetContext.getExternalFilesDir(null)!!
@@ -1094,7 +1096,7 @@ class TouchTest:IsolatedGameTestCase(){
         fixture(5,0);val empty=v.currentSnapshot();tap(v,action);assertEquals(empty,v.currentSnapshot())
         instrumentation.runOnMainSync{activity.finish()}
     }
-    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false,innSupply:Boolean=false,room28:Boolean=false){
+    private fun normalTownShops(useHerb:Boolean,touchUx:Boolean=false,innSupply:Boolean=false,room28:Boolean=false,visualVictory:Boolean=false){
         instrumentation.targetContext.getSharedPreferences("opening-local-save",0).edit().clear().commit()
         val(activity,v)=launch()
         fun capture(name:String){
@@ -1104,6 +1106,8 @@ class TouchTest:IsolatedGameTestCase(){
         }
         var seekingInjury=false
         var approachingVillage=false
+        var normalVictories=0
+        var seekingVictory=false
         val injuryEvents=org.json.JSONArray()
         fun injuryState(name:String,fight:OpeningBattle?=null){
             val event=org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
@@ -1119,11 +1123,13 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fun finishFight(){
             if(v.layer!=GameView.Layer.BATTLE)return
+            val before=v.currentSnapshot();var won=false
             val f=GameView::class.java.getDeclaredField("battle").apply{isAccessible=true}
             val p=GameView::class.java.getDeclaredField("battlePresentation").apply{isAccessible=true}
             for(i in 0..1000){
                 if(v.layer!=GameView.Layer.BATTLE)break
                 val fight=f.get(v) as OpeningBattle;val presentation=p.get(v) as BattlePresentation
+                if(fight.phase==BattlePhase.VICTORY)won=true
                 if(presentation.screen !in listOf(BattlePresentation.Screen.ENTRY,BattlePresentation.Screen.ACTING)){
                     if(fight.phase==BattlePhase.DEFEAT){injuryState("normal-route-defeat",fight);capture("herb-route-defeat")}
                     assertTrue("Town route must survive normally",fight.phase!=BattlePhase.DEFEAT)
@@ -1131,8 +1137,8 @@ class TouchTest:IsolatedGameTestCase(){
                         // A hand-knife can legitimately defeat early single enemies before they act.
                         // Use the actual escape button while still at full HP to expose ordinary
                         // retaliation; never edit HP, force an enemy, or alter random consumption.
-                        val escape=(seekingInjury&&fight.hero.hp==fight.hero.maxHp)||
-                            (approachingVillage&&(fight.enemies.count{it.hp>0}>1||fight.hero.hp<=fight.hero.maxHp*2/3))
+                        val escape=!seekingVictory&&((seekingInjury&&fight.hero.hp==fight.hero.maxHp)||
+                            (approachingVillage&&(fight.enemies.count{it.hp>0}>1||fight.hero.hp<=fight.hero.maxHp*2/3)))
                         injuryState(if(escape)"normal-touch-escape" else "normal-touch-attack",fight)
                         if(escape)
                             tap(v,center(v.battleCommandBounds(3)))
@@ -1143,6 +1149,12 @@ class TouchTest:IsolatedGameTestCase(){
                 SystemClock.sleep(40)
             }
             assertEquals(GameView.Layer.MAP,v.layer)
+            if(won){
+                normalVictories++
+                assertTrue("Actual normal attack victory must grant EXP",v.currentSnapshot().characters.first().experience>before.characters.first().experience)
+                assertTrue("Actual reward cannot reduce money",v.currentSnapshot().money>=before.money)
+                capture("herb-normal-attack-victory")
+            }
             injuryState("normal-encounter-ended")
         }
         fun step(k:Key){stickStep(v,k);finishFight()}
@@ -1256,6 +1268,14 @@ class TouchTest:IsolatedGameTestCase(){
             capture("inn-returned")
         }
         if(useHerb){
+            if(visualVictory&&normalVictories==0){
+                walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId);walkTo(200,130)
+                seekingVictory=true
+                for(i in 0 until 320){if(normalVictories>0)break;step(if(v.world.y/16==130)Key.UP else Key.DOWN)}
+                seekingVictory=false
+                assertTrue("New visual route must include a normal attack victory, not only escapes",normalVictories>0)
+                walkTo(202,130);assertEquals(0,v.world.mapId)
+            }
             // Only normal movement and battle commands create the injury. No HP/item fixture.
             if(v.currentSnapshot().characters.first().hp==v.currentSnapshot().characters.first().maxHp){
                 walkTo(0,14);step(Key.LEFT);assertEquals(16,v.world.mapId)

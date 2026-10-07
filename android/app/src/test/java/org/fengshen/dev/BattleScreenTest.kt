@@ -4,6 +4,26 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class BattleScreenTest {
+    @Test fun illustratedSceneKeepsAllTargetsCardsAndGroundedActorsInsideSafeArea(){
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(font in listOf(1f,1.3f,2f))for(party in 1..4)for(enemies in 1..6){
+                val s=battleSceneLayout(safe,dp,font,enemies,party,true)!!
+                val hit=s.touch.commands+s.touch.enemies+s.partyCards
+                for(b in hit){assertTrue(inside(b,safe));assertTrue(b.w>=48*dp&&b.h>=48*dp)}
+                for(i in hit.indices)for(j in i+1 until hit.size)assertFalse(overlaps(hit[i],hit[j]))
+                for(b in s.allySprites)assertTrue(inside(b,s.allyField))
+                for(i in 1 until s.allySprites.size){assertTrue(s.allySprites[i].x>s.allySprites[i-1].x)
+                    assertTrue(s.allySprites[i].y+s.allySprites[i].h>s.allySprites[i-1].y+s.allySprites[i-1].h)}
+                if(font<=1.3f)assertTrue(s.touch.arena.h>=safe.h*.5f)
+                if(enemies>3)assertTrue(s.compact)
+            }
+    }
+    @Test fun attackMotionReturnsToOriginAndCannotChangeAStoredAction(){
+        val step=BattleActionStep("attack",53,mapOf(0 to 10),kind=BattleActionKind.ATTACK)
+        val before=step.copy();assertEquals(0f,battleAdvance(0f),.001f);assertEquals(1f,battleAdvance(.5f),.001f)
+        assertEquals(0f,battleAdvance(1f),.001f);assertEquals(0f,battleAdvance(2f),.001f)
+        assertEquals(before,step);try{battleAdvance(Float.NaN);fail("Invalid clock") }catch(expected:IllegalArgumentException){}
+    }
     private fun overlaps(a:Box,b:Box)=a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y
     private fun inside(a:Box,b:Box)=a.x>=b.x&&a.y>=b.y&&a.x+a.w<=b.x+b.w+.01f&&a.y+a.h<=b.y+b.h+.01f
     @Test fun allNativePartyEnemyCountsAndLargeFontsHaveVisibleIndependentTargets(){

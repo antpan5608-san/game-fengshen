@@ -314,6 +314,10 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
         adb shell wm density 160
     fi
     if [[ "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
+        timeout 120 adb shell am instrument -w -e class org.fengshen.dev.ContentTest#testBattleVisualAssetsHashesCacheAndReadOnlySnapshots org.fengshen.dev.test/android.test.InstrumentationTestRunner > artifacts/town02-runtime/battle-visual-assets.txt 2>&1
+        cat artifacts/town02-runtime/battle-visual-assets.txt
+        grep -q 'OK (1 test)' artifacts/town02-runtime/battle-visual-assets.txt
+        python tools/record_app_audio.py world-visual-normal testNormalVisualSupplyAttackVictoryAndSave --silent --cold-test testHerbColdStartMatchesNormalSave --budget-seconds 600
         # A fresh normal new game on this signed APK; never reuse DEBUG evidence.
         if ! python tools/record_app_audio.py world-room28 testNormalTownRoom28EntryInvestigationAndSave --silent --cold-test testTownRoom28ExternalColdStartReturnAndNoSecondGrant --budget-seconds 600; then
             adb logcat -d -b crash -s AndroidRuntime > artifacts/town02-runtime/c62-room28-crash.txt
@@ -337,6 +341,7 @@ import json,os,hashlib
 from pathlib import Path
 from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,C60_SCOPES,C61_SCOPES,review_personal,active_scope,jiang_proof_digests
 from tools import battle_ui_evidence as ui, room28_evidence as room28, field_magic_evidence as field_magic, battle_magic_evidence as battle_magic
+from tools import battle_visual_evidence as visual
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -371,6 +376,9 @@ if scope.get('fieldMagicAcceptance')==field_magic.ACCEPTANCE:
 if scope.get('battleMagicAcceptance')==battle_magic.ACCEPTANCE:
     r.update(battle_magic.proof_digests(Path('artifacts/checkpoint-ui')))
     r.update({key:'PASS' for key in battle_magic.GATES})
+if scope.get('battleVisualAcceptance')==visual.ACCEPTANCE:
+    r.update(visual.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime')))
+    r.update({key:'PASS'for key in visual.GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

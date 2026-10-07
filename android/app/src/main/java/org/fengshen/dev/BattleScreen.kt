@@ -2,6 +2,14 @@ package org.fengshen.dev
 
 import kotlin.math.*
 
+/** Preparation, advance, impact hold and return; reads only the presentation clock. */
+fun battleAdvance(progress:Float):Float {
+    require(progress.isFinite())
+    val p=progress.coerceIn(0f,1f)
+    return when{p<.18f->-.08f*p/.18f;p<.42f->-.08f+(p-.18f)/.24f*1.08f
+        p<.65f->1f;else->(1f-p)/.35f}
+}
+
 /** Read-only UI projection. Never a second party, inventory, or settlement. */
 data class BattlePartyView(val id:String,val name:String,val level:Int,val hp:Int,val maxHp:Int,
     val mp:Int,val maxMp:Int?,val status:Int,val active:Boolean)
@@ -23,20 +31,24 @@ data class BattleSceneLayout(val touch:BattleTouchLayout,val prompt:Box,val enem
     val compact:Boolean)
 
 fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCount:Int):BattleSceneLayout? {
+    return battleSceneLayout(safe,dp,fontScale,enemyCount,partyCount,false)
+}
+fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCount:Int,illustrated:Boolean):BattleSceneLayout? {
     require(dp>0&&fontScale>0&&enemyCount in 1..8&&partyCount in 1..4)
     val gap=4*dp
     val commandH=max(48f,15*fontScale+16)*dp
     // Name/status on the first line; current HP/MP numbers and gauges on the
     // second. Full maxima and attributes remain in the separate detail layer.
-    val cardH=max(52f,26*fontScale+18)*dp
-    val partyRows=if(partyCount>2)2 else 1
-    val cardColumns=if(partyCount==1)1 else 2
+    val cardH=max(if(illustrated)56f else 52f,26*fontScale+18)*dp
+    val singleRow=illustrated&&safe.w>=800*dp&&fontScale<=1.3f
+    val partyRows=if(partyCount>2&&!singleRow)2 else 1
+    val cardColumns=if(singleRow)partyCount else if(partyCount==1)1 else 2
     val statusH=partyRows*cardH+(partyRows-1)*gap
     val promptH=max(28f,13*fontScale+8)*dp
     // Respect the actual inset-safe height, which is shorter than the screenshot.
     // Compress only whitespace; preserve two-column cards and system font sizes.
     val minimumArena=max(48f,if(partyCount>2)76f else 48f)*dp
-    val pad=min(8*dp,max(2*dp,(safe.h-commandH-statusH-promptH-minimumArena)/5))
+    val pad=min((if(illustrated)4 else 8)*dp,max(2*dp,(safe.h-commandH-statusH-promptH-minimumArena)/5))
     val f=Box(safe.x+pad,safe.y+pad,safe.w-2*pad,safe.h-2*pad)
     if(f.w<560*dp||f.h<280*dp)return null
     val commands=(0..4).map{i->Box(f.x+i*(f.w+pad)/5,f.y+f.h-commandH,(f.w-4*pad)/5,commandH)}
@@ -51,7 +63,7 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
     val enemyField=Box(arena.x,arena.y,enemyW,arena.h)
     val allies=Box(enemyField.x+enemyField.w+pad,arena.y,arena.w-enemyField.w-pad,arena.h)
     val maxRows=max(1,floor((arena.h+gap)/(48*dp+gap)).toInt())
-    val columns=max(1,ceil(enemyCount.toFloat()/maxRows).toInt())
+    val columns=if(illustrated&&enemyCount>3)enemyCount else max(1,ceil(enemyCount.toFloat()/maxRows).toInt())
     val rows=ceil(enemyCount.toFloat()/columns).toInt()
     val cellW=(enemyField.w-(columns-1)*gap)/columns
     val cellH=(enemyField.h-(rows-1)*gap)/rows
@@ -62,7 +74,14 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
     val allyRows=ceil(partyCount.toFloat()/allyColumns).toInt()
     val aw=(allies.w-(allyColumns-1)*gap)/allyColumns
     val ah=(allies.h-(allyRows-1)*gap)/allyRows
-    val sprites=(0 until partyCount).map{i->Box(allies.x+(i%allyColumns)*(aw+gap),
+    val sprites=if(illustrated)(0 until partyCount).map{i->
+        // Grounded diagonal: rear figures are smaller; slot order and gameplay never change.
+        val t=if(partyCount==1).5f else i.toFloat()/(partyCount-1)
+        val h=allies.h*(.62f+.18f*t);val w=min(allies.w*.48f,h*.76f)
+        val x=allies.x+allies.w*(.06f+.42f*t)
+        val foot=allies.y+allies.h*(.70f+.27f*t)
+        Box(x,foot-h,w,h)
+    } else (0 until partyCount).map{i->Box(allies.x+(i%allyColumns)*(aw+gap),
         allies.y+(i/allyColumns)*(ah+gap),aw,ah)}
     val footer=Box(f.x,commands[0].y,f.w,commandH)
     val close=Box(f.x+f.w-max(80f,40*fontScale)*dp,f.y,max(80f,40*fontScale)*dp,commandH)
