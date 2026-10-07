@@ -9,12 +9,22 @@ development_location: USER_COMPUTER_ONLY
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v85 / 0.8.15-jiang-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v86 battle UI batch，SIGNED_PACKAGE_BUILT_APP_FAILED_NOT_PUBLISHED，TEST_HARNESS修复后新来源重验
+current_candidate_version: v86 battle UI batch，SIGNED_APP_VERIFIED_PUBLICATION_DEPENDENCY_FAILED_NOT_PUBLISHED，新来源补依赖后重验
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c61
 manifest_sha256: 37f0f7bb1080f6fe59f3853928c7e5006c2974d6f3ca5698713b2a37f5747557
 first_real_blocker: c61已完成原签名验收/发布/公网全字节/postflight；正常主线至结局、四人界面与全部方案/累计欠账仍未完成，先接续已确认战斗/角色/物品UI。
+
+## 本轮恢复及v86正式App通过、发布依赖缺口（2026-10-07，北京时间）
+
+已实际读取来源窗口01a11191-f8b7-7db1-8c6c-b39fd4634e01用户消息01a1148a-619d-7130-a1ac-324d94edd54e“任务发生了终止，按开发要求继续启动”，沿原长期授权恢复唯一执行者，不改模型/权限/额度，不将此前权限说明视为开发完成。当前账户ordinaryUsageAllowed=true，但旧长期目标机制仍返回usageLimited；继续此次已授权普通回合的开发/验收，不冒称其机制已恢复active或目标完成。
+
+source0e9888989d40fc8aaa3ab8cd1c0e636e253eaca7 / run37568180477 build和runtime实际SUCCESS。独立核415 release JVM/90 suites零失败错误跳过、21 Content、原18+UI8全部26门禁；正式APK32,513,189字节/SHA6d90ba80ee989350964a58c8d1fbaeba8d97a8de54255cac04fad66a5a22d943，原包名/签名/精确c61内容复核通过。实际旧v85同c61覆盖完整存档保持且未生成备份；controlled c60/c51两次迁移首份raw备份和完整当前/持久存档均一致，原JSON保留。三字体87PNG/6尺寸JSON/11原日志严格重算UI proof358eff90a7875ea3821e634f7c33bb28beb7554f14cb7d5f137e58795982c0b9；原Jiang recorder61448334、完整cold-boundary dddd784a及六段MP4完整SHA/三组before-after等值/偏好恢复通过。实际目视18张本次签名四人六敌/Boss/药品/奖励与滚动图，六段原片末帧和三段4秒App帧；2倍字六敌图形较小、其余详情依赖滚动，真机/声音/完整主线仍未验，不关闭全UI。
+
+原发布37570497990：approve SUCCESS，但publish在上传凭据获取前的原check-reviewed-apk阶段因ModuleNotFoundError: No module named 'PIL'停止，未执行两对象上传。线上仍v85。分类CI_DEPENDENCY：新raw PNG验证需要Pillow，原发布runner未安装；只在原Prepare existing publisher dependencies安装与原build相同Pillow==11.3.0并检查失败，不放宽任何证据/来源/reviewer门禁。新审查和依赖/原scope检查后必须新来源正式构建21 Content+26门禁；不能用改变来源的workflow发布旧6d90候选。旧第一次仪器失败与本次发布失败保留。
+
+依赖修正4B snapshot3ab1e59b6321b88920fba89f07dbc09640b6da54005979c2edc25057ebde31c7完整一份新建议/无未覆盖，全部已读并登记reviewed。全新隔离Python首次从本机配置镜像下载返回403，保留失败；进程内改官方PyPI后安装精确Pillow11.3.0、import和原runtime_handoff对本次87PNG/日志/候选receipt复核实际PASS。四项原UI scope/raw证据/签名分派拒绝测试6.320s、git diff检查通过。新来源正式构建尚待执行，线上仍v85，不因本地依赖PASS宣称发布成功。
 
 ## v86首次签名失败及同内容升级测试修正（2026-10-07，北京时间）
 

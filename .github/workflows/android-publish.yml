@@ -152,6 +152,8 @@ jobs:
           cache-dependency-path: server/package-lock.json
       - name: Prepare existing publisher dependencies
         run: |
+          python -m pip install Pillow==11.3.0
+          if($LASTEXITCODE -ne 0){throw 'Raw runtime PNG review dependency installation failed'}
           npm ci --prefix server --ignore-scripts
           if($LASTEXITCODE -ne 0){throw 'SSH bridge dependencies failed'}
           & "$env:ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager.bat" 'platforms;android-35' 'build-tools;35.0.0'
