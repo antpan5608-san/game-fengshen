@@ -1,6 +1,6 @@
 # BATTLE-VISUAL-02：参考复刻版战斗美术与演出升级
 
-状态：AUTHORIZED_QUEUED；尚未实施或验收，当前战斗初始法术批次继续。
+状态：IN_PROGRESS / PARTIAL；首批场景/头像、部分姿态/敌图及原治疗局部光效已分v91–v93实际App/个人发布，见[当前交付](../evidence/v93-support-visual-personal.md)。完整动作/敌人/环境、按当前战斗准备和真机性能等未完成；以下为完整原获批方案及历史来源。
 
 来源窗口 01a11191-f8b7-7db1-8c6c-b39fd4634e01；已直接读取人类需求消息 01a116a4-c194-7250-ace2-a8ef04618efe 和完整计划，以及人类批准消息 01a116bd-100a-7131-92ae-b4c89ee697c1（turn 01a116bc-c7b9-7af1-8cac-a6d2e9823a54），正文为“Implement the proposed plan.”。本项关联 WORLD-FULL-01、MAGIC-ORIGINAL-01 和战斗 UI 欠账；同一唯一执行者，不创建第二任务，不替换主线/寻路/其他欠账。
 

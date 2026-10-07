@@ -1,3 +1,5 @@
+最新实际检查点：个人 v93 已发布并独立核验公网 62,589,404 完整字节与原审核 APK 一致；本版正式447 JVM/95 suites、21 Content/36门禁及121原PNG/78视频采样/7完整cold已验。原治疗/解毒仅真实目标局部光效，规则/存档/c62/素材不变。postflight查询成功但NO_DATA，保留93/92，不能当真机健康通过；稳定82、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。详见[v93交付](evidence/v93-support-visual-personal.md)。下一有限批次接[按当前战斗准备图像](evidence/battle-scoped-load-next-batch.md)，尚未实施/冻结新版本。以下各段保留历史状态。
+
 最新接续批次：[原治疗局部光效](evidence/battle-support-local-next-batch.md)已完成有限源码及本地新447 JVM/95 suites、68相关Python和应用/仪器DEBUG构建检查；拟93尚未正式签名/App/发布，不能复用92验收。仅现有法术真实目标光效，规则/保存/素材不改。以下为实际已发布92及历史。
 
 最新实际检查点：v92已沿原同源签名/App/审核发布，公网62,588,756完整字节与审核APK一致；正式445 JVM/95 suites、21 Content/36个人门禁及实际121PNG/60帧采样/7完整cold通过。postflight查询成功但NO_DATA（92/91无上传样本），不当运行健康/手机通过；稳定82及全部长期欠账保持。见[v92交付](evidence/v92-battle-pose-personal.md)。服务器继续原合法治疗局部视觉下一批次，以下为历史检查点。

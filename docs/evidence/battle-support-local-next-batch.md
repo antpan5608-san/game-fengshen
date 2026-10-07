@@ -1,3 +1,5 @@
+最新：本有限批次已作为v93真实发布/公网复核，见[v93交付](v93-support-visual-personal.md)；下文保留实施/本地检查时的历史候选状态。下一[按战斗准备](battle-scoped-load-next-batch.md)仍未实施。
+
 # 原治疗局部光效：当前有限接续批次
 
 状态：IMPLEMENTED_LOCAL_VERIFIED；拟93 / 0.8.23-support-visual-personal，尚未正式签名/App/发布。线上个人92、稳定82，WORLD-FULL-01 IN_PROGRESS/PARTIAL及所有三项终点/十类欠账保持。

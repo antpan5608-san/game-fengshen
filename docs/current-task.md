@@ -10,13 +10,15 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v92 / 0.8.22-battle-pose-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 拟v93 / 0.8.23-support-visual-personal，原治疗局部光效本地新447 JVM/68 Python及DEBUG构建通过；待新审查/原Actions签名App，未发布
+published_personal_version: v93 / 0.8.23-support-visual-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: 下一按当前战斗准备图像批次已只读定位，尚未实施/冻结新版本；个人93已发布
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
 manifest_sha256: 625a314a010f6f41f7cb27af373c750c87399d1dc8b59fba9ea13b1ce2eb8bef
 first_real_blocker: 整体参考重制体验未实现；下一安全版本优先已获批正常视觉可玩片段。剩余法术A/B/C、正常原结局/真机/声音/寻路与其他累计欠账不关。
+
+最新实际检查点：个人 v93 已发布并独立核验公网 62,589,404 完整字节与原审核 APK 一致；本版正式447 JVM/95 suites、21 Content/36门禁及121原PNG/78视频采样/7完整cold已验。原治疗/解毒仅真实目标局部光效，规则/存档/c62/素材不变。postflight查询成功但NO_DATA，保留93/92，不能当真机健康通过；稳定82、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。详见[v93交付](evidence/v93-support-visual-personal.md)。下一有限批次接[按当前战斗准备图像](evidence/battle-scoped-load-next-batch.md)，尚未实施/冻结新版本。以下各段保留历史状态。
 
 最新接续批次：[原治疗局部光效](evidence/battle-support-local-next-batch.md)已完成有限源码及本地新447 JVM/95 suites、68相关Python和应用/仪器DEBUG构建检查；拟93尚未正式签名/App/发布，不能复用92验收。仅现有法术真实目标光效，规则/保存/素材不改。以下为实际已发布92及历史。
 
