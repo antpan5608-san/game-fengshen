@@ -4,6 +4,19 @@ import org.junit.Test
 import org.junit.Assert.*
 
 class CoreTest {
+    @Test fun mapMenuMeets48dpWithinTheObservedPhoneSafeArea(){
+        val windows=listOf(Triple(2640,1080,3f),Triple(2640,1216,3f),Triple(960,540,1f))
+        for((w,h,density)in windows)for(mode in DisplayMode.values())
+            for(config in listOf(ControlConfig(),ControlConfig(menuSize=.05f,menuX=1f,menuY=0f))){
+                val ui=layout(w,h,density,SafeInsets(bottom=(48*density).toInt()),mode,config)
+                val menu=ui.buttons.getValue(Key.MENU)
+                assertTrue("Menu width below 48dp: ${menu.w/density}",menu.w>=48*density)
+                assertTrue("Menu height below 48dp: ${menu.h/density}",menu.h>=48*density)
+                assertTrue(menu.x>=ui.safe.x&&menu.y>=ui.safe.y)
+                assertTrue(menu.x+menu.w<=ui.safe.x+ui.safe.w&&menu.y+menu.h<=ui.safe.y+ui.safe.h)
+                assertEquals(Key.MENU,ui.hitButton(menu.x+menu.w/2,menu.y+menu.h/2))
+            }
+    }
     private fun scene():Scene=Scene("test",4,3,IntArray(12),intArrayOf(1,1,1,1,1,0,0,1,1,0,0,1),setOf(5,6,9),1,1)
     @Test fun collisionIsSeparateFromDevelopmentLimit(){val s=scene();assertTrue(s.check(0,1)!!.startsWith("原版"));assertTrue(s.check(2,2)!!.startsWith("开发"));assertNull(s.check(2,1))}
     @Test fun targetLoadFailureDoesNotCommitTransitionOrRestore(){

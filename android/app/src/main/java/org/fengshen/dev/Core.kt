@@ -120,7 +120,7 @@ fun layout(w:Int,h:Int,density:Float,insets:SafeInsets,mode:DisplayMode,c:Contro
     val main=min(safe.h*.19f,safe.w*.12f)*c.mainSize
     val buttons=mapOf(Key.A to control(c.mainX,c.mainY,main),
         Key.B to control(c.secondaryX,c.secondaryY,main*c.secondarySize),
-        Key.MENU to control(c.menuX,c.menuY,min(safe.h*.07f,58*density)*c.menuSize))
+        Key.MENU to control(c.menuX,c.menuY,(min(safe.h*.07f,58*density)*c.menuSize).coerceAtLeast(48*density)))
     return ScreenLayout(game,safe,stick,buttons,scale,game.w/scale,game.h/scale,mode)
 }
 /** Original invisible collision actor removed by its map-local flag. No tile or exit mutation. */
