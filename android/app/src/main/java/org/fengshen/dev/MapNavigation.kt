@@ -38,6 +38,20 @@ class MapNavigationSnapshot private constructor(private val scene:Scene,private 
     val width get()=scene.width
     val height get()=scene.height
     fun contains(x:Int,y:Int)=x in 0 until width&&y in 0 until height
+    /** Exact movement topology comparison, not a hash whose collision could accept stale work.
+     * Parking is compared by each expected NavigationCell; other vehicle capabilities are topology.
+     */
+    internal fun sameTopology(other:MapNavigationSnapshot):Boolean {
+        val a=scene;val b=other.scene
+        return a.mapId==b.mapId&&a.version==b.version&&a.width==b.width&&a.height==b.height&&
+            a.grid.contentEquals(b.grid)&&a.collision.contentEquals(b.collision)&&a.enabled==b.enabled&&
+            a.walkableClasses==b.walkableClasses&&a.dynamicObjectCells==b.dynamicObjectCells&&
+            a.transitionCells==b.transitionCells&&a.sourceEdges==b.sourceEdges&&a.targetEdges==b.targetEdges&&
+            a.unavailableRegions==b.unavailableRegions&&a.terrainProfile==b.terrainProfile&&
+            a.freeBoat?.copy(parked=null)==b.freeBoat?.copy(parked=null)&&exits.size==other.exits.size&&
+            exits.zip(other.exits).all{(x,y)->x==y&&x.contactActorId==y.contactActorId&&
+                x.preserveArrivalDirection==y.preserveArrivalDirection&&x.arrivalTerrainMode==y.arrivalTerrainMode}
+    }
     internal fun step(from:NavigationCell,key:Key):NavigationStep? {
         if(!contains(from.x,from.y)||key !in DIRECTIONS)return null
         val currentScene=if(scene.freeBoat==null||scene.freeBoat?.parked==from.parkedBoat)scene else

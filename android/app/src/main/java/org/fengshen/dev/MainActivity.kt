@@ -97,7 +97,7 @@ class MainActivity:Activity() {
     }
     override fun onResume(){super.onResume();resumed=true;game?.active=true;game?.audio?.foreground(true);updater.resumeAfterPermission();Diagnostics.record("app_foreground");Diagnostics.schedule()}
     override fun onPause(){cancelMapVisuals();resumed=false;game?.active=false;game?.audio?.foreground(false);game?.persistState();Diagnostics.record("app_background");super.onPause()}
-    override fun onDestroy(){destroyed=true;mapWarmQueue.close();contentWorker.shutdownNow();updater.close();game?.active=false;game?.audio?.close();cloud.close();super.onDestroy()}
+    override fun onDestroy(){destroyed=true;mapWarmQueue.close();contentWorker.shutdownNow();updater.close();game?.active=false;game?.closeNavigation();game?.audio?.close();cloud.close();super.onDestroy()}
     override fun onSaveInstanceState(out:Bundle){game?.let{it.finishForLifecycle();out.putString("snapshot",it.currentSnapshot().json().toString());out.putString("version",it.content.scene.version)};super.onSaveInstanceState(out)}
     override fun onWindowFocusChanged(focus:Boolean){super.onWindowFocusChanged(focus);if(!focus)cancelMapVisuals();game?.focused=focus}
     @Suppress("DEPRECATION")
@@ -239,9 +239,28 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
-    var active=false;set(v){field=v;if(!v){historyClock.pause();finishPendingStep()};input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
-    var focused=true;set(v){field=v;if(!v){historyClock.pause();finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
-    var layer=Layer.MAP;private set
+    private val navigationWorker=java.util.concurrent.ThreadPoolExecutor(1,1,0L,java.util.concurrent.TimeUnit.MILLISECONDS,
+        java.util.concurrent.LinkedBlockingQueue<Runnable>(),{r->Thread(r,"map-navigation")})
+    private val navigation=MapNavigationController({navigationWorker.execute(it)},{navigationWorker.remove(it);Unit},
+        {callback->post{callback()}},{if(canNavigate())world.navigationSnapshot()else null},{failure->
+            mapNotice=when(failure){NavigationFailure.OUTSIDE_MAP->"目标在地图之外";NavigationFailure.SEARCH_LIMIT->"路线搜索达到上限，请选择近处目标";else->"目标不可达"}
+            noticeUntil=SystemClock.uptimeMillis()+1800
+        })
+    private var navigationTap:MapNavigationTap?=null
+    private var navigationTapBlocked=false
+    private fun cancelNavigation(){navigation.cancel();navigationTap=null}
+    internal fun closeNavigation(){cancelNavigation();navigationWorker.shutdownNow()}
+    private fun canNavigate()=active&&focused&&surface&&layer==Layer.MAP&&
+        OriginalFerry.pending(flags,content.ferries.values)==null
+    private fun mapMovementIntent():MoveIntent? {
+        val manual=input.movementIntent()
+        if(manual!=null){cancelNavigation();return manual}
+        if(!navigation.active||world.remaining!=0)return null
+        return world.navigationSnapshot()?.let{navigation.direction(it)}?.let(MoveIntent::cardinal)
+    }
+    var active=false;set(v){cancelNavigation();field=v;if(!v){historyClock.pause();finishPendingStep()};input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}
+    var focused=true;set(v){field=v;if(!v){cancelNavigation();historyClock.pause();finishPendingStep();input.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();shopTouch.clear();clearUxGesture();clock.reset()}}
+    var layer=Layer.MAP;private set(v){if(v!=field)cancelNavigation();field=v}
     val menuOpen get()=layer==Layer.MENU
     var menuSelection=0;private set
     private var surface=false
@@ -251,6 +270,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var ui=layout(1,1,1f,safe,mode,config,world.scene.width*16,world.scene.height*16)
     private val paint=Paint().apply{isFilterBitmap=false;isAntiAlias=false}
     private val overlayPaint=Paint(Paint.ANTI_ALIAS_FLAG)
+    private val navigationPaint=Paint(Paint.ANTI_ALIAS_FLAG).apply{style=Paint.Style.STROKE;strokeCap=Paint.Cap.ROUND;strokeJoin=Paint.Join.ROUND}
     private val textPaint=Paint(Paint.ANTI_ALIAS_FLAG).apply{color=Color.WHITE;typeface=Typeface.create("sans-serif",Typeface.NORMAL)}
     private val battleLinePaint=android.text.TextPaint(Paint.ANTI_ALIAS_FLAG)
     private val battleFeedbackPaint=android.text.TextPaint(Paint.ANTI_ALIAS_FLAG)
@@ -318,6 +338,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     /** Apply a validated proposal in memory; transaction owners decide when to persist. */
     private fun applySnapshotState(snapshot:SaveSnapshot):Boolean {
+        cancelNavigation()
         if(!snapshot.validate(content))return false
         clearUxGesture();uxRevision++;world.finishStep();input.clear();clock.reset()
         val priorFlags=flags;flags=snapshot.flags
@@ -442,7 +463,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){activity.cancelMapVisuals();historyClock.pause();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){cancelNavigation();activity.cancelMapVisuals();historyClock.pause();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -451,8 +472,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             clock.reset();advanceFerryIfDue(time/1000000L)
         } else if(active&&focused&&layer==Layer.MAP)clock.advance(time){
             if(layer==Layer.MAP&&OriginalFerry.pending(flags,content.ferries.values)==null){
-                if(!beginFreeBoatIfRequested()&&!beginFerryIfRequested(time/1000000L)){
-                    world.tickIntent(input.movementIntent());processContactTransition();processCompletedStep()
+                val intent=mapMovementIntent()
+                if(!beginFreeBoatIfRequested(intent)&&!beginFerryIfRequested(time/1000000L,intent)){
+                    world.tickIntent(intent);processContactTransition();processCompletedStep()
                 }
             }
         } else if(active&&focused&&layer==Layer.BATTLE)clock.advance(time){
@@ -511,9 +533,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         return true
     }
-    private fun beginFerryIfRequested(now:Long):Boolean {
+    private fun beginFerryIfRequested(now:Long,intent:MoveIntent?):Boolean {
         if(world.remaining!=0)return false
-        val key=input.movementIntent()?.primary?:return false
+        val key=intent?.primary?:return false
         val before=currentSnapshot()
         val rule=content.ferries.values.firstOrNull{OriginalFerry.matchesContact(before,it,key)}?:return false
         input.clear();clock.reset()
@@ -525,9 +547,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
         return true
     }
-    private fun beginFreeBoatIfRequested():Boolean {
+    private fun beginFreeBoatIfRequested(intent:MoveIntent?):Boolean {
         if(!content.freeBoatEnabled||world.remaining!=0)return false
-        val key=input.movementIntent()?.primary?:return false
+        val key=intent?.primary?:return false
         val before=currentSnapshot()
         if(!OriginalBoat.contact(before,key))return false
         input.clear();npcTouch.clear();hudTouch.clear();clock.reset()
@@ -572,6 +594,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun processContactTransition(){
         if(processedContactSeq==world.contactTransitionSeq)return
+        cancelNavigation()
         processedContactSeq=world.contactTransitionSeq
         val exit=world.lastContactExit?:return
         flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
@@ -595,6 +618,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             flags=flags+(FIELD_FAILURE_FLAG to true);showFieldFailure();persistState();return
         }
         if(step.transitioned){
+            cancelNavigation()
             flags=OriginalNpcTalk.flagsAfterMapLoad(world.mapId,characters.size,flags)
             Diagnostics.record("map_transition",details=JSONObject().put("success",true).put("fromMapId",step.mapId)
                 .put("mapId",world.mapId).put("x",world.x/16).put("y",world.y/16));audio.scene(world.mapId)
@@ -656,7 +680,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         world.finishStep();processCompletedStep()
         return layer==Layer.BATTLE
     }
-    fun finishForLifecycle(){finishPendingStep()}
+    fun finishForLifecycle(){cancelNavigation();finishPendingStep()}
     private fun createPartyBattle(group:EncounterGroup,rules:BattleContent):OpeningBattle =
         OpeningBattle(group,rules,characters.first(),equipmentBonus(characters.first(),"rightHand"),
             equipmentBonus(characters.first(),"body")).also{current->
@@ -1101,7 +1125,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val id=if(flags[story?.flagId?:npc.id]==true)npc.repeatDialogue?:npc.firstDialogue else npc.firstDialogue
         content.dialogues[id]?.let{openDialogue(it,npc)}
     }
-    fun mapControlEnabled(key:Key)=layer==Layer.MAP&&(key==Key.MENU || (key==Key.A && interactionTarget()!=null))
+    fun mapControlEnabled(key:Key)=layer==Layer.MAP&&(key==Key.MENU || (key==Key.B&&navigation.active) || (key==Key.A && interactionTarget()!=null))
     private fun applySceneMechanism():Boolean {
         if(layer!=Layer.MAP)return false
         val mechanism=content.mechanisms.firstOrNull{
@@ -1991,12 +2015,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         when(key){
             Key.MENU->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             Key.A->when(layer){Layer.MAP->interactionTarget()?.let{openNpc(it)};Layer.MENU->confirmMenu();Layer.DIALOGUE->advanceDialogue();Layer.BATTLE->confirmBattle();Layer.CHARACTER,Layer.INVENTORY->if(directPanel()){val b=modalLayout().primary;panelHit(b.x+b.w/2,b.y+b.h/2)?.let{runPanelCommand(it)}};else->Unit}
-            Key.B->when(layer){Layer.MENU->closeMenu();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
+            Key.B->when(layer){Layer.MAP->cancelNavigation();Layer.MENU->closeMenu();Layer.DIALOGUE->{if(canDismissDialogue())dismissDialogue()};Layer.CHARACTER,Layer.INVENTORY->closePanel();Layer.BATTLE->closeBattle();else->Unit}
             Key.START->when(layer){Layer.MAP->openMenu();Layer.MENU->closeMenu();Layer.CHARACTER,Layer.INVENTORY->closePanel();else->Unit}
             else->Unit
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
+        if(e.actionMasked==MotionEvent.ACTION_DOWN){navigationTap=null;navigationTapBlocked=false}
+        if(e.actionMasked==MotionEvent.ACTION_POINTER_DOWN){navigationTap=null;navigationTapBlocked=true}
+        if(e.actionMasked==MotionEvent.ACTION_CANCEL){navigationTap=null;navigationTapBlocked=true}
         if(OriginalFerry.pending(flags,content.ferries.values)!=null){input.clear();npcTouch.clear();hudTouch.clear();return true}
         if(layer==Layer.FIELD_FAILURE)return true
         if(layer==Layer.BATTLE)return battleTouchEvent(e)
@@ -2009,18 +2036,28 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(layer==Layer.MAP){
                     val button=ui.hitButton(x,y)
                     if(button!=null && mapControlEnabled(button)){
+                        cancelNavigation()
                         if(button==Key.A){if(finishPendingStep())return true;input.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
                         input.set(id,button);if(haptic)performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
                     }
-                    else if(ui.stick.contains(x,y)&&input.startStick(id))input.moveStick(id,x,y,ui.stick,config.deadZone)
+                    else if(ui.stick.contains(x,y)&&input.startStick(id)){cancelNavigation();input.moveStick(id,x,y,ui.stick,config.deadZone)}
                     else if(button==null && hudBox().contains(x,y)){
+                        cancelNavigation()
                         if(finishPendingStep())return true
                         input.clear();npcTouch.clear();clock.reset();hudTouch.add(id)
                     }
-                    else if(button==null)hitNpc(x,y)?.let{npc->
-                        if(finishPendingStep())return true
-                        input.clear();npcTouch.clear();clock.reset()
-                        npcTouch[id]=Triple(npc.id,x,y)
+                    else if(button==null){
+                        val npc=hitNpc(x,y)
+                        if(npc!=null){
+                            cancelNavigation()
+                            if(finishPendingStep())return true
+                            input.clear();npcTouch.clear();clock.reset();npcTouch[id]=Triple(npc.id,x,y)
+                        }else if(!navigationTapBlocked&&e.pointerCount==1&&ui.game.contains(x,y)){
+                            val cam=world.camera(ui.viewWidth,ui.viewHeight)
+                            val cell=floor((cam.x+(x-ui.game.x)/ui.scale)/16).toInt() to
+                                floor((cam.y+(y-ui.game.y)/ui.scale)/16).toInt()
+                            navigationTap=MapNavigationTap(id,world.mapId,x,y,cell,ViewConfiguration.get(context).scaledTouchSlop.toFloat())
+                        }
                     }
                 } else if(layer==Layer.MENU){
                     if(menuCloseBox().contains(x,y))menuTouch[id]=-1
@@ -2032,6 +2069,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 else if(layer==Layer.SHOP)Unit
             }
             MotionEvent.ACTION_MOVE->{
+                navigationTap?.let{g->val i=e.findPointerIndex(g.pointer);if(i>=0)g.move(e.getX(i),e.getY(i))}
                 if(layer==Layer.MAP)for(i in 0 until e.pointerCount){
                     val id=e.getPointerId(i);val x=e.getX(i);val y=e.getY(i)
                     if(input.ownsStick(id)){
@@ -2052,6 +2090,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val wasDialogue=dialogueTouch.remove(id)
                 val battleSelected=battleTouch.remove(id)
                 val key=input.keyFor(id)?.takeIf{layer==Layer.MAP&&ui.hitButton(x,y)==it}
+                val ground=navigationTap?.takeIf{!navigationTapBlocked&&e.actionMasked==MotionEvent.ACTION_UP&&e.pointerCount==1&&canNavigate()}
+                    ?.finish(id,world.mapId,x,y)
+                navigationTap=null
                 input.release(id)
                 if(shopPressed!=null && layer==Layer.SHOP && shopPressed.second==shopRevision && false)runShopAction(shopPressed.first)
                 else if(battleSelected!=null && layer==Layer.BATTLE && false && battleTouchRevision==battlePresentation.revision){
@@ -2069,6 +2110,10 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 } else if(panelSelected!=null && layer in listOf(Layer.CHARACTER,Layer.INVENTORY) &&
                     panelSelected==panelAction(x,y)){runPanelAction(panelSelected)
                 } else if(key!=null)activate(key)
+                else if(ground!=null&&layer==Layer.MAP){
+                    if(ground==(world.x/16 to world.y/16))cancelNavigation()
+                    else navigation.request(world.mapId,ground.first,ground.second)
+                }
                 performClick()
             }
         }
@@ -2078,6 +2123,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onKeyDown(code:Int,event:KeyEvent):Boolean {
         if(OriginalFerry.pending(flags,content.ferries.values)!=null){input.clear();return true}
         val key=hardwareKey(code)?:return super.onKeyDown(code,event)
+        if(layer==Layer.MAP)cancelNavigation()
         if(layer==Layer.SETTINGS)return false
         if(layer==Layer.SHOP&&key in listOf(Key.UP,Key.DOWN)){if(event.repeatCount==0)runShopAction(if(key==Key.UP)7 else 8);return true}
         if(layer==Layer.BATTLE && key in listOf(Key.UP,Key.DOWN)){
@@ -2160,6 +2206,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         for(npc in actors.filter{it.y*16+8>world.y})
             c.drawBitmap(if(npc.treasure?.let{flags[it.flagId]}==true||npc.moneyTreasure?.let{flags[it.flagId]}==true)npc.openedSprite?:npc.sprite else npc.sprite,npc.x*16f,npc.y*16f,paint)
         if(layer==Layer.MAP){
+            drawNavigation(c)
             overlayPaint.color=0xff75ded5.toInt();overlayPaint.alpha=230
             for(npc in nearbyNpcs())c.drawCircle(npc.x*16f+8,npc.y*16f-2,1.6f,overlayPaint)
         }
@@ -2210,6 +2257,22 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         y+=touchText(c,text,Box(x,y,right-x,1f),10f)
         gauge(c,Box(x,y+2*dp,right-x,4*dp),progress.earned?:0,progress.span,0xffcfab54.toInt())
     }
+    /** Already inside the original map camera transform/clip. Rendering never advances a step. */
+    private fun drawNavigation(c:Canvas){
+        val target=navigation.target?:return
+        val path=Path();path.moveTo(world.x.toFloat(),world.y.toFloat())
+        for(step in navigation.remainingSteps)path.lineTo(step.to.x*16f+8,step.to.y*16f+8)
+        val unit=resources.displayMetrics.density/ui.scale
+        navigationPaint.pathEffect=DashPathEffect(floatArrayOf(7*unit,5*unit),0f)
+        for((color,stroke)in listOf(0xff10212f.toInt() to 5f,0xff29dfff.toInt() to 2.5f)){
+            navigationPaint.color=color;navigationPaint.strokeWidth=stroke*unit;c.drawPath(path,navigationPaint)
+        }
+        navigationPaint.pathEffect=null
+        for((color,stroke)in listOf(0xff10212f.toInt() to 5f,0xff29dfff.toInt() to 2.5f)){
+            navigationPaint.color=color;navigationPaint.strokeWidth=stroke*unit
+            c.drawCircle(target.first*16f+8,target.second*16f+8,5.5f,navigationPaint)
+        }
+    }
     private fun drawControls(c:Canvas){
         val stick=ui.stick;val alpha=(config.opacity.coerceIn(.2f,.9f)*255).toInt()
         overlayPaint.color=0x28475b;overlayPaint.alpha=alpha
@@ -2221,7 +2284,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         for((key,b)in ui.buttons){
             overlayPaint.color=when{!mapControlEnabled(key)->0xff34434c.toInt();input.pressed(key)->0xff44c6b5.toInt();else->0xff263e51.toInt()};overlayPaint.alpha=if(mapControlEnabled(key))alpha else max(115,alpha)
             c.drawCircle(b.x+b.w/2,b.y+b.h/2,b.w/2,overlayPaint)
-            val title=when(key){Key.A->"交互";Key.B->"返回";else->"☰"}
+            val title=when(key){Key.A->"交互";Key.B->if(navigation.active)"停止"else"返回";else->"☰"}
             textPaint.color=if(mapControlEnabled(key))Color.WHITE else 0xffa7b4bb.toInt()
             label(c,title,b.x+b.w/2,b.y+b.h/2-(if(key==Key.MENU)0f else b.h*.07f),if(key==Key.MENU)16f else 15f)
             if(key==Key.A||key==Key.B)label(c,key.name,b.x+b.w/2,b.y+b.h*.31f,9f)
