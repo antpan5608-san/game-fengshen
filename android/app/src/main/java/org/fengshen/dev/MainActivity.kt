@@ -2354,9 +2354,11 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         val textWidth=battleFeedbackPaint.measureText(text)
         val metrics=battleFeedbackPaint.fontMetrics;val textHeight=metrics.descent-metrics.ascent
         val adapted=if(current.enemies.size==1)battleEnemyFeedbackLayout(cell,sprite,dp,textWidth,textHeight)else null
-        val parts=adapted?:battleEnemySceneLayout(cell,dp,resources.configuration.fontScale,scene.compact,
+        val original=adapted?:battleEnemySceneLayout(cell,dp,resources.configuration.fontScale,scene.compact,
             current.enemies.size==1).copy(graphic=sprite)
-        return BattleEnemyFeedback(parts,text,textWidth,textHeight,adapted!=null)
+        val parts=battleCompactEnemyGauge(original,dp,scene.compact,current.enemies.size==1)
+        return BattleEnemyFeedback(parts,text,textWidth,textHeight,adapted!=null,
+            original.gauge,scene.compact&&current.enemies.size>1)
     }
     /** The exact prepared crops and positions used by Canvas, also observed by isolated App tests. */
     internal fun battlePartyBodies(current:OpeningBattle,scene:BattleSceneLayout,

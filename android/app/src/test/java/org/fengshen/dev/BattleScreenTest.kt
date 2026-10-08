@@ -4,6 +4,64 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class BattleScreenTest {
+    @Test fun compactGaugeKeepsSpriteLabelAndOriginalBoundsAcrossSupportedScenes(){
+        var narrowed=0;var preserved=0
+        val windows=listOf(Box(0f,136f,960f,404f) to 1f,Box(90f,0f,2460f,1216f) to 3f,
+            Box(0f,0f,660f,318f) to 1f,Box(0f,0f,2640f,936f) to 3f)
+        for((safe,dp)in windows)for(font in listOf(1f,1.3f,2f))for(party in 1..4)
+            for(enemies in 1..6)for(illustrated in listOf(false,true)){
+                val scene=battleSceneLayout(safe,dp,font,enemies,party,illustrated)!!
+                for(cell in scene.touch.enemies){
+                    val original=battleEnemySceneLayout(cell,dp,font,scene.compact,enemies==1)
+                    // Two differently shaped observed sprites, not replacement hit cells.
+                    for(ratio in listOf(.5f,1.5f)){
+                        val h=kotlin.math.min(original.graphic.h,40*dp)
+                        val w=kotlin.math.min(original.graphic.w,h*ratio)
+                        val sprite=Box(original.graphic.x+(original.graphic.w-w)/2,
+                            original.graphic.y+(original.graphic.h-h)/2,w,h)
+                        val before=original.copy(graphic=sprite)
+                        val result=battleCompactEnemyGauge(before,dp,scene.compact,enemies==1)
+                        assertEquals(before.graphic,result.graphic);assertEquals(before.label,result.label)
+                        if(!scene.compact||enemies==1){assertSame(before,result);preserved++;continue}
+                        assertTrue(inside(result.gauge,before.gauge))
+                        assertEquals(before.gauge.y,result.gauge.y,0f);assertEquals(before.gauge.h,result.gauge.h,0f)
+                        assertTrue(result.gauge.w>=kotlin.math.min(24*dp,before.gauge.w)-.01f)
+                        assertTrue(result.gauge.w<=before.gauge.w)
+                        assertFalse(overlaps(sprite,result.gauge));assertFalse(overlaps(result.label,result.gauge))
+                        if(result.gauge.w<before.gauge.w)narrowed++
+                    }
+                }
+            }
+        assertTrue(narrowed>0&&preserved>0)
+    }
+    @Test fun compactGaugeCentersOnSpriteAndClampsAtBothOriginalEdges(){
+        val original=BattleEnemySceneLayout(Box(76f,0f,4f,10f),Box(28f,12f,100f,10f),Box(28f,30f,100f,4f))
+        assertEquals(Box(66f,30f,24f,4f),battleCompactEnemyGauge(original,1f,true,false).gauge)
+        assertEquals(Box(28f,30f,24f,4f),battleCompactEnemyGauge(original.copy(graphic=Box(28f,0f,2f,10f)),1f,true,false).gauge)
+        assertEquals(Box(104f,30f,24f,4f),battleCompactEnemyGauge(original.copy(graphic=Box(126f,0f,2f,10f)),1f,true,false).gauge)
+        assertEquals(Box(28f,30f,100f,4f),original.gauge)
+    }
+    @Test fun compactGaugeNeverExpandsNarrowOrAlreadyFittingOriginalBar(){
+        val parts=BattleEnemySceneLayout(Box(10f,0f,92f,8f),Box(10f,10f,100f,20f),Box(10f,32f,100f,4f))
+        assertEquals(parts,battleCompactEnemyGauge(parts,1f,true,false))
+        val narrow=parts.copy(graphic=Box(13f,0f,2f,8f),gauge=Box(10f,32f,8f,4f))
+        assertEquals(narrow,battleCompactEnemyGauge(narrow,1f,true,false))
+        assertSame(parts,battleCompactEnemyGauge(parts,1f,false,false))
+        assertSame(parts,battleCompactEnemyGauge(parts,1f,true,true))
+        // Subtract widths before adding x: x+w-w can round below x and create an empty clamp range.
+        val fractional=parts.copy(graphic=Box(12f,0f,100f,8f),gauge=Box(12f,32f,24.03f,4f))
+        assertEquals(fractional,battleCompactEnemyGauge(fractional,1f,true,false))
+    }
+    @Test fun compactGaugeRejectsInvalidDensityAndNonFiniteObservedWidth(){
+        val parts=BattleEnemySceneLayout(Box(10f,0f,8f,8f),Box(10f,10f,100f,20f),Box(10f,32f,100f,4f))
+        for(dp in listOf(0f,-1f,Float.NaN,Float.POSITIVE_INFINITY)){
+            try{battleCompactEnemyGauge(parts,dp,true,false);fail("Invalid density")}catch(expected:IllegalArgumentException){}
+        }
+        for(width in listOf(0f,-1f,Float.NaN,Float.POSITIVE_INFINITY)){
+            try{battleCompactEnemyGauge(parts.copy(graphic=parts.graphic.copy(w=width)),1f,true,false);fail("Invalid sprite")}catch(expected:IllegalArgumentException){}
+            try{battleCompactEnemyGauge(parts.copy(gauge=parts.gauge.copy(w=width)),1f,true,false);fail("Invalid gauge")}catch(expected:IllegalArgumentException){}
+        }
+    }
     @Test fun shortIllustratedPartyUsesVerticalSpaceWithoutMovingControlsOrSolo(){
         var shortCases=0;var originalCases=0
         for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))

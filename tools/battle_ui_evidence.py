@@ -24,7 +24,7 @@ METHODS = ('testControlledMobileBattleTouchAndSnapshots', 'testControlledMobileB
            'testControlledWholly08PartyAdvancesWithoutTouchCommand')
 PHONE_METHODS = ('testMobileBattlePhoneSizeAndLargeFont', 'testControlledBattlePartyPhoneSizeAndLargeFont')
 GEOMETRY_EVIDENCE = 'ACTUAL_WINDOW_INSETS_V1'
-FEEDBACK_EVIDENCE = 'ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
+FEEDBACK_EVIDENCE = 'ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2'
 
 
 def acceptance(require_insets=False,require_feedback=False):
@@ -97,23 +97,38 @@ def validate_feedback(rows,enemies,height):
                 or type(row.get('fontSp')) is not int or row.get('density')!=3
                 or row.get('originalSpritePreserved') is not True or row.get('stateUnchanged') is not True):
             raise ValueError('Actual enemy feedback identity/font/original state differs')
-        cell,sprite,label,gauge=(box(row.get(k),height)for k in ('cell','sprite','label','gauge'))
+        cell,sprite,label,gauge,baseline=(box(row.get(k),height)for k in ('cell','sprite','label','gauge','baselineGauge'))
         if cell[2]<144 or cell[3]<144:raise ValueError('Original enemy target smaller than 48dp')
-        for b in (sprite,label,gauge):
+        for b in (sprite,label,gauge,baseline):
             if b[0]<cell[0]-.01 or b[1]<cell[1]-.01 or b[0]+b[2]>cell[0]+cell[2]+.01 or b[1]+b[3]>cell[1]+cell[3]+.01:
                 raise ValueError('Enemy feedback escapes its original cell')
         text=row.get('text');width,height_text=(row.get(k)for k in ('textWidth','textHeight'))
         if (not isinstance(text,str) or not 0<len(text)<=256 or '\n' in text
                 or any(type(n)not in (int,float)or not math.isfinite(n)or n<=0 for n in (width,height_text))):
             raise ValueError('Invalid actual enemy text measurements')
-        if abs(label[2]-gauge[2])>.01:raise ValueError('Label/gauge width differs')
         if len(enemies)==1:
+            if (row.get('compactGauge') is not False or any(abs(a-b)>.01 for a,b in zip(gauge,baseline))
+                    or abs(label[2]-gauge[2])>.01):
+                raise ValueError('Single-enemy original measured gauge changed')
             if (row.get('adapted') is not True or label[2]+.01<width or label[3]+.01<height_text
                     or label[2]>max(sprite[2]+24,width+24)+.01
                     or any(overlap(a,b)for a,b in ((sprite,label),(sprite,gauge),(label,gauge)))):
                 raise ValueError('Measured single-enemy feedback overlaps or loses full text')
-        elif row.get('adapted') is not False or text!=f'#{slot+1}':
-            raise ValueError('Compact native instance feedback changed')
+        else:
+            if row.get('adapted') is not False or row.get('compactGauge') is not True or text!=f'#{slot+1}':
+                raise ValueError('Compact native instance feedback changed')
+            # Original gauge bounds are still observed by the App. Only width and x may change.
+            original=(cell[0]+12,cell[1]+cell[3]-18,cell[2]-24,12)
+            wanted_width=min(baseline[2],max(72,sprite[2]+24))
+            wanted_x=min(max(sprite[0]+sprite[2]/2-wanted_width/2,baseline[0]),
+                         baseline[0]+baseline[2]-wanted_width)
+            if (any(abs(a-b)>.01 for a,b in zip(baseline,original))
+                    or abs(label[0]-baseline[0])>.01 or abs(label[2]-baseline[2])>.01
+                    or abs(gauge[0]-wanted_x)>.01 or abs(gauge[2]-wanted_width)>.01
+                    or abs(gauge[1]-baseline[1])>.01 or abs(gauge[3]-baseline[3])>.01
+                    or label[2]+.01<width or label[3]+.01<height_text
+                    or any(overlap(a,b)for a,b in ((sprite,label),(sprite,gauge),(label,gauge)))):
+                raise ValueError('Compact gauge loses original bounds, sprite alignment or instance label')
 
 
 def validate_metrics(value, font, native, require_insets=False,require_feedback=False):

@@ -27,15 +27,31 @@ class TouchTest:IsolatedGameTestCase(){
                 b.x+b.w<=cell.x+cell.w+.01f&&b.y+b.h<=cell.y+cell.h+.01f)
             if(scene.touch.enemies.size==1){
                 assertTrue("Supported single enemy must use actual measured feedback",actual.adapted)
+                assertFalse(actual.compactGauge);assertEquals(actual.baselineGauge,parts.gauge)
                 assertTrue(parts.label.h>=actual.textHeight);assertTrue(parts.label.w>=actual.textWidth)
                 assertFalse(overlap(parts.graphic,parts.label));assertFalse(overlap(parts.graphic,parts.gauge))
                 assertFalse(overlap(parts.label,parts.gauge))
+            }else if(scene.compact){
+                val original=battleEnemySceneLayout(cell,dp,v.resources.configuration.fontScale,true,false)
+                assertTrue(actual.compactGauge);assertFalse(actual.adapted)
+                assertEquals(original.label,parts.label);assertEquals(original.gauge,actual.baselineGauge)
+                assertEquals(original.gauge.y,parts.gauge.y,.01f);assertEquals(original.gauge.h,parts.gauge.h,.01f)
+                assertTrue(parts.gauge.x>=original.gauge.x-.01f&&
+                    parts.gauge.x+parts.gauge.w<=original.gauge.x+original.gauge.w+.01f)
+                assertTrue(parts.gauge.w>=kotlin.math.min(original.gauge.w,24*dp)-.01f)
+                assertTrue(parts.gauge.w<=original.gauge.w+.01f)
+                assertTrue(parts.label.w>=actual.textWidth&&parts.label.h>=actual.textHeight)
+                assertFalse(overlap(parts.graphic,parts.label));assertFalse(overlap(parts.graphic,parts.gauge))
+                assertFalse(overlap(parts.label,parts.gauge))
+            }else{
+                assertFalse(actual.compactGauge);assertEquals(actual.baselineGauge,parts.gauge)
             }
             assertEquals(before,v.currentSnapshot())
             evidence=JSONObject().put("enemyId",enemy.definition.id).put("slot",enemy.slot).put("cell",json(cell))
                 .put("sprite",json(parts.graphic)).put("label",json(parts.label)).put("gauge",json(parts.gauge))
                 .put("text",actual.text).put("textWidth",actual.textWidth).put("textHeight",actual.textHeight)
                 .put("fontSp",12).put("density",dp).put("adapted",actual.adapted)
+                .put("baselineGauge",json(actual.baselineGauge)).put("compactGauge",actual.compactGauge)
                 .put("originalSpritePreserved",true).put("stateUnchanged",true)
         }
         return evidence
@@ -5957,7 +5973,7 @@ class TouchTest:IsolatedGameTestCase(){
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
             phoneWindowMetrics(v).put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
                 .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48)
-                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1").put("enemyFeedback",org.json.JSONArray().put(bossFeedback))
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2").put("enemyFeedback",org.json.JSONArray().put(bossFeedback))
                 .put("medicineDetailHeightDp",medicine.detail.h/dp).put("medicineTextRowsVisible",medicine.detail.h/((14f*font*1.25f+4)*dp)).toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
@@ -6049,7 +6065,7 @@ class TouchTest:IsolatedGameTestCase(){
             phoneWindowMetrics(v).put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)
                 .put("screenHeight",screen.height).put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font)
                 .put("density",dp).put("cases",reports).put("fourActorInputAndRewardChecks","PASS")
-                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1").toString())
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2").toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
 

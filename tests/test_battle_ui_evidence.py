@@ -14,11 +14,16 @@ class BattleUiEvidenceTest(unittest.TestCase):
         def row(enemy,slot,compact):
             cell=dict(x=24+slot*250 if compact else 24,y=132,width=240 if compact else 1540,height=264)
             sprite=dict(x=cell['x']+20,y=210,width=60 if compact else 100,height=100)
-            label=dict(x=cell['x']+10 if compact else sprite['x']+sprite['width']+24,y=140 if compact else 180,width=124,height=60)
-            gauge=dict(x=label['x'],y=cell['y']+240 if compact else 246,width=124,height=12)
+            label=dict(x=cell['x']+12 if compact else sprite['x']+sprite['width']+24,y=140 if compact else 180,width=216 if compact else 124,height=60)
+            baseline=dict(x=label['x'],y=cell['y']+246 if compact else 246,width=label['width'],height=12)
+            gauge=copy.deepcopy(baseline)
+            if compact:
+                gauge['width']=84
+                gauge['x']=max(baseline['x'],sprite['x']+sprite['width']/2-42)
             return dict(enemyId=enemy,slot=slot,cell=cell,sprite=sprite,label=label,gauge=gauge,
                 text=f'#{slot+1}'if compact else '南海龙王',textWidth=60,textHeight=42,
-                fontSp=12,density=3,adapted=not compact,originalSpritePreserved=True,stateUnchanged=True)
+                fontSp=12,density=3,adapted=not compact,baselineGauge=baseline,compactGauge=compact,
+                originalSpritePreserved=True,stateUnchanged=True)
         value['enemyFeedbackModel']=ui.FEEDBACK_EVIDENCE
         if native:
             for case in value['cases']:
@@ -52,6 +57,44 @@ class BattleUiEvidenceTest(unittest.TestCase):
             with self.subTest(change=change),self.assertRaises(ValueError):ui.proof_digests(self.evidence,self.logs,require_feedback=True)
         self.write(name,original)
         self.assertEqual(proof,ui.proof_digests(self.evidence,self.logs,require_feedback=True))
+
+    def test_compact_gauge_protocol_rejects_old_or_forged_bounds_and_short_labels(self):
+        value=self.add_feedback_fixture(json.loads((self.evidence/'mobile-party-phone-2.0.json').read_text()),True)
+        ui.validate_metrics(value,'2.0',True,require_feedback=True)
+        for change in ('old_model','missing_baseline','missing_flag','flag_bool','adapted','old_width',
+                       'too_small','center','y','height','baseline','label_width','text_width','text_height','target'):
+            v=copy.deepcopy(value);row=v['cases'][0]['enemyFeedback'][0]
+            if change=='old_model':v['enemyFeedbackModel']='ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
+            elif change=='missing_baseline':row.pop('baselineGauge')
+            elif change=='missing_flag':row.pop('compactGauge')
+            elif change=='flag_bool':row['compactGauge']=1
+            elif change=='adapted':row['adapted']=True
+            elif change=='old_width':row['gauge']=copy.deepcopy(row['baselineGauge'])
+            elif change=='too_small':row['gauge']['width']=24
+            elif change=='center':row['gauge']['x']+=10
+            elif change=='y':row['gauge']['y']-=3
+            elif change=='height':row['gauge']['height']=3
+            elif change=='baseline':row['baselineGauge']['width']-=10
+            elif change=='label_width':row['label']['width']=row['gauge']['width']
+            elif change=='text_width':row['textWidth']=row['label']['width']+1
+            elif change=='text_height':row['textHeight']=row['label']['height']+1
+            else:row['cell']['width']=100
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                ui.validate_metrics(v,'2.0',True,require_feedback=True)
+
+    def test_compact_gauge_changes_only_raw_gauge_and_preserves_single_enemy_contract(self):
+        v=self.add_feedback_fixture(json.loads((self.evidence/'mobile-party-phone-1.0.json').read_text()),True)
+        ui.validate_metrics(v,'1.0',True,require_feedback=True)
+        row=v['cases'][0]['enemyFeedback'][0]
+        self.assertLess(row['gauge']['width'],row['baselineGauge']['width'])
+        self.assertEqual(row['label']['width'],row['baselineGauge']['width'])
+        for change in ('compact','baseline','width'):
+            bad=copy.deepcopy(v);boss=bad['cases'][1]['enemyFeedback'][0]
+            if change=='compact':boss['compactGauge']=True
+            elif change=='baseline':boss['baselineGauge']['x']+=1
+            else:boss['gauge']['width']-=1
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                ui.validate_metrics(bad,'1.0',True,require_feedback=True)
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)

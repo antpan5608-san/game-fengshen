@@ -101,7 +101,19 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
 data class BattleEnemySceneLayout(val graphic:Box,val label:Box,val gauge:Box)
 /** Read-only feedback measured at the exact font used by Canvas. */
 data class BattleEnemyFeedback(val parts:BattleEnemySceneLayout,val text:String,
-    val textWidth:Float,val textHeight:Float,val adapted:Boolean)
+    val textWidth:Float,val textHeight:Float,val adapted:Boolean,
+    val baselineGauge:Box,val compactGauge:Boolean)
+
+/** Only the crowded row's gauge follows the actual sprite; labels and hit cells stay intact. */
+fun battleCompactEnemyGauge(parts:BattleEnemySceneLayout,dp:Float,compact:Boolean,single:Boolean):BattleEnemySceneLayout {
+    require(dp.isFinite()&&dp>0)
+    if(!compact||single)return parts
+    val sprite=parts.graphic;val gauge=parts.gauge
+    require(listOf(sprite.x,sprite.w,gauge.x,gauge.w).all{it.isFinite()}&&sprite.w>0&&gauge.w>0)
+    val width=min(gauge.w,max(24*dp,sprite.w+8*dp))
+    val x=(sprite.x+sprite.w/2-width/2).coerceIn(gauge.x,gauge.x+(gauge.w-width))
+    return parts.copy(gauge=gauge.copy(x=x,w=width))
+}
 
 /** Preserve the original sprite and hit cell; fit feedback below it or in the side whitespace. */
 fun battleEnemyFeedbackLayout(cell:Box,sprite:Box,dp:Float,textWidth:Float,textHeight:Float):BattleEnemySceneLayout? {
