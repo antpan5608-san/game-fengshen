@@ -1,3 +1,9 @@
+最新实际交付：个人v96 / 0.8.26-enemy-feedback-personal 已按原同源审核发布，source428c67e／build37725875054／publish37729043457 SUCCESS；公网62,610,832完整字节/SHA23f7a7ac等于审核签名APK。新454 release JVM／96 suites、16组132 Python、21Content／36raw、87实际量字、121原PNG／91新独立视频采样／14原片SHA／7完整cold／7prefs均已验；正常攻击奖励和药草HP7→20/20／外部cold另于受控四人/Boss。postflight04:48:11Z NO_ISSUES_OBSERVED/errors空/cleanup0，权威96/95，39事件1实机均95、96样本0，手机仍PENDING。稳定82、c62/392／视觉17、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v96-enemy-feedback-personal.md)，主动接续[大字体短战场角色比例](evidence/battle-short-arena-next-batch.md)，现仅设计已核／未实施。以下为历史检查点。
+
+最新同会话检查点（2026-10-08T04:46:13.226984+00:00）：v96 source428c67e／原build37725875054首次build/runtime均SUCCESS；本批独立21Content／36raw、121原PNG／74新视频采样／14原片SHA／7完整cold／7prefs及87实际量字已验。新codex_only ed72f2c2／Stop current。原[发布37729043457](https://github.com/antpan5608-san/game-fengshen/actions/runs/37729043457)已沿既有授权触发，公网／postflight仍待验，当前线上95／稳定82。短战场角色比例仅设计，下一步先完成96同审核APK发布与公网后接该有限批次；所有未验与历史保留，长期active，无暂停／完成标记。以下各段为当时历史。
+
+最新手机同会话交接检查点（2026-10-08T04:16:41.306850+00:00）：本批v96敌人短反馈源码已冻结至main `428c67e8f9073fc6087fa9d017564d8a0438e29c`，原[Actions 37725875054](https://github.com/antpan5608-san/game-fengshen/actions/runs/37725875054)实际IN_PROGRESS／build签名内容检查中，App未验／未发布。新454 JVM／96 suites、84相关Python、DEBUG两包通过，409内容／视觉文件同95；codex_only ed72f2c2／Stop current。线上已验95、稳定82、全部欠账保持。接续按[本批入口](evidence/battle-enemy-feedback-next-batch.md)核新签名、原21Content／36raw与三字体实际反馈、图片录像／完整cold，再满足门槛才原同源发布和公网／postflight。仅本地交接文档待提交，不改变冻结候选来源；按最新人类指令本回合交接手机同一会话，长期保持active，不设暂停／完成标记，不取消Actions。以下保留历史。
+
 最新有限研发检查点：下一敌人短标签／血条源码已实施，Canvas与仪器共用原sprite／cell及同字号Android Paint反馈，七规则源码不变。新454 JVM／96 suites（失败／错误／跳过0）、84相关Python、应用与仪器DEBUG编译通过；正式同源签名／实际Android量字App／发布尚未执行，不能复用v95验收。拟96尚未冻结，线上实际95／稳定82、c62／视觉17及所有长期欠账保持。见[本批入口](evidence/battle-enemy-feedback-next-batch.md)。以下保留历史。
 
 最新实际交付：个人v95 / 0.8.25-party-spacing-personal 已按原同源审核发布，公网62,606,416完整字节/SHA403c366a等于审核签名APK。新452 release JVM/96 suites、16组131 Python、21Content/36raw、121原PNG/97独立视频采样/15原片SHA/7完整cold/7prefs已实际核验；首App系统abort、旧候选和原发布失败均保留，不复用旧来源App。postflight03:41:27Z NO_ISSUES_OBSERVED/errors空/cleanup0，保留95/94，19事件1实机均94、95样本0。稳定82、c62/392/视觉17和WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v95-party-spacing-personal.md)，服务器主动接续[敌人短标签/血条](evidence/battle-enemy-feedback-next-batch.md)，目前设计已核、游戏未实施；以下是历史检查点。
@@ -32,8 +38,8 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v95 / 0.8.25-party-spacing-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v95已交付；下一敌人短反馈IMPLEMENTED_LOCAL_CHECKED，拟96尚未冻结／正式App未验
+published_personal_version: v96 / 0.8.26-enemy-feedback-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: NONE；v96已公开验明，短战场角色下一批仅DESIGN_REVIEWED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
