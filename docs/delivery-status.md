@@ -1,3 +1,7 @@
+当前有限研发检查点（2026-10-08T10:42:22.732534+00:00）：正式个人v101已发布、公网全字节/postflight验明（source272e5a0/build37757334463/publish37762465126），稳定82/c62、WORLD-FULL-01 IN_PROGRESS/PARTIAL。下一点击寻路底层四文件已实际实现：共享原edge/contact查询、私有防御复制的同图快照、包含地形模式和停船位置的四向最短BFS、非目标出口拒绝/取消/搜索上限。没有手机点击、画线或自动行走接入；未启动102正式Actions，不能当玩家功能完成。
+
+新492 DEBUG JVM/100 suites零失败错误跳过、12新增导航检查、DEBUG应用/仪器两包和409素材字节同101通过；首wrapper权限失败及11项定向测试3处夹具错误/XML保留，改正fixture后通过。四代码/测试文件完整实审，新codex_only84be73cc/Stop current；本批代码仅服务器本地提交c6de70b3d3d14f4aeb8b727481cdabe38405c5aa，未推main。下一 [地图点击寻路](evidence/map-click-navigation-next-batch.md) 的后台revision/过期拒绝、单指tap、原FixedClock逐格执行/生命周期中断、青色虚线/停止、摇杆设置与对象到达确认；再同源新正式Actions/App/覆盖101/完整cold/原审核发布。13T/声音/完整结局/真实云恢复和全部欠账OPEN；唯一服务器writer，迁入dirty/冻结Windows历史/失败/存档保持，无暂停或长期完成标记。以下为当时历史。
+
 当前实际交付检查点（2026-10-08T10:23:49.105580+00:00）：个人v101 / 0.8.31-compact-label-personal 已PUBLISHED_AND_VERIFIED，游戏source272e5a0，原build37757334463/runtime与publish37762465126首次SUCCESS。公网62,635,404完整字节等审核SHAf5959cd6，新480release JVM/99、16组136Python、21Content36raw、121PNG/155实际视频采样/14原片SHA/7全cold/7prefs通过；四人/Boss另列。10:20:42Z postflight查询成功NO_DATA、errors空/cleanup0/0实机，权威101/100。稳定82/c62与WORLD-FULL-01 IN_PROGRESS/PARTIAL保持。
 
 四runtimeBaseline字段已更新实际101，新35测试/0.334s通过，新完整codex_only7ba450d7/Stop current。详见[evidence/v101-compact-label-personal.md](evidence/v101-compact-label-personal.md)；下一[地图点击寻路](evidence/map-click-navigation-next-batch.md)实际源码设计未实施，接原World/FixedClock/共享只读通行、BFS与单指tap/青色虚线。13T/声音/完整结局/真实云恢复/敌35原名UNKNOWN及全部欠账OPEN。唯一服务器writer；迁入dirty、冻结Windows完整历史/原失败/存档保留，无暂停或完成标记。以下均为当时历史。
