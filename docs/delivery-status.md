@@ -1,3 +1,5 @@
+最新检查点：新source3af4861/build37713473461在原Windows Actions运行46项runtime回归时，ZIP危险路径夹具被Windows构造器规范化而FAIL，App未运行/未发布。已保留失败，夹具改为原样ZIP名并逐名断言，生产校验不变；本机46 runtime及55相关Python新复测通过，仍需最新source原Actions签名/App，线上94/稳定82保持。额外一次本地测试模块名误写的ImportError及修正后v2日志均保留。
+
 最新研发检查点：拟95身体间距原source3896cf2的App重试已成功/36 raw门禁独立复核；发现同run同名artifact按最大ID误取失败轮，现已修原成功job窗口/明确ID下载选择并新55 Python检查通过。需新source正式构建/App及发布器实际验收，不复用旧App/不发布旧source；线上94、稳定82/全部欠账保持。见[本批记录](evidence/battle-party-spacing-next-batch.md)，以下保留历史。
 
 最新研发批次：拟v95四人身体间距有限源码已实施，新452 JVM/96 suites、48相关Python和DEBUG应用/仪器编译通过；新三字体actual crop/有界攻击断言待原Actions同源App，不称已验或已发布。线上94、稳定82/c62和全部长期未完成项保持。见[本批入口](evidence/battle-party-spacing-next-batch.md)，以下旧检查点保留。

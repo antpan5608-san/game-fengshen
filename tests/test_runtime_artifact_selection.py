@@ -62,7 +62,10 @@ class RuntimeArtifactSelectionTests(unittest.TestCase):
 
     def zip_bytes(self,name='town02-runtime/runtime-receipt.json'):
         stream=io.BytesIO()
-        with zipfile.ZipFile(stream,'w')as archive:archive.writestr(name,b'explicit synthetic evidence')
+        # ZipInfo normalizes Windows separators in its constructor. Preserve
+        # hostile archive names verbatim so every host tests the same bytes.
+        entry=zipfile.ZipInfo('fixture');entry.filename=name
+        with zipfile.ZipFile(stream,'w')as archive:archive.writestr(entry,b'explicit synthetic evidence')
         raw=stream.getvalue();return raw,dict(digest='sha256:'+hashlib.sha256(raw).hexdigest(),size_in_bytes=len(raw))
 
     def test_exact_zip_digest_and_evidence_preservation(self):
@@ -76,7 +79,9 @@ class RuntimeArtifactSelectionTests(unittest.TestCase):
     def test_zip_path_escape_symlink_and_duplicate_refused_before_extract(self):
         for name in ('../escape','/absolute','C:drive','nested\\escape','./alias'):
             raw,artifact=self.zip_bytes(name)
-            with tempfile.TemporaryDirectory()as folder:
+            with self.subTest(archive_name=name),tempfile.TemporaryDirectory()as folder:
+                with zipfile.ZipFile(io.BytesIO(raw))as archive:
+                    self.assertEqual(name,archive.infolist()[0].filename)
                 with self.assertRaises(ValueError):selector.extract_verified(raw,artifact,Path(folder)/'review')
                 self.assertFalse((Path(folder)/'review').exists())
         stream=io.BytesIO()
