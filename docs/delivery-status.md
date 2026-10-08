@@ -1,3 +1,11 @@
+当前有限代码检查点（2026-10-08T11:34:27.373844+00:00）：默认隐藏摇杆和原设置开启已实现，偏好位于 operation-a-ui 的 show-joystick-v1、独立于存档；可见且原规则允许交互的对象按稳定ID绑定，沿同一BFS选择最短合法交互位，按原World/FixedClock自然到达后显示原生选项。确认才调用原openNpc/物品面板；取消、对象变化/消失或过期弹窗不提交事务、不自动续走。地面路线、船与渡船、原ContentLoader/统一战斗/BattleActionStep与奖励/存档规则保持。六代码/测试文件本地提交 `f5d4eb70d664a3119e2a04f9033c07b474520121`，未推main、未冻结正式候选。
+
+本轮实际515 DEBUG JVM/102 suites零失败、错误或跳过，35项导航包括新增10项对象/最短交互/出口/过期/一次到达检查；DEBUG应用和仪器两包成功。新Android导航真实触控脚本仅COMPILED_NOT_RUN，未生成新App回执。409素材字节同审核101、16授权PNG当前哈希一致；没有新增美术。六文件完整实审后新codex_only `3026afa21b5d7b360fb1c76cf5dea1c304aadadf8c9b673b4b29d6984be386d9`、Stop current。证据 `/srv/fengshen-dev/receipts/navigation-arrival-local-verified.json`；首次证据检查器误把manifest.files的16PNG计作17，断言失败保留于 navigation-arrival-evidence-first-failure.json，按16PNG＋manifest修正后通过，不是游戏测试失败。旧失败、迁入工具dirty、Windows冻结历史和玩家存档保持。
+
+线上仍实际个人101/source272e5a0，原build/runtime37757334463与publish37762465126已SUCCESS；稳定82、c62不变。本轮11:10:06Z原Linux preflight查询成功NO_DATA/errors空/cleanup0/0实机，不能当新App或手机健康。102只作为本机DEBUG版本参数；新正式Actions、覆盖101、外部完整cold和发布均未开始。下一具体入口：[点击寻路批次](evidence/map-click-navigation-next-batch.md)，补原Actions必需导航raw/源码pin与实际触控、三字体/生命周期/偏好重启，再正常起始/物品/攻击/合法治疗/奖励/完整保存和外部cold；受控四人/Boss单列。原门禁全部实际通过后才沿同审核签名APK发布、公网全字节/postflight并接续。
+
+WORLD-FULL-01仍IN_PROGRESS/PARTIAL；13T、声音、完整原版结局、真实云恢复及累计欠账OPEN。当前没有平台权限/登录外部阻断证据，缺口是导航App协议/验收尚未完成。唯一服务器writer，未设置暂停或长期完成标记。以下保留当时历史。
+
 当前有限代码检查点（2026-10-08T11:08:45.583027+00:00）：地面点击导航已接入原地图层，服务器本地代码提交 `516505bf921e43ff06c8ad2ac0cb16a3129efbac`，未推main、未冻结下一正式候选。单指DOWN世界格绑定、后台冻结快照BFS/epoch过期拒绝、原FixedClock逐格/原船与渡船入口、每格精确拓扑与完成序列复核、原Camera青色虚线/终点环、B停止及手动/菜单/剧情/战斗/换图/后台/失焦/读档中断；不另建结算或存档状态。仍保留旧摇杆；默认隐藏偏好和远处稳定对象的最短合法交互位/到达确认选项未实现，不关闭完整寻路项。
 
 本轮新505 DEBUG JVM/101 suites，失败/错误/跳过均0，13新增控制器检查＋既有12规划项；DEBUG应用/仪器两包成功、409素材字节同审核101。新完整四代码/测试文件实审，codex_only `7d7be8158322f00be3417d35733e76f4a75a5047c5e2184f250ada073cfb0e10`，Stop current。16素材逐哈希对照授权provenance及正确准备入口（12候选/4冻结ZIP）；48 ZIP条目8与当前相同，其余后续来源/目录调整保留，未整树覆盖。首次只查三候选列表遗漏哪吒攻击的检查器断言失败已记入回执，按provenance转查4份ZIP修正，没有修改素材。证据在 `/srv/fengshen-dev/receipts/map-navigation-ui-local-verified.json` 与 `map-navigation-ui-assets-handoff-verified.json`，旧失败/迁入dirty/Windows冻结历史/玩家存档保持。

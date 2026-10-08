@@ -1,3 +1,11 @@
+当前唯一服务器开发检查点（2026-10-08T11:34:27.373844+00:00）：本批六代码/测试文件已本地提交 `f5d4eb70d664a3119e2a04f9033c07b474520121`，默认隐藏摇杆/独立UI偏好和稳定ID对象最短合法到达确认接在原实现；不整树覆盖或回退旧成果。原main16550c7未变，正式101/source272e5a0/build37757334463/publish37762465126保持，稳定82/c62、原gpt-6.1-sol/high与唯一writer/审核/同源签名产物/两OSS对象规则保持。正式构建/App/发布继续原GitHub Actions，本机DEBUG不替代正式包。
+
+本轮已验515 DEBUG JVM/102 suites/35导航（含新10项）、DEBUG应用/仪器构建、409素材字节同101和16授权PNG哈希；六文件真实完整实审、新codex_only `3026afa21b5d7b360fb1c76cf5dea1c304aadadf8c9b673b4b29d6984be386d9`、Stop current。新Android脚本只编译未运行，新App/三字体实际画面/导航取消确认/偏好重启/覆盖101/完整cold/真机性能待验；11:10:06Z原Linux preflight仅NO_DATA/errors空/cleanup0/0实机。新证据 navigation-arrival-local-verified.json 和首次metadata16/17计数失败回执均在服务器receipts，失败未清除。
+
+当前未提交仍是迁入CPU检索/后台辅助工具、项目配置/AGENTS/local-ai文档及gradlew.bat原mode，本轮未编辑或代提交。windows-freeze.md/48条ZIP和原12候选＋4ZIP准备记录已实际读核/选择性保留；没有新增图像、私有原素材/存档/密钥没有上传模型或公开目录。原Windows和云端历史保留在原迁移及legacy目录，所有新源码/证据/检查点只写服务器。81/current83敌图、敌35原名UNKNOWN、完整动作、13T/声音/结局/真实账号云恢复和累计未完成项保持OPEN。
+
+下一入口 `docs/evidence/map-click-navigation-next-batch.md`：先补原CI必需新navigation raw与源码pin，再原Actions同源签名/App/正常操作保存cold/覆盖101验证；全门禁满足才原审核发布并主动接续。新正式候选和Actions均尚未开始；不把本批有限完成当全游戏完成，没有development-paused或长期完成标记。以下保留历史。
+
 当前服务器研发检查点（2026-10-08T11:08:45.583027+00:00）：唯一写入位置仍 `/srv/fengshen-dev/game-fengshen`，本批地面点击导航四代码文件本地提交 `516505bf921e43ff06c8ad2ac0cb16a3129efbac`，未推原main16550c7、未冻结/触发102正式Actions。原项目模型/审核/签名/同源产物/两OSS对象门禁保持，原GitHub Actions继续承担正式构建与App发布。本机505 DEBUG JVM/101 suites、13新控制器测试、两DEBUG包及409同101素材字节已实验；新完整实审codex_only `7d7be8158322f00be3417d35733e76f4a75a5047c5e2184f250ada073cfb0e10` / Stop current。新Android画面/实际导航/覆盖升级/完整cold未验，不复用101 App回执冒充。
 
 当前未提交仍为迁入的本地CPU检索/后台工具及项目配置、AGENTS、docs/local-ai-*、gradlew.bat原mode；本轮没有编辑、代提交或清除这些输入。Windows freeze和48条visual ZIP再次hash核对，16已批准素材来源/准备记录正确复核；原Windows完整历史、旧工作树、云端历史及失败在原保留路径。新的证据、检查点只写服务器receipts和仓库docs，不回Windows执行。本批未新增图像，81/current83敌图、敌35原名、完整角色动作/13T/声音/主线等缺口OPEN。

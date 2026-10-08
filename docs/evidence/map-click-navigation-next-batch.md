@@ -1,3 +1,18 @@
+最新隐藏摇杆/对象到达批次（2026-10-08T11:34:27.373844+00:00）
+
+本地代码 `f5d4eb70d664a3119e2a04f9033c07b474520121`，阶段 HIDDEN_JOYSTICK_OBJECT_ARRIVAL_LOCAL_CHECKED / APP_NOT_VERIFIED / FORMAL_SOURCE_NOT_FROZEN。新515 DEBUG JVM/102 suites零失败错误跳过、35导航项（新10对象项）、DEBUG两包构建、409素材字节同审核101；新完整六文件codex_only `3026afa21b5d7b360fb1c76cf5dea1c304aadadf8c9b673b4b29d6984be386d9`、Stop current。线上个人101/source272e5a0、原Actions37757334463/37762465126 SUCCESS、稳定82/c62和原main16550c7保持，没有102正式Actions/发布。
+
+本批接在原World/FixedClock导航上：show-joystick-v1默认关闭、原设置可开启；合法可见对象DOWN稳定ID绑定，单次BFS选择原邻格/专用交互点与朝向，不借目标出口当对象站位。worker只拿冻结数据；live对象变化/消失与过期投递拒绝/重算。自然到达仅面向/停走/显示选项，不调用openNpc；真实选择后才按完整内存snapshot与当前对象/站位复查调用原事务，取消不发奖、不续走；过期弹窗不会切回新层。原nearby/openNpc、隐藏调查、服务绑定、赠物/宝箱/存档保护没有复制新规则。
+
+TouchTest新 testControlledNavigationHiddenGroundAndObjectCancel 已编译：隔离开场、实际地图DOWN/UP与自然时钟、原Canvas青色像素截图、原生取消注入与完整状态不结算断言；旧正常手动冒烟显式开启摇杆并由原IsolatedGameTestCase精确恢复偏好，新选项用真实Native触控、<=101仅走旧APK兼容入口。**本轮没有执行这项App测试**，也没有生成新的PNG/导航JSON原始证据，现有脚本不代替完整导航验收。
+
+直接接续的有限范围：
+
+1. 实际读取 `ci/runtime-scope.json`、`ci/run-town02-runtime.sh`、`tools/runtime_handoff.py` 和原raw验收器；增加源码pin绑定的新navigation协议/必需门禁，拒绝旧101raw。目前它们没有接入新方法，不能冻结/发布跳过导航验收的候选。
+2. 补同源真实地图tap改目标/B停止/手动接管/HUD与按钮不穿透/多指拖动CANCEL、镜头/开发边界/船楼梯/层与生命周期、默认偏好重启；确认原生primary单次提交，取消不提交。三字体实际路径/选项截图原片和48dp、真实耗时须实际检查；现有cyan像素脚本不能证明全路径投影或13T性能。
+3. 新完整源码审查、相关测试、record/Stop后冻结完整玩家增量，原main/Actions签名App；保留原21Content/36门禁，正常起始/物品/攻击/合法治疗/奖励/全保存外部cold/覆盖实际101，四人Boss证据单列；同审核APK原reviewer发布/公网完整字节/postflight全实际通过才登记。
+4. 本批服务器证据 `navigation-arrival-local-verified.json`、六份实际Gradle日志、首次metadata计数断言失败均保留；正式App待验无需假报外部平台阻断。13T/声音/完整主线/真实云恢复及全欠账OPEN，验收发布后主动继续下一有意义批次。以下保留当时历史。
+
 最新地面导航实现检查点（2026-10-08T11:08:45.583027+00:00）
 
 本地代码 `516505bf921e43ff06c8ad2ac0cb16a3129efbac`，新505 DEBUG JVM/101 suites/13控制器项＋12规划项零失败，新codex_only `7d7be8158322f00be3417d35733e76f4a75a5047c5e2184f250ada073cfb0e10` / Stop current；两DEBUG包编译成功、409素材字节同正式101。阶段为PLAYER_GROUND_NAVIGATION_LOCAL_CHECKED / APP_NOT_VERIFIED / FORMAL_SOURCE_NOT_FROZEN。原main16550c7，线上101/source272e5a0和稳定82/c62不变，无102 Actions或发布。
