@@ -302,7 +302,8 @@
       1216
     ],
     "safe": "MEASURED_ANDROID_INSETS",
-    "geometryEvidence": "ACTUAL_WINDOW_INSETS_V1"
+    "geometryEvidence": "ACTUAL_WINDOW_INSETS_V1",
+    "enemyFeedbackModel": "ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1"
   },
   "normalRoom28Acceptance": {
     "kind": "NORMAL_NEW_GAME_TOUCH_WITH_EXTERNAL_COLD_NOT_FULL_STORY_OR_PHONE",
@@ -397,6 +398,7 @@
     "proofKey": "battleVisualEvidenceSha256",
     "supportFeedback": "IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW",
     "preparation": "PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS",
-    "partySpacing": "SEPARATED_CROPS_BOUNDED_ATTACK"
+    "partySpacing": "SEPARATED_CROPS_BOUNDED_ATTACK",
+    "enemyFeedback": "ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1"
   }
 }

@@ -285,7 +285,8 @@ def active_scope(candidate=None):
         if c62 and (scope.get('battleVisualAcceptance') is not None or candidate is not None and int(candidate.get('versionCode',0))>=91) and scope.get('battleVisualAcceptance')!=visual.ACCEPTANCE:
             raise ValueError('Current original visual/normal/cold proofs cannot be omitted')
         if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != battle_ui.acceptance(
-                require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE):
+                require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE,
+                require_feedback=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE):
             raise ValueError('Exact battle UI acceptance cannot omit fonts, native cases, screenshots or logs')
     else:
         raise ValueError('Unknown authorized frozen milestone')
@@ -547,7 +548,8 @@ def main():
             review_personal(receipt)
             if scope['id'] in battle_ui.UI_SCOPES:
                 proofs = battle_ui.proof_digests(args.evidence, args.receipt.parent,
-                    require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE)
+                    require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE,
+                    require_feedback=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE)
                 if any(receipt.get(key) != value for key, value in proofs.items()):
                     raise ValueError('Raw battle UI artifacts differ from this reviewed candidate proof')
             if scope['id'] == room28.SCOPE:

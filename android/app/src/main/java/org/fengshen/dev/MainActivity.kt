@@ -189,6 +189,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val overlayPaint=Paint(Paint.ANTI_ALIAS_FLAG)
     private val textPaint=Paint(Paint.ANTI_ALIAS_FLAG).apply{color=Color.WHITE;typeface=Typeface.create("sans-serif",Typeface.NORMAL)}
     private val battleLinePaint=android.text.TextPaint(Paint.ANTI_ALIAS_FLAG)
+    private val battleFeedbackPaint=Paint(Paint.ANTI_ALIAS_FLAG)
     private val menuTouch=mutableMapOf<Int,Int>()
     private val panelTouch=mutableMapOf<Int,Int>()
     private val hudTouch=mutableSetOf<Int>()
@@ -2308,6 +2309,23 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.save();c.clipRect(box.x,box.y,box.x+box.w,box.y+box.h)
         c.drawText(text,box.x,box.y-textPaint.fontMetrics.ascent,textPaint);c.restore()
     }
+    /** Shared Canvas/instrument projection, never a second HP or touch target. */
+    internal fun battleEnemyFeedback(enemy:BattleEnemy,scene:BattleSceneLayout):BattleEnemyFeedback {
+        val current=battle!!;val dp=resources.displayMetrics.density
+        val cell=scene.touch.enemies[current.enemies.indexOfFirst{it.slot==enemy.slot}]
+        val sprite=battleEnemyBox(enemy)
+        val hp=battleVisibleHp(enemy.slot)?:0
+        val name=if(scene.compact)"#${enemy.slot+1}"
+            else (if(current.enemies.size>1)"#${enemy.slot+1} "else"")+enemy.definition.name
+        val text=if(hp>0||scene.compact)name else "$name · 倒下"
+        battleFeedbackPaint.set(textPaint);battleFeedbackPaint.textSize=12*resources.displayMetrics.scaledDensity
+        val textWidth=battleFeedbackPaint.measureText(text)
+        val metrics=battleFeedbackPaint.fontMetrics;val textHeight=metrics.descent-metrics.ascent
+        val adapted=if(current.enemies.size==1)battleEnemyFeedbackLayout(cell,sprite,dp,textWidth,textHeight)else null
+        val parts=adapted?:battleEnemySceneLayout(cell,dp,resources.configuration.fontScale,scene.compact,
+            current.enemies.size==1).copy(graphic=sprite)
+        return BattleEnemyFeedback(parts,text,textWidth,textHeight,adapted!=null)
+    }
     /** The exact prepared crops and positions used by Canvas, also observed by isolated App tests. */
     internal fun battlePartyBodies(current:OpeningBattle,scene:BattleSceneLayout,
         action:BattleActionStep?,progress:Float):List<Pair<BattleVisualImage?,Box>> {
@@ -2364,7 +2382,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 overlayPaint.color=if(selectedBattleSlot==enemy.slot)0x44244d49 else if(blackScene)0xcc000000.toInt()else 0xcc18252e.toInt()
                 c.drawRect(cell.x,cell.y,cell.x+cell.w,cell.y+cell.h,overlayPaint)
             }
-            val sprite=battleEnemyBox(enemy)
+            val feedback=battleEnemyFeedback(enemy,scene);val parts=feedback.parts;val sprite=parts.graphic
             val impact=action?.targetSlot==enemy.slot&&action.kind in listOf(BattleActionKind.DAMAGE,BattleActionKind.DEATH)
             if(hp>0||impact){
                 val shift=if(action?.actorSlot==enemy.slot)sin(battlePresentation.elapsedMs.toDouble()/battlePresentation.actionDurationMs*Math.PI).toFloat()*3*dp else 0f
@@ -2377,11 +2395,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 }else content.enemyGraphics[enemy.definition.id]?.let{c.drawBitmap(it,null,RectF(sprite.x+shift,sprite.y,sprite.x+sprite.w+shift,sprite.y+sprite.h),paint)}
                 paint.alpha=255
             }
-            val parts=battleEnemySceneLayout(cell,dp,font,scene.compact,current.enemies.size==1)
-            val name=if(scene.compact)"#${enemy.slot+1}"
-                else (if(current.enemies.size>1)"#${enemy.slot+1} "else"")+enemy.definition.name
             overlayPaint.color=0xcc14242b.toInt();c.drawRoundRect(RectF(parts.label.x,parts.label.y,parts.label.x+parts.label.w,parts.label.y+parts.label.h),4*dp,4*dp,overlayPaint)
-            battleLine(c,if(hp>0||scene.compact)name else "$name · 倒下",parts.label,12f,
+            battleLine(c,feedback.text,parts.label,12f,
                 if(hp>0)Color.WHITE else 0xff88969c.toInt())
             gauge(c,parts.gauge,hp,enemy.definition.hp,0xffc55758.toInt())
         }

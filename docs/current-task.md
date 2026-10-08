@@ -1,3 +1,5 @@
+最新有限研发检查点：下一敌人短标签／血条源码已实施，Canvas与仪器共用原sprite／cell及同字号Android Paint反馈，七规则源码不变。新454 JVM／96 suites（失败／错误／跳过0）、84相关Python、应用与仪器DEBUG编译通过；正式同源签名／实际Android量字App／发布尚未执行，不能复用v95验收。拟96尚未冻结，线上实际95／稳定82、c62／视觉17及所有长期欠账保持。见[本批入口](evidence/battle-enemy-feedback-next-batch.md)。以下保留历史。
+
 最新实际交付：个人v95 / 0.8.25-party-spacing-personal 已按原同源审核发布，公网62,606,416完整字节/SHA403c366a等于审核签名APK。新452 release JVM/96 suites、16组131 Python、21Content/36raw、121原PNG/97独立视频采样/15原片SHA/7完整cold/7prefs已实际核验；首App系统abort、旧候选和原发布失败均保留，不复用旧来源App。postflight03:41:27Z NO_ISSUES_OBSERVED/errors空/cleanup0，保留95/94，19事件1实机均94、95样本0。稳定82、c62/392/视觉17和WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v95-party-spacing-personal.md)，服务器主动接续[敌人短标签/血条](evidence/battle-enemy-feedback-next-batch.md)，目前设计已核、游戏未实施；以下是历史检查点。
 
 最新服务器检查点：拟95 sourceeb94c50 / 原build37719985421，正式签名62,606,416字节/SHA403c366a、新452 release JVM/96 suites及16组131 Python独立通过；原App首轮正常短冒烟System has crashed失败保留、原因未核，同source/同immutable APK原runtime仅重试一次成功。新21Content/36raw、121原PNG/97独立视频采样/9原尺寸复查、15原片SHA/7完整cold/7prefs均已真实核验。codex_only snapshot68bb86f5/Stop current；原publish37723586817进行中，公网/发布后结果仍PENDING。线上实际94/稳定82、c62/视觉17及全部长期欠账保持；下一敌人短反馈仅已审源码与1440组合成范围设计，不计Android量字或新App。
@@ -31,7 +33,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v95 / 0.8.25-party-spacing-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v95已交付；下一敌人短反馈DESIGN_PROTOTYPED，尚未冻结新候选
+current_candidate_version: v95已交付；下一敌人短反馈IMPLEMENTED_LOCAL_CHECKED，拟96尚未冻结／正式App未验
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

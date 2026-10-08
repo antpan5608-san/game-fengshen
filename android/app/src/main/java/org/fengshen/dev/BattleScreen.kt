@@ -96,6 +96,36 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
 
 /** The compact row keeps a whole instance number above the native graphic. */
 data class BattleEnemySceneLayout(val graphic:Box,val label:Box,val gauge:Box)
+/** Read-only feedback measured at the exact font used by Canvas. */
+data class BattleEnemyFeedback(val parts:BattleEnemySceneLayout,val text:String,
+    val textWidth:Float,val textHeight:Float,val adapted:Boolean)
+
+/** Preserve the original sprite and hit cell; fit feedback below it or in the side whitespace. */
+fun battleEnemyFeedbackLayout(cell:Box,sprite:Box,dp:Float,textWidth:Float,textHeight:Float):BattleEnemySceneLayout? {
+    require(listOf(cell.x,cell.y,cell.w,cell.h,sprite.x,sprite.y,sprite.w,sprite.h,dp,textWidth,textHeight).all{it.isFinite()})
+    require(dp>0&&textWidth>=0&&textHeight>0&&cell.w>0&&cell.h>0&&sprite.w>0&&sprite.h>0)
+    require(sprite.x>=cell.x-.01f&&sprite.y>=cell.y-.01f&&
+        sprite.x+sprite.w<=cell.x+cell.w+.01f&&sprite.y+sprite.h<=cell.y+cell.h+.01f)
+    val labelH=ceil(textHeight)+2*dp;val gap=2*dp;val gaugeH=4*dp
+    val blockH=labelH+gap+gaugeH;val desired=max(sprite.w+8*dp,textWidth+8*dp)
+    var y=sprite.y+sprite.h+gap
+    val width:Float;val x:Float
+    if(y+blockH<=cell.y+cell.h-4*dp){
+        width=min(desired,cell.w-8*dp)
+        if(width<=0)return null
+        x=(sprite.x+sprite.w/2-width/2).coerceIn(cell.x+4*dp,cell.x+cell.w-4*dp-width)
+    }else{
+        val right=cell.x+cell.w-4*dp-(sprite.x+sprite.w+8*dp)
+        val left=sprite.x-8*dp-(cell.x+4*dp)
+        val space=max(right,left)
+        if(space<24*dp||blockH>cell.h-8*dp)return null
+        width=min(desired,space)
+        x=if(right>=left)sprite.x+sprite.w+8*dp else sprite.x-8*dp-width
+        y=(sprite.y+sprite.h/2-blockH/2).coerceIn(cell.y+4*dp,cell.y+cell.h-4*dp-blockH)
+    }
+    return BattleEnemySceneLayout(sprite,Box(x,y,width,labelH),Box(x,y+labelH+gap,width,gaugeH))
+}
+
 fun battleEnemySceneLayout(cell:Box,dp:Float,fontScale:Float,compact:Boolean,single:Boolean):BattleEnemySceneLayout {
     val labelH=max(26f,16*fontScale)*dp
     if(compact){

@@ -11,6 +11,35 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Actual Canvas feedback/measurements, observed on its UI thread without rule mutations. */
+    private fun enemyFeedbackEvidence(v:GameView,scene:BattleSceneLayout,enemy:BattleEnemy):JSONObject {
+        lateinit var evidence:JSONObject
+        instrumentation.runOnMainSync{
+            val before=v.currentSnapshot();val dp=v.resources.displayMetrics.density
+            val actual=v.battleEnemyFeedback(enemy,scene);val parts=actual.parts
+            val sprite=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java)
+                .apply{isAccessible=true}.invoke(v,enemy) as Box
+            val cell=v.battleTargetBounds(enemy.slot)
+            fun json(b:Box)=JSONObject().put("x",b.x).put("y",b.y).put("width",b.w).put("height",b.h)
+            fun overlap(a:Box,b:Box)=a.x<b.x+b.w-.01f&&a.x+a.w>b.x+.01f&&a.y<b.y+b.h-.01f&&a.y+a.h>b.y+.01f
+            assertEquals("Original sprite scale/position preserved",sprite,parts.graphic)
+            for(b in listOf(parts.graphic,parts.label,parts.gauge))assertTrue(b.x>=cell.x-.01f&&b.y>=cell.y-.01f&&
+                b.x+b.w<=cell.x+cell.w+.01f&&b.y+b.h<=cell.y+cell.h+.01f)
+            if(scene.touch.enemies.size==1){
+                assertTrue("Supported single enemy must use actual measured feedback",actual.adapted)
+                assertTrue(parts.label.h>=actual.textHeight);assertTrue(parts.label.w>=actual.textWidth)
+                assertFalse(overlap(parts.graphic,parts.label));assertFalse(overlap(parts.graphic,parts.gauge))
+                assertFalse(overlap(parts.label,parts.gauge))
+            }
+            assertEquals(before,v.currentSnapshot())
+            evidence=JSONObject().put("enemyId",enemy.definition.id).put("slot",enemy.slot).put("cell",json(cell))
+                .put("sprite",json(parts.graphic)).put("label",json(parts.label)).put("gauge",json(parts.gauge))
+                .put("text",actual.text).put("textWidth",actual.textWidth).put("textHeight",actual.textHeight)
+                .put("fontSp",12).put("density",dp).put("adapted",actual.adapted)
+                .put("originalSpritePreserved",true).put("stateUnchanged",true)
+        }
+        return evidence
+    }
     private fun awaitBattleVisuals(v:GameView){
         for(i in 0..200){
             var ready=false;instrumentation.runOnMainSync{ready=v.battleVisualPrepared}
@@ -5857,6 +5886,8 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(128f/112,originalBoss.width.toFloat()/originalBoss.height,.001f)
         assertEquals(battleDrawnEnemyRatio(v,fight.enemies.single()),eb.w/eb.h,.001f)
         assertTrue(eb.x>=bossTarget.x&&eb.y>=bossTarget.y&&eb.x+eb.w<=bossTarget.x+bossTarget.w&&eb.y+eb.h<=bossTarget.y+bossTarget.h)
+        val feedbackScene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as BattleSceneLayout
+        val bossFeedback=enemyFeedbackEvidence(v,feedbackScene,fight.enemies.single())
         screenshot(v,"mobile-phone-boss-$font");tap(v,center(v.battleCommandBounds(2)))
         screenshot(v,"mobile-phone-medicine-$font");tap(v,center(v.battleItemBounds(HerbUse.ID)))
         screenshot(v,"mobile-phone-medicine-detail-$font")
@@ -5887,6 +5918,7 @@ class TouchTest:IsolatedGameTestCase(){
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
             phoneWindowMetrics(v).put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
                 .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48)
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1").put("enemyFeedback",org.json.JSONArray().put(bossFeedback))
                 .put("medicineDetailHeightDp",medicine.detail.h/dp).put("medicineTextRowsVisible",medicine.detail.h/((14f*font*1.25f+4)*dp)).toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
@@ -5935,11 +5967,13 @@ class TouchTest:IsolatedGameTestCase(){
             assertTrue("Restore the validated layout fixture on the actual GameView: party=$count",restored)
             awaitBattleVisuals(v)
             val before=v.currentSnapshot();val layout=scene()
+            val feedback=org.json.JSONArray()
             val targets=layout.partyCards+layout.touch.commands+layout.touch.enemies
             for(box in targets){assertTrue(box.w>=48*dp&&box.h>=48*dp)
                 assertTrue(box.x>=0&&box.y>=0&&box.x+box.w<=v.width&&box.y+box.h<=v.height)}
             for(i in targets.indices)for(j in i+1 until targets.size)assertFalse(overlap(targets[i],targets[j]))
             for(enemy in fight.enemies){
+                feedback.put(enemyFeedbackEvidence(v,layout,enemy))
                 val graphic=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java).apply{isAccessible=true}.invoke(v,enemy) as Box
                 val target=v.battleTargetBounds(enemy.slot)
                 assertEquals(battleDrawnEnemyRatio(v,enemy),graphic.w/graphic.h,.001f)
@@ -5966,6 +6000,7 @@ class TouchTest:IsolatedGameTestCase(){
                 .put("enemies",org.json.JSONArray(fight.enemies.map{it.definition.id})).put("frame",json(layout.touch.frame))
                 .put("cards",org.json.JSONArray(layout.partyCards.map{json(it)})).put("enemyField",json(layout.enemyField)).put("allyField",json(layout.allyField))
                 .put("compactInstanceNumbers",layout.compact))
+            reports.getJSONObject(reports.length()-1).put("enemyFeedback",feedback)
         }
         var rewardSourceRestored=false
         instrumentation.runOnMainSync{field("battle",null);field("layer",GameView.Layer.MAP);rewardSourceRestored=v.restoreSnapshot(source(4))}
@@ -5974,7 +6009,8 @@ class TouchTest:IsolatedGameTestCase(){
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-party-phone-$font.json").writeText(
             phoneWindowMetrics(v).put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)
                 .put("screenHeight",screen.height).put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font)
-                .put("density",dp).put("cases",reports).put("fourActorInputAndRewardChecks","PASS").toString())
+                .put("density",dp).put("cases",reports).put("fourActorInputAndRewardChecks","PASS")
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1").toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
 

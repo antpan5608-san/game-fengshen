@@ -24,15 +24,17 @@ METHODS = ('testControlledMobileBattleTouchAndSnapshots', 'testControlledMobileB
            'testControlledWholly08PartyAdvancesWithoutTouchCommand')
 PHONE_METHODS = ('testMobileBattlePhoneSizeAndLargeFont', 'testControlledBattlePartyPhoneSizeAndLargeFont')
 GEOMETRY_EVIDENCE = 'ACTUAL_WINDOW_INSETS_V1'
+FEEDBACK_EVIDENCE = 'ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
 
 
-def acceptance(require_insets=False):
+def acceptance(require_insets=False,require_feedback=False):
     value=dict(kind='CONTROLLED_EMULATOR_NOT_REAL_PHONE_OR_FULL_STORY',screen=[2640,1216],
                window=[2640,1080],safe=[2640,936],density=3,fonts=[1.0,1.3,2.0],
                nativeCasesPerFont=8,requiredScreenshotsPerFont=29,requiredInstrumentLogs=log_names(),proofKey=UI_PROOF_KEY)
     if require_insets:
         value.pop('window');value.pop('safe')
         value.update(windowHeights=[1080,1216],safe='MEASURED_ANDROID_INSETS',geometryEvidence=GEOMETRY_EVIDENCE)
+    if require_feedback:value['enemyFeedbackModel']=FEEDBACK_EVIDENCE
     return value
 
 
@@ -85,7 +87,36 @@ def overlap(a, b):
     return a[0] < b[0] + b[2] and a[0] + a[2] > b[0] and a[1] < b[1] + b[3] and a[1] + a[3] > b[1]
 
 
-def validate_metrics(value, font, native, require_insets=False):
+def validate_feedback(rows,enemies,height):
+    """Check actual draw boxes/measurements; never recompute a replacement App layout."""
+    slots=list(range(6)) if len(enemies)==6 else [3]
+    if not isinstance(rows,list) or len(rows)!=len(enemies):raise ValueError('Missing actual enemy feedback')
+    for row,enemy,slot in zip(rows,enemies,slots):
+        if (not isinstance(row,dict) or type(row.get('enemyId')) is not int or row['enemyId']!=enemy
+                or type(row.get('slot')) is not int or row['slot']!=slot or row.get('fontSp')!=12
+                or type(row.get('fontSp')) is not int or row.get('density')!=3
+                or row.get('originalSpritePreserved') is not True or row.get('stateUnchanged') is not True):
+            raise ValueError('Actual enemy feedback identity/font/original state differs')
+        cell,sprite,label,gauge=(box(row.get(k),height)for k in ('cell','sprite','label','gauge'))
+        if cell[2]<144 or cell[3]<144:raise ValueError('Original enemy target smaller than 48dp')
+        for b in (sprite,label,gauge):
+            if b[0]<cell[0]-.01 or b[1]<cell[1]-.01 or b[0]+b[2]>cell[0]+cell[2]+.01 or b[1]+b[3]>cell[1]+cell[3]+.01:
+                raise ValueError('Enemy feedback escapes its original cell')
+        text=row.get('text');width,height_text=(row.get(k)for k in ('textWidth','textHeight'))
+        if (not isinstance(text,str) or not 0<len(text)<=256 or '\n' in text
+                or any(type(n)not in (int,float)or not math.isfinite(n)or n<=0 for n in (width,height_text))):
+            raise ValueError('Invalid actual enemy text measurements')
+        if abs(label[2]-gauge[2])>.01:raise ValueError('Label/gauge width differs')
+        if len(enemies)==1:
+            if (row.get('adapted') is not True or label[2]+.01<width or label[3]+.01<height_text
+                    or label[2]>max(sprite[2]+24,width+24)+.01
+                    or any(overlap(a,b)for a,b in ((sprite,label),(sprite,gauge),(label,gauge)))):
+                raise ValueError('Measured single-enemy feedback overlaps or loses full text')
+        elif row.get('adapted') is not False or text!=f'#{slot+1}':
+            raise ValueError('Compact native instance feedback changed')
+
+
+def validate_metrics(value, font, native, require_insets=False,require_feedback=False):
     kind = 'CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE' if native else 'CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE'
     if (value.get('kind') != kind or value.get('screenWidth') != 2640 or value.get('screenHeight') != 1216
             or value.get('windowWidth') != 2640
@@ -117,10 +148,15 @@ def validate_metrics(value, font, native, require_insets=False):
     if not native:
         if value.get('minTouchDp') != 48 or value.get('medicineTextRowsVisible', 0) < 3:
             raise ValueError('Original medicine layout checks are missing')
+        if require_feedback:
+            if value.get('enemyFeedbackModel')!=FEEDBACK_EVIDENCE:raise ValueError('Missing measured feedback protocol')
+            validate_feedback(value.get('enemyFeedback'),[137],height)
         return
     cases = value.get('cases')
     if not isinstance(cases, list) or len(cases) != 8 or value.get('fourActorInputAndRewardChecks') != 'PASS':
         raise ValueError('All native party layouts and real four-actor input/reward checks are required')
+    if require_feedback and value.get('enemyFeedbackModel')!=FEEDBACK_EVIDENCE:
+        raise ValueError('Missing measured feedback protocol')
     for index, case in enumerate(cases):
         count = index // 2 + 1
         enemies, group = ([35] * 6, 8) if index % 2 == 0 else ([137], 156)
@@ -142,9 +178,10 @@ def validate_metrics(value, font, native, require_insets=False):
             raise ValueError('Native party/enemy regions overlap')
         if count >= 3 and len(enemies) == 6 and case.get('compactInstanceNumbers') is not True:
             raise ValueError('Crowded native enemy instance IDs are not independently visible')
+        if require_feedback:validate_feedback(case.get('enemyFeedback'),enemies,height)
 
 
-def proof_digests(evidence, logs, require_insets=False):
+def proof_digests(evidence, logs, require_insets=False,require_feedback=False):
     """Bind all expected raw screenshots, measured JSON and actual passing logs."""
     from PIL import Image
     evidence, logs = Path(evidence), Path(logs)
@@ -159,7 +196,7 @@ def proof_digests(evidence, logs, require_insets=False):
         for prefix, native in (('mobile-phone-', False), ('mobile-party-phone-', True)):
             name = prefix + font + '.json'
             value, data = json_evidence(evidence / name)
-            validate_metrics(value, font, native,require_insets)
+            validate_metrics(value, font, native,require_insets,require_feedback)
             files['checkpoint-ui/' + name] = hashlib.sha256(data).hexdigest()
         for name in screenshot_names(font):
             path = evidence / name

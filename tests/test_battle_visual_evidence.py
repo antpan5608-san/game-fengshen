@@ -95,7 +95,7 @@ class VisualProofTests(unittest.TestCase):
     def test_new_gates_keep_all_thirty_three_old_gates_and_refuse_omitted_visual_proofs(self):
         fixture=fixtures.BattleMagicPersonalScopeTest();fixture.setUp();self.addCleanup(fixture.doCleanups)
         scope=copy.deepcopy(fixture.scope);scope['battleVisualAcceptance']=visual.ACCEPTANCE;scope['personalTest']['gates']+=visual.GATES
-        scope['battleUiAcceptance']=ui.acceptance(require_insets=True)
+        scope['battleUiAcceptance']=ui.acceptance(require_insets=True,require_feedback=True)
         fixture.fixture.fixture.write_scope(scope)
         candidate=dict(fixture.candidate,versionCode=92);proposed=dict(fixture.proposed,versionCode=92,**{g:'PASS'for g in visual.GATES},**self.proof())
         self.assertEqual(36,len(h.personal_gates(h.active_scope(candidate))))

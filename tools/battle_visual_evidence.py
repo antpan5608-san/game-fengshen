@@ -14,6 +14,7 @@ ACCEPTANCE=dict(kind='ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PH
 ACCEPTANCE['supportFeedback']='IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW'
 ACCEPTANCE['preparation']='PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS'
 ACCEPTANCE['partySpacing']='SEPARATED_CROPS_BOUNDED_ATTACK'
+ACCEPTANCE['enemyFeedback']='ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
 POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
     'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
     'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',

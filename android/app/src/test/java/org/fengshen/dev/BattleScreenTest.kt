@@ -4,6 +4,40 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class BattleScreenTest {
+    @Test fun singleEnemyFeedbackPreservesCropsAndTargetsWithSeparateMeasuredLabels(){
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(font in listOf(1f,1.3f,2f))for(party in 1..4){
+                val scene=battleSceneLayout(safe,dp,font,1,party,true)!!;val cell=scene.touch.enemies.single()
+                val target=battleEnemySceneLayout(cell,dp,font,false,true).graphic
+                for((cw,ch)in listOf(633 to 1019,1065 to 1308,32 to 40)){
+                    val scale=kotlin.math.min(target.w/cw,target.h/ch)
+                    val sprite=Box(target.x+(target.w-cw*scale)/2,target.y+(target.h-ch*scale)/2,cw*scale,ch*scale)
+                    for(width in listOf(12f,56f,144f,220f))for(lineFactor in listOf(1.05f,1.25f,1.5f)){
+                        val textHeight=12*font*dp*lineFactor
+                        val parts=battleEnemyFeedbackLayout(cell,sprite,dp,width*dp,textHeight)!!
+                        assertEquals(sprite,parts.graphic);assertTrue(cell.w>=48*dp&&cell.h>=48*dp)
+                        assertTrue(parts.label.h>=textHeight);assertTrue(parts.gauge.w==parts.label.w)
+                        for(b in listOf(parts.graphic,parts.label,parts.gauge))assertTrue(inside(b,cell))
+                        assertFalse(overlaps(parts.label,parts.gauge))
+                        for(shift in listOf(-3f,0f,3f)){
+                            val moving=sprite.copy(x=sprite.x+shift*dp)
+                            assertFalse(overlaps(moving,parts.label));assertFalse(overlaps(moving,parts.gauge))
+                        }
+                    }
+                }
+            }
+    }
+    @Test fun shortFeedbackUsesSpriteSpaceAndDefersImpossibleMeasuredText(){
+        val cell=Box(0f,0f,520f,76f);val sprite=Box(244f,4f,32f,38f)
+        val parts=battleEnemyFeedbackLayout(cell,sprite,1f,96f,28f)!!
+        assertEquals(sprite,parts.graphic);assertTrue(parts.label.x>=sprite.x+sprite.w+8f)
+        assertTrue(parts.label.w<cell.w/2);assertTrue(parts.label.w>=96f)
+        assertNull(battleEnemyFeedbackLayout(cell,sprite,1f,96f,100f))
+        for(value in listOf(Float.NaN,Float.POSITIVE_INFINITY,-1f)){
+            try{battleEnemyFeedbackLayout(cell,sprite,1f,value,28f);fail("Invalid text measurement")}
+            catch(expected:IllegalArgumentException){}
+        }
+    }
     @Test fun illustratedPartyCropsStaySeparateThroughEachActorsAdvanceAndReturn(){
         val crops=listOf(853 to 1250,881 to 1311,942 to 1338,922 to 1309,896 to 898,873 to 1210)
         for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))

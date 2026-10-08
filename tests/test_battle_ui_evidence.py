@@ -10,6 +10,49 @@ from tools import battle_ui_evidence as ui
 
 
 class BattleUiEvidenceTest(unittest.TestCase):
+    def add_feedback_fixture(self,value,native):
+        def row(enemy,slot,compact):
+            cell=dict(x=24+slot*250 if compact else 24,y=132,width=240 if compact else 1540,height=264)
+            sprite=dict(x=cell['x']+20,y=210,width=60 if compact else 100,height=100)
+            label=dict(x=cell['x']+10 if compact else sprite['x']+sprite['width']+24,y=140 if compact else 180,width=124,height=60)
+            gauge=dict(x=label['x'],y=cell['y']+240 if compact else 246,width=124,height=12)
+            return dict(enemyId=enemy,slot=slot,cell=cell,sprite=sprite,label=label,gauge=gauge,
+                text=f'#{slot+1}'if compact else '南海龙王',textWidth=60,textHeight=42,
+                fontSp=12,density=3,adapted=not compact,originalSpritePreserved=True,stateUnchanged=True)
+        value['enemyFeedbackModel']=ui.FEEDBACK_EVIDENCE
+        if native:
+            for case in value['cases']:
+                enemies=case['enemies'];case['enemyFeedback']=[row(e,i if len(enemies)==6 else 3,len(enemies)==6)for i,e in enumerate(enemies)]
+        else:value['enemyFeedback']=[row(137,3,False)]
+        return value
+
+    def test_measured_feedback_is_hash_bound_and_old_or_forged_layouts_rejected(self):
+        for font in ui.FONTS:
+            for prefix,native in (('mobile-phone-',False),('mobile-party-phone-',True)):
+                name=prefix+font+'.json';v=json.loads((self.evidence/name).read_text())
+                self.write(name,self.add_feedback_fixture(v,native))
+        proof=ui.proof_digests(self.evidence,self.logs,require_feedback=True)
+        self.assertEqual(64,len(proof[ui.UI_PROOF_KEY]))
+        name='mobile-party-phone-2.0.json';original=json.loads((self.evidence/name).read_text())
+        for change in ('missing','model','slot','enemy','overlap','escape','nan','bool','font','state','wide','compact'):
+            v=copy.deepcopy(original);row=v['cases'][1]['enemyFeedback'][0]
+            if change=='missing':v['cases'][1].pop('enemyFeedback')
+            elif change=='model':v.pop('enemyFeedbackModel')
+            elif change=='slot':row['slot']=0
+            elif change=='enemy':row['enemyId']=35
+            elif change=='overlap':row['label']['x']=row['sprite']['x']
+            elif change=='escape':row['gauge']['x']=2600
+            elif change=='nan':row['textWidth']=float('nan')
+            elif change=='bool':row['textHeight']=True
+            elif change=='font':row['fontSp']=11
+            elif change=='state':row['stateUnchanged']=1
+            elif change=='wide':row['label']['width']=row['gauge']['width']=900
+            else:v['cases'][0]['enemyFeedback'][0]['text']='new name'
+            self.write(name,v)
+            with self.subTest(change=change),self.assertRaises(ValueError):ui.proof_digests(self.evidence,self.logs,require_feedback=True)
+        self.write(name,original)
+        self.assertEqual(proof,ui.proof_digests(self.evidence,self.logs,require_feedback=True))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
