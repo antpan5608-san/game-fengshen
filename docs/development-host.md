@@ -1,3 +1,21 @@
+当前实际交付检查点（2026-10-08T10:23:49.105580+00:00）：个人v101 / 0.8.31-compact-label-personal 已PUBLISHED_AND_VERIFIED，游戏source272e5a0，原build37757334463/runtime与publish37762465126首次SUCCESS。公网62,635,404完整字节等审核SHAf5959cd6，新480release JVM/99、16组136Python、21Content36raw、121PNG/155实际视频采样/14原片SHA/7全cold/7prefs通过；四人/Boss另列。10:20:42Z postflight查询成功NO_DATA、errors空/cleanup0/0实机，权威101/100。稳定82/c62与WORLD-FULL-01 IN_PROGRESS/PARTIAL保持。
+
+四runtimeBaseline字段已更新实际101，新35测试/0.334s通过，新完整codex_only7ba450d7/Stop current。详见[evidence/v101-compact-label-personal.md](evidence/v101-compact-label-personal.md)；下一[地图点击寻路](evidence/map-click-navigation-next-batch.md)实际源码设计未实施，接原World/FixedClock/共享只读通行、BFS与单指tap/青色虚线。13T/声音/完整结局/真实云恢复/敌35原名UNKNOWN及全部欠账OPEN。唯一服务器writer；迁入dirty、冻结Windows完整历史/原失败/存档保留，无暂停或完成标记。以下均为当时历史。
+
+当前App验收检查点（2026-10-08T10:15:23.794866+00:00）：个人候选101/source272e5a0，原Actions37757334463 build/runtime首次SUCCESS。新正式480release JVM/99 suites、16组136Python、21Content/36raw通过；实际121PNG/155视频采样、14原片SHA、7完整cold/7prefs通过。正常两战EXP3/银两+2、药草19→20、完整cold，四人/Boss另列。新codex_only83a22e79/Stop current，APP_VERIFIED PERSONAL_TEST/manual_acceptance=PENDING，发布尚未启动。线上实际100/稳定82/c62与WORLD-FULL-01 IN_PROGRESS/PARTIAL保持。
+
+接续 `.local-ai/visual-actions-37757334463/inspection/` 原同审核APK发布/public全字节/postflight，保持冻结main。下一 [地图点击寻路](evidence/map-click-navigation-next-batch.md) 仅真实源码设计未实施；13T/声音/完整主线/真实云恢复/敌35原名UNKNOWN及全部欠账OPEN。迁入dirty/冻结Windows历史/失败/存档保留，无暂停或完成标记。以下保留当时历史。
+
+当前正式候选检查点（2026-10-08T09:48:58.687789+00:00）：v101/source272e5a0／原Actions37757334463，build113245022085 SUCCESS、runtime113249173995 in_progress。已独立同源正式签名62,635,404字节/SHAf5959cd6、480 release JVM/99 suites零失败错误跳过、原成功job完整日志16组136 Python/16OK和409素材同100；当前PACKAGED，新App验收/发布仍NO。新完整codex_only 83a22e79／Stop current。线上实际100/稳定82/c62和全部长期欠账保持IN_PROGRESS/PARTIAL。
+
+接续服务器`.local-ai/visual-actions-37757334463/inspection/README.md`；verify_build.py本轮实际通过，其余新raw/三字体标签/PNG原片/全cold/偏好/覆盖100待原runtime SUCCESS与完整ZIP下载exit0，不复用100证据。主线/13T/声音/真实云恢复未验不关闭；main仍冻结，不推无关改动，不取消Actions，原dirty/Windows完整历史/失败/存档保留，无暂停或完成标记。以下为当时历史。
+
+最新源码冻结/同会话接续检查点（2026-10-08T09:35:49.665488+00:00）：拟个人v101 / 0.8.31-compact-label-personal，原main/source `272e5a040809cfe54f0f7eaf601c27d47495d015`；原[Actions37757334463](https://github.com/antpan5608-san/game-fengshen/actions/runs/37757334463)已实际in_progress/build113245022085，新正式签名/App/发布未验。线上实际100，稳定82/c62，长期IN_PROGRESS/PARTIAL。
+
+新480 JVM/99 suites、59相关Python和DEBUG两包通过；完整9代码文件新codex_only 83a22e79／Stop current，首编译类型错误与修复日志保留。只投影原内容名＋slot与真实END省略/Canvas测字，敌35原名UNKNOWN；409字节同100。四份只读验收入口已全文核对/语法编译，位于服务器`.local-ai/visual-actions-37757334463/inspection/`，尚未运行、不冒称App通过。按README先取得唯一成功job完整ZIP与新签名/XML，再原21Content36门槛、三字体新标签原PNG原片、正常攻击/合法治疗/奖励、完整cold/偏好/覆盖100，受控四人/Boss另列；全实际门槛及新review齐才原审核同APK发布/public/postflight。
+
+为手机沿同一thread接续保存本回合自然检查点；只写服务器本地文档/receipts，不改变冻结main，不取消Actions。迁入dirty/Windows冻结完整历史/旧失败/玩家存档保留；真机、声音、完整主线、云恢复和所有未完成项OPEN，没有暂停或任务完成标记。具体入口[本批](evidence/battle-compact-label-next-batch.md)，以下均为当时历史。
+
 最新有限批次检查点（2026-10-08T09:31:37.311760+00:00）：拟个人 v101 / 0.8.31-compact-label-personal 已 IMPLEMENTED_LOCAL_CHECKED；正式签名、App验收和发布均 PENDING，线上仍为实际已发布 v100，稳定 v82/c62，WORLD-FULL-01 IN_PROGRESS/PARTIAL。
 
 - 本批只将紧凑多敌标签投影为既有 content 名称＋原 slot 编号，原12sp/框/图形/短条/命中与玩家规则、存档保持；TextPaint 的 END 省略与 Canvas 共用真实字符串。

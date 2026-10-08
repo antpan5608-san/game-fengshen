@@ -1,3 +1,11 @@
+本批实际101已发布并公网全字节/postflight核验，2026-10-08T10:23:49.105580+00:00。完整当前交付见[v101](v101-compact-label-personal.md)，下一[当前地图点击寻路](map-click-navigation-next-batch.md)。敌35原名/全美术/真机声音主线云恢复未关闭；以下为实施前和冻结时历史。
+
+最新源码冻结/同会话接续检查点（2026-10-08T09:35:49.665488+00:00）：拟个人v101 / 0.8.31-compact-label-personal，原main/source `272e5a040809cfe54f0f7eaf601c27d47495d015`；原[Actions37757334463](https://github.com/antpan5608-san/game-fengshen/actions/runs/37757334463)已实际in_progress/build113245022085，新正式签名/App/发布未验。线上实际100，稳定82/c62，长期IN_PROGRESS/PARTIAL。
+
+新480 JVM/99 suites、59相关Python和DEBUG两包通过；完整9代码文件新codex_only 83a22e79／Stop current，首编译类型错误与修复日志保留。只投影原内容名＋slot与真实END省略/Canvas测字，敌35原名UNKNOWN；409字节同100。四份只读验收入口已全文核对/语法编译，位于服务器`.local-ai/visual-actions-37757334463/inspection/`，尚未运行、不冒称App通过。按README先取得唯一成功job完整ZIP与新签名/XML，再原21Content36门槛、三字体新标签原PNG原片、正常攻击/合法治疗/奖励、完整cold/偏好/覆盖100，受控四人/Boss另列；全实际门槛及新review齐才原审核同APK发布/public/postflight。
+
+为手机沿同一thread接续保存本回合自然检查点；只写服务器本地文档/receipts，不改变冻结main，不取消Actions。迁入dirty/Windows冻结完整历史/旧失败/玩家存档保留；真机、声音、完整主线、云恢复和所有未完成项OPEN，没有暂停或任务完成标记。具体入口[本批](battle-compact-label-next-batch.md)，以下均为当时历史。
+
 最新实际实现/检查（2026-10-08T09:31:37.311760+00:00）：101 IMPLEMENTED_LOCAL_CHECKED，新480 JVM/99 suites、59相关Python和DEBUG两包通过；9代码文件完整Codex审查，codex_only 83a22e79／Stop current。记录在 /srv/fengshen-dev/receipts/compact-label-local-checks.json，首编译类型错误保留并已修正。409资源同实际100，六份旧100 V2报告被新V3拒绝。正式签名/App/发布仍PENDING；原同源Actions待冻结触发，正常/controlled/全cold/覆盖100及三字体新原图原片未验不得借旧结果。当前实际线上100、稳定82/c62，完整任务未完成。下文设计/原型为当时历史。
 
 当前有限批次冻结设计（2026-10-08T09:23:16.683102+00:00）：从已实际发布100/source80e768e接续，拟101 / 0.8.31-compact-label-personal；只紧凑多敌标签显示已有content.definition.name＋原slot编号，END ellipsize保持12sp与旧label/sprite/cell/gauge、输入与规则/save不变。Canvas与仪器读取同一实际drawText/测字，新增V3严格绑定contentName/inputText/drawn width/是否省略，旧V2证据拒绝。原同source构建/App/正常attack治疗奖励/全cold/覆盖100及36门槛完成才原逐版发布。
