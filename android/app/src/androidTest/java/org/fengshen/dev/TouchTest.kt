@@ -1151,6 +1151,10 @@ class TouchTest:IsolatedGameTestCase(){
         val down=SystemClock.uptimeMillis()
         for(action in listOf(MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP)){
             val event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,point.first,point.second,0)
+            // API 30's six-argument obtain defaults to SOURCE_UNKNOWN, unlike newer releases.
+            val defaultSource=event.source
+            event.source=android.view.InputDevice.SOURCE_TOUCHSCREEN
+            println("NAVIGATION_NATIVE_INPUT action=$action defaultSource=$defaultSource source=${event.source}")
             try{assertTrue(instrumentation.uiAutomation.injectInputEvent(event,true))}finally{event.recycle()}
         }
     }
