@@ -225,4 +225,5 @@ python(){ printf 'PY %s\\n' "$*"; }
                 exec(compile(block, 'original-PYEVIDENCE', 'exec'), {})
         finally: os.chdir(previous)
         self.assertEqual(names, [Path(args[2]).name for args in calls])
-        self.assertEqual(['artifacts/checkpoint-ui/touch-ux-' + name for name in names], [args[3] for args in calls])
+        self.assertEqual([str(Path('artifacts') / 'checkpoint-ui' / ('touch-ux-' + name))
+                          for name in names], [args[3] for args in calls])
