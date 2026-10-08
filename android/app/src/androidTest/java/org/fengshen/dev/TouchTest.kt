@@ -4769,7 +4769,7 @@ class TouchTest:IsolatedGameTestCase(){
             checkSourceUnchanged();assertEquals(if(cold)0 else 1,bossEntries)
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(island){
+        fun runIslandStage(){
             assertEquals(listOf("nezha","xiaolongnv","yangjian"),source.characters.map{it.id})
             val victory="rom.map.76.flag.128";val witness="rom.global.7c6.16"
             state(if(cold)"cold-exact-island-victory-save"else"verified-ferry-source-no-state-grants")
@@ -4903,6 +4903,7 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(if(cold)0 else 1,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
+        if(island){runIslandStage();return}
         if(ferry){
             normalFerryStage(v,cold,source,::walkTo,::step,::fixedFerry,::state,{threeActorBattles},::persistChecked)
             checkSourceUnchanged();assertEquals(0,bossEntries)
@@ -4914,7 +4915,7 @@ class TouchTest:IsolatedGameTestCase(){
                 ::dialogue,::checkSourceUnchanged,::persistChecked)
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(yangJoin){
+        fun runYangJoinStage(){
             assertEquals(1,source.inventory[OriginalYangJoin.ITEM_ID]);assertEquals(true,source.flags["rom.global.7c8.1"])
             state(if(cold)"cold-exact-normal-three-party-save"else"verified-teacher-gift-source-no-state-grants")
             if(!cold){
@@ -4965,7 +4966,8 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(room171){
+        if(yangJoin){runYangJoinStage();return}
+        fun runRoom171Stage(){
             assertEquals(true,source.flags["rom.global.7c8.1"])
             state(if(cold)"cold-exact-normal-teacher-save"else"verified-tree-source-no-state-grants")
             if(!cold){
@@ -5008,7 +5010,8 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(tree107){
+        if(room171){runRoom171Stage();return}
+        fun runTree107Stage(){
             assertEquals(true,source.flags["rom.map.86.flag.128"])
             state(if(cold)"cold-exact-normal-tree-save"else"verified-bridge-source-no-state-grants")
             if(!cold){
@@ -5054,7 +5057,8 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(forest101){
+        if(tree107){runTree107Stage();return}
+        fun runForest101Stage(){
             assertEquals(true,source.flags["rom.map.86.flag.128"])
             state(if(cold)"cold-exact-normal-owned-save"else"verified-bridge-source-no-state-grants")
             if(!cold){
@@ -5087,7 +5091,8 @@ class TouchTest:IsolatedGameTestCase(){
             }
             assertEquals(0,bossEntries);instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(continentBridge){
+        if(forest101){runForest101Stage();return}
+        fun runContinentBridgeStage(){
             assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
             assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
             state(if(cold)"cold-exact-normal-owned-save"else"verified-medical-source-no-state-grants")
@@ -5111,7 +5116,8 @@ class TouchTest:IsolatedGameTestCase(){
             state(if(cold)"cold-bridge-real-both-directions-and-save"else"normal-bridge-zone16-and-save")
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(medical){
+        if(continentBridge){runContinentBridgeStage();return}
+        fun runMedicalStage(){
             assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
             state(if(cold)"cold-exact-medical-source-no-state-grants"else"verified-village3-source-owned-state")
             walkTo(239,160);assertEquals(3,v.world.mapId)
@@ -5164,7 +5170,8 @@ class TouchTest:IsolatedGameTestCase(){
             state(if(cold)"cold-medical-reentry-cancel-and-owned-save-kept"else"normal-medical-entries-real-state-and-return-saved")
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(village3){
+        if(medical){runMedicalStage();return}
+        fun runVillageThreeStage(){
             assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             state(if(cold)"cold-exact-owned-party-inventory-and-flags" else "verified-rebirth-source-no-state-grants")
@@ -5207,7 +5214,8 @@ class TouchTest:IsolatedGameTestCase(){
             state(if(cold)"cold-complete-real-route-and-service-continuation" else "normal-village3-trades-gear-lodging-dialogue-saved")
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(hallBatch||rebirth){
+        if(village3){runVillageThreeStage();return}
+        fun runHallBatchStage(){
             val maps=if(rebirth)listOf(67,68)else listOf(61,62,63,64,65,66)
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             assertTrue(source.flags["rom.map.60.flag.2"]==true)
@@ -5387,7 +5395,8 @@ class TouchTest:IsolatedGameTestCase(){
             state(if(cold)"cold-full-batch-flags-no-repeat-and-continue" else "normal-full-batch-original-exit-saved")
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(secondHall){
+        if(hallBatch||rebirth){runHallBatchStage();return}
+        fun runSecondHallStage(){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             for(flag in listOf("rom.map.70.flag.2","rom.map.70.flag.4"))assertEquals(true,source.flags[flag])
             assertTrue(source.flags["rom.map.70.flag.2.dialogue.pending"]!=true)
@@ -5429,7 +5438,8 @@ class TouchTest:IsolatedGameTestCase(){
             checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
             state("normal-original-second-hall-exit-saved");instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(firstHall){
+        if(secondHall){runSecondHallStage();return}
+        fun runFirstHallStage(){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             val story=v.content.battle!!.storyBattles.getValue("rom.npc.70.1")
             assertEquals(142,story.group.members.single().enemyId)
@@ -5509,7 +5519,8 @@ class TouchTest:IsolatedGameTestCase(){
             checkSourceUnchanged();persistChecked();File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
             state("normal-original-first-hall-exit-saved");instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(hell){
+        if(firstHall){runFirstHallStage();return}
+        fun runHellStage(){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             assertEquals(true,source.flags["rom.map.95.flag.128"])
             state(if(cold)"cold-complete-party-and-services-save" else "verified-east-party-source")
@@ -5567,7 +5578,8 @@ class TouchTest:IsolatedGameTestCase(){
             state("normal-two-actor-extended-hell-and-services-saved")
             instrumentation.runOnMainSync{activity.finish()};return
         }
-        if(east){
+        if(hell){runHellStage();return}
+        fun runEastStage(){
             val story=v.content.battle!!.storyBattles.getValue("rom.npc.95.0")
             val chain=story.continuation!!
             val mechanism=v.content.mechanisms.single{it.mapId==95}
@@ -5719,6 +5731,7 @@ class TouchTest:IsolatedGameTestCase(){
             state("normal-two-actor-next-state-saved-for-cold-restart")
             instrumentation.runOnMainSync{activity.finish()};return
         }
+        if(east){runEastStage();return}
         if(cold){
             assertEquals(16,v.world.mapId);assertEquals(215,v.world.x/16);assertEquals(107,v.world.y/16)
             state("cold-full-save-restored")
