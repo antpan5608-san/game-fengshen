@@ -1,3 +1,11 @@
+当前候选102重建检查点（2026-10-08T12:06:20.977815+00:00）：原main/source `c14ea39cad6b69e14d2a018422da1e8eec5582fe`，原[Actions37774259640](https://github.com/antpan5608-san/game-fengshen/actions/runs/37774259640) 已实际IN_PROGRESS（12:03:58Z dispatch，runtime_tests=true）。首次37772997507/source722fcb8的build真实FAILURE：Windows节点的collector测试将Path生成的反斜杠目标与写死POSIX字符串比较；runtime均SKIPPED，未产生可接受App，失败完整保存 `/srv/fengshen-dev/receipts/navigation-102-actions-failed.log`。本次仅修正测试期望由平台Path组合，仍严格比较9个源名及目标，不改变生产采集/玩家规则/37门禁/21Content。新13 Python实际通过2.839秒、完整模块及原采集/build脚本实读、新codex_only ac00b3c4/Stop current；原515本地JVM属于上批，本轮没有重跑或借作正式验收。
+
+本轮12:03:23Z原Linux preflight成功NO_DATA/errors空/cleanup0/0实机，仅权威线上101/100；不能证明候选或手机健康。Windows冻结说明已实读，48 ZIP新hash比较8同/40后续成果保留、16授权PNG全部当前hash一致（navigation-102-path-fix-assets-handoff.json），没有新增/重复制美术、无整树覆盖。原4b157ad/dd310仅历史，服务器唯一writer，迁入工具dirty/旧失败/存档保持。
+
+接续服务器 `.local-ai/visual-actions-37774259640/inspection/README.md`。新三份只读核验脚本已全文核对/语法编译，尚未执行：唯一build成功后 verify_build.py 独立核正式签名102/c62/409同101与真实XML；完整runtime成功后 download_verified.py 以成功job时间/explicit artifact ID/全ZIP digest安全下载，再 verify_raw.py 核新21Content37门禁与完整cold/raw。三字体新导航3 JSON/6 PNG/3仪器日志须实际获得、逐图看；正常起始/物品/攻击/合法治疗/奖励/全保存外部cold/覆盖101和受控四人Boss单列。全部新真实门槛及新review满足才原reviewer同审核APK发布/public全字节/postflight。当前正式包SHA/App/发布均PENDING，线上个人101/稳定82/c62，不能登记102。
+
+完整导航的原片/路径镜头、走途中改目标/手动与B停止、屏外绕行/出入口/遇敌不续走/后台失焦读档、设置真实开启偏好重启及13T性能仍OPEN；声音/正常原结局/真实云恢复/全获批方案和欠账未完成。没有登录/平台外部阻断证据，没有暂停或长期完成标记。以下保留当时历史。
+
 最新原Actions源码冻结入口（2026-10-08T11:55:06.555538+00:00）
 
 个人候选102/source `722fcb8efa071f0234ffc6c0f5ccff4afcfafe9b`，原[Actions37772997507](https://github.com/antpan5608-san/game-fengshen/actions/runs/37772997507) IN_PROGRESS，正式包/App/发布尚未验，线上仍个人101/稳定82/c62。冻结main保持source，不推无关变更。导航原个人门槛已由36增加至37，原21Content/正常物品攻击合法治疗奖励与全cold/覆盖101保持；同run新3字体导航方法/JSON/两截图每字体/仪器日志成为必需项，raw实际字节和candidate绑定SHA由原review CLI复核。受控开场导航证据不升级为正常主线或真机。
