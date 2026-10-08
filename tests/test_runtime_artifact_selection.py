@@ -4,6 +4,8 @@ import hashlib
 import io
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 from unittest.mock import patch
 import warnings
@@ -60,6 +62,18 @@ class RuntimeArtifactSelectionTests(unittest.TestCase):
         with self.assertRaises(ValueError):selector.select(self.run,self.listing,123,self.source,'runtime-continuation')
         self.run['jobs'][-1]['name']='runtime-continuation'
         self.assertEqual(200,selector.select(self.run,self.listing,123,self.source,'runtime-continuation')['runtime']['id'])
+
+    def test_original_publisher_passes_last_whole_job_name_in_powershell(self):
+        workflow=Path(__file__).resolve().parents[1]/'.github/workflows/android-publish.yml'
+        assignment=next(line.strip()for line in workflow.read_text().splitlines()
+            if '$runtimeNames=' in line)
+        for quality,expected in [('PERSONAL_TEST','runtime'),('STABLE','runtime-continuation')]:
+            command=f"$quality='{quality}'; {assignment}; & $env:FENGSHEN_TEST_PYTHON -c 'import sys; print(sys.argv[1])' $runtimeNames[-1]"
+            import os
+            result=subprocess.run(['pwsh','-NoProfile','-Command',command],capture_output=True,text=True,
+                env=dict(os.environ,FENGSHEN_TEST_PYTHON=sys.executable),timeout=30)
+            self.assertEqual(0,result.returncode,result.stderr)
+            self.assertEqual(expected,result.stdout.strip())
 
     def zip_bytes(self,name='town02-runtime/runtime-receipt.json'):
         stream=io.BytesIO()

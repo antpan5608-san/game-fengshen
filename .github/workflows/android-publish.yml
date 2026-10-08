@@ -121,7 +121,7 @@ jobs:
           if($successfulBuildJobs.Count -ne 1){throw 'Base verification/capability runs are not APK builds'}
           $quality=python tools/runtime_handoff.py scope --field quality
           if($LASTEXITCODE -ne 0){throw 'Invalid hash-bound runtime quality'}
-          $runtimeNames=if($quality -eq 'PERSONAL_TEST'){@('runtime')}else{@('runtime','runtime-world','runtime-continuation')}
+          $runtimeNames=@(if($quality -eq 'PERSONAL_TEST'){@('runtime')}else{@('runtime','runtime-world','runtime-continuation')})
           foreach($runtimeName in $runtimeNames){
             $runtimeJobs=@($r.jobs|Where-Object {$_.name -eq $runtimeName -and $_.status -eq 'completed' -and $_.conclusion -eq 'success'})
             if($runtimeJobs.Count -ne 1){throw "Actual same-candidate runtime stage required: $runtimeName"}

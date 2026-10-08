@@ -1,3 +1,9 @@
+最新发布检查点：原reviewer approve通过，原publish37719334597在取得上传凭据前拒绝候选95，未上传；sourceae3fd09的新452 release JVM/96 suites、16组130 Python、21Content/36 raw门禁、121PNG/82采样/15原片SHA/7完整cold已真实复核仅保留其source范围。实际PowerShell复现：if输出单项数组展开成System.String，[-1]传入e；当前以外层@(...)保持数组，补实际PowerShell PERSONAL_TEST/STABLE末项回归。新48 runtime/57相关Python通过，须最新source重新审查及原同源构建/App/发布，不用ae App替新检查。线上94/稳定82、c62/原已审16图及全部未完成保持。
+
+最新App检查点：sourceae3fd09/build37714603955正式签名/452 release JVM-96 suites成功；新包62,606,416字节/SHA03fa6036及c62-392/视觉17独立核验，409文件逐字节同v94。App attempt1在2倍字体首phone布局测试INSTRUMENTATION_ABORTED:System has crashed，无游戏断言堆栈，1/1.3视觉已执行；完整新App未通过/未发布。保留失败两个artifact，原runtime作业同source/同immutable signed仅重试一次。preflight01:54:49Z实际NO_ISSUES_OBSERVED/15事件1实机会话均v94，errors空/cleanup0；先前口头NO_DATA更正，不当95手机验收。线上94/稳定82、全部长期欠账保持。
+
+最新检查点：source44df7e8/build37714075036明确Windows读取ZIP也规范化反斜杠，第一次夹具修正不完整；两次失败/App未运行保留。sourceae3fd09现校验ZipInfo.orig_filename并拒原样/规范化不一致，补Windows读取模拟回归，本机新47 runtime及56相关Python通过。工具实际验证首用过早artifact清单被拒，已用final清单完成历史成功ZIP摘要/安全提取PASS；回执已补正时序。新原Actions37714603955执行中，线上94/稳定82及全部未完成保持。
+
 最新检查点：新source3af4861/build37713473461在原Windows Actions运行46项runtime回归时，ZIP危险路径夹具被Windows构造器规范化而FAIL，App未运行/未发布。已保留失败，夹具改为原样ZIP名并逐名断言，生产校验不变；本机46 runtime及55相关Python新复测通过，仍需最新source原Actions签名/App，线上94/稳定82保持。额外一次本地测试模块名误写的ImportError及修正后v2日志均保留。
 
 最新研发检查点：拟95身体间距原source3896cf2的App重试已成功/36 raw门禁独立复核；发现同run同名artifact按最大ID误取失败轮，现已修原成功job窗口/明确ID下载选择并新55 Python检查通过。需新source正式构建/App及发布器实际验收，不复用旧App/不发布旧source；线上94、稳定82/全部欠账保持。见[本批记录](evidence/battle-party-spacing-next-batch.md)，以下保留历史。
