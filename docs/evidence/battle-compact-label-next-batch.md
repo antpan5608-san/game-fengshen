@@ -1,3 +1,9 @@
+最新实际实现/检查（2026-10-08T09:31:37.311760+00:00）：101 IMPLEMENTED_LOCAL_CHECKED，新480 JVM/99 suites、59相关Python和DEBUG两包通过；9代码文件完整Codex审查，codex_only 83a22e79／Stop current。记录在 /srv/fengshen-dev/receipts/compact-label-local-checks.json，首编译类型错误保留并已修正。409资源同实际100，六份旧100 V2报告被新V3拒绝。正式签名/App/发布仍PENDING；原同源Actions待冻结触发，正常/controlled/全cold/覆盖100及三字体新原图原片未验不得借旧结果。当前实际线上100、稳定82/c62，完整任务未完成。下文设计/原型为当时历史。
+
+当前有限批次冻结设计（2026-10-08T09:23:16.683102+00:00）：从已实际发布100/source80e768e接续，拟101 / 0.8.31-compact-label-personal；只紧凑多敌标签显示已有content.definition.name＋原slot编号，END ellipsize保持12sp与旧label/sprite/cell/gauge、输入与规则/save不变。Canvas与仪器读取同一实际drawText/测字，新增V3严格绑定contentName/inputText/drawn width/是否省略，旧V2证据拒绝。原同source构建/App/正常attack治疗奖励/全cold/覆盖100及36门槛完成才原逐版发布。
+
+新输入核查明确缺口：已签名100的approved assets/development/combat.json SHA86f2f75d15ca09c975d8be7a155f83f6d10c78cc6b14efcec65c8ee33aa45f27；id137名称南海龍王/nameConfidence GAMEPLAY_VERIFIED_NAME_SCOPED，id35名称原名未核（敵人35）/UNKNOWN。本批只投影既有定义，不把UNKNOWN升VERIFIED，也不编造简称或名字；真实敌35原名仍欠原版实际运行/字体取证。合成/原型的canonical仅指当前定义，不代表原版名字已核。原面板仍展示完整既有定义，窄标签可省略；不关闭完整美术或全部原名欠账。
+
 最新独立原型检查（2026-10-08T08:59:54.698405+00:00）：`.local-ai/battle-compact-label-prototype/`新增纯label helper、两个JVM用例和87行已验99标签/同409 approved combat names的来源hash fixture；沿既有本机Kotlin2.0.21/JUnit4.13.2缓存离线编译并实际运行，2 tests/0.014s/OK。15单敌旧原文兼容、72紧凑原编号＋canonical原名通过。receipts/compact-label-prototype-tests.json保存两源码SHA及真实结果。已实际全文读取这两份原型代码与日志；原型在ignored staging，未接入游戏/Android绘制，未量字体或新App，不借两个原型测试当v100正式或新功能App通过，当前80e768e冻结源码不变。接入后必须新源码全审/原正常与受控App/新反馈raw protocol/原保存cold门槛；原设计段落继续说明未完成范围。
 
 # 下一有限视觉范围：紧凑多敌的原名标签

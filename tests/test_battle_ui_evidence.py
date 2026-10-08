@@ -20,8 +20,11 @@ class BattleUiEvidenceTest(unittest.TestCase):
             if compact:
                 gauge['width']=84
                 gauge['x']=max(baseline['x'],sprite['x']+sprite['width']/2-42)
+            name=ui.CONTENT_NAME_PINS[enemy];input_text=(f'#{slot+1} ' if compact else '')+name
             return dict(enemyId=enemy,slot=slot,cell=cell,sprite=sprite,label=label,gauge=gauge,
-                text=f'#{slot+1}'if compact else '南海龙王',textWidth=60,textHeight=42,
+                text=f'#{slot+1} 原名…'if compact else input_text,textWidth=60,textHeight=42,
+                contentName=name,inputText=input_text,inputTextWidth=300 if compact else 60,
+                ellipsized=compact,alive=True,
                 fontSp=12,density=3,adapted=not compact,baselineGauge=baseline,compactGauge=compact,
                 originalSpritePreserved=True,stateUnchanged=True)
         value['enemyFeedbackModel']=ui.FEEDBACK_EVIDENCE
@@ -95,6 +98,42 @@ class BattleUiEvidenceTest(unittest.TestCase):
             else:boss['gauge']['width']-=1
             with self.subTest(change=change),self.assertRaises(ValueError):
                 ui.validate_metrics(bad,'1.0',True,require_feedback=True)
+
+    def test_content_labels_reject_legacy_protocol_guessed_names_and_false_ellipsis(self):
+        value=self.add_feedback_fixture(json.loads((self.evidence/'mobile-party-phone-2.0.json').read_text()),True)
+        for change in ('v2','missing_name','guessed_name','input','missing_width','nan','bool_width',
+                       'too_small_width','missing_flag','bool_flag','false_flag','no_ellipsis',
+                       'wrong_prefix','lost_slot','number_only','bool_alive'):
+            v=copy.deepcopy(value);row=v['cases'][0]['enemyFeedback'][0]
+            if change=='v2':v['enemyFeedbackModel']='ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2'
+            elif change=='missing_name':row.pop('contentName')
+            elif change=='guessed_name':row['contentName']='已核骷髅'
+            elif change=='input':row['inputText']='#1 骷髅'
+            elif change=='missing_width':row.pop('inputTextWidth')
+            elif change=='nan':row['inputTextWidth']=float('nan')
+            elif change=='bool_width':row['inputTextWidth']=True
+            elif change=='too_small_width':row['inputTextWidth']=100
+            elif change=='missing_flag':row.pop('ellipsized')
+            elif change=='bool_flag':row['ellipsized']=1
+            elif change=='false_flag':row['ellipsized']=False
+            elif change=='no_ellipsis':row['text']='#1 原名'
+            elif change=='wrong_prefix':row['text']='#1 假名…'
+            elif change=='lost_slot':row['text']='原名…'
+            elif change=='number_only':row['text']='#1'
+            else:row['alive']=1
+            with self.subTest(change=change),self.assertRaises(ValueError):
+                ui.validate_metrics(v,'2.0',True,require_feedback=True)
+
+    def test_unclipped_compact_unknown_name_and_single_enemy_death_keep_content_identity(self):
+        v=self.add_feedback_fixture(json.loads((self.evidence/'mobile-party-phone-1.0.json').read_text()),True)
+        for row in v['cases'][0]['enemyFeedback']:
+            row.update(text=row['inputText'],textWidth=180,inputTextWidth=180,ellipsized=False,alive=False)
+        boss=v['cases'][1]['enemyFeedback'][0]
+        boss.update(alive=False,inputText=boss['contentName']+' · 倒下')
+        boss['text']=boss['inputText']
+        ui.validate_metrics(v,'1.0',True,require_feedback=True)
+        boss['text']=boss['contentName']
+        with self.assertRaises(ValueError):ui.validate_metrics(v,'1.0',True,require_feedback=True)
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)

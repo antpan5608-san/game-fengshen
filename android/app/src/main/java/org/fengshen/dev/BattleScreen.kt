@@ -102,7 +102,14 @@ data class BattleEnemySceneLayout(val graphic:Box,val label:Box,val gauge:Box)
 /** Read-only feedback measured at the exact font used by Canvas. */
 data class BattleEnemyFeedback(val parts:BattleEnemySceneLayout,val text:String,
     val textWidth:Float,val textHeight:Float,val adapted:Boolean,
-    val baselineGauge:Box,val compactGauge:Boolean)
+    val baselineGauge:Box,val compactGauge:Boolean,val contentName:String,
+    val inputText:String,val inputTextWidth:Float,val ellipsized:Boolean)
+
+/** Existing content names retain unresolved markers; presentation never verifies or renames them. */
+internal fun battleEnemyLabel(slot:Int,enemyCount:Int,compact:Boolean,contentName:String,alive:Boolean):String {
+    val name=(if(enemyCount>1)"#${slot+1} "else"")+contentName
+    return if(alive||compact&&enemyCount>1)name else "$name · 倒下"
+}
 
 /** Only the crowded row's gauge follows the actual sprite; labels and hit cells stay intact. */
 fun battleCompactEnemyGauge(parts:BattleEnemySceneLayout,dp:Float,compact:Boolean,single:Boolean):BattleEnemySceneLayout {

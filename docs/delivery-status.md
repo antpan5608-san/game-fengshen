@@ -1,3 +1,14 @@
+最新有限批次检查点（2026-10-08T09:31:37.311760+00:00）：拟个人 v101 / 0.8.31-compact-label-personal 已 IMPLEMENTED_LOCAL_CHECKED；正式签名、App验收和发布均 PENDING，线上仍为实际已发布 v100，稳定 v82/c62，WORLD-FULL-01 IN_PROGRESS/PARTIAL。
+
+- 本批只将紧凑多敌标签投影为既有 content 名称＋原 slot 编号，原12sp/框/图形/短条/命中与玩家规则、存档保持；TextPaint 的 END 省略与 Canvas 共用真实字符串。
+- 敌35既有“原名未核（敵人35）”仍 UNKNOWN，敌137沿既有“南海龍王”；不关闭原名或全美术欠账。新V3绑定实际内容名/输入/绘制测字/省略标志，拒绝旧V2。
+- 新480 JVM/99 suites零失败错误跳过，59相关Python、DEBUG应用/仪器构建通过，409资源逐字节同100；首Paint/TextPaint编译错误及修复后日志保留在服务器 receipts/compact-label-*。
+- 已完整审查本批9代码/测试/配置文件，新codex_only 83a22e79／Stop current；09:18:01Z preflight查询成功但NO_DATA、errors空、cleanup0，无实机样本。
+- 下一步原main冻结后 android-build.yml(runtime_tests=true)，独立核同源新签名/21Content36门禁、三字体新标签原PNG原片、正常交互物品攻击合法治疗奖励、全保存外部cold、覆盖100与偏好；受控四人/Boss另列。全门槛齐才原reviewer同审核APK发布/public全字节/postflight。
+- 本服务器是唯一writer；迁入工具dirty、Windows冻结ZIP/旧完整历史、原失败和玩家存档保持。真机13T/声音/完整原结局/云恢复及全部长期欠账OPEN，无暂停或完成标记。
+
+接续入口：[密集敌人标签本批](evidence/battle-compact-label-next-batch.md)。以下保留当时历史。
+
 # WORLD-FULL-01 服务器当前接续
 状态：IN_PROGRESS / PARTIAL，三项长期终点未完成。
 唯一开发位置：192.168.1.20，/srv/fengshen-dev/game-fengshen。

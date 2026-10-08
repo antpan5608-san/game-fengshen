@@ -17,6 +17,12 @@ class TouchTest:IsolatedGameTestCase(){
         instrumentation.runOnMainSync{
             val before=v.currentSnapshot();val dp=v.resources.displayMetrics.density
             val actual=v.battleEnemyFeedback(enemy,scene);val parts=actual.parts
+            val alive=(v.battleVisibleHp(enemy.slot)?:0)>0
+            assertEquals(enemy.definition.name,actual.contentName)
+            assertEquals(battleEnemyLabel(enemy.slot,scene.touch.enemies.size,scene.compact,enemy.definition.name,alive),actual.inputText)
+            assertEquals(actual.text!=actual.inputText,actual.ellipsized)
+            assertTrue(actual.inputTextWidth+.01f>=actual.textWidth)
+            if(scene.compact)assertTrue(actual.text.startsWith("#${enemy.slot+1} "))
             val sprite=GameView::class.java.getDeclaredMethod("battleEnemyBox",BattleEnemy::class.java)
                 .apply{isAccessible=true}.invoke(v,enemy) as Box
             val cell=v.battleTargetBounds(enemy.slot)
@@ -52,6 +58,8 @@ class TouchTest:IsolatedGameTestCase(){
                 .put("text",actual.text).put("textWidth",actual.textWidth).put("textHeight",actual.textHeight)
                 .put("fontSp",12).put("density",dp).put("adapted",actual.adapted)
                 .put("baselineGauge",json(actual.baselineGauge)).put("compactGauge",actual.compactGauge)
+                .put("contentName",actual.contentName).put("inputText",actual.inputText)
+                .put("inputTextWidth",actual.inputTextWidth).put("ellipsized",actual.ellipsized).put("alive",alive)
                 .put("originalSpritePreserved",true).put("stateUnchanged",true)
         }
         return evidence
@@ -5975,7 +5983,7 @@ class TouchTest:IsolatedGameTestCase(){
         File(instrumentation.targetContext.getExternalFilesDir(null),"mobile-phone-$font.json").writeText(
             phoneWindowMetrics(v).put("kind","CONTROLLED_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width).put("screenHeight",screen.height)
                 .put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font).put("density",dp).put("minTouchDp",48)
-                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2").put("enemyFeedback",org.json.JSONArray().put(bossFeedback))
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_CONTENT_LABEL_V3").put("enemyFeedback",org.json.JSONArray().put(bossFeedback))
                 .put("medicineDetailHeightDp",medicine.detail.h/dp).put("medicineTextRowsVisible",medicine.detail.h/((14f*font*1.25f+4)*dp)).toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
@@ -6067,7 +6075,7 @@ class TouchTest:IsolatedGameTestCase(){
             phoneWindowMetrics(v).put("kind","CONTROLLED_NATIVE_LAYOUT_EMULATOR_NOT_REAL_PHONE").put("screenWidth",screen.width)
                 .put("screenHeight",screen.height).put("windowWidth",v.width).put("windowHeight",v.height).put("fontScale",font)
                 .put("density",dp).put("cases",reports).put("fourActorInputAndRewardChecks","PASS")
-                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2").toString())
+                .put("enemyFeedbackModel","ACTUAL_SPRITE_MEASURED_CONTENT_LABEL_V3").toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
 

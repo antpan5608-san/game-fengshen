@@ -24,7 +24,10 @@ METHODS = ('testControlledMobileBattleTouchAndSnapshots', 'testControlledMobileB
            'testControlledWholly08PartyAdvancesWithoutTouchCommand')
 PHONE_METHODS = ('testMobileBattlePhoneSizeAndLargeFont', 'testControlledBattlePartyPhoneSizeAndLargeFont')
 GEOMETRY_EVIDENCE = 'ACTUAL_WINDOW_INSETS_V1'
-FEEDBACK_EVIDENCE = 'ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2'
+FEEDBACK_EVIDENCE = 'ACTUAL_SPRITE_MEASURED_CONTENT_LABEL_V3'
+# Existing c62 combat.json, SHA256 86f2f75d15ca09c975d8be7a155f83f6d10c78cc6b14efcec65c8ee33aa45f27.
+# Scoped native UI fixtures only; enemy 35's original name remains UNKNOWN.
+CONTENT_NAME_PINS = {35: '原名未核（敵人35）', 137: '南海龍王'}
 
 
 def acceptance(require_insets=False,require_feedback=False):
@@ -106,6 +109,21 @@ def validate_feedback(rows,enemies,height):
         if (not isinstance(text,str) or not 0<len(text)<=256 or '\n' in text
                 or any(type(n)not in (int,float)or not math.isfinite(n)or n<=0 for n in (width,height_text))):
             raise ValueError('Invalid actual enemy text measurements')
+        name=row.get('contentName');alive=row.get('alive');input_text=row.get('inputText')
+        input_width=row.get('inputTextWidth');ellipsized=row.get('ellipsized')
+        expected=(f'#{slot+1} ' if len(enemies)>1 else '')+CONTENT_NAME_PINS[enemy]
+        if len(enemies)==1 and alive is False:expected+=' · 倒下'
+        if (name!=CONTENT_NAME_PINS[enemy] or type(alive)is not bool or input_text!=expected
+                or type(input_width)not in (int,float) or not math.isfinite(input_width) or input_width<=0
+                or type(ellipsized)is not bool or ellipsized!=(text!=input_text)
+                or input_width+.01<width):
+            raise ValueError('Actual content name/input text/measurements differ')
+        if ellipsized:
+            if (input_width<=label[2] or not text.endswith('…') or not input_text.startswith(text[:-1])
+                    or len(enemies)==1 or not text.startswith(f'#{slot+1} ')):
+                raise ValueError('Actual END ellipsis loses content/instance identity')
+        elif text!=expected or abs(input_width-width)>.01:
+            raise ValueError('Unclipped actual text differs from its measured input')
         if len(enemies)==1:
             if (row.get('compactGauge') is not False or any(abs(a-b)>.01 for a,b in zip(gauge,baseline))
                     or abs(label[2]-gauge[2])>.01):
@@ -115,7 +133,7 @@ def validate_feedback(rows,enemies,height):
                     or any(overlap(a,b)for a,b in ((sprite,label),(sprite,gauge),(label,gauge)))):
                 raise ValueError('Measured single-enemy feedback overlaps or loses full text')
         else:
-            if row.get('adapted') is not False or row.get('compactGauge') is not True or text!=f'#{slot+1}':
+            if row.get('adapted') is not False or row.get('compactGauge') is not True:
                 raise ValueError('Compact native instance feedback changed')
             # Original gauge bounds are still observed by the App. Only width and x may change.
             original=(cell[0]+12,cell[1]+cell[3]-18,cell[2]-24,12)
