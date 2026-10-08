@@ -1,3 +1,9 @@
+补充实际接续：原候选95 source3896cf2/build37708544777首attempt在Content21/旧档覆盖后ADB root离线，失败留档；同run重试相同signed SHA77312f52成功，36原门禁与三字体99进度投影/4crop身份和原完整cold独立重算通过。按名称下载误拿首失败小artifact，失败本地下载检查也保留；原v8.0.1下载器已实际读固定commit源码，getArtifactPublic/filterLatest按最大ID选“最新”，而本次成功runtime ID11521273557小于首失败11521630673。
+
+已在原发布步骤有限修正：按同source/run的唯一成功build与最后所需runtime job起止时间选唯一未过期上传，完整ZIP摘要/大小及路径安全核验后以GH明确ID下载；不删除旧失败、不改Secrets/reviewer/同审核APK检查/仅两对象。新7项元数据与ZIP负向测试随原test_runtime*py覆盖；本机合计55相关Python真实通过，原PowerShell块仅语法验证、实际GitHub成功元数据+明确ID签名包下载/ZIP/raw同源绑定实测通过，尚未在新source原publisher执行。
+
+95游戏源码仍原已审身体批次/452 JVM，不重复声称新JVM已跑；当前新源码含发布选择修正，必须重新审查并新同source正式签名/App，不能用3896cf2已过App替新source。旧signed/App/原片与重试记录保留为历史，线上94/稳定82及全部未完成保持。
+
 最新有限实施：拟95 / 0.8.25-party-spacing-personal，已接同一斜列身体槽位与有界攻击投影；452 JVM/96 suites、48相关Python和DEBUG应用/仪器编译真实通过，尚未正式签名/App/发布，不复用94App。下面仅“尚未实施”的段落是实施前历史。
 
 # 下一有限视觉批次：四人身体间距

@@ -126,18 +126,15 @@ jobs:
             $runtimeJobs=@($r.jobs|Where-Object {$_.name -eq $runtimeName -and $_.status -eq 'completed' -and $_.conclusion -eq 'success'})
             if($runtimeJobs.Count -ne 1){throw "Actual same-candidate runtime stage required: $runtimeName"}
           }
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: fengshen-signed-apk
-          path: artifacts/ci
-          run-id: ${{ inputs.build_run_id }}
-          github-token: ${{ github.token }}
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: fengshen-town02-runtime-evidence
-          path: artifacts/runtime-review
-          run-id: ${{ inputs.build_run_id }}
-          github-token: ${{ github.token }}
+          New-Item artifacts/runtime-selection -ItemType Directory -Force|Out-Null
+          $run|Set-Content artifacts/runtime-selection/run.json -Encoding utf8
+          $artifacts=gh api "repos/$env:GITHUB_REPOSITORY/actions/runs/$env:BUILD_RUN_ID/artifacts?per_page=100"
+          if($LASTEXITCODE -ne 0){throw 'Cannot read immutable review artifact metadata'}
+          $artifacts|Set-Content artifacts/runtime-selection/artifacts.json -Encoding utf8
+          # Retried uploads can have smaller IDs than the failed attempt. Keep both;
+          # select only the unique upload during each successful producing job.
+          python tools/runtime_artifact_selection.py --run artifacts/runtime-selection/run.json --artifacts artifacts/runtime-selection/artifacts.json --run-id $env:BUILD_RUN_ID --source $env:GITHUB_SHA --runtime-job $runtimeNames[-1] --download
+          if($LASTEXITCODE -ne 0){throw 'Exact successful-job artifact selection/download failed'}
       - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin

@@ -1,3 +1,5 @@
+最新研发检查点：拟95身体间距原source3896cf2的App重试已成功/36 raw门禁独立复核；发现同run同名artifact按最大ID误取失败轮，现已修原成功job窗口/明确ID下载选择并新55 Python检查通过。需新source正式构建/App及发布器实际验收，不复用旧App/不发布旧source；线上94、稳定82/全部欠账保持。见[本批记录](evidence/battle-party-spacing-next-batch.md)，以下保留历史。
+
 最新研发批次：拟v95四人身体间距有限源码已实施，新452 JVM/96 suites、48相关Python和DEBUG应用/仪器编译通过；新三字体actual crop/有界攻击断言待原Actions同源App，不称已验或已发布。线上94、稳定82/c62和全部长期未完成项保持。见[本批入口](evidence/battle-party-spacing-next-batch.md)，以下旧检查点保留。
 
 最新实际检查点：个人 v94 / 0.8.24-scoped-visual-personal 已发布并独立核验公网62,603,864完整字节与审核APK一致；原Actions新450 release JVM/96 suites、21 Content/36个人门禁通过，121原PNG/74视频采样/15原片SHA/7完整cold已实际复核。四头像启动与当前战斗按需准备、过期/不同battle/退出/销毁owner拒绝均实际通过。postflight 2026-10-08T00:11:17Z查询成功但NO_DATA，权威保留94/93，不当真机健康。稳定82、c62/392、原已审16图/17文件及WORLD-FULL-01 IN_PROGRESS/PARTIAL和全部长期欠账保持。详见[v94交付](evidence/v94-scoped-visual-personal.md)，主动接续[四人身体间距](evidence/battle-party-spacing-next-batch.md)。以下保留各检查点当时事实。
