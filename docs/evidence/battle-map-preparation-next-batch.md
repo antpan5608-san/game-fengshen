@@ -1,0 +1,27 @@
+# 下一候选范围：地图首帧后的局部图像预备
+
+DESIGN_SOURCE_READ_NOT_IMPLEMENTED；当前99/source a5bb7c6 / Actions37741740866仍冻结验收，线上98/稳定82/c62及长期IN_PROGRESS/PARTIAL保持。本文件仅接续入口，不变更冻结来源，不是新独立任务。
+
+CPU prepare_context本轮成功，已再读真实MainActivity.onCreate/prepareBattleVisuals/firstInteractiveFrame/GameView.doFrame/requestBattleVisuals/createPartyBattle、ContentLoader.loadForPlay、BattleVisualAssets/Preparer/Definition、完整BattleVisualRequest/Selection与ResourceMap。doFrame为原Choreographer回调，实际Surface post后已有首次交互节点；原单contentWorker拥有preparer/cache，UI只接完成bundle。ContentLoader启动仅四头像；当前地图/队伍的准备可复用同一selection与缓存，不能在Canvas/主线程解码或创建第二套缓存/战斗/HP。
+
+v98原AVD正常仅一个真实请求：queue0/prepare663/UI0/ready663/postDelay41/firstPosted704ms；三字体受控缓存后准备0–3ms但排队293–381ms。受控12图bundle18,864,036字节只是bundle保留量，不是进程峰值或手机预算。准备阶段未细分每图校验/解码，不能据这一个样本归因某文件或宣称预备一定改善。新99实际时序到齐后再核范围。
+
+较小拟方案：只有活动/聚焦、真正MAP成功送帧后，按当前map和当前characters稳定ID、空enemy集合、blackScene=false做局部预备；未知map/actor仍原回退，不猜未来敌群或RNG、不改世界、存档、输入或原战斗请求守卫。只在现有worker预热缓存，不安装地图预备bundle到战斗UI，不把预备成功冒称battle素材或首战首帧已准备。
+
+实施前须确定单一有界待处理任务/同scope去重、新map/party合并、battle请求取消尚未开始的旧预备、退出/销毁取消、活动解码每图之间可放弃剩余项的精确方式。保留worker单写cache与原64MiB预算、无主线程同步cache查询；不扩大为全16启动重解码。不能因队列忙加入线程并破坏cache所有权，也不为测试删原守卫。真实游戏首帧不等待預备；race/异常时只能回退，不能堵路线。
+
+验收要求：真正新JVM去重/取消/迟到owner/小预算/优先battle无效预备模型边界；原Android实际准备/诊断stage与raw source/hash绑定，正常新游戏/无grants/不强制等待预备的原片及时序分列受控四人/Boss。原21Content36门禁、全save/外部cold/覆盖98或下一实际发布版、图像hash/缓存上限与失败恢复保持。新source完整审查/相关测试/record/Stop，再原Actions同源正式签名/App原画面通过才逐版发布/public/postflight。
+
+尚缺：具体取消/合并实现与实际Android新测量；本文件没有新JVM、App或性能通过。真机13T帧耗时/内存/声音、真实多设备恢复、完整原主线、全部美术/角色动作/敌图/地图/寻路及累计欠账继续OPEN。原失败/迁入工具dirty/Windows冻结历史和原存档保持。
+
+## 有界队列接法的源码核对（只读设计）
+
+原contentWorker为Executors.newSingleThreadExecutor的委托实例，仅启动加载、battle任务和销毁使用；它没有公开remove待处理Runnable入口。后续实现不能仅无限submit再cancel Future而宣称队列有界。较直接可审范围是在原位置保留同一个、同名字、单worker的ThreadPoolExecutor，明确持有一个可取消warm Runnable：新scope先取消/移除旧待处理项，active warm在每张图之间检查token，battle进入先取消warm再走原submit；UI不读cache或等待任务。需要独立测试原启动/战斗顺序、同scope去重、最多一个待处理warm、旧owner/销毁拒绝和正在decode时取消后剩余项不读取。
+
+GameView.doFrame为主线程Choreographer回调；可在成功render且Surface实际post返回之后、active/focused/MAP且无battle的自然节点捕获不可变map/characters范围。requestBattleVisuals仍原battle/ID/epoch守卫，不把旧map bundle安装进battle。未开始warm可remove，已开始的单张decode不能假称即时取消；最多保留该张的原cache结果并在下一张前停止。仍是方案候选，尚未新代码/App或性能验证；原99冻结验收继续。
+
+## v99 新同源 App 的原因线索
+
+v99/source a5bb7c6/原build37741740866的新 raw 与原片已独立验：正常两次自然遭遇，首请求 queue1/prepare1505/UI13/ready1519/post40/firstPosted1559ms；第二次prepare0/firstPosted71ms。受控三字体queue355–432/prepare0/firstPosted460–503ms，跟正常新游戏分列。首正常原片7.5–8.5s采样仍是原sprite/头像回退，9s已有新角色/背景。不同敌群与机器时序不能和98一个样本作可比性能结论；这些只是进一步局部预备的真实原因线索。
+
+预备失败不阻塞正常战斗重试；同scope去重只阻止重复预热，battle取消后同图首帧可重新入队。Activity pause/focus loss、GameView Surface销毁与Activity销毁须取消旧任务，token在每张校验/解码之前检查；当前单图若已开始可完成缓存，不假称可中断解码。只记录当前范围stage/耗时/成功等既有允许scalar，warm完成不写battlePrepared、不安装content.battleVisual、不修改snapshot/RNG。原21Content36门禁及当前99全save/cold实际基线保持。尚无新warm代码或测试通过。
