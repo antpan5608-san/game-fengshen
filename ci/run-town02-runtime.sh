@@ -85,7 +85,7 @@ if listed.returncode:
         print('No installed App evidence directory; preserve the primary runtime failure')
         raise SystemExit(0)
 for name in listed.stdout.splitlines():
-    if re.fullmatch(r'(world-[A-Za-z0-9._-]+|battle-magic-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*|town01-normal-injury-attempts)\.(png|json)',name):
+    if re.fullmatch(r'(world01-navigation-(?:touch|ground|object-options)-(?:1\.0|1\.3|2\.0)|world-[A-Za-z0-9._-]+|battle-magic-[A-Za-z0-9._-]+|mobile-[A-Za-z0-9._-]+|nanhai-[A-Za-z0-9._-]+|touch-ux-[A-Za-z0-9._-]+|town01-(?:touch-ux-|shop|bought|herb|inn)[A-Za-z0-9._-]*|town01-normal-injury-attempts)\.(png|json)',name):
         Path('artifacts/checkpoint-ui').mkdir(parents=True,exist_ok=True)
         target=Path('artifacts/checkpoint-ui')/(name if name.startswith(('touch-ux-','nanhai-','mobile-')) else 'touch-ux-'+name)
         subprocess.run(['adb','pull',base+name,str(target)],check=True,timeout=10)
@@ -307,6 +307,10 @@ if [[ "$quality" == PERSONAL_TEST ]]; then
             run_test testControlledFieldMagicSelectionCancelCommitAndSave false
             run_test testControlledBattleMagicSelectionPhasesAndSave false
             run_test testControlledBattleVisualPosesReadOnly false
+            if [[ "$scope_id" == WORLD-C62-ROOM-PERSONAL ]]; then
+                run_test testControlledNavigationHiddenGroundAndObjectCancel false
+                cp artifacts/town02-runtime/testControlledNavigationHiddenGroundAndObjectCancel.txt "artifacts/town02-runtime/testControlledNavigationHiddenGroundAndObjectCancel-font-$font.txt"
+            fi
             cp artifacts/town02-runtime/testControlledBattleVisualPosesReadOnly.txt "artifacts/town02-runtime/testControlledBattleVisualPosesReadOnly-font-$font.txt"
             cp artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont.txt "artifacts/town02-runtime/testControlledBattlePartyPhoneSizeAndLargeFont-font-$font.txt"
             pull_evidence
@@ -344,6 +348,7 @@ from pathlib import Path
 from tools.runtime_handoff import finish_personal,PERSONAL_GATES,C60_PERSONAL_GATES,C61_PERSONAL_GATES,C60_SCOPES,C61_SCOPES,review_personal,active_scope,jiang_proof_digests
 from tools import battle_ui_evidence as ui, room28_evidence as room28, field_magic_evidence as field_magic, battle_magic_evidence as battle_magic
 from tools import battle_visual_evidence as visual
+from tools import map_navigation_evidence as navigation
 r=json.loads(Path('artifacts/town02-runtime/candidate.json').read_text())
 r.update(sourceCommit=os.environ['GITHUB_SHA'],buildRunID=os.environ['GITHUB_RUN_ID'])
 recording=Path('artifacts/checkpoint-ui/personal-r1-smoke-recording.json')
@@ -381,6 +386,9 @@ if scope.get('battleMagicAcceptance')==battle_magic.ACCEPTANCE:
 if scope.get('battleVisualAcceptance')==visual.ACCEPTANCE:
     r.update(visual.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime')))
     r.update({key:'PASS'for key in visual.GATES})
+if scope.get('mapNavigationAcceptance')==navigation.ACCEPTANCE:
+    r.update(navigation.proof_digests(Path('artifacts/checkpoint-ui'),Path('artifacts/town02-runtime'),r))
+    r.update({key:'PASS' for key in navigation.GATES})
 r=finish_personal(r);review_personal(r)
 r['smokeRecordingSha256']=hashlib.sha256(recording.read_bytes()).hexdigest()
 Path('artifacts/town02-runtime/runtime-receipt.json').write_text(json.dumps(r,indent=2)+'\n')

@@ -254,7 +254,8 @@
       "battleMagicFullSaveExternalCold",
       "battleVisualAssets",
       "battleVisualNormalAndCold",
-      "battleVisualControlledPosesReadOnly"
+      "battleVisualControlledPosesReadOnly",
+      "mapNavigationGroundObjectAndFonts"
     ],
     "manual_acceptance": "PENDING"
   },
@@ -403,5 +404,22 @@
     "bodyScale": "SHORT_ARENA_MULTIPARTY_CROPS_V1",
     "preparationTiming": "CURRENT_BATTLE_MONOTONIC_TO_POST_V1",
     "mapPreparation": "MAP_POST_SCOPED_CACHE_WARM_V1"
+  },
+  "mapNavigationAcceptance": {
+    "kind": "CONTROLLED_FRESH_OPENING_NOT_NORMAL_WORLD_COMPLETION",
+    "model": "CURRENT_MAP_NAVIGATION_TOUCH_V1",
+    "mapId": 114,
+    "screen": [
+      2640,
+      1216
+    ],
+    "fonts": [
+      1.0,
+      1.3,
+      2.0
+    ],
+    "method": "testControlledNavigationHiddenGroundAndObjectCancel",
+    "proofKey": "mapNavigationEvidenceSha256",
+    "coverage": "HIDDEN_STICK_GESTURE_PRIORITY_GROUND_NATURAL_STEPS_OBJECT_ARRIVAL_CANCEL"
   }
 }

@@ -335,6 +335,7 @@ jobs:
             artifacts/checkpoint-ui/world-visual-normal-*
             artifacts/checkpoint-ui/touch-ux-world-visual-pose*
             artifacts/checkpoint-ui/touch-ux-world-visual-normal-preparation.json
+            artifacts/checkpoint-ui/touch-ux-world01-navigation-*
             artifacts/checkpoint-ui/touch-ux-battle-magic-*
             artifacts/checkpoint-ui/touch-ux-world-controlled-r1-*
             artifacts/checkpoint-ui/touch-ux-world-content-migration-backup.json

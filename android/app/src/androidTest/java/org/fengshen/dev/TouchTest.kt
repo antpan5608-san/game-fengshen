@@ -14,6 +14,12 @@ class TouchTest:IsolatedGameTestCase(){
     /** Isolated fresh opening, real map/clock/native touches. Not normal completion/phone evidence. */
     fun testControlledNavigationHiddenGroundAndObjectCancel(){
         val ctx=instrumentation.targetContext
+        val font=ctx.resources.configuration.fontScale.toString()
+        for(name in listOf("world01-navigation-touch-$font.json", "world01-navigation-ground-$font.png",
+                "world01-navigation-object-options-$font.png")){
+            val file=File(ctx.getExternalFilesDir(null),name)
+            if(file.exists())assertTrue("Cannot discard this isolated method's stale evidence",file.delete())
+        }
         assertTrue(ctx.getSharedPreferences("opening-local-save",0).edit().clear().commit())
         assertTrue(ctx.getSharedPreferences("operation-a-ui",0).edit().putString("display-v2","FULL").commit())
         val(activity,v)=launch(joystick=null)
@@ -33,6 +39,34 @@ class TouchTest:IsolatedGameTestCase(){
             v.onKeyDown(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN,android.view.KeyEvent.KEYCODE_BUTTON_B))
             v.onKeyUp(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_UP,android.view.KeyEvent.KEYCODE_BUTTON_B))
             assertFalse(controller().active);assertEquals(initial,v.currentSnapshot())
+            // Invalid gestures stay within this UI callback: no synthetic clock/world steps.
+            val dragged=(middle.first+100*resourcesDensity(v)) to middle.second
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(middle))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_MOVE,listOf(dragged))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(dragged))
+            assertFalse("Drag must not install a map target",controller().active)
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(middle))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_CANCEL,listOf(middle))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(middle))
+            assertFalse("CANCEL must not install a map target",controller().active)
+            val other=(middle.first+20*resourcesDensity(v)) to middle.second
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(middle))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_POINTER_DOWN or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(middle,other))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_POINTER_UP or (1 shl MotionEvent.ACTION_POINTER_INDEX_SHIFT),listOf(middle,other))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(middle))
+            assertFalse("Multiple fingers must not install a map target",controller().active)
+            val hud=center(v.hudBounds())
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(hud));dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(hud))
+            assertEquals(GameView.Layer.CHARACTER,v.layer);assertFalse(controller().active)
+            v.onKeyDown(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            v.onKeyUp(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_UP,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            assertEquals(GameView.Layer.MAP,v.layer);assertEquals(initial,v.currentSnapshot())
+            val menu=ui.buttons.getValue(Key.MENU);assertTrue(menu.w>=48*resourcesDensity(v)&&menu.h>=48*resourcesDensity(v))
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(center(menu)));dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(center(menu)))
+            assertEquals(GameView.Layer.MENU,v.layer);assertFalse(controller().active)
+            v.onKeyDown(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            v.onKeyUp(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_UP,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            assertEquals(GameView.Layer.MAP,v.layer);assertEquals(initial,v.currentSnapshot())
         }
         var ground:Pair<Int,Int>?=null;var groundPoint:Pair<Float,Float>?=null;var groundSteps=0;var beforeSeq=0L
         var groundActualSteps=0L;var objectActualSteps=0L
@@ -56,10 +90,16 @@ class TouchTest:IsolatedGameTestCase(){
         tap(v,groundPoint!!,confirmArrival=false)
         waitFor("Ground route was not installed"){controller().remainingSteps.size>=3}
         // No test draw or World tick: inspect the actual posted Canvas pixels.
-        val frame=instrumentation.uiAutomation.takeScreenshot();val pixels=IntArray(frame.width*frame.height)
-        frame.getPixels(pixels,0,frame.width,0,0,frame.width,frame.height)
-        val cyan=pixels.count{it==0xff29dfff.toInt()};assertTrue("Posted cyan route/target missing",cyan>20)
-        File(ctx.getExternalFilesDir(null),"world01-navigation-ground.png").outputStream().use{frame.compress(Bitmap.CompressFormat.PNG,100,it)}
+        var frame=instrumentation.uiAutomation.takeScreenshot();var cyan=0
+        val postedDeadline=SystemClock.elapsedRealtime()+2000
+        do{
+            val pixels=IntArray(frame.width*frame.height);frame.getPixels(pixels,0,frame.width,0,0,frame.width,frame.height)
+            cyan=pixels.count{it==0xff29dfff.toInt()}
+            if(cyan>20)break
+            SystemClock.sleep(20);frame=instrumentation.uiAutomation.takeScreenshot()
+        }while(SystemClock.elapsedRealtime()<postedDeadline)
+        assertTrue("Posted cyan route/target missing",cyan>20)
+        File(ctx.getExternalFilesDir(null),"world01-navigation-ground-$font.png").outputStream().use{frame.compress(Bitmap.CompressFormat.PNG,100,it)}
         waitFor("Ground route did not finish naturally"){!controller().active&&v.world.remaining==0}
         lateinit var afterGround:SaveSnapshot
         instrumentation.runOnMainSync{
@@ -98,9 +138,10 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(initial.inventory,atArrival.inventory);assertEquals(initial.money,atArrival.money);assertEquals(initial.flags,atArrival.flags)
             val dialog=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as android.app.AlertDialog
             val button=dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE);val pos=IntArray(2);button.getLocationOnScreen(pos)
+            assertTrue(button.width>=48*resourcesDensity(v)&&button.height>=48*resourcesDensity(v))
             cancelPoint=(pos[0]+button.width/2f) to (pos[1]+button.height/2f)
         }
-        screenshot(v,"world01-navigation-object-options")
+        screenshot(v,"world01-navigation-object-options-$font")
         nativeTap(cancelPoint!!);waitFor("Cancel did not return to map"){v.layer==GameView.Layer.MAP}
         SystemClock.sleep(300)
         instrumentation.runOnMainSync{assertEquals(atArrival,v.currentSnapshot());assertFalse(controller().active)}
@@ -109,12 +150,16 @@ class TouchTest:IsolatedGameTestCase(){
             .put("hiddenStickAreaMapGesture",true).put("cyanPixels",cyan).put("frameWidth",frame.width).put("frameHeight",frame.height)
             .put("versionCode",ctx.packageManager.getPackageInfo(ctx.packageName,0).longVersionCode)
             .put("fontScale",v.resources.configuration.fontScale)
+            .put("contentVersion",atArrival.contentVersion).put("mapId",atArrival.mapId)
             .put("groundExpectedSteps",groundSteps).put("groundActualSteps",groundActualSteps).put("objectId",objectValue!!.id)
             .put("objectExpectedSteps",objectSteps).put("objectActualSteps",objectActualSteps)
             .put("arrivalFace",atArrival.direction.name).put("arrivalSelectionOnly",true).put("cancelNoCommit",true).put("noAutoResume",true)
-        File(ctx.getExternalFilesDir(null),"world01-navigation-touch.json").writeText(report.toString())
+            .put("dragNoTarget",true).put("cancelGestureNoTarget",true).put("multipleFingersNoTarget",true)
+            .put("hudNoMapTarget",true).put("menuNoMapTarget",true).put("menuAndCancelMinimum48dp",true)
+        File(ctx.getExternalFilesDir(null),"world01-navigation-touch-$font.json").writeText(report.toString())
         instrumentation.runOnMainSync{activity.finish()}
     }
+    private fun resourcesDensity(v:GameView)=v.resources.displayMetrics.density
     /** Actual Canvas feedback/measurements, observed on its UI thread without rule mutations. */
     private fun enemyFeedbackEvidence(v:GameView,scene:BattleSceneLayout,enemy:BattleEnemy):JSONObject {
         lateinit var evidence:JSONObject

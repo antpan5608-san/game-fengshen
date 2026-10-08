@@ -52,7 +52,7 @@ try {
         $patterns=@('test_ci_apk.py','test_runtime*py','test_record_app_boundary.py','test_c60_personal_scope.py','test_personal_test_delivery.py','test_world_reference_repair.py','test_world_scene_mechanism.py','test_world_trade_driver.py','test_world_hell_route_driver.py')
         if($scopeId -in @('WORLD-C61-PERSONAL','WORLD-C61-UI-PERSONAL','WORLD-C62-ROOM-PERSONAL')){$patterns+=@('test_c61_personal_scope.py','test_world_jiang_export.py')}
         if($scopeId -in @('WORLD-C61-UI-PERSONAL','WORLD-C62-ROOM-PERSONAL')){$patterns+=@('test_battle_ui_evidence.py','test_battle_ui_personal_scope.py')}
-        if($scopeId -eq 'WORLD-C62-ROOM-PERSONAL'){$patterns+=@('test_room28_evidence.py','test_room28_personal_scope.py','test_town_room28_export.py')}
+        if($scopeId -eq 'WORLD-C62-ROOM-PERSONAL'){$patterns+=@('test_room28_evidence.py','test_room28_personal_scope.py','test_town_room28_export.py','test_map_navigation_evidence.py')}
         foreach($pattern in $patterns){
             & python -m unittest discover -s tests -p $pattern
             if($LASTEXITCODE -ne 0){throw "Personal scope related regression failed: $pattern"}

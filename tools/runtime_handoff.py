@@ -14,9 +14,11 @@ from pathlib import Path
 
 if __package__:
     from . import battle_visual_evidence as visual
+    from . import map_navigation_evidence as navigation
     from . import battle_ui_evidence as battle_ui, room28_evidence as room28, field_magic_evidence as field_magic, battle_magic_evidence as battle_magic
 else:
     import battle_visual_evidence as visual
+    import map_navigation_evidence as navigation
     import battle_ui_evidence as battle_ui
     import room28_evidence as room28
     import field_magic_evidence as field_magic
@@ -113,7 +115,8 @@ def personal_gates(scope):
             + (room28.GATES if scope['id'] == room28.SCOPE else [])
             + (field_magic.GATES if scope.get('fieldMagicAcceptance') == field_magic.ACCEPTANCE else [])
             + (battle_magic.GATES if scope.get('battleMagicAcceptance') == battle_magic.ACCEPTANCE else [])
-            + (visual.GATES if scope.get('battleVisualAcceptance') == visual.ACCEPTANCE else []))
+            + (visual.GATES if scope.get('battleVisualAcceptance') == visual.ACCEPTANCE else [])
+            + (navigation.GATES if scope.get('mapNavigationAcceptance') == navigation.ACCEPTANCE else []))
 
 
 def validate_jiang_digests(receipt):
@@ -199,6 +202,9 @@ def finish_personal(proposed):
     if scope.get('battleVisualAcceptance') == visual.ACCEPTANCE:
         visual.validate_digests(proposed)
         result.update({key:proposed[key]for key in visual.PROOF_KEYS})
+    if scope.get('mapNavigationAcceptance') == navigation.ACCEPTANCE:
+        navigation.validate_digests(proposed)
+        result.update({key: proposed[key] for key in navigation.PROOF_KEYS})
     result.update(quality='PERSONAL_TEST', manual_acceptance='PENDING', runtime='SMOKE_PASS',
         completedStages=['personal-smoke'], runtimeScope=scope['id'], runtimeScopeSha256=digest(SCOPE_PATH),
         longTests='DEFERRED_TO_MANUAL', stableAcceptance='NOT_RUN', audio='NOT_RUN', onePlus13T='NOT_RUN',
@@ -231,6 +237,8 @@ def review_personal(receipt):
         battle_magic.validate_digests(receipt)
     if scope.get('battleVisualAcceptance') == visual.ACCEPTANCE:
         visual.validate_digests(receipt)
+    if scope.get('mapNavigationAcceptance') == navigation.ACCEPTANCE:
+        navigation.validate_digests(receipt)
     if receipt.get('longTests') != 'DEFERRED_TO_MANUAL' or receipt.get('stableAcceptance') != 'NOT_RUN':
         raise ValueError('Unexecuted long/stable acceptance must remain explicit')
     if any(receipt.get(k) == 'PASS' for k in R1_BASE_KEYS + WORLD_KEYS + CONTINUATION_KEYS + R1_CONTINUATION_KEYS if k != 'upgrade'):
@@ -284,6 +292,9 @@ def active_scope(candidate=None):
             raise ValueError('Current battle magic touch/phases/fonts/full cold proofs cannot be omitted')
         if c62 and (scope.get('battleVisualAcceptance') is not None or candidate is not None and int(candidate.get('versionCode',0))>=91) and scope.get('battleVisualAcceptance')!=visual.ACCEPTANCE:
             raise ValueError('Current original visual/normal/cold proofs cannot be omitted')
+        if c62 and (scope.get('mapNavigationAcceptance') is not None or
+                candidate is not None and int(candidate.get('versionCode', 0)) >= 102) and scope.get('mapNavigationAcceptance') != navigation.ACCEPTANCE:
+            raise ValueError('Current map navigation touch/fonts proofs cannot be omitted')
         if scope['id'] in battle_ui.UI_SCOPES and scope.get('battleUiAcceptance') != battle_ui.acceptance(
                 require_insets=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE,
                 require_feedback=scope.get('battleVisualAcceptance') == visual.ACCEPTANCE):
@@ -569,6 +580,10 @@ def main():
                 proofs=visual.proof_digests(args.evidence,args.receipt.parent)
                 if any(receipt.get(key)!=value for key,value in proofs.items()):
                     raise ValueError('Raw visual normal/cold artifacts differ from this reviewed candidate proof')
+            if scope.get('mapNavigationAcceptance') == navigation.ACCEPTANCE:
+                proofs = navigation.proof_digests(args.evidence, args.receipt.parent, receipt)
+                if any(receipt.get(key) != value for key, value in proofs.items()):
+                    raise ValueError('Raw navigation artifacts differ from this reviewed candidate proof')
             print('PERSONAL_TEST minimum checks verified; manual acceptance PENDING; stable acceptance NOT_RUN')
             return
         if not scope or receipt.get('runtimeScope') != scope['id'] or receipt.get('runtimeScopeSha256') != digest(SCOPE_PATH):
