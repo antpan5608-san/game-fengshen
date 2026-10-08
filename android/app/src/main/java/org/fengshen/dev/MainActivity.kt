@@ -57,14 +57,22 @@ class MainActivity:Activity() {
             } catch(e:Exception) {Diagnostics.record("content_load","ERROR",JSONObject().put("success",false),e.javaClass.simpleName,e.stackTrace.take(12).joinToString("\n"));runOnUiThread {if(!destroyed)setContentView(TextView(this).apply{text="开发内容加载失败，未进入场景。\n${e.message}";gravity=Gravity.CENTER})}}
         }
     }
-    internal fun prepareBattleVisuals(owner:GameView,request:BattleVisualRequest,ready:(BattleVisualAssets?)->Unit){
+    internal fun prepareBattleVisuals(owner:GameView,request:BattleVisualRequest,ready:(BattleVisualAssets?,BattleVisualTiming)->Unit){
         if(destroyed)return
+        val submitted=SystemClock.elapsedRealtime()
         try{contentWorker.execute {
             if(destroyed)return@execute
+            val started=SystemClock.elapsedRealtime()
             val visual=runCatching{visualPreparer?.prepareBattle(request)}.onFailure{
                 Diagnostics.record("visual_load","WARN",code="battle_visual_preparation_failed")
             }.getOrNull()
-            runOnUiThread{if(!destroyed&&game===owner)ready(visual)}
+            val completed=SystemClock.elapsedRealtime()
+            runOnUiThread{
+                val timing=BattleVisualTiming(submitted,started,completed,SystemClock.elapsedRealtime())
+                if(!destroyed&&game===owner)ready(visual,timing)
+                else Diagnostics.record("visual_load",details=JSONObject().put("stage","BATTLE_DISCARDED")
+                    .put("verificationMs",timing.durations().getValue("readyMs")).put("success",false).put("reason","STALE_OWNER"))
+            }
         }}catch(_:java.util.concurrent.RejectedExecutionException){/* Closed activity owns no result. */}
     }
     internal fun ownsVisualTarget(owner:GameView)=!destroyed&&game===owner
@@ -107,22 +115,37 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private val startupBattleVisual=content.battleVisual
     private var battleVisualEpoch=0L
     internal var battleVisualPrepared=false;private set
+    internal var battleVisualTiming:BattleVisualTiming?=null;private set
+    private var renderedVisualEpoch=-1L
+    internal var battleVisualPreparationSucceeded=false;private set
     internal fun requestBattleVisuals(){
         val current=battle?:return
         val id=battleID;val epoch=++battleVisualEpoch
-        content.battleVisual=startupBattleVisual;battleVisualPrepared=false
+        content.battleVisual=startupBattleVisual;battleVisualPrepared=false;battleVisualTiming=null;battleVisualPreparationSucceeded=false
         val request=BattleVisualRequest(current.party.map{it.id},current.enemies.map{it.definition.id},
             world.mapId,current.enemies.any{it.definition.id in content.blackBattleEnemyIds})
-        activity.prepareBattleVisuals(this,request){visual->deliverBattleVisuals(current,id,epoch,visual)}
+        activity.prepareBattleVisuals(this,request){visual,timing->
+            val accepted=deliverBattleVisuals(current,id,epoch,visual,timing)
+            reportBattleVisualTiming(timing,accepted&&visual!=null&&visual.failedAssets.isEmpty(),reason=if(accepted)"CURRENT_BATTLE"else"STALE_BATTLE")
+        }
     }
-    internal fun deliverBattleVisuals(current:OpeningBattle,id:String,epoch:Long,visual:BattleVisualAssets?):Boolean {
+    internal fun deliverBattleVisuals(current:OpeningBattle,id:String,epoch:Long,visual:BattleVisualAssets?,timing:BattleVisualTiming?=null):Boolean {
         if(!activity.ownsVisualTarget(this)||battle!==current||battleID!=id||battleVisualEpoch!=epoch||layer!=Layer.BATTLE)return false
         content.battleVisual=if(visual==null)startupBattleVisual else startupBattleVisual?.let{visual.withPortraits(it)}?:visual
         battleVisualPrepared=true
+        battleVisualTiming=timing;battleVisualPreparationSucceeded=visual!=null&&visual.failedAssets.isEmpty()
         Diagnostics.record("visual_load",if(visual==null||visual.failedAssets.isNotEmpty())"WARN"else"INFO",
             JSONObject().put("scope","CURRENT_BATTLE").put("prepared",content.battleVisual?.preparedCount?:0)
                 .put("decodedBytes",content.battleVisual?.cachedBytes?:0).put("success",visual!=null&&visual.failedAssets.isEmpty()))
         invalidate();return true
+    }
+    /** Existing server-supported scalar fields; diagnostics I/O remains on its own worker. */
+    private fun reportBattleVisualTiming(timing:BattleVisualTiming,success:Boolean,posted:Boolean=false,reason:String="CURRENT_BATTLE"){
+        val stages=if(posted)mapOf("postDelayMs" to "BATTLE_POST_DELAY","firstPostedMs" to "BATTLE_FIRST_POST")
+            else mapOf("queueMs" to "BATTLE_QUEUE","prepareMs" to "BATTLE_PREPARE","deliveryMs" to "BATTLE_UI_DELIVERY","readyMs" to "BATTLE_READY")
+        val durations=timing.durations()
+        for((key,stage)in stages)Diagnostics.record("visual_load",details=JSONObject().put("stage",stage)
+            .put("verificationMs",durations.getValue(key)).put("success",success).put("reason",reason))
     }
     private var battleMessage=""
     private var battlePresentation=BattlePresentation()
@@ -415,7 +438,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
             saveHistoryResult(SaveHistoryEntry.Kind.AUTO)
         }
         var canvas:Canvas?=null
-        try {canvas=holder.lockCanvas();if(canvas!=null)render(canvas)} finally {if(canvas!=null){holder.unlockCanvasAndPost(canvas);if(active&&focused)activity.firstInteractiveFrame()}}
+        var rendered=false;renderedVisualEpoch=-1L
+        try {canvas=holder.lockCanvas();if(canvas!=null){render(canvas);rendered=true}} finally {if(canvas!=null){
+            holder.unlockCanvasAndPost(canvas)
+            val timing=battleVisualTiming
+            if(rendered&&renderedVisualEpoch==battleVisualEpoch&&timing!=null&&timing.firstPostedMs==null){
+                val postedTiming=timing.posted(SystemClock.elapsedRealtime());battleVisualTiming=postedTiming
+                reportBattleVisualTiming(postedTiming,battleVisualPreparationSucceeded,posted=true)
+            }
+            if(active&&focused)activity.firstInteractiveFrame()
+        }}
         schedule()
     }
     private fun commitFerry(before:SaveSnapshot,result:OriginalFerry.Result):Boolean {
@@ -2452,6 +2484,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         if(action?.kind==BattleActionKind.SPECIAL&&supportTarget==null){overlayPaint.color=0x33ffffff
             c.drawRect(l.arena.x,l.arena.y,l.arena.x+l.arena.w,l.arena.y+l.arena.h,overlayPaint)}
         overlayPaint.alpha=255
+        if(battleVisualPrepared)renderedVisualEpoch=battleVisualEpoch
     }
     private fun drawBattleSceneResult(c:Canvas,current:OpeningBattle,scene:BattleSceneLayout){
         val l=scene.touch;val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale

@@ -16,11 +16,30 @@ ACCEPTANCE['preparation']='PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS'
 ACCEPTANCE['partySpacing']='SEPARATED_CROPS_BOUNDED_ATTACK'
 ACCEPTANCE['enemyFeedback']='ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
 ACCEPTANCE['bodyScale']='SHORT_ARENA_MULTIPARTY_CROPS_V1'
+ACCEPTANCE['preparationTiming']='CURRENT_BATTLE_MONOTONIC_TO_POST_V1'
 POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
     'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
     'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',
     'nezha-attack.png','xiaolongnv-cast.png','enemy-1.png','grass-v1.png')))
 DELIVERY_GUARDS=('staleEpochRejected','otherBattleRejected','exitRejected','destroyedOwnerRejected')
+
+
+def verify_preparation_timing(value,require_post=True):
+    if not isinstance(value,dict) or value.get('model')!=ACCEPTANCE['preparationTiming']:
+        raise ValueError('Missing current battle preparation timing')
+    keys=('queueMs','prepareMs','deliveryMs','readyMs')
+    posted=value.get('actualFramePosted')
+    if type(posted) is not bool or (require_post and not posted):
+        raise ValueError('Preparation was not actually posted to the Surface')
+    if posted:keys+=('postDelayMs','firstPostedMs')
+    if any(type(value.get(k)) is not int or not 0<=value[k]<=2**63-1 for k in keys):
+        raise ValueError('Invalid monotonic preparation durations')
+    if value['readyMs']!=sum(value[k]for k in ('queueMs','prepareMs','deliveryMs')):
+        raise ValueError('Preparation stages do not account for actual ready time')
+    if posted and value['firstPostedMs']!=value['readyMs']+value['postDelayMs']:
+        raise ValueError('Actual post time differs from preparation and delivery')
+    if not posted and any(k in value for k in ('postDelayMs','firstPostedMs')):
+        raise ValueError('Unposted preparation claims post durations')
 
 
 def measured_box(value):
@@ -81,6 +100,26 @@ def validate_digests(receipt):
 
 def proof_digests(evidence,logs):
     evidence,logs=Path(evidence),Path(logs);hashes={}
+    name='touch-ux-world-visual-normal-preparation.json'
+    raw=bounded(evidence/name,64*1024);normal=json.loads(raw);hashes[name]=hashlib.sha256(raw).hexdigest()
+    rows=normal.get('encounters')
+    if (normal.get('kind')!='NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE'
+            or normal.get('stateGrants') is not False or not isinstance(rows,list) or not 1<=len(rows)<=1000):
+        raise ValueError('Missing actual normal route preparation observations')
+    posted_count=0
+    for row in rows:
+        if (not isinstance(row,dict) or type(row.get('actualFramePosted')) is not bool
+                or type(row.get('preparedSucceeded')) is not bool):
+            raise ValueError('Invalid normal route preparation observation')
+        timing=row.get('timing')
+        if timing is not None:
+            verify_preparation_timing(timing,require_post=False)
+            if timing['actualFramePosted']!=row['actualFramePosted']:
+                raise ValueError('Normal preparation post observation disagrees')
+        elif row['actualFramePosted']:
+            raise ValueError('Normal posted scene lacks actual preparation timings')
+        posted_count+=row['actualFramePosted'] and row['preparedSucceeded']
+    if not posted_count:raise ValueError('No actual normal route prepared scene post')
     names=('world-visual-normal-normal-test.txt','world-visual-normal-cold-start-test.txt')
     for directory,name in [(logs,'battle-visual-assets.txt'),*((evidence,n)for n in names)]:
         raw=bounded(directory/name,512*1024);text=raw.decode('utf-8')
@@ -127,6 +166,7 @@ def proof_digests(evidence,logs):
         if (value.get('startupPrepared')!=4 or value.get('preparedFiles')!=list(POSE_FILES)
                 or any(value.get(key) is not True for key in DELIVERY_GUARDS)):
             raise ValueError('Scoped preparation or stale delivery guards were not verified')
+        verify_preparation_timing(value.get('preparationTiming'))
         if (value.get('partySpacing')!=ACCEPTANCE['partySpacing']
                 or type(value.get('projectedSpacingSamples')) is not int
                 or not 396<=value['projectedSpacingSamples']<=9900 or value['projectedSpacingSamples']%99):

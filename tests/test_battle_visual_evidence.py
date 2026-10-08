@@ -26,6 +26,12 @@ class VisualProofTests(unittest.TestCase):
         segments[-1]['phase']='EXTERNAL_FORCE_STOP_ACTUAL_COLD_RESTART_AND_CONTINUE'
         self.recording=dict(normalAssertions='PASS',forceStopRestartEqual=True,continuedExploration=True,originalPreferencesRestored=True,segments=segments,videos=[s['file']for s in segments])
         self.write('world-visual-normal-recording.json',self.recording)
+        self.timing=dict(model=visual.ACCEPTANCE['preparationTiming'],actualFramePosted=True,
+            queueMs=2,prepareMs=10,deliveryMs=3,readyMs=15,postDelayMs=5,firstPostedMs=20)
+        self.normal_timing=dict(kind='NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE',stateGrants=False,
+            encounters=[dict(actualFramePosted=False,preparedSucceeded=False,timing=None),
+                dict(actualFramePosted=True,preparedSucceeded=True,timing=self.timing)])
+        self.write('touch-ux-world-visual-normal-preparation.json',self.normal_timing)
         fixture=magic_fixture.BattleMagicEvidenceTest();fixture.setUp();self.addCleanup(fixture.doCleanups)
         phases=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
                 ('xiaolongnv','HEAL','CAST','xiaolongnv-cast.png',44,58),
@@ -51,6 +57,7 @@ class VisualProofTests(unittest.TestCase):
                 startupPrepared=4,preparedFiles=list(visual.POSE_FILES),**{k:True for k in visual.DELIVERY_GUARDS},
                 partySpacing=visual.ACCEPTANCE['partySpacing'],projectedSpacingSamples=396,
                 bodyScale=visual.ACCEPTANCE['bodyScale'],density=1,
+                preparationTiming=self.timing,
                 renderStateUnchanged=True,rngUnchanged=True,before=fixture.before,after=fixture.before,
                 screenWidth=160,screenHeight=100,phases=rows))
             (self.logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt')).write_text('OK (1 test)\n')
@@ -75,6 +82,26 @@ class VisualProofTests(unittest.TestCase):
         self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
         (self.evidence/'world-visual-normal-normal-00.mp4').write_bytes(b'changed')
         with self.assertRaises(ValueError):self.proof()
+
+    def test_preparation_requires_actual_post_finite_integer_stages_and_exact_sums(self):
+        for change in [dict(model=None),dict(actualFramePosted=False),dict(actualFramePosted=1),
+                dict(queueMs=True),dict(prepareMs=-1),dict(deliveryMs=1.0),dict(readyMs=16),
+                dict(postDelayMs=float('nan')),dict(firstPostedMs=21),dict(queueMs=2**63)]:
+            with self.assertRaises(ValueError):visual.verify_preparation_timing(dict(self.timing,**change))
+        name='touch-ux-world-visual-poses-1.0.json';original=json.loads((self.evidence/name).read_text())
+        changed=copy.deepcopy(original);changed.pop('preparationTiming');self.write(name,changed)
+        with self.assertRaises(ValueError):self.proof()
+        self.write(name,original);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
+
+    def test_normal_timing_rejects_grants_missing_post_and_inconsistent_observations(self):
+        name='touch-ux-world-visual-normal-preparation.json'
+        for change in [dict(stateGrants=True),dict(encounters=[]),dict(encounters=[dict(actualFramePosted=False,timing=None)]),
+                dict(encounters=[dict(actualFramePosted=True,timing=None)]),
+                dict(encounters=[dict(actualFramePosted=False,timing=self.timing)]),
+                dict(encounters=[dict(actualFramePosted=True,preparedSucceeded=False,timing=self.timing)])]:
+            self.write(name,dict(self.normal_timing,**change))
+            with self.assertRaises(ValueError):self.proof()
+        self.write(name,self.normal_timing);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
 
     def test_short_arena_refuses_old_protocol_shrunken_envelope_and_detached_feet(self):
         name='touch-ux-world-visual-poses-2.0.json';original=json.loads((self.evidence/name).read_text());bad=[]

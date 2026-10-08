@@ -1,3 +1,5 @@
+最新有限研发检查点（2026-10-08T06:09:16.513444+00:00）：拟98 / 0.8.28-visual-timing-personal 首战准备时序观测已实现；新462 JVM／97 suites零失败错误跳过、46相关Python及DEBUG应用/仪器通过。每请求原单队列排队/准备/UI交付与真实Surface送帧后一次记录，原owner/epoch/规则/存档/409素材字节保持；旧97raw被新协议拒绝。实际完整9代码/测试/配置/workflow审查，新codex_only a21dd987／Stop current。正式签名、新App时序及发布未执行；线上实际97／稳定82、c62/视觉17及全部长期欠账保持。接续[本批入口](evidence/battle-visual-preparation-next-batch.md)，新同源Actions原21Content36门禁／三字体时序／正常片段／原图录像和完整cold通过后才原逐版发布公网/postflight。服务器唯一writer，迁入dirty和旧失败历史保持，无暂停／完成标记。以下为历史。
+
 最新服务器交付检查点（2026-10-08T05:53:43.071005+00:00）：个人v97 / 0.8.27-short-arena-personal 已PUBLISHED_AND_VERIFIED；游戏source63b600fe025c8ff1ba4c02b71bdddbc28e0ab9f7／原build37730631440与publish37734267704均SUCCESS。公网62,610,928完整字节／SHA178071ed与同审核签名APK相等；新456 release JVM／96 suites、原16组132 Python、21 Content／36 raw、121原PNG／104实际录像采样、15原片SHA／7完整cold／7prefs已核，发布后新35基线回归通过。05:51:05Z postflight查询成功但NO_DATA／0事件0实机、errors空／cleanup0，权威97/96，不能当手机健康。稳定82、c62/392＋视觉17和WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。首战素材准备期间原像素/头像回退已实际记录；接续[原准备时序取证入口](evidence/battle-visual-preparation-next-batch.md)，[紧凑多敌短条](evidence/visual-resource-coverage-20261008.md)已按97实际72度量重核，仍仅设计未实施。详见[v97交付](evidence/v97-short-arena-personal.md)。唯一服务器writer，迁入工具dirty、Windows冻结历史、失败证据和存档保持；无暂停／完成标记。以下为历史。
 
 最新服务器验收检查点（2026-10-08T05:24:55.244648+00:00）：v97/source63b600f／原build37730631440正式build成功，独立签名62,610,928完整字节／SHA178071ed、456 release JVM／96 suites零失败、原16组132 Python／16OK、c62/392＋视觉17共409素材字节同96已核。原runtime同源App仍in_progress；21Content／36新raw／原画面录像和完整cold未验，APP_VERIFIED／PUBLISHED尚未达成。新完整实际codex_only499ed516／Stop current已记录正式检查；旧失败保留。线上96／稳定82及全部长期欠账保持。接续[当前97入口](evidence/battle-short-arena-next-batch.md)；[资源缺口与下一多敌短条设计](evidence/visual-resource-coverage-20261008.md)仅设计，未改冻结游戏源码。服务器唯一writer，无暂停／完成标记。以下为历史。
@@ -47,7 +49,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v97 / 0.8.27-short-arena-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: NONE；v97已完成个人发布，下一有限准备时序/多敌条仍仅定位设计，未冻结新候选
+current_candidate_version: v98 / 0.8.28-visual-timing-personal；IMPLEMENTED_LOCAL_CHECKED／NOT_PACKAGED／NOT_APP_VERIFIED／NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

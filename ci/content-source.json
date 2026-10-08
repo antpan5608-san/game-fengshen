@@ -26,7 +26,7 @@
   "signerSha256": "5c460557b64daf1eda32c8019cc3610751f8d12af5a9aa412099db5bc8ef70d6",
   "runtimeScope": {
     "path": "ci/runtime-scope.json",
-    "sha256": "119b9cf6557f94cf3f5c3a4ffcdc7847914da9c99c292cff71dfcfa2eff3656a"
+    "sha256": "6b2d7ffc6d4a23298f5aba5e812d34813770fe8c5b9848df914e3ac22ad8ce78"
   },
   "visualPack": {
     "id": "battle-visual-02-r2",

@@ -48,6 +48,18 @@ class TouchTest:IsolatedGameTestCase(){
         }
         fail("Current battle visual preparation did not complete")
     }
+    private fun visualTimingEvidence(timing:BattleVisualTiming):JSONObject = JSONObject()
+        .put("model",BattleVisualTiming.MODEL).put("actualFramePosted",timing.firstPostedMs!=null).also{row->
+            for((key,value)in timing.durations())row.put(key,value)
+        }
+    private fun awaitPostedBattleVisuals(v:GameView):JSONObject {
+        for(i in 0..200){
+            var timing:BattleVisualTiming?=null;instrumentation.runOnMainSync{timing=v.battleVisualTiming}
+            timing?.takeIf{it.firstPostedMs!=null}?.let{return visualTimingEvidence(it)}
+            SystemClock.sleep(25)
+        }
+        fail("Prepared battle scene has not actually been posted to its Surface");return JSONObject()
+    }
     /** Expected ratio of the actual selected draw asset, retaining the legacy native fallback. */
     private fun battleDrawnEnemyRatio(v:GameView,enemy:BattleEnemy):Float {
         val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v)
@@ -98,6 +110,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         awaitBattleVisuals(v)
         val visual=c.battleVisual!!
+        val preparationTiming=awaitPostedBattleVisuals(v)
         assertEquals(12,visual.preparedCount);assertTrue(visual.failedAssets.isEmpty())
         assertNull(visual.background(25,false));assertNull(visual.enemy(137))
         val saved=v.currentSnapshot();val party=fight.party.toList();val sampled=draws;val bytes=visual.cachedBytes
@@ -182,6 +195,7 @@ class TouchTest:IsolatedGameTestCase(){
             .put("font",font).put("screenWidth",screen.width).put("screenHeight",screen.height)
             .put("manifestSha256",BattleVisualAssets.MANIFEST_SHA256).put("prepared",visual.preparedCount)
             .put("startupPrepared",startup.preparedCount).put("preparedFiles",org.json.JSONArray(visual.preparedFiles.sorted()))
+            .put("preparationTiming",preparationTiming)
             .put("staleEpochRejected",true).put("otherBattleRejected",true).put("exitRejected",true).put("destroyedOwnerRejected",true)
             .put("decodedBytes",bytes).put("phases",phases).put("renderStateUnchanged",true)
             .put("partySpacing","SEPARATED_CROPS_BOUNDED_ATTACK").put("projectedSpacingSamples",projectedSamples)
@@ -1293,6 +1307,7 @@ class TouchTest:IsolatedGameTestCase(){
         var normalVictories=0
         var seekingVictory=false
         val injuryEvents=org.json.JSONArray()
+        val normalVisualTimings=org.json.JSONArray()
         fun injuryState(name:String,fight:OpeningBattle?=null){
             val event=org.json.JSONObject().put("name",name).put("androidUptimeMs",SystemClock.elapsedRealtime())
                 .put("snapshot",v.currentSnapshot().json())
@@ -1340,6 +1355,13 @@ class TouchTest:IsolatedGameTestCase(){
                 capture("herb-normal-attack-victory")
             }
             injuryState("normal-encounter-ended")
+            if(visualVictory){
+                var timing:BattleVisualTiming?=null;var succeeded=false
+                instrumentation.runOnMainSync{timing=v.battleVisualTiming;succeeded=v.battleVisualPreparationSucceeded}
+                normalVisualTimings.put(JSONObject().put("actualFramePosted",timing?.firstPostedMs!=null)
+                    .put("preparedSucceeded",succeeded)
+                    .put("timing",timing?.let{visualTimingEvidence(it)}?:JSONObject.NULL))
+            }
         }
         fun step(k:Key){stickStep(v,k);finishFight()}
         fun walkTo(tx:Int,ty:Int){
@@ -1498,6 +1520,14 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(before.money,used.money);assertEquals(before.flags,used.flags)
             repeat(10){send(v,MotionEvent.ACTION_UP,listOf(action))};assertEquals(used,v.currentSnapshot())
             capture("herb-used")
+            if(visualVictory){
+                assertTrue("Normal visual route must observe at least one actually posted prepared scene",
+                    (0 until normalVisualTimings.length()).any{normalVisualTimings.getJSONObject(it).let{row->
+                        row.getBoolean("actualFramePosted")&&row.getBoolean("preparedSucceeded")}})
+                File(instrumentation.targetContext.getExternalFilesDir(null),"world-visual-normal-preparation.json")
+                    .writeText(JSONObject().put("kind","NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE")
+                        .put("stateGrants",false).put("encounters",normalVisualTimings).toString())
+            }
             instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}
             val(restarted,reloaded)=launch()
             assertEquals(used,reloaded.currentSnapshot())
