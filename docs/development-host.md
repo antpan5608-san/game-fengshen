@@ -1,3 +1,5 @@
+最新有限研发检查点：短战场角色留白最小适配已实施；新456 JVM／96 suites零失败错误跳过、44相关Python与DEBUG应用/仪器构建通过。首轮测试场景假设失败原日志/XML保留，修正后通过；409素材字节同96、七规则源码未改，新raw协议拒旧96证据。拟97正式签名/App/发布均尚未执行，线上实际96／稳定82与全部长期欠账保持。接续[本批入口](evidence/battle-short-arena-next-batch.md)，新完整审查后才冻结同源Actions验收；以下历史保留。
+
 最新实际交付：个人v96 / 0.8.26-enemy-feedback-personal 已按原同源审核发布，source428c67e／build37725875054／publish37729043457 SUCCESS；公网62,610,832完整字节/SHA23f7a7ac等于审核签名APK。新454 release JVM／96 suites、16组132 Python、21Content／36raw、87实际量字、121原PNG／91新独立视频采样／14原片SHA／7完整cold／7prefs均已验；正常攻击奖励和药草HP7→20/20／外部cold另于受控四人/Boss。postflight04:48:11Z NO_ISSUES_OBSERVED/errors空/cleanup0，权威96/95，39事件1实机均95、96样本0，手机仍PENDING。稳定82、c62/392／视觉17、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v96-enemy-feedback-personal.md)，主动接续[大字体短战场角色比例](evidence/battle-short-arena-next-batch.md)，现仅设计已核／未实施。以下为历史检查点。
 
 最新96 App核验检查点：source428c67e／原build37725875054首次签名与runtime SUCCESS，新21Content／36raw、121原PNG／74新采样／14原片SHA／7完整cold／87实际量字已验，新codex_only ed72f2c2／Stop current。原publish37729043457进行中，公网／postflight PENDING，线上实际95／稳定82，所有长期欠账保持OPEN；服务器唯一writer，迁入dirty／旧冻结ZIP／历史和失败保留。下一短战场角色比例仅已定位并核设计，未实施。以下为历史。

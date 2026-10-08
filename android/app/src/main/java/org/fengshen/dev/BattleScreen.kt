@@ -79,11 +79,14 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
         val t=if(partyCount==1).5f else i.toFloat()/(partyCount-1)
         val side=allies.w*.04f;val bodyGap=min(8*dp,allies.w*.02f)
         val slotW=(allies.w-2*side-(partyCount-1)*bodyGap)/partyCount
-        val h=allies.h*(.62f+.18f*t)
+        // Large-font two-row cards can leave a short arena. Use its vertical
+        // whitespace without changing the slots, cards, targets or solo pose.
+        val short=partyCount>1&&allies.h<96*dp
+        val h=allies.h*(if(short).80f+.14f*t else .62f+.18f*t)
         val w=min(if(partyCount==1)allies.w*.48f else slotW,h*.76f)
         val x=if(partyCount==1)allies.x+allies.w*.27f
             else allies.x+side+i*(slotW+bodyGap)+(slotW-w)/2
-        val foot=allies.y+allies.h*(.70f+.27f*t)
+        val foot=allies.y+allies.h*(if(short).84f+.15f*t else .70f+.27f*t)
         Box(x,foot-h,w,h)
     } else (0 until partyCount).map{i->Box(allies.x+(i%allyColumns)*(aw+gap),
         allies.y+(i/allyColumns)*(ah+gap),aw,ah)}

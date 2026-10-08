@@ -4,6 +4,55 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class BattleScreenTest {
+    @Test fun shortIllustratedPartyUsesVerticalSpaceWithoutMovingControlsOrSolo(){
+        var shortCases=0;var originalCases=0
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(font in listOf(1f,1.3f,2f))for(count in 1..4)for(enemies in listOf(1,6)){
+                val scene=battleSceneLayout(safe,dp,font,enemies,count,true)!!;val ally=scene.allyField
+                for((i,frame)in scene.allySprites.withIndex()){
+                    assertTrue(inside(frame,ally));val t=if(count==1).5f else i.toFloat()/(count-1)
+                    if(count>1&&ally.h<96*dp){
+                        assertTrue("Use at least 80% of the short arena",frame.h>=ally.h*.8f-.01f)
+                        assertTrue("Leave room above each body",frame.y>=ally.y+ally.h*.039f)
+                        assertTrue("Keep feet above the status cards",frame.y+frame.h<ally.y+ally.h)
+                        shortCases++
+                    }else{
+                        // Published v96 standing geometry stays exactly the same outside the scope.
+                        assertEquals(ally.h*(.62f+.18f*t),frame.h,0f)
+                        assertEquals(ally.y+ally.h*(.70f+.27f*t),frame.y+frame.h,.01f)
+                        originalCases++
+                    }
+                }
+                val other=battleSceneLayout(safe,dp,font,if(enemies==1)6 else 1,count,true)!!
+                assertEquals(scene.allySprites,other.allySprites);assertEquals(scene.partyCards,other.partyCards)
+                assertEquals(scene.touch.commands,other.touch.commands)
+                assertEquals(scene.allyField,other.allyField)
+            }
+        assertTrue(shortCases>0&&originalCases>0)
+    }
+    @Test fun shortIllustratedActualPoseCropsStaySeparateAtNinetyNineClockSamples(){
+        val crops=listOf(853 to 1250,881 to 1311,942 to 1338,922 to 1309,896 to 898,873 to 1210)
+        var shortScenes=0
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(count in 3..4){
+                val scene=battleSceneLayout(safe,dp,2f,6,count,true)!!
+                // The taller desktop window remains a normal arena, covered above.
+                if(scene.allyField.h>=96*dp)continue
+                shortScenes++
+                for(crop in crops){
+                    val bases=scene.allySprites.map{battleVisualBodyBounds(it,crop.first,crop.second)}
+                    for(actor in bases.indices)for(sample in 0..98){
+                        val drawn=battleVisualAttackBounds(bases,actor,scene.touch.arena,sample/98f)
+                        for(i in bases.indices){assertTrue(inside(drawn[i],scene.touch.arena))
+                            assertEquals(bases[i].y,drawn[i].y,0f);assertEquals(bases[i].h,drawn[i].h,0f)
+                            if(i!=actor)assertEquals(bases[i],drawn[i])}
+                        for(i in drawn.indices)for(j in i+1 until drawn.size)assertFalse(overlaps(drawn[i],drawn[j]))
+                        if(sample==0||sample==98)assertEquals(bases,drawn)
+                    }
+                }
+            }
+        assertTrue("Exercise actual short arenas",shortScenes>0)
+    }
     @Test fun singleEnemyFeedbackPreservesCropsAndTargetsWithSeparateMeasuredLabels(){
         for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
             for(font in listOf(1f,1.3f,2f))for(party in 1..4){

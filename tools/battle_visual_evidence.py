@@ -15,6 +15,7 @@ ACCEPTANCE['supportFeedback']='IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARG
 ACCEPTANCE['preparation']='PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS'
 ACCEPTANCE['partySpacing']='SEPARATED_CROPS_BOUNDED_ATTACK'
 ACCEPTANCE['enemyFeedback']='ACTUAL_SPRITE_MEASURED_SHORT_FEEDBACK_V1'
+ACCEPTANCE['bodyScale']='SHORT_ARENA_MULTIPARTY_CROPS_V1'
 POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
     'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
     'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',
@@ -22,13 +23,28 @@ POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
 DELIVERY_GUARDS=('staleEpochRejected','otherBattleRejected','exitRejected','destroyedOwnerRejected')
 
 
-def verify_party_bodies(phase,width,height):
+def measured_box(value):
+    if not isinstance(value,dict) or any(type(value.get(k)) not in (int,float)
+            or not math.isfinite(value[k]) for k in ('x','y','w','h')):
+        raise ValueError('Invalid actual crop envelope')
+    if value['w']<=0 or value['h']<=0:raise ValueError('Empty actual crop envelope')
+    return value
+
+
+def inside(a,b):
+    return a['x']>=b['x']-.01 and a['y']>=b['y']-.01 and a['x']+a['w']<=b['x']+b['w']+.01 and a['y']+a['h']<=b['y']+b['h']+.01
+
+
+def verify_party_bodies(phase,width,height,density):
     bodies=phase.get('partyBodies',[])
     actors=('nezha','xiaolongnv','yangjian','jiangziya')
     files=['nezha-idle-v1.png','xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png']
     if phase.get('kind')=='ATTACK':files[0]='nezha-attack.png'
     if phase.get('kind') in ('SPECIAL','HEAL'):files[1]='xiaolongnv-cast.png'
     if not isinstance(bodies,list) or len(bodies)!=4:raise ValueError('Missing actual party crop positions')
+    arena=measured_box(phase.get('arena'));ally=measured_box(phase.get('allyField'))
+    if not inside(arena,dict(x=0,y=0,w=width,h=height)) or not inside(ally,arena):
+        raise ValueError('Actual crop fields leave the screen or arena')
     for row,actor,file in zip(bodies,actors,files):
         if not isinstance(row,dict) or row.get('actor')!=actor or row.get('file')!=file:
             raise ValueError('Party crop identity differs from the original action')
@@ -37,6 +53,13 @@ def verify_party_bodies(phase,width,height):
         x,y,w,h=(row[k]for k in ('x','y','w','h'))
         if x<0 or y<0 or w<=0 or h<=0 or x+w>width+.01 or y+h>height+.01:
             raise ValueError('Party crop lies outside the actual screen')
+        envelope=measured_box(row.get('envelope'))
+        if (not inside(envelope,ally) or not inside(row,arena)
+                or w>envelope['w']+.01 or h>envelope['h']+.01
+                or abs(y+h-envelope['y']-envelope['h'])>.01):
+            raise ValueError('Actual prepared crop differs from its bounded grounded envelope')
+        if ally['h']<96*density and envelope['h']<ally['h']*.8-.01:
+            raise ValueError('Short arena crop envelope retains excessive vertical whitespace')
     for i,a in enumerate(bodies):
         for b in bodies[i+1:]:
             if (min(a['x']+a['w'],b['x']+b['w'])-max(a['x'],b['x'])>.01
@@ -106,8 +129,11 @@ def proof_digests(evidence,logs):
             raise ValueError('Scoped preparation or stale delivery guards were not verified')
         if (value.get('partySpacing')!=ACCEPTANCE['partySpacing']
                 or type(value.get('projectedSpacingSamples')) is not int
-                or not 36<=value['projectedSpacingSamples']<=1000):
+                or not 396<=value['projectedSpacingSamples']<=9900 or value['projectedSpacingSamples']%99):
             raise ValueError('Separated party crop projection was not verified')
+        if (value.get('bodyScale')!=ACCEPTANCE['bodyScale'] or type(value.get('density')) not in (int,float)
+                or not math.isfinite(value['density']) or value['density']<=0):
+            raise ValueError('Missing actual short arena crop protocol or density')
         complete_save(value.get('before'))
         phases=value.get('phases',[])
         expected=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
@@ -120,7 +146,7 @@ def proof_digests(evidence,logs):
                 or [p.get('supportTarget')for p in phases]!=['nezha','nezha',None,None]):
             raise ValueError('Support feedback must stay local to the actual original target')
         for phase in phases:
-            verify_party_bodies(phase,value.get('screenWidth',0),value.get('screenHeight',0))
+            verify_party_bodies(phase,value.get('screenWidth',0),value.get('screenHeight',0),value['density'])
             name=phase.get('screenshot','')
             if not re.fullmatch(r'touch-ux-world-visual-pose-'+font.replace('.','_')+r'-\d{1,2}\.png',name):
                 raise ValueError('Unsafe controlled pose picture path')

@@ -41,13 +41,16 @@ class VisualProofTests(unittest.TestCase):
                 files=['nezha-attack.png' if kind=='ATTACK' else 'nezha-idle-v1.png',
                     'xiaolongnv-cast.png' if kind in ('SPECIAL','HEAL') else 'xiaolongnv-idle-v1.png',
                     'yangjian-idle-v2.png','jiangziya-idle-v1.png']
-                rows[-1]['partyBodies']=[dict(actor=a,file=f,x=10+j*30,y=20,w=20,h=40)
+                rows[-1].update(allyField=dict(x=0,y=10,w=160,h=70),arena=dict(x=0,y=0,w=160,h=100))
+                rows[-1]['partyBodies']=[dict(actor=a,file=f,x=10+j*30,y=30,w=20,h=40,
+                    envelope=dict(x=10+j*30,y=10,w=20,h=60))
                     for j,(a,f)in enumerate(zip(('nezha','xiaolongnv','yangjian','jiangziya'),files))]
             self.write('touch-ux-world-visual-poses-'+font+'.json',dict(
                 kind='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE',font=float(font),
                 manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=12,decodedBytes=32*1024*1024,
                 startupPrepared=4,preparedFiles=list(visual.POSE_FILES),**{k:True for k in visual.DELIVERY_GUARDS},
-                partySpacing=visual.ACCEPTANCE['partySpacing'],projectedSpacingSamples=36,
+                partySpacing=visual.ACCEPTANCE['partySpacing'],projectedSpacingSamples=396,
+                bodyScale=visual.ACCEPTANCE['bodyScale'],density=1,
                 renderStateUnchanged=True,rngUnchanged=True,before=fixture.before,after=fixture.before,
                 screenWidth=160,screenHeight=100,phases=rows))
             (self.logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt')).write_text('OK (1 test)\n')
@@ -72,6 +75,24 @@ class VisualProofTests(unittest.TestCase):
         self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
         (self.evidence/'world-visual-normal-normal-00.mp4').write_bytes(b'changed')
         with self.assertRaises(ValueError):self.proof()
+
+    def test_short_arena_refuses_old_protocol_shrunken_envelope_and_detached_feet(self):
+        name='touch-ux-world-visual-poses-2.0.json';original=json.loads((self.evidence/name).read_text());bad=[]
+        for key,value in [('bodyScale',None),('density',True),('density',float('nan')),
+                ('density',0),('projectedSpacingSamples',99),('projectedSpacingSamples',397)]:
+            item=copy.deepcopy(original);item[key]=value;bad.append(item)
+        for key,value in [('h',42),('w',True),('y',-10),('x',float('inf'))]:
+            item=copy.deepcopy(original);item['phases'][0]['partyBodies'][0]['envelope'][key]=value;bad.append(item)
+        item=copy.deepcopy(original);item['phases'][0]['partyBodies'][0].pop('envelope');bad.append(item)
+        item=copy.deepcopy(original);item['phases'][0]['partyBodies'][0]['y']=20;bad.append(item)
+        item=copy.deepcopy(original);item['phases'][0].pop('allyField');bad.append(item)
+        for item in bad:
+            self.write(name,item)
+            with self.assertRaises(ValueError):self.proof()
+        item=copy.deepcopy(original);item['phases'][0]['partyBodies'][0]['envelope'].update(y=28,h=42)
+        self.write(name,item)
+        with self.assertRaisesRegex(ValueError,'vertical whitespace'):self.proof()
+        self.write(name,original);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
 
     def test_missing_decoder_failure_log_controlled_or_false_cold_rejected(self):
         for change in (dict(controlledAssertions='PASS'),dict(normalAssertions='NOT_APPLICABLE'),dict(forceStopRestartEqual=False),dict(originalPreferencesRestored=False)):

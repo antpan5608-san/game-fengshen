@@ -1,3 +1,5 @@
+最新有限研发检查点：短战场角色留白最小适配已实施；新456 JVM／96 suites零失败错误跳过、44相关Python与DEBUG应用/仪器构建通过。首轮测试场景假设失败原日志/XML保留，修正后通过；409素材字节同96、七规则源码未改，新raw协议拒旧96证据。拟97正式签名/App/发布均尚未执行，线上实际96／稳定82与全部长期欠账保持。接续[本批入口](evidence/battle-short-arena-next-batch.md)，新完整审查后才冻结同源Actions验收；以下历史保留。
+
 最新实际交付：个人v96 / 0.8.26-enemy-feedback-personal 已按原同源审核发布，source428c67e／build37725875054／publish37729043457 SUCCESS；公网62,610,832完整字节/SHA23f7a7ac等于审核签名APK。新454 release JVM／96 suites、16组132 Python、21Content／36raw、87实际量字、121原PNG／91新独立视频采样／14原片SHA／7完整cold／7prefs均已验；正常攻击奖励和药草HP7→20/20／外部cold另于受控四人/Boss。postflight04:48:11Z NO_ISSUES_OBSERVED/errors空/cleanup0，权威96/95，39事件1实机均95、96样本0，手机仍PENDING。稳定82、c62/392／视觉17、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v96-enemy-feedback-personal.md)，主动接续[大字体短战场角色比例](evidence/battle-short-arena-next-batch.md)，现仅设计已核／未实施。以下为历史检查点。
 
 最新同会话检查点（2026-10-08T04:46:13.226984+00:00）：v96 source428c67e／原build37725875054首次build/runtime均SUCCESS；本批独立21Content／36raw、121原PNG／74新视频采样／14原片SHA／7完整cold／7prefs及87实际量字已验。新codex_only ed72f2c2／Stop current。原[发布37729043457](https://github.com/antpan5608-san/game-fengshen/actions/runs/37729043457)已沿既有授权触发，公网／postflight仍待验，当前线上95／稳定82。短战场角色比例仅设计，下一步先完成96同审核APK发布与公网后接该有限批次；所有未验与历史保留，长期active，无暂停／完成标记。以下各段为当时历史。
@@ -39,7 +41,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v96 / 0.8.26-enemy-feedback-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: NONE；v96已公开验明，短战场角色下一批仅DESIGN_REVIEWED
+current_candidate_version: v97拟定；短战场角色IMPLEMENTED_LOCAL_CHECKED／NOT_PACKAGED／NOT_APP_VERIFIED／NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

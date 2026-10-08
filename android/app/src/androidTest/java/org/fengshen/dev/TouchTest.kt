@@ -107,8 +107,12 @@ class TouchTest:IsolatedGameTestCase(){
             val action=p.action!!
             instrumentation.runOnMainSync{
                 val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as BattleSceneLayout
-                for(progress in listOf(0f,.05f,.18f,.2f,.42f,.5f,.65f,.85f,1f)){
+                for(sample in 0..98){
+                    val progress=sample/98f
                     val drawn=v.battlePartyBodies(fight,scene,action,progress).map{it.second}
+                    if(scene.allyField.h<96*v.resources.displayMetrics.density)
+                        for(frame in scene.allySprites)assertTrue("Short arena keeps full-sized crop envelopes",
+                            frame.h>=scene.allyField.h*.8f-.01f)
                     for(b in drawn)assertTrue(b.x>=scene.touch.arena.x-.01f&&b.y>=scene.touch.arena.y-.01f&&
                         b.x+b.w<=scene.touch.arena.x+scene.touch.arena.w+.01f&&b.y+b.h<=scene.touch.arena.y+scene.touch.arena.h+.01f)
                     for(i in drawn.indices)for(j in i+1 until drawn.size){val a=drawn[i];val b=drawn[j]
@@ -145,9 +149,13 @@ class TouchTest:IsolatedGameTestCase(){
                     .put("arenaFlash",action.kind==BattleActionKind.SPECIAL&&supportTarget==null)
                 instrumentation.runOnMainSync{
                     val actual=v.battlePartyBodies(fight,scene,action,p.elapsedMs.toFloat()/p.actionDurationMs)
+                    fun box(b:Box)=JSONObject().put("x",b.x).put("y",b.y).put("w",b.w).put("h",b.h)
+                    phases.getJSONObject(phases.length()-1).put("allyField",box(scene.allyField))
+                        .put("arena",box(scene.touch.arena))
                     phases.getJSONObject(phases.length()-1).put("partyBodies",org.json.JSONArray().apply{
                         actual.forEachIndexed{i,(image,b)->put(JSONObject().put("actor",fight.party[i].id)
-                            .put("file",image!!.file).put("x",b.x).put("y",b.y).put("w",b.w).put("h",b.h))}
+                            .put("file",image!!.file).put("x",b.x).put("y",b.y).put("w",b.w).put("h",b.h)
+                            .put("envelope",box(scene.allySprites[i])))}
                     })
                 }
             }
@@ -177,6 +185,7 @@ class TouchTest:IsolatedGameTestCase(){
             .put("staleEpochRejected",true).put("otherBattleRejected",true).put("exitRejected",true).put("destroyedOwnerRejected",true)
             .put("decodedBytes",bytes).put("phases",phases).put("renderStateUnchanged",true)
             .put("partySpacing","SEPARATED_CROPS_BOUNDED_ATTACK").put("projectedSpacingSamples",projectedSamples)
+            .put("bodyScale","SHORT_ARENA_MULTIPARTY_CROPS_V1").put("density",v.resources.displayMetrics.density)
             .put("rngUnchanged",true).put("before",saved.json()).put("after",v.currentSnapshot().json()).toString())
     }
     /** Controlled four-role fixture, real taps/foreground phases/save; no normal join claim. */
