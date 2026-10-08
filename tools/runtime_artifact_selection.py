@@ -68,9 +68,11 @@ def extract_verified(raw, artifact, destination):
         if len(names)!=len(set(names)) or len(names)>5000 or sum(e.file_size for e in entries)>512*1024*1024:
             raise ValueError('Duplicate or excessive artifact ZIP entries')
         for entry in entries:
-            path=PurePosixPath(entry.filename)
-            if (not path.parts or entry.filename.rstrip('/')!=str(path) or path.is_absolute() or '..' in path.parts or '\\' in entry.filename
-                    or ':' in entry.filename or (entry.external_attr>>16)&0o170000==0o120000):
+            # Windows normalizes separators while reading ZipInfo.filename;
+            # validate original archive bytes before allowing that conversion.
+            name=entry.orig_filename;path=PurePosixPath(name)
+            if (name!=entry.filename or not path.parts or name.rstrip('/')!=str(path) or path.is_absolute() or '..' in path.parts or '\\' in name
+                    or ':' in name or (entry.external_attr>>16)&0o170000==0o120000):
                 raise ValueError('Unsafe artifact ZIP path')
         destination.mkdir(parents=True,exist_ok=True)
         archive.extractall(destination)

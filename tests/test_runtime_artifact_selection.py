@@ -5,6 +5,7 @@ import io
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 import warnings
 import zipfile
 from tools import runtime_artifact_selection as selector
@@ -81,7 +82,7 @@ class RuntimeArtifactSelectionTests(unittest.TestCase):
             raw,artifact=self.zip_bytes(name)
             with self.subTest(archive_name=name),tempfile.TemporaryDirectory()as folder:
                 with zipfile.ZipFile(io.BytesIO(raw))as archive:
-                    self.assertEqual(name,archive.infolist()[0].filename)
+                    self.assertEqual(name,archive.infolist()[0].orig_filename)
                 with self.assertRaises(ValueError):selector.extract_verified(raw,artifact,Path(folder)/'review')
                 self.assertFalse((Path(folder)/'review').exists())
         stream=io.BytesIO()
@@ -99,6 +100,22 @@ class RuntimeArtifactSelectionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory()as folder:
             with self.assertRaisesRegex(ValueError,'Duplicate'):
                 selector.extract_verified(raw,dict(digest='sha256:'+hashlib.sha256(raw).hexdigest(),size_in_bytes=len(raw)),Path(folder)/'review')
+
+    def test_original_name_checked_when_windows_reader_normalizes_separators(self):
+        original_init=zipfile.ZipInfo.__init__
+        def windows_init(info,filename='NoName',*args,**kwargs):
+            original_init(info,filename,*args,**kwargs)
+            info.filename=info.filename.replace('\\','/')
+        raw,artifact=self.zip_bytes('nested\\escape')
+        with patch.object(zipfile.ZipInfo,'__init__',windows_init):
+            with zipfile.ZipFile(io.BytesIO(raw))as archive:
+                entry=archive.infolist()[0]
+                self.assertEqual('nested/escape',entry.filename)
+                self.assertEqual('nested\\escape',entry.orig_filename)
+            with tempfile.TemporaryDirectory()as folder:
+                target=Path(folder)/'review'
+                with self.assertRaisesRegex(ValueError,'Unsafe'):selector.extract_verified(raw,artifact,target)
+                self.assertFalse(target.exists())
 
 
 if __name__=='__main__':unittest.main()
