@@ -17,11 +17,61 @@ ACCEPTANCE['partySpacing']='SEPARATED_CROPS_BOUNDED_ATTACK'
 ACCEPTANCE['enemyFeedback']='ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2'
 ACCEPTANCE['bodyScale']='SHORT_ARENA_MULTIPARTY_CROPS_V1'
 ACCEPTANCE['preparationTiming']='CURRENT_BATTLE_MONOTONIC_TO_POST_V1'
+ACCEPTANCE['mapPreparation']='MAP_POST_SCOPED_CACHE_WARM_V1'
 POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
     'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
     'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',
     'nezha-attack.png','xiaolongnv-cast.png','enemy-1.png','grass-v1.png')))
 DELIVERY_GUARDS=('staleEpochRejected','otherBattleRejected','exitRejected','destroyedOwnerRejected')
+
+
+def verify_map_preparation(value):
+    if not isinstance(value,dict) or value.get('model')!=ACCEPTANCE['mapPreparation']:
+        raise ValueError('Missing actual map post cache warm observations')
+    rows=value.get('observations')
+    if not isinstance(rows,list) or not 1<=len(rows)<=32:
+        raise ValueError('Invalid bounded map warm history')
+    raw=(Path(__file__).resolve().parents[1]/'game-data/visual/battle-visual-02/manifest.json').read_bytes()
+    if hashlib.sha256(raw).hexdigest()!=ACCEPTANCE['manifestSha256']:
+        raise ValueError('Map warm mappings differ from approved visual pack')
+    manifest=json.loads(raw);completed=0
+    for row in rows:
+        if not isinstance(row,dict):raise ValueError('Invalid map warm observation')
+        actors=row.get('actorIds');map_id=row.get('mapId')
+        if (type(map_id) is not int or not 0<=map_id<=255 or not isinstance(actors,list)
+                or not 1<=len(actors)<=4 or any(not isinstance(a,str) or not 1<=len(a)<=64 for a in actors)
+                or actors!=sorted(set(actors)) or row.get('enemyIds')!=[] or row.get('blackScene') is not False):
+            raise ValueError('Map warm must use current identities without predicted enemies')
+        times=[row.get(k)for k in ('mapPostedMs','submittedMs','startedMs','completedMs','deliveredMs')]
+        if any(type(t) is not int or not 0<=t<=2**63-1 for t in times) or times!=sorted(times):
+            raise ValueError('Map warm does not follow actual Surface post')
+        if any(type(row.get(k)) is not bool for k in ('acceptedCurrentScope','resultAvailable','stopped')):
+            raise ValueError('Invalid map warm acceptance or cancellation')
+        size=row.get('retainedBytes')
+        if type(size) is not int or not 0<=size<=64*1024*1024:
+            raise ValueError('Map warm exceeds the original cache budget')
+        fields=[]
+        for key in ('selectedFiles','preparedFiles','failedFiles'):
+            files=row.get(key)
+            if (not isinstance(files,list) or any(not isinstance(f,str) for f in files)
+                    or files!=sorted(set(files))):raise ValueError('Invalid map warm resource list')
+            fields.append(set(files))
+        selected,prepared,failed=fields
+        expected=set()
+        for actor in actors:
+            mapping=manifest['actors'].get(actor,{})
+            expected.update(mapping[k]for k in ('portrait','idle','attack','cast')if k in mapping)
+        background=manifest['mapBackgrounds'].get(str(map_id))
+        if background in manifest['backgrounds']:expected.add(manifest['backgrounds'][background])
+        if row['resultAvailable']:
+            if selected!=expected or not prepared<=selected or not failed<=selected or prepared&failed:
+                raise ValueError('Map warm loads files outside the exact current scope')
+            if not row['stopped'] and prepared|failed!=selected:
+                raise ValueError('Uncancelled map warm omits a selected image')
+        elif selected or prepared or failed or size or not row['stopped']:
+            raise ValueError('Unavailable map warm claims loaded resources')
+        completed+=row['acceptedCurrentScope'] and row['resultAvailable'] and not row['stopped'] and not failed and bool(prepared)
+    if not completed:raise ValueError('No completed current map warm in the actual normal route')
 
 
 def verify_preparation_timing(value,require_post=True):
@@ -102,6 +152,7 @@ def proof_digests(evidence,logs):
     evidence,logs=Path(evidence),Path(logs);hashes={}
     name='touch-ux-world-visual-normal-preparation.json'
     raw=bounded(evidence/name,64*1024);normal=json.loads(raw);hashes[name]=hashlib.sha256(raw).hexdigest()
+    verify_map_preparation(normal.get('mapPreparation'))
     rows=normal.get('encounters')
     if (normal.get('kind')!='NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE'
             or normal.get('stateGrants') is not False or not isinstance(rows,list) or not 1<=len(rows)<=1000):

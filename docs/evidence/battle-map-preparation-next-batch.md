@@ -1,3 +1,15 @@
+最新实际有限批次（2026-10-08T08:30:08.656551+00:00）：拟100 / `0.8.30-map-warm-personal`，IMPLEMENTED_LOCAL_CHECKED；正式签名、新App、发布均PENDING，线上99/稳定82。以下DESIGN段落为实施前历史。
+
+本批最小接法：原contentWorker仍唯一同名单线程，改为显式ThreadPoolExecutor以移除待处理warm Runnable；新纯MapVisualWarmQueue由UI调度，同map/actor集合去重、latest scope合并、最多一项pending、battle进入及pause/focus loss/Surface/Destroy取消。正在解码一张可完成并进入原cache，下一张前检查token，不承诺解码可即时中断。Preparer.warmMap复用原selection/cache与64MiB上限；空enemy/black=false，只选当前角色已有头像/idle/合法pose和当前已批准背景，unknown原回退，不安装任何warm bundle、不写battlePrepared、不读取UI同步cache、不改ContentLoader/BattleActionStep/玩家规则/save。
+
+GameView仅实际成功Surface post之后且active/focused/MAP/no battle提交；UI完成回调核原owner、token、当前map/actors，最多32条只读历史。原正常无grants路线结束取此实际历史，不强制等待warm，不替代原battle真实首送帧。新MAP_POST_SCOPED_CACHE_WARM_V1绑定到原正常raw/hash和runtimeScope，新验证实际单调post→submit→start→complete→delivery、exact approved manifest当前选择、失败/取消/64MiB；旧36门禁和原受控/全部save/cold/偏好保持，不能把丢弃或只unknown空选算预备成功。
+
+新实际检查：`/srv/fengshen-dev/receipts/map-warm-local-build-first.log`，476 JVM/98 suites failures/errors/skipped全0，DEBUG应用/仪器构建成功；aapt确认为100/0.8.30-map-warm-personal。新增10 JVM覆盖重复帧、latest/coalescing、startup/battle保留、late token、cancel/close/retry、正在单图取消、失败cache/小预算和exact scope；`map-warm-python-first.log`为61项相关测试/OK，其中2新测试包含23种篡改/旧协议拒绝及取消/unknown诚实但不算成功。`map-warm-local-checks.json`保存实际计数；原99真实raw e020bd6d被新协议拒绝，`map-warm-old-v99-raw-rejected.json`保留。本批9源码/测试/配置完整实际审查，新codex_only e9ce81e5f979de4584faf884469e44344bf048f74477b5bcbbd44d3a49017558／Stop continue true，不复用99回执。
+
+已核视觉manifest8dc53b77及16 PNG全size/hash仍与99相同，来源沿game-data/provenance/battle-visual-02-assets.json的OWN_BUILTIN_IMAGE_GEN_EXACT_COPY及迁入候选/授权；两个原不合格候选仍排除，无新素材。c62/392与409已批准资源保持，缺完整动作/敌图/探索美术仍OPEN。08:09:14Z新preflight查询成功NO_ISSUES_OBSERVED/errors空/cleanup0，仅15旧98上传事件/1real、无99/100手机验收。
+
+下一步冻结同源main，原android-build.yml新100正式签名/App，独立核新21Content/36raw、MAP预备actual scope/time/正常与四人Boss分列、原图原片、7全cold/偏好及覆盖99。新App尚未运行，不能宣称预备改善、APP_VERIFIED或发布。全部原门槛通过并补真实审查才原reviewer同审核APK发布，公网全字节/postflight后将baseline由99更新为真实100并主动接下一有意义批次。迁入工具dirty、原失败、Windows冻结ZIP/历史/玩家存档保持，长期IN_PROGRESS/PARTIAL，无暂停或完成标记。
+
 # 下一候选范围：地图首帧后的局部图像预备
 
 DESIGN_SOURCE_READ_NOT_IMPLEMENTED；当前99/source a5bb7c6 / Actions37741740866仍冻结验收，线上98/稳定82/c62及长期IN_PROGRESS/PARTIAL保持。本文件仅接续入口，不变更冻结来源，不是新独立任务。

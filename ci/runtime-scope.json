@@ -401,6 +401,7 @@
     "partySpacing": "SEPARATED_CROPS_BOUNDED_ATTACK",
     "enemyFeedback": "ACTUAL_SPRITE_MEASURED_COMPACT_GAUGE_V2",
     "bodyScale": "SHORT_ARENA_MULTIPARTY_CROPS_V1",
-    "preparationTiming": "CURRENT_BATTLE_MONOTONIC_TO_POST_V1"
+    "preparationTiming": "CURRENT_BATTLE_MONOTONIC_TO_POST_V1",
+    "mapPreparation": "MAP_POST_SCOPED_CACHE_WARM_V1"
   }
 }

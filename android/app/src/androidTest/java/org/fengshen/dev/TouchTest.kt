@@ -1542,7 +1542,9 @@ class TouchTest:IsolatedGameTestCase(){
                         row.getBoolean("actualFramePosted")&&row.getBoolean("preparedSucceeded")}})
                 File(instrumentation.targetContext.getExternalFilesDir(null),"world-visual-normal-preparation.json")
                     .writeText(JSONObject().put("kind","NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE")
-                        .put("stateGrants",false).put("encounters",normalVisualTimings).toString())
+                        .put("stateGrants",false).put("encounters",normalVisualTimings).apply{
+                            instrumentation.runOnMainSync{put("mapPreparation",v.mapVisualWarmEvidence())}
+                        }.toString())
             }
             instrumentation.runOnMainSync{v.handleBack();v.persistState();activity.finish()}
             val(restarted,reloaded)=launch()

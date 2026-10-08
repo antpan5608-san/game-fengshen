@@ -21,7 +21,9 @@ class MainActivity:Activity() {
     fun onLocalSnapshotSaved(snapshot:SaveSnapshot){cloud.onLocalSaved(snapshot)}
     private var resumed=false
     @Volatile private var destroyed=false
-    private val contentWorker=java.util.concurrent.Executors.newSingleThreadExecutor{r->Thread(r,"development-content-loader")}
+    private val contentWorker=java.util.concurrent.ThreadPoolExecutor(1,1,0L,java.util.concurrent.TimeUnit.MILLISECONDS,
+        java.util.concurrent.LinkedBlockingQueue<Runnable>(),{r->Thread(r,"development-content-loader")})
+    private val mapWarmQueue=MapVisualWarmQueue({contentWorker.execute(it)},{contentWorker.remove(it);Unit})
     private var visualPreparer:BattleVisualPreparer?=null // Accessed only on contentWorker.
     private var loadStarted=0L
     internal var firstFrameReported=false
@@ -59,6 +61,7 @@ class MainActivity:Activity() {
     }
     internal fun prepareBattleVisuals(owner:GameView,request:BattleVisualRequest,ready:(BattleVisualAssets?,BattleVisualTiming)->Unit){
         if(destroyed)return
+        cancelMapVisuals()
         val submitted=SystemClock.elapsedRealtime()
         try{contentWorker.execute {
             if(destroyed)return@execute
@@ -76,11 +79,27 @@ class MainActivity:Activity() {
         }}catch(_:java.util.concurrent.RejectedExecutionException){/* Closed activity owns no result. */}
     }
     internal fun ownsVisualTarget(owner:GameView)=!destroyed&&game===owner
+    internal fun cancelMapVisuals(){mapWarmQueue.cancel()}
+    internal fun prepareMapVisuals(owner:GameView,request:BattleVisualRequest,postedAt:Long){
+        if(!ownsVisualTarget(owner)||!owner.matchesMapVisualWarm(request))return
+        val submitted=SystemClock.elapsedRealtime()
+        mapWarmQueue.request(request){copy,keepGoing->
+            if(destroyed||!keepGoing())return@request
+            val started=SystemClock.elapsedRealtime()
+            val result=runCatching{visualPreparer?.warmMap(copy){!destroyed&&keepGoing()}}.getOrNull()
+            val completed=SystemClock.elapsedRealtime()
+            runOnUiThread{
+                if(!ownsVisualTarget(owner))return@runOnUiThread
+                val accepted=keepGoing()&&owner.matchesMapVisualWarm(copy)
+                owner.recordMapVisualWarm(copy,postedAt,submitted,started,completed,SystemClock.elapsedRealtime(),result,accepted)
+            }
+        }
+    }
     override fun onResume(){super.onResume();resumed=true;game?.active=true;game?.audio?.foreground(true);updater.resumeAfterPermission();Diagnostics.record("app_foreground");Diagnostics.schedule()}
-    override fun onPause(){resumed=false;game?.active=false;game?.audio?.foreground(false);game?.persistState();Diagnostics.record("app_background");super.onPause()}
-    override fun onDestroy(){destroyed=true;contentWorker.shutdownNow();updater.close();game?.active=false;game?.audio?.close();cloud.close();super.onDestroy()}
+    override fun onPause(){cancelMapVisuals();resumed=false;game?.active=false;game?.audio?.foreground(false);game?.persistState();Diagnostics.record("app_background");super.onPause()}
+    override fun onDestroy(){destroyed=true;mapWarmQueue.close();contentWorker.shutdownNow();updater.close();game?.active=false;game?.audio?.close();cloud.close();super.onDestroy()}
     override fun onSaveInstanceState(out:Bundle){game?.let{it.finishForLifecycle();out.putString("snapshot",it.currentSnapshot().json().toString());out.putString("version",it.content.scene.version)};super.onSaveInstanceState(out)}
-    override fun onWindowFocusChanged(focus:Boolean){super.onWindowFocusChanged(focus);game?.focused=focus}
+    override fun onWindowFocusChanged(focus:Boolean){super.onWindowFocusChanged(focus);if(!focus)cancelMapVisuals();game?.focused=focus}
     @Suppress("DEPRECATION")
     override fun onBackPressed(){if(game?.handleBack()==true)return;super.onBackPressed()}
 }
@@ -117,6 +136,28 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     internal var battleVisualPrepared=false;private set
     internal var battleVisualTiming:BattleVisualTiming?=null;private set
     private var renderedVisualEpoch=-1L
+    private val mapWarmHistory=java.util.ArrayDeque<JSONObject>()
+    internal fun matchesMapVisualWarm(request:BattleVisualRequest)=surface&&active&&focused&&layer==Layer.MAP&&battle==null&&
+        request.enemyIds.isEmpty()&&!request.blackScene&&world.mapId==request.mapId&&characters.map{it.id}.toSet()==request.actorIds
+    internal fun mapVisualWarmEvidence()=JSONObject().put("model","MAP_POST_SCOPED_CACHE_WARM_V1")
+        .put("observations",org.json.JSONArray(mapWarmHistory.toList()))
+    internal fun recordMapVisualWarm(request:BattleVisualRequest,postedAt:Long,submitted:Long,started:Long,
+        completed:Long,delivered:Long,result:MapVisualWarmResult?,accepted:Boolean){
+        val row=JSONObject().put("mapId",request.mapId).put("actorIds",org.json.JSONArray(request.actorIds.sorted()))
+            .put("enemyIds",org.json.JSONArray()).put("blackScene",false).put("mapPostedMs",postedAt)
+            .put("submittedMs",submitted).put("startedMs",started).put("completedMs",completed).put("deliveredMs",delivered)
+            .put("acceptedCurrentScope",accepted).put("resultAvailable",result!=null)
+            .put("stopped",result?.stopped?:true).put("retainedBytes",result?.retainedBytes?:0L)
+            .put("selectedFiles",org.json.JSONArray(result?.selectedFiles?.sorted().orEmpty()))
+            .put("preparedFiles",org.json.JSONArray(result?.preparedFiles?.sorted().orEmpty()))
+            .put("failedFiles",org.json.JSONArray(result?.failedFiles?.sorted().orEmpty()))
+        if(mapWarmHistory.size==32)mapWarmHistory.removeFirst()
+        mapWarmHistory.addLast(row)
+        Diagnostics.record("visual_load",details=JSONObject().put("stage",if(accepted)"MAP_WARM_COMPLETED"else"MAP_WARM_DISCARDED")
+            .put("mapId",request.mapId).put("verificationMs",delivered-submitted)
+            .put("success",accepted&&result!=null&&!result.stopped&&result.failedFiles.isEmpty())
+            .put("reason",if(accepted)"CURRENT_MAP"else"STALE_MAP"))
+    }
     internal var battleVisualPreparationSucceeded=false;private set
     internal fun requestBattleVisuals(){
         val current=battle?:return
@@ -401,7 +442,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     override fun onSizeChanged(w:Int,h:Int,oldw:Int,oldh:Int){relayout()}
     override fun surfaceCreated(h:SurfaceHolder){surface=true;schedule()}
     override fun surfaceChanged(h:SurfaceHolder,format:Int,w:Int,height:Int){relayout()}
-    override fun surfaceDestroyed(h:SurfaceHolder){historyClock.pause();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
+    override fun surfaceDestroyed(h:SurfaceHolder){activity.cancelMapVisuals();historyClock.pause();clearAttackChoice();clearBattleGesture();battlePresentation.invalidateInput();surface=false;input.clear();menuTouch.clear();panelTouch.clear();clearUxGesture();hudTouch.clear();npcTouch.clear();clock.reset();Choreographer.getInstance().removeFrameCallback(this);posted=false}
     private fun schedule(){if(surface&&!posted){posted=true;Choreographer.getInstance().postFrameCallback(this)}}
     override fun doFrame(time:Long){
         posted=false
@@ -447,6 +488,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 reportBattleVisualTiming(postedTiming,battleVisualPreparationSucceeded,posted=true)
             }
             if(active&&focused)activity.firstInteractiveFrame()
+            if(rendered&&active&&focused&&layer==Layer.MAP&&battle==null)
+                activity.prepareMapVisuals(this,BattleVisualRequest(characters.map{it.id},emptyList(),world.mapId,false),SystemClock.elapsedRealtime())
+            else activity.cancelMapVisuals()
         }}
         schedule()
     }

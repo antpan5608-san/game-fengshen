@@ -76,6 +76,11 @@ class BattleVisualPreparer(private val source:ContentSource,manifestBytes:ByteAr
         .limitBytes(BattleVisualAssets.CACHE_LIMIT.toLong()){it.allocationByteCount.toLong()}
     fun preparePortraits():BattleVisualAssets=prepare(definition.portraits)
     fun prepareBattle(request:BattleVisualRequest):BattleVisualAssets=prepare(definition.selection.battle(request))
+    internal fun warmMap(request:BattleVisualRequest,keepGoing:()->Boolean):MapVisualWarmResult {
+        require(request.enemyIds.isEmpty()&&!request.blackScene)
+        return warmVisualResources(definition.selection.battle(request),{cache.getValue(it);Unit},keepGoing)
+            .copy(retainedBytes=cache.cachedBytes())
+    }
     fun prepareAll():BattleVisualAssets=prepare(definition.names)
     /** Worker diagnostics only; this synchronized query is never needed by Canvas. */
     fun retainedCacheBytes():Long=cache.cachedBytes()

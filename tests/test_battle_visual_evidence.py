@@ -31,6 +31,13 @@ class VisualProofTests(unittest.TestCase):
         self.normal_timing=dict(kind='NORMAL_NEW_GAME_CURRENT_BATTLE_PREPARATION_NOT_PHONE',stateGrants=False,
             encounters=[dict(actualFramePosted=False,preparedSucceeded=False,timing=None),
                 dict(actualFramePosted=True,preparedSucceeded=True,timing=self.timing)])
+        self.map_warm=dict(model=visual.ACCEPTANCE['mapPreparation'],observations=[dict(
+            mapId=16,actorIds=['nezha'],enemyIds=[],blackScene=False,mapPostedMs=100,submittedMs=101,
+            startedMs=103,completedMs=111,deliveredMs=112,acceptedCurrentScope=True,resultAvailable=True,
+            stopped=False,retainedBytes=32*1024*1024,
+            selectedFiles=['grass-v1.png','nezha-attack.png','nezha-idle-v1.png','nezha-portrait-v1.png'],
+            preparedFiles=['grass-v1.png','nezha-attack.png','nezha-idle-v1.png','nezha-portrait-v1.png'],failedFiles=[])])
+        self.normal_timing['mapPreparation']=self.map_warm
         self.write('touch-ux-world-visual-normal-preparation.json',self.normal_timing)
         fixture=magic_fixture.BattleMagicEvidenceTest();fixture.setUp();self.addCleanup(fixture.doCleanups)
         phases=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
@@ -102,6 +109,32 @@ class VisualProofTests(unittest.TestCase):
             self.write(name,dict(self.normal_timing,**change))
             with self.assertRaises(ValueError):self.proof()
         self.write(name,self.normal_timing);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
+
+    def test_map_warm_rejects_old_missing_protocol_nonpost_and_foreign_assets(self):
+        name='touch-ux-world-visual-normal-preparation.json';bad=[]
+        for key,value in [('mapPostedMs',104),('submittedMs',True),('startedMs',-1),('completedMs',float('nan')),
+                ('deliveredMs',2**63),('enemyIds',[1]),('blackScene',True),('mapId',True),('actorIds',['xiaolongnv']),
+                ('actorIds',['nezha','nezha']),('selectedFiles',self.map_warm['observations'][0]['selectedFiles']+['enemy-1.png']),
+                ('preparedFiles',['../private.png']),('failedFiles',['grass-v1.png']),('retainedBytes',64*1024*1024+1),
+                ('retainedBytes',True),('acceptedCurrentScope',False),('acceptedCurrentScope',1),('stopped',True),('resultAvailable',False)]:
+            changed=copy.deepcopy(self.map_warm);changed['observations'][0][key]=value;bad.append(changed)
+        bad.extend([None,dict(model=None,observations=[]),dict(self.map_warm,observations=[]),
+            dict(self.map_warm,observations=self.map_warm['observations']*33)])
+        for changed in bad:
+            self.write(name,dict(self.normal_timing,mapPreparation=changed))
+            with self.assertRaises(ValueError):self.proof()
+        self.write(name,self.normal_timing);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
+
+    def test_map_warm_cancelled_partial_and_missing_result_are_honest_but_not_success(self):
+        partial=copy.deepcopy(self.map_warm['observations'][0]);partial.update(stopped=True,
+            acceptedCurrentScope=False,preparedFiles=['grass-v1.png'])
+        missing=dict(partial,resultAvailable=False,preparedFiles=[],selectedFiles=[],failedFiles=[],retainedBytes=0)
+        value=dict(self.map_warm,observations=[partial,missing,self.map_warm['observations'][0]])
+        visual.verify_map_preparation(value)
+        with self.assertRaises(ValueError):visual.verify_map_preparation(dict(value,observations=[partial,missing]))
+        unknown=dict(self.map_warm['observations'][0],mapId=255,actorIds=['unknown'],selectedFiles=[],preparedFiles=[])
+        visual.verify_map_preparation(dict(value,observations=[unknown,self.map_warm['observations'][0]]))
+        with self.assertRaises(ValueError):visual.verify_map_preparation(dict(value,observations=[unknown]))
 
     def test_short_arena_refuses_old_protocol_shrunken_envelope_and_detached_feet(self):
         name='touch-ux-world-visual-poses-2.0.json';original=json.loads((self.evidence/name).read_text());bad=[]
