@@ -1,3 +1,18 @@
+最新原Actions源码冻结入口（2026-10-08T11:55:06.555538+00:00）
+
+个人候选102/source `722fcb8efa071f0234ffc6c0f5ccff4afcfafe9b`，原[Actions37772997507](https://github.com/antpan5608-san/game-fengshen/actions/runs/37772997507) IN_PROGRESS，正式包/App/发布尚未验，线上仍个人101/稳定82/c62。冻结main保持source，不推无关变更。导航原个人门槛已由36增加至37，原21Content/正常物品攻击合法治疗奖励与全cold/覆盖101保持；同run新3字体导航方法/JSON/两截图每字体/仪器日志成为必需项，raw实际字节和candidate绑定SHA由原review CLI复核。受控开场导航证据不升级为正常主线或真机。
+
+新94相关Python/13新增，最终图片尺寸保护后13再次通过；本轮515 DEBUG JVM/102 suites零失败、最新仪器编译成功，正确参数包内102。三字体方法新增真实拖动CANCEL多指/HUD菜单优先/48dp断言、只清本方法同字体旧证据、真实post后cyan截图，尚未实际App执行。九文件完整新codex_only `9ff12d70cc520bd5d64ca93b660c1db1e9cdc8122d012f70cac162aa2ad0a707` / Stop current。源码hash/包hash/全部日志、资产与48ZIP新比较、首环境变量缺失和DEBUG21参数错误保留在服务器 navigation-gate-*.json/log。没有外部登录/权限阻断证据。
+
+接续顺序：
+
+1. `gh run view 37772997507 --repo antpan5608-san/game-fengshen --json headSha,status,conclusion,jobs`；以实际job状态与时间取原唯一成功job不可变artifact。用原 tools/runtime_artifact_selection.py 核安全ZIP/source/job与ID，不按同名最大ID选失败产物。
+2. 原 fengshen-signed-apk 与测试XML独立核新source722fcb8/非DEBUG/包名证书/102与c62/visual17/409bytes；正式JVM及Python数量从本run真实日志/XML读，不能拿本地94/515或旧101替代。新版runtime是否PASS按实际返回；失败保留具体日志，未验不发布。
+3. 成功runtime的 fengshen-town02-runtime-evidence 才是原publisher使用artifact。核新增 mapNavigationEvidenceSha256：`tools.map_navigation_evidence.proof_digests(raw_directory, log_directory, actual_runtime_receipt)`；3份 touch-ux-world01-navigation-touch-FONT.json、6份ground/object-options PNG与3份testControlledNavigationHiddenGroundAndObjectCancel-font-FONT.txt均须实际取得、逐图看。审核原21Content37raw与正常起始/物品/攻击/合法治疗/奖励、完整保存/外部cold/覆盖101，受控四人/Boss单列；不能用synthetic测试图片作App证据。
+4. 全新同源正式门禁与人工目视核对齐备，补真实检查review/Stop后原android-publish.yml同审核APK发布；验证公网完整字节/版本签名内容及原postflight，才登记个人102并主动接续。当前尚无正式SHA或App通过回执，不填写猜测值。
+
+剩余独立导航验收：原片/全路径与镜头精确对应、走途中改目标/手动/B停止、屏外绕行/出入口/遇敌不续走/后台失焦读档、原设置真实开启摇杆与偏好完整重启。代码及JVM覆盖与实际Android分别记录，不关闭完整点击寻路项；13T性能/声音/完整原结局/真实账号云恢复及全欠账OPEN。接续只写服务器，原失败/dirty/历史/存档保持，无暂停或长期完成标记。以下保留当时历史。
+
 最新隐藏摇杆/对象到达批次（2026-10-08T11:34:27.373844+00:00）
 
 本地代码 `f5d4eb70d664a3119e2a04f9033c07b474520121`，阶段 HIDDEN_JOYSTICK_OBJECT_ARRIVAL_LOCAL_CHECKED / APP_NOT_VERIFIED / FORMAL_SOURCE_NOT_FROZEN。新515 DEBUG JVM/102 suites零失败错误跳过、35导航项（新10对象项）、DEBUG两包构建、409素材字节同审核101；新完整六文件codex_only `3026afa21b5d7b360fb1c76cf5dea1c304aadadf8c9b673b4b29d6984be386d9`、Stop current。线上个人101/source272e5a0、原Actions37757334463/37762465126 SUCCESS、稳定82/c62和原main16550c7保持，没有102正式Actions/发布。

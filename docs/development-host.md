@@ -1,3 +1,11 @@
+当前唯一服务器源码冻结检查点（2026-10-08T11:55:06.555538+00:00）：main/source `722fcb8efa071f0234ffc6c0f5ccff4afcfafe9b`，候选个人102，原Actions37772997507实际IN_PROGRESS。新导航原门禁/发布复核/明确raw采集与个人artifact保留已接；正式签名/App/覆盖101/cold/发布待验，原Actions继续唯一正式打包与验收。当前线上个人101/source272e5a0/稳定82/c62保持，原gpt-6.1-sol/high与唯一writer/审核/同源同APK/原签名/两OSS对象保护不变。
+
+本轮实际94相关Python（新13），最终decode尺寸保护后13再通过；515 DEBUG JVM/102 suites本轮执行零失败，最后生产未变任务UP_TO_DATE，最新仪器包已编译。DEBUG metadata102、409素材字节同101、16PNG授权hash一致。完整九文件实审、新codex_only `9ff12d70cc520bd5d64ca93b660c1db1e9cdc8122d012f70cac162aa2ad0a707` / Stop current；navigation-gate-local-verified.json、preflight和首次缺base环境变量/错版本属性的失败修正记录保留于服务器receipts。11:38:51Zpreflight仅NO_DATA/errors空/cleanup0/0实机，不是手机/App验收。
+
+迁入CPU检索/后台辅助工具、项目配置/AGENTS/local-ai文档和gradlew.bat mode仍原dirty，未代提交；新代码和本批CI文件已提交并按授权快进原main。之后只保存服务器本地文档/检查点，不改变冻结main或取消Actions。Windows freeze/48条ZIP/原12候选＋4ZIP与完整历史保留；没有读取输出凭据或向模型发送ROM/原始私有素材/存档。
+
+下一沿 `docs/current-task.md` / `docs/evidence/map-click-navigation-next-batch.md` 独立验同run不可变正式包/实际App三字体导航与原正常操作/全cold/覆盖101，再同审核产物发布/public/postflight。更完整导航原片/镜头/改道/手动/生命期/偏好、13T声音结局云恢复和全部欠账OPEN；本批部分成功不算游戏完成，没有暂停或终点完成标记。以下保留历史。
+
 当前唯一服务器开发检查点（2026-10-08T11:34:27.373844+00:00）：本批六代码/测试文件已本地提交 `f5d4eb70d664a3119e2a04f9033c07b474520121`，默认隐藏摇杆/独立UI偏好和稳定ID对象最短合法到达确认接在原实现；不整树覆盖或回退旧成果。原main16550c7未变，正式101/source272e5a0/build37757334463/publish37762465126保持，稳定82/c62、原gpt-6.1-sol/high与唯一writer/审核/同源签名产物/两OSS对象规则保持。正式构建/App/发布继续原GitHub Actions，本机DEBUG不替代正式包。
 
 本轮已验515 DEBUG JVM/102 suites/35导航（含新10项）、DEBUG应用/仪器构建、409素材字节同101和16授权PNG哈希；六文件真实完整实审、新codex_only `3026afa21b5d7b360fb1c76cf5dea1c304aadadf8c9b673b4b29d6984be386d9`、Stop current。新Android脚本只编译未运行，新App/三字体实际画面/导航取消确认/偏好重启/覆盖101/完整cold/真机性能待验；11:10:06Z原Linux preflight仅NO_DATA/errors空/cleanup0/0实机。新证据 navigation-arrival-local-verified.json 和首次metadata16/17计数失败回执均在服务器receipts，失败未清除。
