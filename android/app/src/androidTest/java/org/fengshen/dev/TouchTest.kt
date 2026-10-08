@@ -4394,6 +4394,12 @@ class TouchTest:IsolatedGameTestCase(){
                 persist();state("cold-original-fixed-reverse-and-village-continue",true)
             }
     }
+    // Keep both original coordinate checks, without Pair/Integer boxing in the
+    // large route driver where release D8 reused high String parameter registers.
+    private fun assertOriginalCell(expectedX:Int,expectedY:Int,actualX:Int,actualY:Int){
+        assertEquals(expectedX,actualX)
+        assertEquals(expectedY,actualY)
+    }
     private fun normalWorldStoryContinuation(cold:Boolean,east:Boolean,hell:Boolean=false,firstHall:Boolean=false,secondHall:Boolean=false,hallBatch:Boolean=false,rebirth:Boolean=false,village3:Boolean=false,medical:Boolean=false,continentBridge:Boolean=false,forest101:Boolean=false,tree107:Boolean=false,room171:Boolean=false,yangJoin:Boolean=false,village4:Boolean=false,ferry:Boolean=false,island:Boolean=false,village5:Boolean=false,cave87:Boolean=false,village6:Boolean=false,night8:Boolean=false,queen:Boolean=false,fixtureLabel:String?=null,normalSourceName:String?=null){
         val root=instrumentation.targetContext.getExternalFilesDir(null)
         require(fixtureLabel==null || (fixtureLabel=="controlled-r1-village2" && hell && east))
@@ -4603,8 +4609,8 @@ class TouchTest:IsolatedGameTestCase(){
                 }
                 if(v.layer==GameView.Layer.DIALOGUE)assertEquals("Original story may only trigger at requested route endpoint",keys.lastIndex,index)
                 if(island&&v.layer==GameView.Layer.DIALOGUE){
-                    assertEquals(76,scene.mapId);assertEquals(12 to 12,tx to ty)
-                    assertEquals(9 to 11,v.world.x/16 to v.world.y/16);return
+                    assertEquals(76,scene.mapId);assertOriginalCell(12,12,tx,ty)
+                    assertOriginalCell(9,11,v.world.x/16,v.world.y/16);return
                 }
                 val expectedX=beforeX+if(key==Key.RIGHT)1 else if(key==Key.LEFT)-1 else 0
                 val expectedY=beforeY+if(key==Key.DOWN)1 else if(key==Key.UP)-1 else 0
@@ -4829,7 +4835,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertFalse(10*16+7 in v.world.scene.dynamicObjectCells)
                 assertTrue(9*16+7 in v.world.scene.dynamicObjectCells)
                 val disciple=v.content.npcsForState(163,v.currentSnapshot().flags).single{it.id=="rom.npc.163.0"}
-                assertEquals(7 to 9,disciple.x to disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
+                assertOriginalCell(7,9,disciple.x,disciple.y);assertEquals("rom.dialogue.173.1",disciple.firstDialogue)
                 walkTo(7,5);val teacherBefore=v.currentSnapshot()
                 assertTrue(teacherBefore.flags["rom.map.163.flag.2"]!=true)
                 tap(v,center(layoutFor(v).buttons.getValue(Key.A)))
@@ -4856,7 +4862,7 @@ class TouchTest:IsolatedGameTestCase(){
                 islandWalk(Triple(76,14,13));state("normal-original-floor76-four-actors-and-six-chests")
                 walkTo(12,12);assertEquals(GameView.Layer.DIALOGUE,v.layer)
                 val story=v.content.battle!!.storyBattles.getValue("rom.npc.76.0");val intro=story.intro!!
-                assertEquals(9 to 11,v.world.x/16 to v.world.y/16)
+                assertOriginalCell(9,11,v.world.x/16,v.world.y/16)
                 for(id in intro.continuation.dialogueIds){
                     assertEquals(GameView.Layer.DIALOGUE,v.layer);assertEquals(id,intro.pendingDialogue(v.currentSnapshot().flags))
                     state("normal-original-intro-$id");tap(v,Pair(v.width*.5f,v.height*.5f))
@@ -4914,10 +4920,10 @@ class TouchTest:IsolatedGameTestCase(){
             if(!cold){
                 assertEquals(171,v.world.mapId);assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
                 walkTo(7,13);step(Key.DOWN);assertEquals(101,v.world.mapId)
-                walkTo(8,51);assertEquals(16,v.world.mapId);assertEquals(213 to 155,v.world.x/16 to v.world.y/16)
+                walkTo(8,51);assertEquals(16,v.world.mapId);assertOriginalCell(213,155,v.world.x/16,v.world.y/16)
                 walkTo(168,161);walkTo(168,149);walkTo(169,149);step(Key.RIGHT);assertEquals(107,v.world.mapId)
                 treeWalkTo(Triple(110,7,6));step(Key.LEFT)
-                assertEquals(7 to 6,v.world.x/16 to v.world.y/16);assertEquals(Key.LEFT,v.world.direction)
+                assertOriginalCell(7,6,v.world.x/16,v.world.y/16);assertEquals(Key.LEFT,v.world.direction)
                 state("normal-real-return-to-yang-facing-no-position-repair")
                 val before=v.currentSnapshot();tap(v,center(v.hudBounds()));tap(v,tabPoint(v,2))
                 scrollToItem(v,OriginalYangJoin.ITEM_ID);tap(v,center(v.panelItemBounds(OriginalYangJoin.ITEM_ID)))
@@ -4933,7 +4939,7 @@ class TouchTest:IsolatedGameTestCase(){
                 dialogue();assertEquals(GameView.Layer.MAP,v.layer);assertEquals(true,v.currentSnapshot().flags["rom.map.110.flag.128"])
                 assertEquals(1,v.currentSnapshot().inventory[OriginalYangJoin.ITEM_ID])
                 state("normal-both-original-dialogues-complete-no-free-reward")
-                walkTo(6,6);assertEquals(6 to 6,v.world.x/16 to v.world.y/16)
+                walkTo(6,6);assertOriginalCell(6,6,v.world.x/16,v.world.y/16)
                 assertFalse(v.content.npcVisible(v.content.npcs.single{it.id=="rom.npc.110.0"},v.currentSnapshot().flags))
                 state("normal-empty-context207-removes-actor-and-collision")
                 var steps=0
@@ -4949,7 +4955,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(true,source.flags["rom.map.110.flag.128"])
                 assertFalse(v.content.npcVisible(v.content.npcs.single{it.id=="rom.npc.110.0"},source.flags))
                 treeWalkTo(Triple(107,7,13));step(Key.DOWN);assertEquals(16,v.world.mapId)
-                assertEquals(169 to 149,v.world.x/16 to v.world.y/16);state("cold-three-party-original-tree-return")
+                assertOriginalCell(169,149,v.world.x/16,v.world.y/16);state("cold-three-party-original-tree-return")
                 step(Key.RIGHT);assertEquals(107,v.world.mapId);treeWalkTo(Triple(110,6,6))
                 assertEquals(1,v.currentSnapshot().characters.count{it.id=="yangjian"})
                 assertEquals(1,v.currentSnapshot().inventory[OriginalYangJoin.ITEM_ID])
@@ -4965,14 +4971,14 @@ class TouchTest:IsolatedGameTestCase(){
             if(!cold){
                 assertEquals(110,v.world.mapId);assertEquals(0,source.inventory["rom.special.19"]?:0)
                 treeWalkTo(Triple(107,7,13));step(Key.DOWN)
-                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                assertEquals(16,v.world.mapId);assertOriginalCell(169,149,v.world.x/16,v.world.y/16)
                 walkTo(168,149);walkTo(168,161);walkTo(213,155)
-                assertEquals(101,v.world.mapId);assertEquals(8 to 51,v.world.x/16 to v.world.y/16)
+                assertEquals(101,v.world.mapId);assertOriginalCell(8,51,v.world.x/16,v.world.y/16)
                 walkTo(32,13);step(Key.UP)
-                assertEquals(171,v.world.mapId);assertEquals(7 to 14,v.world.x/16 to v.world.y/16)
+                assertEquals(171,v.world.mapId);assertOriginalCell(7,14,v.world.x/16,v.world.y/16)
                 state("normal-forest-original-door-and-room")
                 walkTo(7,5);step(Key.UP)
-                assertEquals(7 to 5,v.world.x/16 to v.world.y/16)
+                assertOriginalCell(7,5,v.world.x/16,v.world.y/16)
                 val before=v.currentSnapshot();val npc=v.content.npcs.single{it.id=="rom.npc.171.1"}
                 val item=v.content.itemDefinitions.getValue("rom.special.19")
                 val expected=OriginalNpcTalk.begin(before,npc.originalTalk!!,item)
@@ -4993,7 +4999,7 @@ class TouchTest:IsolatedGameTestCase(){
                 walkTo(7,5);step(Key.UP);val before=v.currentSnapshot();talk()
                 assertEquals(before,v.currentSnapshot());state("cold-repeat-no-reward-or-party-change")
                 walkTo(7,13);step(Key.DOWN)
-                assertEquals(101,v.world.mapId);assertEquals(32 to 12,v.world.x/16 to v.world.y/16)
+                assertEquals(101,v.world.mapId);assertOriginalCell(32,12,v.world.x/16,v.world.y/16)
                 state("cold-original-room-return-to-forest")
                 step(Key.DOWN);walkTo(32,12);assertEquals(171,v.world.mapId)
                 walkTo(7,5);step(Key.UP);val beforeRepeat=v.currentSnapshot();talk()
@@ -5006,7 +5012,7 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(true,source.flags["rom.map.86.flag.128"])
             state(if(cold)"cold-exact-normal-tree-save"else"verified-bridge-source-no-state-grants")
             if(!cold){
-                assertEquals(16,v.world.mapId);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+                assertEquals(16,v.world.mapId);assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
                 walkTo(239,160);assertEquals(3,v.world.mapId)
                 val service=enterService(3,19);val herb=v.content.itemDefinitions.getValue(HerbUse.ID)
                 val available=minOf(herb.maxCount-(v.currentSnapshot().inventory[HerbUse.ID]?:0),v.currentSnapshot().money/herb.buyPrice!!)
@@ -5015,7 +5021,7 @@ class TouchTest:IsolatedGameTestCase(){
                 val exit=v.content.exits.first{it.fromMapId==3&&it.toMapId==16};walkTo(exit.triggerX,exit.triggerY)
                 walkTo(235,159);walkTo(231,159);walkTo(230,161);walkTo(168,161);walkTo(168,149);walkTo(169,149)
                 val before=v.currentSnapshot();step(Key.RIGHT)
-                assertEquals(107,v.world.mapId);assertEquals(7 to 14,v.world.x/16 to v.world.y/16)
+                assertEquals(107,v.world.mapId);assertOriginalCell(7,14,v.world.x/16,v.world.y/16)
                 assertEquals(before.inventory,v.currentSnapshot().inventory);assertEquals(before.flags,v.currentSnapshot().flags)
                 state("normal-real-western-mainland-actor-contact-entry")
                 for(id in listOf("rom.npc.107.1","rom.npc.107.0","rom.npc.108.0")){
@@ -5039,7 +5045,7 @@ class TouchTest:IsolatedGameTestCase(){
                 assertEquals(110,v.world.mapId);assertEquals(true,source.flags["rom.global.7c8.1"])
                 interactTreeNpc("rom.npc.110.0");assertEquals(source.flags,v.currentSnapshot().flags)
                 treeWalkTo(Triple(107,7,13));step(Key.DOWN)
-                assertEquals(16,v.world.mapId);assertEquals(169 to 149,v.world.x/16 to v.world.y/16)
+                assertEquals(16,v.world.mapId);assertOriginalCell(169,149,v.world.x/16,v.world.y/16)
                 state("cold-original-independent-tree-return-to-mainland")
                 val before=v.currentSnapshot();step(Key.RIGHT);assertEquals(107,v.world.mapId)
                 assertEquals(before.flags,v.currentSnapshot().flags);assertEquals(before.inventory,v.currentSnapshot().inventory)
@@ -5052,7 +5058,7 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(true,source.flags["rom.map.86.flag.128"])
             state(if(cold)"cold-exact-normal-owned-save"else"verified-bridge-source-no-state-grants")
             if(!cold){
-                assertEquals(16,v.world.mapId);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+                assertEquals(16,v.world.mapId);assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
                 // Restock only via the existing actual village shop and paid inn.
                 walkTo(239,160);assertEquals(3,v.world.mapId)
                 val service=enterService(3,19)
@@ -5063,7 +5069,7 @@ class TouchTest:IsolatedGameTestCase(){
                 val villageReturn=v.content.exits.first{it.fromMapId==3&&it.toMapId==16}
                 walkTo(villageReturn.triggerX,villageReturn.triggerY);assertEquals(16,v.world.mapId)
                 walkTo(235,159);walkTo(231,159);walkTo(213,155)
-                assertEquals(101,v.world.mapId);assertEquals(8 to 51,v.world.x/16 to v.world.y/16)
+                assertEquals(101,v.world.mapId);assertOriginalCell(8,51,v.world.x/16,v.world.y/16)
                 state("real-continent-door-and-original-forest")
                 walkTo(32,13);assertEquals(101,v.world.mapId)
                 state("normal-forest-full-path-to-next-room-approach")
@@ -5072,9 +5078,9 @@ class TouchTest:IsolatedGameTestCase(){
                 File(root,"world-forest101-expected-save.json").writeText(v.currentSnapshot().json().toString())
                 state("normal-forest-save-at-original-next-door-approach")
             }else{
-                assertEquals(101,v.world.mapId);assertEquals(32 to 13,v.world.x/16 to v.world.y/16)
+                assertEquals(101,v.world.mapId);assertOriginalCell(32,13,v.world.x/16,v.world.y/16)
                 walkTo(8,51);assertEquals(16,v.world.mapId)
-                assertEquals(213 to 155,v.world.x/16 to v.world.y/16)
+                assertOriginalCell(213,155,v.world.x/16,v.world.y/16)
                 state("cold-forest-original-return-to-continent")
                 walkTo(238,160);for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
                 checkSourceUnchanged();persistChecked();state("cold-return-and-owned-save")
@@ -5083,7 +5089,7 @@ class TouchTest:IsolatedGameTestCase(){
         }
         if(continentBridge){
             assertEquals(16,v.world.mapId);assertEquals(true,source.flags["rom.map.86.flag.128"])
-            assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
             state(if(cold)"cold-exact-normal-owned-save"else"verified-medical-source-no-state-grants")
             walkTo(235,159);state("normal-original-eastern-bridge-end")
             walkTo(231,159);state("normal-crossed-class16-bridge-west")
@@ -5147,8 +5153,8 @@ class TouchTest:IsolatedGameTestCase(){
                 leaveService(entry);assertEquals(3,v.world.mapId)
             }
             walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
-            assertEquals(239 to 160,v.world.x/16 to v.world.y/16)
-            step(Key.LEFT);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            assertOriginalCell(239,160,v.world.x/16,v.world.y/16)
+            step(Key.LEFT);assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
             for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
             assertEquals(0,bossEntries);checkSourceUnchanged();persistChecked()
             if(!cold){
@@ -5163,7 +5169,7 @@ class TouchTest:IsolatedGameTestCase(){
             assertEquals(listOf("nezha","xiaolongnv"),source.characters.map{it.id})
             state(if(cold)"cold-exact-owned-party-inventory-and-flags" else "verified-rebirth-source-no-state-grants")
             walkTo(239,160);assertEquals(3,v.world.mapId)
-            assertEquals(15 to 29,v.world.x/16 to v.world.y/16);state("normal-world-to-village3-original-door")
+            assertOriginalCell(15,29,v.world.x/16,v.world.y/16);state("normal-world-to-village3-original-door")
             if(!cold){
                 for((room,id)in listOf(17 to "rom.weapon.6",18 to "rom.armor.12",19 to "rom.medicine.10")){
                     val entry=enterService(3,room);state("normal-shop-$room-open")
@@ -5193,8 +5199,8 @@ class TouchTest:IsolatedGameTestCase(){
                 leaveService(entry);state("cold-real-service-reentry-cancel-no-charge")
             }
             walkTo(15,29);step(Key.DOWN);assertEquals(16,v.world.mapId)
-            assertEquals(239 to 160,v.world.x/16 to v.world.y/16);state("normal-independent-original-world-return")
-            step(Key.LEFT);assertEquals(238 to 160,v.world.x/16 to v.world.y/16)
+            assertOriginalCell(239,160,v.world.x/16,v.world.y/16);state("normal-independent-original-world-return")
+            step(Key.LEFT);assertOriginalCell(238,160,v.world.x/16,v.world.y/16)
             for((flag,value)in source.flags)assertEquals(value,v.currentSnapshot().flags[flag])
             assertEquals(0,bossEntries);checkSourceUnchanged();persistChecked()
             if(!cold)File(root,"world-$label-expected-save.json").writeText(v.currentSnapshot().json().toString())
