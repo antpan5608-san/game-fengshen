@@ -103,7 +103,9 @@ object OriginalBoat {
                 if(flags[FAILED_BOARD]==true)BoatFailureCell(9,2,MODE)else null,scriptedFootCell)
         }
     }
-    fun flagsAfterStep(flags:Map<String,Boolean>,step:CompletedStep):Map<String,Boolean> =
+    internal fun parkingCell(step:CompletedStep):Pair<Int,Int>?=
         if(step.mapId==16&&!step.transitioned&&step.fromTerrainMode==MODE&&step.toTerrainMode==0)
-            park(flags,step.originX,step.originY,step.direction) else flags
+            step.originX to step.originY else null
+    fun flagsAfterStep(flags:Map<String,Boolean>,step:CompletedStep):Map<String,Boolean> =
+        parkingCell(step)?.let{park(flags,it.first,it.second,step.direction)}?:flags
 }

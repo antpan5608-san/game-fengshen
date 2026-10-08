@@ -344,18 +344,13 @@ class World(private val scenes:Map<Int,Scene>,private val exits:List<MapExit>,pr
         return true
     }
     private fun delta(key:Key)=when(key){Key.LEFT->-1 to 0;Key.RIGHT->1 to 0;Key.UP->0 to -1;Key.DOWN->0 to 1;else->0 to 0}
-    private fun edgeExit(key:Key)=exits.firstOrNull{it.fromMapId==mapId && it.triggerX==x/16 &&
-        it.triggerY==y/16 && it.edgeDirection==key}
+    /** Capture on the UI thread at a natural tile boundary, never halfway through a step. */
+    fun navigationSnapshot():MapNavigationSnapshot?=if(remaining!=0)null else
+        MapNavigationSnapshot.freeze(scene,exits,NavigationCell(x/16,y/16,terrainMode),completedStepSeq)
+    private fun edgeExit(key:Key)=MapMovementQuery.edge(exits,mapId,x/16,y/16,key)
     private fun contactExit(key:Key):MapExit? {
         if(terrainMode!=0)return null // No unimplemented boat/flying actor.
-        val(dx,dy)=delta(key);val nx=x/16+dx;val ny=y/16+dy;val s=scene
-        val exit=exits.firstOrNull{it.fromMapId==mapId&&it.contactActorId!=null&&it.triggerX==nx&&it.triggerY==ny}?:return null
-        val cell=ny*s.width+nx
-        if(cell !in s.dynamicObjectCells)return null // Original actor removed by its flag.
-        // Only the reviewed contact actor is exempted. Walls, direction rules,
-        // unavailable regions and all other NPCs remain active.
-        return exit.takeIf{s.copy(dynamicObjectCells=s.dynamicObjectCells-cell)
-            .probeFrom(x/16,y/16,key,terrainMode)==MovementBlock.NONE}
+        return MapMovementQuery.contact(scene,exits,mapId,x/16,y/16,terrainMode,key)
     }
     private fun probe(key:Key):MovementBlock {
         if(edgeExit(key)!=null||contactExit(key)!=null)return MovementBlock.NONE
