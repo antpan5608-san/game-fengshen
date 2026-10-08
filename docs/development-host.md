@@ -1,3 +1,5 @@
+最新实际检查点：个人 v94 / 0.8.24-scoped-visual-personal 已发布并独立核验公网62,603,864完整字节与审核APK一致；原Actions新450 release JVM/96 suites、21 Content/36个人门禁通过，121原PNG/74视频采样/15原片SHA/7完整cold已实际复核。四头像启动与当前战斗按需准备、过期/不同battle/退出/销毁owner拒绝均实际通过。postflight 2026-10-08T00:11:17Z查询成功但NO_DATA，权威保留94/93，不当真机健康。稳定82、c62/392、原已审16图/17文件及WORLD-FULL-01 IN_PROGRESS/PARTIAL和全部长期欠账保持。详见[v94交付](evidence/v94-scoped-visual-personal.md)，主动接续[四人身体间距](evidence/battle-party-spacing-next-batch.md)。以下保留各检查点当时事实。
+
 最新研发检查点：拟v94按当前战斗准备已接原ContentLoader单队列、四头像启动与battle/GameView/epoch/销毁owner拒过期；本批新450 JVM/96 suites、61相关Python和DEBUG编译通过，仪器新断言尚待原Actions实际App执行，未正式签名/未发布。个人线上93、稳定82/c62/原审核16图及全部长期/真机/声音欠账保持，见[本批实际状态](evidence/battle-scoped-load-next-batch.md)。以下为已发布93与历史。
 
 最新实际检查点：个人 v93 已发布并独立核验公网 62,589,404 完整字节与原审核 APK 一致；本版正式447 JVM/95 suites、21 Content/36门禁及121原PNG/78视频采样/7完整cold已验。原治疗/解毒仅真实目标局部光效，规则/存档/c62/素材不变。postflight查询成功但NO_DATA，保留93/92，不能当真机健康通过；稳定82、WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。详见[v93交付](evidence/v93-support-visual-personal.md)。下一有限批次接[按当前战斗准备图像](evidence/battle-scoped-load-next-batch.md)，尚未实施/冻结新版本。以下各段保留历史状态。

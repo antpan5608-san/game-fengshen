@@ -1,3 +1,5 @@
+最新实际检查点：个人 v94 / 0.8.24-scoped-visual-personal 已发布并独立核验公网62,603,864完整字节与审核APK一致；原Actions新450 release JVM/96 suites、21 Content/36个人门禁通过，121原PNG/74视频采样/15原片SHA/7完整cold已实际复核。四头像启动与当前战斗按需准备、过期/不同battle/退出/销毁owner拒绝均实际通过。postflight 2026-10-08T00:11:17Z查询成功但NO_DATA，权威保留94/93，不当真机健康。稳定82、c62/392、原已审16图/17文件及WORLD-FULL-01 IN_PROGRESS/PARTIAL和全部长期欠账保持。详见[v94交付](evidence/v94-scoped-visual-personal.md)，主动接续[四人身体间距](evidence/battle-party-spacing-next-batch.md)。以下保留各检查点当时事实。
+
 最新研发检查点：拟v94按当前战斗准备已接原ContentLoader单队列、四头像启动与battle/GameView/epoch/销毁owner拒过期；本批新450 JVM/96 suites、61相关Python和DEBUG编译通过，仪器新断言尚待原Actions实际App执行，未正式签名/未发布。个人线上93、稳定82/c62/原审核16图及全部长期/真机/声音欠账保持，见[本批实际状态](evidence/battle-scoped-load-next-batch.md)。以下为已发布93与历史。
 
 # WORLD-FULL-01 本地恢复执行
@@ -12,8 +14,8 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v93 / 0.8.23-support-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 拟v94 / 0.8.24-scoped-visual-personal，按当前战斗准备已有限实施/新450 JVM及61 Python通过；待新原Actions签名/App，尚未发布
+published_personal_version: v94 / 0.8.24-scoped-visual-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: v94 / 0.8.24-scoped-visual-personal 已发布复核；下一四人身体间距仅已定位/设计，尚未实施或预占版本
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）

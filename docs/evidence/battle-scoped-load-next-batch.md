@@ -1,3 +1,5 @@
+最新状态：PUBLISHED_AND_VERIFIED_PERSONAL，实际v94同源签名/App/两对象发布/公网完整字节与postflight已复核，见[v94交付](v94-scoped-visual-personal.md)。以下本地待验描述保留为历史；下一批次接[身体间距](battle-party-spacing-next-batch.md)。
+
 # 下一有限批次：按当前战斗准备图像
 
 状态：IMPLEMENTED_LOCAL_VERIFIED；拟94 / 0.8.24-scoped-visual-personal，尚未正式签名/App/发布。线上个人93、稳定82、c62与全部未完成项保持；同一WORLD-FULL-01，不创建新任务。以下原只读设计保留为实施前记录。
