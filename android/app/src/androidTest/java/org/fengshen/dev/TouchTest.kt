@@ -1067,7 +1067,10 @@ class TouchTest:IsolatedGameTestCase(){
             val event=MotionEvent.obtain(time,time,action,points.size,props,coords,0,0,1f,1f,0,0,0,0)
             v.dispatchTouchEvent(event);event.recycle()
     }
-    private fun tap(v:GameView,p:Pair<Float,Float>,confirmArrival:Boolean=true){
+    // Keep the original two-argument call shape in the large historical route driver.
+    // A default third argument expands every call into a synthetic mask invocation.
+    private fun tap(v:GameView,p:Pair<Float,Float>){tap(v,p,true)}
+    private fun tap(v:GameView,p:Pair<Float,Float>,confirmArrival:Boolean){
         var objectId:String?=null
         // Preserve cross-APK old-baseline execution: never call a new app method on <=101.
         if(confirmArrival&&instrumentation.targetContext.packageManager.getPackageInfo(
