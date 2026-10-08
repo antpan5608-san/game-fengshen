@@ -1,3 +1,9 @@
+当前服务器研发检查点（2026-10-08T11:08:45.583027+00:00）：唯一写入位置仍 `/srv/fengshen-dev/game-fengshen`，本批地面点击导航四代码文件本地提交 `516505bf921e43ff06c8ad2ac0cb16a3129efbac`，未推原main16550c7、未冻结/触发102正式Actions。原项目模型/审核/签名/同源产物/两OSS对象门禁保持，原GitHub Actions继续承担正式构建与App发布。本机505 DEBUG JVM/101 suites、13新控制器测试、两DEBUG包及409同101素材字节已实验；新完整实审codex_only `7d7be8158322f00be3417d35733e76f4a75a5047c5e2184f250ada073cfb0e10` / Stop current。新Android画面/实际导航/覆盖升级/完整cold未验，不复用101 App回执冒充。
+
+当前未提交仍为迁入的本地CPU检索/后台工具及项目配置、AGENTS、docs/local-ai-*、gradlew.bat原mode；本轮没有编辑、代提交或清除这些输入。Windows freeze和48条visual ZIP再次hash核对，16已批准素材来源/准备记录正确复核；原Windows完整历史、旧工作树、云端历史及失败在原保留路径。新的证据、检查点只写服务器receipts和仓库docs，不回Windows执行。本批未新增图像，81/current83敌图、敌35原名、完整角色动作/13T/声音/主线等缺口OPEN。
+
+正式个人101/source272e5a0、build/runtime37757334463、publish37762465126 SUCCESS；稳定82/c62不变。新Linux preflight10:54:34Z为NO_DATA/errors空/cleanup0/0实机。下一开发入口为地面导航上的默认隐藏摇杆设置与既有驱动适配、对象合法到达确认、新同源Android导航验收及原正常完整保存/冷启/覆盖101；全门禁满足才原流程发布。接续见 `docs/current-task.md` 与 `docs/evidence/map-click-navigation-next-batch.md`，任务保持IN_PROGRESS/PARTIAL，没有development-paused或长期完成标记。以下保留历史。
+
 当前有限研发检查点（2026-10-08T10:42:22.732534+00:00）：正式个人v101已发布、公网全字节/postflight验明（source272e5a0/build37757334463/publish37762465126），稳定82/c62、WORLD-FULL-01 IN_PROGRESS/PARTIAL。下一点击寻路底层四文件已实际实现：共享原edge/contact查询、私有防御复制的同图快照、包含地形模式和停船位置的四向最短BFS、非目标出口拒绝/取消/搜索上限。没有手机点击、画线或自动行走接入；未启动102正式Actions，不能当玩家功能完成。
 
 新492 DEBUG JVM/100 suites零失败错误跳过、12新增导航检查、DEBUG应用/仪器两包和409素材字节同101通过；首wrapper权限失败及11项定向测试3处夹具错误/XML保留，改正fixture后通过。四代码/测试文件完整实审，新codex_only84be73cc/Stop current；本批代码仅服务器本地提交c6de70b3d3d14f4aeb8b727481cdabe38405c5aa，未推main。下一 [地图点击寻路](evidence/map-click-navigation-next-batch.md) 的后台revision/过期拒绝、单指tap、原FixedClock逐格执行/生命周期中断、青色虚线/停止、摇杆设置与对象到达确认；再同源新正式Actions/App/覆盖101/完整cold/原审核发布。13T/声音/完整结局/真实云恢复和全部欠账OPEN；唯一服务器writer，迁入dirty/冻结Windows历史/失败/存档保持，无暂停或长期完成标记。以下为当时历史。

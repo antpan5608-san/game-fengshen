@@ -1,3 +1,18 @@
+最新地面导航实现检查点（2026-10-08T11:08:45.583027+00:00）
+
+本地代码 `516505bf921e43ff06c8ad2ac0cb16a3129efbac`，新505 DEBUG JVM/101 suites/13控制器项＋12规划项零失败，新codex_only `7d7be8158322f00be3417d35733e76f4a75a5047c5e2184f250ada073cfb0e10` / Stop current；两DEBUG包编译成功、409素材字节同正式101。阶段为PLAYER_GROUND_NAVIGATION_LOCAL_CHECKED / APP_NOT_VERIFIED / FORMAL_SOURCE_NOT_FROZEN。原main16550c7，线上101/source272e5a0和稳定82/c62不变，无102 Actions或发布。
+
+真实生产接法已落在MainActivity.mapMovementIntent/onTouchEvent/drawNavigation和MapNavigationController：每格前只读冻结快照、原时钟自然执行；船/渡船同一intent先走原入口；route只临时内存，worker取消/epoch/起点/完成序列/拓扑与出口body/停车节点过期拒绝。路线以索引推进，避免每步复制长列表；画线与命中仍用原camera/clip。stop在按钮DOWN取消，当前自然步仍由原时钟完成；不借finishStep完成自动行走。手动/层/生命期/保存恢复取消，旧附近NPC/A/HUD优先且没有添加隐藏图标。此段是新实现/本地检查，Canvas实际可见性、Android触控和手机性能尚未验。
+
+直接接续：
+
+1. 补默认隐藏摇杆偏好（现有operation-a-ui，独立于SaveSnapshot）和设置开启；同步适配既有仪器的真实手动移动入口，不削弱原正常操作/状态断言。当前源码旧摇杆仍保留，覆盖区域不会发地图目标。
+2. 补稳定ID对象的最短合法邻位/专用交互点/朝向和到达后选项确认，复用原openNpc/调查/原事务，不直接交谈、发奖或开隐藏标记。对象消失或条件变化停止/重算；地图入口按原规则停止，不能借它跨图导航。
+3. 新Android导航raw/源pin/截图原片：真正地图tap、路径/目标测量、改道/停止/手动、HUD/按钮不穿透、多指/拖动/CANCEL、镜头、墙/开发边界、船/楼梯、层/生命周期/读档；特别核搜索/绘制耗时与长路径、三字体48dp。旧21Content36raw正常物品/攻击/合法治疗/奖励及全cold/覆盖101保持，四人/Boss另列。
+4. 新完整审查/相关测试/record/Stop后才冻结完整玩家增量，提交原main、沿原Actions同源签名候选App，门槛齐才原审核发布、公网完整字节/postflight并主动下一批。
+
+本批16授权图/48ZIP新hash及未验范围见服务器 `map-navigation-ui-assets-handoff-verified.json`；505/两包/代码hash/日志和新review见 `map-navigation-ui-local-verified.json`。没有平台权限或登录阻断证据；当前缺口是上述尚未完成的代码/App验收，不能写外部失败或复用旧测试。旧失败、迁入dirty、Windows历史、存档和全部长期终点继续OPEN。以下保留底层与设计历史。
+
 本批底层代码仅服务器本地提交 `c6de70b3d3d14f4aeb8b727481cdabe38405c5aa`；新完整codex_only84be73cc/Stop current，492 JVM/100 suites/12新检查真实通过。原main为文档/正式101基线16550c7；当前正式101/source272e5a0，下一正式Actions/App尚未启动。下一入口是下方已列的后台revision控制器与地图单指tap/虚线/原逐格执行，不把本底层提交当玩家功能或全目标完成。
 
 当前底层阶段（2026-10-08T10:42:22.732534+00:00）：IMPLEMENTED_LOCAL_CHECKED / PLAYER_UI_NOT_IMPLEMENTED / APP_NOT_VERIFIED。基底开发提交16550c7；正式游戏仍101/source272e5a0，原build/runtime37757334463与publish37762465126首次SUCCESS、公网全字节/postflight齐备。
