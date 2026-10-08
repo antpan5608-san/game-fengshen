@@ -1,3 +1,7 @@
+最新实际交付：个人v95 / 0.8.25-party-spacing-personal 已按原同源审核发布，公网62,606,416完整字节/SHA403c366a等于审核签名APK。新452 release JVM/96 suites、16组131 Python、21Content/36raw、121原PNG/97独立视频采样/15原片SHA/7完整cold/7prefs已实际核验；首App系统abort、旧候选和原发布失败均保留，不复用旧来源App。postflight03:41:27Z NO_ISSUES_OBSERVED/errors空/cleanup0，保留95/94，19事件1实机均94、95样本0。稳定82、c62/392/视觉17和WORLD-FULL-01 IN_PROGRESS/PARTIAL及全部长期欠账保持。见[本版交付](evidence/v95-party-spacing-personal.md)，服务器主动接续[敌人短标签/血条](evidence/battle-enemy-feedback-next-batch.md)，目前设计已核、游戏未实施；以下是历史检查点。
+
+最新服务器检查点：拟95 sourceeb94c50 / 原build37719985421，正式签名62,606,416字节/SHA403c366a、新452 release JVM/96 suites及16组131 Python独立通过；原App首轮正常短冒烟System has crashed失败保留、原因未核，同source/同immutable APK原runtime仅重试一次成功。新21Content/36raw、121原PNG/97独立视频采样/9原尺寸复查、15原片SHA/7完整cold/7prefs均已真实核验。codex_only snapshot68bb86f5/Stop current；原publish37723586817进行中，公网/发布后结果仍PENDING。线上实际94/稳定82、c62/视觉17及全部长期欠账保持；下一敌人短反馈仅已审源码与1440组合成范围设计，不计Android量字或新App。
+
 最新发布检查点：原reviewer approve通过，原publish37719334597在取得上传凭据前拒绝候选95，未上传；sourceae3fd09的新452 release JVM/96 suites、16组130 Python、21Content/36 raw门禁、121PNG/82采样/15原片SHA/7完整cold已真实复核仅保留其source范围。实际PowerShell复现：if输出单项数组展开成System.String，[-1]传入e；当前以外层@(...)保持数组，补实际PowerShell PERSONAL_TEST/STABLE末项回归。新48 runtime/57相关Python通过，须最新source重新审查及原同源构建/App/发布，不用ae App替新检查。线上94/稳定82、c62/原已审16图及全部未完成保持。
 
 最新App检查点：sourceae3fd09/build37714603955正式签名/452 release JVM-96 suites成功；新包62,606,416字节/SHA03fa6036及c62-392/视觉17独立核验，409文件逐字节同v94。App attempt1在2倍字体首phone布局测试INSTRUMENTATION_ABORTED:System has crashed，无游戏断言堆栈，1/1.3视觉已执行；完整新App未通过/未发布。保留失败两个artifact，原runtime作业同source/同immutable signed仅重试一次。preflight01:54:49Z实际NO_ISSUES_OBSERVED/15事件1实机会话均v94，errors空/cleanup0；先前口头NO_DATA更正，不当95手机验收。线上94/稳定82、全部长期欠账保持。
@@ -26,8 +30,8 @@ development_host: 192.168.1.20 / antpan
 development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
-published_personal_version: v94 / 0.8.24-scoped-visual-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: 拟v95 / 0.8.25-party-spacing-personal，四人身体间距源码/新452 JVM及48 Python通过；待原同源签名/App/发布
+published_personal_version: v95 / 0.8.25-party-spacing-personal，PUBLISHED_AND_VERIFIED
+current_candidate_version: v95已交付；下一敌人短反馈DESIGN_PROTOTYPED，尚未冻结新候选
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
