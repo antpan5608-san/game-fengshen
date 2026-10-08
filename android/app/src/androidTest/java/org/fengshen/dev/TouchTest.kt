@@ -11,6 +11,110 @@ import org.json.JSONObject
 
 @Suppress("DEPRECATION")
 class TouchTest:IsolatedGameTestCase(){
+    /** Isolated fresh opening, real map/clock/native touches. Not normal completion/phone evidence. */
+    fun testControlledNavigationHiddenGroundAndObjectCancel(){
+        val ctx=instrumentation.targetContext
+        assertTrue(ctx.getSharedPreferences("opening-local-save",0).edit().clear().commit())
+        assertTrue(ctx.getSharedPreferences("operation-a-ui",0).edit().putString("display-v2","FULL").commit())
+        val(activity,v)=launch(joystick=null)
+        lateinit var initial:SaveSnapshot;lateinit var ui:ScreenLayout
+        fun controller()=GameView::class.java.getDeclaredField("navigation").apply{isAccessible=true}.get(v) as MapNavigationController
+        fun waitFor(message:String,condition:()->Boolean){
+            val deadline=SystemClock.elapsedRealtime()+10000;var ready=false
+            while(!ready&&SystemClock.elapsedRealtime()<deadline){instrumentation.runOnMainSync{ready=condition()};if(!ready)SystemClock.sleep(10)}
+            assertTrue(message,ready)
+        }
+        instrumentation.runOnMainSync{
+            initial=v.currentSnapshot();assertEquals(114,initial.mapId);assertEquals(GameView.Layer.MAP,v.layer)
+            assertFalse(v.visibleJoystick());ui=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+            val middle=center(ui.stick)
+            dispatchTouchOnMain(v,MotionEvent.ACTION_DOWN,listOf(middle));dispatchTouchOnMain(v,MotionEvent.ACTION_UP,listOf(middle))
+            assertFalse(v.input.ownsStick(0));assertTrue("Hidden stick area must accept a map gesture",controller().active)
+            v.onKeyDown(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            v.onKeyUp(android.view.KeyEvent.KEYCODE_BUTTON_B,android.view.KeyEvent(android.view.KeyEvent.ACTION_UP,android.view.KeyEvent.KEYCODE_BUTTON_B))
+            assertFalse(controller().active);assertEquals(initial,v.currentSnapshot())
+        }
+        var ground:Pair<Int,Int>?=null;var groundPoint:Pair<Float,Float>?=null;var groundSteps=0;var beforeSeq=0L
+        var groundActualSteps=0L;var objectActualSteps=0L
+        instrumentation.runOnMainSync{
+            val snapshot=v.world.navigationSnapshot()!!;val camera=v.world.camera(ui.viewWidth,ui.viewHeight)
+            for(y in 0 until snapshot.height)for(x in 0 until snapshot.width){
+                if(ground!=null)continue
+                val p=ui.worldToScreen(x*16f+8,y*16f+8,camera)
+                if(!ui.game.contains(p.first,p.second)||ui.hitButton(p.first,p.second)!=null||v.hudBounds().contains(p.first,p.second))continue
+                val obj=GameView::class.java.getDeclaredMethod("hitNpc",Float::class.javaPrimitiveType,Float::class.javaPrimitiveType)
+                    .apply{isAccessible=true}.invoke(v,p.first,p.second)
+                if(obj!=null)continue
+                val plan=MapNavigationPlanner.plan(snapshot,x,y)
+                if(plan.reachable&&plan.steps.size in 6..9&&plan.steps.all{it.exitKind==NavigationExitKind.NONE}){
+                    ground=x to y;groundPoint=p;groundSteps=plan.steps.size
+                }
+            }
+            beforeSeq=v.world.completedStepSeq
+        }
+        assertNotNull("No visible non-HUD legal ground target",ground)
+        tap(v,groundPoint!!,confirmArrival=false)
+        waitFor("Ground route was not installed"){controller().remainingSteps.size>=3}
+        // No test draw or World tick: inspect the actual posted Canvas pixels.
+        val frame=instrumentation.uiAutomation.takeScreenshot();val pixels=IntArray(frame.width*frame.height)
+        frame.getPixels(pixels,0,frame.width,0,0,frame.width,frame.height)
+        val cyan=pixels.count{it==0xff29dfff.toInt()};assertTrue("Posted cyan route/target missing",cyan>20)
+        File(ctx.getExternalFilesDir(null),"world01-navigation-ground.png").outputStream().use{frame.compress(Bitmap.CompressFormat.PNG,100,it)}
+        waitFor("Ground route did not finish naturally"){!controller().active&&v.world.remaining==0}
+        lateinit var afterGround:SaveSnapshot
+        instrumentation.runOnMainSync{
+            afterGround=v.currentSnapshot();assertEquals(ground,v.world.x/16 to v.world.y/16)
+            groundActualSteps=v.world.completedStepSeq-beforeSeq;assertEquals(groundSteps.toLong(),groundActualSteps)
+            assertEquals(initial.characters,afterGround.characters);assertEquals(initial.inventory,afterGround.inventory)
+            assertEquals(initial.money,afterGround.money);assertEquals(initial.flags,afterGround.flags)
+        }
+        var objectValue:NavigationObject?=null;var objectPoint:Pair<Float,Float>?=null;var objectSteps=0
+        instrumentation.runOnMainSync{
+            val snapshot=v.world.navigationSnapshot()!!;val camera=v.world.camera(ui.viewWidth,ui.viewHeight)
+            for(npc in v.content.npcsForState(114,afterGround.flags)){
+                if(objectValue!=null||!v.content.npcInteractive(npc)||!v.content.npcVisible(npc,afterGround.flags)||npc.hiddenInvestigation)continue
+                val obj=NavigationObject(npc.id,npc.mapId,npc.x,npc.y,npc.interactionCell,npc.interactionDirection,
+                    npc.shopId!=null||npc.innId!=null||npc.clinicId!=null)
+                val p=ui.worldToScreen(npc.x*16f+8,npc.y*16f+8,camera)
+                if(!ui.game.contains(p.first,p.second)||ui.hitButton(p.first,p.second)!=null||v.hudBounds().contains(p.first,p.second))continue
+                val hit=GameView::class.java.getDeclaredMethod("hitNpc",Float::class.javaPrimitiveType,Float::class.javaPrimitiveType)
+                    .apply{isAccessible=true}.invoke(v,p.first,p.second) as? StoryNpc
+                if(hit?.id!=npc.id)continue
+                val plan=MapNavigationPlanner.planToAny(snapshot,obj.cells(),false)
+                if(plan.reachable&&plan.steps.size>=2){objectValue=obj;objectPoint=p;objectSteps=plan.steps.size}
+            }
+            beforeSeq=v.world.completedStepSeq
+        }
+        assertNotNull("No visible reachable original object",objectValue)
+        tap(v,objectPoint!!,confirmArrival=false)
+        waitFor("Source-bound object arrival options missing"){
+            v.layer==GameView.Layer.SETTINGS&&GameView::class.java.getDeclaredField("navigationArrivalId")
+                .apply{isAccessible=true}.get(v)==objectValue!!.id
+        }
+        lateinit var atArrival:SaveSnapshot;var cancelPoint:Pair<Float,Float>?=null
+        instrumentation.runOnMainSync{
+            atArrival=v.currentSnapshot();objectActualSteps=v.world.completedStepSeq-beforeSeq;assertEquals(objectSteps.toLong(),objectActualSteps)
+            assertEquals(objectValue!!.facingAt(v.world.x/16,v.world.y/16),v.world.direction)
+            assertEquals(initial.inventory,atArrival.inventory);assertEquals(initial.money,atArrival.money);assertEquals(initial.flags,atArrival.flags)
+            val dialog=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as android.app.AlertDialog
+            val button=dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE);val pos=IntArray(2);button.getLocationOnScreen(pos)
+            cancelPoint=(pos[0]+button.width/2f) to (pos[1]+button.height/2f)
+        }
+        screenshot(v,"world01-navigation-object-options")
+        nativeTap(cancelPoint!!);waitFor("Cancel did not return to map"){v.layer==GameView.Layer.MAP}
+        SystemClock.sleep(300)
+        instrumentation.runOnMainSync{assertEquals(atArrival,v.currentSnapshot());assertFalse(controller().active)}
+        val report=JSONObject().put("model","CURRENT_MAP_NAVIGATION_TOUCH_V1")
+            .put("scope","CONTROLLED_FRESH_OPENING_NOT_NORMAL_WORLD_COMPLETION").put("defaultHiddenJoystick",true)
+            .put("hiddenStickAreaMapGesture",true).put("cyanPixels",cyan).put("frameWidth",frame.width).put("frameHeight",frame.height)
+            .put("versionCode",ctx.packageManager.getPackageInfo(ctx.packageName,0).longVersionCode)
+            .put("fontScale",v.resources.configuration.fontScale)
+            .put("groundExpectedSteps",groundSteps).put("groundActualSteps",groundActualSteps).put("objectId",objectValue!!.id)
+            .put("objectExpectedSteps",objectSteps).put("objectActualSteps",objectActualSteps)
+            .put("arrivalFace",atArrival.direction.name).put("arrivalSelectionOnly",true).put("cancelNoCommit",true).put("noAutoResume",true)
+        File(ctx.getExternalFilesDir(null),"world01-navigation-touch.json").writeText(report.toString())
+        instrumentation.runOnMainSync{activity.finish()}
+    }
     /** Actual Canvas feedback/measurements, observed on its UI thread without rule mutations. */
     private fun enemyFeedbackEvidence(v:GameView,scene:BattleSceneLayout,enemy:BattleEnemy):JSONObject {
         lateinit var evidence:JSONObject
@@ -885,7 +989,11 @@ class TouchTest:IsolatedGameTestCase(){
         assertEquals(GameView.Layer.MAP,v.layer);assertEquals(settled,v.currentSnapshot())
         repeat(5){send(v,MotionEvent.ACTION_UP,listOf(scroll))};assertEquals(settled,v.currentSnapshot())
     }
-    private fun launch(dismissOpening:Boolean=true):Pair<MainActivity,GameView>{
+    private fun launch(dismissOpening:Boolean=true,joystick:Boolean?=true):Pair<MainActivity,GameView>{
+        // Existing manual-input smoke explicitly opts in. IsolatedGameTestCase restores the exact old prefs.
+        val editor=instrumentation.targetContext.getSharedPreferences("operation-a-ui",0).edit()
+        if(joystick==null)editor.remove("show-joystick-v1")else editor.putBoolean("show-joystick-v1",joystick)
+        assertTrue(editor.commit())
         val activity=instrumentation.startActivitySync(Intent(instrumentation.targetContext,MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) as MainActivity
         var view:GameView?=null
         // A fresh emulator install may still be dex-optimizing while the content loader runs.
@@ -914,7 +1022,59 @@ class TouchTest:IsolatedGameTestCase(){
             val event=MotionEvent.obtain(time,time,action,points.size,props,coords,0,0,1f,1f,0,0,0,0)
             v.dispatchTouchEvent(event);event.recycle()
     }
-    private fun tap(v:GameView,p:Pair<Float,Float>){send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p))}
+    private fun tap(v:GameView,p:Pair<Float,Float>,confirmArrival:Boolean=true){
+        var objectId:String?=null
+        // Preserve cross-APK old-baseline execution: never call a new app method on <=101.
+        if(confirmArrival&&instrumentation.targetContext.packageManager.getPackageInfo(
+            instrumentation.targetContext.packageName,0).longVersionCode>=102){
+            instrumentation.runOnMainSync{
+                if(v.layer==GameView.Layer.MAP){
+                    val ui=GameView::class.java.getDeclaredField("ui").apply{isAccessible=true}.get(v) as ScreenLayout
+                    val show=GameView::class.java.getDeclaredField("showJoystick").apply{isAccessible=true}.getBoolean(v)
+                    if(ui.hitButton(p.first,p.second)==null&&!v.hudBounds().contains(p.first,p.second)&&
+                        (!show||!ui.stick.contains(p.first,p.second))){
+                        objectId=(GameView::class.java.getDeclaredMethod("hitNpc",Float::class.javaPrimitiveType,
+                            Float::class.javaPrimitiveType).apply{isAccessible=true}.invoke(v,p.first,p.second) as? StoryNpc)?.id
+                    }
+                }
+            }
+        }
+        send(v,MotionEvent.ACTION_DOWN,listOf(p));send(v,MotionEvent.ACTION_UP,listOf(p))
+        objectId?.let{confirmNavigationArrival(v,it)}
+    }
+    private fun confirmNavigationArrival(v:GameView,id:String){
+        var dialog:android.app.AlertDialog?=null;var point:Pair<Float,Float>?=null
+        val deadline=SystemClock.elapsedRealtime()+8000
+        while(point==null&&SystemClock.elapsedRealtime()<deadline){
+            instrumentation.runOnMainSync{
+                val bound=GameView::class.java.getDeclaredField("navigationArrivalId").apply{isAccessible=true}.get(v)
+                if(bound==id){
+                    dialog=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as? android.app.AlertDialog
+                    dialog?.listView?.getChildAt(0)?.takeIf{it.width>0&&it.height>0}?.let{row->
+                        val at=IntArray(2);row.getLocationOnScreen(at);point=(at[0]+row.width/2f) to (at[1]+row.height/2f)
+                    }
+                }
+            }
+            if(point==null)SystemClock.sleep(20)
+        }
+        assertNotNull("No source-bound arrival option for $id",point)
+        nativeTap(point!!)
+        instrumentation.waitForIdleSync()
+        var dismissed=false
+        while(!dismissed&&SystemClock.elapsedRealtime()<deadline){
+            instrumentation.runOnMainSync{dismissed=GameView::class.java.getDeclaredField("modalDialog")
+                .apply{isAccessible=true}.get(v)!==dialog}
+            if(!dismissed)SystemClock.sleep(20)
+        }
+        assertTrue("Native arrival option did not dismiss",dismissed)
+    }
+    private fun nativeTap(point:Pair<Float,Float>){
+        val down=SystemClock.uptimeMillis()
+        for(action in listOf(MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP)){
+            val event=MotionEvent.obtain(down,SystemClock.uptimeMillis(),action,point.first,point.second,0)
+            try{assertTrue(instrumentation.uiAutomation.injectInputEvent(event,true))}finally{event.recycle()}
+        }
+    }
     private fun hardwareButton(v:GameView,code:Int){instrumentation.runOnMainSync{
         v.onKeyDown(code,android.view.KeyEvent(android.view.KeyEvent.ACTION_DOWN,code))
         v.onKeyUp(code,android.view.KeyEvent(android.view.KeyEvent.ACTION_UP,code))

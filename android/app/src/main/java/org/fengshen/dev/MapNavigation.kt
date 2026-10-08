@@ -95,11 +95,16 @@ class MapNavigationSnapshot private constructor(private val scene:Scene,private 
  */
 object MapNavigationPlanner {
     private const val MAX_VISITED=196608
-    fun plan(snapshot:MapNavigationSnapshot,targetX:Int,targetY:Int,cancelled:()->Boolean={false}):NavigationPlan {
+    fun plan(snapshot:MapNavigationSnapshot,targetX:Int,targetY:Int,cancelled:()->Boolean={false}):NavigationPlan =
+        planToAny(snapshot,setOf(targetX to targetY),true,cancelled)
+    internal fun planToAny(snapshot:MapNavigationSnapshot,targets:Set<Pair<Int,Int>>,allowGoalExit:Boolean,
+        cancelled:()->Boolean={false}):NavigationPlan {
         if(cancelled())return NavigationPlan(emptyList(),NavigationFailure.CANCELLED)
-        if(!snapshot.contains(targetX,targetY))return NavigationPlan(emptyList(),NavigationFailure.OUTSIDE_MAP)
+        if(targets.isEmpty())return NavigationPlan(emptyList(),NavigationFailure.UNREACHABLE)
+        val goals=targets.filter{snapshot.contains(it.first,it.second)}.toSet()
+        if(goals.isEmpty())return NavigationPlan(emptyList(),NavigationFailure.OUTSIDE_MAP)
         val start=snapshot.start
-        if(start.x==targetX&&start.y==targetY)return NavigationPlan(emptyList())
+        if((start.x to start.y) in goals)return NavigationPlan(emptyList())
         val visited=HashSet<NavigationCell>();visited.add(start)
         val previous=HashMap<NavigationCell,NavigationStep>()
         val queue=java.util.ArrayDeque<NavigationCell>();queue.add(start)
@@ -108,8 +113,8 @@ object MapNavigationPlanner {
             val from=queue.removeFirst()
             for(key in MapNavigationSnapshot.DIRECTIONS){
                 val step=snapshot.step(from,key)?:continue
-                val goal=step.to.x==targetX&&step.to.y==targetY
-                if(step.exitKind!=NavigationExitKind.NONE&&!goal)continue
+                val goal=(step.to.x to step.to.y) in goals
+                if(step.exitKind!=NavigationExitKind.NONE&&(!goal||!allowGoalExit))continue
                 if(!visited.add(step.to))continue
                 if(visited.size>MAX_VISITED)return NavigationPlan(emptyList(),NavigationFailure.SEARCH_LIMIT)
                 previous[step.to]=step

@@ -239,16 +239,19 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private var mode=runCatching{DisplayMode.valueOf(prefs.getString("display-v2","FULL")?:"FULL")}.getOrDefault(DisplayMode.FULL)
     private var debug=prefs.getBoolean("debug",false)
     private var haptic=prefs.getBoolean("haptic",false)
+    private var showJoystick=prefs.getBoolean("show-joystick-v1",false)
     private val navigationWorker=java.util.concurrent.ThreadPoolExecutor(1,1,0L,java.util.concurrent.TimeUnit.MILLISECONDS,
         java.util.concurrent.LinkedBlockingQueue<Runnable>(),{r->Thread(r,"map-navigation")})
     private val navigation=MapNavigationController({navigationWorker.execute(it)},{navigationWorker.remove(it);Unit},
         {callback->post{callback()}},{if(canNavigate())world.navigationSnapshot()else null},{failure->
             mapNotice=when(failure){NavigationFailure.OUTSIDE_MAP->"目标在地图之外";NavigationFailure.SEARCH_LIMIT->"路线搜索达到上限，请选择近处目标";else->"目标不可达"}
             noticeUntil=SystemClock.uptimeMillis()+1800
-        })
+        },{id->resolveNavigationObject(id)},{target,face->showNavigationArrival(target,face)})
     private var navigationTap:MapNavigationTap?=null
+    private var navigationTapObject:NavigationObject?=null
+    private var navigationArrivalId:String?=null
     private var navigationTapBlocked=false
-    private fun cancelNavigation(){navigation.cancel();navigationTap=null}
+    private fun cancelNavigation(){navigation.cancel();navigationTap=null;navigationTapObject=null}
     internal fun closeNavigation(){cancelNavigation();navigationWorker.shutdownNow()}
     private fun canNavigate()=active&&focused&&surface&&layer==Layer.MAP&&
         OriginalFerry.pending(flags,content.ferries.values)==null
@@ -1024,10 +1027,16 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         };return true
     }
     fun visibleMapControls()=layer==Layer.MAP
+    fun visibleJoystick()=visibleMapControls()&&showJoystick
+    private fun StoryNpc.navigationObject()=NavigationObject(id,mapId,x,y,interactionCell,interactionDirection,
+        shopId!=null||clinicId!=null||innId!=null)
+    private fun resolveNavigationObject(id:String)=content.npcsForState(world.mapId,flags).firstOrNull{
+        it.id==id&&!it.hiddenInvestigation&&content.npcInteractive(it)&&content.npcVisible(it,flags)
+    }?.navigationObject()
     private fun nearbyNpcs():List<StoryNpc> {
         val (x,y)=world.destinationCell()
         return content.npcsForState(world.mapId,flags).filter{content.npcInteractive(it) && content.npcVisible(it,flags) &&
-            (it.interactionCell?.let{p->p==(x to y)} ?: (abs(it.x-x)+abs(it.y-y)==1))}
+            it.navigationObject().standsAt(x,y)}
     }
     private fun interactionTarget():StoryNpc? {
         val merchant=nearbyNpcs().firstOrNull{it.shopId!=null||it.innId!=null||it.clinicId!=null}
@@ -1042,7 +1051,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun hitNpc(x:Float,y:Float):StoryNpc? {
         if(!ui.game.contains(x,y))return null
         val camera=world.camera(ui.viewWidth,ui.viewHeight)
-        val candidates=nearbyNpcs().filter{!it.hiddenInvestigation}.map{npc->
+        val candidates=content.npcsForState(world.mapId,flags).filter{!it.hiddenInvestigation&&
+            content.npcInteractive(it)&&content.npcVisible(it,flags)}.map{npc->
             val (sx,sy)=ui.worldToScreen(npc.x*16f,npc.y*16f,camera)
             val size=16*ui.scale;val pad=min(12*resources.displayMetrics.density,size*.24f)
             npc to Box(sx-pad,sy-pad,size+pad*2,size+pad*2)
@@ -1050,6 +1060,36 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         return candidates.filter{it.second.contains(x,y)}.minByOrNull{
             val b=it.second;hypot(x-(b.x+b.w/2),y-(b.y+b.h/2))
         }?.first
+    }
+    private fun showNavigationArrival(target:NavigationObject,face:Key){
+        if(!canNavigate()||world.remaining!=0||modalDialog!=null||resolveNavigationObject(target.id)!=target||
+            target.facingAt(world.x/16,world.y/16)!=face)return
+        world.face(face);input.clear();clock.reset()
+        val before=currentSnapshot()
+        val npc=content.npcsForState(world.mapId,flags).firstOrNull{it.id==target.id}?:return
+        val primary=when{npc.shopId!=null->"查看商店";npc.clinicId!=null->"医疗服务";npc.innId!=null->"住宿服务"
+            npc.treasure!=null||npc.moneyTreasure!=null||npc.worldItemTarget!=null->"调查";else->"交谈"}
+        val choices=if(npc.worldItemTarget!=null)arrayOf(primary,"使用物品")else arrayOf(primary)
+        var selected:Int?=null
+        layer=Layer.SETTINGS
+        val dialog=AlertDialog.Builder(activity).setTitle("到达 · 交互").setItems(choices){_,i->selected=i}
+            .setNegativeButton("取消",null).create()
+        modalDialog=dialog
+        navigationArrivalId=target.id
+        dialog.setOnDismissListener{
+            if(modalDialog!==dialog)return@setOnDismissListener
+            modalDialog=null;navigationArrivalId=null
+            if(layer!=Layer.SETTINGS){selected=null;return@setOnDismissListener}
+            val valid=active&&surface&&activity.ownsVisualTarget(this)&&
+                currentSnapshot()==before&&resolveNavigationObject(target.id)==target&&
+                target.facingAt(world.x/16,world.y/16)==world.direction
+            layer=Layer.MAP;input.clear();clock.reset()
+            val action=selected;selected=null
+            if(!valid||action==null)return@setOnDismissListener
+            if(action==0)nearbyNpcs().firstOrNull{it.id==target.id}?.let{openNpc(it)}
+            else if(action==1&&npc.worldItemTarget!=null)openPanel(Layer.INVENTORY)
+        }
+        dialog.show()
     }
     private fun openNpc(npc:StoryNpc){
         if(finishPendingStep())return
@@ -2021,9 +2061,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         }
     }
     override fun onTouchEvent(e:MotionEvent):Boolean {
-        if(e.actionMasked==MotionEvent.ACTION_DOWN){navigationTap=null;navigationTapBlocked=false}
-        if(e.actionMasked==MotionEvent.ACTION_POINTER_DOWN){navigationTap=null;navigationTapBlocked=true}
-        if(e.actionMasked==MotionEvent.ACTION_CANCEL){navigationTap=null;navigationTapBlocked=true}
+        if(e.actionMasked==MotionEvent.ACTION_DOWN){navigationTap=null;navigationTapObject=null;navigationTapBlocked=false}
+        if(e.actionMasked==MotionEvent.ACTION_POINTER_DOWN){navigationTap=null;navigationTapObject=null;navigationTapBlocked=true}
+        if(e.actionMasked==MotionEvent.ACTION_CANCEL){navigationTap=null;navigationTapObject=null;navigationTapBlocked=true}
         if(OriginalFerry.pending(flags,content.ferries.values)!=null){input.clear();npcTouch.clear();hudTouch.clear();return true}
         if(layer==Layer.FIELD_FAILURE)return true
         if(layer==Layer.BATTLE)return battleTouchEvent(e)
@@ -2040,19 +2080,15 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                         if(button==Key.A){if(finishPendingStep())return true;input.clear();npcTouch.clear();shopTouch.clear();clearUxGesture();clock.reset()}
                         input.set(id,button);if(haptic)performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
                     }
-                    else if(ui.stick.contains(x,y)&&input.startStick(id)){cancelNavigation();input.moveStick(id,x,y,ui.stick,config.deadZone)}
+                    else if(showJoystick&&ui.stick.contains(x,y)&&input.startStick(id)){cancelNavigation();input.moveStick(id,x,y,ui.stick,config.deadZone)}
                     else if(button==null && hudBox().contains(x,y)){
                         cancelNavigation()
                         if(finishPendingStep())return true
                         input.clear();npcTouch.clear();clock.reset();hudTouch.add(id)
                     }
                     else if(button==null){
-                        val npc=hitNpc(x,y)
-                        if(npc!=null){
-                            cancelNavigation()
-                            if(finishPendingStep())return true
-                            input.clear();npcTouch.clear();clock.reset();npcTouch[id]=Triple(npc.id,x,y)
-                        }else if(!navigationTapBlocked&&e.pointerCount==1&&ui.game.contains(x,y)){
+                        if(!navigationTapBlocked&&e.pointerCount==1&&ui.game.contains(x,y)){
+                            navigationTapObject=hitNpc(x,y)?.navigationObject()
                             val cam=world.camera(ui.viewWidth,ui.viewHeight)
                             val cell=floor((cam.x+(x-ui.game.x)/ui.scale)/16).toInt() to
                                 floor((cam.y+(y-ui.game.y)/ui.scale)/16).toInt()
@@ -2092,7 +2128,8 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 val key=input.keyFor(id)?.takeIf{layer==Layer.MAP&&ui.hitButton(x,y)==it}
                 val ground=navigationTap?.takeIf{!navigationTapBlocked&&e.actionMasked==MotionEvent.ACTION_UP&&e.pointerCount==1&&canNavigate()}
                     ?.finish(id,world.mapId,x,y)
-                navigationTap=null
+                val objectAtDown=navigationTapObject
+                navigationTap=null;navigationTapObject=null
                 input.release(id)
                 if(shopPressed!=null && layer==Layer.SHOP && shopPressed.second==shopRevision && false)runShopAction(shopPressed.first)
                 else if(battleSelected!=null && layer==Layer.BATTLE && false && battleTouchRevision==battlePresentation.revision){
@@ -2111,7 +2148,9 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                     panelSelected==panelAction(x,y)){runPanelAction(panelSelected)
                 } else if(key!=null)activate(key)
                 else if(ground!=null&&layer==Layer.MAP){
-                    if(ground==(world.x/16 to world.y/16))cancelNavigation()
+                    if(objectAtDown!=null){
+                        if(resolveNavigationObject(objectAtDown.id)==objectAtDown)navigation.requestObject(objectAtDown)
+                    }else if(ground==(world.x/16 to world.y/16))cancelNavigation()
                     else navigation.request(world.mapId,ground.first,ground.second)
                 }
                 performClick()
@@ -2275,12 +2314,14 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     }
     private fun drawControls(c:Canvas){
         val stick=ui.stick;val alpha=(config.opacity.coerceIn(.2f,.9f)*255).toInt()
+        if(showJoystick){
         overlayPaint.color=0x28475b;overlayPaint.alpha=alpha
         c.drawCircle(stick.x+stick.w/2,stick.y+stick.h/2,stick.w/2,overlayPaint)
         overlayPaint.color=Color.WHITE;overlayPaint.alpha=(alpha*.72f).toInt();overlayPaint.style=Paint.Style.STROKE;overlayPaint.strokeWidth=max(2f,stick.w*.018f)
         c.drawCircle(stick.x+stick.w/2,stick.y+stick.h/2,stick.w*.43f,overlayPaint);overlayPaint.style=Paint.Style.FILL
         overlayPaint.color=if(input.stickDirection!=null)0xff6ed3cf.toInt() else 0xffb8d0d8.toInt();overlayPaint.alpha=min(235,alpha+60)
         c.drawCircle(stick.x+stick.w/2+input.stickX,stick.y+stick.h/2+input.stickY,stick.w*.21f,overlayPaint)
+        }
         for((key,b)in ui.buttons){
             overlayPaint.color=when{!mapControlEnabled(key)->0xff34434c.toInt();input.pressed(key)->0xff44c6b5.toInt();else->0xff263e51.toInt()};overlayPaint.alpha=if(mapControlEnabled(key))alpha else max(115,alpha)
             c.drawCircle(b.x+b.w/2,b.y+b.h/2,b.w/2,overlayPaint)
@@ -2824,7 +2865,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
     private fun settings(){
         layer=Layer.SETTINGS;input.clear();menuTouch.clear();clock.reset()
         var child=0
-        val choices=arrayOf("显示：${mode.name}（全屏 / 原版比例 / 整数裁切）","开发者调试层：$debug","触觉反馈：$haptic","检查应用更新","封神云存档 / 登录","查看设备与开发范围","摇杆/按钮参数 JSON","恢复默认控件","回到初始位置（仅调试）","声音与诊断上传（${if(Diagnostics.enabled)"上传开启" else "上传关闭"}）","存档 / 回档")
+        val choices=arrayOf("显示：${mode.name}（全屏 / 原版比例 / 整数裁切）","开发者调试层：$debug","触觉反馈：$haptic","检查应用更新","封神云存档 / 登录","查看设备与开发范围","摇杆/按钮参数 JSON","恢复默认控件","回到初始位置（仅调试）","声音与诊断上传（${if(Diagnostics.enabled)"上传开启" else "上传关闭"}）","存档 / 回档","显示摇杆：${if(showJoystick)"开启"else"关闭"}")
         modalDialog=AlertDialog.Builder(activity).setTitle("设置 · 操作验证版").setItems(choices){_,i->
             when(i){
                 0->{mode=when(mode){DisplayMode.FULL->DisplayMode.ORIGINAL;DisplayMode.ORIGINAL->DisplayMode.INTEGER;DisplayMode.INTEGER->DisplayMode.FULL};prefs.edit().putString("display-v2",mode.name).apply();relayout()}
@@ -2838,6 +2879,7 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 8->world.reset()
                 9->child=9
                 10->child=10
+                11->{showJoystick=!showJoystick;input.clear();prefs.edit().putBoolean("show-joystick-v1",showJoystick).apply()}
             }
         }.setNegativeButton("返回",null).setOnDismissListener{
             modalDialog=null
