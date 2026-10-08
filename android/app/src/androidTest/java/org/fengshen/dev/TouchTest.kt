@@ -1092,24 +1092,36 @@ class TouchTest:IsolatedGameTestCase(){
     }
     private fun confirmNavigationArrival(v:GameView,id:String){
         var dialog:android.app.AlertDialog?=null;var point:Pair<Float,Float>?=null
+        var previousPoint:Pair<Float,Float>?=null
         val deadline=SystemClock.elapsedRealtime()+8000
         while(point==null&&SystemClock.elapsedRealtime()<deadline){
+            var readyPoint:Pair<Float,Float>?=null
             instrumentation.runOnMainSync{
                 val bound=GameView::class.java.getDeclaredField("navigationArrivalId").apply{isAccessible=true}.get(v)
                 if(bound==id){
                     dialog=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as? android.app.AlertDialog
-                    dialog?.listView?.getChildAt(0)?.takeIf{it.width>0&&it.height>0}?.let{row->
-                        val at=IntArray(2);row.getLocationOnScreen(at);point=(at[0]+row.width/2f) to (at[1]+row.height/2f)
+                    if(dialog?.window?.decorView?.hasWindowFocus()==true){
+                        dialog?.listView?.getChildAt(0)?.takeIf{
+                            it.isShown&&it.isEnabled&&!it.isLayoutRequested&&it.width>0&&it.height>0
+                        }?.let{row->
+                            val at=IntArray(2);row.getLocationOnScreen(at)
+                            readyPoint=(at[0]+row.width/2f) to (at[1]+row.height/2f)
+                        }
                     }
                 }
             }
-            if(point==null)SystemClock.sleep(20)
+            // Native window entry can move a laid-out row before it accepts input.
+            // Inject once only after focus and two stable screen-position samples.
+            if(readyPoint!=null&&readyPoint==previousPoint)point=readyPoint
+            previousPoint=readyPoint
+            if(point==null)SystemClock.sleep(100)
         }
         assertNotNull("No source-bound arrival option for $id",point)
         nativeTap(point!!)
         instrumentation.waitForIdleSync()
         var dismissed=false
-        while(!dismissed&&SystemClock.elapsedRealtime()<deadline){
+        val dismissDeadline=SystemClock.elapsedRealtime()+8000
+        while(!dismissed&&SystemClock.elapsedRealtime()<dismissDeadline){
             instrumentation.runOnMainSync{dismissed=GameView::class.java.getDeclaredField("modalDialog")
                 .apply{isAccessible=true}.get(v)!==dialog}
             if(!dismissed)SystemClock.sleep(20)
