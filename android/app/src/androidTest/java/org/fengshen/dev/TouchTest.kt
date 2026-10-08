@@ -131,17 +131,24 @@ class TouchTest:IsolatedGameTestCase(){
             v.layer==GameView.Layer.SETTINGS&&GameView::class.java.getDeclaredField("navigationArrivalId")
                 .apply{isAccessible=true}.get(v)==objectValue!!.id
         }
-        lateinit var atArrival:SaveSnapshot;var cancelPoint:Pair<Float,Float>?=null
+        lateinit var atArrival:SaveSnapshot;var cancelLabel:String?=null
         instrumentation.runOnMainSync{
             atArrival=v.currentSnapshot();objectActualSteps=v.world.completedStepSeq-beforeSeq;assertEquals(objectSteps.toLong(),objectActualSteps)
             assertEquals(objectValue!!.facingAt(v.world.x/16,v.world.y/16),v.world.direction)
             assertEquals(initial.inventory,atArrival.inventory);assertEquals(initial.money,atArrival.money);assertEquals(initial.flags,atArrival.flags)
             val dialog=GameView::class.java.getDeclaredField("modalDialog").apply{isAccessible=true}.get(v) as android.app.AlertDialog
-            val button=dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE);val pos=IntArray(2);button.getLocationOnScreen(pos)
+            val button=dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)
             assertTrue(button.width>=48*resourcesDensity(v)&&button.height>=48*resourcesDensity(v))
-            cancelPoint=(pos[0]+button.width/2f) to (pos[1]+button.height/2f)
+            cancelLabel=button.text.toString()
         }
         screenshot(v,"world01-navigation-object-options-$font")
+        var cancelPoint:Pair<Float,Float>?=null
+        val cancelDeadline=SystemClock.elapsedRealtime()+8000
+        while(cancelPoint==null&&SystemClock.elapsedRealtime()<cancelDeadline){
+            cancelPoint=nativeDialogPoint(cancelLabel!!)
+            if(cancelPoint==null)SystemClock.sleep(100)
+        }
+        assertNotNull("Source-bound native cancel control missing",cancelPoint)
         nativeTap(cancelPoint!!);waitFor("Cancel did not return to map"){v.layer==GameView.Layer.MAP}
         SystemClock.sleep(300)
         instrumentation.runOnMainSync{assertEquals(atArrival,v.currentSnapshot());assertFalse(controller().active)}
@@ -1095,7 +1102,7 @@ class TouchTest:IsolatedGameTestCase(){
         var previousPoint:Pair<Float,Float>?=null
         val deadline=SystemClock.elapsedRealtime()+8000
         while(point==null&&SystemClock.elapsedRealtime()<deadline){
-            var readyPoint:Pair<Float,Float>?=null
+            var label:String?=null
             instrumentation.runOnMainSync{
                 val bound=GameView::class.java.getDeclaredField("navigationArrivalId").apply{isAccessible=true}.get(v)
                 if(bound==id){
@@ -1104,19 +1111,19 @@ class TouchTest:IsolatedGameTestCase(){
                         dialog?.listView?.getChildAt(0)?.takeIf{
                             it.isShown&&it.isEnabled&&!it.isLayoutRequested&&it.width>0&&it.height>0
                         }?.let{row->
-                            val at=IntArray(2);row.getLocationOnScreen(at)
-                            readyPoint=(at[0]+row.width/2f) to (at[1]+row.height/2f)
+                            label=(row as? android.widget.TextView)?.text?.toString()
                         }
                     }
                 }
             }
-            // Native window entry can move a laid-out row before it accepts input.
-            // Inject once only after focus and two stable screen-position samples.
+            // Resolve the actual native screen rectangle, independently of GameView coordinates.
+            val readyPoint=label?.let{nativeDialogPoint(it)}
             if(readyPoint!=null&&readyPoint==previousPoint)point=readyPoint
             previousPoint=readyPoint
             if(point==null)SystemClock.sleep(100)
         }
         assertNotNull("No source-bound arrival option for $id",point)
+        println("NAVIGATION_NATIVE_ARRIVAL id=$id screenPoint=$point")
         nativeTap(point!!)
         instrumentation.waitForIdleSync()
         var dismissed=false
@@ -1126,7 +1133,19 @@ class TouchTest:IsolatedGameTestCase(){
                 .apply{isAccessible=true}.get(v)!==dialog}
             if(!dismissed)SystemClock.sleep(20)
         }
-        assertTrue("Native arrival option did not dismiss",dismissed)
+        assertTrue("Native arrival option did not dismiss for $id at $point",dismissed)
+    }
+    private fun nativeDialogPoint(label:String):Pair<Float,Float>?{
+        val root=instrumentation.uiAutomation.rootInActiveWindow?:return null
+        val nodes=root.findAccessibilityNodeInfosByText(label)
+        try{
+            val matches=nodes.filter{it.text?.toString()==label&&it.isVisibleToUser&&it.isEnabled&&
+                it.packageName?.toString()==instrumentation.targetContext.packageName}
+            if(matches.size!=1)return null
+            val bounds=android.graphics.Rect();matches.single().getBoundsInScreen(bounds)
+            if(bounds.isEmpty)return null
+            return bounds.exactCenterX() to bounds.exactCenterY()
+        }finally{nodes.forEach{it.recycle()};root.recycle()}
     }
     private fun nativeTap(point:Pair<Float,Float>){
         val down=SystemClock.uptimeMillis()
