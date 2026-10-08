@@ -38,16 +38,35 @@ class VisualProofTests(unittest.TestCase):
                 Image.new('RGB',(160,100),(1,2,3)).save(self.evidence/name)
                 rows.append(dict(actor=actor,kind=kind,pose=pose,file=file,casterMP=mp,targetHP=hp,screenshot=name,
                     supportTarget='nezha' if kind in ('SPECIAL','HEAL') else None,arenaFlash=False))
+                files=['nezha-attack.png' if kind=='ATTACK' else 'nezha-idle-v1.png',
+                    'xiaolongnv-cast.png' if kind in ('SPECIAL','HEAL') else 'xiaolongnv-idle-v1.png',
+                    'yangjian-idle-v2.png','jiangziya-idle-v1.png']
+                rows[-1]['partyBodies']=[dict(actor=a,file=f,x=10+j*30,y=20,w=20,h=40)
+                    for j,(a,f)in enumerate(zip(('nezha','xiaolongnv','yangjian','jiangziya'),files))]
             self.write('touch-ux-world-visual-poses-'+font+'.json',dict(
                 kind='CONTROLLED_REAL_ACTION_QUEUE_VISUAL_ONLY_NOT_NORMAL_JOIN_OR_PHONE',font=float(font),
                 manifestSha256=visual.ACCEPTANCE['manifestSha256'],prepared=12,decodedBytes=32*1024*1024,
                 startupPrepared=4,preparedFiles=list(visual.POSE_FILES),**{k:True for k in visual.DELIVERY_GUARDS},
+                partySpacing=visual.ACCEPTANCE['partySpacing'],projectedSpacingSamples=36,
                 renderStateUnchanged=True,rngUnchanged=True,before=fixture.before,after=fixture.before,
                 screenWidth=160,screenHeight=100,phases=rows))
             (self.logs/('testControlledBattleVisualPosesReadOnly-font-'+font+'.txt')).write_text('OK (1 test)\n')
 
     def write(self,name,value):(self.evidence/name).write_text(json.dumps(value),encoding='utf-8')
     def proof(self):return visual.proof_digests(self.evidence,self.logs)
+
+    def test_party_spacing_refuses_old_report_overlap_wrong_actor_and_invalid_coordinates(self):
+        name='touch-ux-world-visual-poses-1.0.json';original=json.loads((self.evidence/name).read_text())
+        changes=[]
+        for key,value in [('partySpacing',None),('projectedSpacingSamples',True),('projectedSpacingSamples',0)]:
+            bad=copy.deepcopy(original);bad[key]=value;changes.append(bad)
+        for key,value in [('x',40),('w',0),('x',float('nan')),('x',True),('actor','unknown'),('file','enemy-1.png')]:
+            bad=copy.deepcopy(original);bad['phases'][0]['partyBodies'][0][key]=value;changes.append(bad)
+        bad=copy.deepcopy(original);bad['phases'][0].pop('partyBodies');changes.append(bad)
+        for bad in changes:
+            self.write(name,bad)
+            with self.assertRaises(ValueError):self.proof()
+        self.write(name,original);self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))
 
     def test_complete_raw_binding_and_changed_video_rejected(self):
         self.assertEqual(64,len(self.proof()[visual.PROOF_KEYS[0]]))

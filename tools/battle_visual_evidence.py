@@ -1,6 +1,7 @@
 """Bind new original art/decoder and normal item/battle/cold evidence to the existing CI receipt."""
 import hashlib
 import json
+import math
 import re
 from pathlib import Path
 
@@ -12,11 +13,34 @@ ACCEPTANCE=dict(kind='ORIGINAL_ART_C62_NORMAL_SUPPLY_AND_CONTROLLED_PARTY_NOT_PH
     decoderMethod='testBattleVisualAssetsHashesCacheAndReadOnlySnapshots',proofKey=PROOF_KEYS[0])
 ACCEPTANCE['supportFeedback']='IDENTIFIED_ORIGINAL_HEAL_ANTIDOTE_REAL_PARTY_TARGET_LOCAL_GLOW'
 ACCEPTANCE['preparation']='PORTRAITS_STARTUP_SCOPED_BATTLE_EPOCH_GUARDS'
+ACCEPTANCE['partySpacing']='SEPARATED_CROPS_BOUNDED_ATTACK'
 POSE_FILES=tuple(sorted(('nezha-portrait-v1.png','xiaolongnv-portrait-v1.png',
     'yangjian-portrait-v2.png','jiangziya-portrait-v1.png','nezha-idle-v1.png',
     'xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png',
     'nezha-attack.png','xiaolongnv-cast.png','enemy-1.png','grass-v1.png')))
 DELIVERY_GUARDS=('staleEpochRejected','otherBattleRejected','exitRejected','destroyedOwnerRejected')
+
+
+def verify_party_bodies(phase,width,height):
+    bodies=phase.get('partyBodies',[])
+    actors=('nezha','xiaolongnv','yangjian','jiangziya')
+    files=['nezha-idle-v1.png','xiaolongnv-idle-v1.png','yangjian-idle-v2.png','jiangziya-idle-v1.png']
+    if phase.get('kind')=='ATTACK':files[0]='nezha-attack.png'
+    if phase.get('kind') in ('SPECIAL','HEAL'):files[1]='xiaolongnv-cast.png'
+    if not isinstance(bodies,list) or len(bodies)!=4:raise ValueError('Missing actual party crop positions')
+    for row,actor,file in zip(bodies,actors,files):
+        if not isinstance(row,dict) or row.get('actor')!=actor or row.get('file')!=file:
+            raise ValueError('Party crop identity differs from the original action')
+        if any(type(row.get(k)) not in (int,float) or not math.isfinite(row[k]) for k in ('x','y','w','h')):
+            raise ValueError('Invalid actual party crop position')
+        x,y,w,h=(row[k]for k in ('x','y','w','h'))
+        if x<0 or y<0 or w<=0 or h<=0 or x+w>width+.01 or y+h>height+.01:
+            raise ValueError('Party crop lies outside the actual screen')
+    for i,a in enumerate(bodies):
+        for b in bodies[i+1:]:
+            if (min(a['x']+a['w'],b['x']+b['w'])-max(a['x'],b['x'])>.01
+                    and min(a['y']+a['h'],b['y']+b['h'])-max(a['y'],b['y'])>.01):
+                raise ValueError('Actual party crops overlap')
 
 
 def bounded(path,limit):
@@ -79,6 +103,10 @@ def proof_digests(evidence,logs):
         if (value.get('startupPrepared')!=4 or value.get('preparedFiles')!=list(POSE_FILES)
                 or any(value.get(key) is not True for key in DELIVERY_GUARDS)):
             raise ValueError('Scoped preparation or stale delivery guards were not verified')
+        if (value.get('partySpacing')!=ACCEPTANCE['partySpacing']
+                or type(value.get('projectedSpacingSamples')) is not int
+                or not 36<=value['projectedSpacingSamples']<=1000):
+            raise ValueError('Separated party crop projection was not verified')
         complete_save(value.get('before'))
         phases=value.get('phases',[])
         expected=[('xiaolongnv','SPECIAL','CAST','xiaolongnv-cast.png',44,5),
@@ -91,6 +119,7 @@ def proof_digests(evidence,logs):
                 or [p.get('supportTarget')for p in phases]!=['nezha','nezha',None,None]):
             raise ValueError('Support feedback must stay local to the actual original target')
         for phase in phases:
+            verify_party_bodies(phase,value.get('screenWidth',0),value.get('screenHeight',0))
             name=phase.get('screenshot','')
             if not re.fullmatch(r'touch-ux-world-visual-pose-'+font.replace('.','_')+r'-\d{1,2}\.png',name):
                 raise ValueError('Unsafe controlled pose picture path')

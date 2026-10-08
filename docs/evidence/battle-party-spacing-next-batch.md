@@ -1,3 +1,5 @@
+最新有限实施：拟95 / 0.8.25-party-spacing-personal，已接同一斜列身体槽位与有界攻击投影；452 JVM/96 suites、48相关Python和DEBUG应用/仪器编译真实通过，尚未正式签名/App/发布，不复用94App。下面仅“尚未实施”的段落是实施前历史。
+
 # 下一有限视觉批次：四人身体间距
 
 状态 SOURCE_LOCATED_DESIGN_PENDING_IMPLEMENTATION；同一WORLD-FULL-01，v94已个人发布并公网/postflight复核，不预占新版本、不复用94App回执为下一代码检查。
@@ -9,3 +11,5 @@
 先对实际已审裁框四idle/哪吒attack/小龙女cast投影量化重叠与足点；提出有界间距适配，再新JVM覆盖一至四人/三字体及实际960与2640safe范围、动作准备/前移/回位，原48dp/信息层/完整state/RNG门槛保持。仅现有合法动作，杨戬/姜子牙未覆盖姿态留idle或native，不编造动作/法术/入队。
 
 实施前原Linux preflight；每次改代码全文diff/真实源码/相关新测试后codex_only与Stop，再原Actions同source/同审核签名App实际新静态/动作/正常片/完整保存/外部冷启取证。缺手机/声音仅阻塞对应验收，不能凭几何或截图库存在关闭。达到原门槛才发布一版、公网完整字节/postflight后接续。完整结局、真实账号及十类欠账保持OPEN。
+
+本批最小适配：仅两至四人身体分开crop envelope，单人原站位/接近时钟与最大位移保持；四人其他角色攻击按同样时钟在邻居边界内前移/回位。Canvas和仪器共用battlePartyBodies准备图像与最终位置，未读取Source或改规则。三字体真实队列新增9进度点投影检查与4帧实际crop位置/raw身份；新报告拒旧scope、缺字段、错角色/图、NaN/布尔/零尺寸/越界与重叠，原36门禁保持。几何投影不是全程手机动画或性能。只复用原16图且逐SHA等于冻结ZIP；其他敌/动作覆盖缺口仍OPEN。preflight2026-10-08T00:26:34Z NO_DATA/94-93非手机健康。

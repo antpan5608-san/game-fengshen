@@ -2308,6 +2308,26 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
         c.save();c.clipRect(box.x,box.y,box.x+box.w,box.y+box.h)
         c.drawText(text,box.x,box.y-textPaint.fontMetrics.ascent,textPaint);c.restore()
     }
+    /** The exact prepared crops and positions used by Canvas, also observed by isolated App tests. */
+    internal fun battlePartyBodies(current:OpeningBattle,scene:BattleSceneLayout,
+        action:BattleActionStep?,progress:Float):List<Pair<BattleVisualImage?,Box>> {
+        val dp=resources.displayMetrics.density
+        val images=current.party.map{hero->
+            val pose=battleVisualPose(action,hero.id).let{
+                if(it==BattleVisualPose.ATTACK&&progress !in .2f.. .85f)BattleVisualPose.IDLE else it}
+            content.battleVisual?.body(hero.id,pose)
+        }
+        val bases=images.mapIndexed{i,image->
+            val field=scene.allySprites[i];val crop=image?.crop
+            if(crop!=null)battleVisualBodyBounds(field,crop.width(),crop.height())
+            else {val size=min(48*dp,min(field.w-8*dp,field.h-8*dp)).coerceAtLeast(dp)
+                Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2,size,size)}
+        }
+        val actor=if(action?.kind==BattleActionKind.ATTACK&&action.actorSlot==null)
+            current.party.indexOfFirst{action.actorId==it.id||(action.actorId==null&&it.id==current.hero.id)} else -1
+        val drawn=if(actor>=0&&images[actor]!=null)battleVisualAttackBounds(bases,actor,scene.touch.arena,progress)else bases
+        return images.mapIndexed{i,image->image to drawn[i]}
+    }
     private fun drawBattleScene(c:Canvas,current:OpeningBattle,scene:BattleSceneLayout){
         val l=scene.touch;val dp=resources.displayMetrics.density;val font=resources.configuration.fontScale
         val screen=battlePresentation.screen;val action=battlePresentation.action
@@ -2365,19 +2385,12 @@ class GameView(private val activity:MainActivity,val content:Content):SurfaceVie
                 if(hp>0)Color.WHITE else 0xff88969c.toInt())
             gauge(c,parts.gauge,hp,enemy.definition.hp,0xffc55758.toInt())
         }
+        val progress=(battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs).coerceIn(0f,1f)
+        val partyBodies=battlePartyBodies(current,scene,action,progress)
         for((i,hero)in current.party.withIndex()){
             val view=battlePartyView(hero,heroName(hero.id),action,current.inputHero?.id,current.hero.id)
-            val field=scene.allySprites[i];val size=min(48*dp,min(field.w-8*dp,field.h-8*dp)).coerceAtLeast(dp)
-            val moving=action?.kind==BattleActionKind.ATTACK&&action.actorSlot==null&&
-                (action.actorId==hero.id||(action.actorId==null&&hero.id==current.hero.id))
-            val progress=(battlePresentation.elapsedMs.toFloat()/battlePresentation.actionDurationMs).coerceIn(0f,1f)
-            val shift=if(moving)battleAdvance(progress)*l.arena.w*.055f else 0f
-            val pose=battleVisualPose(action,hero.id).let{
-                if(it==BattleVisualPose.ATTACK&&progress !in .2f.. .85f)BattleVisualPose.IDLE else it}
-            val body=content.battleVisual?.body(hero.id,pose)
+            val(body,sprite)=partyBodies[i]
             val crop=body?.crop
-            val sprite=if(crop==null)Box(field.x+(field.w-size)/2,field.y+(field.h-size)/2,size,size)
-                else battleVisualBodyBounds(field,crop.width(),crop.height()).let{it.copy(x=it.x-shift)}
             if(body!=null){
                 overlayPaint.color=0x550a151b;c.drawOval(RectF(sprite.x+sprite.w*.12f,sprite.y+sprite.h-3*dp,sprite.x+sprite.w*.88f,sprite.y+sprite.h+3*dp),overlayPaint)
                 val damaged=action?.targetId==hero.id&&action.kind==BattleActionKind.DAMAGE

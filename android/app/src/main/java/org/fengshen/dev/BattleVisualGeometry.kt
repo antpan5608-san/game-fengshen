@@ -11,6 +11,23 @@ fun battleVisualBodyBounds(field:Box,sourceWidth:Int,sourceHeight:Int):Box {
     return Box(field.x+(field.w-w)/2,field.y+field.h-h,w,h)
 }
 
+/** Keep the existing advance/return clock, bounded by the arena and adjacent crop envelopes.
+ * Only the active body's x changes. No rule, bitmap, cache or actor state is touched.
+ */
+fun battleVisualAttackBounds(bodies:List<Box>,actorIndex:Int,arena:Box,progress:Float):List<Box> {
+    require(actorIndex in bodies.indices)
+    val actor=bodies[actorIndex]
+    var forward=(actor.x-arena.x).coerceAtLeast(0f)
+    var backward=(arena.x+arena.w-actor.x-actor.w).coerceAtLeast(0f)
+    for((i,other)in bodies.withIndex())if(i!=actorIndex&&
+        other.y<actor.y+actor.h&&other.y+other.h>actor.y){
+        if(other.x+other.w<=actor.x+.01f)forward=min(forward,(actor.x-other.x-other.w).coerceAtLeast(0f))
+        if(other.x>=actor.x+actor.w-.01f)backward=min(backward,(other.x-actor.x-actor.w).coerceAtLeast(0f))
+    }
+    val shift=(battleAdvance(progress)*arena.w*.055f).coerceIn(-backward,forward)
+    return bodies.mapIndexed{i,box->if(i==actorIndex)box.copy(x=box.x-shift) else box}
+}
+
 enum class BattleVisualPose { IDLE, ATTACK, CAST }
 
 /** Only an already executed, identified spell may select a cast pose.

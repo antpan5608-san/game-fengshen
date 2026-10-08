@@ -73,9 +73,20 @@ class TouchTest:IsolatedGameTestCase(){
         assertNull(visual.background(25,false));assertNull(visual.enemy(137))
         val saved=v.currentSnapshot();val party=fight.party.toList();val sampled=draws;val bytes=visual.cachedBytes
         var attack=false;var cast=false;var debit=false
-        var index=0
+        var index=0;var projectedSamples=0
         while(p.screen==BattlePresentation.Screen.ACTING){
             val action=p.action!!
+            instrumentation.runOnMainSync{
+                val scene=GameView::class.java.getDeclaredMethod("battleScene").apply{isAccessible=true}.invoke(v) as BattleSceneLayout
+                for(progress in listOf(0f,.05f,.18f,.2f,.42f,.5f,.65f,.85f,1f)){
+                    val drawn=v.battlePartyBodies(fight,scene,action,progress).map{it.second}
+                    for(b in drawn)assertTrue(b.x>=scene.touch.arena.x-.01f&&b.y>=scene.touch.arena.y-.01f&&
+                        b.x+b.w<=scene.touch.arena.x+scene.touch.arena.w+.01f&&b.y+b.h<=scene.touch.arena.y+scene.touch.arena.h+.01f)
+                    for(i in drawn.indices)for(j in i+1 until drawn.size){val a=drawn[i];val b=drawn[j]
+                        assertFalse("Actual prepared crops must remain separate",a.x<b.x+b.w&&a.x+a.w>b.x+.01f&&a.y<b.y+b.h&&a.y+a.h>b.y)}
+                    projectedSamples++
+                }
+            }
             val capture=action.actorId=="nezha"&&action.kind==BattleActionKind.ATTACK||
                 action.actorId=="xiaolongnv"&&action.abilityId==OriginalBattleMagic.HEAL
             if(capture){
@@ -103,6 +114,13 @@ class TouchTest:IsolatedGameTestCase(){
                 phases.getJSONObject(phases.length()-1)
                     .put("supportTarget",supportTarget?:JSONObject.NULL)
                     .put("arenaFlash",action.kind==BattleActionKind.SPECIAL&&supportTarget==null)
+                instrumentation.runOnMainSync{
+                    val actual=v.battlePartyBodies(fight,scene,action,p.elapsedMs.toFloat()/p.actionDurationMs)
+                    phases.getJSONObject(phases.length()-1).put("partyBodies",org.json.JSONArray().apply{
+                        actual.forEachIndexed{i,(image,b)->put(JSONObject().put("actor",fight.party[i].id)
+                            .put("file",image!!.file).put("x",b.x).put("y",b.y).put("w",b.w).put("h",b.h))}
+                    })
+                }
             }
             instrumentation.runOnMainSync{p.tick(p.actionDurationMs-p.elapsedMs)};index++
             assertTrue("Finite original action queue",index<100)
@@ -129,6 +147,7 @@ class TouchTest:IsolatedGameTestCase(){
             .put("startupPrepared",startup.preparedCount).put("preparedFiles",org.json.JSONArray(visual.preparedFiles.sorted()))
             .put("staleEpochRejected",true).put("otherBattleRejected",true).put("exitRejected",true).put("destroyedOwnerRejected",true)
             .put("decodedBytes",bytes).put("phases",phases).put("renderStateUnchanged",true)
+            .put("partySpacing","SEPARATED_CROPS_BOUNDED_ATTACK").put("projectedSpacingSamples",projectedSamples)
             .put("rngUnchanged",true).put("before",saved.json()).put("after",v.currentSnapshot().json()).toString())
     }
     /** Controlled four-role fixture, real taps/foreground phases/save; no normal join claim. */

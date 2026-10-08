@@ -75,10 +75,14 @@ fun battleSceneLayout(safe:Box,dp:Float,fontScale:Float,enemyCount:Int,partyCoun
     val aw=(allies.w-(allyColumns-1)*gap)/allyColumns
     val ah=(allies.h-(allyRows-1)*gap)/allyRows
     val sprites=if(illustrated)(0 until partyCount).map{i->
-        // Grounded diagonal: rear figures are smaller; slot order and gameplay never change.
+        // Separate crop envelopes along the same grounded diagonal. Cards and slots stay intact.
         val t=if(partyCount==1).5f else i.toFloat()/(partyCount-1)
-        val h=allies.h*(.62f+.18f*t);val w=min(allies.w*.48f,h*.76f)
-        val x=allies.x+allies.w*(.06f+.42f*t)
+        val side=allies.w*.04f;val bodyGap=min(8*dp,allies.w*.02f)
+        val slotW=(allies.w-2*side-(partyCount-1)*bodyGap)/partyCount
+        val h=allies.h*(.62f+.18f*t)
+        val w=min(if(partyCount==1)allies.w*.48f else slotW,h*.76f)
+        val x=if(partyCount==1)allies.x+allies.w*.27f
+            else allies.x+side+i*(slotW+bodyGap)+(slotW-w)/2
         val foot=allies.y+allies.h*(.70f+.27f*t)
         Box(x,foot-h,w,h)
     } else (0 until partyCount).map{i->Box(allies.x+(i%allyColumns)*(aw+gap),

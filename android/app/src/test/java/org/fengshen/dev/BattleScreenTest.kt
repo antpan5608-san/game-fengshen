@@ -4,6 +4,32 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class BattleScreenTest {
+    @Test fun illustratedPartyCropsStaySeparateThroughEachActorsAdvanceAndReturn(){
+        val crops=listOf(853 to 1250,881 to 1311,942 to 1338,922 to 1309,896 to 898,873 to 1210)
+        for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
+            for(font in listOf(1f,1.3f,2f))for(count in 1..4){
+                val scene=battleSceneLayout(safe,dp,font,1,count,true)!!
+                for(crop in crops){
+                    val bodies=scene.allySprites.map{battleVisualBodyBounds(it,crop.first,crop.second)}
+                    for(actor in bodies.indices)for(progress in listOf(0f,.05f,.18f,.2f,.42f,.5f,.65f,.85f,1f)){
+                        val drawn=battleVisualAttackBounds(bodies,actor,scene.touch.arena,progress)
+                        for(i in drawn.indices){assertTrue(inside(drawn[i],scene.touch.arena))
+                            assertEquals(bodies[i].y+bodies[i].h,drawn[i].y+drawn[i].h,.01f)
+                            if(i!=actor)assertEquals(bodies[i],drawn[i])}
+                        for(i in drawn.indices)for(j in i+1 until drawn.size)assertFalse(overlaps(drawn[i],drawn[j]))
+                        if(progress==0f||progress==1f)assertEquals(bodies,drawn)
+                    }
+                }
+            }
+    }
+    @Test fun attackBoundsKeepSingleActorsOriginalAdvanceAndRejectInvalidClock(){
+        val arena=Box(0f,0f,900f,300f);val body=Box(600f,100f,100f,150f);val bodies=listOf(body)
+        assertEquals(body.x-900f*.055f,battleVisualAttackBounds(bodies,0,arena,.5f)[0].x,.001f)
+        assertEquals(bodies,listOf(body));try{battleVisualAttackBounds(bodies,0,arena,Float.NaN);fail("Invalid clock")}
+        catch(expected:IllegalArgumentException){}
+        try{battleVisualAttackBounds(bodies,1,arena,.5f);fail("Missing actor")}
+        catch(expected:IllegalArgumentException){}
+    }
     @Test fun illustratedSceneKeepsAllTargetsCardsAndGroundedActorsInsideSafeArea(){
         for((safe,dp)in listOf(Box(0f,136f,960f,404f) to 1f,Box(0f,0f,2640f,936f) to 3f))
             for(font in listOf(1f,1.3f,2f))for(party in 1..4)for(enemies in 1..6){
