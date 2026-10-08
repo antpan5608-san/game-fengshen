@@ -1,3 +1,26 @@
+# WORLD-FULL-01 服务器当前接续
+状态：IN_PROGRESS / PARTIAL，三项长期终点未完成。
+唯一开发位置：192.168.1.20，/srv/fengshen-dev/game-fengshen。
+已发布个人v100 / 0.8.30-map-warm-personal，PUBLISHED_AND_VERIFIED。
+游戏source80e768ea886e3ad090cfc627c1d918c61471898f；后续基线/文档另列。
+原build37750367297/runtime与原publish37755038457首次SUCCESS。
+公网62633576完整字节等审核SHA5e6992848d51dce3dab0246ba9508b9421c2c0018395a173e00f0f4b26b72ce3。
+实际476release JVM/98、16组134Python、21Content/36raw通过。
+实际121+5PNG/151视频采样/14原片hash/7全cold/7prefs通过，受控另列。
+本批15当前MAPpost局部warm；正常攻击EXP4/银两+3、药草12→20、完整cold。
+09:15:17 postflight查询成功NO_DATA/error空/权威10099，真机样本0。
+四baseline字段真实100，新35测试/7c643ef8 codex_only/Stop current。
+稳定82，c62/392+visual17；13T/声音/完整结局/云恢复/全美术及全部欠账OPEN。
+交付入口：docs/evidence/v100-map-warm-personal.md，manual_acceptance=PENDING。
+下一入口：docs/evidence/battle-compact-label-next-batch.md，独立原型2项通过、游戏未实施。
+迁入dirty/Windows历史/原失败/存档保持；无暂停或长期完成标记。
+
+以下为有时间标记的历史快照，保留当时事实；当前状态以上述摘要及最新实际回执为准。
+
+最新正式候选核验检查点（2026-10-08T08:46:18.449755+00:00）：拟个人v100 / 0.8.30-map-warm-personal source `80e768ea886e3ad090cfc627c1d918c61471898f`／原[Actions37750367297](https://github.com/antpan5608-san/game-fengshen/actions/runs/37750367297) build113221820488 SUCCESS；本轮独立原成功job不可变artifact完整ZIP/source/time/hash核验，正式签名非DEBUG包62,633,576字节／SHA5e6992848d51dce3dab0246ba9508b9421c2c0018395a173e00f0f4b26b72ce3，原包名/证书/c62/392+visual17共409资源字节同99，新476 release JVM/98 suites failures/errors/skipped全0。原runtime113225743127仍IN_PROGRESS、正在原隔离AVD验同候选；新App原图原片/MAPscope及时序/21Content36raw/全cold/偏好/覆盖99未核，正式Python日志计数PENDING，不借旧134或本地61。只PACKAGED_FORMAL_VERIFIED，APP_VERIFIED/PUBLISHED仍NO，线上实际99/稳定82、所有长期欠账保持。已实际再次完整9文件审查并补新同快照codex_only e9ce81e5／Stop current。接[本批入口](evidence/battle-map-preparation-next-batch.md)新App真实独立核验，门槛齐才原同审核发布/public/postflight；[紧凑多敌原名下一入口](evidence/battle-compact-label-next-batch.md)只读设计未实现，单敌误判已源码及15实样纠正、分析首KeyError/修正保留。冻结main保持80e768e、不推无关文档，不取消Actions；唯一服务器writer、迁入dirty/Windows冻结历史/失败/原存档保持，WORLD-FULL-01 IN_PROGRESS/PARTIAL，无暂停或完成标记。以下均为历史。
+
+最新源码冻结/同会话接续检查点（2026-10-08T08:33:23.715622+00:00）：拟个人v100 / 0.8.30-map-warm-personal 源码已冻结原main `80e768ea886e3ad090cfc627c1d918c61471898f`；原[Actions37750367297](https://github.com/antpan5608-san/game-fengshen/actions/runs/37750367297)已实际in_progress，新正式签名/App/发布尚未验。新476 JVM/98 suites、61相关Python、DEBUG应用/仪器及409资源逐字节同公网99已通过；本批9文件完整审查，新codex_only e9ce81e5／Stop current。只当前MAP真送帧后局部原cache预热、去重/取消，玩家规则/存档/c62保持，原99raw被新协议拒绝。线上实际99/稳定82/所有真机声音主线云恢复与长期欠账保持。接续[本批入口](evidence/battle-map-preparation-next-batch.md)，服务器`.local-ai/visual-actions-37750367297/inspection/`的verify_build.py/verify_raw.py已按新source准备并全文核对，尚未运行、不冒称验收；下一步原同源正式签名/21Content36raw、新actual map scope/time/原PNG原片/全cold/偏好/覆盖99独立检查，全部门槛通过才原reviewer同审核APK发布/public/postflight，再主动接续。仅在服务器保存交接文档，不再推无关main改变冻结来源、不取消Actions；迁入dirty/Windows历史/失败/玩家存档保留，长期IN_PROGRESS/PARTIAL，无暂停或完成标记。以下各段为历史。
+
 最新有限研发检查点（2026-10-08T08:30:08.656551+00:00）：拟个人v100 / 0.8.30-map-warm-personal 已IMPLEMENTED_LOCAL_CHECKED。真实MAP成功送帧后仅当前map/actors预热原单worker/cache，不预测enemy/全图；最多一项pending、battle/lifecycle取消、单张已开始可完成后停止，warm不安装battle bundle或改变规则/save。新476 JVM/98 suites零失败错误跳过、61相关Python与DEBUG两包通过；9文件完整Codex审查，新codex_only e9ce81e5／Stop current；旧99真实raw缺新协议被拒，16图和c62保持。正式签名/App/发布尚未执行，线上实际99/稳定82，真机/声音/主线/云恢复和全部欠账OPEN。见[局部预备本批入口](evidence/battle-map-preparation-next-batch.md)。服务器唯一writer，迁入dirty/旧冻结历史/失败/玩家存档保留，长期IN_PROGRESS/PARTIAL，无暂停或完成标记。以下历史保持。
 
 最新服务器实际交付检查点（2026-10-08T08:07:11.593064+00:00）：个人v99 / 0.8.29-compact-gauge-personal已PUBLISHED_AND_VERIFIED，游戏source a5bb7c6／原build37741740866和publish37746689697首次SUCCESS。公网62618584完整字节/SHA35bd105a同审核原签名APK；466 release JVM/97 suites、16组134 Python、21Content36raw、实际121+5PNG/128视频采样/15原片hash/7全cold/7prefs通过；24紧凑多敌短条、15单敌保持。正常自然两战/真实攻击胜利EXP3银两+2、药草13→20、最终银两7/药草0全cold；受控四人/Boss另列。发布后四baseline字段实际99，新35相关测试通过，新codex_only快照c3498ade／Stop current已实际记录。08:03:40Z postflight NO_ISSUES_OBSERVED/errors空/cleanup0/权威99/98，仅15旧98事件/1实机，无99真机样本。稳定82/c62和全长期欠账仍IN_PROGRESS/PARTIAL。详见[v99实际交付](evidence/v99-compact-gauge-personal.md)，主动接续[局部预备入口](evidence/battle-map-preparation-next-batch.md)有限预备，未实现部分不算通过。服务器唯一writer，迁入dirty/Windows冻结历史/失败/存档保持，无暂停或长期完成标记。以下均为当时历史。
@@ -69,7 +92,7 @@ development_root: /srv/fengshen-dev/game-fengshen
 cloud_role: EXISTING_GITHUB_ACTIONS_BUILD_AND_ACCEPTANCE_ONLY
 stable_version: v82 / 0.8.12-playable-r1-stable
 published_personal_version: v99 / 0.8.29-compact-gauge-personal，PUBLISHED_AND_VERIFIED
-current_candidate_version: v100 / 0.8.30-map-warm-personal；IMPLEMENTED_LOCAL_CHECKED／NOT_APP_VERIFIED／NOT_PUBLISHED
+current_candidate_version: v100 / 0.8.30-map-warm-personal；SOURCE_FROZEN／PACKAGED_FORMAL_VERIFIED／ACTIONS_RUNTIME_IN_PROGRESS／NOT_APP_VERIFIED／NOT_PUBLISHED
 frozen_previous_candidate: v83 / 0.8.13-world-hell-r2，NOT_PUBLISHED
 frozen_previous_candidate_source: 75ac819cad0bc387bafbf35ac3ccb352229aab9f
 content_version: opening-segment-001-c62（v88同内容已发布并公网复核）
